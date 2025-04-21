@@ -1,3 +1,4 @@
-# NoHeroes Site
 
-Base do projeto do site NoHeroes.
+# NoHeroes
+
+Site oficial do projeto NoHeroes, incluindo os universos de ROAR e FREQ.
