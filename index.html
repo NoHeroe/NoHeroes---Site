@@ -1,87 +1,80 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<!DOCTYPE html><html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NoHeroes — O Ruir do Abismo</title>
+  <title>NoHeroes | Home</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
+  <!-- TOPO FIXO -->
+  <header class="topo">
+    <div class="logo" onclick="scrollToTop()">NoHeroes</div>
     <nav>
       <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#sobre">Sobre</a></li>
-        <li><a href="#freq">FREQ</a></li>
-        <li><a href="#roar">ROAR</a></li>
-        <li><a href="#contato">Contato</a></li>
+        <li><a href="#oque">O que é NoHeroes?</a></li>
+        <li><a href="#quem">Quem é NoHeroe?</a></li>
+        <li><a href="#acharaqui">O que achará aqui?</a></li>
+        <li><a href="#acompanhar">Como acompanhar?</a></li>
       </ul>
     </nav>
-  </header>
-
-  <section id="home">
-    <h1>NoHeroes — O Ruir do Abismo</h1>
-    <blockquote>“Num mundo onde até a luz mente, a única verdade nasce da sombra.”</blockquote>
-  </section>
-
-  <section id="sobre">
-    <h2>O Universo de Caelum</h2>
-    <p>Um mundo à beira do colapso. Corrompido por vícios, iludido por tecnologia, desnutrido de alma...</p>
-  </section>
-
-  <section id="freq">
-    <h2>FREQ — O Primeiro Despertar</h2>
-    <p>Ryu foi arrancado de sua realidade. Jogado num mundo decadente, onde a magia é fraca e esquecida. Lá, ele encontra aliados que o ajudam a se reconstruir: Arbon, Gabriel, Francisco, Luiz, Yohan e Bruno. Cada um desperta uma parte dele. Mas, ao evoluírem, atraem a fúria da elite corrompida. FREQ é sobre (re)nascer quando tudo parece perdido.</p>
-  </section>
-
-  <section id="roar">
-    <h2>ROAR — O Eco dos Quebrados</h2>
-    <p>Muito antes de FREQ, existia a fúria de Azuos. Um guerreiro que foi destruído... e depois ressuscitou. ROAR mergulha em uma narrativa visceral e brutal, onde traumas, perdas e dores constroem heróis quebrados. Aqui, redenção não é garantida. É arrancada.</p>
-  </section>
-
-  <section>
-    <h2>NoHeroes — Não Há Salvação, Só Escolhas</h2>
-    <p>NoHeroes não é uma franquia. É um movimento narrativo. Um universo compartilhado onde o criador e o público constroem juntos histórias profundas, sombrias e reais. Tudo interligado. Tudo relevante.</p>
-  </section>
-
-  <section>
-    <h2>Sobre NoHeroes</h2>
-    <p>Um mundo forjado na dor, na fé e na arte. Aqui, usamos a tecnologia e a inteligência artificial como ferramentas, não como substitutos. Criamos com alma, mesmo quando usamos máquinas.</p>
-  </section>
-
-  <section>
-    <h2>E por que usar IA?</h2>
-    <blockquote>“A vida não deve girar em torno do trabalho, mas o trabalho em torno da vida.”</blockquote>
-  </section>
-
-  <section>
-    <h2>O que você vai encontrar aqui:</h2>
+  </header>  <!-- CAPA / HERO SECTION -->  <section class="hero">
+    <div class="overlay"></div>
+    <h1>“Num mundo onde até a luz mente, a única verdade nasce da sombra.”</h1>
+    <a href="roar.html#caelum" class="btn">Explorar Caelum</a>
+  </section>  <!-- SOBRE O PROJETO -->  <section class="sobre" id="oque">
+    <h2>O que é NoHeroes?</h2>
+    <p>NoHeroes não é uma franquia. É um movimento narrativo. Um colapso em forma de anime.</p>
     <ul>
-      <li>Animes e mangás originais como ROAR e FREQ</li>
-      <li>Mentorias criativas e colaborativas</li>
-      <li>Uma comunidade obscura e acolhedora</li>
-      <li>Um convite para fazer parte do mundo de Caelum</li>
+      <li>Mangás autorais</li>
+      <li>Animes com som e emoção cruas</li>
+      <li>Bastidores abertos</li>
+      <li>Mentorias para criadores que usam as trevas como tinta</li>
+      <li>E muito mais.</li>
     </ul>
-  </section>
-
-  <section>
-    <h2>A Dualidade de Dois Mundos:</h2>
-    <p><strong>FREQ:</strong> Uma jornada mais leve, educativa, censurada.<br>
-    <strong>ROAR:</strong> Um mergulho sombrio, visceral, maior de 18.</p>
-  </section>
-
-  <section>
-    <h2>Se você chegou até aqui… já faz parte.</h2>
-    <p>Torne-se uma das sombras que vagam por Caelum. Junte-se ao clã dos Vitalistas. Aqui, a escuridão também é lar.</p>
-  </section>
-
-  <section>
-    <h2>Por Trás da Sombra: O Criador</h2>
-    <p>Ninguém conhece seu nome. Mas ele existe. Observa. Cria. Ele não quer fama, quer impacto. E está só começando.</p>
-  </section>
-
-  <footer id="contato">
-    <p>&copy; 2025 NoHeroes. Todos os direitos reservados.</p>
-  </footer>
-</body>
+    <p>Tudo será compartilhado. Nada será suavizado.<br>Um mundo forjado na dor, na fé e na arte.</p>
+  </section>  <!-- QUEM É NOHEROE -->  <section class="quem" id="quem">
+    <h2>Quem é NoHeroe?</h2>
+    <p>NoHeroe sou eu. É Azuos. É Ryu. Pode ser você.<br>
+    É quem toma decisões que heróis não conseguem tomar. Que encara sacrifícios que outros evitam.<br>
+    NoHeroe é a entidade, a colônia de vozes e sombras que sussurram neste universo.</p>
+  </section>  <!-- O QUE ACHARÁ AQUI -->  <section class="acharaqui" id="acharaqui">
+    <h2>O que achará aqui?</h2>
+    <ul>
+      <li>Animes – FREQ e ROAR</li>
+      <li>Mangás – Versões visuais</li>
+      <li>Comunidade – Debates e teorias</li>
+      <li>Cursos e Mentorias</li>
+      <li>Apoie o projeto</li>
+    </ul>
+  </section>  <!-- COMO ACOMPANHAR OS PROJETOS -->  <section class="acompanhar" id="acompanhar">
+    <h2>Como acompanhar os projetos?</h2>
+    <p>Redes sociais:</p>
+    <ul>
+      <li>Instagram</li>
+      <li>TikTok</li>
+      <li>Grupo - Discord - WhatsApp</li>
+      <li><i>Futuramente: YouTube e Twitter</i></li>
+    </ul>
+  </section>  <!-- ESCOLHA ENTRE FREQ E ROAR -->  <section class="escolha">
+    <h2>Escolha seu caminho</h2>
+    <div class="opcoes">
+      <div class="botao" onclick="selecionarProjeto('freq')">
+        <h3>FREQ</h3>
+        <p class="resumo">Uma jornada de despertar. Ryu precisa evoluir para sobreviver.</p>
+        <a href="freq.html">Mais informações</a>
+      </div>
+      <div class="botao" onclick="selecionarProjeto('roar')">
+        <h3>ROAR</h3>
+        <p class="resumo">Uma queda brutal. Azuos enfrenta o abismo e a si mesmo.</p>
+        <a href="roar.html">Mais informações</a>
+      </div>
+    </div>
+  </section>  <!-- RODAPÉ -->  <footer>
+    <div class="social">
+      <a href="https://instagram.com/_noheroe" target="_blank">Instagram: @_noheroe</a>
+      <p>Contato comercial: +55 (65) 99324-0270</p>
+    </div>
+    <p class="assinatura">Explore. Escolha. Caia. Evolua.</p>
+    <p class="extra">Toda escolha tem um preço. Toda queda, uma razão.</p>
+  </footer>  <script src="script.js"></script></body>
 </html>
