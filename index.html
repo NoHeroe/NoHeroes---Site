@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,18 +45,23 @@
     }
   </style>
 </head>
-<body class="font-serif bg-[#0a0a0a] text-[#e5e5e5] leading-relaxed">  <!-- TOPO FIXO -->  <header class="fixed top-0 w-full bg-[#100d1a] border-b border-[#2e2e2e] z-50 px-8 py-4 flex justify-between items-center">
+<body class="font-serif bg-[#0a0a0a] text-[#e5e5e5] leading-relaxed">
+
+  <!-- TOPO FIXO -->
+  <header class="fixed top-0 w-full bg-[#100d1a] border-b border-[#2e2e2e] z-50 px-8 py-4 flex justify-between items-center">
     <div class="text-[#8f4fff] text-2xl font-bold uppercase tracking-wide cursor-pointer" onclick="scrollToTop()">NoHeroes</div>
     <nav>
       <ul class="flex space-x-4">
         <li><a href="roar.html" class="text-[#ccc] hover:text-[#8f4fff] transition-colors">ROAR</a></li>
         <li><a href="freq.html" class="text-[#ccc] hover:text-[#8f4fff] transition-colors">FREQ</a></li>
-        <li><a href="#sobre" class="text-[#ccc] hover:text-[#8f4fff] transition-colors">Sobre</a></li>
         <li><a href="#loja" class="text-[#ccc] hover:text-[#8f4fff] transition-colors">Loja</a></li>
         <li><a href="#login" class="text-[#ccc] hover:text-[#8f4fff] transition-colors">Login/Conta</a></li>
       </ul>
     </nav>
-  </header>  <!-- CAPA -->  <section class="relative flex flex-col items-center justify-center h-screen bg-cover bg-center text-center text-[#d9d6ff]" style="background-image: url('bg-fantasy.gif');">
+  </header>
+
+  <!-- CAPA -->
+  <section class="relative flex flex-col items-center justify-center h-screen bg-cover bg-center text-center text-[#d9d6ff]" style="background-image: url('bg-fantasy.gif');">
     <div class="overlay"></div>
     <h1 class="relative text-3xl md:text-5xl max-w-2xl mb-8 text-shadow-md z-10">
       “Num mundo onde até a luz mente, a única verdade nasce da sombra.”
@@ -63,26 +69,41 @@
     <a href="#obras" class="bg-[#8f4fff] text-white px-6 py-3 text-lg rounded-lg shadow-lg transition-transform hover:scale-105 relative z-10">
       Explorar Obras
     </a>
-  </section>  <!-- SOBRE/QUESTIONÁRIO -->  <section class="py-16 px-8 max-w-4xl mx-auto" id="sobre">
+  </section>
+
+  <!-- PERGUNTAS (NO INÍCIO) -->
+  <section class="py-16 px-8 max-w-4xl mx-auto">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div>
-        <h2 class="text-xl font-bold text-[#8f4fff] mb-2">O que é NoHeroes?</h2>
-        <p class="text-[#cfcfcf] text-sm">NoHeroes não é uma franquia. É um movimento narrativo...</p>
-      </div>
-      <div>
-        <h2 class="text-xl font-bold text-[#8f4fff] mb-2">Quem é NoHeroe?</h2>
-        <p class="text-[#cfcfcf] text-sm">NoHeroe sou eu. É Azuos. É Ryu...</p>
-      </div>
-      <div>
-        <h2 class="text-xl font-bold text-[#8f4fff] mb-2">O que achará aqui?</h2>
-        <p class="text-[#cfcfcf] text-sm">Animes, mangás, comunidade...</p>
-      </div>
-      <div>
-        <h2 class="text-xl font-bold text-[#8f4fff] mb-2">Como acompanhar?</h2>
-        <p class="text-[#cfcfcf] text-sm">Instagram, TikTok, Discord...</p>
-      </div>
+      <a href="#oque" class="text-xl font-bold text-[#8f4fff] hover:underline">O que é NoHeroes?</a>
+      <a href="#quem" class="text-xl font-bold text-[#8f4fff] hover:underline">Quem é NoHeroe?</a>
+      <a href="#acharaqui" class="text-xl font-bold text-[#8f4fff] hover:underline">O que achará aqui?</a>
+      <a href="#acompanhar" class="text-xl font-bold text-[#8f4fff] hover:underline">Como acompanhar?</a>
     </div>
-  </section>  <!-- ESCOLHA ENTRE FREQ E ROAR -->  <section class="py-16 px-8 max-w-6xl mx-auto" id="obras">
+  </section>
+
+  <!-- SOBRE / QUESTIONÁRIO -->
+  <section class="py-16 px-8 max-w-4xl mx-auto" id="oque">
+    <h2 class="text-xl font-bold text-[#8f4fff] mb-2">O que é NoHeroes?</h2>
+    <p class="text-[#cfcfcf] text-sm">NoHeroes não é uma franquia. É um movimento narrativo...</p>
+  </section>
+
+  <section class="py-16 px-8 max-w-4xl mx-auto" id="quem">
+    <h2 class="text-xl font-bold text-[#8f4fff] mb-2">Quem é NoHeroe?</h2>
+    <p class="text-[#cfcfcf] text-sm">NoHeroe sou eu. É Azuos. É Ryu...</p>
+  </section>
+
+  <section class="py-16 px-8 max-w-4xl mx-auto" id="acharaqui">
+    <h2 class="text-xl font-bold text-[#8f4fff] mb-2">O que achará aqui?</h2>
+    <p class="text-[#cfcfcf] text-sm">Animes, mangás, comunidade...</p>
+  </section>
+
+  <section class="py-16 px-8 max-w-4xl mx-auto" id="acompanhar">
+    <h2 class="text-xl font-bold text-[#8f4fff] mb-2">Como acompanhar?</h2>
+    <p class="text-[#cfcfcf] text-sm">Instagram, TikTok, Discord...</p>
+  </section>
+
+  <!-- ESCOLHA ENTRE FREQ E ROAR -->
+  <section class="py-16 px-8 max-w-6xl mx-auto" id="obras">
     <h2 class="text-2xl font-bold mb-8 text-[#8f4fff] text-shadow-md text-center">Escolha seu caminho</h2>
     <div class="flex justify-center gap-10 flex-wrap">
       <div>
@@ -106,7 +127,10 @@
         </div>
       </div>
     </div>
-  </section>  <!-- RODAPÉ -->  <footer class="bg-[#0d0d0d] py-8 text-center text-[#666] border-t border-[#333] mt-16">
+  </section>
+
+  <!-- RODAPÉ -->
+  <footer class="bg-[#0d0d0d] py-8 text-center text-[#666] border-t border-[#333] mt-16">
     <div class="text-[#8f4fff] mb-4">
       <a href="https://instagram.com/_noheroe" target="_blank">Instagram: @_noheroe</a>
     </div>
@@ -114,10 +138,13 @@
     <p class="mt-4">Explore. Escolha. Caia. Evolua.</p>
     <p class="extra mt-2">Toda escolha tem um preço. Toda queda, uma razão.</p>
     <p class="text-xs mt-6">© 2025 NoHeroes. Todos os direitos reservados.</p>
-  </footer>  <script>
+  </footer>
+
+  <script>
     function toggleDialog(id) {
       document.querySelectorAll('.dialog-box').forEach(box => box.classList.add('hidden'));
       document.getElementById('dialog-' + id).classList.remove('hidden');
     }
-  </script></body>
+  </script>
+</body>
 </html>
