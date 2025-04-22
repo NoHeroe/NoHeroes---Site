@@ -1,20 +1,104 @@
-
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NoHeroes</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NoHeroes</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(145deg, #0f0f0f, #1a1a1a);
+      color: #fff;
+    }
+
+    header {
+      background-color: #121212;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid #333;
+    }
+
+    header nav a {
+      color: #a658ff;
+      margin-right: 20px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    header nav a:hover {
+      color: #fff;
+    }
+
+    .section {
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .btn {
+      background-color: #a658ff;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      margin: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .btn:hover {
+      background-color: #8830e0;
+    }
+
+    #sobre {
+      background-color: #181818;
+      padding: 40px 20px;
+      text-align: left;
+      max-width: 800px;
+      margin: auto;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(166, 88, 255, 0.2);
+    }
+
+    #sobre h2 {
+      color: #a658ff;
+    }
+
+    #sobre p {
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Bem-vindo ao NoHeroes</h1>
-        <p>Escolha seu destino. Explore o universo de ROAR e FREQ.</p>
-        <div class="buttons">
-            <button onclick="alert('ROAR')">ROAR</button>
-            <button onclick="alert('FREQ')">FREQ</button>
-        </div>
-    </div>
+
+  <header>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#sobre">Sobre</a>
+    </nav>
+  </header>
+
+  <section id="home" class="section">
+    <h1>Bem-vindo ao NoHeroes</h1>
+    <p>Escolha seu destino. Explore o universo de ROAR e FREQ.</p>
+    <button class="btn">ROAR</button>
+    <button class="btn">FREQ</button>
+  </section>
+
+  <section id="sobre">
+    <h2>O Ruir do Abismo</h2>
+    <p><strong>NoHeroes</strong> é mais que um projeto — é um grito silencioso daqueles que afundam sem serem vistos. Não celebramos heróis, mas sim os que caem e continuam lutando.</p>
+    <p>Nosso mundo é feito de sombras, perdas e verdades distorcidas. Cada obra do universo NoHeroes revela uma parte dessa dor — ROAR e FREQ não são apenas histórias; são espelhos da alma de quem já quebrou por dentro.</p>
+    <p>Por trás do projeto está uma sombra com olhos atentos: NoHeroe, a entidade que observa, cria e conduz. Ele não é um personagem, é um reflexo de todos nós.</p>
+    <p>Se você sente que carrega algo que o mundo não entende — você está em casa.</p>
+  </section>
+
 </body>
 </html>
