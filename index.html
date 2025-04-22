@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<!DOCTYPE html><html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NoHeroes | Home</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* Estilos adicionais */
     .text-shadow-md {
       text-shadow: 0 0 10px rgba(143, 79, 255, 0.4);
     }
@@ -21,108 +19,105 @@
       width: 100%;
       height: 100%;
     }
+    .dialog-box {
+      background: #1c1c1c;
+      border: 1px solid #8f4fff;
+      padding: 1rem;
+      border-radius: 1rem;
+      position: relative;
+      animation: fadeIn 0.5s ease-out;
+      max-width: 500px;
+      margin: 1rem auto;
+    }
+    .dialog-character {
+      position: absolute;
+      left: -60px;
+      top: -40px;
+      width: 80px;
+      height: 80px;
+      background-color: #8f4fff;
+      border-radius: 50%;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
-<body class="font-serif bg-[#0a0a0a] text-[#e5e5e5] leading-relaxed">
-
-  <!-- TOPO FIXO -->
-  <header class="fixed top-0 w-full bg-[#100d1a] border-b border-[#2e2e2e] z-50 px-8 py-4 flex justify-between items-center">
+<body class="font-serif bg-[#0a0a0a] text-[#e5e5e5] leading-relaxed">  <!-- TOPO FIXO -->  <header class="fixed top-0 w-full bg-[#100d1a] border-b border-[#2e2e2e] z-50 px-8 py-4 flex justify-between items-center">
     <div class="text-[#8f4fff] text-2xl font-bold uppercase tracking-wide cursor-pointer" onclick="scrollToTop()">NoHeroes</div>
     <nav>
       <ul class="flex space-x-4">
-        <li><a href="#oque" class="text-[#ccc] hover:text-[#8f4fff] transition-colors">O que é NoHeroes?</a></li>
-        <li><a href="#quem" class="text-[#ccc] hover:text-[#8f4fff] transition-colors">Quem é NoHeroe?</a></li>
-        <li><a href="#acharaqui" class="text-[#ccc] hover:text-[#8f4fff] transition-colors">O que achará aqui?</a></li>
-        <li><a href="#acompanhar" class="text-[#ccc] hover:text-[#8f4fff] transition-colors">Como acompanhar?</a></li>
+        <li><a href="roar.html" class="text-[#ccc] hover:text-[#8f4fff] transition-colors">ROAR</a></li>
+        <li><a href="freq.html" class="text-[#ccc] hover:text-[#8f4fff] transition-colors">FREQ</a></li>
+        <li><a href="#sobre" class="text-[#ccc] hover:text-[#8f4fff] transition-colors">Sobre</a></li>
+        <li><a href="#loja" class="text-[#ccc] hover:text-[#8f4fff] transition-colors">Loja</a></li>
+        <li><a href="#login" class="text-[#ccc] hover:text-[#8f4fff] transition-colors">Login/Conta</a></li>
       </ul>
     </nav>
-  </header>
-
-  <!-- CAPA / HERO SECTION -->
-  <section class="relative flex flex-col items-center justify-center h-screen bg-cover bg-center text-center text-[#d9d6ff]" style="background-image: url('bg-fantasy.gif');">
+  </header>  <!-- CAPA -->  <section class="relative flex flex-col items-center justify-center h-screen bg-cover bg-center text-center text-[#d9d6ff]" style="background-image: url('bg-fantasy.gif');">
     <div class="overlay"></div>
     <h1 class="relative text-3xl md:text-5xl max-w-2xl mb-8 text-shadow-md z-10">
       “Num mundo onde até a luz mente, a única verdade nasce da sombra.”
     </h1>
-    <a href="roar.html#caelum" class="bg-[#8f4fff] text-white px-6 py-3 text-lg rounded-lg shadow-lg transition-transform hover:scale-105 relative z-10">
-      Explorar Caelum
+    <a href="#obras" class="bg-[#8f4fff] text-white px-6 py-3 text-lg rounded-lg shadow-lg transition-transform hover:scale-105 relative z-10">
+      Explorar Obras
     </a>
-  </section>
-
-  <!-- SOBRE O PROJETO -->
-  <section class="py-16 px-8 max-w-4xl mx-auto" id="oque">
-    <h2 class="text-2xl font-bold mb-4 text-[#8f4fff] text-shadow-md">O que é NoHeroes?</h2>
-    <p class="text-lg text-[#cfcfcf] mb-6">
-      NoHeroes não é uma franquia. É um movimento narrativo. Um colapso em forma de anime.
-    </p>
-    <ul class="list-disc list-inside text-[#cfcfcf]">
-      <li>Mangás autorais</li>
-      <li>Animes com som e emoção cruas</li>
-      <li>Bastidores abertos</li>
-      <li>Mentorias para criadores que usam as trevas como tinta</li>
-      <li>E muito mais.</li>
-    </ul>
-    <p class="text-lg text-[#cfcfcf] mt-6">
-      Tudo será compartilhado. Nada será suavizado.<br>Um mundo forjado na dor, na fé e na arte.
-    </p>
-  </section>
-
-  <!-- QUEM É NOHEROE -->
-  <section class="py-16 px-8 max-w-4xl mx-auto" id="quem">
-    <h2 class="text-2xl font-bold mb-4 text-[#8f4fff] text-shadow-md">Quem é NoHeroe?</h2>
-    <p class="text-lg text-[#cfcfcf]">
-      NoHeroe sou eu. É Azuos. É Ryu. Pode ser você.<br>
-      É quem toma decisões que heróis não conseguem tomar. Que encara sacrifícios que outros evitam.<br>
-      NoHeroe é a entidade, a colônia de vozes e sombras que sussurram neste universo.
-    </p>
-  </section>
-
-  <!-- O QUE ACHARÁ AQUI -->
-  <section class="py-16 px-8 max-w-4xl mx-auto" id="acharaqui">
-    <h2 class="text-2xl font-bold mb-4 text-[#8f4fff] text-shadow-md">O que achará aqui?</h2>
-    <ul class="list-disc list-inside text-[#cfcfcf]">
-      <li>Animes – FREQ e ROAR</li>
-      <li>Mangás – Versões visuais</li>
-      <li>Comunidade – Debates e teorias</li>
-      <li>Cursos e Mentorias</li>
-      <li>Apoie o projeto</li>
-    </ul>
-  </section>
-
-  <!-- COMO ACOMPANHAR OS PROJETOS -->
-  <section class="py-16 px-8 max-w-4xl mx-auto" id="acompanhar">
-    <h2 class="text-2xl font-bold mb-4 text-[#8f4fff] text-shadow-md">Como acompanhar os projetos?</h2>
-    <p class="text-lg text-[#cfcfcf] mb-4">Redes sociais:</p>
-    <ul class="list-disc list-inside text-[#cfcfcf]">
-      <li>Instagram</li>
-      <li>TikTok</li>
-      <li>Grupo - Discord - WhatsApp</li>
-      <li><i>Futuramente: YouTube e Twitter</i></li>
-    </ul>
-  </section>
-
-  <!-- ESCOLHA ENTRE FREQ E ROAR -->
-  <section class="py-16 px-8 max-w-4xl mx-auto">
-    <h2 class="text-2xl font-bold mb-4 text-[#8f4fff] text-shadow-md">Escolha seu caminho</h2>
-    <div class="flex flex-wrap justify-around mt-8 space-y-4 px-4">
-      <button class="bg-[#1c1c1c] border border-[#8f4fff] text-[#8f4fff] px-6 py-3 rounded-lg transition-all hover:bg-[#8f4fff] hover:text-black">
-        FREQ - Uma jornada de despertar. Ryu precisa evoluir para sobreviver.
-      </button>
-      <button class="bg-[#1c1c1c] border border-[#8f4fff] text-[#8f4fff] px-6 py-3 rounded-lg transition-all hover:bg-[#8f4fff] hover:text-black">
-        ROAR - Uma queda brutal. Azuos enfrenta o abismo e a si mesmo.
-      </button>
+  </section>  <!-- SOBRE/QUESTIONÁRIO -->  <section class="py-16 px-8 max-w-4xl mx-auto" id="sobre">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <h2 class="text-xl font-bold text-[#8f4fff] mb-2">O que é NoHeroes?</h2>
+        <p class="text-[#cfcfcf] text-sm">NoHeroes não é uma franquia. É um movimento narrativo...</p>
+      </div>
+      <div>
+        <h2 class="text-xl font-bold text-[#8f4fff] mb-2">Quem é NoHeroe?</h2>
+        <p class="text-[#cfcfcf] text-sm">NoHeroe sou eu. É Azuos. É Ryu...</p>
+      </div>
+      <div>
+        <h2 class="text-xl font-bold text-[#8f4fff] mb-2">O que achará aqui?</h2>
+        <p class="text-[#cfcfcf] text-sm">Animes, mangás, comunidade...</p>
+      </div>
+      <div>
+        <h2 class="text-xl font-bold text-[#8f4fff] mb-2">Como acompanhar?</h2>
+        <p class="text-[#cfcfcf] text-sm">Instagram, TikTok, Discord...</p>
+      </div>
     </div>
-  </section>
-
-  <!-- RODAPÉ -->
-  <footer class="bg-[#0d0d0d] py-8 text-center text-[#666] border-t border-[#333] mt-16">
+  </section>  <!-- ESCOLHA ENTRE FREQ E ROAR -->  <section class="py-16 px-8 max-w-6xl mx-auto" id="obras">
+    <h2 class="text-2xl font-bold mb-8 text-[#8f4fff] text-shadow-md text-center">Escolha seu caminho</h2>
+    <div class="flex justify-center gap-10 flex-wrap">
+      <div>
+        <button onclick="toggleDialog('freq')" class="bg-[#1c1c1c] border border-[#8f4fff] text-[#8f4fff] px-6 py-3 rounded-lg hover:bg-[#8f4fff] hover:text-black transition">
+          FREQ
+        </button>
+        <div id="dialog-freq" class="dialog-box hidden">
+          <div class="dialog-character"></div>
+          <p class="mb-4">FREQ - Uma jornada de despertar. Ryu precisa evoluir para sobreviver.</p>
+          <a href="freq.html" class="bg-[#8f4fff] text-black px-4 py-2 rounded">Ver mais</a>
+        </div>
+      </div>
+      <div>
+        <button onclick="toggleDialog('roar')" class="bg-[#1c1c1c] border border-[#8f4fff] text-[#8f4fff] px-6 py-3 rounded-lg hover:bg-[#8f4fff] hover:text-black transition">
+          ROAR
+        </button>
+        <div id="dialog-roar" class="dialog-box hidden">
+          <div class="dialog-character"></div>
+          <p class="mb-4">ROAR - Uma queda brutal. Azuos enfrenta o abismo e a si mesmo.</p>
+          <a href="roar.html" class="bg-[#8f4fff] text-black px-4 py-2 rounded">Ver mais</a>
+        </div>
+      </div>
+    </div>
+  </section>  <!-- RODAPÉ -->  <footer class="bg-[#0d0d0d] py-8 text-center text-[#666] border-t border-[#333] mt-16">
     <div class="text-[#8f4fff] mb-4">
       <a href="https://instagram.com/_noheroe" target="_blank">Instagram: @_noheroe</a>
     </div>
     <p>Contato comercial: +55 (65) 99324-0270</p>
     <p class="mt-4">Explore. Escolha. Caia. Evolua.</p>
     <p class="extra mt-2">Toda escolha tem um preço. Toda queda, uma razão.</p>
-  </footer>
-
-</body>
+    <p class="text-xs mt-6">© 2025 NoHeroes. Todos os direitos reservados.</p>
+  </footer>  <script>
+    function toggleDialog(id) {
+      document.querySelectorAll('.dialog-box').forEach(box => box.classList.add('hidden'));
+      document.getElementById('dialog-' + id).classList.remove('hidden');
+    }
+  </script></body>
 </html>
