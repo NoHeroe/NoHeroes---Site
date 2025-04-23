@@ -85,11 +85,12 @@ nav ul {
 
 /* Estilização do vídeo de fundo */
 .background-video {
-  position: absolute;
-  top: 0;
+  position: fixed;
+  bottom: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100vw; /* Formato 1x1 */
+  max-height: 400px; /* Limite máximo de altura */
   overflow: hidden;
   z-index: -1; /* Coloca o vídeo atrás do conteúdo */
 }
@@ -106,7 +107,7 @@ nav ul {
 
 /* Overlay para escurecer o vídeo */
 .overlay {
-  background-color: rgba(0, 0, 0, 0.5); /* Ajuste a opacidade conforme necessário */
+  background-color: rgba(0, 0, 0, 0.3); /* Ajuste a opacidade conforme necessário */
   position: absolute;
   top: 0;
   left: 0;
@@ -151,19 +152,24 @@ section.relative {
 /* Estilo exclusivo para a seção "Escolha entre FREQ e ROAR" */
 #obras {
   position: relative;
+  height: 100vh; /* A seção ocupa a altura total da janela */
   padding: 4rem 1rem;
-  background-color: transparent; /* Transparente para exibir o vídeo */
   color: white;
   text-align: center;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 #obras .background-video {
-  position: absolute;
-  top: 0;
+  position: fixed;
+  bottom: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100vw; /* Mantém o formato 1x1 */
+  max-height: 400px; /* Limite máximo de altura */
   z-index: -1; /* Coloca o vídeo atrás do conteúdo */
   overflow: hidden;
 }
@@ -184,15 +190,15 @@ section.relative {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Escurece o vídeo para melhor leitura */
+  background-color: rgba(0, 0, 0, 0.3); /* Escurece levemente o vídeo */
   z-index: 0; /* Mantém o overlay atrás do conteúdo */
 }
 
 #obras h2 {
   font-size: 2rem;
   font-weight: bold;
-  margin-bottom: 1rem;
-  z-index: 10; /* Garante que o texto fique acima do vídeo */
+  margin-bottom: 2rem;
+  z-index: 10;
   position: relative;
 }
 
@@ -201,7 +207,7 @@ section.relative {
   flex-wrap: wrap;
   gap: 2rem;
   justify-content: center;
-  z-index: 10; /* Garante que os botões fiquem acima do vídeo */
+  z-index: 10;
   position: relative;
 }
 
@@ -234,5 +240,10 @@ section.relative {
   #obras button {
     width: 100%; /* Botões ocupam toda a largura */
     padding: 1rem;
+  }
+
+  #obras .background-video {
+    height: 100vh; /* No mobile, o vídeo ocupa toda a altura */
+    max-height: none;
   }
 }
