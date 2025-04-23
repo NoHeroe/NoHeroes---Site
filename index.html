@@ -48,17 +48,27 @@
 <body class="font-serif bg-[#0a0a0a] text-[#e5e5e5] leading-relaxed">
 
   <!-- TOPO FIXO -->
-  <header class="fixed top-0 w-full bg-[#100d1a] border-b border-[#2e2e2e] z-50 px-8 py-4 flex justify-between items-center">
-    <div class="text-[#8f4fff] text-2xl font-bold uppercase tracking-wide cursor-pointer" onclick="scrollToTop()">NoHeroes</div>
-    <nav>
-      <ul class="flex space-x-4">
-        <li><a href="ROAR.html" class="text-[#ccc] hover:text-[#8f4fff] transition-colors">ROAR</a></li>
-        <li><a href="freq.html" class="text-[#ccc] hover:text-[#8f4fff] transition-colors">FREQ</a></li>
-        <li><a href="#loja" class="text-[#ccc] hover:text-[#8f4fff] transition-colors">Loja</a></li>
-        <li><a href="#login" class="text-[#ccc] hover:text-[#8f4fff] transition-colors">Login/Conta</a></li>
-      </ul>
-    </nav>
-  </header>
+<header class="fixed top-0 w-full bg-[#100d1a] border-b border-[#2e2e2e] z-50 px-8 py-4 flex justify-between items-center">
+  <!-- Logo com imagem estilizada -->
+  <div class="relative">
+    <img src="assets/images/noheroes-logo.png" alt="NoHeroes Logo" class="h-16 -mt-4 drop-shadow-glow cursor-pointer" onclick="scrollToTop()">
+  </div>
+  <nav>
+    <ul class="flex space-x-4">
+      <li><a href="ROAR.html" class="text-[#ccc] hover:text-[#8f4fff] transition-colors">ROAR</a></li>
+      <li><a href="freq.html" class="text-[#ccc] hover:text-[#8f4fff] transition-colors">FREQ</a></li>
+      <li><a href="#loja" class="text-[#ccc] hover:text-[#8f4fff] transition-colors">Loja</a></li>
+      <li><a href="#login" class="text-[#ccc] hover:text-[#8f4fff] transition-colors">Login/Conta</a></li>
+    </ul>
+  </nav>
+</header>
+
+<style>
+  /* Ajusta o glow roxo na imagem */
+  .drop-shadow-glow {
+    filter: drop-shadow(0 0 10px #8f4fff) drop-shadow(0 0 20px #8f4fff);
+  }
+</style>
 
   <!-- CAPA -->
   <section class="relative flex flex-col items-center justify-center h-screen bg-cover bg-center text-center text-[#d9d6ff]" style="background-image: url('bg-fantasy.gif');">
