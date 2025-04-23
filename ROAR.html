@@ -73,14 +73,114 @@
     <!-- Mundo de ROAR -->
     <section id="mundo">
       <h2 class="text-3xl font-bold text-[#8f4fff] mb-4">O Mundo de ROAR</h2>
-      <p class="mb-4">Explore Caelum, Sublicus, muralhas, nações, clãs, facções e muito mais. Regras do universo e poderes estão presentes em cada esquina.</p>
-      <ul class="space-y-2">
-        <li><strong>Sublicus:</strong> Principal continente de Caelum. Região marcada pelas Muralhas de Gelo e Fogo, zonas militares e ruínas esquecidas.</li>
-        <li><strong>Muralhas de Gelo e Fogo:</strong> Zonas de conflito elemental.</li>
-        <li><strong>Clãs:</strong> Lua, Sol, Feras, Runas.</li>
-        <li><strong>Facções:</strong> Guilda de Aventureiros, Culto do Vazio.</li>
-      </ul>
-    </section>
+      <p class="mb-4"><section id="mundo" class="py-16 px-8 max-w-6xl mx-auto">
+  <h2 class="text-3xl font-bold text-[#8f4fff] mb-8">O Mundo de ROAR</h2>
+
+  <!-- Accordion Container -->
+  <div class="space-y-4">
+    <!-- 1. Caelum e seus continentes -->
+    <div class="accordion-item border border-[#8f4fff] rounded-lg">
+      <button onclick="toggleAccordion(this)" class="accordion-header flex justify-between items-center w-full px-4 py-3 text-left text-[#cfcfcf] hover:text-[#8f4fff]">
+        <span>Caelum e seus continentes</span>
+        <span class="arrow">←</span>
+      </button>
+      <div class="accordion-body hidden px-4 py-3">
+        <p><strong>Mapa de Caelum:</strong> O continente principal de <em>Sublicus</em> é nascido da jornada de Azuos — marcado por zonas militares, muralhas ancestrais e ruínas.</p>
+        <ul class="list-disc list-inside mt-4">
+          <li><strong>Muralhas de Gelo e Fogo:</strong> Limite entre vivos e amaldiçoados.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 2. Facções e Nações -->
+    <div class="accordion-item border border-[#8f4fff] rounded-lg">
+      <button onclick="toggleAccordion(this)" class="accordion-header flex justify-between items-center w-full px-4 py-3 text-left text-[#cfcfcf] hover:text-[#8f4fff]">
+        <span>Facções e Nações</span>
+        <span class="arrow">←</span>
+      </button>
+      <div class="accordion-body hidden px-4 py-3">
+        <ul class="list-disc list-inside">
+          <li><strong>Aeon:</strong> Teocracia totalitária que dita "Ordem e Perfeição".</li>
+          <li><strong>Kaleidos:</strong> Democracia multicultural — resistência, refúgio e revolta.</li>
+          <li><strong>Clã da Lua:</strong> Espiões, assassinos, sombras.</li>
+          <li><strong>Clã do Sol:</strong> Magos e estudiosos da luz arcana.</li>
+          <li><strong>Clã das Feras:</strong> Druidas metamorfos em simbiose com a natureza.</li>
+          <li><strong>Clã das Runas:</strong> Tradutores da linguagem universal da criação.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 3. Sistema de Magia e Regras -->
+    <div class="accordion-item border border-[#8f4fff] rounded-lg">
+      <button onclick="toggleAccordion(this)" class="accordion-header flex justify-between items-center w-full px-4 py-3 text-left text-[#cfcfcf] hover:text-[#8f4fff]">
+        <span>Sistema de Magia e Regras</span>
+        <span class="arrow">←</span>
+      </button>
+      <div class="accordion-body hidden px-4 py-3">
+        <p><strong>Fontes de Energia:</strong></p>
+        <ul class="list-disc list-inside">
+          <li><strong>Vital:</strong> Energia de todo ser vivo. Excesso de 91%+ desperta habilidades únicas (Vitalistas).</li>
+          <li><strong>Positiva:</strong> Gera anjos e seres celestiais.</li>
+          <li><strong>Negativa:</strong> Alimenta demônios e dragões.</li>
+        </ul>
+        <p class="mt-4"><strong>Leis do Mundo:</strong></p>
+        <ul class="list-disc list-inside">
+          <li>Somente magia negra mexe com vida e morte.</li>
+          <li>Habilidades vitalistas são superiores a magias comuns.</li>
+          <li>Magia exige preparo; vitalismo é instintivo.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 4. Mitos e Lendas -->
+    <div class="accordion-item border border-[#8f4fff] rounded-lg">
+      <button onclick="toggleAccordion(this)" class="accordion-header flex justify-between items-center w-full px-4 py-3 text-left text-[#cfcfcf] hover:text-[#8f4fff]">
+        <span>Mitos e Lendas</span>
+        <span class="arrow">←</span>
+      </button>
+      <div class="accordion-body hidden px-4 py-3">
+        <ul class="list-disc list-inside">
+          <li><strong>Oni Vagante:</strong> Espadachim mascarado imortal. Nunca derrotado — nem pela morte.</li>
+          <li><strong>O Bom Dragão:</strong> Oráculo lendário que aparece para almas puras.</li>
+          <li><strong>Dragões Barões Anciãos:</strong> Dragões que devoram emoções negativas e ganham forma humana.</li>
+          <li><strong>A Floresta Negra:</strong> Selva maldita onde tudo tem consciência e devora o que entra.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 5. Magitecnologia -->
+    <div class="accordion-item border border-[#8f4fff] rounded-lg">
+      <button onclick="toggleAccordion(this)" class="accordion-header flex justify-between items-center w-full px-4 py-3 text-left text-[#cfcfcf] hover:text-[#8f4fff]">
+        <span>Magitecnologia</span>
+        <span class="arrow">←</span>
+      </button>
+      <div class="accordion-body hidden px-4 py-3">
+        <p><strong>Magitecnologia:</strong> Tecnologia alimentada por mana, não eletricidade.</p>
+        <ul class="list-disc list-inside">
+          <li>Armas encantadas, zepelins flutuantes, portais e montarias mágicas.</li>
+          <li>Artefatos comuns entre magos e guerreiros.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function toggleAccordion(button) {
+    const allItems = document.querySelectorAll(".accordion-item");
+    allItems.forEach(item => {
+      const body = item.querySelector(".accordion-body");
+      const arrow = item.querySelector(".arrow");
+      if (item.contains(button)) {
+        body.classList.toggle("hidden"); // Toggle visibility
+        arrow.textContent = body.classList.contains("hidden") ? "←" : "↓"; // Change arrow direction
+      } else {
+        body.classList.add("hidden"); // Close other accordions
+        arrow.textContent = "←";
+      }
+    });
+  }
+</script>
 
     <!-- Evento Caótico -->
     <section id="evento">
