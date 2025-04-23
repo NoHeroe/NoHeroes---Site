@@ -45,6 +45,25 @@
     }
   </style>
 </head>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const scrollButton = document.getElementById("scroll-button");
+
+    if (scrollButton) {
+      scrollButton.addEventListener("click", function (event) {
+        event.preventDefault(); // Evita o comportamento padrão de pular direto
+        const target = document.querySelector(scrollButton.getAttribute("href"));
+
+        if (target) {
+          target.scrollIntoView({
+            behavior: "smooth", // Ativa o scroll suave
+            block: "start", // Alinha o topo do alvo
+          });
+        }
+      });
+    }
+  });
+</script>
 <body class="font-serif bg-[#0a0a0a] text-[#e5e5e5] leading-relaxed">
 
   <!-- TOPO FIXO -->
