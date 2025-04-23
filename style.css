@@ -89,10 +89,9 @@ nav ul {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 100vw; /* Formato 1x1 */
-  max-height: 400px; /* Limite máximo de altura */
-  overflow: hidden;
+  height: auto; /* Ajusta a altura automaticamente */
   z-index: -1; /* Coloca o vídeo atrás do conteúdo */
+  overflow: hidden;
 }
 
 .background-video video {
@@ -100,8 +99,8 @@ nav ul {
   top: 50%;
   left: 50%;
   width: 100%;
-  height: 100%;
-  object-fit: cover; /* Faz o vídeo preencher a área sem distorção */
+  height: auto; /* Mantém a proporção 1x1 */
+  object-fit: contain; /* Garante que o vídeo será exibido inteiro */
   transform: translate(-50%, -50%);
 }
 
@@ -168,8 +167,7 @@ section.relative {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 100vw; /* Mantém o formato 1x1 */
-  max-height: 400px; /* Limite máximo de altura */
+  height: auto; /* Mantém a altura proporcionada ao vídeo */
   z-index: -1; /* Coloca o vídeo atrás do conteúdo */
   overflow: hidden;
 }
@@ -179,8 +177,8 @@ section.relative {
   top: 50%;
   left: 50%;
   width: 100%;
-  height: 100%;
-  object-fit: cover; /* Faz o vídeo preencher a área sem distorção */
+  height: auto; /* Mantém a proporção do vídeo */
+  object-fit: contain; /* Garante que o vídeo será exibido inteiro */
   transform: translate(-50%, -50%);
 }
 
@@ -240,10 +238,5 @@ section.relative {
   #obras button {
     width: 100%; /* Botões ocupam toda a largura */
     padding: 1rem;
-  }
-
-  #obras .background-video {
-    height: 100vh; /* No mobile, o vídeo ocupa toda a altura */
-    max-height: none;
   }
 }
