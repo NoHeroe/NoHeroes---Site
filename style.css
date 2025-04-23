@@ -160,6 +160,7 @@ section.relative {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  z-index: 10; /* Mantém o conteúdo acima do vídeo */
 }
 
 #obras .background-video {
@@ -238,5 +239,20 @@ section.relative {
   #obras button {
     width: 100%; /* Botões ocupam toda a largura */
     padding: 1rem;
+  }
+}
+
+/* Ajustes para telas maiores (Desktop) */
+@media (min-width: 1024px) {
+  #obras h2 {
+    font-size: 2.5rem; /* Tamanho maior no desktop */
+  }
+
+  #obras .flex {
+    gap: 3rem; /* Mais espaço entre os botões */
+  }
+
+  #obras button {
+    padding: 1rem 2rem; /* Botões maiores no desktop */
   }
 }
