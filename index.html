@@ -264,5 +264,29 @@
     reset: true // Permite que o efeito seja repetido
   });
 </script>
+<script>
+  // Adiciona scroll suave para todos os links que apontam para IDs na página
+  document.addEventListener("DOMContentLoaded", function () {
+    const links = document.querySelectorAll('a[href^="#"]'); // Seleciona todos os links internos
+
+    links.forEach(link => {
+      link.addEventListener("click", function (event) {
+        event.preventDefault(); // Evita o comportamento padrão (pular direto)
+        const target = document.querySelector(this.getAttribute("href")); // Alvo do link
+
+        if (target) {
+          const headerOffset = 80; // Compensa a altura do header fixo
+          const elementPosition = target.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth" // Ativa a animação suave
+          });
+        }
+      });
+    });
+  });
+</script>
 </body>
 </html>
