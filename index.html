@@ -6,42 +6,89 @@
   <title>NoHeroes | Home</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    .text-shadow-md {
-      text-shadow: 0 0 10px rgba(143, 79, 255, 0.4);
+    /* Reset básico */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
     }
-    .text-shadow-lg {
-      text-shadow: 0 0 20px rgba(143, 79, 255, 0.5);
+
+    /* Estilo global */
+    body {
+      font-family: serif;
+      font-size: 16px;
+      line-height: 1.6;
+      background-color: #0a0a0a;
+      color: #e5e5e5;
     }
-    .overlay {
-      background-color: rgba(0, 0, 0, 0.5);
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+
+    /* Título no topo */
+    .top-title {
+      font-size: 2rem; /* Grande no desktop */
+      font-weight: bold;
+      color: #8f4fff;
+      margin-bottom: 1rem; /* Espaçamento abaixo do título */
     }
-    .dialog-box {
-      background: #1c1c1c;
-      border: 1px solid #8f4fff;
-      padding: 1rem;
-      border-radius: 1rem;
-      position: relative;
-      animation: fadeIn 0.5s ease-out;
-      max-width: 500px;
-      margin: 1rem auto;
+
+    @media (max-width: 768px) {
+      .top-title {
+        font-size: 1.5rem; /* Menor no mobile */
+        margin-bottom: 1.5rem; /* Espaço maior no mobile */
+      }
     }
-    .dialog-character {
-      position: absolute;
-      left: -60px;
-      top: -40px;
-      width: 80px;
-      height: 80px;
+
+    /* Menu no topo */
+    header {
+      padding: 1rem 2rem;
+      background-color: #100d1a;
+      border-bottom: 1px solid #2e2e2e;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 1rem; /* Espaçamento entre os links */
+    }
+
+    @media (max-width: 768px) {
+      nav ul {
+        flex-direction: column; /* Links em coluna no mobile */
+        gap: 1rem; /* Espaçamento maior no mobile */
+      }
+    }
+
+    /* Botão Login/Conta */
+    .button-login {
       background-color: #8f4fff;
-      border-radius: 50%;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      white-space: nowrap; /* Impede quebra de texto */
     }
+
+    @media (max-width: 768px) {
+      .button-login {
+        width: 100%; /* Faz o botão ocupar toda a largura disponível no mobile */
+        text-align: center; /* Centraliza o texto dentro do botão */
+        padding: 0.75rem; /* Aumenta o espaço interno no mobile */
+      }
+    }
+
+    /* Animação ao exibir caixas */
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* Estilização do vídeo de fundo */
@@ -54,6 +101,7 @@
       overflow: hidden;
       z-index: -1; /* Coloca o vídeo atrás do conteúdo */
     }
+
     .background-video video {
       position: absolute;
       top: 50%;
@@ -62,6 +110,38 @@
       height: 100%;
       object-fit: cover; /* Faz o vídeo preencher a área sem distorção */
       transform: translate(-50%, -50%);
+    }
+
+    /* Overlay para escurecer o vídeo */
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.5); /* Ajuste a opacidade conforme necessário */
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0; /* Mantém o overlay atrás do conteúdo */
+    }
+
+    /* Estilo do texto e botão sobre o vídeo */
+    .relative h1 {
+      font-size: 2rem;
+      font-weight: bold;
+      z-index: 10; /* Garante que o texto ficará acima do vídeo */
+    }
+
+    .relative a {
+      background-color: #8f4fff;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 5px;
+      text-decoration: none;
+      z-index: 10; /* Garante que o botão ficará acima do vídeo */
+      transition: transform 0.3s ease;
+    }
+
+    .relative a:hover {
+      transform: scale(1.1); /* Efeito de hover no botão */
     }
   </style>
 </head>
@@ -89,7 +169,9 @@
         Seu navegador não suporta vídeos HTML5.
       </video>
     </div>
+    <!-- Overlay para escurecer o vídeo -->
     <div class="overlay"></div>
+    <!-- Texto e botão sobre o vídeo -->
     <h1 class="relative text-3xl md:text-5xl max-w-2xl mb-8 text-shadow-md z-10">
       “Num mundo onde até a luz mente, a única verdade nasce da sombra.”
     </h1>
@@ -98,9 +180,19 @@
     </a>
   </section>
 
-  <!-- RESTANTE DO CÓDIGO CONTINUA IGUAL -->
-  <!-- Perguntas, Sobre, Escolha entre FREQ e ROAR, Rodapé -->
-  <!-- Código que você já forneceu será mantido aqui -->
+  <!-- OUTRAS SEÇÕES DO SITE -->
+  <!-- Adicione aqui as demais seções como Perguntas, Sobre, Escolha entre FREQ e ROAR -->
+  <!-- O conteúdo deve ser mantido conforme o design e estrutura original -->
+
+  <footer class="bg-[#0d0d0d] py-8 text-center text-[#666] border-t border-[#333] mt-16">
+    <div class="text-[#8f4fff] mb-4">
+      <a href="https://instagram.com/_noheroe" target="_blank">Instagram: @_noheroe</a>
+    </div>
+    <p>Contato comercial: +55 (65) 99324-0270</p>
+    <p class="mt-4">Explore. Escolha. Caia. Evolua.</p>
+    <p class="extra mt-2">Toda escolha tem um preço. Toda queda, uma razão.</p>
+    <p class="text-xs mt-6">© 2025 NoHeroes. Todos os direitos reservados.</p>
+  </footer>
 
   <script>
     function toggleDialog(id) {
