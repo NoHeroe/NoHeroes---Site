@@ -82,3 +82,56 @@ nav ul {
     transform: translateY(0);
   }
 }
+/* Estilização do vídeo de fundo */
+.background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1; /* Coloca o vídeo atrás do conteúdo */
+}
+
+.background-video video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Faz o vídeo preencher a área sem distorção */
+  transform: translate(-50%, -50%);
+}
+
+/* Estilização da seção com o vídeo */
+section.relative {
+  position: relative;
+  height: 100vh; /* Ocupa a altura total da janela */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #d9d6ff;
+  overflow: hidden;
+}
+
+/* Texto e botões sobre o vídeo */
+.relative h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  z-index: 10; /* Garante que o texto ficará acima do vídeo */
+}
+
+.relative a {
+  background-color: #8f4fff;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  text-decoration: none;
+  z-index: 10; /* Garante que o botão ficará acima do vídeo */
+  transition: transform 0.3s ease;
+}
+
+.relative a:hover {
+  transform: scale(1.1); /* Efeito de hover no botão */
+}
