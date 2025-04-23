@@ -6,12 +6,45 @@
   <title>NoHeroes | Home</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    .text-shadow-md {
-      text-shadow: 0 0 10px rgba(143, 79, 255, 0.4);
+    /* Reset básico */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
     }
-    .text-shadow-lg {
-      text-shadow: 0 0 20px rgba(143, 79, 255, 0.5);
+
+    /* Estilo global */
+    body {
+      font-family: serif;
+      font-size: 16px;
+      line-height: 1.6;
+      background-color: #0a0a0a;
+      color: #e5e5e5;
     }
+
+    /* Estilização do vídeo de fundo */
+    .background-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1; /* Coloca o vídeo atrás do conteúdo */
+    }
+
+    .background-video video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Faz o vídeo preencher a área sem distorção */
+      transform: translate(-50%, -50%);
+    }
+
+    /* Overlay para escurecer o vídeo */
     .overlay {
       background-color: rgba(0, 0, 0, 0.5);
       position: absolute;
@@ -19,7 +52,43 @@
       left: 0;
       width: 100%;
       height: 100%;
+      z-index: 0; /* Mantém o overlay atrás do conteúdo */
     }
+
+    /* Estilo do texto e botão sobre o vídeo */
+    .relative h1 {
+      font-size: 2rem;
+      font-weight: bold;
+      z-index: 10; /* Garante que o texto ficará acima do vídeo */
+    }
+
+    .relative a {
+      background-color: #8f4fff;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 5px;
+      text-decoration: none;
+      z-index: 10; /* Garante que o botão ficará acima do vídeo */
+      transition: transform 0.3s ease;
+    }
+
+    .relative a:hover {
+      transform: scale(1.1);
+    }
+
+    /* Animação ao exibir caixas */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Estilização dos diálogos */
     .dialog-box {
       background: #1c1c1c;
       border: 1px solid #8f4fff;
@@ -30,6 +99,7 @@
       max-width: 500px;
       margin: 1rem auto;
     }
+
     .dialog-character {
       position: absolute;
       left: -60px;
@@ -38,10 +108,6 @@
       height: 80px;
       background-color: #8f4fff;
       border-radius: 50%;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
@@ -60,9 +126,18 @@
     </nav>
   </header>
 
-  <!-- CAPA -->
-  <section class="relative flex flex-col items-center justify-center h-screen bg-cover bg-center text-center text-[#d9d6ff]" style="background-image: url('bg-fantasy.gif');">
+  <!-- CAPA COM VÍDEO DE FUNDO -->
+  <section class="relative flex flex-col items-center justify-center h-screen text-center text-[#d9d6ff]">
+    <!-- Vídeo de fundo -->
+    <div class="background-video">
+      <video autoplay loop muted playsinline>
+        <source src="assets/videos/city-ruins.mp4" type="video/mp4">
+        Seu navegador não suporta vídeos HTML5.
+      </video>
+    </div>
+    <!-- Overlay para escurecer o vídeo -->
     <div class="overlay"></div>
+    <!-- Texto e botão sobre o vídeo -->
     <h1 class="relative text-3xl md:text-5xl max-w-2xl mb-8 text-shadow-md z-10">
       “Num mundo onde até a luz mente, a única verdade nasce da sombra.”
     </h1>
@@ -71,7 +146,7 @@
     </a>
   </section>
 
-  <!-- PERGUNTAS (NO INÍCIO) -->
+  <!-- PERGUNTAS -->
   <section class="py-16 px-8 max-w-4xl mx-auto">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <a href="#oque" class="text-xl font-bold text-[#8f4fff] hover:underline">O que é NoHeroes?</a>
@@ -81,51 +156,41 @@
     </div>
   </section>
 
-  <!-- SOBRE / QUESTIONÁRIO -->
+  <!-- SOBRE -->
   <section class="py-16 px-8 max-w-4xl mx-auto" id="oque">
     <h2 class="text-xl font-bold text-[#8f4fff] mb-2">O que é NoHeroes?</h2>
-    <p class="text-[#cfcfcf] text-sm">NoHeroes não é uma franquia. É um movimento narrativo. Um colapso em forma de anime.</p>
-    <ul class="list-disc list-inside text-[#cfcfcf]">
-      <li>Mangás autorais</li>
-      <li>Animes com som e emoção cruas</li>
-      <li>Bastidores abertos</li>
-      <li>Mentorias para criadores que usam as trevas como tinta</li>
-      <li>E muito mais.</li>
-    </ul>
-    <p class="text-lg text-[#cfcfcf] mt-6">Tudo será compartilhado. Nada será suavizado.<br>Um mundo forjado na dor, na fé e na arte.</p>
-  </section>
-
-  <!-- SOBRE A HISTÓRIA -->
-  <section class="py-16 px-8 max-w-4xl mx-auto" id="quem">
-    <h2 class="text-xl font-bold text-[#8f4fff] mb-2">Quem é NoHeroe?</h2>
-    <p class="text-[#cfcfcf] text-sm">NoHeroe sou eu. É Azuos. É Ryu. Pode ser você.<br>É quem toma decisões que heróis não conseguem tomar...</p>
-  </section>
-
-  <!-- CONTINUAÇÃO DAS SEÇÕES -->
-  <section class="py-16 px-8 max-w-4xl mx-auto" id="acharaqui">
-    <h2 class="text-xl font-bold text-[#8f4fff] mb-2">O que achará aqui?</h2>
-    <ul class="list-disc list-inside text-[#cfcfcf]">
-      <li>Animes – FREQ e ROAR</li>
-      <li>Mangás – Versões visuais</li>
-      <li>Comunidade – Debates e teorias</li>
-      <li>Cursos e Mentorias</li>
-      <li>Apoie o projeto</li>
-    </ul>
-  </section>
-
-  <!-- COMO ACOMPANHAR -->
-  <section class="py-16 px-8 max-w-4xl mx-auto" id="acompanhar">
-    <h2 class="text-xl font-bold text-[#8f4fff] mb-8">Como acompanhar?</h2>
-    <ul class="space-y-4">
-      <li class="flex items-center"><span>Instagram, TikTok, Discord...</span></li>
-    </ul>
+    <p class="text-[#cfcfcf]">NoHeroes é um movimento narrativo...</p>
   </section>
 
   <!-- ESCOLHA ENTRE FREQ E ROAR -->
-  <section id="obras">...</section>
+  <section class="py-16 px-8 max-w-6xl mx-auto" id="obras">
+    <h2 class="text-2xl font-bold mb-8 text-[#8f4fff] text-shadow-md text-center">Escolha seu caminho</h2>
+    <div class="flex justify-center gap-10 flex-wrap">
+      <div>
+        <button onclick="toggleDialog('freq')" class="bg-[#1c1c1c] border border-[#8f4fff] text-[#8f4fff] px-6 py-3 rounded-lg hover:bg-[#8f4fff] hover:text-black transition">
+          FREQ
+        </button>
+        <div id="dialog-freq" class="dialog-box hidden">
+          <p>FREQ é sobre ascensão...</p>
+          <a href="freq.html" class="bg-[#8f4fff] text-black px-4 py-2 rounded">Ver mais</a>
+        </div>
+      </div>
+      <div>
+        <button onclick="toggleDialog('roar')" class="bg-[#1c1c1c] border border-[#8f4fff] text-[#8f4fff] px-6 py-3 rounded-lg hover:bg-[#8f4fff] hover:text-black transition">
+          ROAR
+        </button>
+        <div id="dialog-roar" class="dialog-box hidden">
+          <p>ROAR é sobre queda...</p>
+          <a href="roar.html" class="bg-[#8f4fff] text-black px-4 py-2 rounded">Ver mais</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- RODAPÉ -->
-  <footer>...</footer>
+  <footer class="bg-[#0d0d0d] py-8 text-center text-[#666] border-t border-[#333] mt-16">
+    <p>© 2025 NoHeroes. Todos os direitos reservados.</p>
+  </footer>
 
   <script>
     function toggleDialog(id) {
