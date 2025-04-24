@@ -70,19 +70,21 @@
   <div id="pixModal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center">
     <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-lg w-full text-left">
       <h3 class="text-2xl font-bold text-[#8f4fff] mb-4">Contribuir com Pix</h3>
-      <form id="pixForm">
-        <label class="block mb-2 text-sm">Nome (obrigatório):</label>
-        <input type="text" required class="w-full p-2 mb-4 bg-[#333] text-white rounded">
-        <label class="block mb-2 text-sm">Idade (opcional):</label>
-        <input type="number" class="w-full p-2 mb-4 bg-[#333] text-white rounded">
-        <label class="block mb-2 text-sm">Motivo da doação (opcional):</label>
-        <textarea class="w-full p-2 mb-4 bg-[#333] text-white rounded"></textarea>
-        <label class="block mb-2 text-sm">Valor (R$):</label>
-        <input type="number" required class="w-full p-2 bg-[#333] text-white rounded">
-        <button type="submit" class="bg-[#8f4fff] text-black px-4 py-2 mt-4 rounded hover:bg-[#39ff14]">
-          Gerar QR Code Pix
+      <div id="pixQRCodeContainer" class="text-center">
+        <h4 class="text-lg text-[#8f4fff] mb-4">Escaneie o QR Code abaixo ou copie a chave Pix:</h4>
+        <img src="assets/images/qr-code.png" alt="QR Code Pix" class="mx-auto w-64 mb-4">
+        <button onclick="copyPixKey()" class="bg-[#8f4fff] text-black px-4 py-2 rounded hover:bg-[#39ff14] block mx-auto mb-4">
+          Copiar chave Pix
         </button>
-      </form>
+      </div>
+      <div id="thankYouContainer" class="hidden text-center glow-gold">
+        <h4 class="text-lg text-[#FFD700] font-bold mb-4">Obrigado!</h4>
+        <p class="text-white italic mb-4">“As sombras de Caelum consumiram sua oferenda com prazer. Agora você caminha guardado pela benção de um Guardião Divino.”</p>
+        <button onclick="closeThankYou()" class="bg-[#8f4fff] text-black px-4 py-2 rounded hover:bg-[#39ff14]">x</button>
+      </div>
+      <button onclick="confirmPayment()" class="bg-[#8f4fff] text-black px-4 py-2 rounded hover:bg-[#39ff14] block w-full">
+        Já efetuei o pagamento
+      </button>
       <button onclick="closeModal('pixModal')" class="mt-4 text-[#8f4fff] underline">Fechar</button>
     </div>
   </div>
