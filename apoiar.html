@@ -81,6 +81,18 @@
     <button onclick="openPixModal()" class="bg-[#8f4fff] text-black px-6 py-3 rounded-lg font-bold hover:scale-105 transition">
       Contribuir com Pix
     </button>
+    <button onclick="openForm('ajudarOutrasFormas')" class="bg-[#1c1c1c] text-white px-6 py-3 rounded-lg border border-[#555] hover:border-[#8f4fff]">
+      Quero ajudar de outras formas
+    </button>
+    <button onclick="openForm('fazerParceria')" class="bg-[#1c1c1c] text-white px-6 py-3 rounded-lg border border-[#555] hover:border-[#8f4fff]">
+      Quero fazer uma parceria
+    </button>
+    <button onclick="openForm('investirProjeto')" class="bg-[#1c1c1c] text-white px-6 py-3 rounded-lg border border-[#555] hover:border-[#8f4fff]">
+      Quero investir no projeto
+    </button>
+    <button onclick="openForm('apoioProjeto')" class="bg-[#1c1c1c] text-white px-6 py-3 rounded-lg border border-[#555] hover:border-[#8f4fff]">
+      Preciso de apoio no meu projeto
+    </button>
     <button onclick="openSocials()" class="bg-[#333] text-white px-6 py-3 rounded-lg border border-[#666] hover:border-[#8f4fff]">
       Siga as Sombras
     </button>
@@ -110,6 +122,43 @@
         Já efetuei o pagamento
       </button>
       <button onclick="closeModal('pixModal')" class="mt-4 text-[#8f4fff] underline">Fechar</button>
+    </div>
+  </div>
+
+  <div id="formModal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center">
+    <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-lg w-full text-left">
+      <h3 id="formTitle" class="text-2xl font-bold text-[#8f4fff] mb-4"></h3>
+      <form id="formContent"></form>
+      <button onclick="closeModal('formModal')" class="mt-4 text-[#8f4fff] underline">Fechar</button>
+    </div>
+  </div>
+
+  <div id="socialsModal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center">
+    <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-lg w-full text-center">
+      <h3 class="text-2xl font-bold text-[#8f4fff] mb-4">Siga as Sombras</h3>
+      <ul class="space-y-4">
+        <li class="flex items-center justify-center">
+          <img src="assets/icons/instagram icon.png" alt="Instagram" class="w-6 h-6 mr-2">
+          <a href="https://instagram.com/_noheroe" target="_blank" class="text-[#8f4fff] hover:underline">Instagram</a>
+        </li>
+        <li class="flex items-center justify-center">
+          <img src="assets/icons/tiktok icon.png" alt="TikTok" class="w-6 h-6 mr-2">
+          <a href="https://tiktok.com/@_noheroe" target="_blank" class="text-[#8f4fff] hover:underline">TikTok</a>
+        </li>
+        <li class="flex items-center justify-center">
+          <img src="assets/icons/youtube icon.png" alt="YouTube" class="w-6 h-6 mr-2">
+          <a href="#" target="_blank" class="text-[#8f4fff] hover:underline">YouTube</a>
+        </li>
+        <li class="flex items-center justify-center">
+          <img src="assets/icons/discord icon.png" alt="Discord" class="w-6 h-6 mr-2">
+          <a href="https://discord.gg/" target="_blank" class="text-[#8f4fff] hover:underline">Discord</a>
+        </li>
+        <li class="flex items-center justify-center">
+          <img src="assets/icons/whatsapp icon.png" alt="WhatsApp" class="w-6 h-6 mr-2">
+          <a href="https://chat.whatsapp.com/" target="_blank" class="text-[#8f4fff] hover:underline">WhatsApp</a>
+        </li>
+      </ul>
+      <button onclick="closeModal('socialsModal')" class="mt-4 text-[#8f4fff] underline">Fechar</button>
     </div>
   </div>
 
