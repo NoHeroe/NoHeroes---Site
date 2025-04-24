@@ -17,6 +17,8 @@
     html {
       scroll-behavior: smooth;
     }
+
+    /* Glow na logo */
     .logo-glow {
       animation: logo-glow 2s infinite ease-in-out;
       filter: drop-shadow(0 0 10px #8f4fff);
@@ -26,18 +28,14 @@
       50% { filter: drop-shadow(0 0 30px #8f4fff); }
     }
 
-    /* Glow dourado intenso no balão de agradecimento */
+    /* Glow dourado no balão de agradecimento */
     .glow-gold {
       animation: gold-glow 2s infinite alternate ease-in-out;
       box-shadow: 0 0 20px #FFD700, 0 0 40px #FFD700, 0 0 60px #FFD700;
     }
     @keyframes gold-glow {
-      0% {
-        box-shadow: 0 0 20px #FFD700, 0 0 40px #FFD700, 0 0 60px #FFD700;
-      }
-      100% {
-        box-shadow: 0 0 30px #FFA500, 0 0 50px #FFD700, 0 0 70px #FFD700;
-      }
+      0% { box-shadow: 0 0 20px #FFD700, 0 0 40px #FFD700, 0 0 60px #FFD700; }
+      100% { box-shadow: 0 0 30px #FFA500, 0 0 50px #FFD700, 0 0 70px #FFD700; }
     }
 
     /* Animação de explosão */
@@ -53,7 +51,7 @@
 <body class="text-center p-6">
   <!-- LOGO -->
   <a href="index.html">
-    <img src="assets/images/noheroes logo.png" alt="Logo NoHeroes" class="mx-auto w-40 logo-glow">
+    <img src="assets/images/noheroes-logo.png" alt="Logo NoHeroes" class="mx-auto w-40 logo-glow">
   </a>
 
   <!-- FRASE IMPACTO -->
