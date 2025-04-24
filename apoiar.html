@@ -231,23 +231,50 @@
 <script>
   // Gera o código Pix Payload Format
   function generatePixPayload(valor) {
-    const chavePix = "azuosraul999@gmail.com"; // Substitua pela sua chave Pix
-    const nomeRecebedor = "Raul Souza Silva"; // Substitua pelo nome do recebedor
-    const cidade = "Cananéia"; // Substitua pela cidade
-    const valorFormatado = valor.toFixed(2);
+  const chavePix = "azuosraul999@gmail.com"; // Substitua pela sua chave Pix
+  const nomeRecebedor = "Raul Souza Silva"; // Nome do recebedor (até 25 caracteres)
+  const cidade = "Cananéia"; // Cidade associada (até 15 caracteres)
+  const valorFormatado = valor.toFixed(2);
 
-    return `00020126330014br.gov.bcb.pix0114${chavePix}0212PagamentodoPix520400005303986540${valorFormatado}5802BR5925${nomeRecebedor}6009${cidade}6304`;
+  // Monta o payload Pix
+  const payload = [
+    "000201", // Payload Format Indicator
+    "26330014br.gov.bcb.pix", // Merchant Account Information Template (domínio do Pix)
+    `0114${chavePix}`, // Chave Pix
+    "0212PagamentodoPix", // Descrição do pagamento (opcional)
+    "52040000", // Merchant Category Code (0000 -> não definido)
+    "5303986", // Moeda BRL (986)
+    `540${valorFormatado.length}${valorFormatado}`, // Valor da transação
+    "5802BR", // País (BR -> Brasil)
+    `59${nomeRecebedor.length}${nomeRecebedor}`, // Nome do recebedor
+    `60${cidade.length}${cidade}`, // Cidade do recebedor
+    "62070503***", // Campo adicional (opcional)
+  ].join("");
+
+  // Adiciona o CRC16 no final
+  const crc16 = generateCRC16(payload + "6304");
+  return `${payload}6304${crc16}`;
+}
+
+// Função para calcular o CRC16
+function generateCRC16(payload) {
+  let crc = 0xFFFF;
+  const polinomio = 0x1021;
+
+  for (let i = 0; i < payload.length; i++) {
+    const byte = payload.charCodeAt(i);
+    crc ^= (byte << 8);
+    for (let j = 0; j < 8; j++) {
+      if ((crc & 0x8000) !== 0) {
+        crc = (crc << 1) ^ polinomio;
+      } else {
+        crc = (crc << 1);
+      }
+    }
   }
 
-  // Função para gerar o QR Code
-  function generateQRCode(event) {
-    event.preventDefault();
-
-    const valor = parseFloat(document.getElementById("pixValor").value);
-    if (isNaN(valor) || valor <= 0) {
-      alert("Por favor, insira um valor válido.");
-      return;
-    }
+  return (crc & 0xFFFF).toString(16).toUpperCase().padStart(4, "0");
+}
 
     const payload = generatePixPayload(valor);
     const qrCodeContainer = document.getElementById("pixQRCode");
