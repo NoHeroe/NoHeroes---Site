@@ -138,11 +138,29 @@
 
   <!-- SCRIPTS -->
   <script>
-  // Função para abrir o modal Pix
-  function openPixModal() {
-    document.getElementById('pixModal').classList.remove('hidden');
-  }
+  const pixKey = "azuosraul999@gmail.com";
 
+    function openPixModal() {
+      document.getElementById('pixModal').classList.remove('hidden');
+      document.getElementById('thankYouContainer').classList.add('hidden');
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.add('hidden');
+    }
+
+    function copyPixKey() {
+      navigator.clipboard.writeText(pixKey).then(() => alert("Chave Pix copiada!"));
+    }
+
+    function confirmPayment() {
+      closeModal('pixModal');
+      document.getElementById('thankYouContainer').classList.remove('hidden');
+    }
+
+    function closeThankYou() {
+      document.getElementById('thankYouContainer').classList.add('hidden');
+    }
   // Função para abrir os formulários dinâmicos
   function openForm(type) {
     const modal = document.getElementById('formModal');
