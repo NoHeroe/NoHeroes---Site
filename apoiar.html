@@ -210,147 +210,117 @@
 
   <!-- SCRIPTS -->
   <script>
-  // Função para abrir o modal Pix
-  function openPixModal() {
-    document.getElementById('pixModal').classList.remove('hidden');
-  }
+    // Declarar chave Pix
+    const pixKey = "azuosraul999@gmail.com";
 
-  // Função para abrir os formulários dinâmicos
-  function openForm(type) {
-    const modal = document.getElementById('formModal');
-    const title = document.getElementById('formTitle');
-    const content = document.getElementById('formContent');
-    modal.classList.remove('hidden');
-
-    // Configurar formulários conforme o tipo
-    if (type === 'ajudarOutrasFormas') {
-      title.innerText = 'Quero ajudar de outras formas';
-      content.innerHTML = `
-        <label class="block mb-2 text-sm">Escolha como ajudar:</label>
-        <select class="w-full p-2 mb-4 bg-[#333] text-white rounded">
-          <option>Moderar a comunidade do Discord</option>
-          <option>Moderar grupo WhatsApp</option>
-          <option>Contribuir com artes</option>
-          <option>Colaborar nas animações</option>
-          <option>Divulgar o projeto</option>
-          <option>Outras habilidades</option>
-        </select>
-        <textarea class="w-full p-2 bg-[#333] text-white rounded" placeholder="Detalhe aqui"></textarea>
-        <button class="bg-[#8f4fff] text-black px-4 py-2 mt-4 rounded">Enviar</button>
-      `;
-    } else if (type === 'fazerParceria') {
-      title.innerText = 'Quero fazer uma parceria';
-      content.innerHTML = `
-        <label class="block mb-2 text-sm">Nome do Projeto ou Marca:</label>
-        <input type="text" class="w-full p-2 mb-4 bg-[#333] text-white rounded">
-        <label class="block mb-2 text-sm">Ideia de parceria:</label>
-        <textarea class="w-full p-2 bg-[#333] text-white rounded" placeholder="Detalhe aqui"></textarea>
-        <label class="block mb-2 text-sm">E-mail ou contato:</label>
-        <input type="email" class="w-full p-2 bg-[#333] text-white rounded">
-        <button class="bg-[#8f4fff] text-black px-4 py-2 mt-4 rounded">Enviar</button>
-      `;
-    } else if (type === 'investirProjeto') {
-      title.innerText = 'Quero investir no projeto';
-      content.innerHTML = `
-        <label class="block mb-2 text-sm">Motivo do interesse:</label>
-        <textarea class="w-full p-2 mb-4 bg-[#333] text-white rounded" placeholder="Detalhe aqui"></textarea>
-        <label class="block mb-2 text-sm">E-mail ou contato:</label>
-        <input type="email" class="w-full p-2 bg-[#333] text-white rounded">
-        <button class="bg-[#8f4fff] text-black px-4 py-2 mt-4 rounded">Enviar</button>
-      `;
-    } else if (type === 'apoioProjeto') {
-      title.innerText = 'Preciso de apoio no meu projeto';
-      content.innerHTML = `
-        <label class="block mb-2 text-sm">Nome do Projeto:</label>
-        <input type="text" class="w-full p-2 mb-4 bg-[#333] text-white rounded">
-        <label class="block mb-2 text-sm">Em que precisa de ajuda:</label>
-        <textarea class="w-full p-2 bg-[#333] text-white rounded" placeholder="Detalhe aqui"></textarea>
-        <label class="block mb-2 text-sm">Link para portfólio ou referência:</label>
-        <input type="url" class="w-full p-2 bg-[#333] text-white rounded">
-        <button class="bg-[#8f4fff] text-black px-4 py-2 mt-4 rounded">Enviar</button>
-      `;
+    // Função para abrir o modal Pix
+    function openPixModal() {
+      document.getElementById('pixModal').classList.remove('hidden');
     }
-  }
 
-  // Função para abrir o modal das Redes Sociais
-  function openSocials() {
-    document.getElementById('socialsModal').classList.remove('hidden');
-  }
+    // Função para fechar modais
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.add('hidden');
+    }
 
-  // Função para fechar modais
-  function closeModal(id) {
-    document.getElementById(id).classList.add('hidden');
-  }
-const pixKey = "azuosraul999@gmail.com"; // Chave Pix
+    // Função para copiar a chave Pix
+    function copyPixKey() {
+      navigator.clipboard.writeText(pixKey).then(() => {
+        alert("Chave Pix copiada para a área de transferência!");
+      }).catch(err => {
+        console.error("Erro ao copiar a chave Pix:", err);
+      });
+    }
 
-// Função para abrir o modal Pix
-function openPixModal() {
-  document.getElementById('pixModal').classList.remove('hidden');
-}
+    // Função para confirmar pagamento e ativar animações
+    function confirmPayment() {
+      const container = document.getElementById("thankYouContainer");
+      const body = document.body;
 
-// Função para fechar modais
-function closeModal(modalId) {
-  document.getElementById(modalId).classList.add('hidden');
-}
+      // Ativa a animação de tremor no site
+      body.classList.add("shake");
 
-// Função para copiar a chave Pix
-function copyPixKey() {
-  navigator.clipboard.writeText(pixKey).then(() => {
-    alert("Chave Pix copiada para a área de transferência!");
-  }).catch(err => {
-    console.error("Erro ao copiar a chave Pix:", err);
-  });
-}
+      // Mostra a mensagem de agradecimento com animação
+      container.classList.remove("hidden");
+      container.classList.add("animate-explosion");
 
-// Função para confirmar pagamento
-function confirmPayment() {
-  document.getElementById("pixQRCodeContainer").classList.add("hidden");
-  document.getElementById("thankYouContainer").classList.remove("hidden");
-}
+      // Remove o tremor após 2 segundos
+      setTimeout(() => {
+        body.classList.remove("shake");
+      }, 2000);
+    }
 
-// Função para resetar o modal Pix
-function resetPixPage() {
-  document.getElementById("thankYouContainer").classList.add("hidden");
-  document.getElementById("pixQRCodeContainer").classList.remove("hidden");
-}
+    // Função para fechar a mensagem de agradecimento
+    function closeThankYou() {
+      document.getElementById("thankYouContainer").classList.add("hidden");
+    }
 
-// Função para exibir o aviso ⚠️ ao carregar a página
-function showWarning() {
-  const warningPopup = document.getElementById('warningPopup');
-  warningPopup.classList.remove('hidden');
-}
+    // Função para abrir formulários dinâmicos
+    function openForm(type) {
+      const modal = document.getElementById('formModal');
+      const title = document.getElementById('formTitle');
+      const content = document.getElementById('formContent');
+      modal.classList.remove('hidden');
 
-// Função para fechar o aviso ⚠️
-function closeWarning() {
-  const warningPopup = document.getElementById('warningPopup');
-  warningPopup.classList.add('hidden');
-}
+      if (type === 'ajudarOutrasFormas') {
+        title.innerText = 'Quero ajudar de outras formas';
+        content.innerHTML = `
+          <label class="block mb-2 text-sm">Escolha como ajudar:</label>
+          <select class="w-full p-2 mb-4 bg-[#333] text-white rounded">
+            <option>Moderar a comunidade do Discord</option>
+            <option>Moderar grupo WhatsApp</option>
+            <option>Contribuir com artes</option>
+            <option>Colaborar nas animações</option>
+            <option>Divulgar o projeto</option>
+            <option>Outras habilidades</option>
+          </select>
+          <textarea class="w-full p-2 bg-[#333] text-white rounded" placeholder="Detalhe aqui"></textarea>
+          <button class="bg-[#8f4fff] text-black px-4 py-2 mt-4 rounded">Enviar</button>
+        `;
+      } else if (type === 'fazerParceria') {
+        title.innerText = 'Quero fazer uma parceria';
+        content.innerHTML = `
+          <label class="block mb-2 text-sm">Nome do Projeto ou Marca:</label>
+          <input type="text" class="w-full p-2 mb-4 bg-[#333] text-white rounded">
+          <label class="block mb-2 text-sm">Ideia de parceria:</label>
+          <textarea class="w-full p-2 bg-[#333] text-white rounded" placeholder="Detalhe aqui"></textarea>
+          <label class="block mb-2 text-sm">E-mail ou contato:</label>
+          <input type="email" class="w-full p-2 bg-[#333] text-white rounded">
+          <button class="bg-[#8f4fff] text-black px-4 py-2 mt-4 rounded">Enviar</button>
+        `;
+      } else if (type === 'investirProjeto') {
+        title.innerText = 'Quero investir no projeto';
+        content.innerHTML = `
+          <label class="block mb-2 text-sm">Motivo do interesse:</label>
+          <textarea class="w-full p-2 mb-4 bg-[#333] text-white rounded" placeholder="Detalhe aqui"></textarea>
+          <label class="block mb-2 text-sm">E-mail ou contato:</label>
+          <input type="email" class="w-full p-2 bg-[#333] text-white rounded">
+          <button class="bg-[#8f4fff] text-black px-4 py-2 mt-4 rounded">Enviar</button>
+        `;
+      } else if (type === 'apoioProjeto') {
+        title.innerText = 'Preciso de apoio no meu projeto';
+        content.innerHTML = `
+          <label class="block mb-2 text-sm">Nome do Projeto:</label>
+          <input type="text" class="w-full p-2 mb-4 bg-[#333] text-white rounded">
+          <label class="block mb-2 text-sm">Em que precisa de ajuda:</label>
+          <textarea class="w-full p-2 bg-[#333] text-white rounded" placeholder="Detalhe aqui"></textarea>
+          <label class="block mb-2 text-sm">Link para portfólio ou referência:</label>
+          <input type="url" class="w-full p-2 bg-[#333] text-white rounded">
+          <button class="bg-[#8f4fff] text-black px-4 py-2 mt-4 rounded">Enviar</button>
+        `;
+      }
+    }
 
+    // Função para abrir o modal das Redes Sociais
+    function openSocials() {
+      document.getElementById('socialsModal').classList.remove('hidden');
+    }
 
-// Função para confirmar pagamento e ativar animações
-function confirmPayment() {
-  const container = document.getElementById("thankYouContainer");
-  const body = document.body;
-
-  // Ativa a animação de tremor no site
-  body.classList.add("shake");
-
-  // Mostra a mensagem de agradecimento com animação
-  container.classList.remove("hidden");
-  container.classList.add("animate-explosion");
-
-  // Remove o tremor após 2 segundos
-  setTimeout(() => {
-    body.classList.remove("shake");
-  }, 2000);
-}
-
-// Função para resetar o modal Pix
-function resetPixPage() {
-  document.getElementById("thankYouContainer").classList.add("hidden");
-  document.getElementById("pixQRCodeContainer").classList.remove("hidden");
-}
-
-</div>
+    // Função para fechar o aviso ⚠️
+    function closeWarning() {
+      const warningPopup = document.getElementById('warningPopup');
+      warningPopup.classList.add('hidden');
+    }
+  </script>
 </body>
 </html>
