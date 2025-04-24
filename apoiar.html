@@ -7,21 +7,6 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/scrollreveal"></script>
   <style>
-    .spinner-border {
-      display: inline-block;
-      width: 2rem;
-      height: 2rem;
-      vertical-align: text-bottom;
-      border: 0.25em solid currentColor;
-      border-right-color: transparent;
-      border-radius: 50%;
-      animation: spinner-border .75s linear infinite;
-    }
-
-    @keyframes spinner-border {
-      to { transform: rotate(360deg); }
-    }
-
     body {
       font-family: 'Inter', sans-serif;
       background-color: #0a0a0a;
@@ -92,8 +77,13 @@
 
       <!-- QR Code fixo para escaneamento -->
       <div id="pixQRCodeContainer" class="text-center">
-        <h4 class="text-lg text-[#8f4fff] mb-4">Escaneie o QR Code abaixo para contribuir:</h4>
+        <h4 class="text-lg text-[#8f4fff] mb-4">Escaneie o QR Code abaixo ou copie a chave Pix:</h4>
         <img src="assets/images/qr-code.png" alt="QR Code Pix" class="mx-auto w-64 mb-4">
+
+        <!-- Botão para copiar a chave Pix -->
+        <button onclick="copyPixKey()" class="bg-[#8f4fff] text-black px-4 py-2 rounded hover:bg-[#39ff14] block mx-auto mb-4">
+          Copiar chave Pix
+        </button>
       </div>
 
       <!-- Mensagem de agradecimento -->
@@ -162,6 +152,8 @@
 
   <!-- SCRIPTS -->
   <script>
+    const pixKey = "azuosraul999@gmail.com"; // Chave Pix
+
     function openPixModal() {
       document.getElementById('pixModal').classList.remove('hidden');
     }
@@ -178,6 +170,41 @@
     function confirmPayment() {
       document.getElementById("pixQRCodeContainer").classList.add("hidden");
       document.getElementById("thankYouContainer").classList.remove("hidden");
+    }
+
+    function copyPixKey() {
+      navigator.clipboard.writeText(pixKey).then(() => {
+        alert("Chave Pix copiada para a área de transferência!");
+      }).catch(err => {
+        console.error("Erro ao copiar a chave Pix:", err);
+      });
+    }
+
+    function openForm(type) {
+      const modal = document.getElementById('formModal');
+      const title = document.getElementById('formTitle');
+      const content = document.getElementById('formContent');
+      modal.classList.remove('hidden');
+
+      if (type === 'ajudarOutrasFormas') {
+        title.innerText = 'Quero ajudar de outras formas';
+        content.innerHTML = `
+          <label class="block mb-2 text-sm">Escolha como ajudar:</label>
+          <select class="w-full p-2 mb-4 bg-[#333] text-white rounded">
+            <option>Moderar a comunidade do Discord</option>
+            <option>Contribuir com artes</option>
+            <option>Divulgar o projeto</option>
+            <option>Outras habilidades</option>
+          </select>
+          <textarea class="w-full p-2 bg-[#333] text-white rounded" placeholder="Detalhe aqui"></textarea>
+          <button class="bg-[#8f4fff] text-black px-4 py-2 mt-4 rounded">Enviar</button>
+        `;
+      }
+      // Outros tipos de formulário seguem o mesmo formato...
+    }
+
+    function openSocials() {
+      document.getElementById('socialsModal').classList.remove('hidden');
     }
   </script>
 </body>
