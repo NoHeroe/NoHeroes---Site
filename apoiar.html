@@ -208,5 +208,56 @@
     document.getElementById(id).classList.add('hidden');
   }
 </script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+<script>
+  // Gera o código Pix Payload Format
+  function generatePixPayload(valor) {
+    const chavePix = "sua-chave-pix-aqui"; // Substitua pela sua chave Pix
+    const nomeRecebedor = "Seu Nome ou Empresa"; // Substitua pelo nome do recebedor
+    const cidade = "Sua Cidade"; // Substitua pela cidade
+    const valorFormatado = valor.toFixed(2);
+
+    return `00020126330014br.gov.bcb.pix0114${chavePix}0212PagamentodoPix520400005303986540${valorFormatado}5802BR5925${nomeRecebedor}6009${cidade}6304`;
+  }
+
+  // Função para gerar o QR Code
+  function generateQRCode(event) {
+    event.preventDefault();
+
+    const valor = parseFloat(document.getElementById("pixValor").value);
+    if (isNaN(valor) || valor <= 0) {
+      alert("Por favor, insira um valor válido.");
+      return;
+    }
+
+    const payload = generatePixPayload(valor);
+    const qrCodeContainer = document.getElementById("pixQRCode");
+
+    // Limpa o container anterior
+    qrCodeContainer.innerHTML = "";
+
+    // Gera o QR Code
+    QRCode.toCanvas(qrCodeContainer, payload, { width: 256 }, function (error) {
+      if (error) console.error(error);
+    });
+
+    // Mostra o QR Code e o botão de confirmação
+    document.getElementById("pixFormContainer").classList.add("hidden");
+    document.getElementById("pixQRCodeContainer").classList.remove("hidden");
+  }
+
+  // Confirmar pagamento
+  function confirmPayment() {
+    document.getElementById("pixQRCodeContainer").classList.add("hidden");
+    document.getElementById("thankYouContainer").classList.remove("hidden");
+  }
+
+  // Voltar para o início
+  function resetPixPage() {
+    document.getElementById("thankYouContainer").classList.add("hidden");
+    document.getElementById("pixFormContainer").classList.remove("hidden");
+    document.getElementById("pixForm").reset();
+  }
+</script>
 </body>
 </html>
