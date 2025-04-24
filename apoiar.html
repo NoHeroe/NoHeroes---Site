@@ -168,7 +168,7 @@
 
   <!-- SCRIPTS -->
   <script>
-    // Funções Pix
+    // Funções para abrir e fechar modais
     function openPixModal() {
       document.getElementById('pixModal').classList.remove('hidden');
     }
@@ -183,6 +183,66 @@
       document.getElementById("pixQRCodeContainer").classList.add("hidden");
       document.getElementById("pixForm").reset();
       document.getElementById("loadingSpinner").classList.add("hidden");
+    }
+
+    function openForm(type) {
+      const modal = document.getElementById('formModal');
+      const title = document.getElementById('formTitle');
+      const content = document.getElementById('formContent');
+      modal.classList.remove('hidden');
+
+      // Configurar formulários conforme o tipo
+      if (type === 'ajudarOutrasFormas') {
+        title.innerText = 'Quero ajudar de outras formas';
+        content.innerHTML = `
+          <label class="block mb-2 text-sm">Escolha como ajudar:</label>
+          <select class="w-full p-2 mb-4 bg-[#333] text-white rounded">
+            <option>Moderar a comunidade do Discord</option>
+            <option>Moderar grupo WhatsApp</option>
+            <option>Contribuir com artes</option>
+            <option>Colaborar nas animações</option>
+            <option>Divulgar o projeto</option>
+            <option>Outras habilidades</option>
+          </select>
+          <textarea class="w-full p-2 bg-[#333] text-white rounded" placeholder="Detalhe aqui"></textarea>
+          <button class="bg-[#8f4fff] text-black px-4 py-2 mt-4 rounded">Enviar</button>
+        `;
+      } else if (type === 'fazerParceria') {
+        title.innerText = 'Quero fazer uma parceria';
+        content.innerHTML = `
+          <label class="block mb-2 text-sm">Nome do Projeto ou Marca:</label>
+          <input type="text" class="w-full p-2 mb-4 bg-[#333] text-white rounded">
+          <label class="block mb-2 text-sm">Ideia de parceria:</label>
+          <textarea class="w-full p-2 bg-[#333] text-white rounded" placeholder="Detalhe aqui"></textarea>
+          <label class="block mb-2 text-sm">E-mail ou contato:</label>
+          <input type="email" class="w-full p-2 bg-[#333] text-white rounded">
+          <button class="bg-[#8f4fff] text-black px-4 py-2 mt-4 rounded">Enviar</button>
+        `;
+      } else if (type === 'investirProjeto') {
+        title.innerText = 'Quero investir no projeto';
+        content.innerHTML = `
+          <label class="block mb-2 text-sm">Motivo do interesse:</label>
+          <textarea class="w-full p-2 mb-4 bg-[#333] text-white rounded" placeholder="Detalhe aqui"></textarea>
+          <label class="block mb-2 text-sm">E-mail ou contato:</label>
+          <input type="email" class="w-full p-2 bg-[#333] text-white rounded">
+          <button class="bg-[#8f4fff] text-black px-4 py-2 mt-4 rounded">Enviar</button>
+        `;
+      } else if (type === 'apoioProjeto') {
+        title.innerText = 'Preciso de apoio no meu projeto';
+        content.innerHTML = `
+          <label class="block mb-2 text-sm">Nome do Projeto:</label>
+          <input type="text" class="w-full p-2 mb-4 bg-[#333] text-white rounded">
+          <label class="block mb-2 text-sm">Em que precisa de ajuda:</label>
+          <textarea class="w-full p-2 bg-[#333] text-white rounded" placeholder="Detalhe aqui"></textarea>
+          <label class="block mb-2 text-sm">Link para portfólio ou referência:</label>
+          <input type="url" class="w-full p-2 bg-[#333] text-white rounded">
+          <button class="bg-[#8f4fff] text-black px-4 py-2 mt-4 rounded">Enviar</button>
+        `;
+      }
+    }
+
+    function openSocials() {
+      document.getElementById('socialsModal').classList.remove('hidden');
     }
 
     function generatePixPayload(valor) {
