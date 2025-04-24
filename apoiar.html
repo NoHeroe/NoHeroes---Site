@@ -25,6 +25,68 @@
       0%, 100% { filter: drop-shadow(0 0 8px #8f4fff); }
       50% { filter: drop-shadow(0 0 16px #8f4fff); }
     }
+/* Animação de explosão */
+@keyframes explosion {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  25% {
+    transform: scale(1.5);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(0.9);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Animação de tremor */
+@keyframes shake {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-5px, 5px);
+  }
+  50% {
+    transform: translate(5px, -5px);
+  }
+  75% {
+    transform: translate(-5px, -5px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+/* Glow dourado intenso */
+.glow-gold {
+  animation: glow 2s infinite alternate ease-in-out;
+}
+
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700, 0 0 30px #FFD700;
+  }
+  100% {
+    text-shadow: 0 0 20px #FFA500, 0 0 40px #FFD700, 0 0 50px #FFD700;
+  }
+}
+
+/* Classe para ativar a explosão */
+.animate-explosion {
+  animation: explosion 1s ease-in-out;
+}
+
+/* Classe para o tremor */
+.shake {
+  animation: shake 2s ease-in-out;
+}
   </style>
 </head>
 <body class="text-center p-6">
