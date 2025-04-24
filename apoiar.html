@@ -283,8 +283,9 @@ function generateCRC16(payload) {
     // Gera o QR Code
     QRCode.toCanvas(qrCodeContainer, payload, { width: 256 }, function (error) {
   if (error) {
-    console.error(error);
-    alert("Erro ao gerar o QR Code. Por favor, tente novamente.");
+    console.error("Erro ao gerar o QR Code:", error);
+    alert("Erro ao gerar o QR Code. Por favor, tente novamente ou verifique os dados inseridos.");
+    return;
   }
 });
 
