@@ -241,14 +241,12 @@
     "000201", // Payload Format Indicator
     "26330014br.gov.bcb.pix", // Merchant Account Information Template (domínio do Pix)
     `0114${chavePix}`, // Chave Pix
-    "0212PagamentodoPix", // Descrição do pagamento (opcional)
     "52040000", // Merchant Category Code (0000 -> não definido)
     "5303986", // Moeda BRL (986)
     `540${valorFormatado.length}${valorFormatado}`, // Valor da transação
     "5802BR", // País (BR -> Brasil)
     `59${nomeRecebedor.length}${nomeRecebedor}`, // Nome do recebedor
     `60${cidade.length}${cidade}`, // Cidade do recebedor
-    "62070503***", // Campo adicional (opcional)
   ].join("");
 
   // Adiciona o CRC16 no final
