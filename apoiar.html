@@ -220,5 +220,14 @@
     document.getElementById(id).classList.add('hidden');
   }
 </script>
+<div id="warningPopup" class="fixed top-4 right-4 bg-[#333] text-white p-4 rounded-lg shadow-lg flex items-start hidden">
+  <span class="text-yellow-400 text-lg mr-2">⚠️</span>
+  <div>
+    <p class="text-sm opacity-80">
+      Atualmente apenas os botões <strong>"contribuir com Pix"</strong> e <strong>"siga as sombras"</strong> estão funcionando.
+    </p>
+  </div>
+  <button onclick="closeWarning()" class="ml-4 text-[#8f4fff] hover:underline text-sm">x</button>
+</div>
 </body>
 </html>
