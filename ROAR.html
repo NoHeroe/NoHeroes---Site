@@ -26,18 +26,24 @@
 
   <!-- NAVBAR -->
   <header class="fixed top-0 left-0 w-full bg-[#100d1a] border-b border-[#2e2e2e] z-50 px-8 py-4 flex justify-between items-center">
-    <div class="text-[#8f4fff] text-2xl font-bold uppercase tracking-wide"> ROAR</div>
-    <nav>
-      <ul class="hidden md:flex space-x-6 text-sm">
-        <li><a href="#sobre" class="hover:text-[#8f4fff]">Sobre</a></li>
-        <li><a href="#personagens" class="hover:text-[#8f4fff]">Personagens</a></li>
-        <li><a href="#mundo" class="hover:text-[#8f4fff]">Mundo</a></li>
-        <li><a href="#evento" class="hover:text-[#8f4fff]">Evento Caótico</a></li>
-        <li><a href="#explorar" class="hover:text-[#8f4fff]">Explorar</a></li>
-      </ul>
-      <button class="md:hidden text-[#8f4fff]">Menu</button>
-    </nav>
-  </header>
+  <div class="text-[#8f4fff] text-2xl font-bold uppercase tracking-wide">📜 ROAR</div>
+  <!-- Botão de Menu para Mobile -->
+  <button id="mobile-menu-button" class="md:hidden text-[#8f4fff] focus:outline-none">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+    </svg>
+  </button>
+  <!-- Links de Navegação -->
+  <nav>
+    <ul id="mobile-menu" class="hidden md:flex space-x-6 text-sm flex-col md:flex-row md:items-center">
+      <li><a href="#sobre" class="hover:text-[#8f4fff]">Sobre</a></li>
+      <li><a href="#personagens" class="hover:text-[#8f4fff]">Personagens</a></li>
+      <li><a href="#mundo" class="hover:text-[#8f4fff]">Mundo</a></li>
+      <li><a href="#evento" class="hover:text-[#8f4fff]">Evento Caótico</a></li>
+      <li><a href="#explorar" class="hover:text-[#8f4fff]">Explorar</a></li>
+    </ul>
+  </nav>
+</header>
 
   <!-- Título Principal -->
 <section id="titulo-principal" class="text-center bg-[#0a0a0a] text-[#8f4fff] pt-28 pb-8">
