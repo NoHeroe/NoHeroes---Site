@@ -6,7 +6,6 @@
   <title>Apoio Vitalista | NoHeroes</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/scrollreveal"></script>
-  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <style>
     body {
       font-family: 'Inter', sans-serif;
@@ -71,94 +70,143 @@
   <div id="pixModal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center">
     <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-lg w-full text-left">
       <h3 class="text-2xl font-bold text-[#8f4fff] mb-4">Contribuir com Pix</h3>
-      <form id="pixForm" onsubmit="generateQRCode(event)">
-        <label for="valor" class="block mb-2 text-sm">Digite o valor da contribuição (R$):</label>
-        <input type="number" id="valor" name="valor" step="0.01" min="1" required class="w-full p-2 mb-4 bg-[#333] text-white rounded">
+      <form id="pixForm">
+        <label class="block mb-2 text-sm">Nome (obrigatório):</label>
+        <input type="text" required class="w-full p-2 mb-4 bg-[#333] text-white rounded">
+        <label class="block mb-2 text-sm">Idade (opcional):</label>
+        <input type="number" class="w-full p-2 mb-4 bg-[#333] text-white rounded">
+        <label class="block mb-2 text-sm">Motivo da doação (opcional):</label>
+        <textarea class="w-full p-2 mb-4 bg-[#333] text-white rounded"></textarea>
+        <label class="block mb-2 text-sm">Valor (R$):</label>
+        <input type="number" required class="w-full p-2 bg-[#333] text-white rounded">
         <button type="submit" class="bg-[#8f4fff] text-black px-4 py-2 mt-4 rounded hover:bg-[#39ff14]">
           Gerar QR Code Pix
         </button>
       </form>
-      <div id="qrCodeContainer" class="hidden mt-4">
-        <h4 class="text-lg text-[#8f4fff] mb-2">Escaneie o QR Code</h4>
-        <div id="qrcode" class="mb-4"></div>
-        <button onclick="confirmPayment()" class="bg-[#8f4fff] text-black px-4 py-2 mt-4 rounded hover:bg-[#39ff14]">
-          Já efetuei o pagamento
-        </button>
-      </div>
       <button onclick="closeModal('pixModal')" class="mt-4 text-[#8f4fff] underline">Fechar</button>
     </div>
   </div>
 
-  <!-- Mensagem de Agradecimento -->
-  <div id="thankYouContainer" class="hidden mt-6 text-center bg-[#1c1c1c] p-6 rounded-lg">
-    <h2 class="text-xl font-bold text-[#8f4fff] mb-4">Obrigado!</h2>
-    <p class="text-white italic">
-      “As sombras de Caelum consumiram sua oferenda com prazer. Agora você caminha guardado pela benção de um Guardião Divino. Obrigado por sua coragem, Vitalista.”
-    </p>
-    <button onclick="resetPage()" class="bg-[#8f4fff] text-black px-4 py-2 mt-4 rounded hover:bg-[#39ff14]">
-      Voltar
-    </button>
+  <!-- Outros Modais -->
+  <div id="formModal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center">
+    <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-lg w-full text-left">
+      <h3 id="formTitle" class="text-2xl font-bold text-[#8f4fff] mb-4"></h3>
+      <form id="formContent">
+        <!-- O conteúdo do formulário será carregado dinamicamente -->
+      </form>
+      <button onclick="closeModal('formModal')" class="mt-4 text-[#8f4fff] underline">Fechar</button>
+    </div>
   </div>
+
+  <!-- Redes Sociais Modal -->
+<div id="socialsModal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center">
+  <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-lg w-full text-center">
+    <h3 class="text-2xl font-bold text-[#8f4fff] mb-4">Siga as Sombras</h3>
+    <ul class="space-y-4">
+      <li class="flex items-center justify-center">
+        <img src="assets/icons/instagram icon.png" alt="Instagram" class="w-6 h-6 mr-2">
+        <a href="https://instagram.com/_noheroe" target="_blank" class="text-[#8f4fff] hover:underline">Instagram</a>
+      </li>
+      <li class="flex items-center justify-center">
+        <img src="assets/icons/tiktok icon.png" alt="TikTok" class="w-6 h-6 mr-2">
+        <a href="https://tiktok.com/@_noheroe" target="_blank" class="text-[#8f4fff] hover:underline">TikTok</a>
+      </li>
+      <li class="flex items-center justify-center">
+        <img src="assets/icons/youtube icon.png" alt="YouTube" class="w-6 h-6 mr-2">
+        <a href="#" target="_blank" class="text-[#8f4fff] hover:underline">YouTube</a>
+      </li>
+      <li class="flex items-center justify-center">
+        <img src="assets/icons/discord icon.png" alt="Discord" class="w-6 h-6 mr-2">
+        <a href="https://discord.gg/" target="_blank" class="text-[#8f4fff] hover:underline">Discord</a>
+      </li>
+      <li class="flex items-center justify-center">
+        <img src="assets/icons/whatsapp icon.png" alt="WhatsApp" class="w-6 h-6 mr-2">
+        <a href="https://chat.whatsapp.com/" target="_blank" class="text-[#8f4fff] hover:underline">WhatsApp</a>
+      </li>
+    </ul>
+    <button onclick="closeModal('socialsModal')" class="mt-4 text-[#8f4fff] underline">Fechar</button>
+  </div>
+</div>
+
+  <!-- RODAPÉ -->
+  <footer class="mt-20 text-sm text-[#777]">
+    <p>© 2025 NoHeroes. Todos os direitos reservados.</p>
+    <p class="italic">Explore. Escolha. Caia. Evolua.</p>
+  </footer>
 
   <!-- SCRIPTS -->
   <script>
-    // Gera o código Pix Payload Format
-    function generatePixPayload(valor) {
-      const chavePix = "sua-chave-pix-aqui"; // Substitua pela sua chave Pix
-      const nomeRecebedor = "Seu Nome ou Empresa"; // Substitua pelo nome do recebedor
-      const cidade = "Sua Cidade"; // Substitua pela cidade
-      const valorFormatado = valor.toFixed(2);
+  // Função para abrir o modal Pix
+  function openPixModal() {
+    document.getElementById('pixModal').classList.remove('hidden');
+  }
 
-      return `00020126330014br.gov.bcb.pix0114${chavePix}0212PagamentodoPix520400005303986540${valorFormatado}5802BR5925${nomeRecebedor}6009${cidade}6304`;
+  // Função para abrir os formulários dinâmicos
+  function openForm(type) {
+    const modal = document.getElementById('formModal');
+    const title = document.getElementById('formTitle');
+    const content = document.getElementById('formContent');
+    modal.classList.remove('hidden');
+
+    // Configurar formulários conforme o tipo
+    if (type === 'ajudarOutrasFormas') {
+      title.innerText = 'Quero ajudar de outras formas';
+      content.innerHTML = `
+        <label class="block mb-2 text-sm">Escolha como ajudar:</label>
+        <select class="w-full p-2 mb-4 bg-[#333] text-white rounded">
+          <option>Moderar a comunidade do Discord</option>
+          <option>Moderar grupo WhatsApp</option>
+          <option>Contribuir com artes</option>
+          <option>Colaborar nas animações</option>
+          <option>Divulgar o projeto</option>
+          <option>Outras habilidades</option>
+        </select>
+        <textarea class="w-full p-2 bg-[#333] text-white rounded" placeholder="Detalhe aqui"></textarea>
+        <button class="bg-[#8f4fff] text-black px-4 py-2 mt-4 rounded">Enviar</button>
+      `;
+    } else if (type === 'fazerParceria') {
+      title.innerText = 'Quero fazer uma parceria';
+      content.innerHTML = `
+        <label class="block mb-2 text-sm">Nome do Projeto ou Marca:</label>
+        <input type="text" class="w-full p-2 mb-4 bg-[#333] text-white rounded">
+        <label class="block mb-2 text-sm">Ideia de parceria:</label>
+        <textarea class="w-full p-2 bg-[#333] text-white rounded" placeholder="Detalhe aqui"></textarea>
+        <label class="block mb-2 text-sm">E-mail ou contato:</label>
+        <input type="email" class="w-full p-2 bg-[#333] text-white rounded">
+        <button class="bg-[#8f4fff] text-black px-4 py-2 mt-4 rounded">Enviar</button>
+      `;
+    } else if (type === 'investirProjeto') {
+      title.innerText = 'Quero investir no projeto';
+      content.innerHTML = `
+        <label class="block mb-2 text-sm">Motivo do interesse:</label>
+        <textarea class="w-full p-2 mb-4 bg-[#333] text-white rounded" placeholder="Detalhe aqui"></textarea>
+        <label class="block mb-2 text-sm">E-mail ou contato:</label>
+        <input type="email" class="w-full p-2 bg-[#333] text-white rounded">
+        <button class="bg-[#8f4fff] text-black px-4 py-2 mt-4 rounded">Enviar</button>
+      `;
+    } else if (type === 'apoioProjeto') {
+      title.innerText = 'Preciso de apoio no meu projeto';
+      content.innerHTML = `
+        <label class="block mb-2 text-sm">Nome do Projeto:</label>
+        <input type="text" class="w-full p-2 mb-4 bg-[#333] text-white rounded">
+        <label class="block mb-2 text-sm">Em que precisa de ajuda:</label>
+        <textarea class="w-full p-2 bg-[#333] text-white rounded" placeholder="Detalhe aqui"></textarea>
+        <label class="block mb-2 text-sm">Link para portfólio ou referência:</label>
+        <input type="url" class="w-full p-2 bg-[#333] text-white rounded">
+        <button class="bg-[#8f4fff] text-black px-4 py-2 mt-4 rounded">Enviar</button>
+      `;
     }
+  }
 
-    // Função para gerar o QR Code
-    function generateQRCode(event) {
-      event.preventDefault();
+  // Função para abrir o modal das Redes Sociais
+  function openSocials() {
+    document.getElementById('socialsModal').classList.remove('hidden');
+  }
 
-      const valor = parseFloat(document.getElementById("valor").value);
-      if (isNaN(valor) || valor <= 0) {
-        alert("Por favor, insira um valor válido.");
-        return;
-      }
-
-      const payload = generatePixPayload(valor);
-      const qrCodeContainer = document.getElementById("qrcode");
-
-      // Limpa o container anterior, se necessário
-      qrCodeContainer.innerHTML = "";
-
-      // Gera o QR Code
-      QRCode.toCanvas(qrCodeContainer, payload, { width: 256 }, function (error) {
-        if (error) console.error(error);
-      });
-
-      // Mostra o QR Code e o botão de confirmação
-      document.getElementById("qrCodeContainer").classList.remove("hidden");
-    }
-
-    // Confirmar pagamento
-    function confirmPayment() {
-      document.getElementById("pixModal").classList.add("hidden");
-      document.getElementById("thankYouContainer").classList.remove("hidden");
-    }
-
-    // Voltar para o início
-    function resetPage() {
-      document.getElementById("thankYouContainer").classList.add("hidden");
-      document.getElementById("pixModal").classList.remove("hidden");
-      document.getElementById("pixForm").reset();
-    }
-
-    // Função para abrir o modal Pix
-    function openPixModal() {
-      document.getElementById('pixModal').classList.remove('hidden');
-    }
-
-    // Função para fechar modais
-    function closeModal(id) {
-      document.getElementById(id).classList.add('hidden');
-    }
-  </script>
+  // Função para fechar modais
+  function closeModal(id) {
+    document.getElementById(id).classList.add('hidden');
+  }
+</script>
 </body>
 </html>
