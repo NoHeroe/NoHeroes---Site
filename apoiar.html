@@ -1,11 +1,11 @@
-<!DOCTYPE html><html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Apoio Vitalista | NoHeroes</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/scrollreveal"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Inter', sans-serif;
@@ -31,16 +31,116 @@
   <!-- LOGO -->
   <a href="index.html">
     <img src="noheroes logo.png" alt="Logo NoHeroes" class="mx-auto w-40 logo-glow">
-  </a>  <!-- FRASE IMPACTO -->  <h2 class="text-xl italic mt-6 opacity-70">“Até mesmo os mundos mais sombrios precisam de luz para existir.”</h2>
-  <p class="mt-4 max-w-xl mx-auto text-base">Você está prestes a alimentar não um projeto, mas um universo inteiro. Criado do zero, com alma e suor, por um criador que quer mudar vidas com arte, anime e verdade. Aqui, cada contribuição fortalece uma ideia que já é maior do que eu. <strong>Ajude a manter Caelum vivo. Torne-se um Vitalista, ou uma das sombras de Caelum.</strong></p>  <!-- BOTÕES -->  <div class="mt-12 space-y-4">
-    <button class="bg-[#8f4fff] text-black px-6 py-3 rounded-lg font-bold hover:scale-105 transition">Contribuir com Pix</button>
-    <button class="bg-[#1c1c1c] text-white px-6 py-3 rounded-lg border border-[#555] hover:border-[#8f4fff]">Quero ajudar de outras formas</button>
-    <button class="bg-[#1c1c1c] text-white px-6 py-3 rounded-lg border border-[#555] hover:border-[#8f4fff]">Quero fazer uma parceria</button>
-    <button class="bg-[#1c1c1c] text-white px-6 py-3 rounded-lg border border-[#555] hover:border-[#8f4fff]">Quero investir no projeto</button>
-    <button class="bg-[#1c1c1c] text-white px-6 py-3 rounded-lg border border-[#555] hover:border-[#8f4fff]">Preciso de apoio no meu projeto</button>
-    <button class="bg-[#333] text-white px-6 py-3 rounded-lg border border-[#666] hover:border-[#8f4fff]">Siga as Sombras</button>
-  </div>  <!-- RODAPÉ -->  <footer class="mt-20 text-sm text-[#777]">
+  </a>
+
+  <!-- FRASE IMPACTO -->
+  <h2 class="text-xl italic mt-6 opacity-70">“Até mesmo os mundos mais sombrios precisam de luz para existir.”</h2>
+  <p class="mt-4 max-w-xl mx-auto text-base">Você está prestes a alimentar não um projeto, mas um universo inteiro. Criado do zero, com alma e suor, por um criador que quer mudar vidas com arte, anime e verdade. Aqui, cada contribuição fortalece uma ideia que já é maior do que eu. <strong>Ajude a manter Caelum vivo. Torne-se um Vitalista, ou uma das sombras de Caelum.</strong></p>
+
+  <!-- BOTÕES -->
+  <div class="mt-12 space-y-4">
+    <!-- Contribuir com Pix -->
+    <button onclick="openPixModal()" class="bg-[#8f4fff] text-black px-6 py-3 rounded-lg font-bold hover:scale-105 transition">
+      Contribuir com Pix
+    </button>
+    <!-- Quero ajudar de outras formas -->
+    <button onclick="openForm('ajudarOutrasFormas')" class="bg-[#1c1c1c] text-white px-6 py-3 rounded-lg border border-[#555] hover:border-[#8f4fff]">
+      Quero ajudar de outras formas
+    </button>
+    <!-- Quero fazer uma parceria -->
+    <button onclick="openForm('fazerParceria')" class="bg-[#1c1c1c] text-white px-6 py-3 rounded-lg border border-[#555] hover:border-[#8f4fff]">
+      Quero fazer uma parceria
+    </button>
+    <!-- Quero investir no projeto -->
+    <button onclick="openForm('investirProjeto')" class="bg-[#1c1c1c] text-white px-6 py-3 rounded-lg border border-[#555] hover:border-[#8f4fff]">
+      Quero investir no projeto
+    </button>
+    <!-- Preciso de apoio no meu projeto -->
+    <button onclick="openForm('apoioProjeto')" class="bg-[#1c1c1c] text-white px-6 py-3 rounded-lg border border-[#555] hover:border-[#8f4fff]">
+      Preciso de apoio no meu projeto
+    </button>
+    <!-- Siga as sombras -->
+    <button onclick="openSocials()" class="bg-[#333] text-white px-6 py-3 rounded-lg border border-[#666] hover:border-[#8f4fff]">
+      Siga as Sombras
+    </button>
+  </div>
+
+  <!-- MODALS -->
+  <!-- Modal Pix -->
+  <div id="pixModal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center">
+    <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-lg w-full text-left">
+      <h3 class="text-2xl font-bold text-[#8f4fff] mb-4">Contribuir com Pix</h3>
+      <form id="pixForm">
+        <label class="block mb-2 text-sm">Nome (obrigatório):</label>
+        <input type="text" required class="w-full p-2 mb-4 bg-[#333] text-white rounded">
+        <label class="block mb-2 text-sm">Idade (opcional):</label>
+        <input type="number" class="w-full p-2 mb-4 bg-[#333] text-white rounded">
+        <label class="block mb-2 text-sm">Motivo da doação (opcional):</label>
+        <textarea class="w-full p-2 mb-4 bg-[#333] text-white rounded"></textarea>
+        <label class="block mb-2 text-sm">Valor (R$):</label>
+        <input type="number" required class="w-full p-2 bg-[#333] text-white rounded">
+        <button type="submit" class="bg-[#8f4fff] text-black px-4 py-2 mt-4 rounded hover:bg-[#39ff14]">
+          Gerar QR Code Pix
+        </button>
+      </form>
+      <button onclick="closeModal('pixModal')" class="mt-4 text-[#8f4fff] underline">Fechar</button>
+    </div>
+  </div>
+
+  <!-- Outros Modais -->
+  <div id="formModal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center">
+    <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-lg w-full text-left">
+      <h3 id="formTitle" class="text-2xl font-bold text-[#8f4fff] mb-4"></h3>
+      <form id="formContent">
+        <!-- O conteúdo do formulário será carregado dinamicamente -->
+      </form>
+      <button onclick="closeModal('formModal')" class="mt-4 text-[#8f4fff] underline">Fechar</button>
+    </div>
+  </div>
+
+  <!-- RODAPÉ -->
+  <footer class="mt-20 text-sm text-[#777]">
     <p>© 2025 NoHeroes. Todos os direitos reservados.</p>
     <p class="italic">Explore. Escolha. Caia. Evolua.</p>
-  </footer></body>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Função para abrir o modal Pix
+    function openPixModal() {
+      document.getElementById('pixModal').classList.remove('hidden');
+    }
+
+    // Função para abrir os formulários dinâmicos
+    function openForm(type) {
+      const modal = document.getElementById('formModal');
+      const title = document.getElementById('formTitle');
+      const content = document.getElementById('formContent');
+      modal.classList.remove('hidden');
+
+      // Configurar formulários conforme o tipo
+      if (type === 'ajudarOutrasFormas') {
+        title.innerText = 'Quero ajudar de outras formas';
+        content.innerHTML = `
+          <label class="block mb-2 text-sm">Escolha como ajudar:</label>
+          <select class="w-full p-2 mb-4 bg-[#333] text-white rounded">
+            <option>Moderar a comunidade do Discord</option>
+            <option>Moderar grupo WhatsApp</option>
+            <option>Contribuir com artes</option>
+            <option>Colaborar nas animações</option>
+            <option>Divulgar o projeto</option>
+            <option>Outras habilidades</option>
+          </select>
+          <textarea class="w-full p-2 bg-[#333] text-white rounded" placeholder="Detalhe aqui"></textarea>
+        `;
+      }
+      // Outras opções...
+    }
+
+    // Função para fechar modais
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+  </script>
+</body>
 </html>
