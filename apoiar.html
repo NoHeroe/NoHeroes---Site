@@ -326,28 +326,6 @@ function closeWarning() {
   warningPopup.classList.add('hidden');
 }
 
-// Exibe o aviso ⚠️ ao carregar a página
-window.onload = showWarning;
-const pixKey = "azuosraul999@gmail.com"; // Chave Pix
-
-// Função para abrir o modal Pix
-function openPixModal() {
-  document.getElementById('pixModal').classList.remove('hidden');
-}
-
-// Função para fechar modais
-function closeModal(modalId) {
-  document.getElementById(modalId).classList.add('hidden');
-}
-
-// Função para copiar a chave Pix
-function copyPixKey() {
-  navigator.clipboard.writeText(pixKey).then(() => {
-    alert("Chave Pix copiada para a área de transferência!");
-  }).catch(err => {
-    console.error("Erro ao copiar a chave Pix:", err);
-  });
-}
 
 // Função para confirmar pagamento e ativar animações
 function confirmPayment() {
@@ -373,20 +351,6 @@ function resetPixPage() {
   document.getElementById("pixQRCodeContainer").classList.remove("hidden");
 }
 
-// Função para exibir o aviso ⚠️ ao carregar a página
-function showWarning() {
-  const warningPopup = document.getElementById('warningPopup');
-  warningPopup.classList.remove('hidden');
-}
-
-// Função para fechar o aviso ⚠️
-function closeWarning() {
-  const warningPopup = document.getElementById('warningPopup');
-  warningPopup.classList.add('hidden');
-}
-
-//
-  <button onclick="closeWarning()" class="ml-4 text-[#8f4fff] hover:underline text-sm">x</button>
 </div>
 </body>
 </html>
