@@ -81,15 +81,15 @@
     </div>
 
     <!-- Mensagem de agradecimento -->
-    <div id="thankYouContainer" class="hidden text-center">
-      <h4 class="text-lg text-[#8f4fff] mb-4">Obrigado!</h4>
-      <p class="text-white italic mb-4">
-        “As sombras de Caelum consumiram sua oferenda com prazer. Agora você caminha guardado pela benção de um Guardião Divino. Obrigado por sua coragem, Vitalista.”
-      </p>
-      <button onclick="resetPixPage()" class="bg-[#8f4fff] text-black px-4 py-2 rounded hover:bg-[#39ff14]">
-        Voltar
-      </button>
-    </div>
+    <div id="thankYouContainer" class="hidden text-center animate-explosion">
+  <h4 class="text-lg text-[#FFD700] font-bold mb-4 glow-gold">Obrigado!</h4>
+  <p class="text-white italic mb-4">
+    “As sombras de Caelum consumiram sua oferenda com prazer. Agora você caminha guardado pela benção de um Guardião Divino.”
+  </p>
+  <button onclick="closeThankYou()" class="bg-[#8f4fff] text-black px-4 py-2 rounded hover:bg-[#39ff14]">
+    x
+  </button>
+</div>
 
     <!-- Botão para confirmar pagamento -->
     <button onclick="confirmPayment()" class="bg-[#8f4fff] text-black px-4 py-2 rounded hover:bg-[#39ff14] block w-full">
