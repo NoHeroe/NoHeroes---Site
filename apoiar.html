@@ -228,6 +228,9 @@
   }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+if (typeof QRCode === "undefined") {
+  alert("Erro: a biblioteca QRCode.js não foi carregada. Verifique sua conexão com a Internet.");
+}
 <script>
   // Gera o código Pix Payload Format
   function generatePixPayload(valor) {
