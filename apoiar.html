@@ -12,19 +12,15 @@
       background-color: #0a0a0a;
       color: #e5e5e5;
     }
-
     h1, h2 {
       font-family: 'Playfair Display', serif;
     }
-
     html {
       scroll-behavior: smooth;
     }
-
     .logo-glow {
       animation: glow 2s infinite ease-in-out;
     }
-
     @keyframes glow {
       0%, 100% { filter: drop-shadow(0 0 8px #8f4fff); }
       50% { filter: drop-shadow(0 0 16px #8f4fff); }
@@ -74,33 +70,19 @@
   <div id="pixModal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center">
     <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-lg w-full text-left">
       <h3 class="text-2xl font-bold text-[#8f4fff] mb-4">Contribuir com Pix</h3>
-
-      <!-- QR Code fixo para escaneamento -->
-      <div id="pixQRCodeContainer" class="text-center">
-        <h4 class="text-lg text-[#8f4fff] mb-4">Escaneie o QR Code abaixo ou copie a chave Pix:</h4>
-        <img src="assets/images/qr-code.png" alt="QR Code Pix" class="mx-auto w-64 mb-4">
-
-        <!-- Botão para copiar a chave Pix -->
-        <button onclick="copyPixKey()" class="bg-[#8f4fff] text-black px-4 py-2 rounded hover:bg-[#39ff14] block mx-auto mb-4">
-          Copiar chave Pix
+      <form id="pixForm">
+        <label class="block mb-2 text-sm">Nome (obrigatório):</label>
+        <input type="text" required class="w-full p-2 mb-4 bg-[#333] text-white rounded">
+        <label class="block mb-2 text-sm">Idade (opcional):</label>
+        <input type="number" class="w-full p-2 mb-4 bg-[#333] text-white rounded">
+        <label class="block mb-2 text-sm">Motivo da doação (opcional):</label>
+        <textarea class="w-full p-2 mb-4 bg-[#333] text-white rounded"></textarea>
+        <label class="block mb-2 text-sm">Valor (R$):</label>
+        <input type="number" required class="w-full p-2 bg-[#333] text-white rounded">
+        <button type="submit" class="bg-[#8f4fff] text-black px-4 py-2 mt-4 rounded hover:bg-[#39ff14]">
+          Gerar QR Code Pix
         </button>
-      </div>
-
-      <!-- Mensagem de agradecimento -->
-      <div id="thankYouContainer" class="hidden text-center">
-        <h4 class="text-lg text-[#8f4fff] mb-4">Obrigado!</h4>
-        <p class="text-white italic mb-4">
-          “As sombras de Caelum consumiram sua oferenda com prazer. Agora você caminha guardado pela benção de um Guardião Divino. Obrigado por sua coragem, Vitalista.”
-        </p>
-        <button onclick="resetPixPage()" class="bg-[#8f4fff] text-black px-4 py-2 rounded hover:bg-[#39ff14]">
-          Voltar
-        </button>
-      </div>
-
-      <!-- Botão para confirmar pagamento -->
-      <button onclick="confirmPayment()" class="bg-[#8f4fff] text-black px-4 py-2 rounded hover:bg-[#39ff14] block w-full">
-        Já efetuei o pagamento
-      </button>
+      </form>
       <button onclick="closeModal('pixModal')" class="mt-4 text-[#8f4fff] underline">Fechar</button>
     </div>
   </div>
@@ -109,40 +91,42 @@
   <div id="formModal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center">
     <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-lg w-full text-left">
       <h3 id="formTitle" class="text-2xl font-bold text-[#8f4fff] mb-4"></h3>
-      <form id="formContent"></form>
+      <form id="formContent">
+        <!-- O conteúdo do formulário será carregado dinamicamente -->
+      </form>
       <button onclick="closeModal('formModal')" class="mt-4 text-[#8f4fff] underline">Fechar</button>
     </div>
   </div>
 
   <!-- Redes Sociais Modal -->
-  <div id="socialsModal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center">
-    <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-lg w-full text-center">
-      <h3 class="text-2xl font-bold text-[#8f4fff] mb-4">Siga as Sombras</h3>
-      <ul class="space-y-4">
-        <li class="flex items-center justify-center">
-          <img src="assets/icons/instagram icon.png" alt="Instagram" class="w-6 h-6 mr-2">
-          <a href="https://instagram.com/_noheroe" target="_blank" class="text-[#8f4fff] hover:underline">Instagram</a>
-        </li>
-        <li class="flex items-center justify-center">
-          <img src="assets/icons/tiktok icon.png" alt="TikTok" class="w-6 h-6 mr-2">
-          <a href="https://tiktok.com/@_noheroe" target="_blank" class="text-[#8f4fff] hover:underline">TikTok</a>
-        </li>
-        <li class="flex items-center justify-center">
-          <img src="assets/icons/youtube icon.png" alt="YouTube" class="w-6 h-6 mr-2">
-          <a href="https://youtube.com/" target="_blank" class="text-[#8f4fff] hover:underline">YouTube</a>
-        </li>
-        <li class="flex items-center justify-center">
-          <img src="assets/icons/whatsapp icon.png" alt="WhatsApp" class="w-6 h-6 mr-2">
-          <a href="https://chat.whatsapp.com/" target="_blank" class="text-[#8f4fff] hover:underline">WhatsApp</a>
-        </li>
-        <li class="flex items-center justify-center">
-          <img src="assets/icons/discord icon.png" alt="Discord" class="w-6 h-6 mr-2">
-          <a href="https://discord.gg/" target="_blank" class="text-[#8f4fff] hover:underline">Discord</a>
-        </li>
-      </ul>
-      <button onclick="closeModal('socialsModal')" class="mt-4 text-[#8f4fff] underline">Fechar</button>
-    </div>
+<div id="socialsModal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center">
+  <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-lg w-full text-center">
+    <h3 class="text-2xl font-bold text-[#8f4fff] mb-4">Siga as Sombras</h3>
+    <ul class="space-y-4">
+      <li class="flex items-center justify-center">
+        <img src="assets/icons/instagram icon.png" alt="Instagram" class="w-6 h-6 mr-2">
+        <a href="https://instagram.com/_noheroe" target="_blank" class="text-[#8f4fff] hover:underline">Instagram</a>
+      </li>
+      <li class="flex items-center justify-center">
+        <img src="assets/icons/tiktok icon.png" alt="TikTok" class="w-6 h-6 mr-2">
+        <a href="https://tiktok.com/@_noheroe" target="_blank" class="text-[#8f4fff] hover:underline">TikTok</a>
+      </li>
+      <li class="flex items-center justify-center">
+        <img src="assets/icons/youtube icon.png" alt="YouTube" class="w-6 h-6 mr-2">
+        <a href="#" target="_blank" class="text-[#8f4fff] hover:underline">YouTube</a>
+      </li>
+      <li class="flex items-center justify-center">
+        <img src="assets/icons/discord icon.png" alt="Discord" class="w-6 h-6 mr-2">
+        <a href="https://discord.gg/" target="_blank" class="text-[#8f4fff] hover:underline">Discord</a>
+      </li>
+      <li class="flex items-center justify-center">
+        <img src="assets/icons/whatsapp icon.png" alt="WhatsApp" class="w-6 h-6 mr-2">
+        <a href="https://chat.whatsapp.com/" target="_blank" class="text-[#8f4fff] hover:underline">WhatsApp</a>
+      </li>
+    </ul>
+    <button onclick="closeModal('socialsModal')" class="mt-4 text-[#8f4fff] underline">Fechar</button>
   </div>
+</div>
 
   <!-- RODAPÉ -->
   <footer class="mt-20 text-sm text-[#777]">
@@ -152,60 +136,77 @@
 
   <!-- SCRIPTS -->
   <script>
-    const pixKey = "azuosraul999@gmail.com"; // Chave Pix
+  // Função para abrir o modal Pix
+  function openPixModal() {
+    document.getElementById('pixModal').classList.remove('hidden');
+  }
 
-    function openPixModal() {
-      document.getElementById('pixModal').classList.remove('hidden');
+  // Função para abrir os formulários dinâmicos
+  function openForm(type) {
+    const modal = document.getElementById('formModal');
+    const title = document.getElementById('formTitle');
+    const content = document.getElementById('formContent');
+    modal.classList.remove('hidden');
+
+    // Configurar formulários conforme o tipo
+    if (type === 'ajudarOutrasFormas') {
+      title.innerText = 'Quero ajudar de outras formas';
+      content.innerHTML = `
+        <label class="block mb-2 text-sm">Escolha como ajudar:</label>
+        <select class="w-full p-2 mb-4 bg-[#333] text-white rounded">
+          <option>Moderar a comunidade do Discord</option>
+          <option>Moderar grupo WhatsApp</option>
+          <option>Contribuir com artes</option>
+          <option>Colaborar nas animações</option>
+          <option>Divulgar o projeto</option>
+          <option>Outras habilidades</option>
+        </select>
+        <textarea class="w-full p-2 bg-[#333] text-white rounded" placeholder="Detalhe aqui"></textarea>
+        <button class="bg-[#8f4fff] text-black px-4 py-2 mt-4 rounded">Enviar</button>
+      `;
+    } else if (type === 'fazerParceria') {
+      title.innerText = 'Quero fazer uma parceria';
+      content.innerHTML = `
+        <label class="block mb-2 text-sm">Nome do Projeto ou Marca:</label>
+        <input type="text" class="w-full p-2 mb-4 bg-[#333] text-white rounded">
+        <label class="block mb-2 text-sm">Ideia de parceria:</label>
+        <textarea class="w-full p-2 bg-[#333] text-white rounded" placeholder="Detalhe aqui"></textarea>
+        <label class="block mb-2 text-sm">E-mail ou contato:</label>
+        <input type="email" class="w-full p-2 bg-[#333] text-white rounded">
+        <button class="bg-[#8f4fff] text-black px-4 py-2 mt-4 rounded">Enviar</button>
+      `;
+    } else if (type === 'investirProjeto') {
+      title.innerText = 'Quero investir no projeto';
+      content.innerHTML = `
+        <label class="block mb-2 text-sm">Motivo do interesse:</label>
+        <textarea class="w-full p-2 mb-4 bg-[#333] text-white rounded" placeholder="Detalhe aqui"></textarea>
+        <label class="block mb-2 text-sm">E-mail ou contato:</label>
+        <input type="email" class="w-full p-2 bg-[#333] text-white rounded">
+        <button class="bg-[#8f4fff] text-black px-4 py-2 mt-4 rounded">Enviar</button>
+      `;
+    } else if (type === 'apoioProjeto') {
+      title.innerText = 'Preciso de apoio no meu projeto';
+      content.innerHTML = `
+        <label class="block mb-2 text-sm">Nome do Projeto:</label>
+        <input type="text" class="w-full p-2 mb-4 bg-[#333] text-white rounded">
+        <label class="block mb-2 text-sm">Em que precisa de ajuda:</label>
+        <textarea class="w-full p-2 bg-[#333] text-white rounded" placeholder="Detalhe aqui"></textarea>
+        <label class="block mb-2 text-sm">Link para portfólio ou referência:</label>
+        <input type="url" class="w-full p-2 bg-[#333] text-white rounded">
+        <button class="bg-[#8f4fff] text-black px-4 py-2 mt-4 rounded">Enviar</button>
+      `;
     }
+  }
 
-    function closeModal(modalId) {
-      document.getElementById(modalId).classList.add('hidden');
-    }
+  // Função para abrir o modal das Redes Sociais
+  function openSocials() {
+    document.getElementById('socialsModal').classList.remove('hidden');
+  }
 
-    function resetPixPage() {
-      document.getElementById("thankYouContainer").classList.add("hidden");
-      document.getElementById("pixQRCodeContainer").classList.remove("hidden");
-    }
-
-    function confirmPayment() {
-      document.getElementById("pixQRCodeContainer").classList.add("hidden");
-      document.getElementById("thankYouContainer").classList.remove("hidden");
-    }
-
-    function copyPixKey() {
-      navigator.clipboard.writeText(pixKey).then(() => {
-        alert("Chave Pix copiada para a área de transferência!");
-      }).catch(err => {
-        console.error("Erro ao copiar a chave Pix:", err);
-      });
-    }
-
-    function openForm(type) {
-      const modal = document.getElementById('formModal');
-      const title = document.getElementById('formTitle');
-      const content = document.getElementById('formContent');
-      modal.classList.remove('hidden');
-
-      if (type === 'ajudarOutrasFormas') {
-        title.innerText = 'Quero ajudar de outras formas';
-        content.innerHTML = `
-          <label class="block mb-2 text-sm">Escolha como ajudar:</label>
-          <select class="w-full p-2 mb-4 bg-[#333] text-white rounded">
-            <option>Moderar a comunidade do Discord</option>
-            <option>Contribuir com artes</option>
-            <option>Divulgar o projeto</option>
-            <option>Outras habilidades</option>
-          </select>
-          <textarea class="w-full p-2 bg-[#333] text-white rounded" placeholder="Detalhe aqui"></textarea>
-          <button class="bg-[#8f4fff] text-black px-4 py-2 mt-4 rounded">Enviar</button>
-        `;
-      }
-      // Outros tipos de formulário seguem o mesmo formato...
-    }
-
-    function openSocials() {
-      document.getElementById('socialsModal').classList.remove('hidden');
-    }
-  </script>
+  // Função para fechar modais
+  function closeModal(id) {
+    document.getElementById(id).classList.add('hidden');
+  }
+</script>
 </body>
 </html>
