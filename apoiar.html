@@ -177,13 +177,17 @@
     }
 
     function confirmPayment() {
-      closeModal('pixModal');
-      document.getElementById('thankYouContainer').classList.remove('hidden');
-    }
+  closeModal('pixModal'); // Fecha o modal Pix
+  document.getElementById('thankYouModal').classList.remove('hidden'); // Abre o modal de agradecimento
+}
 
-    function closeThankYou() {
-      document.getElementById('thankYouContainer').classList.add('hidden');
-    }
+function closeModal(modalId) {
+  document.getElementById(modalId).classList.add('hidden');
+}
+
+function copyPixKey() {
+  navigator.clipboard.writeText(pixKey).then(() => alert("Chave Pix copiada para a área de transferência!"));
+}
   // Função para abrir os formulários dinâmicos
   function openForm(type) {
     const modal = document.getElementById('formModal');
