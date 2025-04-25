@@ -25,6 +25,21 @@
       0%, 100% { filter: drop-shadow(0 0 8px #8f4fff); }
       50% { filter: drop-shadow(0 0 16px #8f4fff); }
     }
+<style>
+  .glow-gold {
+    animation: gold-glow 2s infinite alternate ease-in-out;
+    box-shadow: 0 0 20px #FFD700, 0 0 40px #FFD700, 0 0 60px #FFD700;
+  }
+
+  @keyframes gold-glow {
+    0% {
+      box-shadow: 0 0 20px #FFD700, 0 0 40px #FFD700, 0 0 60px #FFD700;
+    }
+    100% {
+      box-shadow: 0 0 30px #FFA500, 0 0 50px #FFD700, 0 0 70px #FFD700;
+    }
+  }
+</style>
   </style>
 </head>
 <body class="text-center p-6">
