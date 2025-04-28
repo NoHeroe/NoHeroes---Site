@@ -1,134 +1,139 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!DOCTYPE html><html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Projeto NoHeroes</title>
+  <title>NoHeroes Blog</title>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <!-- ScrollReveal -->
+  <script src="https://unpkg.com/scrollreveal"></script>
+  <!-- Styles -->
   <style>
-    /* Estilos básicos */
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #121212; color: #fff; }
-    .card { padding: 20px; background-color: #333; margin: 10px 0; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); }
-    .btn { padding: 10px 20px; background-color: #27ae60; color: white; border: none; border-radius: 5px; cursor: pointer; }
-    .btn:hover { background-color: #2ecc71; }
-    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1000; justify-content: center; align-items: center; }
-    .modal.open { display: flex; }
-    .modal-content { background-color: #222; padding: 20px; border-radius: 10px; width: 90%; max-width: 600px; }
-    .close { position: absolute; top: 10px; right: 10px; background: none; border: none; color: #fff; font-size: 20px; cursor: pointer; }
-    .flex { display: flex; }
-    .space-x-4 { gap: 10px; }
-    .justify-center { justify-content: center; }
-    .history-filter-btn { background-color: #444; border: 1px solid #555; color: #fff; padding: 10px; cursor: pointer; }
-    .history-filter-btn:hover { background-color: #555; }
-    .history-filter-btn.active { background-color: #27ae60; }
-    .anchor-btn { color: #27ae60; text-decoration: none; }
-    .anchor-btn:hover { text-decoration: underline; }
+    :root {
+      --bg: #111;
+      --text: #eee;
+      --accent1: #8e44ad;
+      --accent2: #27ae60;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; }
+    a { color: var(--accent1); text-decoration: none; }
+    header { position: fixed; top:0; left:0; width:100%; display:flex; justify-content: space-between; align-items:center; padding:1rem 2rem; background: rgba(17,17,17,0.9); z-index:100; }
+    header img { height:32px; }
+    header button { background: none; border:1px solid var(--text); padding:.5rem 1rem; border-radius:4px; cursor:pointer; font-family:'Inter'; }
+    .hero { height: 80vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; background: url('assets/hero-bg.jpg') center/cover no-repeat; position: relative; }
+    .hero::after { content: ''; position:absolute; inset:0; background: rgba(17,17,17,0.6); }
+    .hero h1, .hero p { position: relative; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size:4rem; margin-bottom:1rem; color: var(--accent1);}  
+    .hero p { font-size:1.25rem; color: var(--accent2);}  
+    main { padding: 12rem 2rem 4rem; max-width:800px; margin:0 auto; }
+    .card { background: #222; border-radius:8px; overflow:hidden; margin-bottom:2rem; display:flex; flex-direction:column; }
+    .card img { width:100%; height:auto; }
+    .card-content { padding:1rem; }
+    .card-content h2 { font-family:'Playfair Display'; margin-bottom:.5rem; }
+    .card-content .meta { font-size:.875rem; color:#aaa; margin-bottom:.5rem; }
+    .card-content p { margin-bottom:1rem; }
+    .card-content button { background: var(--accent2); border:none; padding:.5rem 1rem; border-radius:4px; cursor:pointer; }
+    /* Modal Styles */
+    .modal { position:fixed; top:0; left:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; background: rgba(0,0,0,0.8); visibility:hidden; opacity:0; transition: opacity .3s ease; }
+    .modal.open { visibility:visible; opacity:1; }
+    .modal-content { background:#111; border:2px solid var(--accent1); border-radius:8px; max-width:600px; width:90%; max-height:90%; overflow:auto; position:relative; padding:2rem; }
+    .modal-content .close { position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.5rem; cursor:pointer; }
+    /* Quick-scroll anchors (example) */
+    .anchor-btn { background: none; border: none; color: var(--text); cursor:pointer; margin-left:1rem; }
   </style>
 </head>
 <body>
-
-  <!-- Conteúdo Principal -->
-  <div class="container">
-    <button class="btn open-modal" data-modal="modal-2025-04-27-melhorias-na-navegacao">Ver Atualização</button>
-    <button class="btn" id="historyBtn">Histórico de Atualizações</button>
-
-    <!-- Cards de Postagens -->
-    <div class="card" data-id="1" data-category="atualizacoes">
-      <h2>Nova Funcionalidade</h2>
-      <p>Introduzimos uma nova forma de navegação, incluindo categorias de filtragem...</p>
-      <button class="btn open-modal" data-modal="modal-1">Saiba Mais</button>
+  <!-- Topo fixo com botão Histórico -->
+  <header>
+    <img src="assets/logo.png" alt="NoHeroes Logo">
+    <div>
+      <button id="historyBtn">Histórico</button>
+      <!-- Aqui poderão ser adicionados botões de âncora rápida para posts específicos -->
     </div>
-
-    <!-- Modal de Atualização -->
-    <div id="modal-2025-04-27-melhorias-na-navegacao" class="modal">
-      <div class="modal-content">
-        <button class="close" data-close="modal-2025-04-27-melhorias-na-navegacao">×</button>
-        <h2>Patch 0.0.3 — Melhorias na Navegação</h2>
-        <div class="meta">27/04/2025 - Atualizações</div>
-        <p>Adicionamos um sistema de navegação para facilitar a busca por conteúdos. Agora, no topo da página, é possível filtrar rapidamente entre: Atualizações, Notícias e Extras.</p>
+  </header>  <!-- Hero Section -->  <section class="hero">
+    <h1>Crônicas das Sombras</h1>
+    <p>As vozes que moldam o universo NoHeroes.</p>
+  </section>  <!-- Corpo do Blog (Scroll infinito) -->  <main id="blog-feed">
+    <!-- Exemplo de Card de Post -->
+    <article class="card" data-id="2025-07-26-o-despertar-de-freq">
+      <img src="assets/posts/2025-07-26-o-despertar-de-freq-thumb.jpg" alt="O despertar de FREQ">
+      <div class="card-content">
+        <h2>O despertar de FREQ</h2>
+        <div class="meta">26/07/2025</div>
+        <p>Um novo mundo se rasga sob nossos pés...</p>
+        <button class="open-modal" data-modal="modal-2025-07-26-o-despertar-de-freq">Ler Mais</button>
       </div>
+    </article>
+    <!-- Novos cards são carregados dinamicamente via JS -->
+  </main>  <!-- Histórico (Modal Lateral ou Overlay) -->  <div id="historyModal" class="modal">
+    <div class="modal-content">
+      <button class="close" data-close="historyModal">×</button>
+      <h3>Histórico de Publicações</h3>
+      <ul>
+        <!-- Lista gerada dinamicamente -->
+        <li><button class="anchor-btn" data-scroll-to="2025-07-26-o-despertar-de-freq">26/07/2025 - O despertar de FREQ</button></li>
+      </ul>
     </div>
-
-    <!-- Modal de Histórico -->
-    <div id="historyModal" class="modal">
-      <div class="modal-content">
-        <button class="close" data-close="historyModal">×</button>
-        <div class="flex justify-center space-x-4 mb-4">
-          <button class="history-filter-btn" data-filter="atualizacoes">Atualizações</button>
-          <button class="history-filter-btn" data-filter="noticias">Notícias</button>
-          <button class="history-filter-btn" data-filter="comunidade">Comunidade</button>
-          <button class="history-filter-btn" data-filter="extras">Extras</button>
-        </div>
-        <ul id="historyList" class="space-y-2">
-          <!-- Será preenchido pelo JS -->
-        </ul>
+  </div>  <!-- Modals de Posts Individuais -->  <div id="modal-2025-07-26-o-despertar-de-freq" class="modal">
+    <div class="modal-content">
+      <button class="close" data-close="modal-2025-07-26-o-despertar-de-freq">📜</button>
+      <!-- Aqui inicia animação de arauto abrindo pergaminho -->
+      <img src="assets/herald-open.gif" alt="Herald Open" style="width:100%;">
+      <h2>O despertar de FREQ</h2>
+      <div class="meta">26/07/2025</div>
+      <div class="post-body">
+        <!-- Conteúdo do post -->
+        <p>A obra FREQ se inicia quando...</p>
       </div>
+      <!-- Ao fechar, animação do arauto fechando pergaminho -->
+      <img src="assets/herald-close.gif" alt="Herald Close" style="width:100%; display:none;" class="close-anim">
     </div>
+  </div>  <!-- Scripts -->  <script>
+    // ScrollReveal init
+    ScrollReveal().reveal('.card', { distance: '50px', duration: 600, interval: 100, origin: 'bottom' });
 
-  </div>
-
-  <script>
-    // ScrollReveal (Adicione se necessário)
-    ScrollReveal().reveal('.card', { distance:'50px', duration:600, interval:100, origin:'bottom' });
-
-    // Modal open/close
-    document.querySelectorAll('.open-modal').forEach(btn => btn.addEventListener('click', () => {
-      const modalId = btn.dataset.modal;
-      document.querySelectorAll('.modal.open').forEach(m => m.classList.remove('open'));
-      document.getElementById(modalId).classList.add('open');
-    }));
-
-    document.querySelectorAll('.close').forEach(btn => btn.addEventListener('click', () => {
-      const modalId = btn.dataset.close;
-      document.getElementById(modalId).classList.remove('open');
-    }));
-
-    // Histórico button
-    document.getElementById('historyBtn').addEventListener('click', () => {
-      document.getElementById('historyModal').classList.add('open');
-      populateHistoryList(currentHistoryFilter);
+    // Modal logic: abre um modal e garante fechar outros
+    document.querySelectorAll('.open-modal').forEach(btn => {
+      btn.addEventListener('click', () => {
+        // fecha todos os modais
+        document.querySelectorAll('.modal.open').forEach(m => m.classList.remove('open'));
+        // abre o alvo
+        document.getElementById(btn.dataset.modal).classList.add('open');
+      });
+    });
+    document.querySelectorAll('.close').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.close;
+        const modal = document.getElementById(id);
+        // inicia animação de fechar aqui se necessário
+        modal.classList.remove('open');
+      });
     });
 
-    // Posts metadata
-    const posts = Array.from(document.querySelectorAll('.card')).map(card => ({
-      id: card.dataset.id,
-      title: card.querySelector('h2').innerText,
-      category: card.dataset.category
-    }));
-
-    let currentHistoryFilter = 'atualizacoes';
-
-    function populateHistoryList(filter) {
-      currentHistoryFilter = filter;
-      const list = document.getElementById('historyList');
-      list.innerHTML = '';
-      posts.filter(p => p.category === filter).forEach(p => {
-        const li = document.createElement('li');
-        li.className = 'flex justify-between items-center';
-        const btn = document.createElement('button');
-        btn.className = 'text-left anchor-btn';
-        btn.innerText = p.title;
-        btn.addEventListener('click', () => {
-          document.getElementById('historyModal').classList.remove('open');
-          document.querySelector(`[data-id='${p.id}']`).scrollIntoView({behavior:'smooth'});
-        });
-
-        const more = document.createElement('button');
-        more.className = 'text-[#27ae60] underline ml-4';
-        more.innerText = 'Saiba mais';
-        more.addEventListener('click', () => document.getElementById(`modal-${p.id}`).classList.add('open'));
-
-        li.append(btn, more);
-        list.append(li);
+    // Histórico
+    document.getElementById('historyBtn').addEventListener('click', ()=>{
+      document.getElementById('historyModal').classList.add('open');
+    });
+    // âncoras rápidas
+    document.querySelectorAll('.anchor-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        document.getElementById('historyModal').classList.remove('open');
+        document.querySelector(`[data-id='${btn.dataset.scrollTo}']`).scrollIntoView({ behavior: 'smooth' });
       });
+    });
+
+    // Infinite Scroll (simplificado)
+    let page = 1;
+    window.addEventListener('scroll', ()=>{
+      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 200) {
+        // carregar próxima página de posts
+        loadMorePosts(++page);
+      }
+    });
+    function loadMorePosts(pageNum) {
+      // fetch `/posts/page-${pageNum}.json` e gerar cards...
+      // Placeholder: não implementado
     }
-
-    // History filters
-    document.querySelectorAll('.history-filter-btn').forEach(btn => btn.addEventListener('click', () => {
-      document.querySelectorAll('.history-filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      populateHistoryList(btn.dataset.filter);
-    }));
-  </script>
-
-</body>
+  </script></body>
 </html>
