@@ -161,36 +161,118 @@ footer p.text-xs {
   </section>
 
   <!-- Blog Posts -->
-  <main id="blog-feed"></main>
-   
-   <div id="historyModal" class="modal">
-     <div class="modal-content">
-       <button class="close" data-close="historyModal">×</button>
-       <h3>Histórico de Publicações</h3>
-       <ul id="history-list" style="list-style: none; padding: 0;"></ul>
-     </div>
-   </div>
-   
-   <div id="modals-container"></div> 
+<main id="blog-feed"></main>
 
-  <!-- Scripts -->
-  <script>
-    // Open modals
-    document.querySelectorAll('.open-modal').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const modal = document.getElementById(btn.dataset.modal);
-        modal.classList.add('open');
+<div id="historyModal" class="modal">
+  <div class="modal-content">
+    <button class="close" data-close="historyModal">×</button>
+    <h3>Histórico de Publicações</h3>
+    
+    <!-- Adicionar Filtros -->
+    <div class="filter-menu">
+      <label>
+        <input type="radio" name="filter" value="Todos" checked> Todos
+      </label>
+      <label>
+        <input type="radio" name="filter" value="Atualizações"> Atualizações
+      </label>
+      <label>
+        <input type="radio" name="filter" value="Notícias"> Notícias
+      </label>
+    </div>
+
+    <ul id="history-list" style="list-style: none; padding: 0;"></ul>
+  </div>
+</div>
+
+<div id="modals-container"></div>
+
+<script>
+  // Carregar publicações do JSON
+  fetch('posts.json')
+    .then(response => response.json())
+    .then(posts => {
+      const blogFeed = document.getElementById('blog-feed');
+      const historyList = document.getElementById('history-list');
+      const modalsContainer = document.getElementById('modals-container');
+
+      // Ordenar as publicações por data (do mais recente para o mais antigo)
+      posts.sort((a, b) => new Date(b.date.split('/').reverse().join('-')) - new Date(a.date.split('/').reverse().join('-')));
+
+      posts.forEach(post => {
+        // Criar o post na página principal
+        const postElement = document.createElement('article');
+        postElement.classList.add('card');
+        postElement.setAttribute('data-id', post.id);
+        postElement.innerHTML = `
+          <h2>${post.title}</h2>
+          <div class="meta">${post.date} — ${post.category}</div>
+          <button class="open-modal" data-modal="modal-${post.id}">Ler Mais</button>
+        `;
+        blogFeed.appendChild(postElement);
+
+        // Adicionar ao histórico
+        const historyItem = document.createElement('li');
+        historyItem.classList.add('filter-item');
+        historyItem.setAttribute('data-category', post.category);
+        historyItem.innerHTML = `
+          <button class="anchor-btn" data-scroll-to="${post.id}">${post.date} - ${post.title}</button>
+        `;
+        historyList.appendChild(historyItem);
+
+        // Criar o modal correspondente
+        const modalElement = document.createElement('div');
+        modalElement.classList.add('modal');
+        modalElement.setAttribute('id', `modal-${post.id}`);
+        modalElement.innerHTML = `
+          <div class="modal-content">
+            <button class="close" data-close="modal-${post.id}">×</button>
+            <h3>${post.title}</h3>
+            <p>${post.content}</p>
+          </div>
+        `;
+        modalsContainer.appendChild(modalElement);
       });
-    });
 
-    // Close modals
-    document.querySelectorAll('.close').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const modal = document.getElementById(btn.dataset.close);
-        modal.classList.remove('open');
+      // Adicionar funcionalidades dos modais
+      document.querySelectorAll('.open-modal').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const modal = document.getElementById(btn.dataset.modal);
+          modal.classList.add('open');
+        });
       });
-    });
 
+      document.querySelectorAll('.close').forEach(btn => {
+        btn.addEventListener('click', () => {
+          btn.closest('.modal').classList.remove('open');
+        });
+      });
+
+      // Adicionar funcionalidade do histórico
+      document.querySelectorAll('.anchor-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = document.querySelector(`[data-id="${btn.dataset.scrollTo}"]`);
+          document.getElementById('historyModal').classList.remove('open');
+          target.scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+
+      // Adicionar funcionalidade de filtro
+      document.querySelectorAll('input[name="filter"]').forEach(radio => {
+        radio.addEventListener('change', () => {
+          const value = radio.value;
+          document.querySelectorAll('.filter-item').forEach(item => {
+            if (value === 'Todos' || item.dataset.category === value) {
+              item.style.display = 'list-item';
+            } else {
+              item.style.display = 'none';
+            }
+          });
+        });
+      });
+    })
+    .catch(error => console.error('Erro ao carregar publicações:', error));
+</script>
     // Open History Modal
     document.getElementById('historyBtn').addEventListener('click', () => {
       document.getElementById('historyModal').classList.add('open');
