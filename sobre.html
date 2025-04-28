@@ -8,13 +8,21 @@
 </head>
 <body class="bg-black text-white">
 
+<!-- Header -->
+<header class="fixed top-0 left-0 w-full bg-black bg-opacity-90 z-50 flex items-center justify-between px-8 py-4 shadow-lg">
+    <img src="assets/images/noheroes logo.png" alt="NoHeroes Logo" class="h-16">
+    <nav>
+        <a href="index.html" class="text-white text-lg font-semibold hover:text-gray-300 transition">Início</a>
+    </nav>
+</header>
+
 <!-- Hero Section -->
 <section class="relative bg-cover bg-center h-screen text-center" style="background-image: url('background-texture.png');">
     <div class="absolute inset-0 bg-black opacity-50"></div>
     <div class="relative z-10 flex flex-col items-center justify-center h-full">
         <h1 class="text-5xl font-bold text-white shadow-lg">Das Sombras, uma Promessa: A História de NoHeroes</h1>
         <p class="text-xl mt-4">Entre mundos esquecidos e sonhos negados, um universo renasceu.</p>
-        <button class="mt-8 bg-transparent text-white font-semibold py-2 px-6 border-2 border-white rounded-lg hover:bg-white hover:text-black transition">Descer</button>
+        <button class="mt-8 bg-transparent text-white font-semibold py-2 px-6 border-2 border-white rounded-lg hover:bg-white hover:text-black transition scroll-btn">Descer</button>
     </div>
 </section>
 
@@ -30,21 +38,21 @@
     <h2 class="text-4xl font-bold">Quando a Luz Falhou, a Sombra Floresceu</h2>
     <p class="text-lg mt-4 max-w-3xl mx-auto">NoHeroes nasceu de um abismo: a ausência de histórias que tocassem a dor real, a fé crua, a redenção através do sofrimento. Mais que animes. Mais que mangás. É a voz dos derrotados que nunca se renderam. É o universo onde a queda é tão épica quanto a ascensão.</p>
 
-    <!-- Linha do Tempo -->
-    <div class="flex justify-center mt-8 space-x-4">
-        <div class="text-center bg-gray-800 p-6 rounded-lg shadow-lg w-48">
+    <!-- Linha do Tempo com Scroll Lateral -->
+    <div class="flex overflow-x-auto mt-8 space-x-4 px-4">
+        <div class="text-center bg-gray-800 p-6 rounded-lg shadow-lg flex-none w-48">
             <h3 class="text-xl font-semibold">2023</h3>
             <p class="mt-2 text-sm">Criação do conceito ROAR</p>
         </div>
-        <div class="text-center bg-gray-800 p-6 rounded-lg shadow-lg w-48">
+        <div class="text-center bg-gray-800 p-6 rounded-lg shadow-lg flex-none w-48">
             <h3 class="text-xl font-semibold">2024</h3>
             <p class="mt-2 text-sm">Rascunho de FREQ</p>
         </div>
-        <div class="text-center bg-gray-800 p-6 rounded-lg shadow-lg w-48">
+        <div class="text-center bg-gray-800 p-6 rounded-lg shadow-lg flex-none w-48">
             <h3 class="text-xl font-semibold">2025</h3>
             <p class="mt-2 text-sm">Lançamento do Site</p>
         </div>
-        <div class="text-center bg-gray-800 p-6 rounded-lg shadow-lg w-48">
+        <div class="text-center bg-gray-800 p-6 rounded-lg shadow-lg flex-none w-48">
             <h3 class="text-xl font-semibold">2025+</h3>
             <p class="mt-2 text-sm">Expansão de universo e comunidade</p>
         </div>
@@ -68,63 +76,27 @@
     </div>
 </section>
 
-<!-- Seção 4: Missão & Valores -->
-<section class="py-16 bg-gray-900 text-center">
-    <h2 class="text-4xl font-bold">A Promessa Silenciosa de Cada Vitalista</h2>
-    <p class="text-lg mt-4 max-w-3xl mx-auto">Dar forma ao indizível. Transformar a dor em arte. Forjar mundos para quem nunca encontrou seu lar.</p>
-    
-    <div class="flex justify-center mt-8 space-x-8">
-        <div class="text-center">
-            <div class="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center mx-auto">
-                <img src="liberdade-icon.png" alt="Liberdade Criativa" class="w-8 h-8">
-            </div>
-            <p class="mt-4 text-sm">Liberdade Criativa</p>
-        </div>
-        <div class="text-center">
-            <div class="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center mx-auto">
-                <img src="autenticidade-icon.png" alt="Autenticidade" class="w-8 h-8">
-            </div>
-            <p class="mt-4 text-sm">Autenticidade</p>
-        </div>
-        <div class="text-center">
-            <div class="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center mx-auto">
-                <img src="superacao-icon.png" alt="Superação" class="w-8 h-8">
-            </div>
-            <p class="mt-4 text-sm">Superação</p>
-        </div>
-        <div class="text-center">
-            <div class="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center mx-auto">
-                <img src="resiliência-icon.png" alt="Resiliência" class="w-8 h-8">
-            </div>
-            <p class="mt-4 text-sm">Resiliência</p>
-        </div>
-    </div>
-</section>
+<!-- Footer -->
+<footer class="bg-black py-8 text-center text-gray-400">
+    <nav class="flex justify-center space-x-6 mb-4">
+        <a href="index.html" class="hover:text-white transition">Início</a>
+        <a href="sobre.html" class="hover:text-white transition">Sobre</a>
+        <a href="contato.html" class="hover:text-white transition">Contato</a>
+    </nav>
+    <p class="text-sm">Explore. Escolha. Caia. Evolua.</p>
+    <p class="mt-2 italic">Toda escolha tem um preço. Toda queda, uma razão.</p>
+    <p class="text-xs mt-4">&copy; 2025 NoHeroes. Todos os direitos reservados.</p>
+</footer>
 
-<!-- Seção 5: O Futuro -->
-<section class="py-16 text-center">
-    <h2 class="text-4xl font-bold">Ainda Estamos Apenas Começando...</h2>
-    <p class="text-lg mt-4 max-w-3xl mx-auto">O universo NoHeroes é vivo. Em breve, você verá:</p>
-    <ul class="list-disc text-lg mt-8 space-y-4 max-w-3xl mx-auto">
-        <li>Mangás em expansão</li>
-        <li>Animes autorais</li>
-        <li>Comunidades secretas</li>
-        <li>Gamificação vitalista</li>
-        <li>Um novo modo de viver fantasia... com cicatrizes e glória</li>
-    </ul>
-</section>
-
-<!-- Seção Final: A Equipe -->
-<section class="py-16 bg-gray-900 text-center">
-    <h2 class="text-4xl font-bold">Hoje e Amanhã</h2>
-    <p class="text-lg mt-4 max-w-3xl mx-auto">Raul — Criador. Roteirista. Artista. Executor.</p>
-    <p class="text-lg mt-4 max-w-3xl mx-auto">Futuro: Vitalistas se juntarão. Cada alma que ressoar com a verdade se tornará parte da lenda.</p>
-</section>
-</script> document.querySelector('.scroll-btn').addEventListener('click', () => {
-    window.scrollTo({
-        top: window.innerHeight,
-        behavior: 'smooth'
+<!-- Scripts -->
+<script>
+    // Scroll suave para o botão "Descer"
+    document.querySelector('.scroll-btn').addEventListener('click', () => {
+        window.scrollTo({
+            top: window.innerHeight,
+            behavior: 'smooth'
+        });
     });
-}); </script>
+</script>
 </body>
 </html>
