@@ -161,62 +161,17 @@ footer p.text-xs {
   </section>
 
   <!-- Blog Posts -->
-  <main id="blog-feed">
-    <!-- Post 1 -->
-    <article class="card" data-id="2025-04-27-patch-0-0-3">
-      <h2>Patch 0.0.3 — Melhorias na Navegação</h2>
-      <div class="meta">27/04/2025 — Atualizações</div>
-      <button class="open-modal" data-modal="modal-2025-04-27-patch-0-0-3">Ler Mais</button>
-    </article>
-    <!-- Post 2 -->
-    <article class="card" data-id="2025-04-27-patch-0-0-2">
-      <h2>Patch 0.0.2 — Página de Notícias Adicionada</h2>
-      <div class="meta">27/04/2025 — Atualizações</div>
-      <button class="open-modal" data-modal="modal-2025-04-27-patch-0-0-2">Ler Mais</button>
-    </article>
-    <!-- Post 3 -->
-    <article class="card" data-id="2025-04-24-patch-0-0-1">
-      <h2>Patch 0.0.1 — Lançamento do Site</h2>
-      <div class="meta">24/04/2025 — Notícias</div>
-      <button class="open-modal" data-modal="modal-2025-04-24-patch-0-0-1">Ler Mais</button>
-    </article>
-  </main>
-
-  <!-- Histórico Modal -->
-  <div id="historyModal" class="modal">
-  <div class="modal-content">
-    <button class="close" data-close="historyModal" style="background: none; border: none; cursor: pointer; font-size: 1.5rem; color: var(--text); position: absolute; top: 1rem; right: 1rem;">×</button>
-    <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: var(--accent1);">Histórico de Publicações</h3>
-    <div class="filter-menu" style="margin-bottom: 1.5rem;">
-      <label style="display: flex; align-items: center; font-size: 1.2rem; margin-bottom: 0.5rem;">
-        <input type="radio" name="filter" value="Todos" checked style="margin-right: 0.8rem;"> Todos
-      </label>
-      <label style="display: flex; align-items: center; font-size: 1.2rem; margin-bottom: 0.5rem;">
-        <input type="radio" name="filter" value="Notícias" style="margin-right: 0.8rem;"> Notícias
-      </label>
-      <label style="display: flex; align-items: center; font-size: 1.2rem; margin-bottom: 0.5rem;">
-        <input type="radio" name="filter" value="Atualizações" style="margin-right: 0.8rem;"> Atualizações
-      </label>
-      <label style="display: flex; align-items: center; font-size: 1.2rem; margin-bottom: 0.5rem;">
-        <input type="radio" name="filter" value="Comunidade" style="margin-right: 0.8rem;"> Comunidade
-      </label>
-      <label style="display: flex; align-items: center; font-size: 1.2rem; margin-bottom: 0.5rem;">
-        <input type="radio" name="filter" value="Extras" style="margin-right: 0.8rem;"> Extras
-      </label>
-    </div>
-    <ul id="history-list" style="list-style: none; padding: 0;">
-      <li class="filter-item" data-category="Atualizações" style="margin-bottom: 0.8rem;">
-        <button class="anchor-btn" data-scroll-to="2025-04-27-patch-0-0-3" style="background: var(--accent2); color: var(--text); padding: 0.5rem 1rem; border-radius: 8px; font-size: 1rem; cursor: pointer; border: none;">27/04/2025 - Patch 0.0.3</button>
-      </li>
-      <li class="filter-item" data-category="Atualizações" style="margin-bottom: 0.8rem;">
-        <button class="anchor-btn" data-scroll-to="2025-04-27-patch-0-0-2" style="background: var(--accent2); color: var(--text); padding: 0.5rem 1rem; border-radius: 8px; font-size: 1rem; cursor: pointer; border: none;">27/04/2025 - Patch 0.0.2</button>
-      </li>
-      <li class="filter-item" data-category="Notícias" style="margin-bottom: 0.8rem;">
-        <button class="anchor-btn" data-scroll-to="2025-04-24-patch-0-0-1" style="background: var(--accent2); color: var(--text); padding: 0.5rem 1rem; border-radius: 8px; font-size: 1rem; cursor: pointer; border: none;">24/04/2025 - Patch 0.0.1</button>
-      </li>
-    </ul>
-  </div>
-  </div>
+  <main id="blog-feed"></main>
+   
+   <div id="historyModal" class="modal">
+     <div class="modal-content">
+       <button class="close" data-close="historyModal">×</button>
+       <h3>Histórico de Publicações</h3>
+       <ul id="history-list" style="list-style: none; padding: 0;"></ul>
+     </div>
+   </div>
+   
+   <div id="modals-container"></div> 
 
   <!-- Post Modals -->
   <div id="modal-2025-04-27-patch-0-0-3" class="modal">
