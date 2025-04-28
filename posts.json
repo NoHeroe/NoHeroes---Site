@@ -6,12 +6,18 @@
        "category": "Atualizações",
        "content": "O projeto NoHeroes deu seu primeiro passo! O site oficial foi lançado e a estrutura base já está no ar. Agora, começamos a preparar os primeiros conteúdos para compartilhar com a comunidade.\n\nPrincipais mudanças:\n- Publicação da página inicial\n- Estrutura básica do blog criada\n- Primeiras notícias liberadas\n\nEssa é apenas a primeira de muitas atualizações que virão.\nObrigado por acompanhar desde o começo!"
      },
+{
+  "id": "2025-04-26-patch-0-0-2",
+  "title": "Patch 0.0.2 — Preparação de Conteúdo",
+  "date": "26/04/2025",
+  "category": "Atualizações",
+  "content": "O trabalho de estruturação do NoHeroes continua! Começamos a organizar o conteúdo que será publicado no blog e nas futuras áreas do site.\n\nPrincipais mudanças:\n- Definição das primeiras categorias\n- Estruturação dos próximos posts\n- Planejamento dos conteúdos exclusivos\n\nSeguimos avançando para criar um espaço completo para a comunidade."
+},
      {
        "id": "2025-04-24-patch-0-0-1",
        "title": "Patch 0.0.1 — Lançamento do Site",
        "date": "24/04/2025",
        "category": "Notícias",
-       "content": "{
-  "conteudo": "O site oficial da NoHeroes foi lançado! A partir de agora, toda a jornada dos projetos será compartilhada diretamente aqui.\n\nNovidades:\n- Página inicial publicada\n- Primeiros conteúdos sendo estruturados\n\nAgradecemos por acompanhar desde o início!"
+       "content": "O site oficial da NoHeroes foi lançado! A partir de agora, toda a jornada dos projetos será compartilhada diretamente aqui.\n\nNovidades:\n- Página inicial publicada\n- Primeiros conteúdos sendo estruturados\n\nAgradecemos por acompanhar desde o início!"
         }
 
