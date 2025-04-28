@@ -273,33 +273,7 @@ footer p.text-xs {
     })
     .catch(error => console.error('Erro ao carregar publicações:', error));
 </script>
-    // Open History Modal
-    document.getElementById('historyBtn').addEventListener('click', () => {
-      document.getElementById('historyModal').classList.add('open');
-    });
-
-    // Filter logic
-    document.querySelectorAll('input[name="filter"]').forEach(radio => {
-      radio.addEventListener('change', () => {
-        const value = radio.value;
-        document.querySelectorAll('.filter-item').forEach(item => {
-          if (value === 'Todos' || item.dataset.category === value) {
-            item.style.display = 'list-item';
-          } else {
-            item.style.display = 'none';
-          }
-        });
-      });
-    });
-
-    // Scroll to post
-    document.querySelectorAll('.anchor-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const target = document.querySelector(`[data-id="${btn.dataset.scrollTo}"]`);
-        document.getElementById('historyModal').classList.remove('open');
-        target.scrollIntoView({ behavior: 'smooth' });
-      });
-    });
+    
   </script>
 <footer class="bg-[#0d0d0d] py-8 text-center text-[#666] border-t border-[#333] mt-16">
   <nav class="flex justify-center space-x-6 mb-6">
