@@ -122,23 +122,50 @@
     <p class="text-xs mt-6 text-[#555]">© 2025 NoHeroes. Todos os direitos reservados.</p>
   </footer>
 
-  <!-- Scripts -->
+ !-- Scripts -->
   <script>
-    document.querySelectorAll('.open-modal').forEach(button => {
-      button.addEventListener('click', () => {
-        const modal = document.getElementById(button.dataset.modal);
+    // Open modals
+    document.querySelectorAll('.open-modal').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const modal = document.getElementById(btn.dataset.modal);
         modal.classList.add('open');
       });
     });
 
-    document.querySelectorAll('.close').forEach(button => {
-      button.addEventListener('click', () => {
-        button.closest('.modal').classList.remove('open');
+    // Close modals
+    document.querySelectorAll('.close').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const modal = document.getElementById(btn.dataset.close);
+        modal.classList.remove('open');
       });
     });
 
+    // Open History Modal
     document.getElementById('historyBtn').addEventListener('click', () => {
       document.getElementById('historyModal').classList.add('open');
+    });
+
+    // Filter logic
+    document.querySelectorAll('input[name="filter"]').forEach(radio => {
+      radio.addEventListener('change', () => {
+        const value = radio.value;
+        document.querySelectorAll('.filter-item').forEach(item => {
+          if (value === 'Todos' || item.dataset.category === value) {
+            item.style.display = 'list-item';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Scroll to post
+    document.querySelectorAll('.anchor-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = document.querySelector(`[data-id="${btn.dataset.scrollTo}"]`);
+        document.getElementById('historyModal').classList.remove('open');
+        target.scrollIntoView({ behavior: 'smooth' });
+      });
     });
   </script>
 </body>
