@@ -6,8 +6,6 @@
   <title>NoHeroes Blog</title>
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <!-- ScrollReveal -->
-  <script src="https://unpkg.com/scrollreveal"></script>
   <!-- Styles -->
   <style>
     :root {
@@ -25,34 +23,29 @@
     .hero { height: 80vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; background: url('assets/hero-bg.jpg') center/cover no-repeat; position: relative; }
     .hero::after { content: ''; position:absolute; inset:0; background: rgba(17,17,17,0.6); }
     .hero h1, .hero p { position: relative; }
-    .hero h1 { font-family: 'Playfair Display', serif; font-size:4rem; margin-bottom:1rem; color: var(--accent1);}  
-    .hero p { font-size:1.25rem; color: var(--accent2);}  
+    .hero h1 { font-family: 'Playfair Display', serif; font-size:4rem; margin-bottom:1rem; color: var(--accent1);}
+    .hero p { font-size:1.25rem; color: var(--accent2);}
     main { padding: 12rem 2rem 4rem; max-width:800px; margin:0 auto; }
-    .card { background: #222; border-radius:8px; overflow:hidden; margin-bottom:2rem; display:flex; flex-direction:column; }
-    .card img { width:100%; height:auto; }
-    .card-content { padding:1rem; }
-    .card-content h2 { font-family:'Playfair Display'; margin-bottom:.5rem; }
-    .card-content .meta { font-size:.875rem; color:#aaa; margin-bottom:.5rem; }
-    .card-content p { margin-bottom:1rem; }
-    .card-content button { background: var(--accent2); border:none; padding:.5rem 1rem; border-radius:4px; cursor:pointer; }
+    .card { background: #222; border-radius:8px; overflow:hidden; margin-bottom:2rem; padding:1rem; }
+    .card h2 { font-family: 'Playfair Display'; margin-bottom:.5rem; }
+    .card .meta { font-size:.875rem; color:#aaa; margin-bottom:.5rem; }
+    .card button { background: var(--accent2); border:none; padding:.5rem 1rem; border-radius:4px; cursor:pointer; color: var(--text); }
     /* Modal Styles */
-    .modal { position:fixed; top:0; left:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; background: rgba(0,0,0,0.8); visibility:hidden; opacity:0; transition: opacity .3s ease; }
+    .modal { position:fixed; top:0; left:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; background: rgba(0,0,0,0.8); visibility:hidden; opacity:0; transition: opacity .3s ease; z-index:200; }
     .modal.open { visibility:visible; opacity:1; }
     .modal-content { background:#111; border:2px solid var(--accent1); border-radius:8px; max-width:600px; width:90%; max-height:90%; overflow:auto; position:relative; padding:2rem; }
-    .modal-content .close { position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.5rem; cursor:pointer; }
-    /* Quick-scroll anchors (example) */
-    .anchor-btn { background: none; border: none; color: var(--text); cursor:pointer; margin-left:1rem; }
+    .modal-content .close { position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.5rem; cursor:pointer; color: var(--text); }
+    /* Filter Menu */
     .filter-menu { display: flex; flex-direction: column; margin-bottom: 1rem; }
-    .filter-menu label { margin-bottom: 0.5rem; cursor: pointer; }
+    .filter-menu label { margin-bottom: 0.5rem; cursor: pointer; color: var(--text); }
+    .hidden { display: none; }
   </style>
 </head>
 <body>
-  <!-- Topo fixo com botão Histórico -->
+  <!-- Header -->
   <header>
     <img src="assets/logo.png" alt="NoHeroes Logo">
-    <div>
-      <button id="historyBtn">Histórico</button>
-    </div>
+    <button id="historyBtn">Histórico</button>
   </header>
 
   <!-- Hero Section -->
@@ -61,33 +54,29 @@
     <p>As vozes que moldam o universo NoHeroes.</p>
   </section>
 
-  <!-- Corpo do Blog -->
+  <!-- Blog Posts -->
   <main id="blog-feed">
-    <!-- Exemplo de Cards -->
-    <article class="card" data-category="Atualizações" data-id="2025-04-27-patch-0-0-3">
-      <div class="card-content">
-        <h2>Patch 0.0.3 — Melhorias na Navegação</h2>
-        <div class="meta">27/04/2025</div>
-        <button class="open-modal" data-modal="modal-2025-04-27-patch-0-0-3">Ler Mais</button>
-      </div>
+    <!-- Post 1 -->
+    <article class="card" data-id="2025-04-27-patch-0-0-3">
+      <h2>Patch 0.0.3 — Melhorias na Navegação</h2>
+      <div class="meta">27/04/2025 — Atualizações</div>
+      <button class="open-modal" data-modal="modal-2025-04-27-patch-0-0-3">Ler Mais</button>
     </article>
-    <article class="card" data-category="Atualizações" data-id="2025-04-27-patch-0-0-2">
-      <div class="card-content">
-        <h2>Patch 0.0.2 — Página de Notícias Adicionada</h2>
-        <div class="meta">27/04/2025</div>
-        <button class="open-modal" data-modal="modal-2025-04-27-patch-0-0-2">Ler Mais</button>
-      </div>
+    <!-- Post 2 -->
+    <article class="card" data-id="2025-04-27-patch-0-0-2">
+      <h2>Patch 0.0.2 — Página de Notícias Adicionada</h2>
+      <div class="meta">27/04/2025 — Atualizações</div>
+      <button class="open-modal" data-modal="modal-2025-04-27-patch-0-0-2">Ler Mais</button>
     </article>
-    <article class="card" data-category="Notícias" data-id="2025-04-24-patch-0-0-1">
-      <div class="card-content">
-        <h2>Patch 0.0.1 — Lançamento do Site</h2>
-        <div class="meta">24/04/2025</div>
-        <button class="open-modal" data-modal="modal-2025-04-24-patch-0-0-1">Ler Mais</button>
-      </div>
+    <!-- Post 3 -->
+    <article class="card" data-id="2025-04-24-patch-0-0-1">
+      <h2>Patch 0.0.1 — Lançamento do Site</h2>
+      <div class="meta">24/04/2025 — Notícias</div>
+      <button class="open-modal" data-modal="modal-2025-04-24-patch-0-0-1">Ler Mais</button>
     </article>
   </main>
 
-  <!-- Histórico (Modal com Filtro) -->
+  <!-- Histórico Modal -->
   <div id="historyModal" class="modal">
     <div class="modal-content">
       <button class="close" data-close="historyModal">×</button>
@@ -98,19 +87,19 @@
         <label><input type="radio" name="filter" value="Atualizações"> Atualizações</label>
       </div>
       <ul id="history-list">
-        <li><button class="anchor-btn" data-scroll-to="2025-04-27-patch-0-0-3">27/04/2025 - Patch 0.0.3</button></li>
-        <li><button class="anchor-btn" data-scroll-to="2025-04-27-patch-0-0-2">27/04/2025 - Patch 0.0.2</button></li>
-        <li><button class="anchor-btn" data-scroll-to="2025-04-24-patch-0-0-1">24/04/2025 - Patch 0.0.1</button></li>
+        <li class="filter-item" data-category="Atualizações"><button class="anchor-btn" data-scroll-to="2025-04-27-patch-0-0-3">27/04/2025 - Patch 0.0.3</button></li>
+        <li class="filter-item" data-category="Atualizações"><button class="anchor-btn" data-scroll-to="2025-04-27-patch-0-0-2">27/04/2025 - Patch 0.0.2</button></li>
+        <li class="filter-item" data-category="Notícias"><button class="anchor-btn" data-scroll-to="2025-04-24-patch-0-0-1">24/04/2025 - Patch 0.0.1</button></li>
       </ul>
     </div>
   </div>
 
-  <!-- Modals de Posts -->
+  <!-- Post Modals -->
   <div id="modal-2025-04-27-patch-0-0-3" class="modal">
     <div class="modal-content">
       <button class="close" data-close="modal-2025-04-27-patch-0-0-3">×</button>
       <h2>Patch 0.0.3 — Melhorias na Navegação</h2>
-      <p>Adicionamos um sistema de navegação...</p>
+      <p>Adicionamos um sistema de navegação para facilitar...</p>
     </div>
   </div>
   <div id="modal-2025-04-27-patch-0-0-2" class="modal">
@@ -130,40 +119,49 @@
 
   <!-- Scripts -->
   <script>
-    // ScrollReveal init
-    ScrollReveal().reveal('.card', { distance: '50px', duration: 600, interval: 100, origin: 'bottom' });
+    // Open modals
+    document.querySelectorAll('.open-modal').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const modal = document.getElementById(btn.dataset.modal);
+        modal.classList.add('open');
+      });
+    });
 
-    // Modal logic
-    document.querySelectorAll('.open-modal').forEach(btn => btn.addEventListener('click', () => {
-      document.querySelectorAll('.modal.open').forEach(m => m.classList.remove('open'));
-      document.getElementById(btn.dataset.modal).classList.add('open');
-    }));
-    document.querySelectorAll('.close').forEach(btn => btn.addEventListener('click', () => {
-      document.getElementById(btn.dataset.close).classList.remove('open');
-    }));
+    // Close modals
+    document.querySelectorAll('.close').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const modal = document.getElementById(btn.dataset.close);
+        modal.classList.remove('open');
+      });
+    });
 
-    // Histórico
+    // Open History Modal
     document.getElementById('historyBtn').addEventListener('click', () => {
       document.getElementById('historyModal').classList.add('open');
     });
 
-    // Âncoras rápidas
-    document.querySelectorAll('.anchor-btn').forEach(btn => btn.addEventListener('click', () => {
-      document.getElementById('historyModal').classList.remove('open');
-      document.querySelector(`[data-id='${btn.dataset.scrollTo}']`).scrollIntoView({ behavior: 'smooth' });
-    }));
-
-    // Filtro
-    document.querySelectorAll('input[name="filter"]').forEach(radio => radio.addEventListener('change', () => {
-      const value = radio.value;
-      document.querySelectorAll('.card').forEach(card => {
-        if (value === 'Todos' || card.dataset.category === value) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
+    // Filter logic
+    document.querySelectorAll('input[name="filter"]').forEach(radio => {
+      radio.addEventListener('change', () => {
+        const value = radio.value;
+        document.querySelectorAll('.filter-item').forEach(item => {
+          if (value === 'Todos' || item.dataset.category === value) {
+            item.style.display = 'list-item';
+          } else {
+            item.style.display = 'none';
+          }
+        });
       });
-    }));
+    });
+
+    // Scroll to post
+    document.querySelectorAll('.anchor-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = document.querySelector(`[data-id="${btn.dataset.scrollTo}"]`);
+        document.getElementById('historyModal').classList.remove('open');
+        target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
   </script>
 </body>
 </html>
