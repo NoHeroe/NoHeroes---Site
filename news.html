@@ -87,6 +87,42 @@
     </article>
   </main>
 
+  <!-- Histórico Modal -->
+  <div id="historyModal" class="modal">
+    <div class="modal-content">
+      <button class="close absolute top-4 right-4 text-xl" data-close="historyModal">×</button>
+      <h3 class="text-2xl font-bold mb-4 text-[#8f4fff]">Histórico de Publicações</h3>
+      <div class="filter-menu mb-6">
+        <label class="block mb-2">
+          <input type="radio" name="filter" value="Todos" checked class="mr-2"> Todos
+        </label>
+        <label class="block mb-2">
+          <input type="radio" name="filter" value="Notícias" class="mr-2"> Notícias
+        </label>
+        <label class="block mb-2">
+          <input type="radio" name="filter" value="Atualizações" class="mr-2"> Atualizações
+        </label>
+        <label class="block mb-2">
+          <input type="radio" name="filter" value="Comunidade" class="mr-2"> Comunidade
+        </label>
+        <label class="block mb-2">
+          <input type="radio" name="filter" value="Extras" class="mr-2"> Extras
+        </label>
+      </div>
+      <ul id="history-list" class="list-none p-0">
+        <li class="filter-item mb-4" data-category="Atualizações">
+          <button class="anchor-btn bg-[#39ff14] text-black px-4 py-2 rounded">27/04/2025 - Patch 0.0.3</button>
+        </li>
+        <li class="filter-item mb-4" data-category="Atualizações">
+          <button class="anchor-btn bg-[#39ff14] text-black px-4 py-2 rounded">27/04/2025 - Patch 0.0.2</button>
+        </li>
+        <li class="filter-item mb-4" data-category="Notícias">
+          <button class="anchor-btn bg-[#39ff14] text-black px-4 py-2 rounded">24/04/2025 - Patch 0.0.1</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+
   <!-- Modals -->
   <div id="modal-2025-04-27-patch-0-0-3" class="modal">
     <div class="modal-content">
@@ -143,6 +179,11 @@
     document.getElementById('historyBtn').addEventListener('click', () => {
       document.getElementById('historyModal').classList.add('open');
     });
-  </script>
-</body>
-</html>
+
+    // Filter logic
+    document.querySelectorAll('input[name="filter"]').forEach(radio => {
+      radio.addEventListener('change', () => {
+        const value = radio.value;
+        document.querySelectorAll('.filter-item').forEach(item => {
+          if (value === 'Todos' || item.dataset.category === value) {
+            item.style.display = 'list-item';
