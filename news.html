@@ -9,6 +9,17 @@
   <script src="https://unpkg.com/scrollreveal"></script>
   <!-- Styles -->
   <style>
+    /* Menu de filtros */
+.filter-menu { background: var(--bg); }
+.filter-btn {
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  border: 1px solid var(--text);
+  box-shadow: 0 0 8px rgba(0,0,0,0.5);
+}
+.filter-btn:hover {
+  box-shadow: 0 0 12px var(--accent2);
+}
     :root {
       --bg: #111;
       --text: #eee;
@@ -52,6 +63,21 @@
       <!-- Aqui poderão ser adicionados botões de âncora rápida para posts específicos -->
     </div>
   </header>  <!-- Hero Section -->  <section class="hero">
+    <!-- Menu de Filtros Rápidos -->
+  <nav class="filter-menu flex justify-center space-x-6 py-6 bg-[#111]">
+    <button data-filter="atualizacoes" class="filter-btn px-4 py-2 rounded-lg hover:bg-[#222] transition">
+      Atualizações
+    </button>
+    <button data-filter="noticias" class="filter-btn px-4 py-2 rounded-lg hover:bg-[#222] transition">
+      Notícias
+    </button>
+    <button data-filter="comunidade" class="filter-btn px-4 py-2 rounded-lg hover:bg-[#222] transition">
+      Comunidade
+    </button>
+    <button data-filter="extras" class="filter-btn px-4 py-2 rounded-lg hover:bg-[#222] transition">
+      Extras
+    </button>
+  </nav>
     <h1>Crônicas das Sombras</h1>
     <p>As vozes que moldam o universo NoHeroes.</p>
   </section>  <!-- Corpo do Blog (Scroll infinito) -->  <main id="blog-feed">
@@ -135,5 +161,20 @@
       // fetch `/posts/page-${pageNum}.json` e gerar cards...
       // Placeholder: não implementado
     }
-  </script></body>
+  </script>
+<script>
+  // …seu JS existente…
+
+  // Lógica de filtro: rola suave até a primeira ocorrência da categoria
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const cat = btn.dataset.filter;
+      const target = document.querySelector(`[data-category="${cat}"]`);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+</body>
 </html>
