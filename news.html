@@ -1,115 +1,206 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NoHeroes Blog</title>
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <!-- Styles -->
+  <!-- Adiciona Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Estilos -->
   <style>
     :root {
-      --bg: #111;
-      --text: #eee;
-      --accent1: #8e44ad;
-      --accent2: #27ae60;
+      --bg: #0a0a0a;
+      --text: #e5e5e5;
+      --accent1: #8f4fff;
+      --accent2: #39ff14;
     }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; }
-    a { color: var(--accent1); text-decoration: none; }
-    header { position: fixed; top:0; left:0; width:100%; display:flex; justify-content: space-between; align-items:center; padding:1rem 2rem; background: rgba(17,17,17,0.9); z-index:100; }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+    }
+
+    a {
+      color: var(--accent1);
+      text-decoration: none;
+    }
+
+    .text-shadow-md {
+      text-shadow: 0 0 10px rgba(143, 79, 255, 0.4);
+    }
+
+    .text-shadow-lg {
+      text-shadow: 0 0 20px rgba(143, 79, 255, 0.5);
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.5);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .drop-shadow-glow {
+      filter: drop-shadow(0 0 10px #8f4fff) drop-shadow(0 0 20px #8f4fff);
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(17, 17, 17, 0.9);
+      z-index: 100;
+      border-bottom: 1px solid #2e2e2e;
+    }
+
     header img {
-  height: 64px;
-  max-height: 80px;
+      height: 64px;
+      cursor: pointer;
+      filter: drop-shadow(0 0 10px #8f4fff) drop-shadow(0 0 20px #8f4fff);
     }
-    header button {
-  background: var(--accent1); /* Fundo com a cor principal */
-  color: var(--text); /* Texto claro */
-  border: none; /* Remove a borda */
-  padding: 0.8rem 1.5rem; /* Ajusta o espaçamento interno */
-  border-radius: 8px; /* Borda arredondada */
-  cursor: pointer; /* Mostra o cursor de clique */
-  font-family: 'Inter', sans-serif; /* Fonte consistente */
-  font-size: 1rem; /* Tamanho do texto */
-  font-weight: bold; /* Texto mais destacado */
-  transition: background 0.3s ease; /* Suaviza a mudança de cor */
-}
 
-header button:hover {
-  background: var(--accent2); /* Fundo muda para a cor secundária ao passar o mouse */
-}
-.hero { height: 80vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; background: url('assets/hero-bg.jpg') center/cover no-repeat; position: relative; }
-    .hero::after { content: ''; position:absolute; inset:0; background: rgba(17,17,17,0.6); }
-    .hero h1, .hero p { position: relative; }
-    .hero h1 { font-family: 'Playfair Display', serif; font-size:4rem; margin-bottom:1rem; color: var(--accent1);}
-    .hero p { font-size:1.25rem; color: var(--accent2);}
-    main { padding: 12rem 2rem 4rem; max-width:800px; margin:0 auto; }
-    .card { background: #222; border-radius:8px; overflow:hidden; margin-bottom:2rem; padding:1rem; }
-    .card h2 { font-family: 'Playfair Display'; margin-bottom:.5rem; }
-    .card .meta { font-size:.875rem; color:#aaa; margin-bottom:.5rem; }
-    .card button { background: var(--accent2); border:none; padding:.5rem 1rem; border-radius:4px; cursor:pointer; color: var(--text); }
-    /* Modal Styles */
-    .modal { position:fixed; top:0; left:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; background: rgba(0,0,0,0.8); visibility:hidden; opacity:0; transition: opacity .3s ease; z-index:200; }
-    .modal.open { visibility:visible; opacity:1; }
+    header a {
+      color: #ccc;
+      transition: color 0.3s;
+    }
+
+    header a:hover {
+      color: var(--accent1);
+    }
+
+    .hero {
+      height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: url('assets/hero-bg.jpg') center/cover no-repeat;
+      position: relative;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(17, 17, 17, 0.6);
+    }
+
+    .hero h1, .hero p {
+      position: relative;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      color: var(--accent1);
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--accent2);
+    }
+
+    main {
+      padding: 12rem 2rem 4rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: #222;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 2rem;
+      padding: 1rem;
+    }
+
+    .card h2 {
+      font-family: 'Playfair Display';
+      margin-bottom: .5rem;
+    }
+
+    .card .meta {
+      font-size: .875rem;
+      color: #aaa;
+      margin-bottom: .5rem;
+    }
+
+    .card button {
+      background: var(--accent2);
+      border: none;
+      padding: .5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      color: var(--text);
+    }
+
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.8);
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 0s, opacity 0.3s;
+    }
+
+    .modal.open {
+      visibility: visible;
+      opacity: 1;
+    }
+
     .modal-content {
-  background: linear-gradient(145deg, #1c1c1c, #2a2a2a); /* Fundo com gradiente */
-  border: 2px solid var(--accent1);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); /* Sombra para destaque */
-  border-radius: 16px;
-  padding: 2rem;
-  color: var(--text);
-}
+      background: linear-gradient(145deg, #1c1c1c, #2a2a2a);
+      border: 2px solid var(--accent1);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+      border-radius: 16px;
+      padding: 2rem;
+      color: var(--text);
+    }
 
-.modal-content h3 {
-  font-size: 1.8rem;
-  color: var(--accent1); /* Destaque no título */
-  margin-bottom: 1rem;
-}
+    .modal-content h3 {
+      font-size: 1.8rem;
+      color: var(--accent1);
+      margin-bottom: 1rem;
+    }
 
-.modal-content .filter-menu label {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  display: flex;
-  align-items: center;
-}
-
-.modal-content .filter-menu input[type="radio"] {
-  margin-right: 0.8rem;
-  transform: scale(1.2); /* Aumentar tamanho dos botões de rádio */
-}
-
-#history-list li {
-  margin-bottom: 0.8rem;
-}
-
-#history-list .anchor-btn {
-  background: var(--accent2);
-  color: var(--text);
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  font-size: 1rem;
-  display: inline-block;
-  text-align: center;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-#history-list .anchor-btn:hover {
-  background: #39ff14;
-}
-    .modal-content .close { position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.5rem; cursor:pointer; color: var(--text); }
-    /* Filter Menu */
-    .filter-menu { display: flex; flex-direction: column; margin-bottom: 1rem; }
-    .filter-menu label { margin-bottom: 0.5rem; cursor: pointer; color: var(--text); }
-    .hidden { display: none; }
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
 <body>
   <!-- Header -->
   <header>
-  <img src="assets/images/noheroes logo.png" alt="NoHeroes Logo">
-  <button id="historyBtn">Histórico</button>
+    <img src="assets/images/noheroes logo.png" alt="NoHeroes Logo">
+    <nav>
+      <ul class="flex space-x-4">
+        <li><a href="index.html">Início</a></li>
+        <li><a href="sobre.html">Sobre</a></li>
+        <li><a href="contato.html">Contato</a></li>
+      </ul>
+    </nav>
   </header>
 
   <!-- Hero Section -->
@@ -120,140 +211,33 @@ header button:hover {
 
   <!-- Blog Posts -->
   <main id="blog-feed">
-    <!-- Post 1 -->
-    <article class="card" data-id="2025-04-27-patch-0-0-3">
+    <article class="card">
       <h2>Patch 0.0.3 — Melhorias na Navegação</h2>
       <div class="meta">27/04/2025 — Atualizações</div>
-      <button class="open-modal" data-modal="modal-2025-04-27-patch-0-0-3">Ler Mais</button>
+      <button>Ler Mais</button>
     </article>
-    <!-- Post 2 -->
-    <article class="card" data-id="2025-04-27-patch-0-0-2">
+    <article class="card">
       <h2>Patch 0.0.2 — Página de Notícias Adicionada</h2>
       <div class="meta">27/04/2025 — Atualizações</div>
-      <button class="open-modal" data-modal="modal-2025-04-27-patch-0-0-2">Ler Mais</button>
+      <button>Ler Mais</button>
     </article>
-    <!-- Post 3 -->
-    <article class="card" data-id="2025-04-24-patch-0-0-1">
+    <article class="card">
       <h2>Patch 0.0.1 — Lançamento do Site</h2>
       <div class="meta">24/04/2025 — Notícias</div>
-      <button class="open-modal" data-modal="modal-2025-04-24-patch-0-0-1">Ler Mais</button>
+      <button>Ler Mais</button>
     </article>
   </main>
 
-  <!-- Histórico Modal -->
-  <div id="historyModal" class="modal">
-  <div class="modal-content">
-    <button class="close" data-close="historyModal" style="background: none; border: none; cursor: pointer; font-size: 1.5rem; color: var(--text); position: absolute; top: 1rem; right: 1rem;">×</button>
-    <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: var(--accent1);">Histórico de Publicações</h3>
-    <div class="filter-menu" style="margin-bottom: 1.5rem;">
-      <label style="display: flex; align-items: center; font-size: 1.2rem; margin-bottom: 0.5rem;">
-        <input type="radio" name="filter" value="Todos" checked style="margin-right: 0.8rem;"> Todos
-      </label>
-      <label style="display: flex; align-items: center; font-size: 1.2rem; margin-bottom: 0.5rem;">
-        <input type="radio" name="filter" value="Notícias" style="margin-right: 0.8rem;"> Notícias
-      </label>
-      <label style="display: flex; align-items: center; font-size: 1.2rem; margin-bottom: 0.5rem;">
-        <input type="radio" name="filter" value="Atualizações" style="margin-right: 0.8rem;"> Atualizações
-      </label>
-      <label style="display: flex; align-items: center; font-size: 1.2rem; margin-bottom: 0.5rem;">
-        <input type="radio" name="filter" value="Comunidade" style="margin-right: 0.8rem;"> Comunidade
-      </label>
-      <label style="display: flex; align-items: center; font-size: 1.2rem; margin-bottom: 0.5rem;">
-        <input type="radio" name="filter" value="Extras" style="margin-right: 0.8rem;"> Extras
-      </label>
-    </div>
-    <ul id="history-list" style="list-style: none; padding: 0;">
-      <li class="filter-item" data-category="Atualizações" style="margin-bottom: 0.8rem;">
-        <button class="anchor-btn" data-scroll-to="2025-04-27-patch-0-0-3" style="background: var(--accent2); color: var(--text); padding: 0.5rem 1rem; border-radius: 8px; font-size: 1rem; cursor: pointer; border: none;">27/04/2025 - Patch 0.0.3</button>
-      </li>
-      <li class="filter-item" data-category="Atualizações" style="margin-bottom: 0.8rem;">
-        <button class="anchor-btn" data-scroll-to="2025-04-27-patch-0-0-2" style="background: var(--accent2); color: var(--text); padding: 0.5rem 1rem; border-radius: 8px; font-size: 1rem; cursor: pointer; border: none;">27/04/2025 - Patch 0.0.2</button>
-      </li>
-      <li class="filter-item" data-category="Notícias" style="margin-bottom: 0.8rem;">
-        <button class="anchor-btn" data-scroll-to="2025-04-24-patch-0-0-1" style="background: var(--accent2); color: var(--text); padding: 0.5rem 1rem; border-radius: 8px; font-size: 1rem; cursor: pointer; border: none;">24/04/2025 - Patch 0.0.1</button>
-      </li>
-    </ul>
-  </div>
-  </div>
-
-  <!-- Post Modals -->
-  <div id="modal-2025-04-27-patch-0-0-3" class="modal">
-    <div class="modal-content">
-      <button class="close" data-close="modal-2025-04-27-patch-0-0-3">×</button>
-      <h2>Patch 0.0.3 — Melhorias na Navegação</h2>
-      <p>Adicionamos um sistema de navegação para facilitar...</p>
-    </div>
-  </div>
-  <div id="modal-2025-04-27-patch-0-0-2" class="modal">
-    <div class="modal-content">
-      <button class="close" data-close="modal-2025-04-27-patch-0-0-2">×</button>
-      <h2>Patch 0.0.2 — Página de Notícias Adicionada</h2>
-      <p>Uma nova seção de Notícias foi adicionada...</p>
-    </div>
-  </div>
-  <div id="modal-2025-04-24-patch-0-0-1" class="modal">
-    <div class="modal-content">
-      <button class="close" data-close="modal-2025-04-24-patch-0-0-1">×</button>
-      <h2>Patch 0.0.1 — Lançamento do Site</h2>
-      <p>O site oficial da NoHeroes foi lançado...</p>
-    </div>
-  </div>
-
-  <!-- Scripts -->
-  <script>
-    // Open modals
-    document.querySelectorAll('.open-modal').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const modal = document.getElementById(btn.dataset.modal);
-        modal.classList.add('open');
-      });
-    });
-
-    // Close modals
-    document.querySelectorAll('.close').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const modal = document.getElementById(btn.dataset.close);
-        modal.classList.remove('open');
-      });
-    });
-
-    // Open History Modal
-    document.getElementById('historyBtn').addEventListener('click', () => {
-      document.getElementById('historyModal').classList.add('open');
-    });
-
-    // Filter logic
-    document.querySelectorAll('input[name="filter"]').forEach(radio => {
-      radio.addEventListener('change', () => {
-        const value = radio.value;
-        document.querySelectorAll('.filter-item').forEach(item => {
-          if (value === 'Todos' || item.dataset.category === value) {
-            item.style.display = 'list-item';
-          } else {
-            item.style.display = 'none';
-          }
-        });
-      });
-    });
-
-    // Scroll to post
-    document.querySelectorAll('.anchor-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const target = document.querySelector(`[data-id="${btn.dataset.scrollTo}"]`);
-        document.getElementById('historyModal').classList.remove('open');
-        target.scrollIntoView({ behavior: 'smooth' });
-      });
-    });
-  </script>
-<footer class="bg-[#0d0d0d] py-8 text-center text-[#666] border-t border-[#333] mt-16">
-  <nav class="flex justify-center space-x-6 mb-6">
-    <a href="index.html" class="text-[#8f4fff] hover:text-white transition-colors text-shadow-md font-semibold">Início</a>
-    <a href="sobre.html" class="text-[#8f4fff] hover:text-white transition-colors text-shadow-md font-semibold">Sobre</a>
-    <a href="contato.html" class="text-[#8f4fff] hover:text-white transition-colors text-shadow-md font-semibold">Contato</a>
-  </nav>
-  <p class="mt-4 text-[#999]">Explore. Escolha. Caia. Evolua.</p>
-  <p class="extra mt-2 text-[#777] italic">Toda escolha tem um preço. Toda queda, uma razão.</p>
-  <p class="text-xs mt-6 text-[#555]">© 2025 NoHeroes. Todos os direitos reservados.</p>
-</footer>
+  <!-- Footer -->
+  <footer class="bg-[#0d0d0d] py-8 text-center text-[#666] border-t border-[#333] mt-16">
+    <nav class="flex justify-center space-x-6 mb-6">
+      <a href="index.html" class="text-[#8f4fff] hover:text-white transition-colors text-shadow-md font-semibold">Início</a>
+      <a href="sobre.html" class="text-[#8f4fff] hover:text-white transition-colors text-shadow-md font-semibold">Sobre</a>
+      <a href="contato.html" class="text-[#8f4fff] hover:text-white transition-colors text-shadow-md font-semibold">Contato</a>
+    </nav>
+    <p class="mt-4 text-[#999]">Explore. Escolha. Caia. Evolua.</p>
+    <p class="extra mt-2 text-[#777] italic">Toda escolha tem um preço. Toda queda, uma razão.</p>
+    <p class="text-xs mt-6 text-[#555]">© 2025 NoHeroes. Todos os direitos reservados.</p>
+  </footer>
 </body>
 </html>
