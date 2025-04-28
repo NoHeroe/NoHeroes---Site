@@ -18,7 +18,10 @@
     body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; }
     a { color: var(--accent1); text-decoration: none; }
     header { position: fixed; top:0; left:0; width:100%; display:flex; justify-content: space-between; align-items:center; padding:1rem 2rem; background: rgba(17,17,17,0.9); z-index:100; }
-    header img { height:32px; }
+    header img {
+  height: 64px;
+  max-height: 80px;
+    }
     header button { background: none; border:1px solid var(--text); padding:.5rem 1rem; border-radius:4px; cursor:pointer; font-family:'Inter'; }
     .hero { height: 80vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; background: url('assets/hero-bg.jpg') center/cover no-repeat; position: relative; }
     .hero::after { content: ''; position:absolute; inset:0; background: rgba(17,17,17,0.6); }
@@ -33,7 +36,53 @@
     /* Modal Styles */
     .modal { position:fixed; top:0; left:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; background: rgba(0,0,0,0.8); visibility:hidden; opacity:0; transition: opacity .3s ease; z-index:200; }
     .modal.open { visibility:visible; opacity:1; }
-    .modal-content { background:#111; border:2px solid var(--accent1); border-radius:8px; max-width:600px; width:90%; max-height:90%; overflow:auto; position:relative; padding:2rem; }
+    .modal-content {
+  background: linear-gradient(145deg, #1c1c1c, #2a2a2a); /* Fundo com gradiente */
+  border: 2px solid var(--accent1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); /* Sombra para destaque */
+  border-radius: 16px;
+  padding: 2rem;
+  color: var(--text);
+}
+
+.modal-content h3 {
+  font-size: 1.8rem;
+  color: var(--accent1); /* Destaque no título */
+  margin-bottom: 1rem;
+}
+
+.modal-content .filter-menu label {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.modal-content .filter-menu input[type="radio"] {
+  margin-right: 0.8rem;
+  transform: scale(1.2); /* Aumentar tamanho dos botões de rádio */
+}
+
+#history-list li {
+  margin-bottom: 0.8rem;
+}
+
+#history-list .anchor-btn {
+  background: var(--accent2);
+  color: var(--text);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#history-list .anchor-btn:hover {
+  background: #39ff14;
+}
     .modal-content .close { position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.5rem; cursor:pointer; color: var(--text); }
     /* Filter Menu */
     .filter-menu { display: flex; flex-direction: column; margin-bottom: 1rem; }
@@ -44,8 +93,8 @@
 <body>
   <!-- Header -->
   <header>
-    <img src="assets/images/noheroes logo.png" alt="NoHeroes Logo">
-    <button id="historyBtn">Histórico</button>
+  <img src="assets/images/noheroes logo.png" alt="NoHeroes Logo">
+  <button id="historyBtn">Histórico</button>
   </header>
 
   <!-- Hero Section -->
