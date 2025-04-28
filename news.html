@@ -98,11 +98,22 @@
       border-radius: 16px;
       padding: 2rem;
       color: var(--text);
+      position: relative;
     }
     .modal-content h3 {
       font-size: 1.8rem;
       color: var(--accent1);
       margin-bottom: 1rem;
+    }
+    .modal-content .close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 2rem;
+      color: var(--accent1);
+      cursor: pointer;
     }
     #history-list li { margin-bottom: 0.8rem; }
     #history-list .anchor-btn {
@@ -157,6 +168,7 @@
   <!-- Blog Posts -->
   <main id="blog-feed"></main>
 
+  <!-- Modal -->
   <div id="historyModal" class="modal">
     <div class="modal-content">
       <button class="close" data-close="historyModal">×</button>
@@ -183,12 +195,38 @@
     <p class="text-xs">© 2025 NoHeroes. Todos os direitos reservados.</p>
   </footer>
 
+  <!-- Scripts -->
   <script>
-    // Carregar publicações do JSON
+    // Abrir modal
+    const historyBtn = document.getElementById('historyBtn');
+    const historyModal = document.getElementById('historyModal');
+    const closeButtons = document.querySelectorAll('[data-close]');
+
+    historyBtn.addEventListener('click', () => {
+      historyModal.classList.add('open');
+    });
+
+    closeButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        historyModal.classList.remove('open');
+      });
+    });
+
+    // Carregar publicações (apenas esqueleto - você pode adicionar depois)
     fetch('posts.json')
       .then(response => response.json())
       .then(posts => {
-        // Código de carregamento
+        const blogFeed = document.getElementById('blog-feed');
+        posts.forEach(post => {
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `
+            <h2>${post.title}</h2>
+            <p class="meta">${post.date} - ${post.category}</p>
+            <p>${post.excerpt}</p>
+          `;
+          blogFeed.appendChild(card);
+        });
       })
       .catch(error => console.error('Erro ao carregar publicações:', error));
   </script>
