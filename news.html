@@ -252,5 +252,77 @@ footer p.text-xs {
   <p class="extra mt-2 text-[#777] italic">Toda escolha tem um preço. Toda queda, uma razão.</p>
   <p class="text-xs mt-6 text-[#555]">© 2025 NoHeroes. Todos os direitos reservados.</p>
 </footer>
+  <script>
+  // Carregar publicações do JSON
+  fetch('posts.json')
+    .then(response => response.json())
+    .then(posts => {
+      const blogFeed = document.getElementById('blog-feed');
+      const historyList = document.getElementById('history-list');
+      const modalsContainer = document.getElementById('modals-container');
+
+      // Ordenar as publicações por data (do mais recente para o mais antigo)
+      posts.sort((a, b) => new Date(b.date.split('/').reverse().join('-')) - new Date(a.date.split('/').reverse().join('-')));
+
+      posts.forEach(post => {
+        // Criar o post na página principal
+        const postElement = document.createElement('article');
+        postElement.classList.add('card');
+        postElement.setAttribute('data-id', post.id);
+        postElement.innerHTML = `
+          <h2>${post.title}</h2>
+          <div class="meta">${post.date} — ${post.category}</div>
+          <button class="open-modal" data-modal="modal-${post.id}">Ler Mais</button>
+        `;
+        blogFeed.appendChild(postElement);
+
+        // Adicionar ao histórico
+        const historyItem = document.createElement('li');
+        historyItem.classList.add('filter-item');
+        historyItem.setAttribute('data-category', post.category);
+        historyItem.innerHTML = `
+          <button class="anchor-btn" data-scroll-to="${post.id}">${post.date} - ${post.title}</button>
+        `;
+        historyList.appendChild(historyItem);
+
+        // Criar o modal correspondente
+        const modalElement = document.createElement('div');
+        modalElement.classList.add('modal');
+        modalElement.setAttribute('id', `modal-${post.id}`);
+        modalElement.innerHTML = `
+          <div class="modal-content">
+            <button class="close" data-close="modal-${post.id}">×</button>
+            <h3>${post.title}</h3>
+            <p>${post.content}</p>
+          </div>
+        `;
+        modalsContainer.appendChild(modalElement);
+      });
+
+      // Adicionar funcionalidades dos modais
+      document.querySelectorAll('.open-modal').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const modal = document.getElementById(btn.dataset.modal);
+          modal.classList.add('open');
+        });
+      });
+
+      document.querySelectorAll('.close').forEach(btn => {
+        btn.addEventListener('click', () => {
+          btn.closest('.modal').classList.remove('open');
+        });
+      });
+
+      // Adicionar funcionalidade do histórico
+      document.querySelectorAll('.anchor-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = document.querySelector(`[data-id="${btn.dataset.scrollTo}"]`);
+          document.getElementById('historyModal').classList.remove('open');
+          target.scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+    })
+    .catch(error => console.error('Erro ao carregar publicações:', error));
+  </script>
 </body>
 </html>
