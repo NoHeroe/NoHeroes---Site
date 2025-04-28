@@ -22,17 +22,22 @@
   height: 64px;
   max-height: 80px;
     }
-    header button { background: none; border:1px solid var(--text); padding:.5rem 1rem; border-radius:4px; cursor:pointer; font-family:'Inter'; }
-    .hero { height: 80vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; background: url('assets/hero-bg.jpg') center/cover no-repeat; position: relative; }
-    .hero::after { content: ''; position:absolute; inset:0; background: rgba(17,17,17,0.6); }
-    .hero h1, .hero p { position: relative; }
-    .hero h1 { font-family: 'Playfair Display', serif; font-size:4rem; margin-bottom:1rem; color: var(--accent1);}
-    .hero p { font-size:1.25rem; color: var(--accent2);}
-    main { padding: 12rem 2rem 4rem; max-width:800px; margin:0 auto; }
-    .card { background: #222; border-radius:8px; overflow:hidden; margin-bottom:2rem; padding:1rem; }
-    .card h2 { font-family: 'Playfair Display'; margin-bottom:.5rem; }
-    .card .meta { font-size:.875rem; color:#aaa; margin-bottom:.5rem; }
-    .card button { background: var(--accent2); border:none; padding:.5rem 1rem; border-radius:4px; cursor:pointer; color: var(--text); }
+    header button {
+  background: var(--accent1); /* Fundo com a cor principal */
+  color: var(--text); /* Texto claro */
+  border: none; /* Remove a borda */
+  padding: 0.8rem 1.5rem; /* Ajusta o espaçamento interno */
+  border-radius: 8px; /* Borda arredondada */
+  cursor: pointer; /* Mostra o cursor de clique */
+  font-family: 'Inter', sans-serif; /* Fonte consistente */
+  font-size: 1rem; /* Tamanho do texto */
+  font-weight: bold; /* Texto mais destacado */
+  transition: background 0.3s ease; /* Suaviza a mudança de cor */
+}
+
+header button:hover {
+  background: var(--accent2); /* Fundo muda para a cor secundária ao passar o mouse */
+}
     /* Modal Styles */
     .modal { position:fixed; top:0; left:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; background: rgba(0,0,0,0.8); visibility:hidden; opacity:0; transition: opacity .3s ease; z-index:200; }
     .modal.open { visibility:visible; opacity:1; }
