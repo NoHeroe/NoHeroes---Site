@@ -127,22 +127,38 @@
 
   <!-- Histórico Modal -->
   <div id="historyModal" class="modal">
-    <div class="modal-content">
-      <button class="close" data-close="historyModal">×</button>
-      <h3>Histórico de Publicações</h3>
-      <div class="filter-menu">
-        <label><input type="radio" name="filter" value="Todos" checked> Todos</label>
-        <label><input type="radio" name="filter" value="Notícias"> Notícias</label>
-        <label><input type="radio" name="filter" value="Atualizações"> Atualizações</label>
-        <label><input type="radio" name="filter" value="Comunidade"> Comunidade</label>
-        <label><input type="radio" name="filter" value="Extras"> Extras</label>
-      </div>
-      <ul id="history-list">
-        <li class="filter-item" data-category="Atualizações"><button class="anchor-btn" data-scroll-to="2025-04-27-patch-0-0-3">27/04/2025 - Patch 0.0.3</button></li>
-        <li class="filter-item" data-category="Atualizações"><button class="anchor-btn" data-scroll-to="2025-04-27-patch-0-0-2">27/04/2025 - Patch 0.0.2</button></li>
-        <li class="filter-item" data-category="Notícias"><button class="anchor-btn" data-scroll-to="2025-04-24-patch-0-0-1">24/04/2025 - Patch 0.0.1</button></li>
-      </ul>
+  <div class="modal-content">
+    <button class="close" data-close="historyModal" style="background: none; border: none; cursor: pointer; font-size: 1.5rem; color: var(--text); position: absolute; top: 1rem; right: 1rem;">×</button>
+    <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: var(--accent1);">Histórico de Publicações</h3>
+    <div class="filter-menu" style="margin-bottom: 1.5rem;">
+      <label style="display: flex; align-items: center; font-size: 1.2rem; margin-bottom: 0.5rem;">
+        <input type="radio" name="filter" value="Todos" checked style="margin-right: 0.8rem;"> Todos
+      </label>
+      <label style="display: flex; align-items: center; font-size: 1.2rem; margin-bottom: 0.5rem;">
+        <input type="radio" name="filter" value="Notícias" style="margin-right: 0.8rem;"> Notícias
+      </label>
+      <label style="display: flex; align-items: center; font-size: 1.2rem; margin-bottom: 0.5rem;">
+        <input type="radio" name="filter" value="Atualizações" style="margin-right: 0.8rem;"> Atualizações
+      </label>
+      <label style="display: flex; align-items: center; font-size: 1.2rem; margin-bottom: 0.5rem;">
+        <input type="radio" name="filter" value="Comunidade" style="margin-right: 0.8rem;"> Comunidade
+      </label>
+      <label style="display: flex; align-items: center; font-size: 1.2rem; margin-bottom: 0.5rem;">
+        <input type="radio" name="filter" value="Extras" style="margin-right: 0.8rem;"> Extras
+      </label>
     </div>
+    <ul id="history-list" style="list-style: none; padding: 0;">
+      <li class="filter-item" data-category="Atualizações" style="margin-bottom: 0.8rem;">
+        <button class="anchor-btn" data-scroll-to="2025-04-27-patch-0-0-3" style="background: var(--accent2); color: var(--text); padding: 0.5rem 1rem; border-radius: 8px; font-size: 1rem; cursor: pointer; border: none;">27/04/2025 - Patch 0.0.3</button>
+      </li>
+      <li class="filter-item" data-category="Atualizações" style="margin-bottom: 0.8rem;">
+        <button class="anchor-btn" data-scroll-to="2025-04-27-patch-0-0-2" style="background: var(--accent2); color: var(--text); padding: 0.5rem 1rem; border-radius: 8px; font-size: 1rem; cursor: pointer; border: none;">27/04/2025 - Patch 0.0.2</button>
+      </li>
+      <li class="filter-item" data-category="Notícias" style="margin-bottom: 0.8rem;">
+        <button class="anchor-btn" data-scroll-to="2025-04-24-patch-0-0-1" style="background: var(--accent2); color: var(--text); padding: 0.5rem 1rem; border-radius: 8px; font-size: 1rem; cursor: pointer; border: none;">24/04/2025 - Patch 0.0.1</button>
+      </li>
+    </ul>
+  </div>
   </div>
 
   <!-- Post Modals -->
@@ -214,5 +230,15 @@
       });
     });
   </script>
+  <footer style="background: var(--bg); padding: 1.5rem 2rem; text-align: center; color: var(--text); border-top: 2px solid var(--accent1);">
+  <nav style="margin-bottom: 1rem;">
+    <a href="index.html" style="margin-right: 1.5rem; color: var(--accent1); text-decoration: none;">Início</a>
+    <a href="sobre.html" style="margin-right: 1.5rem; color: var(--accent1); text-decoration: none;">Sobre</a>
+    <a href="contato.html" style="margin-right: 1.5rem; color: var(--accent1); text-decoration: none;">Contato</a>
+    <a href="blog.html" style="color: var(--accent1); text-decoration: none;">Blog</a>
+  </nav>
+  <p style="margin-bottom: 0.5rem; font-size: 1rem;">“As sombras de Caelum guiam aqueles que ousam sonhar além.”</p>
+  <p style="font-size: 0.875rem;">Copyright ©️ 2025 NoHeroes. Todos os direitos reservados.</p>
+  </footer>
 </body>
 </html>
