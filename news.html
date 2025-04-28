@@ -102,61 +102,17 @@
         <label class="block mb-2">
           <input type="radio" name="filter" value="Atualizações" class="mr-2"> Atualizações
         </label>
-        <label class="block mb-2">
-          <input type="radio" name="filter" value="Comunidade" class="mr-2"> Comunidade
-        </label>
-        <label class="block mb-2">
-          <input type="radio" name="filter" value="Extras" class="mr-2"> Extras
-        </label>
       </div>
       <ul id="history-list" class="list-none p-0">
         <li class="filter-item mb-4" data-category="Atualizações">
-          <button class="anchor-btn bg-[#39ff14] text-black px-4 py-2 rounded">27/04/2025 - Patch 0.0.3</button>
-        </li>
-        <li class="filter-item mb-4" data-category="Atualizações">
-          <button class="anchor-btn bg-[#39ff14] text-black px-4 py-2 rounded">27/04/2025 - Patch 0.0.2</button>
+          <button class="anchor-btn bg-[#39ff14] text-black px-4 py-2 rounded">Patch 0.0.3</button>
         </li>
         <li class="filter-item mb-4" data-category="Notícias">
-          <button class="anchor-btn bg-[#39ff14] text-black px-4 py-2 rounded">24/04/2025 - Patch 0.0.1</button>
+          <button class="anchor-btn bg-[#39ff14] text-black px-4 py-2 rounded">Patch 0.0.1</button>
         </li>
       </ul>
     </div>
   </div>
-
-  <!-- Modals -->
-  <div id="modal-2025-04-27-patch-0-0-3" class="modal">
-    <div class="modal-content">
-      <button class="close absolute top-4 right-4 text-xl">×</button>
-      <h3 class="text-2xl font-bold mb-4">Patch 0.0.3 — Melhorias na Navegação</h3>
-      <p>Adicionamos um sistema de navegação para facilitar...</p>
-    </div>
-  </div>
-  <div id="modal-2025-04-27-patch-0-0-2" class="modal">
-    <div class="modal-content">
-      <button class="close absolute top-4 right-4 text-xl">×</button>
-      <h3 class="text-2xl font-bold mb-4">Patch 0.0.2 — Página de Notícias Adicionada</h3>
-      <p>Uma nova seção de Notícias foi adicionada...</p>
-    </div>
-  </div>
-  <div id="modal-2025-04-24-patch-0-0-1" class="modal">
-    <div class="modal-content">
-      <button class="close absolute top-4 right-4 text-xl">×</button>
-      <h3 class="text-2xl font-bold mb-4">Patch 0.0.1 — Lançamento do Site</h3>
-      <p>O site oficial da NoHeroes foi lançado...</p>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <footer class="bg-[#0d0d0d] py-8 text-center text-[#666] border-t border-[#333] mt-16">
-    <nav class="flex justify-center space-x-6 mb-6">
-      <a href="index.html" class="text-[#8f4fff] hover:text-white transition-colors text-shadow-md font-semibold">Início</a>
-      <a href="sobre.html" class="text-[#8f4fff] hover:text-white transition-colors text-shadow-md font-semibold">Sobre</a>
-      <a href="contato.html" class="text-[#8f4fff] hover:text-white transition-colors text-shadow-md font-semibold">Contato</a>
-    </nav>
-    <p class="mt-4 text-[#999]">Explore. Escolha. Caia. Evolua.</p>
-    <p class="extra mt-2 text-[#777] italic">Toda escolha tem um preço. Toda queda, uma razão.</p>
-    <p class="text-xs mt-6 text-[#555]">© 2025 NoHeroes. Todos os direitos reservados.</p>
-  </footer>
 
   <!-- Scripts -->
   <script>
@@ -187,3 +143,12 @@
         document.querySelectorAll('.filter-item').forEach(item => {
           if (value === 'Todos' || item.dataset.category === value) {
             item.style.display = 'list-item';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
