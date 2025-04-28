@@ -1,48 +1,26 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NoHeroes Blog</title>
-  <!-- Adiciona Tailwind CSS -->
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Estilos -->
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg: #0a0a0a;
-      --text: #e5e5e5;
-      --accent1: #8f4fff;
-      --accent2: #39ff14;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
-      background: var(--bg);
-      color: var(--text);
       font-family: 'Inter', sans-serif;
-    }
-
-    a {
-      color: var(--accent1);
-      text-decoration: none;
+      background-color: #0a0a0a;
+      color: #e5e5e5;
     }
 
     .text-shadow-md {
       text-shadow: 0 0 10px rgba(143, 79, 255, 0.4);
     }
 
-    .overlay {
-      background-color: rgba(0, 0, 0, 0.5);
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+    .drop-shadow-glow {
+      filter: drop-shadow(0 0 10px #8f4fff) drop-shadow(0 0 20px #8f4fff);
     }
 
     .modal {
@@ -57,7 +35,8 @@
       background: rgba(0, 0, 0, 0.8);
       visibility: hidden;
       opacity: 0;
-      transition: visibility 0s, opacity 0.3s;
+      transition: opacity 0.3s ease;
+      z-index: 200;
     }
 
     .modal.open {
@@ -67,78 +46,66 @@
 
     .modal-content {
       background: linear-gradient(145deg, #1c1c1c, #2a2a2a);
-      border: 2px solid var(--accent1);
+      border: 2px solid #8f4fff;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
       border-radius: 16px;
       padding: 2rem;
-      color: var(--text);
-    }
-
-    .modal-content h3 {
-      font-size: 1.8rem;
-      color: var(--accent1);
-      margin-bottom: 1rem;
+      color: #e5e5e5;
     }
   </style>
 </head>
 <body>
   <!-- Header -->
-  <header class="fixed top-0 w-full bg-[#100d1a] border-b border-[#2e2e2e] z-50 px-8 py-4 flex justify-between items-center">
-    <img src="assets/images/noheroes logo.png" alt="NoHeroes Logo" class="h-16 cursor-pointer">
-    <nav>
-      <ul class="flex space-x-4">
-        <li><a href="index.html" class="text-[#ccc] hover:text-[#8f4fff] transition-colors">Início</a></li>
-        <li><a href="sobre.html" class="text-[#ccc] hover:text-[#8f4fff] transition-colors">Sobre</a></li>
-        <li><a href="contato.html" class="text-[#ccc] hover:text-[#8f4fff] transition-colors">Contato</a></li>
-      </ul>
-    </nav>
+  <header class="fixed top-0 w-full bg-[#100d1a] border-b border-[#333] z-50 px-8 py-4 flex justify-between items-center">
+    <img src="assets/images/noheroes logo.png" alt="NoHeroes Logo" class="h-16 drop-shadow-glow">
+    <button id="historyBtn" class="bg-[#8f4fff] text-white px-6 py-3 text-lg rounded-lg shadow-lg hover:bg-[#39ff14] transition-colors">Histórico</button>
   </header>
 
   <!-- Hero Section -->
   <section class="relative flex flex-col items-center justify-center h-screen bg-cover bg-center text-center text-[#d9d6ff]" style="background-image: url('assets/hero-bg.jpg');">
-    <div class="overlay"></div>
-    <h1 class="relative text-5xl mb-8 text-shadow-md z-10">Crônicas das Sombras</h1>
-    <p class="relative text-xl z-10">As vozes que moldam o universo NoHeroes.</p>
+    <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+    <h1 class="relative text-5xl md:text-6xl font-bold mb-8 text-shadow-md z-10">Crônicas das Sombras</h1>
+    <p class="relative text-xl md:text-2xl z-10">As vozes que moldam o universo NoHeroes.</p>
   </section>
 
   <!-- Blog Posts -->
-  <main id="blog-feed" class="px-8 py-16 max-w-4xl mx-auto">
-    <article class="card">
-      <h2 class="text-2xl font-bold text-[#8f4fff]">Patch 0.0.3 — Melhorias na Navegação</h2>
-      <div class="meta text-sm text-[#aaa]">27/04/2025 — Atualizações</div>
-      <button class="open-modal bg-[#39ff14] text-black px-4 py-2 rounded mt-4" data-modal="modal-1">Ler Mais</button>
+  <main id="blog-feed" class="py-16 px-8 max-w-4xl mx-auto">
+    <article class="bg-[#222] p-6 rounded-lg shadow-lg mb-8">
+      <h2 class="text-2xl font-bold text-[#8f4fff] mb-4">Patch 0.0.3 — Melhorias na Navegação</h2>
+      <div class="text-sm text-[#aaa] mb-4">27/04/2025 — Atualizações</div>
+      <button class="open-modal bg-[#39ff14] text-black px-4 py-2 rounded hover:bg-[#8f4fff] transition" data-modal="modal-2025-04-27-patch-0-0-3">Ler Mais</button>
     </article>
-    <article class="card">
-      <h2 class="text-2xl font-bold text-[#8f4fff]">Patch 0.0.2 — Página de Notícias Adicionada</h2>
-      <div class="meta text-sm text-[#aaa]">27/04/2025 — Atualizações</div>
-      <button class="open-modal bg-[#39ff14] text-black px-4 py-2 rounded mt-4" data-modal="modal-2">Ler Mais</button>
+    <article class="bg-[#222] p-6 rounded-lg shadow-lg mb-8">
+      <h2 class="text-2xl font-bold text-[#8f4fff] mb-4">Patch 0.0.2 — Página de Notícias Adicionada</h2>
+      <div class="text-sm text-[#aaa] mb-4">27/04/2025 — Atualizações</div>
+      <button class="open-modal bg-[#39ff14] text-black px-4 py-2 rounded hover:bg-[#8f4fff] transition" data-modal="modal-2025-04-27-patch-0-0-2">Ler Mais</button>
     </article>
-    <article class="card">
-      <h2 class="text-2xl font-bold text-[#8f4fff]">Patch 0.0.1 — Lançamento do Site</h2>
-      <div class="meta text-sm text-[#aaa]">24/04/2025 — Notícias</div>
-      <button class="open-modal bg-[#39ff14] text-black px-4 py-2 rounded mt-4" data-modal="modal-3">Ler Mais</button>
+    <article class="bg-[#222] p-6 rounded-lg shadow-lg mb-8">
+      <h2 class="text-2xl font-bold text-[#8f4fff] mb-4">Patch 0.0.1 — Lançamento do Site</h2>
+      <div class="text-sm text-[#aaa] mb-4">24/04/2025 — Notícias</div>
+      <button class="open-modal bg-[#39ff14] text-black px-4 py-2 rounded hover:bg-[#8f4fff] transition" data-modal="modal-2025-04-24-patch-0-0-1">Ler Mais</button>
     </article>
   </main>
 
   <!-- Modals -->
-  <div id="modal-1" class="modal">
+  <div id="modal-2025-04-27-patch-0-0-3" class="modal">
     <div class="modal-content">
-      <button class="close bg-transparent text-white text-xl absolute top-4 right-4">×</button>
-      <h3>Patch 0.0.3 — Melhorias na Navegação</h3>
+      <button class="close absolute top-4 right-4 text-xl">×</button>
+      <h3 class="text-2xl font-bold mb-4">Patch 0.0.3 — Melhorias na Navegação</h3>
       <p>Adicionamos um sistema de navegação para facilitar...</p>
     </div>
   </div>
-  <div id="modal-2" class="modal">
+  <div id="modal-2025-04-27-patch-0-0-2" class="modal">
     <div class="modal-content">
-      <button class="close bg-transparent text-white text-xl absolute top-4 right-4">×</button>
-      <h3>Patch 0.0.2 — Página de Notícias Adicionada</h3>
+      <button class="close absolute top-4 right-4 text-xl">×</button>
+      <h3 class="text-2xl font-bold mb-4">Patch 0.0.2 — Página de Notícias Adicionada</h3>
       <p>Uma nova seção de Notícias foi adicionada...</p>
     </div>
   </div>
-  <div id="modal-3" class="modal">
+  <div id="modal-2025-04-24-patch-0-0-1" class="modal">
     <div class="modal-content">
-      <button class="close bg-transparent text-white text-xl absolute top-4 right-4">×</button>
-      <h3>Patch 0.0.1 — Lançamento do Site</h3>
+      <button class="close absolute top-4 right-4 text-xl">×</button>
+      <h3 class="text-2xl font-bold mb-4">Patch 0.0.1 — Lançamento do Site</h3>
       <p>O site oficial da NoHeroes foi lançado...</p>
     </div>
   </div>
@@ -157,19 +124,21 @@
 
   <!-- Scripts -->
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      document.querySelectorAll(".open-modal").forEach(button => {
-        button.addEventListener("click", function () {
-          const modal = document.getElementById(this.dataset.modal);
-          modal.classList.add("open");
-        });
+    document.querySelectorAll('.open-modal').forEach(button => {
+      button.addEventListener('click', () => {
+        const modal = document.getElementById(button.dataset.modal);
+        modal.classList.add('open');
       });
+    });
 
-      document.querySelectorAll(".close").forEach(button => {
-        button.addEventListener("click", function () {
-          this.closest(".modal").classList.remove("open");
-        });
+    document.querySelectorAll('.close').forEach(button => {
+      button.addEventListener('click', () => {
+        button.closest('.modal').classList.remove('open');
       });
+    });
+
+    document.getElementById('historyBtn').addEventListener('click', () => {
+      document.getElementById('historyModal').classList.add('open');
     });
   </script>
 </body>
