@@ -3,95 +3,65 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NoHeroes Blog</title>
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <!-- TailwindCSS para utilitários -->
+  <script src="https://cdn.tailwindcss.com"></script>
   <!-- ScrollReveal -->
   <script src="https://unpkg.com/scrollreveal"></script>
-  <!-- Styles -->
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    /* Menu de filtros */
-.filter-menu { background: var(--bg); }
-.filter-btn {
-  color: var(--text);
-  font-family: 'Inter', sans-serif;
-  border: 1px solid var(--text);
-  box-shadow: 0 0 8px rgba(0,0,0,0.5);
-}
-.filter-btn:hover {
-  box-shadow: 0 0 12px var(--accent2);
-}
-    :root {
-      --bg: #111;
-      --text: #eee;
-      --accent1: #8e44ad;
-      --accent2: #27ae60;
-    }
+    :root { --bg: #111; --text: #eee; --accent1: #8e44ad; --accent2: #27ae60; }
     * { margin:0; padding:0; box-sizing:border-box; }
     body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; }
     a { color: var(--accent1); text-decoration: none; }
-    header { position: fixed; top:0; left:0; width:100%; display:flex; justify-content: space-between; align-items:center; padding:1rem 2rem; background: rgba(17,17,17,0.9); z-index:100; }
+    header { position: fixed; top:0; left:0; width:100%; display:flex; justify-content:space-between; align-items:center; padding:1rem 2rem; background:rgba(17,17,17,0.9); z-index:100; }
     header img { height:32px; }
-    header button { background: none; border:1px solid var(--text); padding:.5rem 1rem; border-radius:4px; cursor:pointer; font-family:'Inter'; }
-    .hero { height: 80vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; background: url('assets/hero-bg.jpg') center/cover no-repeat; position: relative; }
-    .hero::after { content: ''; position:absolute; inset:0; background: rgba(17,17,17,0.6); }
-    .hero h1, .hero p { position: relative; }
-    .hero h1 { font-family: 'Playfair Display', serif; font-size:4rem; margin-bottom:1rem; color: var(--accent1);}  
-    .hero p { font-size:1.25rem; color: var(--accent2);}  
-    main { padding: 12rem 2rem 4rem; max-width:800px; margin:0 auto; }
-    .card { background: #222; border-radius:8px; overflow:hidden; margin-bottom:2rem; display:flex; flex-direction:column; }
+    header button { background:none; border:1px solid var(--text); padding:.5rem 1rem; border-radius:4px; cursor:pointer; }
+    .hero { height:80vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; background:url('assets/hero-bg.jpg') center/cover no-repeat; position:relative; }
+    .hero::after { content:''; position:absolute; inset:0; background:rgba(17,17,17,0.6); }
+    .hero h1 { position:relative; font-family:'Playfair Display',serif; font-size:4rem; margin-bottom:1rem; color:var(--accent1); }
+    .hero p { position:relative; font-size:1.25rem; color:var(--accent2); }
+    main { padding:12rem 2rem 4rem; max-width:800px; margin:0 auto; }
+    .card { background:#222; border-radius:8px; overflow:hidden; margin-bottom:2rem; display:flex; flex-direction:column; }
     .card img { width:100%; height:auto; }
     .card-content { padding:1rem; }
     .card-content h2 { font-family:'Playfair Display'; margin-bottom:.5rem; }
     .card-content .meta { font-size:.875rem; color:#aaa; margin-bottom:.5rem; }
     .card-content p { margin-bottom:1rem; }
-    .card-content button { background: var(--accent2); border:none; padding:.5rem 1rem; border-radius:4px; cursor:pointer; }
-    /* Modal Styles */
-    .modal { position:fixed; top:0; left:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; background: rgba(0,0,0,0.8); visibility:hidden; opacity:0; transition: opacity .3s ease; }
+    .card-content button { background:var(--accent2); border:none; padding:.5rem 1rem; border-radius:4px; cursor:pointer; }
+    .modal { position:fixed; top:0; left:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.8); visibility:hidden; opacity:0; transition:opacity .3s ease; }
     .modal.open { visibility:visible; opacity:1; }
     .modal-content { background:#111; border:2px solid var(--accent1); border-radius:8px; max-width:600px; width:90%; max-height:90%; overflow:auto; position:relative; padding:2rem; }
     .modal-content .close { position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.5rem; cursor:pointer; }
-    /* Quick-scroll anchors (example) */
-    .anchor-btn { background: none; border: none; color: var(--text); cursor:pointer; margin-left:1rem; }
+    .anchor-btn { background:none; border:none; color:var(--text); cursor:pointer; margin-left:1rem; }
   </style>
 </head>
 <body>
-  <!-- Topo fixo com botão Histórico -->
+  <!-- Header -->
   <header>
     <img src="assets/logo.png" alt="NoHeroes Logo">
-    <div>
-      <button id="historyBtn">Histórico</button>
-      <!-- Aqui poderão ser adicionados botões de âncora rápida para posts específicos -->
-    </div>
-  </header>  <!-- Hero Section -->  <section class="hero">
-    <!-- Menu de Filtros Rápidos -->
-  <nav class="filter-menu flex justify-center space-x-6 py-6 bg-[#111]">
-    <button data-filter="atualizacoes" class="filter-btn px-4 py-2 rounded-lg hover:bg-[#222] transition">
-      Atualizações
-    </button>
-    <button data-filter="noticias" class="filter-btn px-4 py-2 rounded-lg hover:bg-[#222] transition">
-      Notícias
-    </button>
-    <button data-filter="comunidade" class="filter-btn px-4 py-2 rounded-lg hover:bg-[#222] transition">
-      Comunidade
-    </button>
-    <button data-filter="extras" class="filter-btn px-4 py-2 rounded-lg hover:bg-[#222] transition">
-      Extras
-    </button>
-  </nav>
+    <button id="historyBtn">Histórico</button>
+  </header>  <!-- Hero + Filtros -->  <section class="hero">
+    <nav class="filter-menu flex justify-center space-x-6 py-6 bg-[#111]">
+      <button data-filter="atualizacoes" class="filter-btn px-4 py-2 rounded-lg hover:bg-[#222] transition">Atualizações</button>
+      <button data-filter="noticias" class="filter-btn px-4 py-2 rounded-lg hover:bg-[#222] transition">Notícias</button>
+      <button data-filter="comunidade" class="filter-btn px-4 py-2 rounded-lg hover:bg-[#222] transition">Comunidade</button>
+      <button data-filter="extras" class="filter-btn px-4 py-2 rounded-lg hover:bg-[#222] transition">Extras</button>
+    </nav>
     <h1>Crônicas das Sombras</h1>
     <p>As vozes que moldam o universo NoHeroes.</p>
-  </section>  <!-- Corpo do Blog (Scroll infinito) -->  <main id="blog-feed">
-    <article class="card" data-id="2025-04-24-lancamento-do-site">
-  <img src="assets/posts/2025-04-24-lancamento-do-site-thumb.jpg" alt="Lançamento do Site">
-  <div class="card-content">
-    <h2>Patch 0.0.1 — Lançamento do Site</h2>
-    <div class="meta">24/04/2025 - Notícias</div>
-    <p>O site oficial da NoHeroes foi lançado! A partir de agora, toda a jornada dos projetos será compartilhada diretamente aqui.</p>
-    <button class="open-modal" data-modal="modal-2025-04-24-lancamento-do-site">Ler Mais</button>
-  </div>
-</article>
-
-<article class="card" data-id="2025-04-27-pagina-de-noticias-adicionada">
+  </section>  <!-- Blog Feed -->  <main id="blog-feed">
+    <!-- Patch 0.0.1 -->
+    <article class="card" data-id="2025-04-24-lancamento-do-site" data-category="noticias">
+      <img src="assets/posts/2025-04-24-lancamento-do-site-thumb.jpg" alt="Lançamento do Site">
+      <div class="card-content">
+        <h2>Patch 0.0.1 — Lançamento do Site</h2>
+        <div class="meta">24/04/2025 - Notícias</div>
+        <p>O site oficial da NoHeroes foi lançado! A partir de agora, toda a jornada dos projetos será compartilhada diretamente aqui.</p>
+        <button class="open-modal" data-modal="modal-2025-04-24-lancamento-do-site">Ler Mais</button>
+      </div>
+    </article><!-- Patch 0.0.2 -->
+<article class="card" data-id="2025-04-27-pagina-de-noticias-adicionada" data-category="atualizacoes">
   <img src="assets/posts/2025-04-27-pagina-de-noticias-adicionada-thumb.jpg" alt="Página de Notícias Adicionada">
   <div class="card-content">
     <h2>Patch 0.0.2 — Página de Notícias Adicionada</h2>
@@ -101,7 +71,8 @@
   </div>
 </article>
 
-<article class="card" data-id="2025-04-27-melhorias-na-navegacao">
+<!-- Patch 0.0.3 -->
+<article class="card" data-id="2025-04-27-melhorias-na-navegacao" data-category="atualizacoes">
   <img src="assets/posts/2025-04-27-melhorias-na-navegacao-thumb.jpg" alt="Melhorias na Navegação">
   <div class="card-content">
     <h2>Patch 0.0.3 — Melhorias na Navegação</h2>
@@ -110,136 +81,88 @@
     <button class="open-modal" data-modal="modal-2025-04-27-melhorias-na-navegacao">Ler Mais</button>
   </div>
 </article>
-    <!-- Novos cards são carregados dinamicamente via JS -->
-  </main>  
-  <!-- Modal para Lançamento do Site -->
-<div id="modal-2025-04-24-lancamento-do-site" class="modal">
-  <div class="modal-content">
-    <button class="close" data-close="modal-2025-04-24-lancamento-do-site">📜</button>
-    <h2>Patch 0.0.1 — Lançamento do Site</h2>
-    <div class="meta">24/04/2025 - Notícias</div>
-    <div class="post-body">
-      <p>O site oficial da NoHeroes foi lançado! A partir de agora, toda a jornada dos projetos será compartilhada diretamente aqui.</p>
-      <ul>
-        <li>Novidades:</li>
-        <li>Página inicial publicada</li>
-        <li>Primeiros conteúdos sendo estruturados</li>
-      </ul>
-      <p>Agradecemos por acompanhar desde o início!</p>
-    </div>
-  </div>
-</div>
 
-<!-- Modal para Página de Notícias Adicionada -->
-<div id="modal-2025-04-27-pagina-de-noticias-adicionada" class="modal">
-  <div class="modal-content">
-    <button class="close" data-close="modal-2025-04-27-pagina-de-noticias-adicionada">📜</button>
-    <h2>Patch 0.0.2 — Página de Notícias Adicionada</h2>
-    <div class="meta">27/04/2025 - Atualizações</div>
-    <div class="post-body">
-      <p>Uma nova seção de Notícias foi adicionada ao site! Agora você poderá acompanhar anúncios importantes, atualizações dos projetos e conteúdos especiais.</p>
-      <ul>
-        <li>Criação da página de notícias no blog</li>
-        <li>Estrutura inicial de organização por categorias</li>
-      </ul>
+  </main>  <!-- Modais individuais -->  <div id="modal-2025-04-24-lancamento-do-site" class="modal">
+    <div class="modal-content">
+      <button class="close" data-close="modal-2025-04-24-lancamento-do-site">📜</button>
+      <h2>Patch 0.0.1 — Lançamento do Site</h2>
+      <div class="meta">24/04/2025 - Notícias</div>
+      <div class="post-body">
+        <p>O site oficial da NoHeroes foi lançado! A partir de agora, toda a jornada dos projetos será compartilhada diretamente aqui.</p>
+        <ul>
+          <li>Página inicial publicada</li>
+          <li>Primeiros conteúdos sendo estruturados</li>
+        </ul>
+        <p>Agradecemos por acompanhar desde o início!</p>
+      </div>
     </div>
-  </div>
-</div>
-
-<!-- Modal para Melhorias na Navegação -->
-<div id="modal-2025-04-27-melhorias-na-navegacao" class="modal">
-  <div class="modal-content">
-    <button class="close" data-close="modal-2025-04-27-melhorias-na-navegacao">📜</button>
-    <h2>Patch 0.0.3 — Melhorias na Navegação</h2>
-    <div class="meta">27/04/2025 - Atualizações</div>
-    <div class="post-body">
-      <p>Adicionamos um sistema de navegação para facilitar a busca por conteúdos. Agora, no topo da página, é possível filtrar rapidamente entre: Atualizações, Notícias e Extras.</p>
+  </div>  <div id="modal-2025-04-27-pagina-de-noticias-adicionada" class="modal">
+    <div class="modal-content">
+      <button class="close" data-close="modal-2025-04-27-pagina-de-noticias-adicionada">📜</button>
+      <h2>Patch 0.0.2 — Página de Notícias Adicionada</h2>
+      <div class="meta">27/04/2025 - Atualizações</div>
+      <div class="post-body">
+        <ul>
+          <li>Criação da página de notícias no blog</li>
+          <li>Estrutura inicial de organização por categorias</li>
+        </ul>
+      </div>
     </div>
-  </div>
-</div>
-  <!-- Histórico (Modal Lateral ou Overlay) -->  <div id="historyModal" class="modal">
+  </div>  <div id="modal-2025-04-27-melhorias-na-navegacao" class="modal">
+    <div class="modal-content">
+      <button class="close" data-close="modal-2025-04-27-melhorias-na-navegacao">📜</button>
+      <h2>Patch 0.0.3 — Melhorias na Navegação</h2>
+      <div class="meta">27/04/2025 - Atualizações</div>
+      <div class="post-body">
+        <p>Agora você pode filtrar rapidamente entre: Atualizações, Notícias e Extras.</p>
+      </div>
+    </div>
+  </div>  <!-- Histórico Modal -->  <div id="historyModal" class="modal">
     <div class="modal-content">
       <button class="close" data-close="historyModal">×</button>
       <h3>Histórico de Publicações</h3>
       <ul>
-        <!-- Lista gerada dinamicamente -->
-        <li><button class="anchor-btn" data-scroll-to="2025-07-26-o-despertar-de-freq">26/07/2025 - O despertar de FREQ</button></li>
+        <li><button class="anchor-btn" data-scroll-to="2025-04-24-lancamento-do-site">24/04/2025 - Lançamento do Site</button></li>
+        <li><button class="anchor-btn" data-scroll-to="2025-04-27-pagina-de-noticias-adicionada">27/04/2025 - Página de Notícias</button></li>
+        <li><button class="anchor-btn" data-scroll-to="2025-04-27-melhorias-na-navegacao">27/04/2025 - Melhorias na Navegação</button></li>
       </ul>
-    </div>
-  </div>  <!-- Modals de Posts Individuais -->  <div id="modal-2025-07-26-o-despertar-de-freq" class="modal">
-    <div class="modal-content">
-      <button class="close" data-close="modal-2025-07-26-o-despertar-de-freq">📜</button>
-      <!-- Aqui inicia animação de arauto abrindo pergaminho -->
-      <img src="assets/herald-open.gif" alt="Herald Open" style="width:100%;">
-      <h2>O despertar de FREQ</h2>
-      <div class="meta">26/07/2025</div>
-      <div class="post-body">
-        <!-- Conteúdo do post -->
-        <p>A obra FREQ se inicia quando...</p>
-      </div>
-      <!-- Ao fechar, animação do arauto fechando pergaminho -->
-      <img src="assets/herald-close.gif" alt="Herald Close" style="width:100%; display:none;" class="close-anim">
     </div>
   </div>  <!-- Scripts -->  <script>
     // ScrollReveal init
     ScrollReveal().reveal('.card', { distance: '50px', duration: 600, interval: 100, origin: 'bottom' });
 
-    // Modal logic: abre um modal e garante fechar outros
+    // Modal logic
     document.querySelectorAll('.open-modal').forEach(btn => {
       btn.addEventListener('click', () => {
-        // fecha todos os modais
         document.querySelectorAll('.modal.open').forEach(m => m.classList.remove('open'));
-        // abre o alvo
         document.getElementById(btn.dataset.modal).classList.add('open');
       });
     });
     document.querySelectorAll('.close').forEach(btn => {
       btn.addEventListener('click', () => {
-        const id = btn.dataset.close;
-        const modal = document.getElementById(id);
-        // inicia animação de fechar aqui se necessário
-        modal.classList.remove('open');
+        document.getElementById(btn.dataset.close).classList.remove('open');
       });
     });
 
-    // Histórico
-    document.getElementById('historyBtn').addEventListener('click', ()=>{
+    // Histórico abrir
+    document.getElementById('historyBtn').addEventListener('click', () => {
       document.getElementById('historyModal').classList.add('open');
     });
-    // âncoras rápidas
-    document.querySelectorAll('.anchor-btn').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
+    // Histórico âncoras
+    document.querySelectorAll('.anchor-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
         document.getElementById('historyModal').classList.remove('open');
         document.querySelector(`[data-id='${btn.dataset.scrollTo}']`).scrollIntoView({ behavior: 'smooth' });
       });
     });
 
-    // Infinite Scroll (simplificado)
-    let page = 1;
-    window.addEventListener('scroll', ()=>{
-      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 200) {
-        // carregar próxima página de posts
-        loadMorePosts(++page);
-      }
+    // Filtro scroll
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const cat = btn.dataset.filter;
+        const target = document.querySelector(`[data-category="${cat}"]`);
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
     });
-    function loadMorePosts(pageNum) {
-      // fetch `/posts/page-${pageNum}.json` e gerar cards...
-      // Placeholder: não implementado
-    }
-  </script>
-<script>
-  // …seu JS existente…
-
-  // Lógica de filtro: rola suave até a primeira ocorrência da categoria
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const cat = btn.dataset.filter;
-      const target = document.querySelector(`[data-category="${cat}"]`);
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
-  });
-</script>
-</body>
+  </script></body>
 </html>
