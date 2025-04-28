@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="pt-BR">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,6 +42,8 @@
     .modal-content .close { position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.5rem; cursor:pointer; }
     /* Quick-scroll anchors (example) */
     .anchor-btn { background: none; border: none; color: var(--text); cursor:pointer; margin-left:1rem; }
+    .filter-menu { display: flex; flex-direction: column; margin-bottom: 1rem; }
+    .filter-menu label { margin-bottom: 0.5rem; cursor: pointer; }
   </style>
 </head>
 <body>
@@ -49,91 +52,118 @@
     <img src="assets/logo.png" alt="NoHeroes Logo">
     <div>
       <button id="historyBtn">Histórico</button>
-      <!-- Aqui poderão ser adicionados botões de âncora rápida para posts específicos -->
     </div>
-  </header>  <!-- Hero Section -->  <section class="hero">
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
     <h1>Crônicas das Sombras</h1>
     <p>As vozes que moldam o universo NoHeroes.</p>
-  </section>  <!-- Corpo do Blog (Scroll infinito) -->  <main id="blog-feed">
-    <!-- Exemplo de Card de Post -->
-    <article class="card" data-id="2025-07-26-o-despertar-de-freq">
-      <img src="assets/posts/2025-07-26-o-despertar-de-freq-thumb.jpg" alt="O despertar de FREQ">
+  </section>
+
+  <!-- Corpo do Blog -->
+  <main id="blog-feed">
+    <!-- Exemplo de Cards -->
+    <article class="card" data-category="Atualizações" data-id="2025-04-27-patch-0-0-3">
       <div class="card-content">
-        <h2>O despertar de FREQ</h2>
-        <div class="meta">26/07/2025</div>
-        <p>Um novo mundo se rasga sob nossos pés...</p>
-        <button class="open-modal" data-modal="modal-2025-07-26-o-despertar-de-freq">Ler Mais</button>
+        <h2>Patch 0.0.3 — Melhorias na Navegação</h2>
+        <div class="meta">27/04/2025</div>
+        <button class="open-modal" data-modal="modal-2025-04-27-patch-0-0-3">Ler Mais</button>
       </div>
     </article>
-    <!-- Novos cards são carregados dinamicamente via JS -->
-  </main>  <!-- Histórico (Modal Lateral ou Overlay) -->  <div id="historyModal" class="modal">
+    <article class="card" data-category="Atualizações" data-id="2025-04-27-patch-0-0-2">
+      <div class="card-content">
+        <h2>Patch 0.0.2 — Página de Notícias Adicionada</h2>
+        <div class="meta">27/04/2025</div>
+        <button class="open-modal" data-modal="modal-2025-04-27-patch-0-0-2">Ler Mais</button>
+      </div>
+    </article>
+    <article class="card" data-category="Notícias" data-id="2025-04-24-patch-0-0-1">
+      <div class="card-content">
+        <h2>Patch 0.0.1 — Lançamento do Site</h2>
+        <div class="meta">24/04/2025</div>
+        <button class="open-modal" data-modal="modal-2025-04-24-patch-0-0-1">Ler Mais</button>
+      </div>
+    </article>
+  </main>
+
+  <!-- Histórico (Modal com Filtro) -->
+  <div id="historyModal" class="modal">
     <div class="modal-content">
       <button class="close" data-close="historyModal">×</button>
       <h3>Histórico de Publicações</h3>
-      <ul>
-        <!-- Lista gerada dinamicamente -->
-        <li><button class="anchor-btn" data-scroll-to="2025-07-26-o-despertar-de-freq">26/07/2025 - O despertar de FREQ</button></li>
+      <div class="filter-menu">
+        <label><input type="radio" name="filter" value="Todos" checked> Todos</label>
+        <label><input type="radio" name="filter" value="Notícias"> Notícias</label>
+        <label><input type="radio" name="filter" value="Atualizações"> Atualizações</label>
+      </div>
+      <ul id="history-list">
+        <li><button class="anchor-btn" data-scroll-to="2025-04-27-patch-0-0-3">27/04/2025 - Patch 0.0.3</button></li>
+        <li><button class="anchor-btn" data-scroll-to="2025-04-27-patch-0-0-2">27/04/2025 - Patch 0.0.2</button></li>
+        <li><button class="anchor-btn" data-scroll-to="2025-04-24-patch-0-0-1">24/04/2025 - Patch 0.0.1</button></li>
       </ul>
     </div>
-  </div>  <!-- Modals de Posts Individuais -->  <div id="modal-2025-07-26-o-despertar-de-freq" class="modal">
+  </div>
+
+  <!-- Modals de Posts -->
+  <div id="modal-2025-04-27-patch-0-0-3" class="modal">
     <div class="modal-content">
-      <button class="close" data-close="modal-2025-07-26-o-despertar-de-freq">📜</button>
-      <!-- Aqui inicia animação de arauto abrindo pergaminho -->
-      <img src="assets/herald-open.gif" alt="Herald Open" style="width:100%;">
-      <h2>O despertar de FREQ</h2>
-      <div class="meta">26/07/2025</div>
-      <div class="post-body">
-        <!-- Conteúdo do post -->
-        <p>A obra FREQ se inicia quando...</p>
-      </div>
-      <!-- Ao fechar, animação do arauto fechando pergaminho -->
-      <img src="assets/herald-close.gif" alt="Herald Close" style="width:100%; display:none;" class="close-anim">
+      <button class="close" data-close="modal-2025-04-27-patch-0-0-3">×</button>
+      <h2>Patch 0.0.3 — Melhorias na Navegação</h2>
+      <p>Adicionamos um sistema de navegação...</p>
     </div>
-  </div>  <!-- Scripts -->  <script>
+  </div>
+  <div id="modal-2025-04-27-patch-0-0-2" class="modal">
+    <div class="modal-content">
+      <button class="close" data-close="modal-2025-04-27-patch-0-0-2">×</button>
+      <h2>Patch 0.0.2 — Página de Notícias Adicionada</h2>
+      <p>Uma nova seção de Notícias foi adicionada...</p>
+    </div>
+  </div>
+  <div id="modal-2025-04-24-patch-0-0-1" class="modal">
+    <div class="modal-content">
+      <button class="close" data-close="modal-2025-04-24-patch-0-0-1">×</button>
+      <h2>Patch 0.0.1 — Lançamento do Site</h2>
+      <p>O site oficial da NoHeroes foi lançado...</p>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
     // ScrollReveal init
     ScrollReveal().reveal('.card', { distance: '50px', duration: 600, interval: 100, origin: 'bottom' });
 
-    // Modal logic: abre um modal e garante fechar outros
-    document.querySelectorAll('.open-modal').forEach(btn => {
-      btn.addEventListener('click', () => {
-        // fecha todos os modais
-        document.querySelectorAll('.modal.open').forEach(m => m.classList.remove('open'));
-        // abre o alvo
-        document.getElementById(btn.dataset.modal).classList.add('open');
-      });
-    });
-    document.querySelectorAll('.close').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const id = btn.dataset.close;
-        const modal = document.getElementById(id);
-        // inicia animação de fechar aqui se necessário
-        modal.classList.remove('open');
-      });
-    });
+    // Modal logic
+    document.querySelectorAll('.open-modal').forEach(btn => btn.addEventListener('click', () => {
+      document.querySelectorAll('.modal.open').forEach(m => m.classList.remove('open'));
+      document.getElementById(btn.dataset.modal).classList.add('open');
+    }));
+    document.querySelectorAll('.close').forEach(btn => btn.addEventListener('click', () => {
+      document.getElementById(btn.dataset.close).classList.remove('open');
+    }));
 
     // Histórico
-    document.getElementById('historyBtn').addEventListener('click', ()=>{
+    document.getElementById('historyBtn').addEventListener('click', () => {
       document.getElementById('historyModal').classList.add('open');
     });
-    // âncoras rápidas
-    document.querySelectorAll('.anchor-btn').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        document.getElementById('historyModal').classList.remove('open');
-        document.querySelector(`[data-id='${btn.dataset.scrollTo}']`).scrollIntoView({ behavior: 'smooth' });
-      });
-    });
 
-    // Infinite Scroll (simplificado)
-    let page = 1;
-    window.addEventListener('scroll', ()=>{
-      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 200) {
-        // carregar próxima página de posts
-        loadMorePosts(++page);
-      }
-    });
-    function loadMorePosts(pageNum) {
-      // fetch `/posts/page-${pageNum}.json` e gerar cards...
-      // Placeholder: não implementado
-    }
-  </script></body>
+    // Âncoras rápidas
+    document.querySelectorAll('.anchor-btn').forEach(btn => btn.addEventListener('click', () => {
+      document.getElementById('historyModal').classList.remove('open');
+      document.querySelector(`[data-id='${btn.dataset.scrollTo}']`).scrollIntoView({ behavior: 'smooth' });
+    }));
+
+    // Filtro
+    document.querySelectorAll('input[name="filter"]').forEach(radio => radio.addEventListener('change', () => {
+      const value = radio.value;
+      document.querySelectorAll('.card').forEach(card => {
+        if (value === 'Todos' || card.dataset.category === value) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }));
+  </script>
+</body>
 </html>
