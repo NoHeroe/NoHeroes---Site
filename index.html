@@ -5,295 +5,161 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NoHeroes | Home</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    .text-shadow-md {
-      text-shadow: 0 0 10px rgba(143, 79, 255, 0.4);
-    }
-    .text-shadow-lg {
-      text-shadow: 0 0 20px rgba(143, 79, 255, 0.5);
-    }
-    .overlay {
-      background-color: rgba(0, 0, 0, 0.5);
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-    .dialog-box {
-      background: #1c1c1c;
-      border: 1px solid #8f4fff;
-      padding: 1rem;
-      border-radius: 1rem;
-      position: relative;
-      animation: fadeIn 0.5s ease-out;
-      max-width: 500px;
-      margin: 1rem auto;
-    }
-    .dialog-character {
-      position: absolute;
-      left: -60px;
-      top: -40px;
-      width: 80px;
-      height: 80px;
-      background-color: #8f4fff;
-      border-radius: 50%;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #e5e5e5; }
+    h1,h2 { font-family: 'Playfair Display', serif; }
+    .text-shadow-md { text-shadow: 0 0 10px rgba(143,79,255,0.4); }
+    .overlay { position:absolute; inset:0; background:rgba(0,0,0,0.5); }
+    .drop-shadow-glow { filter: drop-shadow(0 0 10px #8f4fff) drop-shadow(0 0 20px #8f4fff); }
+    html { scroll-behavior: smooth; }
   </style>
 </head>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const scrollButton = document.getElementById("scroll-button");
+<body class="leading-relaxed">
 
-    if (scrollButton) {
-      scrollButton.addEventListener("click", function (event) {
-        event.preventDefault(); // Evita o comportamento padrão de pular direto
-        const target = document.querySelector(scrollButton.getAttribute("href"));
+  <!-- 1. TOPO FIXO -->
+  <header class="fixed top-0 w-full bg-[#100d1a] border-b border-[#2e2e2e] z-50 px-8 py-4 flex justify-between items-center">
+    <img src="assets/images/noheroes-logo.png" alt="NoHeroes" class="h-16 drop-shadow-glow cursor-pointer" onclick="scrollToTop()">
+    <nav>
+      <ul class="flex space-x-6 text-sm">
+        <li><a href="#introducao" class="hover:text-[#8f4fff]">Início</a></li>
+        <li><a href="#universo" class="hover:text-[#8f4fff]">Universo</a></li>
+        <li><a href="#jogar" class="hover:text-[#8f4fff]">Jogar</a></li>
+        <li><a href="#apoio" class="hover:text-[#8f4fff]">Apoiar</a></li>
+        <li><a href="#blog" class="hover:text-[#8f4fff]">Blog</a></li>
+      </ul>
+    </nav>
+  </header>
 
-        if (target) {
-          target.scrollIntoView({
-            behavior: "smooth", // Ativa o scroll suave
-            block: "start", // Alinha o topo do alvo
-          });
-        }
-      });
-    }
-  });
-</script>
-<body class="font-serif bg-[#0a0a0a] text-[#e5e5e5] leading-relaxed">
+  <main class="pt-28">
 
-  <!-- TOPO FIXO -->
-<header class="fixed top-0 w-full bg-[#100d1a] border-b border-[#2e2e2e] z-50 px-8 py-4 flex justify-between items-center">
-  <!-- Logo com imagem estilizada -->
-  <div class="relative">
-    <img src="assets/images/noheroes logo.png" alt="noheroes logo" class="h-16 -mt-4 drop-shadow-glow cursor-pointer" onclick="scrollToTop()">
-  </div>
-  <nav>
-    <ul class="flex space-x-4">
-      <li><a href="ROAR.html" class="text-[#ccc] hover:text-[#8f4fff] transition-colors">ROAR</a></li>
-      <li><a href="FREQ.html" class="text-[#ccc] hover:text-[#8f4fff] transition-colors">FREQ</a></li>
-      <li><a href="#loja" class="text-[#ccc] hover:text-[#8f4fff] transition-colors">Loja</a></li>
-      <li><a href="#login" class="text-[#ccc] hover:text-[#8f4fff] transition-colors">Login/Conta</a></li>
-    </ul>
-  </nav>
-</header>
-
-<style>
-  /* Ajusta o glow roxo na imagem */
-  .drop-shadow-glow {
-    filter: drop-shadow(0 0 10px #8f4fff) drop-shadow(0 0 20px #8f4fff);
-  }
-</style>
-
-  <!-- CAPA -->
-  <section class="relative flex flex-col items-center justify-center h-screen bg-cover bg-center text-center text-[#d9d6ff]" style="background-image: url('bg-fantasy.gif');">
-    <div class="overlay"></div>
-    <h1 class="relative text-3xl md:text-5xl max-w-2xl mb-8 text-shadow-md z-10">
-      “Num mundo onde até a luz mente, a única verdade nasce da sombra.”
-    </h1>
-    <a href="#obras" class="bg-[#8f4fff] text-white px-6 py-3 text-lg rounded-lg shadow-lg transition-transform hover:scale-105 relative z-10">
-      Explorar Obras
-    </a>
-  </section>
-
-  <!-- PERGUNTAS (NO INÍCIO) -->
-  <section class="py-16 px-8 max-w-4xl mx-auto">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <a href="#oque" class="text-xl font-bold text-[#8f4fff] hover:underline">O que é NoHeroes?</a>
-      <a href="#quem" class="text-xl font-bold text-[#8f4fff] hover:underline">Quem é NoHeroe?</a>
-      <a href="#acharaqui" class="text-xl font-bold text-[#8f4fff] hover:underline">O que achará aqui?</a>
-      <a href="#acompanhar" class="text-xl font-bold text-[#8f4fff] hover:underline">Como acompanhar?</a>
-    </div>
-  </section>
-
-  <!-- SOBRE / QUESTIONÁRIO -->
-  <section class="py-16 px-8 max-w-4xl mx-auto" id="oque">
-    <h2 class="text-xl font-bold text-[#8f4fff] mb-2">O que é NoHeroes?</h2>
-    <p class="text-[#cfcfcf] text-sm">NoHeroes não é uma franquia. É um movimento narrativo. Um colapso em forma de anime.
-    </p>
-    <ul class="list-disc list-inside text-[#cfcfcf]">
-      <li>Mangás autorais</li>
-      <li>Animes com som e emoção cruas</li>
-      <li>Bastidores abertos</li>
-      <li>Mentorias para criadores que usam as trevas como tinta</li>
-      <li>E muito mais.</li>
-    </ul>
-    <p class="text-lg text-[#cfcfcf] mt-6">
-      Tudo será compartilhado. Nada será suavizado.<br>Um mundo forjado na dor, na fé e na arte.</p>
-  </section>
-
-  <section class="py-16 px-8 max-w-4xl mx-auto" id="quem">
-    <h2 class="text-xl font-bold text-[#8f4fff] mb-2">Quem é NoHeroe?</h2>
-    <p class="text-[#cfcfcf] text-sm">NoHeroe sou eu. É Azuos. É Ryu. Pode ser você.<br>
-      É quem toma decisões que heróis não conseguem tomar. Que encara sacrifícios que outros evitam.<br>
-      NoHeroe é a entidade, a colônia de vozes e sombras que sussurram neste universo.
-    </p>
-  </section>
-
-  <section class="py-16 px-8 max-w-4xl mx-auto" id="acharaqui">
-    <h2 class="text-xl font-bold text-[#8f4fff] mb-2">O que achará aqui?</h2>
-    <p class="text-[#cfcfcf] text-sm">     <li>Animes – FREQ e ROAR</li>
-      <li>Mangás – Versões visuais</li>
-      <li>Comunidade – Debates e teorias</li>
-      <li>Cursos e Mentorias</li>
-      <li>Apoie o projeto</li>
-    </ul> </p>
-  </section>
-
-  <section class="py-16 px-8 max-w-4xl mx-auto" id="acompanhar">
-  <h2 class="text-xl font-bold text-[#8f4fff] mb-8">Como acompanhar?</h2>
-  <ul class="space-y-4">
-    <!-- Instagram -->
-    <li class="flex items-center">
-      <a href="https://instagram.com/_noheroe" target="_blank" class="flex items-center space-x-3 text-[#cfcfcf] hover:text-[#8f4fff] transition">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" class="w-6 h-6">
-        <span>Instagram</span>
+    <!-- 1. CAPA HERO -->
+    <section id="introducao" class="relative flex flex-col items-center justify-center h-screen bg-cover bg-center text-center text-[#d9d6ff]" style="background-image:url('assets/images/hero-bg.gif')">
+      <div class="overlay"></div>
+      <h1 class="z-10 text-3xl md:text-5xl max-w-2xl mb-8 text-shadow-md">
+        “Num mundo onde até a luz mente, a única verdade nasce da sombra.”
+      </h1>
+      <a href="#universo" class="z-10 bg-[#8f4fff] text-white px-6 py-3 text-lg rounded-lg shadow-lg hover:scale-105 transition">
+        Explorar o Universo
       </a>
-    </li>
+    </section>
 
-    <!-- TikTok -->
-<li class="flex items-center">
-  <a href="https://tiktok.com" target="_blank" class="flex items-center space-x-3 text-[#cfcfcf] hover:text-[#8f4fff] transition">
-    <img src="assets/icons/tiktok icon.png" alt="TikTok" class="w-6 h-6">
-    <span>TikTok</span>
-  </a>
-</li>
+    <!-- 2. INTRODUÇÃO RÁPIDA -->
+    <section class="py-16 px-8 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center" id="teaser">
+      <div class="p-6 bg-[#1c1c1c] rounded-lg hover:scale-105 transition">
+        <h2 class="font-bold mb-2 text-[#8f4fff]">Anime & Mangá</h2>
+        <p>Histórias cruas e sem filtros.</p>
+      </div>
+      <div class="p-6 bg-[#1c1c1c] rounded-lg hover:scale-105 transition">
+        <h2 class="font-bold mb-2 text-[#8f4fff]">Evolua Seu Personagem</h2>
+        <p>Torne-se um personagem no nosso mundo.</p>
+      </div>
+      <div class="p-6 bg-[#1c1c1c] rounded-lg hover:scale-105 transition">
+        <h2 class="font-bold mb-2 text-[#8f4fff]">Lore Viva</h2>
+        <p>Um universo em constante expansão.</p>
+      </div>
+    </section>
 
-    <!-- Discord -->
-    <li class="flex items-center">
-      <a href=https://discord.gg/Yyb8Ff66cd" target="_blank" class="flex items-center space-x-3 text-[#cfcfcf] hover:text-[#8f4fff] transition">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png" alt="Discord" class="w-6 h-6">
-        <span>Grupo - Discord</span>
+    <!-- 3. TEASER JOGAR -->
+    <section id="jogar" class="py-16 px-8 max-w-4xl mx-auto text-center">
+      <img src="assets/images/hud-teaser.png" alt="Teaser HUD" class="mx-auto mb-6 w-48 opacity-80">
+      <h2 class="text-2xl font-bold mb-4">Você está pronto para deixar de assistir... e começar a viver?</h2>
+      <button class="px-6 py-3 bg-gray-600 text-white rounded-lg opacity-50 cursor-not-allowed">Jogar Agora (em breve)</button>
+    </section>
+
+    <!-- 4. UNIVERSO COMEÇA AQUI -->
+    <section id="universo" class="py-16 px-8 max-w-5xl mx-auto text-center relative">
+      <div class="absolute inset-0 bg-gradient-to-br from-[#39ff14]/30 to-[#8f4fff]/30"></div>
+      <h2 class="relative text-3xl font-bold mb-6">Cada alma vibra em uma frequência… ou ruge contra o próprio destino.</h2>
+      <div class="relative z-10 flex justify-center gap-8 flex-wrap">
+        <a href="FREQ.html" class="px-6 py-3 border-2 border-[#39ff14] text-[#39ff14] rounded-lg hover:bg-[#39ff14] hover:text-black transition">
+          Explorar FREQ
+        </a>
+        <a href="ROAR.html" class="px-6 py-3 border-2 border-[#8f4fff] text-[#8f4fff] rounded-lg hover:bg-[#8f4fff] hover:text-black transition">
+          Explorar ROAR
+        </a>
+      </div>
+    </section>
+
+    <!-- 5. GAMIFICAÇÃO -->
+    <section class="py-16 px-8 max-w-5xl mx-auto bg-[#111] rounded-lg text-center">
+      <h2 class="text-2xl font-bold mb-4 text-[#8f4fff]">Torne-se um personagem no nosso mundo</h2>
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
+        <div><strong>Intel.</strong><p>12</p></div>
+        <div><strong>Força</strong><p>8</p></div>
+        <div><strong>Resist.</strong><p>10</p></div>
+        <div><strong>Infl.</strong><p>5</p></div>
+        <div><strong>Poder</strong><p>35</p></div>
+      </div>
+      <a href="conta.html" class="px-6 py-3 bg-[#8f4fff] text-black rounded-lg hover:scale-105 transition">
+        Como funciona o sistema
       </a>
-    </li>
+    </section>
 
-    <!-- WhatsApp -->
-    <li class="flex items-center">
-      <a href="https://chat.whatsapp.com/DSiquXUkKpj22JwmqoGD7T" target="_blank" class="flex items-center space-x-3 text-[#cfcfcf] hover:text-[#8f4fff] transition">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" class="w-6 h-6">
-        <span>Grupo - WhatsApp</span>
-      </a>
-    </li>
+    <!-- 6. APOIO VITALISTA -->
+    <section id="apoio" class="py-16 px-8 max-w-5xl mx-auto text-center">
+      <h2 class="text-2xl font-bold mb-4 text-[#39ff14]">Sua ajuda alimenta o mundo de Caelum</h2>
+      <div class="flex flex-col md:flex-row justify-center gap-4">
+        <a href="apoio.html" class="px-6 py-3 bg-[#39ff14] text-black rounded-lg hover:scale-105 transition">
+          Contribuir com Pix
+        </a>
+        <a href="apoio.html#outras" class="px-6 py-3 border border-[#39ff14] text-[#39ff14] rounded-lg hover:bg-[#39ff14] hover:text-black transition">
+          Quero ajudar de outras formas
+        </a>
+        <a href="apoio.html#reverso" class="px-6 py-3 border border-[#39ff14] text-[#39ff14] rounded-lg hover:bg-[#39ff14] hover:text-black transition">
+          Apoiar outros criadores
+        </a>
+      </div>
+    </section>
 
-    <!-- Futuro YouTube e Twitter -->
-    <li class="flex items-center">
-      <span class="flex items-center space-x-3 text-[#8f4fff] italic">
-        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube" class="w-6 h-6">
-        <span>Futuramente: YouTube e Twitter</span>
-      </span>
-    </li>
-  </ul>
-</section></p>
-  </section>
+    <!-- 7. COMUNIDADE -->
+    <section class="py-16 px-8 max-w-4xl mx-auto text-center">
+      <h2 class="text-2xl font-bold mb-4 text-[#8f4fff]">Toda sombra precisa de um clã</h2>
+      <div class="flex justify-center gap-6">
+        <a href="https://discord.gg/SEU_LINK" class="hover:scale-110 transition"><img src="assets/icons/discord.png" alt="Discord" class="w-12"></a>
+        <a href="https://chat.whatsapp.com/SEU_LINK" class="hover:scale-110 transition"><img src="assets/icons/whatsapp.png" alt="WhatsApp" class="w-12"></a>
+      </div>
+    </section>
 
-  <!-- ESCOLHA ENTRE FREQ E ROAR -->
-<section class="relative py-16 px-8 max-w-6xl mx-auto" id="obras">
-  <!-- Contêiner do Vídeo de Fundo -->
-  <div class="background-video">
-    <video autoplay loop muted playsinline class="w-full h-full">
-      <source src="assets/videos/City-ruins.mp4" type="video/mp4">
-      Seu navegador não suporta vídeos HTML5.
-    </video>
-  </div>
-
-  <!-- Conteúdo da Seção -->
-  <div class="relative z-10 flex flex-col items-center justify-center text-center h-full">
-    <h2 class="text-2xl font-bold mb-8 text-white text-shadow-md">Escolha seu caminho</h2>
-    <div class="flex justify-center gap-10 flex-wrap">
-      <div>
-        <button onclick="toggleDialog('freq')" class="bg-[#1c1c1c] border border-[#39ff14] text-[#39ff14] px-6 py-3 rounded-lg hover:bg-[#39ff14] hover:text-black transition">
-  FREQ
-</button>
-<div id="dialog-freq" class="dialog-box hidden">
-  <div class="dialog-character"></div>
-  <p class="mb-4 text-[#39ff14]">FREQ - Uma jornada de reconstrução e despertar.
-  Ryu é lançado em um mundo esquecido pela luz, onde a magia adormece e a fé é frágil.
-  Entre ecos de esperança e antigos sussurros, ele busca sua verdadeira frequência.
-  Escolha transcender.
-  Escolha FREQ.
-  </p>
-  <a href="FREQ.html" class="bg-[#39ff14] text-black px-4 py-2 rounded">Ver mais</a>
+    <!-- 8. BLOG -->
+    <section id="blog" class="py-16 px-8 max-w-5xl mx-auto">
+      <h2 class="text-2xl font-bold mb-6 text-[#8f4fff]">Últimos registros do Oráculo</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Cada card: data + título + link -->
+        <div class="p-4 bg-[#1c1c1c] rounded-lg hover:scale-105 transition">
+          <p class="text-sm text-gray-400">12/04/2025</p>
+          <h3 class="mt-2">Como o Oráculo molda nosso destino</h3>
+        </div>
+        <div class="p-4 bg-[#1c1c1c] rounded-lg hover:scale-105 transition">
+          <p class="text-sm text-gray-400">05/04/2025</p>
+          <h3 class="mt-2">A verdade por trás das muralhas</h3>
+        </div>
+        <div class="p-4 bg-[#1c1c1c] rounded-lg hover:scale-105 transition">
+          <p class="text-sm text-gray-400">28/03/2025</p>
+          <h3 class="mt-2">Seu papel na grande Ascensão</h3>
         </div>
       </div>
-      <div>
-        <button onclick="toggleDialog('roar')" class="bg-[#1c1c1c] border border-[#8f4fff] text-[#8f4fff] px-6 py-3 rounded-lg hover:bg-[#8f4fff] hover:text-black transition">
-          ROAR
-        </button>
-        <div id="dialog-roar" class="dialog-box hidden">
-          <div class="dialog-character"></div>
-          <p class="mb-4">ROAR - Quando a fé se quebra, o grito ecoa.
-          Azuos mergulha no abismo da dor e se perde nas próprias sombras.
-          Entre guerras, traições e delírios, o mundo ruge pela destruição.
-          Escolha ROAR.
-          </p>
-          <a href="ROAR.html" class="bg-[#8f4fff] text-black px-4 py-2 rounded">Ver mais</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+      <a href="blog.html" class="mt-6 inline-block underline hover:text-[#8f4fff]">Acessar arquivo completo →</a>
+    </section>
 
-  <!-- RODAPÉ -->
-<footer class="bg-[#0d0d0d] py-8 text-center text-[#666] border-t border-[#333] mt-16">
-  <!-- Botão linktree -->
-  <div class="flex flex-col items-center mb-6">
-    <a href="linktree.html" target="_blank" class="group">
-      <img src="assets/images/linktree.png" alt="Linktree" class="h-12 w-12 mb-2 transition-transform hover:scale-110">
-      <span class="text-[#8f4fff] group-hover:text-white text-sm font-semibold transition-colors text-shadow-md">
-        Linktree
-      </span>
-    </a>
-  </div>
-  <!-- Contato e frases -->
-  <p>Contato comercial: +55 (65) 99324-0270</p>
-  <p class="mt-4">Explore. Escolha. Caia. Evolua.</p>
-  <p class="extra mt-2">Toda escolha tem um preço. Toda queda, uma razão.</p>
-  <p class="text-xs mt-6">© 2025 NoHeroes. Todos os direitos reservados.</p>
-</footer>
+    <!-- 9. CITAÇÃO DO CRIADOR -->
+    <section class="py-16 px-8 max-w-5xl mx-auto text-center bg-[#111] rounded-lg">
+      <p class="italic text-lg opacity-80 mb-4">“Criei tudo isso em 2 dias. Do zero. Sem apoio. Só com propósito.”</p>
+      <a href="sobre.html" class="underline hover:text-[#8f4fff]">→ Sobre o criador e o nascimento de NoHeroes</a>
+    </section>
+
+  </main>
+
+  <!-- 10. RODAPÉ -->
+  <footer class="py-8 text-center text-[#666] border-t border-[#333] mt-16">
+    <a href="linktree.html" class="inline-block mb-4"><img src="assets/images/linktree.png" alt="Linktree" class="h-10 mx-auto"></a>
+    <p>Explore. Escolha. Caia. Evolua.</p>
+    <p class="mt-2">Toda escolha tem um preço. Toda queda, uma razão.</p>
+    <p class="text-xs mt-4">© 2025 NoHeroes. Todos os direitos reservados.</p>
+  </footer>
 
   <script>
-    function toggleDialog(id) {
-      document.querySelectorAll('.dialog-box').forEach(box => box.classList.add('hidden'));
-      document.getElementById('dialog-' + id).classList.remove('hidden');
-    }
+    function scrollToTop() { window.scrollTo({ top:0, behavior:'smooth' }); }
   </script>
-<script src="https://unpkg.com/scrollreveal"></script>
-   <script>
-  ScrollReveal().reveal('section', { 
-    delay: 200, 
-    duration: 1000, 
-    origin: 'bottom', 
-    distance: '50px', 
-    reset: true // Permite que o efeito seja repetido
-  });
-</script>
-<script>
-  // Adiciona scroll suave para todos os links que apontam para IDs na página
-  document.addEventListener("DOMContentLoaded", function () {
-    const links = document.querySelectorAll('a[href^="#"]'); // Seleciona todos os links internos
-
-    links.forEach(link => {
-      link.addEventListener("click", function (event) {
-        event.preventDefault(); // Evita o comportamento padrão (pular direto)
-        const target = document.querySelector(this.getAttribute("href")); // Alvo do link
-
-        if (target) {
-          const headerOffset = 80; // Compensa a altura do header fixo
-          const elementPosition = target.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: "smooth" // Ativa a animação suave
-          });
-        }
-      });
-    });
-  });
-</script>
 </body>
 </html>
