@@ -83,3 +83,47 @@ section::after {
 
 /* 11. Drag-to-scroll JS hookup (sem scrollbars) */
 ::-webkit-scrollbar { display: none; }
+
+/* —————————————— PATCH DE MELHORIA —————————————— */
+
+/* 1. Zoom-out inicial pra caber a árvore toda na tela */
+#tree {
+  /* já existia min-w, agora adiciona: */
+  transform: scale(0.8);
+  transform-origin: top center;
+}
+
+/* 2. Mais espaço entre colunas e fases */
+.columns {
+  gap: 4rem;        /* antes era 2rem */
+}
+section {
+  margin-bottom: 6rem;  /* dá mais respiro entre fases */
+}
+
+/* 3. Garantir que as caixas fiquem visíveis */
+.columns label {
+  background: rgba(255,255,255,0.1); /* um pouco mais claro */
+  padding: 1rem 1.25rem;             /* caixas maiores */
+  font-size: 0.875rem;
+}
+
+/* 4. Root node (“raiz”) */
+.root-node {
+  margin-top: 4rem;
+}
+.root-node .box {
+  padding: 0.75rem 1.5rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.5rem;
+  font-weight: 700;
+}
+
+/* 5. Remove borda fina do trophy pra ficar clean */
+#trophy {
+  border: none !important;
+  background: rgba(255, 202, 21, 0.1);
+}
+
+/* 6. (Opcional) forçar a tree não rolar verticalmente */
+main { overflow-y: hidden !important; }
