@@ -205,7 +205,6 @@
     title: "Patch 0.0.4 — Atualização da página Blog & adição de \"estereggs\"",
     content: "<p>Adicionamos um código que facilita a publicação de atualizações e posts no blog. Além disso, um \"esteregg\" foi adicionado ao site. O problema do rodapé da página foi corrigido e uma página nova \"Sobre\" foi adicionada ao site, mas ainda está em desenvolvimento.</p>"
   }
-]
     ];
       // Para adicionar um novo post, copie este objeto e ajuste os dados:
       // {
@@ -290,44 +289,6 @@
       );
     });
   </script>
-<script>
-  const container = document.getElementById("posts-container"); // onde vai aparecer os cards
-
-  posts.forEach(post => {
-    // Cria o card
-    const card = document.createElement("div");
-    card.className = "post-card";
-    card.innerHTML = `
-      <h3>${post.category}</h3>
-      <h2>${post.title}</h2>
-      <p>${post.date}</p>
-      <button onclick="openModal('${post.id}')">Ver mais</button>
-    `;
-    container.appendChild(card);
-
-    // Cria o modal escondido
-    const modal = document.createElement("div");
-    modal.className = "post-modal";
-    modal.id = post.id;
-    modal.innerHTML = `
-      <div class="modal-content">
-        <span class="close" onclick="closeModal('${post.id}')">&times;</span>
-        <h2>${post.title}</h2>
-        <p class="date">${post.date}</p>
-        <div>${post.content}</div>
-      </div>
-    `;
-    document.body.appendChild(modal);
-  });
-
-  function openModal(id) {
-    document.getElementById(id).style.display = "block";
-  }
-
-  function closeModal(id) {
-    document.getElementById(id).style.display = "none";
-  }
-</script>
 
   <!-- Footer -->
   <footer>
