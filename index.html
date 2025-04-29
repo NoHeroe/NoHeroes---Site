@@ -13,53 +13,50 @@
     .overlay { position:absolute; inset:0; background:rgba(0,0,0,0.5); }
     .drop-shadow-glow { filter: drop-shadow(0 0 10px #8f4fff) drop-shadow(0 0 20px #8f4fff); }
     html { scroll-behavior: smooth; }
+    /* Modal e drawer */
+    .hidden { display: none; }
   </style>
 </head>
 <body class="leading-relaxed">
 
   <!-- 1. TOPO FIXO -->
-<header class="fixed top-0 left-0 w-full bg-[#100d1a] border-b border-[#2e2e2e] z-50 flex items-center justify-between px-6 py-4">
-  <!-- Logo -->
-  <a href="#" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="flex-shrink-0">
-    <img src="assets/images/noheroes logo.png"
-         alt="NoHeroes"
-         class="h-20 drop-shadow-[0_0_20px_rgba(143,79,255,0.7)] cursor-pointer"/>
-  </a>
+  <header class="fixed top-0 left-0 w-full bg-[#100d1a] border-b border-[#2e2e2e] z-50 flex items-center justify-between px-6 py-4">
+    <!-- Logo clicável -->
+    <a href="#" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="flex-shrink-0">
+      <img src="assets/images/noheroes logo.png" alt="NoHeroes" class="h-20 drop-shadow-glow cursor-pointer"/>
+    </a>
+    <!-- Links desktop -->
+    <nav class="hidden md:flex space-x-6 items-center">
+      <a href="loja.html" class="text-[#ccc] hover:text-[#8f4fff] transition">Loja</a>
+      <a href="sobre.html" class="text-[#ccc] hover:text-[#8f4fff] transition">Sobre</a>
+      <a href="login.html" class="text-[#ccc] hover:text-[#8f4fff] transition">Conta/Login</a>
+    </nav>
+    <!-- Ícones ação -->
+    <div class="flex items-center space-x-4">
+      <!-- Notificações -->
+      <button id="notify-btn" class="relative text-2xl text-[#ccc] hover:text-[#8f4fff] transition">
+        🔔
+        <span id="notify-badge" class="absolute -top-1 -right-2 bg-[#8f4fff] text-black text-xs rounded-full px-1 hidden">3</span>
+      </button>
+      <!-- Menu mobile -->
+      <button id="menu-btn" class="md:hidden text-2xl text-[#ccc] hover:text-[#8f4fff] transition">☰</button>
+    </div>
+  </header>
 
-  <!-- Links desktop -->
-  <nav class="hidden md:flex space-x-6 items-center">
-    <a href="loja.html" class="text-[#ccc] hover:text-[#8f4fff] transition">Loja</a>
-    <a href="sobre.html" class="text-[#ccc] hover:text-[#8f4fff] transition">Sobre</a>
-    <a href="login.html" class="text-[#ccc] hover:text-[#8f4fff] transition">Conta/Login</a>
-  </nav>
-
-  <!-- Ícones ação -->
-  <div class="flex items-center space-x-4">
-    <!-- Notificações -->
-    <button id="notify-btn" class="relative text-2xl text-[#ccc] hover:text-[#8f4fff] transition">
-      🔔
-      <span id="notify-badge" class="absolute -top-1 -right-2 bg-[#8f4fff] text-black text-xs rounded-full px-1 hidden">3</span>
-    </button>
-
-    <!-- Menu mobile -->
-    <button id="menu-btn" class="md:hidden text-2xl text-[#ccc] hover:text-[#8f4fff] transition">
-      ☰
-    </button>
+  <!-- Modal de Notificações -->
+  <div id="notify-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+    <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-sm w-full">
+      <h3 class="text-lg font-bold text-[#8f4fff] mb-4">Notificações</h3>
+      <ul class="space-y-2 text-[#ccc]">
+        <li>• Novo post no Blog (12/04/2025)</li>
+        <li>• Atualização da página FREQ</li>
+        <li>• Em breve: Loja Online</li>
+      </ul>
+      <button class="mt-4 px-4 py-2 bg-[#8f4fff] text-black rounded" onclick="toggleNotifyModal()">Fechar</button>
+    </div>
   </div>
-</header>
-<!-- MODAL DE NOTIFICAÇÕES (escondido até clicar) -->
-<div id="notify-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
-  <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-sm w-full">
-    <h3 class="text-lg font-bold text-[#8f4fff] mb-4">Notificações</h3>
-    <ul class="space-y-2 text-[#ccc]">
-      <li>• Novo post no Blog (2 dias atrás)</li>
-      <li>• Atualização da página FREQ</li>
-      <li>• Em breve: Loja Online</li>
-    </ul>
-    <button class="mt-4 px-4 py-2 bg-[#8f4fff] text-black rounded" onclick="toggleNotifyModal()">Fechar</button>
-  </div>
-</div>
 
+  <!-- Main -->
   <main class="pt-28">
 
     <!-- 1. CAPA HERO -->
@@ -74,7 +71,7 @@
     </section>
 
     <!-- 2. INTRODUÇÃO RÁPIDA -->
-    <section class="py-16 px-8 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center" id="teaser">
+    <section id="teaser" class="py-16 px-8 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
       <div class="p-6 bg-[#1c1c1c] rounded-lg hover:scale-105 transition">
         <h2 class="font-bold mb-2 text-[#8f4fff]">Anime & Mangá</h2>
         <p>Histórias cruas e sem filtros.</p>
@@ -101,17 +98,13 @@
       <div class="absolute inset-0 bg-gradient-to-br from-[#39ff14]/30 to-[#8f4fff]/30"></div>
       <h2 class="relative text-3xl font-bold mb-6">Cada alma vibra em uma frequência… ou ruge contra o próprio destino.</h2>
       <div class="relative z-10 flex justify-center gap-8 flex-wrap">
-        <a href="FREQ.html" class="px-6 py-3 border-2 border-[#39ff14] text-[#39ff14] rounded-lg hover:bg-[#39ff14] hover:text-black transition">
-          Explorar FREQ
-        </a>
-        <a href="ROAR.html" class="px-6 py-3 border-2 border-[#8f4fff] text-[#8f4fff] rounded-lg hover:bg-[#8f4fff] hover:text-black transition">
-          Explorar ROAR
-        </a>
+        <a href="FREQ.html" class="px-6 py-3 border-2 border-[#39ff14] text-[#39ff14] rounded-lg hover:bg-[#39ff14] hover:text-black transition">Explorar FREQ</a>
+        <a href="ROAR.html" class="px-6 py-3 border-2 border-[#8f4fff] text-[#8f4fff] rounded-lg hover:bg-[#8f4fff] hover:text-black transition">Explorar ROAR</a>
       </div>
     </section>
 
     <!-- 5. GAMIFICAÇÃO -->
-    <section class="py-16 px-8 max-w-5xl mx-auto bg-[#111] rounded-lg text-center">
+    <section id="game" class="py-16 px-8 max-w-5xl mx-auto bg-[#111] rounded-lg text-center">
       <h2 class="text-2xl font-bold mb-4 text-[#8f4fff]">Torne-se um personagem no nosso mundo</h2>
       <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
         <div><strong>Intel.</strong><p>12</p></div>
@@ -120,29 +113,21 @@
         <div><strong>Infl.</strong><p>5</p></div>
         <div><strong>Poder</strong><p>35</p></div>
       </div>
-      <a href="conta.html" class="px-6 py-3 bg-[#8f4fff] text-black rounded-lg hover:scale-105 transition">
-        Como funciona o sistema
-      </a>
+      <a href="conta.html" class="px-6 py-3 bg-[#8f4fff] text-black rounded-lg hover:scale-105 transition">Como funciona o sistema</a>
     </section>
 
     <!-- 6. APOIO VITALISTA -->
     <section id="apoio" class="py-16 px-8 max-w-5xl mx-auto text-center">
       <h2 class="text-2xl font-bold mb-4 text-[#39ff14]">Sua ajuda alimenta o mundo de Caelum</h2>
       <div class="flex flex-col md:flex-row justify-center gap-4">
-        <a href="apoio.html" class="px-6 py-3 bg-[#39ff14] text-black rounded-lg hover:scale-105 transition">
-          Contribuir com Pix
-        </a>
-        <a href="apoiar.html#outras" class="px-6 py-3 border border-[#39ff14] text-[#39ff14] rounded-lg hover:bg-[#39ff14] hover:text-black transition">
-          Quero ajudar de outras formas
-        </a>
-        <a href="apoiar.html#reverso" class="px-6 py-3 border border-[#39ff14] text-[#39ff14] rounded-lg hover:bg-[#39ff14] hover:text-black transition">
-          Apoiar outros criadores
-        </a>
+        <a href="apoio.html" class="px-6 py-3 bg-[#39ff14] text-black rounded-lg hover:scale-105 transition">Contribuir com Pix</a>
+        <a href="apoio.html#outras" class="px-6 py-3 border border-[#39ff14] text-[#39ff14] rounded-lg hover:bg-[#39ff14] hover:text-black transition">Quero ajudar de outras formas</a>
+        <a href="apoio.html#reverso" class="px-6 py-3 border border-[#39ff14] text-[#39ff14] rounded-lg hover:bg-[#39ff14] hover:text-black transition">Quero apoio no meu projeto</a>
       </div>
     </section>
 
     <!-- 7. COMUNIDADE -->
-    <section class="py-16 px-8 max-w-4xl mx-auto text-center">
+    <section id="comunidade" class="py-16 px-8 max-w-4xl mx-auto text-center">
       <h2 class="text-2xl font-bold mb-4 text-[#8f4fff]">Toda sombra precisa de um clã</h2>
       <div class="flex justify-center gap-6">
         <a href="https://discord.gg/SEU_LINK" class="hover:scale-110 transition"><img src="assets/icons/discord icon.png" alt="Discord" class="w-12"></a>
@@ -154,7 +139,6 @@
     <section id="blog" class="py-16 px-8 max-w-5xl mx-auto">
       <h2 class="text-2xl font-bold mb-6 text-[#8f4fff]">Últimos registros do Oráculo</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Cada card: data + título + link -->
         <div class="p-4 bg-[#1c1c1c] rounded-lg hover:scale-105 transition">
           <p class="text-sm text-gray-400">12/04/2025</p>
           <h3 class="mt-2">Como o Oráculo molda nosso destino</h3>
@@ -187,76 +171,41 @@
     <p class="text-xs mt-4">© 2025 NoHeroes. Todos os direitos reservados.</p>
   </footer>
 
+  <!-- Scripts -->
   <script>
-    function scrollToTop() { window.scrollTo({ top:0, behavior:'smooth' }); }
+    // Notificações
+    function toggleNotifyModal() {
+      document.getElementById('notify-modal').classList.toggle('hidden');
+    }
+    document.getElementById('notify-btn').addEventListener('click', toggleNotifyModal);
+
+    // Drawer de navegação interna
+    document.getElementById('menu-btn').addEventListener('click', () => {
+      if (!document.getElementById('scroll-drawer')) {
+        const menu = document.createElement('div');
+        menu.id = 'scroll-drawer';
+        menu.className = 'fixed top-0 right-0 w-64 h-full bg-[#1c1c1c] shadow-lg p-6 flex flex-col space-y-4 z-50';
+        menu.innerHTML = `
+          <button class="self-end text-2xl text-[#8f4fff]" onclick="closeDrawer()">×</button>
+          <a href="#universo" class="text-lg text-[#ccc] hover:text-[#8f4fff]" onclick="scrollToSection('universo')">Lore Viva</a>
+          <a href="#comunidade" class="text-lg text-[#ccc] hover:text-[#8f4fff]" onclick="scrollToSection('comunidade')">Comunidade</a>
+          <a href="#jogar" class="text-lg text-[#ccc] hover:text-[#8f4fff]" onclick="scrollToSection('jogar')">Torne-se Personagem</a>
+          <a href="#apoio" class="text-lg text-[#ccc] hover:text-[#8f4fff]" onclick="scrollToSection('apoio')">Apoio Vitalista</a>
+        `;
+        document.body.appendChild(menu);
+      }
+    });
+
+    function closeDrawer() {
+      document.getElementById('scroll-drawer')?.remove();
+    }
+
+    function scrollToSection(id) {
+      closeDrawer();
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   </script>
-<script>
-// Notificações
-const notifyBtn = document.getElementById('notify-btn');
-notifyBtn.addEventListener('click', () => {
-  // implementar exibição de modal de notificações
-  alert('Abrir modal de novidades (captadas do blog)');
-});
 
-// Menu interno
-const menuBtn = document.getElementById('menu-btn');
-menuBtn.addEventListener('click', () => {
-  // abrir drawer com navegação scroll
-  const menu = document.createElement('div');
-  menu.id = 'scroll-drawer';
-  menu.className = 'fixed top-0 right-0 w-64 h-full bg-[#1c1c1c] shadow-lg p-6 flex flex-col space-y-4 z-50';
-  menu.innerHTML = `
-    <button class="self-end text-2xl text-[#8f4fff]" onclick="closeDrawer()">×</button>
-    <a href="#lore" class="text-lg text-[#ccc] hover:text-[#8f4fff]" onclick="scrollToSection('lore')">Lore Viva</a>
-    <a href="#comunidade" class="text-lg text-[#ccc] hover:text-[#8f4fff]" onclick="scrollToSection('comunidade')">Comunidade</a>
-    <a href="#game" class="text-lg text-[#ccc] hover:text-[#8f4fff]" onclick="scrollToSection('game')">Torne-se Personagem</a>
-    <a href="#apoiar" class="text-lg text-[#ccc] hover:text-[#8f4fff]" onclick="scrollToSection('apoiar')">Apoio Vitalista</a>
-  `;
-  document.body.appendChild(menu);
-});
-
-function closeDrawer() {
-  document.getElementById('scroll-drawer')?.remove();
-}
-
-function scrollToSection(id) {
-  closeDrawer();
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-</script>
-<script>
-// Abre e fecha modal de notificações
-function toggleNotifyModal() {
-  document.getElementById('notify-modal').classList.toggle('hidden');
-}
-document.getElementById('notify-btn').onclick = toggleNotifyModal;
-
-// Drawer de navegação interna
-document.getElementById('menu-btn').addEventListener('click', () => {
-  if (!document.getElementById('scroll-drawer')) {
-    const menu = document.createElement('div');
-    menu.id = 'scroll-drawer';
-    menu.className = 'fixed top-0 right-0 w-64 h-full bg-[#1c1c1c] shadow-lg p-6 flex flex-col space-y-4 z-50';
-    menu.innerHTML = `
-      <button class="self-end text-2xl text-[#8f4fff]" onclick="closeDrawer()">×</button>
-      <a href="#lore" class="text-lg text-[#ccc] hover:text-[#8f4fff]" onclick="scrollToSection('lore')">Lore Viva</a>
-      <a href="#comunidade" class="text-lg text-[#ccc] hover:text-[#8f4fff]" onclick="scrollToSection('comunidade')">Comunidade</a>
-      <a href="#game" class="text-lg text-[#ccc] hover:text-[#8f4fff]" onclick="scrollToSection('game')">Torne-se Personagem</a>
-      <a href="#apoiar" class="text-lg text-[#ccc] hover:text-[#8f4fff]" onclick="scrollToSection('apoiar')">Apoio Vitalista</a>
-    `;
-    document.body.appendChild(menu);
-  }
-});
-
-function closeDrawer() {
-  document.getElementById('scroll-drawer')?.remove();
-}
-
-function scrollToSection(id) {
-  closeDrawer();
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-</script>
 </body>
 </html>
