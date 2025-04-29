@@ -1,201 +1,701 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Árvore de Habilidades – NoHeroes</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* habilita scroll suave e remove outline feio em focus */
-    html { scroll-behavior: smooth; }
-    input:focus { outline-offset: 2px; }
+    /* hide scrollbars */
+    ::-webkit-scrollbar { display: none; }
+    html, body { -ms-overflow-style: none;  scrollbar-width: none; }
+    /* smooth pan */
+    body { overflow-x: auto; overflow-y: hidden; cursor: grab; }
+    body:active { cursor: grabbing; }
   </style>
 </head>
-<body class="bg-gray-900 text-white">
-  <main class="min-h-screen p-4 overflow-auto">
-    <div class="max-w-[2000px] mx-auto space-y-8">
+<body class="bg-gray-900 text-white" onmousedown="dragStart(event)" onmouseup="dragEnd(event)" onmousemove="drag(event)">
+  <main class="min-h-screen p-8">
+    <div id="tree" class="min-w-[2000px] flex flex-col space-y-16">
 
       <!-- Título -->
-      <h1 class="text-3xl font-extrabold text-center">Árvore de Habilidades<br>NoHeroes</h1>
+      <h1 class="text-4xl font-extrabold text-center">
+        Árvore de Habilidades<br/>
+        <span class="text-indigo-400">NoHeroes</span>
+      </h1>
 
       <!-- Grande Prêmio -->
       <div class="flex justify-center">
-        <div class="px-4 py-2 border-2 border-white rounded-lg">🏆 Grande prêmio 🏆</div>
+        <div class="px-4 py-2 border-2 border-yellow-400 rounded-lg">
+          🏆 Grande prêmio 🏆
+        </div>
       </div>
 
-      <!-- Container das fases + categorias -->
-      <div class="space-y-12">
-
-        <!-- Fase 4 -->
-        <section class="relative">
-          <span class="absolute left-0 top-0 bg-gray-900 px-2 font-bold">Fase 4</span>
-          <div class="flex space-x-4 pt-6">
-            <!-- Coluna FREQ -->
-            <div class="flex-1 flex flex-col items-start border-l-2 border-white first:border-none pl-4">
-              <label class="inline-flex items-center space-x-2">
-                <input type="checkbox" class="form-checkbox accent-white"/>
-                <span>Incluir AI ativa no Site</span>
-              </label>
-              <label class="inline-flex items-center space-x-2">
-                <input type="checkbox" class="form-checkbox accent-white"/>
-                <span>Deixar AI responsável pelo Site</span>
-              </label>
-              <label class="inline-flex items-center space-x-2">
-                <input type="checkbox" class="form-checkbox accent-white"/>
-                <span>Criar o Jogo para o Site 🔗</span>
-              </label>
-              <label class="inline-flex items-center space-x-2">
-                <input type="checkbox" class="form-checkbox accent-white"/>
-                <span>Automatizar atualizações e correções</span>
-              </label>
-            </div>
-            <!-- Coluna ROAR -->
-            <div class="flex-1 flex flex-col items-start border-l-2 border-white pl-4">
-              <label class="inline-flex items-center space-x-2">
-                <input type="checkbox" class="form-checkbox accent-white"/>
-                <span>Criar trailer e material de divulgação</span>
-              </label>
-              <label class="inline-flex items-center space-x-2">
-                <input type="checkbox" class="form-checkbox accent-white"/>
-                <span>Estratégia multiplataforma</span>
-              </label>
-              <label class="inline-flex items-center space-x-2">
-                <input type="checkbox" class="form-checkbox accent-white"/>
-                <span>Parcerias / influenciadores</span>
-              </label>
-              <label class="inline-flex items-center space-x-2">
-                <input type="checkbox" class="form-checkbox accent-white"/>
-                <span>Análise e ajustes pós-lançamento</span>
-              </label>
-            </div>
-            <!-- Coluna Empresa -->
-            <div class="flex-1 flex flex-col items-start border-l-2 border-white pl-4">
-              <label class="inline-flex items-center space-x-2">
-                <input type="checkbox" class="form-checkbox accent-white"/>
-                <span>Definir organograma e equipe</span>
-              </label>
-              <label class="inline-flex items-center space-x-2">
-                <input type="checkbox" class="form-checkbox accent-white"/>
-                <span>Padronizar processos internos</span>
-              </label>
-              <label class="inline-flex items-center space-x-2">
-                <input type="checkbox" class="form-checkbox accent-white"/>
-                <span>Parcerias estratégicas/terceirizações</span>
-              </label>
-              <label class="inline-flex items-center space-x-2">
-                <input type="checkbox" class="form-checkbox accent-white"/>
-                <span>Expandir portfólio de serviços</span>
-              </label>
-            </div>
-            <!-- Coluna Site -->
-            <div class="flex-1 flex flex-col items-start border-l-2 border-white pl-4">
-              <label class="inline-flex items-center space-x-2">
-                <input type="checkbox" class="form-checkbox accent-white"/>
-                <span>Adicionar AI a todas as páginas</span>
-              </label>
-              <label class="inline-flex items-center space-x-2">
-                <input type="checkbox" class="form-checkbox accent-white"/>
-                <span>Deixar AI responsável pelo site</span>
-              </label>
-              <label class="inline-flex items-center space-x-2">
-                <input type="checkbox" class="form-checkbox accent-white"/>
-                <span>Criar o Jogo para o Site 🔗</span>
-              </label>
-              <label class="inline-flex items-center space-x-2">
-                <input type="checkbox" class="form-checkbox accent-white"/>
-                <span>Automatizar updates e correções</span>
-              </label>
-            </div>
-            <!-- Coluna Financeiro -->
-            <div class="flex-1 flex flex-col items-start border-l-2 border-white pl-4">
-              <label class="inline-flex items-center space-x-2">
-                <input type="checkbox" class="form-checkbox accent-white"/>
-                <span>Definir reinvestimento de lucros</span>
-              </label>
-              <label class="inline-flex items-center space-x-2">
-                <input type="checkbox" class="form-checkbox accent-white"/>
-                <span>Explorar renda passiva (royalties)</span>
-              </label>
-              <label class="inline-flex items-center space-x-2">
-                <input type="checkbox" class="form-checkbox accent-white"/>
-                <span>Automatizar provisões</span>
-              </label>
-            </div>
-            <!-- Coluna Redes Sociais -->
-            <div class="flex-1 flex flex-col items-start border-l-2 border-white pl-4">
-              <label class="inline-flex items-center space-x-2">
-                <input type="checkbox" class="form-checkbox accent-white"/>
-                <span>Definir pacotes de patrocínio</span>
-              </label>
-              <label class="inline-flex items-center space-x-2">
-                <input type="checkbox" class="form-checkbox accent-white"/>
-                <span>Lançar campanhas pagas (ads)</span>
-              </label>
-              <label class="inline-flex items-center space-x-2">
-                <input type="checkbox" class="form-checkbox accent-white"/>
-                <span>Otimizar ROI de parcerias</span>
-              </label>
-            </div>
-            <!-- Coluna AI -->
-            <div class="flex-1 flex flex-col items-start border-l-2 border-white pl-4">
-              <label class="inline-flex items-center space-x-2">
-                <input type="checkbox" class="form-checkbox accent-white"/>
-                <span>Treinar modelo com feedback</span>
-              </label>
-              <label class="inline-flex items-center space-x-2">
-                <input type="checkbox" class="form-checkbox accent-white"/>
-                <span>Automatizar relatórios</span>
-              </label>
-              <label class="inline-flex items-center space-x-2">
-                <input type="checkbox" class="form-checkbox accent-white"/>
-                <span>Lançar atualizações programadas</span>
-              </label>
-            </div>
+      <!-- Fase 4 -->
+      <section class="relative">
+        <span class="absolute left-0 top-0 bg-gray-900 px-2 font-bold">Fase 4</span>
+        <div class="flex space-x-8 pt-8">
+          <!-- FREQ -->
+          <div class="flex-1 flex flex-col items-start border-l-4 border-green-400 pl-6 space-y-2">
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-green-400"/>
+              <span>Criar trailer e teasers</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-green-400"/>
+              <span>Planejar & executar campanha redes</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-green-400"/>
+              <span>Sincronizar lançamentos site/YouTube/IG</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-green-400"/>
+              <span>Coletar feedback & métricas</span>
+            </label>
           </div>
-        </section>
-
-        <!-- Fase 3 -->
-        <section class="relative">
-          <span class="absolute left-0 top-0 bg-gray-900 px-2 font-bold">Fase 3</span>
-          <div class="flex space-x-4 pt-6">
-            <!-- repete colunas com os itens de Fase 3 de cada categoria… -->
-            <!-- (copie o padrão acima e substitua pelas tarefas de cada tema) -->
+          <!-- ROAR -->
+          <div class="flex-1 flex flex-col items-start border-l-4 border-red-800 pl-6 space-y-2">
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-red-800"/>
+              <span>Criar trailer & material divulgação</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-red-800"/>
+              <span>Estratégia multiplataforma</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-red-800"/>
+              <span>Parcerias / influenciadores</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-red-800"/>
+              <span>Análise & ajustes pós-lançamento</span>
+            </label>
           </div>
-        </section>
-
-        <!-- Fase 2 -->
-        <section class="relative">
-          <span class="absolute left-0 top-0 bg-gray-900 px-2 font-bold">Fase 2</span>
-          <div class="flex space-x-4 pt-6">
-            <!-- repete colunas com os itens de Fase 2 de cada categoria… -->
+          <!-- Empresa -->
+          <div class="flex-1 flex flex-col items-start border-l-4 border-white pl-6 space-y-2">
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-white"/>
+              <span>Definir organograma & equipe</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-white"/>
+              <span>Padronizar processos internos</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-white"/>
+              <span>Parcerias estratégicas / terceirizações</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-white"/>
+              <span>Expandir portfólio de serviços</span>
+            </label>
           </div>
-        </section>
-
-        <!-- Fase 1 -->
-        <section class="relative">
-          <span class="absolute left-0 top-0 bg-gray-900 px-2 font-bold">Fase 1</span>
-          <div class="flex space-x-4 pt-6">
-            <!-- repete colunas com os itens de Fase 1 de cada categoria… -->
+          <!-- Site -->
+          <div class="flex-1 flex flex-col items-start border-l-4 border-purple-600 pl-6 space-y-2">
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Adicionar AI a todas as páginas</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Deixar AI responsável pelo Site</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Criar o Jogo para o Site 🔗</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Automatizar updates & correções</span>
+            </label>
           </div>
-        </section>
-
-        <!-- Linha de Categorias -->
-        <section class="relative">
-          <span class="absolute left-0 top-0 bg-gray-900 px-2 font-bold">Categorias</span>
-          <div class="flex space-x-4 pt-6">
-            <div class="flex-1 text-center font-bold">FREQ</div>
-            <div class="flex-1 text-center font-bold">ROAR</div>
-            <div class="flex-1 text-center font-bold">Empresa</div>
-            <div class="flex-1 text-center font-bold">Site</div>
-            <div class="flex-1 text-center font-bold">Financeiro</div>
-            <div class="flex-1 text-center font-bold">Redes Sociais</div>
-            <div class="flex-1 text-center font-bold">AI</div>
+          <!-- Financeiro -->
+          <div class="flex-1 flex flex-col items-start border-l-4 border-yellow-500 pl-6 space-y-2">
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-yellow-500"/>
+              <span>Definir reinvestimento de lucros</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-yellow-500"/>
+              <span>Explorar renda passiva (royalties)</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-yellow-500"/>
+              <span>Automatizar provisões</span>
+            </label>
           </div>
-        </section>
+          <!-- Redes Sociais -->
+          <div class="flex-1 flex flex-col items-start border-l-4 border-gray-500 pl-6 space-y-2">
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-gray-500"/>
+              <span>Definir pacotes de patrocínio</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-gray-500"/>
+              <span>Lançar campanhas pagas (ads)</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-gray-500"/>  
+              <span>Otimizar ROI de parcerias</span>
+            </label>
+          </div>
+          <!-- AI -->
+          <div class="flex-1 flex flex-col items-start border-l-4 border-blue-900 pl-6 space-y-2">
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-blue-900"/>
+              <span>Treinar modelo com feedback</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-blue-900"/>
+              <span>Automatizar relatórios</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-blue-900"/>
+              <span>Lançar atualizações programadas</span>
+            </label>
+          </div>
+        </div>
+      </section>
 
-      </div> <!-- /container fases -->
+      <!-- Fase 3 -->
+      <section class="relative">
+        <span class="absolute left-0 top-0 bg-gray-900 px-2 font-bold">Fase 3</span>
+        <div class="flex space-x-8 pt-8">
+          <!-- FREQ -->
+          <div class="flex-1 flex flex-col items-start border-l-4 border-green-400 pl-6 space-y-2">
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-green-400"/>
+              <span>Produzir key-frames & line-art</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-green-400"/>
+              <span>Animação intermediária (in-betweens)</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-green-400"/>
+              <span>Colorização & iluminação</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-green-400"/>
+              <span>Edição de som & mixagem</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-green-400"/>
+              <span>Render final & exportação</span>
+            </label>
+          </div>
+          <!-- ROAR -->
+          <div class="flex-1 flex flex-col items-start border-l-4 border-red-800 pl-6 space-y-2">
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-red-800"/>
+              <span>Produzir key-frames & line-art</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-red-800"/>
+              <span>Animação intermediária</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-red-800"/>
+              <span>Colorização & efeitos luz/sombra</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-red-800"/>
+              <span>Mixagem de áudio & FX</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-red-800"/>
+              <span>Renderização final</span>
+            </label>
+          </div>
+          <!-- Empresa -->
+          <div class="flex-1 flex flex-col items-start border-l-4 border-white pl-6 space-y-2">
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-white"/>
+              <span>Criar pitch deck para investidores</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-white"/>
+              <span>Gravar pitch video</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-white"/>
+              <span>Participar de eventos/rodadas</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-white"/>
+              <span>Formalizar contratos de investimento</span>
+            </label>
+          </div>
+          <!-- Site -->
+          <div class="flex-1 flex flex-col items-start border-l-4 border-purple-600 pl-6 space-y-2">
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Animar página Home (Index)</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Animar página ROAR</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Animar página FREQ</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Animar página Apoio Vitalista</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Animar página Sobre</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Animar página Linktree</span>
+            </label>
+          </div>
+          <!-- Financeiro -->
+          <div class="flex-1 flex flex-col items-start border-l-4 border-yellow-500 pl-6 space-y-2">
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-yellow-500"/>
+              <span>Gerar relatórios mensais</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-yellow-500"/>
+              <span>Analisar KPIs (ROI, margem)</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-yellow-500"/>
+              <span>Ajustar orçamento conforme</span>
+            </label>
+          </div>
+          <!-- Redes Sociais -->
+          <div class="flex-1 flex flex-col items-start border-l-4 border-gray-500 pl-6 space-y-2">
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-gray-500"/>
+              <span>Responder comentários/mensagens</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-gray-500"/>
+              <span>Fazer lives & Q&A</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-gray-500"/>
+              <span>Promover conteúdos colaborativos</span>
+            </label>
+          </div>
+          <!-- AI -->
+          <div class="flex-1 flex flex-col items-start border-l-4 border-blue-900 pl-6 space-y-2">
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-blue-900"/>
+              <span>Criar intents & respostas</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-blue-900"/>
+              <span>Programar lógica de navegação</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-blue-900"/>
+              <span>Testar em staging</span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- Fase 2 -->
+      <section class="relative">
+        <span class="absolute left-0 top-0 bg-gray-900 px-2 font-bold">Fase 2</span>
+        <div class="flex space-x-8 pt-8">
+          <!-- FREQ -->
+          <div class="flex-1 flex flex-col items-start border-l-4 border-green-400 pl-6 space-y-2">
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-green-400"/>
+              <span>Traduzir roteiros em scripts animação</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-green-400"/>
+              <span>Storyboard animado (animatics)</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-green-400"/>
+              <span>Definir estilo animação & cores</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-green-400"/>
+              <span>Escolher trilha sonora & sonoplastia</span>
+            </label>
+          </div>
+          <!-- ROAR -->
+          <div class="flex-1 flex flex-col items-start border-l-4 border-red-800 pl-6 space-y-2">
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-red-800"/>
+              <span>Adaptar roteiro para audiovisual</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-red-800"/>
+              <span>Storyboard animado (animatics)</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-red-800"/>
+              <span>Definir estilo animação & cores</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-red-800"/>
+              <span>Escolher trilha & vozes</span>
+            </label>
+          </div>
+          <!-- Empresa -->
+          <div class="flex-1 flex flex-col items-start border-l-4 border-white pl-6 space-y-2">
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-white"/>
+              <span>Criar identidade visual (logo/cores)</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-white"/>
+              <span>Definir missão, visão & valores</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-white"/>
+              <span>Montar site institucional</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-white"/>
+              <span>Contratar contador / ERP</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-white"/>
+              <span>Configurar conta bancária PJ</span>
+            </label>
+          </div>
+          <!-- Site -->
+          <div class="flex-1 flex flex-col items-start border-l-4 border-purple-600 pl-6 space-y-2">
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Ilustrar página Home (Index)</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Ilustrar página ROAR</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Ilustrar página FREQ</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Ilustrar Apoio Vitalista</span>
+            </label>
+          </div>
+          <!-- Financeiro -->
+          <div class="flex-1 flex flex-col items-start border-l-4 border-yellow-500 pl-6 space-y-2">
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-yellow-500"/>
+              <span>Escolher software gestão financeira</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-yellow-500"/>
+              <span>Configurar contas & integrações</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-yellow-500"/>
+              <span>Criar rotina despesas & receitas</span>
+            </label>
+          </div>
+          <!-- Redes Sociais -->
+          <div class="flex-1 flex flex-col items-start border-l-4 border-gray-500 pl-6 space-y-2">
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-gray-500"/>
+              <span>Planejar calendário editorial</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-gray-500"/>
+              <span>Gravar vídeos & Reels</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-gray-500"/>
+              <span>Criar posts para stories & feed</span>
+            </label>
+          </div>
+          <!-- AI -->
+          <div class="flex-1 flex flex-col items-start border-l-4 border-blue-900 pl-6 space-y-2">
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-blue-900"/>
+              <span>Treinar modelos com TensorFlow</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-blue-900"/>
+              <span>Integrar IA ao front-end</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-blue-900"/>
+              <span>Testar & ajustar performance</span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- Fase 1 -->
+      <section class="relative">
+        <span class="absolute left-0 top-0 bg-gray-900 px-2 font-bold">Fase 1</span>
+        <div class="flex space-x-8 pt-8">
+          <!-- FREQ -->
+          <div class="flex-1 flex flex-col items-start border-l-4 border-green-400 pl-6 space-y-2">
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-green-400"/>
+              <span>Roteirizar arco principal</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-green-400"/>
+              <span>Definir perfil & design personagens</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-green-400"/>
+              <span>Criar storyboard de cada capítulo</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-green-400"/>
+              <span>Desenhar layouts (sketch)</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-green-400"/>
+              <span>Finalizar arte (tinta & cor)</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-green-400"/>
+              <span>Revisão de texto & arte</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-green-400"/>
+              <span>Publicar no site</span>
+            </label>
+          </div>
+          <!-- ROAR -->
+          <div class="flex-1 flex flex-col items-start border-l-4 border-red-800 pl-6 space-y-2">
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-red-800"/>
+              <span>Roteirizar arco principal</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-red-800"/>  
+              <span>Definir perfil & design personagens</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-red-800"/>
+              <span>Criar storyboard de cada capítulo</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-red-800"/>
+              <span>Desenhar layouts (sketch)</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-red-800"/>
+              <span>Finalizar arte (tinta & cor)</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-red-800"/>
+              <span>Revisão texto & arte</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-red-800"/>
+              <span>Publicar no site</span>
+            </label>
+          </div>
+          <!-- Empresa -->
+          <div class="flex-1 flex flex-col items-start border-l-4 border-white pl-6 space-y-2">
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-white"/>
+              <span>Definir tipo societário</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-white"/>
+              <span>Redigir Contrato Social</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-white"/>
+              <span>Registrar na Junta Comercial</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-white"/>
+              <span>Obter CNPJ</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-white"/>
+              <span>Inscrições estadual/municipal</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-white"/>
+              <span>Alvará de funcionamento</span>
+            </label>
+          </div>
+          <!-- Site -->
+          <div class="flex-1 flex flex-col items-start border-l-4 border-purple-600 pl-6 space-y-2">
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Página Home (Index)</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Página ROAR</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Página FREQ</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Página Apoio Vitalista</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Página Sobre</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>  
+              <span>Página Linktree</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Página Loja</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Página Loja Conteúdo Físico</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Página Loja Conteúdo Digital</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Página Login & Conta</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Página Meu Perfil</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Página Meu Conteúdo</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Página Meu Personagem</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Página Oráculo</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Página Explorar Caelum</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Página Jogar NoHeroes</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Página Conquistas</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Página Missões & Tarefas</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Página Conteúdo</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-purple-600"/>
+              <span>Página Blog (news)</span>
+            </label>
+          </div>
+          <!-- Financeiro -->
+          <div class="flex-1 flex flex-col items-start border-l-4 border-yellow-500 pl-6 space-y-2">
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-yellow-500"/>
+              <span>Levantar custos fixos & variáveis</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-yellow-500"/>
+              <span>Definir fontes de receita</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-yellow-500"/>
+              <span>Criar planilha orçamento anual</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-yellow-500"/>
+              <span>Estabelecer reserva de emergência</span>
+            </label>
+          </div>
+          <!-- Redes Sociais -->
+          <div class="flex-1 flex flex-col items-start border-l-4 border-gray-500 pl-6 space-y-2">
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-gray-500"/>
+              <span>Criar perfis Instagram/YouTube/TikTok</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-gray-500"/>
+              <span>Definir identidade visual & tone</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-gray-500"/>
+              <span>Produzir templates de post & capas</span>
+            </label>
+          </div>
+          <!-- AI -->
+          <div class="flex-1 flex flex-col items-start border-l-4 border-blue-900 pl-6 space-y-2">
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-blue-900"/>
+              <span>Listar funcionalidades principais</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-blue-900"/>
+              <span>Coletar dados para treinamento</span>
+            </label>
+            <label class="inline-flex items-center space-x-2">
+              <input type="checkbox" class="form-checkbox accent-blue-900"/>
+              <span>Escolher algoritmos & plataforma</span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- Categorias -->
+      <section class="relative">
+        <span class="absolute left-0 top-0 bg-gray-900 px-2 font-bold">Categorias</span>
+        <div class="flex space-x-8 pt-8">
+          <div class="flex-1 text-center font-bold text-green-400">FREQ</div>
+          <div class="flex-1 text-center font-bold text-red-800">ROAR</div>
+          <div class="flex-1 text-center font-bold text-white">Empresa</div>
+          <div class="flex-1 text-center font-bold text-purple-600">Site</div>
+          <div class="flex-1 text-center font-bold text-yellow-500">Financeiro</div>
+          <div class="flex-1 text-center font-bold text-gray-500">Redes Sociais</div>
+          <div class="flex-1 text-center font-bold text-blue-900">AI</div>
+        </div>
+      </section>
 
     </div>
   </main>
+
+  <script>
+    // drag to scroll horizontally
+    let isDown = false, startX, scrollLeft;
+    function dragStart(e) {
+      isDown = true;
+      startX = e.pageX - document.body.offsetLeft;
+      scrollLeft = document.body.scrollLeft;
+    }
+    function dragEnd() { isDown = false; }
+    function drag(e) {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - document.body.offsetLeft;
+      const walk = (x - startX) * 2; // scroll-fast
+      document.body.scrollLeft = scrollLeft - walk;
+    }
+  </script>
 </body>
 </html>
