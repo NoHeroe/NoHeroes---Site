@@ -176,5 +176,39 @@
   <script>
     function scrollToTop() { window.scrollTo({ top:0, behavior:'smooth' }); }
   </script>
+<script>
+// Notificações
+const notifyBtn = document.getElementById('notify-btn');
+notifyBtn.addEventListener('click', () => {
+  // implementar exibição de modal de notificações
+  alert('Abrir modal de novidades (captadas do blog)');
+});
+
+// Menu interno
+const menuBtn = document.getElementById('menu-btn');
+menuBtn.addEventListener('click', () => {
+  // abrir drawer com navegação scroll
+  const menu = document.createElement('div');
+  menu.id = 'scroll-drawer';
+  menu.className = 'fixed top-0 right-0 w-64 h-full bg-[#1c1c1c] shadow-lg p-6 flex flex-col space-y-4 z-50';
+  menu.innerHTML = `
+    <button class="self-end text-2xl text-[#8f4fff]" onclick="closeDrawer()">×</button>
+    <a href="#lore" class="text-lg text-[#ccc] hover:text-[#8f4fff]" onclick="scrollToSection('lore')">Lore Viva</a>
+    <a href="#comunidade" class="text-lg text-[#ccc] hover:text-[#8f4fff]" onclick="scrollToSection('comunidade')">Comunidade</a>
+    <a href="#game" class="text-lg text-[#ccc] hover:text-[#8f4fff]" onclick="scrollToSection('game')">Torne-se Personagem</a>
+    <a href="#apoiar" class="text-lg text-[#ccc] hover:text-[#8f4fff]" onclick="scrollToSection('apoiar')">Apoio Vitalista</a>
+  `;
+  document.body.appendChild(menu);
+});
+
+function closeDrawer() {
+  document.getElementById('scroll-drawer')?.remove();
+}
+
+function scrollToSection(id) {
+  closeDrawer();
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
 </body>
 </html>
