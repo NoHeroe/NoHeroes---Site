@@ -18,29 +18,31 @@
 <body class="leading-relaxed">
 
   <!-- 1. TOPO FIXO -->
-  <header class="fixed top-0 left-0 w-full bg-[#100d1a] border-b border-[#2e2e2e] z-50 flex items-center justify-between px-6 py-4">
+<header class="fixed top-0 left-0 w-full bg-[#100d1a] border-b border-[#2e2e2e] z-50 flex items-center justify-between px-6 py-4">
   <!-- Logo -->
   <a href="#" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="flex-shrink-0">
-    <img src="assets/images/noheroes logo.png" alt="NoHeroes" class="h-20 drop-shadow-[0_0_20px_rgba(143,79,255,0.7)] cursor-pointer"/>
+    <img src="assets/images/noheroes-logo.png"
+         alt="NoHeroes"
+         class="h-20 drop-shadow-[0_0_20px_rgba(143,79,255,0.7)] cursor-pointer"/>
   </a>
 
-  <!-- Links principais -->
-  <nav class="hidden md:flex space-x-6">
+  <!-- Links desktop -->
+  <nav class="hidden md:flex space-x-6 items-center">
     <a href="loja.html" class="text-[#ccc] hover:text-[#8f4fff] transition">Loja</a>
     <a href="sobre.html" class="text-[#ccc] hover:text-[#8f4fff] transition">Sobre</a>
+    <a href="login.html" class="text-[#ccc] hover:text-[#8f4fff] transition">Conta/Login</a>
   </nav>
 
   <!-- Ícones ação -->
   <div class="flex items-center space-x-4">
     <!-- Notificações -->
-    <button id="notify-btn" class="relative text-[#ccc] hover:text-[#8f4fff] transition">
+    <button id="notify-btn" class="relative text-2xl text-[#ccc] hover:text-[#8f4fff] transition">
       🔔
-      <!-- badge opcional -->
       <span id="notify-badge" class="absolute -top-1 -right-2 bg-[#8f4fff] text-black text-xs rounded-full px-1 hidden">3</span>
     </button>
 
-    <!-- Menu mobile / scroll interno -->
-    <button id="menu-btn" class="md:hidden text-[#ccc] hover:text-[#8f4fff] transition">
+    <!-- Menu mobile -->
+    <button id="menu-btn" class="md:hidden text-2xl text-[#ccc] hover:text-[#8f4fff] transition">
       ☰
     </button>
   </div>
