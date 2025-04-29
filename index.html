@@ -71,20 +71,32 @@
     </section>
 
     <!-- 2. INTRODUÇÃO RÁPIDA -->
-    <section id="teaser" class="py-16 px-8 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-      <div class="p-6 bg-[#1c1c1c] rounded-lg hover:scale-105 transition">
-        <h2 class="font-bold mb-2 text-[#8f4fff]">Anime & Mangá</h2>
-        <p>Histórias cruas e sem filtros.</p>
-      </div>
-      <div class="p-6 bg-[#1c1c1c] rounded-lg hover:scale-105 transition">
-        <h2 class="font-bold mb-2 text-[#8f4fff]">Evolua Seu Personagem</h2>
-        <p>Torne-se um personagem no nosso mundo.</p>
-      </div>
-      <div class="p-6 bg-[#1c1c1c] rounded-lg hover:scale-105 transition">
-        <h2 class="font-bold mb-2 text-[#8f4fff]">Lore Viva</h2>
-        <p>Um universo em constante expansão.</p>
-      </div>
-    </section>
+    <!-- 2. INTRODUÇÃO RÁPIDA -->
+<section id="teaser" class="py-16 px-8 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+  <!-- Card 1: Anime & Mangá → Loja -->
+  <div 
+    onclick="window.location.href='loja.html'" 
+    class="p-6 bg-[#1c1c1c] rounded-lg hover:scale-105 transition cursor-pointer">
+    <h2 class="font-bold mb-2 text-[#8f4fff]">Anime &amp; Mangá</h2>
+    <p>Histórias cruas e sem filtros.</p>
+  </div>
+
+  <!-- Card 2: Evolua Seu Personagem → #jogar -->
+  <div 
+    onclick="scrollToSection('jogar')" 
+    class="p-6 bg-[#1c1c1c] rounded-lg hover:scale-105 transition cursor-pointer">
+    <h2 class="font-bold mb-2 text-[#8f4fff]">Evolua Seu Personagem</h2>
+    <p>Torne-se um personagem no nosso mundo.</p>
+  </div>
+
+  <!-- Card 3: Lore Viva → #universo -->
+  <div 
+    onclick="scrollToSection('universo')" 
+    class="p-6 bg-[#1c1c1c] rounded-lg hover:scale-105 transition cursor-pointer">
+    <h2 class="font-bold mb-2 text-[#8f4fff]">Lore Viva</h2>
+    <p>Um universo em constante expansão.</p>
+  </div>
+</section>
 
     <!-- 3. TEASER JOGAR -->
     <section id="jogar" class="py-16 px-8 max-w-4xl mx-auto text-center">
