@@ -218,6 +218,13 @@
       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   </script>
-
+<script>
+  // Re-usa a mesma função de scroll suave do drawer:
+  function scrollToSection(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+</script>
 </body>
 </html>
