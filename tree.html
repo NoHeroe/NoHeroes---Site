@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Árvore de Habilidades – NoHeroes</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* habilita scroll suave e remove outline feio em focus */
+    html { scroll-behavior: smooth; }
+    input:focus { outline-offset: 2px; }
+  </style>
+</head>
+<body class="bg-gray-900 text-white">
+  <main class="min-h-screen p-4 overflow-auto">
+    <div class="max-w-[2000px] mx-auto space-y-8">
+
+      <!-- Título -->
+      <h1 class="text-3xl font-extrabold text-center">Árvore de Habilidades<br>NoHeroes</h1>
+
+      <!-- Grande Prêmio -->
+      <div class="flex justify-center">
+        <div class="px-4 py-2 border-2 border-white rounded-lg">🏆 Grande prêmio 🏆</div>
+      </div>
+
+      <!-- Container das fases + categorias -->
+      <div class="space-y-12">
+
+        <!-- Fase 4 -->
+        <section class="relative">
+          <span class="absolute left-0 top-0 bg-gray-900 px-2 font-bold">Fase 4</span>
+          <div class="flex space-x-4 pt-6">
+            <!-- Coluna FREQ -->
+            <div class="flex-1 flex flex-col items-start border-l-2 border-white first:border-none pl-4">
+              <label class="inline-flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox accent-white"/>
+                <span>Incluir AI ativa no Site</span>
+              </label>
+              <label class="inline-flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox accent-white"/>
+                <span>Deixar AI responsável pelo Site</span>
+              </label>
+              <label class="inline-flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox accent-white"/>
+                <span>Criar o Jogo para o Site 🔗</span>
+              </label>
+              <label class="inline-flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox accent-white"/>
+                <span>Automatizar atualizações e correções</span>
+              </label>
+            </div>
+            <!-- Coluna ROAR -->
+            <div class="flex-1 flex flex-col items-start border-l-2 border-white pl-4">
+              <label class="inline-flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox accent-white"/>
+                <span>Criar trailer e material de divulgação</span>
+              </label>
+              <label class="inline-flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox accent-white"/>
+                <span>Estratégia multiplataforma</span>
+              </label>
+              <label class="inline-flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox accent-white"/>
+                <span>Parcerias / influenciadores</span>
+              </label>
+              <label class="inline-flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox accent-white"/>
+                <span>Análise e ajustes pós-lançamento</span>
+              </label>
+            </div>
+            <!-- Coluna Empresa -->
+            <div class="flex-1 flex flex-col items-start border-l-2 border-white pl-4">
+              <label class="inline-flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox accent-white"/>
+                <span>Definir organograma e equipe</span>
+              </label>
+              <label class="inline-flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox accent-white"/>
+                <span>Padronizar processos internos</span>
+              </label>
+              <label class="inline-flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox accent-white"/>
+                <span>Parcerias estratégicas/terceirizações</span>
+              </label>
+              <label class="inline-flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox accent-white"/>
+                <span>Expandir portfólio de serviços</span>
+              </label>
+            </div>
+            <!-- Coluna Site -->
+            <div class="flex-1 flex flex-col items-start border-l-2 border-white pl-4">
+              <label class="inline-flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox accent-white"/>
+                <span>Adicionar AI a todas as páginas</span>
+              </label>
+              <label class="inline-flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox accent-white"/>
+                <span>Deixar AI responsável pelo site</span>
+              </label>
+              <label class="inline-flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox accent-white"/>
+                <span>Criar o Jogo para o Site 🔗</span>
+              </label>
+              <label class="inline-flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox accent-white"/>
+                <span>Automatizar updates e correções</span>
+              </label>
+            </div>
+            <!-- Coluna Financeiro -->
+            <div class="flex-1 flex flex-col items-start border-l-2 border-white pl-4">
+              <label class="inline-flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox accent-white"/>
+                <span>Definir reinvestimento de lucros</span>
+              </label>
+              <label class="inline-flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox accent-white"/>
+                <span>Explorar renda passiva (royalties)</span>
+              </label>
+              <label class="inline-flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox accent-white"/>
+                <span>Automatizar provisões</span>
+              </label>
+            </div>
+            <!-- Coluna Redes Sociais -->
+            <div class="flex-1 flex flex-col items-start border-l-2 border-white pl-4">
+              <label class="inline-flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox accent-white"/>
+                <span>Definir pacotes de patrocínio</span>
+              </label>
+              <label class="inline-flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox accent-white"/>
+                <span>Lançar campanhas pagas (ads)</span>
+              </label>
+              <label class="inline-flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox accent-white"/>
+                <span>Otimizar ROI de parcerias</span>
+              </label>
+            </div>
+            <!-- Coluna AI -->
+            <div class="flex-1 flex flex-col items-start border-l-2 border-white pl-4">
+              <label class="inline-flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox accent-white"/>
+                <span>Treinar modelo com feedback</span>
+              </label>
+              <label class="inline-flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox accent-white"/>
+                <span>Automatizar relatórios</span>
+              </label>
+              <label class="inline-flex items-center space-x-2">
+                <input type="checkbox" class="form-checkbox accent-white"/>
+                <span>Lançar atualizações programadas</span>
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <!-- Fase 3 -->
+        <section class="relative">
+          <span class="absolute left-0 top-0 bg-gray-900 px-2 font-bold">Fase 3</span>
+          <div class="flex space-x-4 pt-6">
+            <!-- repete colunas com os itens de Fase 3 de cada categoria… -->
+            <!-- (copie o padrão acima e substitua pelas tarefas de cada tema) -->
+          </div>
+        </section>
+
+        <!-- Fase 2 -->
+        <section class="relative">
+          <span class="absolute left-0 top-0 bg-gray-900 px-2 font-bold">Fase 2</span>
+          <div class="flex space-x-4 pt-6">
+            <!-- repete colunas com os itens de Fase 2 de cada categoria… -->
+          </div>
+        </section>
+
+        <!-- Fase 1 -->
+        <section class="relative">
+          <span class="absolute left-0 top-0 bg-gray-900 px-2 font-bold">Fase 1</span>
+          <div class="flex space-x-4 pt-6">
+            <!-- repete colunas com os itens de Fase 1 de cada categoria… -->
+          </div>
+        </section>
+
+        <!-- Linha de Categorias -->
+        <section class="relative">
+          <span class="absolute left-0 top-0 bg-gray-900 px-2 font-bold">Categorias</span>
+          <div class="flex space-x-4 pt-6">
+            <div class="flex-1 text-center font-bold">FREQ</div>
+            <div class="flex-1 text-center font-bold">ROAR</div>
+            <div class="flex-1 text-center font-bold">Empresa</div>
+            <div class="flex-1 text-center font-bold">Site</div>
+            <div class="flex-1 text-center font-bold">Financeiro</div>
+            <div class="flex-1 text-center font-bold">Redes Sociais</div>
+            <div class="flex-1 text-center font-bold">AI</div>
+          </div>
+        </section>
+
+      </div> <!-- /container fases -->
+
+    </div>
+  </main>
+</body>
+</html>
