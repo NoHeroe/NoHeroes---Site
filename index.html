@@ -224,5 +224,39 @@ function scrollToSection(id) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 </script>
+<script>
+// Abre e fecha modal de notificações
+function toggleNotifyModal() {
+  document.getElementById('notify-modal').classList.toggle('hidden');
+}
+document.getElementById('notify-btn').onclick = toggleNotifyModal;
+
+// Drawer de navegação interna
+document.getElementById('menu-btn').addEventListener('click', () => {
+  if (!document.getElementById('scroll-drawer')) {
+    const menu = document.createElement('div');
+    menu.id = 'scroll-drawer';
+    menu.className = 'fixed top-0 right-0 w-64 h-full bg-[#1c1c1c] shadow-lg p-6 flex flex-col space-y-4 z-50';
+    menu.innerHTML = `
+      <button class="self-end text-2xl text-[#8f4fff]" onclick="closeDrawer()">×</button>
+      <a href="#lore" class="text-lg text-[#ccc] hover:text-[#8f4fff]" onclick="scrollToSection('lore')">Lore Viva</a>
+      <a href="#comunidade" class="text-lg text-[#ccc] hover:text-[#8f4fff]" onclick="scrollToSection('comunidade')">Comunidade</a>
+      <a href="#game" class="text-lg text-[#ccc] hover:text-[#8f4fff]" onclick="scrollToSection('game')">Torne-se Personagem</a>
+      <a href="#apoiar" class="text-lg text-[#ccc] hover:text-[#8f4fff]" onclick="scrollToSection('apoiar')">Apoio Vitalista</a>
+    `;
+    document.body.appendChild(menu);
+  }
+});
+
+function closeDrawer() {
+  document.getElementById('scroll-drawer')?.remove();
+}
+
+function scrollToSection(id) {
+  closeDrawer();
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
 </body>
 </html>
