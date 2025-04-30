@@ -152,48 +152,6 @@
 
   <!-- Scripts -->
   <script>
-    document.addEventListener("DOMContentLoaded", async () => {
-      const notifyBtn = document.getElementById("notify-btn");
-      const notifyModal = document.getElementById("notify-modal");
-      const notifyCloseBtn = document.getElementById("notify-close-btn");
-      const notifyList = document.getElementById("notify-list");
-
-      // Abrir e fechar modal de notificações
-      notifyBtn.addEventListener("click", () => {
-        notifyModal.classList.remove("hidden");
-        notifyModal.classList.add("flex");
-      });
-
-      notifyCloseBtn.addEventListener("click", () => {
-        notifyModal.classList.add("hidden");
-        notifyModal.classList.remove("flex");
-      });
-
-      notifyModal.addEventListener("click", (e) => {
-        if (e.target === notifyModal) {
-          notifyModal.classList.add("hidden");
-          notifyModal.classList.remove("flex");
-        }
-      });
-
-      // Carregar notificações dinâmicas
-      try {
-        const response = await fetch("assets/data/posts.json");
-        const data = await response.json();
-
-        notifyList.innerHTML = ""; // Limpa lista
-        data.posts.slice(0, 3)forEach(post => {
-  const li = document.createElement("li");
-  li.innerHTML = `• ${post.title} (${post.date}) 
-    <a href="news.html#${post.id}" class="text-[#8f4fff] underline hover:text-white ml-2">mais detalhes</a>`;
-  notifyList.appendChild(li);
-});
-      } catch (error) {
-        console.error("Erro ao carregar notificações:", error);
-        notifyList.innerHTML = "<li class='text-red-500'>Erro ao carregar notificações</li>";
-      }
-    });
-
     // Função para scroll suave
     const scrollToSection = (sectionId) => {
       const section = document.getElementById(sectionId);
