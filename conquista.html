@@ -1,0 +1,52 @@
+<!DOCTYPE html><html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NoHeroes | Página Inativa</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #1a1a1a;
+      color: #e5e5e5;
+    }
+    h1, h2 {
+      font-family: 'Playfair Display', serif;
+    }
+    .inactive-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(50, 50, 50, 0.9);
+      pointer-events: all;
+      z-index: 40;
+    }
+    .inactive-overlay * {
+      pointer-events: none;
+    }
+    /* exceção: footer button clicável */
+    .footer-button {
+      pointer-events: auto;
+    }
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body class="relative">
+  <!-- TOPO FIXO -->
+  <header class="fixed top-0 left-0 w-full bg-[#100d1a] border-b border-[#2e2e2e] z-50 flex items-center justify-between px-6 py-4">
+    <div>
+      <img src="assets/images/noheroes logo.png" alt="NoHeroes" class="h-16" />
+    </div>
+  </header>  <!-- RODAPÉ -->  <footer class="fixed bottom-0 left-0 w-full bg-[#100d1a] border-t border-[#2e2e2e] text-center py-4 z-50">
+    <button onclick="window.location.href='index.html'" class="footer-button px-6 py-2 bg-[#8f4fff] text-black rounded-lg font-semibold hover:bg-[#a16fff] transition">
+      Início
+    </button>
+  </footer>  <!-- Overlay de Inatividade -->  <div class="inactive-overlay flex flex-col items-center justify-center text-center px-4">
+    <!-- Espaço para nome da página -->
+    <h2 id="🏆" class="text-2xl md:text-4xl font-bold mb-4 text-[#8f4fff]"></h2>
+    <h1 class="text-5xl md:text-7xl font-extrabold">EM BREVE</h1>
+  </div>  <!-- Espaço para futuro conteúdo das páginas -->  <div class="pt-20 pb-20">
+    <!-- Conteúdo inicial (logo, cabeçalho e rodapé) já estão fixos. --
+  </div>
+</body>
+  </html>
