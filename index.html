@@ -199,11 +199,12 @@
         const data = await response.json();
 
         notifyList.innerHTML = ""; // Limpa lista
-        data.posts.slice(0, 3).forEach((post) => {
-          const li = document.createElement("li");
-          li.textContent = `• ${post.title} (${post.date})`;
-          notifyList.appendChild(li);
-        });
+        data.posts.forEach(post => {
+  const li = document.createElement("li");
+  li.innerHTML = `• ${post.title} (${post.date}) 
+    <a href="news.html#${post.id}" class="text-[#8f4fff] underline hover:text-white ml-2">mais detalhes</a>`;
+  notifyList.appendChild(li);
+});
       } catch (error) {
         console.error("Erro ao carregar notificações:", error);
         notifyList.innerHTML = "<li class='text-red-500'>Erro ao carregar notificações</li>";
