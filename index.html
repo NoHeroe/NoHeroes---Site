@@ -89,7 +89,34 @@
         <div><strong>Infl.</strong><p>5</p></div>
         <div><strong>Poder</strong><p>35</p></div>
       </div>
-      <a href="conta.html" class="px-6 py-3 bg-[#8f4fff] text-black rounded-lg hover:scale-105 transition">Como funciona o sistema</a>
+     
+<!-- Botão que abre o modal (substitua seu <a> atual) -->
+<button id="open-personagem-modal"
+        class="px-6 py-3 bg-[#8f4fff] text-black rounded-lg hover:scale-105 transition">
+  Como funciona o sistema
+</button>
+
+<!-- Modal de sistema de personagem -->
+<div id="personagem-modal" class="fixed inset-0 bg-black/70 hidden items-center justify-center z-50">
+  <div class="bg-[#1c1c1c] rounded-lg shadow-xl max-w-md w-full p-6 relative opacity-0 transform scale-95 transition-all duration-300">
+    <!-- Botão fechar -->
+    <button id="close-personagem-modal"
+            class="absolute top-3 right-3 text-2xl text-[#ccc] hover:text-white">&times;</button>
+    <!-- Conteúdo -->
+    <h3 class="text-2xl font-bold text-[#8f4fff] mb-4">Desperte o seu reflexo no universo NoHeroes</h3>
+    <p class="mb-4 italic">Seu personagem não é apenas um avatar. Ele é a extensão do que você constrói aqui — uma versão simbólica e energética da sua jornada.</p>
+    <ul class="list-disc list-inside space-y-2 mb-6 text-[#e5e5e5]">
+      <li><strong>Vinculado à sua conta:</strong> Seu personagem nasce conectado à sua identidade no universo NoHeroes.</li>
+      <li><strong>Evolução baseada na vida real:</strong> Suas escolhas, missões cumpridas e habilidades aplicadas na vida real influenciam diretamente o crescimento dele.</li>
+      <li><strong>Missões e desafios simbólicos:</strong> Tarefas e rituais que te fortalecem tanto no jogo quanto fora dele.</li>
+      <li><strong>Útil desde já:</strong> Mesmo antes do lançamento oficial, ele já traz recompensas e narrativas únicas.</li>
+    </ul>
+    <button id="mirror-btn"
+            class="w-full py-3 bg-gradient-to-r from-[#8f4fff] to-[#39ff14] text-black font-semibold rounded-lg hover:scale-105 transition">
+      Me Espelhar na Escuridão
+    </button>
+  </div>
+</div>
     </section>
 
     <!-- 6. APOIO VITALISTA -->
