@@ -189,7 +189,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     posts.forEach(post => {
       // 1) Criar card no feed
       const card = document.createElement("article");
-      card.className = "card";
+      card.className = "card"; card.id = post.id;
       card.dataset.id = post.id;
       card.innerHTML = `
         <h2>${post.title}</h2>
