@@ -199,7 +199,7 @@
         const data = await response.json();
 
         notifyList.innerHTML = ""; // Limpa lista
-        data.posts.forEach(post => {
+        data.posts.slice(0, 3)forEach(post => {
   const li = document.createElement("li");
   li.innerHTML = `• ${post.title} (${post.date}) 
     <a href="news.html#${post.id}" class="text-[#8f4fff] underline hover:text-white ml-2">mais detalhes</a>`;
