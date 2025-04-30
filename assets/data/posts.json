@@ -1,25 +1,48 @@
 {
   "posts": [
     {
+      "id": "2025-04-30-patch-0-0-6",
+      "date": "30/04/2025",
+      "category": "Atualizações",
+      "title": "Patch 0.0.6 — Página Home",
+      "content": "<p>Refizemos a página Home com a proposta de tornar ela mais dinâmica e navegável. alguns botões não estão funcionando por faltarem as páginas respectivas. adicionamos também uma página esteregg e adicionamos uma opção de notificação simples no topo da página.</p>"
+    },
+{
+  "posts": [
+    {
       "id": "2025-04-29-patch-0-0-5",
       "date": "29/04/2025",
       "category": "Notícias",
       "title": "Patch 0.0.5 — Próximas mudanças e avisos",
-      "content": "<p>Iremos acrescentar a opção de comentários na página blog...</p>"
+      "content": "<p>Páginas a serem implementadas e polidas a seguir,Página Home,Página ROAR, Página FREQ, Página Apoio Vitalista, Página Sobre, Página linktree, Página Loja, Página Loja Conteúdo Físico, Página Loja Conteúdo Digital, Página Login & Conta, Página Meu Perfil, Página Meu Conteúdo, Página Meu Personagem, Página Oráculo, Página Explorar Caelum, Página Jogar No Heroes, Página Conquistas, Página Missões e Tarefas, Página Conteúdo, Página Blog. Estamos ansiosos pela interação de vcs!</p>"
     },
     {
       "id": "2025-04-29-patch-0-0-4",
       "date": "29/04/2025",
       "category": "Atualizações",
       "title": "Patch 0.0.4 — Correções e novas páginas",
-      "content": "<p>Adicionamos um novo código que acelera a publicação...</p>"
+      "content": "<p>Adicionamos um novo código que acelera a publicação de posts novos. Criamos a página Sobre, a qual ainda está tendo inconsistências visuais.</p>"
     },
     {
       "id": "2025-04-27-patch-0-0-3",
       "date": "27/04/2025",
       "category": "Atualizações",
       "title": "Patch 0.0.3 — Melhorias na Navegação",
-      "content": "<p>Adicionamos um sistema de navegação para facilitar...</p>"
-    }
+      "content": "<p>Adicionamos um sistema de navegação para facilitar a inspeção dos conteúdos do blog.</p>"
+    },
+      {
+        id: "2025-04-27-patch-0-0-2",
+        date: "27/04/2025",
+        category: "Atualizações",
+        title: "Patch 0.0.2 — Página de Notícias Adicionada",
+        content: "<p>Uma nova seção de Notícias foi adicionada, com modal e filtro por categoria.</p>"
+      },
+{
+        id: "2025-04-24-patch-0-0-1",
+        date: "24/04/2025",
+        category: "Notícias",
+        title: "Patch 0.0.1 — Lançamento do Site",
+        content: "<p>O site oficial da NoHeroes foi lançado com design dark e funcionalidades básicas de blog!</p>"
+      }
   ]
 }
