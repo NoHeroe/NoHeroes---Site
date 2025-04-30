@@ -176,42 +176,15 @@
 
   <!-- Script para gerar posts e histórico dinamicamente -->
   <script>
-    const posts = [
-      {
-        id: "2025-04-24-patch-0-0-1",
-        date: "24/04/2025",
-        category: "Notícias",
-        title: "Patch 0.0.1 — Lançamento do Site",
-        content: "<p>O site oficial da NoHeroes foi lançado com design dark e funcionalidades básicas de blog!</p>"
-      },
-      {
-        id: "2025-04-27-patch-0-0-2",
-        date: "27/04/2025",
-        category: "Atualizações",
-        title: "Patch 0.0.2 — Página de Notícias Adicionada",
-        content: "<p>Uma nova seção de Notícias foi adicionada, com modal e filtro por categoria.</p>"
-      },
-      {
-        id: "2025-04-27-patch-0-0-3",
-        date: "27/04/2025",
-        category: "Atualizações",
-        title: "Patch 0.0.3 — Melhorias na Navegação",
-        content: "<p>Adicionamos um sistema de navegação para facilitar o uso no mobile e desktop.</p>"
-      },
-{
-        id: "2025-04-29-patch-0-0-4",
-        date: "29/04/2025",
-        category: "Atualizações",
-        title: "Patch 0.0.4 —Correção de bugs e adição de páginas ",
-        content: "<p>Adicionamos um novo código que acelera a publicação de posts novos na página Blog. O rodapé da página foi corrigido. A página Sobre foi adicionada, mas ainda passará por melhoras. Um esteregg foi adicionado ao site.</p>"
-      },
-{
-        id: "2025-04-29-patch-0-0-5",
-        date: "29/04/2025",
-        category: "Notícias",
-        title: "Patch 0.0.5 — Próximas mudanças e avisos",
-        content: "<p>Iremos acrescentar a opção de comentários na página blog num futuro próximo. A animação de apresentação do dia 30.04 foi finalizada e será apresentada na tribo no mesmo dia. nós desejem sorte! Mais conteúdos serão publicados nas redes sociais.</p>"
-      }
+    let posts = [];
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const res = await fetch('assets/data/posts.json');
+  const data = await res.json();
+  posts = data.posts;
+
+  // ... segue o código atual que já usa o array posts
+});
       
     ];
 
