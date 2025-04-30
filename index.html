@@ -226,5 +226,36 @@
     el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 </script>
+  <script>
+(async function () {
+  const res = await fetch('assets/data/posts.json');
+  const data = await res.json();
+  const posts = data.posts;
+
+  // Ordenar do mais recente para o mais antigo
+  posts.sort((a, b) => new Date(b.date.split("/").reverse().join("-")) - new Date(a.date.split("/").reverse().join("-")));
+
+  // Selecionar os 3 primeiros
+  const recentes = posts.slice(0, 3);
+
+  // Badge
+  const badge = document.getElementById('notify-badge');
+  if (badge) {
+    badge.textContent = recentes.length;
+    badge.classList.remove('hidden');
+  }
+
+  // Lista no modal
+  const ul = document.querySelector('#notify-modal ul');
+  if (ul) {
+    ul.innerHTML = recentes.map(post => `
+      <li>
+        • <a href="blog.html#${post.id}" class="hover:underline">
+        ${post.title}</a> (${post.date})
+      </li>
+    `).join('');
+  }
+})();
+  </script>
 </body>
 </html>
