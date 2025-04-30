@@ -178,14 +178,44 @@
   </main>
 
   <!-- Scripts -->
-  <script>
-    // Função para scroll suave
-    const scrollToSection = (sectionId) => {
-      const section = document.getElementById(sectionId);
-      if (section) {
-        section.scrollIntoView({ behavior: "smooth" });
-      }
-    };
-  </script>
+ <script>
+  // Scroll suave
+  const scrollToSection = sectionId => {
+    const sec = document.getElementById(sectionId);
+    if (sec) sec.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  // Modal personagem
+  const openBtn  = document.getElementById('open-personagem-modal');
+  const modal    = document.getElementById('personagem-modal');
+  const closeBtn = document.getElementById('close-personagem-modal');
+
+  const showModal = () => {
+    modal.classList.remove('hidden');
+    // trigger animation
+    requestAnimationFrame(() => {
+      modal.children[0].classList.replace('opacity-0','opacity-100');
+      modal.children[0].classList.replace('scale-95','scale-100');
+    });
+  };
+  const hideModal = () => {
+    // animação de saída
+    modal.children[0].classList.replace('opacity-100','opacity-0');
+    modal.children[0].classList.replace('scale-100','scale-95');
+    // depois de 300ms, esconde o overlay
+    setTimeout(() => modal.classList.add('hidden'), 300);
+  };
+
+  openBtn.addEventListener('click', showModal);
+  closeBtn.addEventListener('click', hideModal);
+  modal.addEventListener('click', e => {
+    if (e.target === modal) hideModal();
+  });
+
+  // Placeholder do botão “Me Espelhar na Escuridão”
+  document.getElementById('mirror-btn').addEventListener('click', () => {
+    window.location.href = 'login.html'; // ou personagem.html
+  });
+</script>
 </body>
 </html>
