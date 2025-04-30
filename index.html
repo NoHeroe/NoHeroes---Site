@@ -34,27 +34,23 @@
     <!-- Ícones ação -->
     <div class="flex items-center space-x-4">
       <!-- Notificações -->
-      <button id="notify-btn" class="relative text-2xl text-[#ccc] hover:text-[#8f4fff] transition">
-        🔔
-        <span id="notify-badge" class="absolute -top-1 -right-2 bg-[#8f4fff] text-black text-xs rounded-full px-1 hidden">3</span>
-      </button>
-      <!-- Menu mobile -->
-      <button id="menu-btn" class="md:hidden text-2xl text-[#ccc] hover:text-[#8f4fff] transition">☰</button>
-    </div>
-  </header>
+<button id="notify-btn" class="relative text-2xl text-[#ccc] hover:text-[#8f4fff] transition">
+  🔔
+  <span id="notify-badge" class="absolute -top-1 -right-2 bg-[#8f4fff] text-black text-xs rounded-full px-1">3</span>
+</button>
 
-  <!-- Modal de Notificações -->
-  <div id="notify-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
-    <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-sm w-full">
-      <h3 class="text-lg font-bold text-[#8f4fff] mb-4">Notificações</h3>
-      <ul class="space-y-2 text-[#ccc]">
-        <li>• Novo post no Blog (12/04/2025)</li>
-        <li>• Atualização da página FREQ</li>
-        <li>• Em breve: Loja Online</li>
-      </ul>
-      <button class="mt-4 px-4 py-2 bg-[#8f4fff] text-black rounded" onclick="toggleNotifyModal()">Fechar</button>
-    </div>
+<!-- Modal de Notificações -->
+<div id="notify-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+  <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-sm w-full">
+    <h3 class="text-lg font-bold text-[#8f4fff] mb-4">Notificações</h3>
+    <ul class="space-y-2 text-[#ccc]">
+      <li>• Novo post no Blog (12/04/2025)</li>
+      <li>• Atualização da página FREQ</li>
+      <li>• Em breve: Loja Online</li>
+    </ul>
+    <button class="mt-4 px-4 py-2 bg-[#8f4fff] text-black rounded" id="notify-close-btn">Fechar</button>
   </div>
+</div>
 
   <!-- Main -->
   <main class="pt-28">
