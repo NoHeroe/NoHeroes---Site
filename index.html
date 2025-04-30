@@ -34,27 +34,26 @@
     <!-- Ícones ação -->
     <div class="flex items-center space-x-4">
       <!-- Notificações -->
-<button id="notify-btn" class="relative text-2xl text-[#ccc] hover:text-[#8f4fff] transition">
-  🔔
-  <span id="notify-badge" class="absolute -top-1 -right-2 bg-[#8f4fff] text-black text-xs rounded-full px-1">3</span>
-</button>
+      <button id="notify-btn" class="relative text-2xl text-[#ccc] hover:text-[#8f4fff] transition">
+        🔔
+        <span id="notify-badge" class="absolute -top-1 -right-2 bg-[#8f4fff] text-black text-xs rounded-full px-1 hidden">3</span>
+      </button>
+    </div>
+  </header>
 
-<!-- Modal de Notificações -->
-<div id="notify-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
-  <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-sm w-full">
-    <h3 class="text-lg font-bold text-[#8f4fff] mb-4">Notificações</h3>
-    <ul class="space-y-2 text-[#ccc]">
-      <li>• Novo post no Blog (12/04/2025)</li>
-      <li>• Atualização da página FREQ</li>
-      <li>• Em breve: Loja Online</li>
-    </ul>
-    <button class="mt-4 px-4 py-2 bg-[#8f4fff] text-black rounded" id="notify-close-btn">Fechar</button>
+  <!-- Modal de Notificações -->
+  <div id="notify-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+    <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-sm w-full">
+      <h3 class="text-lg font-bold text-[#8f4fff] mb-4">Notificações</h3>
+      <ul id="notify-list" class="space-y-2 text-[#ccc]">
+        <!-- Notificações dinâmicas serão carregadas aqui -->
+      </ul>
+      <button class="mt-4 px-4 py-2 bg-[#8f4fff] text-black rounded" id="notify-close-btn">Fechar</button>
+    </div>
   </div>
-</div>
 
   <!-- Main -->
   <main class="pt-28">
-
     <!-- 1. CAPA HERO -->
     <section id="introducao" class="relative flex flex-col items-center justify-center h-screen bg-cover bg-center text-center text-[#d9d6ff]" style="background-image:url('assets/images/hero-bg.gif')">
       <div class="overlay"></div>
@@ -67,34 +66,22 @@
     </section>
 
     <!-- 2. INTRODUÇÃO RÁPIDA -->
-    <!-- 2. INTRODUÇÃO RÁPIDA -->
-<section id="teaser" class="py-16 px-8 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-  <!-- Card 1: Anime & Mangá → Loja -->
-  <div 
-    onclick="window.location.href='loja.html'" 
-    class="p-6 bg-[#1c1c1c] rounded-lg hover:scale-105 transition cursor-pointer">
-    <h2 class="font-bold mb-2 text-[#8f4fff]">Anime &amp; Mangá</h2>
-    <p>Histórias cruas e sem filtros.</p>
-  </div>
+    <section id="teaser" class="py-16 px-8 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+      <div onclick="window.location.href='loja.html'" class="p-6 bg-[#1c1c1c] rounded-lg hover:scale-105 transition cursor-pointer">
+        <h2 class="font-bold mb-2 text-[#8f4fff]">Anime &amp; Mangá</h2>
+        <p>Histórias cruas e sem filtros.</p>
+      </div>
+      <div onclick="scrollToSection('jogar')" class="p-6 bg-[#1c1c1c] rounded-lg hover:scale-105 transition cursor-pointer">
+        <h2 class="font-bold mb-2 text-[#8f4fff]">Evolua Seu Personagem</h2>
+        <p>Torne-se um personagem no nosso mundo.</p>
+      </div>
+      <div onclick="scrollToSection('universo')" class="p-6 bg-[#1c1c1c] rounded-lg hover:scale-105 transition cursor-pointer">
+        <h2 class="font-bold mb-2 text-[#8f4fff]">Lore Viva</h2>
+        <p>Um universo em constante expansão.</p>
+      </div>
+    </section>
 
-  <!-- Card 2: Evolua Seu Personagem → #jogar -->
-  <div 
-    onclick="scrollToSection('jogar')" 
-    class="p-6 bg-[#1c1c1c] rounded-lg hover:scale-105 transition cursor-pointer">
-    <h2 class="font-bold mb-2 text-[#8f4fff]">Evolua Seu Personagem</h2>
-    <p>Torne-se um personagem no nosso mundo.</p>
-  </div>
-
-  <!-- Card 3: Lore Viva → #universo -->
-  <div 
-    onclick="scrollToSection('universo')" 
-    class="p-6 bg-[#1c1c1c] rounded-lg hover:scale-105 transition cursor-pointer">
-    <h2 class="font-bold mb-2 text-[#8f4fff]">Lore Viva</h2>
-    <p>Um universo em constante expansão.</p>
-  </div>
-</section>
-
-    <!-- 3. TEASER JOGAR -->
+     <!-- 3. TEASER JOGAR -->
     <section id="jogar" class="py-16 px-8 max-w-4xl mx-auto text-center">
       <img src="assets/images/hud-teaser.png" alt="Teaser HUD" class="mx-auto mb-6 w-48 opacity-80">
       <h2 class="text-2xl font-bold mb-4">Você está pronto para deixar de assistir... e começar a viver?</h2>
@@ -178,112 +165,58 @@
     <p class="mt-2">Toda escolha tem um preço. Toda queda, uma razão.</p>
     <p class="text-xs mt-4">© 2025 NoHeroes. Todos os direitos reservados.</p>
   </footer>
+  </main>
 
   <!-- Scripts -->
   <script>
-  document.addEventListener("DOMContentLoaded", async () => {
-    const res = await fetch('assets/data/posts.json');
-    const data = await res.json();
-    const posts = data.posts;
+    document.addEventListener("DOMContentLoaded", async () => {
+      const notifyBtn = document.getElementById("notify-btn");
+      const notifyModal = document.getElementById("notify-modal");
+      const notifyCloseBtn = document.getElementById("notify-close-btn");
+      const notifyList = document.getElementById("notify-list");
 
-    const feed = document.getElementById("blog-feed");
-    const historyList = document.getElementById("history-list");
-    const modalsContainer = document.getElementById("modals-container");
+      // Abrir e fechar modal de notificações
+      notifyBtn.addEventListener("click", () => {
+        notifyModal.classList.remove("hidden");
+        notifyModal.classList.add("flex");
+      });
 
-    posts.forEach(post => {
-      // Card no feed
-      const card = document.createElement("article");
-      card.className = "card";
-      card.dataset.id = post.id;
-      card.innerHTML = `
-        <h2>${post.title}</h2>
-        <div class="meta">${post.date} — ${post.category}</div>
-        <button class="open-modal" data-modal="${post.id}">Ler Mais</button>
-      `;
-      feed.appendChild(card);
-
-      // Modal
-      const modal = document.createElement("div");
-      modal.id = post.id;
-      modal.className = "modal";
-      modal.innerHTML = `
-        <div class="modal-content">
-          <button class="close" data-close="${post.id}">×</button>
-          <h2>${post.title}</h2>
-          ${post.content}
-        </div>
-      `;
-      modalsContainer.appendChild(modal);
-
-      // Histórico
-      const li = document.createElement("li");
-      li.className = "filter-item";
-      li.dataset.category = post.category;
-      li.innerHTML = `
-        <button class="anchor-btn" data-scroll-to="${post.id}">
-          ${post.date} — ${post.title}
-        </button>
-      `;
-      historyList.appendChild(li);
-    });
-
-    // Eventos
-    document.querySelectorAll('.open-modal').forEach(btn =>
-      btn.addEventListener('click', () =>
-        document.getElementById(btn.dataset.modal).classList.add('open')
-      )
-    );
-    document.querySelectorAll('.close').forEach(btn =>
-      btn.addEventListener('click', () =>
-        document.getElementById(btn.dataset.close).classList.remove('open')
-      )
-    );
-    document.getElementById('historyBtn').addEventListener('click', () =>
-      document.getElementById('historyModal').classList.add('open')
-    );
-    document.querySelectorAll('input[name="filter"]').forEach(radio =>
-      radio.addEventListener('change', () => {
-        const v = radio.value;
-        document.querySelectorAll('.filter-item').forEach(item =>
-          item.style.display = (v === 'Todos' || item.dataset.category === v) ? 'block' : 'none'
-        );
-      })
-    );
-    document.querySelectorAll('.anchor-btn').forEach(btn =>
-      btn.addEventListener('click', () => {
-        document.getElementById('historyModal').classList.remove('open');
-        document.querySelector(`[data-id="${btn.dataset.scrollTo}"]`)
-          .scrollIntoView({ behavior: 'smooth' });
-      })
-    );
-  });
-</script>
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const notifyBtn = document.getElementById("notify-btn");
-    const notifyModal = document.getElementById("notify-modal");
-    const notifyCloseBtn = document.getElementById("notify-close-btn");
-
-    // Abrir modal de notificações
-    notifyBtn.addEventListener("click", () => {
-      notifyModal.classList.remove("hidden");
-      notifyModal.classList.add("flex");
-    });
-
-    // Fechar modal de notificações
-    notifyCloseBtn.addEventListener("click", () => {
-      notifyModal.classList.add("hidden");
-      notifyModal.classList.remove("flex");
-    });
-
-    // Fechar modal ao clicar fora do conteúdo
-    notifyModal.addEventListener("click", (e) => {
-      if (e.target === notifyModal) {
+      notifyCloseBtn.addEventListener("click", () => {
         notifyModal.classList.add("hidden");
         notifyModal.classList.remove("flex");
+      });
+
+      notifyModal.addEventListener("click", (e) => {
+        if (e.target === notifyModal) {
+          notifyModal.classList.add("hidden");
+          notifyModal.classList.remove("flex");
+        }
+      });
+
+      // Carregar notificações dinâmicas
+      try {
+        const response = await fetch("assets/data/posts.json");
+        const data = await response.json();
+
+        notifyList.innerHTML = ""; // Limpa lista
+        data.posts.slice(0, 3).forEach((post) => {
+          const li = document.createElement("li");
+          li.textContent = `• ${post.title} (${post.date})`;
+          notifyList.appendChild(li);
+        });
+      } catch (error) {
+        console.error("Erro ao carregar notificações:", error);
+        notifyList.innerHTML = "<li class='text-red-500'>Erro ao carregar notificações</li>";
       }
     });
-  });
-</script>
+
+    // Função para scroll suave
+    const scrollToSection = (sectionId) => {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth" });
+      }
+    };
+  </script>
 </body>
 </html>
