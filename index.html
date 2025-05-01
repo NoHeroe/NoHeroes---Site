@@ -33,17 +33,19 @@
   <!-- 1. TOPO FIXO -->
  <header class="fixed top-0 left-0 w-full bg-[#100d1a] border-b border-[#2e2e2e] z-50 flex items-center px-6">
   <!-- Botão Loja -->
-  <a href="loja.html" class="text-[#ccc] hover:text-[#8f4fff] transition ml-6">
+  <a href="loja.html" class="text-[#ccc] hover:text-[#8f4fff] transition">
     Loja
   </a>
-  
+
   <!-- Logo -->
-  <a href="#" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="logo-container mx-auto">
-    <img src="assets/images/noheroes logo.png" alt="NoHeroes" class="drop-shadow-glow cursor-pointer h-10"/>
-  </a>
-  
+  <div class="logo-container absolute left-1/2 transform -translate-x-1/2">
+    <a href="#" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
+      <img src="assets/images/noheroes logo.png" alt="NoHeroes" class="drop-shadow-glow cursor-pointer" style="height: 100px;"/>
+    </a>
+  </div>
+
   <!-- Botão Conta/Login -->
-  <a href="login.html" class="text-[#ccc] hover:text-[#8f4fff] transition mr-6">
+  <a href="login.html" class="text-[#ccc] hover:text-[#8f4fff] transition">
     Conta/Login
   </a>
 </header>
