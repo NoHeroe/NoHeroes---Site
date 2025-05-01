@@ -4,81 +4,87 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ROAR — Rebirth Of Order And Relentless Spirit</title>
+
+  <!-- Tailwind e fontes -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?
-    family=Playfair+Display:wght@700&family=Inter:wght@400;500&display=swap"
-    rel="stylesheet"/>
-<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
+
+  <!-- Alpine.js e ScrollReveal -->
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <script src="https://unpkg.com/scrollreveal"></script>
-  /* Estilos gerais */
-body { 
-  font-family: 'Inter', sans-serif; 
-  background: #0a0a0a; 
-  color: #e5e5e5; 
-}
-h1, h2, h3 { 
-  font-family: 'Playfair Display', serif; 
-}
-html { 
-  scroll-behavior: smooth; 
-}
-.overlay { 
-  position: absolute; 
-  inset: 0; 
-  background: rgba(0, 0, 0, 0.6); 
-}
-.accordion-body { 
-  display: none; 
-}
 
-/* Carrossel */
-.carousel-container {
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  display: flex;
-  justify-content: center;
-  padding: 1rem 0;
-}
-.carousel-track {
-  display: flex;
-  gap: 1rem;
-}
-.carousel-card {
-  scroll-snap-align: center;
-  flex: 0 0 80%;
-  max-width: 300px;
-  text-align: center;
-  transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
-}
-.carousel-card img.character-img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-.carousel-card h3.character-title {
-  font-size: 1.25rem;
-  font-weight: bold;
-  margin: 0.5rem 0;
-}
-.carousel-card p.character-description {
-  font-size: 0.875rem;
-  color: #ccc;
-}
+  <!-- Estilos gerais e do carrossel -->
+  <style>
+    /* Estilos gerais */
+    body { 
+      font-family: 'Inter', sans-serif; 
+      background: #0a0a0a; 
+      color: #e5e5e5; 
+    }
+    h1, h2, h3 { 
+      font-family: 'Playfair Display', serif; 
+    }
+    html { 
+      scroll-behavior: smooth; 
+    }
+    .overlay { 
+      position: absolute; 
+      inset: 0; 
+      background: rgba(0, 0, 0, 0.6); 
+    }
+    .accordion-body { 
+      display: none; 
+    }
 
-/* Botões do carrossel */
-#prev, #next {
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-#prev:hover, #next:hover {
-  background-color: #6c3cc9;
-}
+    /* Carrossel */
+    #carousel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      overflow: hidden;
+      position: relative;
+      padding: 2rem 0;
+    }
+    .carousel-card {
+      flex: 0 0 auto;
+      max-width: 300px;
+      text-align: center;
+      transition: transform 0.5s ease, opacity 0.5s ease, filter 0.5s ease;
+    }
+    .carousel-card img.character-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .carousel-card h3.character-title {
+      font-size: 1.25rem;
+      font-weight: bold;
+      margin: 0.5rem 0;
+    }
+    .carousel-card p.character-description {
+      font-size: 0.875rem;
+      color: #ccc;
+    }
+
+    /* Botões do carrossel */
+    #prev, #next {
+      background: none;
+      border: none;
+      font-size: 2rem;
+      color: #fff;
+      cursor: pointer;
+      z-index: 10;
+      padding: 0.5rem 1rem;
+      transition: background-color 0.3s ease;
+    }
+    #prev:hover, #next:hover {
+      background-color: #6c3cc9;
+      border-radius: 4px;
+    }
+  </style>
 </head>
 <body class="leading-relaxed">
 
