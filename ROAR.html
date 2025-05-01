@@ -430,9 +430,23 @@
 
     // Auto-scroll a cada 10s
     setInterval(() => {
-      container.scrollBy({ left: container.offsetWidth, behavior: 'smooth' })
-    }, 10000)
+  if (!document.activeElement.closest("#carousel")) {
+    btnNext.click();
+  }
+}, 10000);
   })
+function updateCarousel() {
+  // Correção para simular scroll infinito
+  if (currentIndex >= cards.length) currentIndex = 0;
+  if (currentIndex < 0) currentIndex = cards.length - 1;
+
+  cards.forEach((card, i) => {
+    const offset = i - currentIndex;
+    card.style.transform = `translateX(${offset * 110}%) scale(${offset === 0 ? 1 : 0.8})`;
+    card.style.opacity = offset === 0 ? '1' : '0.5';
+    card.style.filter  = offset === 0 ? 'none' : 'blur(3px)';
+  });
+}
 </script>
 </body>
 </html>
