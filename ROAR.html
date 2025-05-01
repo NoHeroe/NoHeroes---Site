@@ -177,83 +177,167 @@
 
     <!-- 4. Personagens Principais -->
 <section id="personagens" class="py-16 px-6">
-  <h2 class="text-3xl text-[#8f4fff] font-bold mb-6">Personagens Principais</h2>
-  <div class="relative">
-    <!-- Container do Carrossel -->
-    <div class="carousel-container overflow-x-auto">
-      <div class="carousel-track flex gap-6 px-4">
+  <h2 class="text-3xl text-[#8f4fff] font-bold mb-6 text-center">Personagens Principais</h2>
+  <div class="relative max-w-lg mx-auto">
+    <!-- Carrossel mostrando 1 card de cada vez -->
+    <div class="overflow-hidden rounded-2xl">
+      <div id="carousel-track" class="flex transition-transform duration-500 ease-in-out" style="width:100%;">
         <!-- Card Azuos -->
-        <div class="carousel-card scroll-snap-align-center">
-          <img src="assets/images/azuos.jpg" alt="Azuos" class="character-img"/>
-          <h3 class="character-title">Azuos</h3>
-          <p class="character-description">Jovem vitalista, portador da Marca Negra — um selo maldito que carrega um segredo terrível.</p>
+        <div class="flex-shrink-0 w-full px-4 flex justify-center">
+          <div class="relative w-[300px] h-[450px] bg-[#1c1c1c] rounded-xl shadow-lg overflow-hidden">
+            <img src="assets/images/azuos.jpg" alt="Azuos" class="w-full h-full object-cover"/>
+            <button class="absolute top-2 right-2 bg-white bg-opacity-50 rounded-full p-1" onclick="openModal('assets/images/azuos.jpg','Azuos')">🔎</button>
+            <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-70 p-4">
+              <h3 class="text-xl font-bold text-[#8f4fff]">Azuos</h3>
+              <p class="text-sm text-gray-200">Jovem vitalista, portador da Marca Negra — um selo maldito que carrega um segredo terrível.</p>
+            </div>
+          </div>
         </div>
         <!-- Card Tyrian -->
-        <div class="carousel-card scroll-snap-align-center">
-          <img src="assets/images/tyrian.jpg" alt="Tyrian" class="character-img"/>
-          <h3 class="character-title">Tyrian</h3>
-          <p class="character-description">Pai de Azuos, mago supremo e principal antagonista.</p>
+        <div class="flex-shrink-0 w-full px-4 flex justify-center">
+          <div class="relative w-[300px] h-[450px] bg-[#1c1c1c] rounded-xl shadow-lg overflow-hidden">
+            <img src="assets/images/tyrian.jpg" alt="Tyrian" class="w-full h-full object-cover"/>
+            <button class="absolute top-2 right-2 bg-white bg-opacity-50 rounded-full p-1" onclick="openModal('assets/images/tyrian.jpg','Tyrian')">🔎</button>
+            <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-70 p-4">
+              <h3 class="text-xl font-bold text-[#8f4fff]">Tyrian</h3>
+              <p class="text-sm text-gray-200">Pai de Azuos, mago supremo e principal antagonista.</p>
+            </div>
+          </div>
         </div>
         <!-- Card Cerverus -->
-        <div class="carousel-card scroll-snap-align-center">
-          <img src="assets/images/cerverus.jpg" alt="Cerverus" class="character-img"/>
-          <h3 class="character-title">Cerverus</h3>
-          <p class="character-description">Mentor dracônico, último vitalista de Draconis.</p>
+        <div class="flex-shrink-0 w-full px-4 flex justify-center">
+          <div class="relative w-[300px] h-[450px] bg-[#1c1c1c] rounded-xl shadow-lg overflow-hidden">
+            <img src="assets/images/cerverus.jpg" alt="Cerverus" class="w-full h-full object-cover"/>
+            <button class="absolute top-2 right-2 bg-white bg-opacity-50 rounded-full p-1" onclick="openModal('assets/images/cerverus.jpg','Cerverus')">🔎</button>
+            <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-70 p-4">
+              <h3 class="text-xl font-bold text-[#8f4fff]">Cerverus</h3>
+              <p class="text-sm text-gray-200">Mentor dracônico, último vitalista de Draconis.</p>
+            </div>
+          </div>
         </div>
         <!-- Card Sado -->
-        <div class="carousel-card scroll-snap-align-center">
-          <img src="assets/images/sado.jpg" alt="Sado" class="character-img"/>
-          <h3 class="character-title">Sado</h3>
-          <p class="character-description">Guerreiro solitário, marcado pelas batalhas contra os dragões do sul.</p>
+        <div class="flex-shrink-0 w-full px-4 flex justify-center">
+          <div class="relative w-[300px] h-[450px] bg-[#1c1c1c] rounded-xl shadow-lg overflow-hidden">
+            <img src="assets/images/sado.jpg" alt="Sado" class="w-full h-full object-cover"/>
+            <button class="absolute top-2 right-2 bg-white bg-opacity-50 rounded-full p-1" onclick="openModal('assets/images/sado.jpg','Sado')">🔎</button>
+            <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-70 p-4">
+              <h3 class="text-xl font-bold text-[#8f4fff]">Sado</h3>
+              <p class="text-sm text-gray-200">Guerreiro solitário, marcado pelas batalhas contra os dragões do sul.</p>
+            </div>
+          </div>
         </div>
         <!-- Card Sakura -->
-        <div class="carousel-card scroll-snap-align-center">
-          <img src="assets/images/sakura.jpg" alt="Sakura" class="character-img"/>
-          <h3 class="character-title">Sakura</h3>
-          <p class="character-description">Vitalista ancestral, portadora de um espírito guardião.</p>
+        <div class="flex-shrink-0 w-full px-4 flex justify-center">
+          <div class="relative w-[300px] h-[450px] bg-[#1c1c1c] rounded-xl shadow-lg overflow-hidden">
+            <img src="assets/images/sakura.jpg" alt="Sakura" class="w-full h-full object-cover"/>
+            <button class="absolute top-2 right-2 bg-white bg-opacity-50 rounded-full p-1" onclick="openModal('assets/images/sakura.jpg','Sakura')">🔎</button>
+            <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-70 p-4">
+              <h3 class="text-xl font-bold text-[#8f4fff]">Sakura</h3>
+              <p class="text-sm text-gray-200">Vitalista ancestral, portadora de um espírito guardião.</p>
+            </div>
+          </div>
         </div>
         <!-- Card Slyther -->
-        <div class="carousel-card scroll-snap-align-center">
-          <img src="assets/images/slyther.jpg" alt="Slyther" class="character-img"/>
-          <h3 class="character-title">Slyther</h3>
-          <p class="character-description">Assassino ágil e mestre das sombras.</p>
+        <div class="flex-shrink-0 w-full px-4 flex justify-center">
+          <div class="relative w-[300px] h-[450px] bg-[#1c1c1c] rounded-xl shadow-lg overflow-hidden">
+            <img src="assets/images/slyther.jpg" alt="Slyther" class="w-full h-full object-cover"/>
+            <button class="absolute top-2 right-2 bg-white bg-opacity-50 rounded-full p-1" onclick="openModal('assets/images/slyther.jpg','Slyther')">🔎</button>
+            <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-70 p-4">
+              <h3 class="text-xl font-bold text-[#8f4fff]">Slyther</h3>
+              <p class="text-sm text-gray-200">Assassino ágil e mestre das sombras.</p>
+            </div>
+          </div>
         </div>
         <!-- Card Runan -->
-        <div class="carousel-card scroll-snap-align-center">
-          <img src="assets/images/runan.jpg" alt="Runan" class="character-img"/>
-          <h3 class="character-title">Runan</h3>
-          <p class="character-description">Guardião das florestas de Caelum, último dos elfos selvagens.</p>
+        <div class="flex-shrink-0 w-full px-4 flex justify-center">
+          <div class="relative w-[300px] h-[450px] bg-[#1c1c1c] rounded-xl shadow-lg overflow-hidden">
+            <img src="assets/images/runan.jpg" alt="Runan" class="w-full h-full object-cover"/>
+            <button class="absolute top-2 right-2 bg-white bg-opacity-50 rounded-full p-1" onclick="openModal('assets/images/runan.jpg','Runan')">🔎</button>
+            <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-70 p-4">
+              <h3 class="text-xl font-bold text-[#8f4fff]">Runan</h3>
+              <p class="text-sm text-gray-200">Guardião das florestas de Caelum, último dos elfos selvagens.</p>
+            </div>
+          </div>
         </div>
         <!-- Card Yumi -->
-        <div class="carousel-card scroll-snap-align-center">
-          <img src="assets/images/yumi.jpg" alt="Yumi" class="character-img"/>
-          <h3 class="character-title">Yumi</h3>
-          <p class="character-description">Vitalista da aurora, conhecida por sua graça e poder destrutivo.</p>
+        <div class="flex-shrink-0 w-full px-4 flex justify-center">
+          <div class="relative w-[300px] h-[450px] bg-[#1c1c1c] rounded-xl shadow-lg overflow-hidden">
+            <img src="assets/images/yumi.jpg" alt="Yumi" class="w-full h-full object-cover"/>
+            <button class="absolute top-2 right-2 bg-white bg-opacity-50 rounded-full p-1" onclick="openModal('assets/images/yumi.jpg','Yumi')">🔎</button>
+            <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-70 p-4">
+              <h3 class="text-xl font-bold text-[#8f4fff]">Yumi</h3>
+              <p class="text-sm text-gray-200">Vitalista da aurora, conhecida por sua graça e poder destrutivo.</p>
+            </div>
+          </div>
         </div>
         <!-- Card Kagemitsu -->
-        <div class="carousel-card scroll-snap-align-center">
-          <img src="assets/images/kagemitsu.jpg" alt="Kagemitsu" class="character-img"/>
-          <h3 class="character-title">Kagemitsu</h3>
-          <p class="character-description">Espadachim lendário, cujas lâminas dançam como fogo.</p>
+        <div class="flex-shrink-0 w-full px-4 flex justify-center">
+          <div class="relative w-[300px] h-[450px] bg-[#1c1c1c] rounded-xl shadow-lg overflow-hidden">
+            <img src="assets/images/kagemitsu.jpg" alt="Kagemitsu" class="w-full h-full object-cover"/>
+            <button class="absolute top-2 right-2 bg-white bg-opacity-50 rounded-full p-1" onclick="openModal('assets/images/kagemitsu.jpg','Kagemitsu')">🔎</button>
+            <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-70 p-4">
+              <h3 class="text-xl font-bold text-[#8f4fff]">Kagemitsu</h3>
+              <p class="text-sm text-gray-200">Espadachim lendário, cujas lâminas dançam como fogo.</p>
+            </div>
+          </div>
         </div>
         <!-- Card Koda -->
-        <div class="carousel-card scroll-snap-align-center">
-          <img src="assets/images/koda.jpg" alt="Koda" class="character-img"/>
-          <h3 class="character-title">Koda</h3>
-          <p class="character-description">Dragão ancião, portador do caos e guardião do equilíbrio.</p>
+        <div class="flex-shrink-0 w-full px-4 flex justify-center">
+          <div class="relative w-[300px] h-[450px] bg-[#1c1c1c] rounded-xl shadow-lg overflow-hidden">
+            <img src="assets/images/koda.jpg" alt="Koda" class="w-full h-full object-cover"/>
+            <button class="absolute top-2 right-2 bg-white bg-opacity-50 rounded-full p-1" onclick="openModal('assets/images/koda.jpg','Koda')">🔎</button>
+            <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-70 p-4">
+              <h3 class="text-xl font-bold text-[#8f4fff]">Koda</h3>
+              <p class="text-sm text-gray-200">Dragão ancião, portador do caos e guardião do equilíbrio.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Botões de Navegação -->
-    <div class="absolute top-1/2 left-0 transform -translate-y-1/2">
-      <button id="prev" class="bg-[#8f4fff] text-black px-4 py-2 rounded-l-lg hover:bg-[#6c3cc9] transition">←</button>
-    </div>
-    <div class="absolute top-1/2 right-0 transform -translate-y-1/2">
-      <button id="next" class="bg-[#8f4fff] text-black px-4 py-2 rounded-r-lg hover:bg-[#6c3cc9] transition">→</button>
-    </div>
+    <button onclick="prevCard()" class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-[#8f4fff] text-black p-3 rounded-full hover:bg-[#6c3cc9]">←</button>
+    <button onclick="nextCard()" class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-[#8f4fff] text-black p-3 rounded-full hover:bg-[#6c3cc9]">→</button>
   </div>
 </section>
+
+<!-- Modal de imagem -->
+<div id="modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 hidden">
+  <img id="modal-img" src="" class="max-w-[90%] max-h-[90%] rounded-xl">
+  <button onclick="closeModal()" class="absolute top-4 right-6 text-white text-3xl">✕</button>
+</div>
+
+<script>
+  const track = document.getElementById('carousel-track');
+  let currentIndex = 0;
+  const totalCards = track.children.length;
+
+  function updateCarousel() {
+    track.style.transform = `translateX(-${currentIndex * 100}%)`;
+  }
+
+  function nextCard() {
+    currentIndex = (currentIndex + 1) % totalCards;
+    updateCarousel();
+  }
+
+  function prevCard() {
+    currentIndex = (currentIndex - 1 + totalCards) % totalCards;
+    updateCarousel();
+  }
+
+  function openModal(src, caption) {
+    document.getElementById('modal-img').src = src;
+    document.getElementById('modal').classList.remove('hidden');
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.add('hidden');
+  }
+
+  // inicializa
+  updateCarousel();
+</script>
 
     <!-- 5. Universo & Ambientação -->
     <section id="mundo" class="py-16 px-6 bg-[#111]">
@@ -413,58 +497,6 @@
       easing: 'ease-in-out',
       reset: false
     });
-  </script>
-
-  <!-- Carrossel de Personagens -->
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const container = document.querySelector('.carousel-container');
-  const track     = document.querySelector('.carousel-track');
-  const cards     = Array.from(track.children);
-  const btnPrev   = document.getElementById('prev');
-  const btnNext   = document.getElementById('next');
-  
-  // pega o gap em pixels definido no CSS
-  const style    = getComputedStyle(track);
-  const gap      = parseInt(style.getPropertyValue('gap')) || 0;
-  
-  let currentIndex = 0;
-  const cardWidth = cards[0].offsetWidth + gap;
-
-  // Reposiciona o track e aplica classes
-  function updateCarousel() {
-    // move todo o conjunto
-    track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
-
-    // aplica estado active/adjacent
-    cards.forEach((card, i) => {
-      card.classList.remove('active', 'adjacent');
-      if (i === currentIndex) {
-        card.classList.add('active');
-      } else if (
-        i === (currentIndex + 1) % cards.length ||
-        i === (currentIndex - 1 + cards.length) % cards.length
-      ) {
-        card.classList.add('adjacent');
-      }
-    });
-  }
-
-  // avançar
-  btnNext.addEventListener('click', () => {
-    currentIndex = (currentIndex + 1) % cards.length;
-    updateCarousel();
-  });
-
-  // retroceder
-  btnPrev.addEventListener('click', () => {
-    currentIndex = (currentIndex - 1 + cards.length) % cards.length;
-    updateCarousel();
-  });
-
-  // chamada inicial para posicionar tudo
-  updateCarousel();
-});
 </script>
 </body>
 </html>
