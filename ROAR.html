@@ -82,28 +82,82 @@
     </section>
 
     <!-- 4. Personagens Principais -->
-    <section id="personagens" class="py-16 px-6">
-      <h2 class="text-3xl text-[#8f4fff] font-bold mb-6">Personagens Principais</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Card Azuos -->
-        <div class="bg-[#1c1c1c] rounded-xl p-6 hover:scale-105 transition">
-          <img src="assets/images/azuos.jpg" alt="Azuos" class="w-full h-48 object-cover rounded-lg mb-4"/>
-          <h3 class="text-xl font-bold mb-2">Azuos</h3>
-          <p>Jovem vitalista, portador da Marca Negra — um selo maldito que carrega um segredo terrível.</p>
-        </div>
-        <!-- Outros personagens -->
-        <div class="bg-[#1c1c1c] rounded-xl p-6 hover:scale-105 transition">
-          <img src="assets/images/tyrian.jpg" alt="Tyrian" class="w-full h-48 object-cover rounded-lg mb-4"/>
-          <h3 class="text-xl font-bold mb-2">Tyrian</h3>
-          <p>Pai de Azuos, mago supremo e principal antagonista.</p>
-        </div>
-        <div class="bg-[#1c1c1c] rounded-xl p-6 hover:scale-105 transition">
-          <img src="assets/images/cerverus.jpg" alt="Cerverus" class="w-full h-48 object-cover rounded-lg mb-4"/>
-          <h3 class="text-xl font-bold mb-2">Cerverus</h3>
-          <p>Mentor dracônico, último vitalista de Draconis.</p>
-        </div>
+<section id="personagens" class="py-16 px-6">
+  <h2 class="text-3xl text-[#8f4fff] font-bold mb-6">Personagens Principais</h2>
+  <div class="relative">
+    <!-- Container do Carrossel -->
+    <div id="carousel" class="flex gap-6 overflow-x-hidden justify-center">
+      <!-- Card Azuos -->
+      <div class="carousel-card">
+        <img src="assets/images/azuos.jpg" alt="Azuos" class="character-img"/>
+        <h3 class="character-title">Azuos</h3>
+        <p class="character-description">Jovem vitalista, portador da Marca Negra — um selo maldito que carrega um segredo terrível.</p>
       </div>
-    </section>
+      <!-- Card Tyrian -->
+      <div class="carousel-card">
+        <img src="assets/images/tyrian.jpg" alt="Tyrian" class="character-img"/>
+        <h3 class="character-title">Tyrian</h3>
+        <p class="character-description">Pai de Azuos, mago supremo e principal antagonista.</p>
+      </div>
+      <!-- Card Cerverus -->
+      <div class="carousel-card">
+        <img src="assets/images/cerverus.jpg" alt="Cerverus" class="character-img"/>
+        <h3 class="character-title">Cerverus</h3>
+        <p class="character-description">Mentor dracônico, último vitalista de Draconis.</p>
+      </div>
+      <!-- Card Sado -->
+      <div class="carousel-card">
+        <img src="assets/images/sado.jpg" alt="Sado" class="character-img"/>
+        <h3 class="character-title">Sado</h3>
+        <p class="character-description">Guerreiro solitário, marcado pelas batalhas contra os dragões do sul.</p>
+      </div>
+      <!-- Card Sakura -->
+      <div class="carousel-card">
+        <img src="assets/images/sakura.jpg" alt="Sakura" class="character-img"/>
+        <h3 class="character-title">Sakura</h3>
+        <p class="character-description">Vitalista ancestral, portadora de um espírito guardião.</p>
+      </div>
+      <!-- Card Slyther -->
+      <div class="carousel-card">
+        <img src="assets/images/slyther.jpg" alt="Slyther" class="character-img"/>
+        <h3 class="character-title">Slyther</h3>
+        <p class="character-description">Assassino ágil e mestre das sombras.</p>
+      </div>
+      <!-- Card Runan -->
+      <div class="carousel-card">
+        <img src="assets/images/runan.jpg" alt="Runan" class="character-img"/>
+        <h3 class="character-title">Runan</h3>
+        <p class="character-description">Guardião das florestas de Caelum, último dos elfos selvagens.</p>
+      </div>
+      <!-- Card Yumi -->
+      <div class="carousel-card">
+        <img src="assets/images/yumi.jpg" alt="Yumi" class="character-img"/>
+        <h3 class="character-title">Yumi</h3>
+        <p class="character-description">Vitalista da aurora, conhecida por sua graça e poder destrutivo.</p>
+      </div>
+      <!-- Card Kagemitsu -->
+      <div class="carousel-card">
+        <img src="assets/images/kagemitsu.jpg" alt="Kagemitsu" class="character-img"/>
+        <h3 class="character-title">Kagemitsu</h3>
+        <p class="character-description">Espadachim lendário, cujas lâminas dançam como fogo.</p>
+      </div>
+      <!-- Card Koda -->
+      <div class="carousel-card">
+        <img src="assets/images/koda.jpg" alt="Koda" class="character-img"/>
+        <h3 class="character-title">Koda</h3>
+        <p class="character-description">Dragão ancião, portador do caos e guardião do equilíbrio.</p>
+      </div>
+    </div>
+
+    <!-- Botões de Navegação -->
+    <div class="absolute top-1/2 left-0 transform -translate-y-1/2">
+      <button id="prev" class="bg-[#8f4fff] text-black px-4 py-2 rounded-l-lg hover:bg-[#6c3cc9] transition">←</button>
+    </div>
+    <div class="absolute top-1/2 right-0 transform -translate-y-1/2">
+      <button id="next" class="bg-[#8f4fff] text-black px-4 py-2 rounded-r-lg hover:bg-[#6c3cc9] transition">→</button>
+    </div>
+  </div>
+</section>
 
     <!-- 5. Universo & Ambientação -->
     <section id="mundo" class="py-16 px-6 bg-[#111]">
