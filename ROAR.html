@@ -1,253 +1,190 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ROAR — Rebirth Of Order And Relentless Spirit</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?
+    family=Playfair+Display:wght@700&family=Inter:wght@400;500&display=swap"
+    rel="stylesheet"/>
   <script src="https://unpkg.com/scrollreveal"></script>
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0a0a0a;
-      color: #e5e5e5;
-    }
-    h1, h2 {
-      font-family: 'Playfair Display', serif;
-    }
-    html {
-      scroll-behavior: smooth;
-    }
+    body { font-family:'Inter',sans-serif; background:#0a0a0a; color:#e5e5e5; }
+    h1,h2,h3 { font-family:'Playfair Display',serif; }
+    html { scroll-behavior:smooth; }
+    .overlay { position:absolute; inset:0; background:rgba(0,0,0,0.6); }
+    .accordion-body { display:none; }
   </style>
 </head>
 <body class="leading-relaxed">
 
   <!-- NAVBAR -->
   <header class="fixed top-0 left-0 w-full bg-[#100d1a] border-b border-[#2e2e2e] z-50 px-8 py-4 flex justify-between items-center">
-  <div class="text-[#8f4fff] text-2xl font-bold uppercase tracking-wide"> ROAR</div>
-  <!-- Botão de Menu para Mobile -->
-  <button id="mobile-menu-button" class="md:hidden text-[#8f4fff] focus:outline-none">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-    </svg>
-  </button>
-  <!-- Links de Navegação -->
-  <nav>
-    <ul id="mobile-menu" class="hidden md:flex space-x-6 text-sm flex-col md:flex-row md:items-center">
-      <li><a href="#sobre" class="hover:text-[#8f4fff]">Sobre</a></li>
-      <li><a href="#personagens" class="hover:text-[#8f4fff]">Personagens</a></li>
-      <li><a href="#mundo" class="hover:text-[#8f4fff]">Mundo</a></li>
-      <li><a href="#evento" class="hover:text-[#8f4fff]">Evento Caótico</a></li>
-      <li><a href="#explorar" class="hover:text-[#8f4fff]">Explorar</a></li>
-    </ul>
-  </nav>
-</header>
+    <div class="text-[#8f4fff] text-2xl font-bold uppercase">ROAR</div>
+    <nav class="hidden md:flex space-x-6">
+      <a href="#sobre" class="hover:text-[#8f4fff]">Sobre</a>
+      <a href="#personagens" class="hover:text-[#8f4fff]">Personagens</a>
+      <a href="#mundo" class="hover:text-[#8f4fff]">Mundo</a>
+      <a href="#evento" class="hover:text-[#8f4fff]">Evento</a>
+      <a href="#bastidores" class="hover:text-[#8f4fff]">Bastidores</a>
+      <a href="#cta" class="hover:text-[#8f4fff]">Apoiar</a>
+    </nav>
+    <button id="mobile-menu-button" class="md:hidden text-2xl text-[#8f4fff]">☰</button>
+  </header>
 
-  <!-- Título Principal -->
-<section id="titulo-principal" class="text-center bg-[#0a0a0a] text-[#8f4fff] pt-28 pb-8">
-  <h1 class="text-4xl font-bold"> ROAR — Rebirth Of Order And Relentless Spirit</h1>
-</section>
+  <!-- Hero Section -->
+  <section id="principal" class="relative h-screen bg-cover bg-center" style="background-image:url('assets/images/roar-hero.jpg')">
+    <div class="overlay"></div>
+    <div class="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
+      <h1 class="text-4xl md:text-6xl text-[#8f4fff] font-bold mb-4">ROAR<br/><span class="text-2xl">Rebirth Of Order And Relentless Spirit</span></h1>
+      <p class="text-lg md:text-2xl italic mb-8 text-[#d9d6ff]">Um épico sombrio sobre redenção, fé e poder perdido.</p>
+      <a href="#sinopse" class="bg-[#8f4fff] text-black px-6 py-3 rounded-xl hover:scale-105 transition">Leia a Sinopse</a>
+      <div class="mt-12 animate-bounce text-[#8f4fff]">↓</div>
+    </div>
+  </section>
 
-  <!-- MAIN CONTENT -->
-  <main class="pt-28 px-6 max-w-5xl mx-auto space-y-24">
-    <!-- Conteúdo principal -->
-  </main>
-  <main class="pt-28 px-6 max-w-5xl mx-auto space-y-24">
-    <!-- Sobre a Obra -->
-    <section id="sobre">
-      <h2 class="text-3xl font-bold text-[#8f4fff] mb-4">Sobre a Obra</h2>
-      <p class="text-lg italic mb-4">“No reino de Caelum, onde dragões rugem e demônios espreitam, um guerreiro renasce para desafiar o caos ou se juntar a ele — sem saber que o inimigo mais terrível pode estar dentro de si.”</p>
-      <p class="text-base">ROAR é uma fantasia épica com estética dark fantasy e soulslike, que explora temas como redenção, ruína, reencarnação e resistência. Aqui, a luta entre ordem e caos ganha novas formas — espirituais, físicas e filosóficas.</p>
-    </section>
+  <main class="pt-32 space-y-24">
 
-    <!-- Personagens -->
-    <section id="personagens">
-      <h2 class="text-3xl font-bold text-[#8f4fff] mb-4">Personagens Principais</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="p-6 bg-[#1c1c1c] border border-[#333] rounded-lg shadow-md transition hover:scale-105">
-          <strong>Azuos:</strong> Jovem vitalista, portador da Marca Negra — um selo maldito que carrega um segredo terrível.
-        </div>
-        <div class="p-6 bg-[#1c1c1c] border border-[#333] rounded-lg shadow-md transition hover:scale-105">
-          <strong>Tyrian:</strong> Pai de Azuos (aparência e informações desconhecidas).
-        </div>
-        <div class="p-6 bg-[#1c1c1c] border border-[#333] rounded-lg shadow-md transition hover:scale-105">
-          <strong>Cerverus:</strong> Mentor dracônico, último vitalista de Draconis, moldado por perdas e cicatrizes.
-        </div>
-        <div class="p-6 bg-[#1c1c1c] border border-[#333] rounded-lg shadow-md transition hover:scale-105">
-          <strong>Sado:</strong> Irmão de consideração de Azuos, vitalista do furto, movido por lealdade inabalável e ódio contido.
-        </div>
-        <div class="p-6 bg-[#1c1c1c] border border-[#333] rounded-lg shadow-md transition hover:scale-105">
-          <strong>Kagemitsu:</strong> Ancião e líder do Clã da Lua — estrategista e dono de segredos milenares.
+    <!-- 2. Sinopse Cinematográfica -->
+    <section id="sinopse" class="relative py-16 px-6 bg-[#111]">
+      <h2 class="text-3xl text-[#8f4fff] font-bold mb-6">Sinopse Cinematográfica</h2>
+      <div class="relative overflow-hidden">
+        <div class="absolute inset-0 bg-fixed bg-center bg-cover opacity-30" style="background-image:url('assets/images/roar-sinopse-bg.jpg')"></div>
+        <div class="relative max-w-3xl mx-auto text-lg text-[#ccc] space-y-4">
+          <p>“Quando as muralhas de gelo se partirem e o rugido dos dragões ecoar...</p>
+          <p>Azuos, marcado pela Marca Negra, será forçado a desafiar sua própria essência em busca da última esperança...</p>
+          <p>Em um mundo rasgado pelo caos, apenas o grito mais forte poderá reerguer a fé.”</p>
         </div>
       </div>
     </section>
-      <p class="mb-4"><section id="mundo" class="py-16 px-8 max-w-6xl mx-auto">
-  <h2 class="text-3xl font-bold text-[#8f4fff] mb-8">O Mundo de ROAR</h2>
 
-  <!-- Accordion Container -->
-  <div class="space-y-4">
-    <!-- 1. Caelum e seus continentes -->
-    <div class="accordion-item border border-[#8f4fff] rounded-lg">
-      <button onclick="toggleAccordion(this)" class="accordion-header flex justify-between items-center w-full px-4 py-3 text-left text-[#cfcfcf] hover:text-[#8f4fff]">
-        <span>Caelum e seus continentes</span>
-        <span class="arrow">←</span>
-      </button>
-      <div class="accordion-body hidden px-4 py-3">
-        <p><strong>Mapa de Caelum:</strong> O continente principal de <em>Sublicus</em> é nascido da jornada de Azuos — marcado por zonas militares, muralhas ancestrais e ruínas.</p>
-        <ul class="list-disc list-inside mt-4">
-          <li><strong>Muralhas de Gelo e Fogo:</strong> Limite entre mundos. Fronteira entre os vivos e os amaldiçoados.</li>
-        </ul>
+    <!-- 3. Trailer ou Prévia -->
+    <section id="trailer" class="py-16 px-6 text-center">
+      <h2 class="text-3xl text-[#8f4fff] font-bold mb-6">Trailer & Prévia</h2>
+      <!-- substitua src pelo seu vídeo real -->
+      <div class="max-w-4xl mx-auto">
+        <video controls class="w-full rounded-lg shadow-lg">
+          <source src="assets/videos/roar-teaser.mp4" type="video/mp4">
+          Seu navegador não suporta vídeo.
+        </video>
       </div>
-    </div>
-
-   <!-- 2. Nações e Cidades -->
-<div class="accordion-item border border-[#8f4fff] rounded-lg">
-  <button onclick="toggleAccordion(this)" class="accordion-header flex justify-between items-center w-full px-4 py-3 text-left text-[#cfcfcf] hover:text-[#8f4fff]">
-    <span>Nações e Cidades</span>
-    <span class="arrow">←</span>
-  </button>
-  <div class="accordion-body hidden px-4 py-3">
-    <ul class="list-disc list-inside">
-      <li><strong>Aeon:</strong> Teocracia totalitária que dita "Ordem e Perfeição".</li>
-      <li><strong>Kaleidos:</strong> Democracia multicultural — resistência, refúgio e revolta.</li>
-    </ul>
-  </div>
-</div>
-
-<!-- Nova aba: Clãs e Facções -->
-<div class="accordion-item border border-[#8f4fff] rounded-lg">
-  <button onclick="toggleAccordion(this)" class="accordion-header flex justify-between items-center w-full px-4 py-3 text-left text-[#cfcfcf] hover:text-[#8f4fff]">
-    <span>Clãs e Facções</span>
-    <span class="arrow">←</span>
-  </button>
-  <div class="accordion-body hidden px-4 py-3">
-    <ul class="list-disc list-inside">
-      <li><strong>Clã da Lua:</strong> Espiões, assassinos, sombras.</li>
-      <li><strong>Clã do Sol:</strong> Magos e estudiosos da luz arcana.</li>
-      <li><strong>Clã das Feras:</strong> Druidas metamorfos em simbiose com a natureza.</li>
-      <li><strong>Clã das Runas:</strong> Tradutores da linguagem universal da criação.</li>
-      <li><strong>Culto do Vazio:</strong> Conhecidos também como magos negros, são a principal ameaça ao continente depois dos dragões.</li>
-    </ul>
-  </div>
-</div>
-
-    <!-- 3. Sistema de Magia e Regras -->
-    <div class="accordion-item border border-[#8f4fff] rounded-lg">
-      <button onclick="toggleAccordion(this)" class="accordion-header flex justify-between items-center w-full px-4 py-3 text-left text-[#cfcfcf] hover:text-[#8f4fff]">
-        <span>Sistema de Magia e Regras</span>
-        <span class="arrow">←</span>
-      </button>
-      <div class="accordion-body hidden px-4 py-3">
-        <p><strong>Fontes de Energia:</strong></p>
-        <ul class="list-disc list-inside">
-          <li><strong>Vital:</strong> Energia de todo ser vivo. Excesso de 91%+ desperta habilidades únicas (Vitalistas).</li>
-          <li><strong>Positiva:</strong> Gera anjos e seres celestiais.</li>
-          <li><strong>Negativa:</strong> Alimenta demônios e dragões.</li>
-        </ul>
-        <p class="mt-4"><strong>Leis do Mundo:</strong></p>
-        <ul class="list-disc list-inside">
-          <li>Somente magia negra mexe com vida e morte.</li>
-          <li>Habilidades vitalistas são superiores a magias comuns.</li>
-          <li>Magia exige preparo; vitalismo é instintivo.</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- 4. Mitos e Lendas -->
-    <div class="accordion-item border border-[#8f4fff] rounded-lg">
-      <button onclick="toggleAccordion(this)" class="accordion-header flex justify-between items-center w-full px-4 py-3 text-left text-[#cfcfcf] hover:text-[#8f4fff]">
-        <span>Mitos e Lendas</span>
-        <span class="arrow">←</span>
-      </button>
-      <div class="accordion-body hidden px-4 py-3">
-        <ul class="list-disc list-inside">
-          <li><strong>Oni Vagante:</strong> Espadachim mascarado imortal. Nunca derrotado — nem pela morte.</li>
-          <li><strong>O Bom Dragão:</strong> Oráculo lendário que aparece para almas puras.</li>
-          <li><strong>Dragões Barões Anciãos:</strong> Dragões que devoram emoções negativas e ganham forma humana.</li>
-          <li><strong>A Floresta Negra:</strong> Selva maldita onde tudo tem consciência e devora o que entra.</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- 5. Magitecnologia -->
-    <div class="accordion-item border border-[#8f4fff] rounded-lg">
-      <button onclick="toggleAccordion(this)" class="accordion-header flex justify-between items-center w-full px-4 py-3 text-left text-[#cfcfcf] hover:text-[#8f4fff]">
-        <span>Magitecnologia</span>
-        <span class="arrow">←</span>
-      </button>
-      <div class="accordion-body hidden px-4 py-3">
-        <p><strong>Magitecnologia:</strong> Tecnologia alimentada por mana, não eletricidade.</p>
-        <ul class="list-disc list-inside">
-          <li>Armas encantadas, zepelins flutuantes, portais e montarias mágicas.</li>
-          <li>Artefatos comuns entre magos e guerreiros.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<script>
-  function toggleAccordion(button) {
-    const allItems = document.querySelectorAll(".accordion-item");
-    allItems.forEach(item => {
-      const body = item.querySelector(".accordion-body");
-      const arrow = item.querySelector(".arrow");
-      if (item.contains(button)) {
-        body.classList.toggle("hidden"); // Toggle visibility
-        arrow.textContent = body.classList.contains("hidden") ? "←" : "↓"; // Change arrow direction
-      } else {
-        body.classList.add("hidden"); // Close other accordions
-        arrow.textContent = "←";
-      }
-    });
-  }
-</script>
-
-    <!-- Evento Caótico -->
-    <section id="evento">
-      <h2 class="text-3xl font-bold text-[#8f4fff] mb-4">O Evento Caótico</h2>
-      <p class="italic mb-2">“Quando o terceiro demônio serpente foi invocado pela fenda dimensional, Caelum mudou para sempre…”</p>
-      <p>Um colapso dimensional partiu a realidade em fragmentos. Azuos e Ryu são separados nesse fenômeno — evento que conecta ROAR com FREQ.</p>
-      <a href="FREQ.html" class="inline-block mt-4 bg-[#8f4fff] px-4 py-2 rounded text-black font-semibold">Entenda o Outro Lado →</a>
     </section>
 
-    <!-- Explorar o Universo -->
-    <section id="explorar">
-      <h2 class="text-3xl font-bold text-[#8f4fff] mb-4">Explorar o Universo</h2>
-      <ul class="space-y-2">
-        <li><a href="FREQ.html" class="underline hover:text-[#8f4fff]">Página FREQ</a></li>
-        <li><a href="index.html" class="underline hover:text-[#8f4fff]">Universo Geral</a></li>
-        <li><a href="#" class="underline hover:text-[#8f4fff]">Loja & Produtos (em breve)</a></li>
-        <li><a href="#" class="underline hover:text-[#8f4fff]">Mentorias & Cursos</a></li>
-      </ul>
+    <!-- 4. Personagens Principais -->
+    <section id="personagens" class="py-16 px-6">
+      <h2 class="text-3xl text-[#8f4fff] font-bold mb-6">Personagens Principais</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Card Azuos -->
+        <div class="bg-[#1c1c1c] rounded-xl p-6 hover:scale-105 transition">
+          <img src="assets/images/azuos.jpg" alt="Azuos" class="w-full h-48 object-cover rounded-lg mb-4"/>
+          <h3 class="text-xl font-bold mb-2">Azuos</h3>
+          <p>Jovem vitalista, portador da Marca Negra — um selo maldito que carrega um segredo terrível.</p>
+        </div>
+        <!-- Outros personagens -->
+        <div class="bg-[#1c1c1c] rounded-xl p-6 hover:scale-105 transition">
+          <img src="assets/images/tyrian.jpg" alt="Tyrian" class="w-full h-48 object-cover rounded-lg mb-4"/>
+          <h3 class="text-xl font-bold mb-2">Tyrian</h3>
+          <p>Pai de Azuos, mago supremo e principal antagonista.</p>
+        </div>
+        <div class="bg-[#1c1c1c] rounded-xl p-6 hover:scale-105 transition">
+          <img src="assets/images/cerverus.jpg" alt="Cerverus" class="w-full h-48 object-cover rounded-lg mb-4"/>
+          <h3 class="text-xl font-bold mb-2">Cerverus</h3>
+          <p>Mentor dracônico, último vitalista de Draconis.</p>
+        </div>
+      </div>
     </section>
+
+    <!-- 5. Universo & Ambientação -->
+    <section id="mundo" class="py-16 px-6 bg-[#111]">
+      <h2 class="text-3xl text-[#8f4fff] font-bold mb-6">Universo & Ambientação</h2>
+      <img src="assets/images/caelum-map.jpg" alt="Mapa de Caelum" class="w-full rounded-lg shadow-lg mb-6"/>
+      <p class="text-[#ccc] mb-4">Caelum é dividido entre as muralhas de Gelo e Fogo, Sublicus ao leste e as Nações de Aeon e Kaleidos...</p>
+      <a href="#" class="text-[#8f4fff] underline hover:text-white">Explore mais →</a>
+    </section>
+
+    <!-- 6. Linha do Tempo -->
+    <section id="timeline" class="py-16 px-6">
+      <h2 class="text-3xl text-[#8f4fff] font-bold mb-6">Linha do Tempo</h2>
+      <div class="overflow-x-auto">
+        <ul class="flex space-x-8">
+          <li class="min-w-[200px]">
+            <div class="font-bold">Ano 0</div>
+            <div class="text-[#ccc]">Nascimento de Azuos</div>
+          </li>
+          <li class="min-w-[200px]">
+            <div class="font-bold">Ano 50</div>
+            <div class="text-[#ccc]">Ressurreição do Dragão Ancião</div>
+          </li>
+          <li class="min-w-[200px]">
+            <div class="font-bold">Ano 100</div>
+            <div class="text-[#ccc]">Conflito Final</div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 7. Bastidores / Processo Criativo -->
+    <section id="bastidores" class="py-16 px-6 bg-[#111]">
+      <h2 class="text-3xl text-[#8f4fff] font-bold mb-6">Bastidores & Processo Criativo</h2>
+      <p class="text-[#ccc] mb-6">Inspiração em dark fantasy, uso de FlipaClip para animação alfa e IA para concept art.</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <img src="assets/images/concept1.jpg" alt="Concept Art" class="rounded-lg shadow-lg"/>
+        <img src="assets/images/storyboard1.jpg" alt="Storyboard" class="rounded-lg shadow-lg"/>
+        <img src="assets/images/makingof1.jpg" alt="Making Of" class="rounded-lg shadow-lg"/>
+      </div>
+    </section>
+
+    <!-- 8. Equipe / Criador -->
+    <section id="equipe" class="py-16 px-6">
+      <h2 class="text-3xl text-[#8f4fff] font-bold mb-4">Criado por NoHeroe (Raul Souza Silva)</h2>
+      <p class="text-[#ccc]">Autor, roteirista e artista principal. <a href="sobre.html" class="underline hover:text-[#8f4fff]">Saiba mais →</a></p>
+    </section>
+
+    <!-- 9. Chamada para Ação -->
+    <section id="cta" class="py-16 px-6 bg-[#222] text-center rounded-lg">
+      <h2 class="text-3xl text-[#8f4fff] font-bold mb-6">Quer apoiar esse universo?</h2>
+      <div class="flex flex-col md:flex-row justify-center gap-4">
+        <a href="apoiar.html" class="px-6 py-3 bg-[#8f4fff] text-black rounded-lg hover:scale-105 transition">Seja Patrono</a>
+        <a href="manga.html" class="px-6 py-3 bg-[#39ff14] text-black rounded-lg hover:scale-105 transition">Compre o Mangá</a>
+        <a href="https://instagram.com/_noheroe" target="_blank" class="px-6 py-3 border border-[#8f4fff] rounded-lg hover:bg-[#8f4fff] hover:text-black transition">Siga no Instagram</a>
+      </div>
+    </section>
+
+    <!-- 10. Depoimentos (oculto até ter conteúdo) -->
+    <section id="depoimentos" class="py-16 px-6 hidden">
+      <h2 class="text-3xl text-[#8f4fff] font-bold mb-6">Reações da Comunidade</h2>
+      <p class="text-[#ccc]">Em breve!</p>
+    </section>
+
   </main>
 
-  <!-- Rodapé -->
-  <footer class="text-center py-8 text-sm text-[#777] mt-24 border-t border-[#333]">
-    <p>&copy; 2025 NoHeroes. Todos os direitos reservados.</p>
-    <p class="italic">Explore. Escolha. Caia. Evolua.</p>
+  <!-- 11. Rodapé -->
+  <footer class="py-8 text-center text-sm text-[#777] border-t border-[#333] mt-24">
+    <a href="#principal" class="block mb-4 hover:text-[#8f4fff]">Voltar ao Topo</a>
+    <nav class="space-x-4">
+      <a href="freq.html" class="hover:text-[#8f4fff]">FREQ</a>
+      <a href="news.html" class="hover:text-[#8f4fff]">Blog</a>
+      <a href="sobre.html" class="hover:text-[#8f4fff]">Sobre</a>
+      <a href="contato.html" class="hover:text-[#8f4fff]">Contato</a>
+    </nav>
+    <p class="italic mt-4">Explore. Escolha. Caia. Evolua.</p>
+    <p class="mt-2">© 2025 NoHeroes. Todos os direitos reservados.</p>
   </footer>
 
-  <!-- ScrollReveal Config -->
+  <!-- Mobile Menu Script -->
   <script>
-  ScrollReveal().reveal('section', { 
-    delay: 200, 
-    duration: 1000, 
-    origin: 'bottom', 
-    distance: '50px', 
-    reset: true // Permite que o efeito seja repetido
-  });
-</script>
-<script>
-  // Mobile Menu Toggle
-  document.getElementById('mobile-menu-button').addEventListener('click', function () {
-    const menu = document.getElementById('mobile-menu');
-    menu.classList.toggle('hidden'); // Alternar visibilidade (esconder/mostrar)
-    menu.classList.toggle('flex');  // Exibir como flexbox no mobile
-  });
-</script>
+    const btn = document.getElementById('mobile-menu-button'),
+          nav = document.querySelector('header nav');
+    btn.addEventListener('click', () => {
+      nav.classList.toggle('hidden');
+      nav.classList.toggle('flex');
+    });
+    // ScrollReveal
+    ScrollReveal().reveal('section', {
+      delay:200, duration:1000, origin:'bottom', distance:'50px', reset:true
+    });
+  </script>
 </body>
 </html>
