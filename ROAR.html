@@ -391,41 +391,57 @@
   <!-- Carrossel de Personagens -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const cards = Array.from(document.querySelectorAll('.carousel-card'));
-  const btnPrev = document.getElementById('prev');
-  const btnNext = document.getElementById('next');
+  const container = document.querySelector('.carousel-container');
+  const track     = document.querySelector('.carousel-track');
+  const cards     = Array.from(track.children);
+  const btnPrev   = document.getElementById('prev');
+  const btnNext   = document.getElementById('next');
+  
+  // gap em pixels entre cards (vindo do CSS)
+  const style    = getComputedStyle(track);
+  const gap      = parseInt(style.getPropertyValue('gap')) || 0;
+  
   let currentIndex = 0;
+  const cardWidth = cards[0].offsetWidth + gap;
 
+  // Reposiciona o track e marca classes
   function updateCarousel() {
+    // desliza o track
+    track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+
+    // limpa e reatribui classes
     cards.forEach((card, i) => {
-      // calcula offset circular no intervalo [-n/2 … +n/2]
-      let offset = (i - currentIndex + cards.length) % cards.length;
-      if (offset > cards.length / 2) offset -= cards.length;
-      // aplica transformação
-      card.style.transform = `translateX(${offset * 110}%) scale(${offset === 0 ? 1 : 0.8})`;
-      card.style.opacity   = offset === 0 ? '1' : '0.5';
-      card.style.filter    = offset === 0 ? 'none' : 'blur(3px)';
+      card.classList.remove('active','adjacent');
+      // central
+      if (i === currentIndex) {
+        card.classList.add('active');
+      }
+      // adjacentes
+      else if (
+        i === (currentIndex + 1) % cards.length ||
+        i === (currentIndex - 1 + cards.length) % cards.length
+      ) {
+        card.classList.add('adjacent');
+      }
     });
   }
 
+  // Próximo / Anterior
   btnNext.addEventListener('click', () => {
     currentIndex = (currentIndex + 1) % cards.length;
     updateCarousel();
   });
-
   btnPrev.addEventListener('click', () => {
     currentIndex = (currentIndex - 1 + cards.length) % cards.length;
     updateCarousel();
   });
 
-  // auto-scroll: simula clique em "next" a cada 10s
+  // Auto-scroll
   setInterval(() => {
-    if (!document.activeElement.closest('#carousel')) {
-      btnNext.click();
-    }
+    btnNext.click();
   }, 10000);
 
-  // inicia
+  // Inicializa
   updateCarousel();
 });
 </script>
