@@ -84,6 +84,31 @@
       background-color: #6c3cc9;
       border-radius: 4px;
     }
+.carousel-container {
+  overflow: hidden;
+}
+.carousel-track {
+  display: flex;
+  gap: 1rem;                /* ou o gap que você quiser */
+  transition: transform .5s ease;
+}
+.carousel-card {
+  flex: 0 0 auto;
+  opacity: 0;
+  transition: transform .5s ease, opacity .5s ease, filter .5s ease;
+}
+/* card central */
+.carousel-card.active {
+  opacity: 1;
+  transform: scale(1);
+  filter: none;
+}
+/* cards à esquerda e direita */
+.carousel-card.adjacent {
+  opacity: 0.5;
+  transform: scale(0.8);
+  filter: blur(3px);
+}
   </style>
 </head>
 <body class="leading-relaxed">
