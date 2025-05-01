@@ -110,10 +110,15 @@
   background-color: #6c3cc9;
   border-radius: 4px;
 }
+/* Ajuste de centralização */
 #carousel {
-  width: 100%;
-  max-width: 1200px; /* ou qualquer largura máxima que faça sentido pro teu layout */
-  margin: 0 auto;    /* centraliza horizontalmente */
+  /* faz o container do track ocupar até 3 cards + gaps */
+  width: calc(300px * 3 + 2 * 1rem); /* 3 cards de 300px e 1rem de gap entre eles */
+  max-width: 100%;                   /* mas nunca ultrapassa 100% da tela */
+  margin: 0 auto;                    /* centraliza horizontalmente */
+  overflow: hidden;
+  position: relative;
+  padding: 2rem 0;
 }
   </style>
 </head>
