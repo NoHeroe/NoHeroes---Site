@@ -31,20 +31,24 @@
 <body class="leading-relaxed">
 
   <!-- 1. TOPO FIXO -->
-  <header class="fixed top-0 left-0 w-full bg-[#100d1a] border-b border-[#2e2e2e] z-50 flex items-center justify-center px-6 py-4">
-    <!-- Logo clicável -->
-    <a href="#" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="flex-shrink-0">
-      <div class="logo-container">
-        <img src="assets/images/noheroes logo.png" alt="NoHeroes" class="drop-shadow-glow cursor-pointer"/>
-      </div>
-    </a>
-    <!-- Links desktop -->
-    <nav class="hidden md:flex space-x-6 items-center">
-      <a href="loja.html" class="text-[#ccc] hover:text-[#8f4fff] transition">Loja</a>
-      <a href="sobre.html" class="text-[#ccc] hover:text-[#8f4fff] transition">Sobre</a>
-      <a href="login.html" class="text-[#ccc] hover:text-[#8f4fff] transition">Conta/Login</a>
-    </nav>
-  </header>
+  <header class="fixed top-0 left-0 w-full bg-[#100d1a] border-b border-[#2e2e2e] z-50 flex items-center justify-between px-6 py-4">
+  <!-- Botão Loja -->
+  <a href="loja.html" class="text-[#ccc] hover:text-[#8f4fff] transition ml-6">
+    Loja
+  </a>
+  
+  <!-- Logo -->
+  <a href="#" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="flex-shrink-0">
+    <div class="logo-container">
+      <img src="assets/images/noheroes logo.png" alt="NoHeroes" class="drop-shadow-glow cursor-pointer"/>
+    </div>
+  </a>
+  
+  <!-- Botão Conta/Login -->
+  <a href="login.html" class="text-[#ccc] hover:text-[#8f4fff] transition mr-6">
+    Conta/Login
+  </a>
+</header>
 
   <!-- Main -->
   <main class="pt-28">
