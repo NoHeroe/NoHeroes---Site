@@ -353,7 +353,7 @@
     <p class="mt-2">© 2025 NoHeroes. Todos os direitos reservados.</p>
   </footer>
 
-  <!-- Mobile Menu Script -->
+  <!-- Mobile Menu + ScrollReveal -->
   <script>
     const btn = document.getElementById('mobile-menu-button'),
           nav = document.querySelector('header nav');
@@ -365,55 +365,52 @@
     ScrollReveal().reveal('section', {
       delay:200, duration:1000, origin:'bottom', distance:'50px', reset:true
     });
-ScrollReveal().reveal('#lenda-roar', {
-  delay: 300,
-  duration: 1200,
-  origin: 'left',
-  distance: '80px',
-  easing: 'ease-in-out',
-  reset: false
-});
-<script>
-  const carousel = document.getElementById("carousel");
-  const cards = document.querySelectorAll(".carousel-card");
-  const btnPrev = document.getElementById("prev");
-  const btnNext = document.getElementById("next");
-
-  let currentIndex = 0;
-
-  // Função para atualizar o carrossel
-  function updateCarousel() {
-    cards.forEach((card, index) => {
-      const offset = index - currentIndex;
-      card.style.transform = `translateX(${offset * 110}%)`;
-      card.style.opacity = offset === 0 ? 1 : 0.5;
-      card.style.filter = offset === 0 ? "none" : "blur(3px)";
-      card.style.transform += offset === 0 ? " scale(1)" : " scale(0.8)";
+    ScrollReveal().reveal('#lenda-roar', {
+      delay: 300,
+      duration: 1200,
+      origin: 'left',
+      distance: '80px',
+      easing: 'ease-in-out',
+      reset: false
     });
-  }
+  </script>
 
-  // Clique no botão "Próximo"
-  btnNext.addEventListener("click", () => {
-    currentIndex = (currentIndex + 1) % cards.length;
-    updateCarousel();
-  });
+  <!-- Carrossel de Personagens -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const carousel = document.getElementById("carousel");
+      const cards = document.querySelectorAll(".carousel-card");
+      const btnPrev = document.getElementById("prev");
+      const btnNext = document.getElementById("next");
+      let currentIndex = 0;
 
-  // Clique no botão "Anterior"
-  btnPrev.addEventListener("click", () => {
-    currentIndex = (currentIndex - 1 + cards.length) % cards.length;
-    updateCarousel();
-  });
+      function updateCarousel() {
+        cards.forEach((card, i) => {
+          const offset = i - currentIndex;
+          card.style.transform = `translateX(${offset * 110}%) scale(${offset === 0 ? 1 : 0.8})`;
+          card.style.opacity = offset === 0 ? '1' : '0.5';
+          card.style.filter  = offset === 0 ? 'none' : 'blur(3px)';
+        });
+      }
 
-  // Rolagem automática
-  setInterval(() => {
-    if (!document.activeElement.closest("#carousel")) {
-      currentIndex = (currentIndex + 1) % cards.length;
+      btnNext.addEventListener("click", () => {
+        currentIndex = (currentIndex + 1) % cards.length;
+        updateCarousel();
+      });
+      btnPrev.addEventListener("click", () => {
+        currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+        updateCarousel();
+      });
+
+      setInterval(() => {
+        if (!document.activeElement.closest("#carousel")) {
+          currentIndex = (currentIndex + 1) % cards.length;
+          updateCarousel();
+        }
+      }, 10000);
+
       updateCarousel();
-    }
-  }, 10000); // A cada 10 segundos
-
-  // Inicializar o carrossel
-  updateCarousel();
-</script>
+    });
+  </script>
 </body>
 </html>
