@@ -15,6 +15,17 @@
     html { scroll-behavior: smooth; }
     /* Modal e drawer */
     .hidden { display: none; }
+    /* Ajustes para o topo fixo */
+    header {
+      height: 60px; /* Ajusta a altura do topo */
+    }
+    header .logo-container {
+      position: relative;
+      top: -30px; /* Move a logo para cima, ultrapassando o topo */
+    }
+    header img {
+      height: 80px; /* Tamanho da logo */
+    }
   </style>
 </head>
 <body class="leading-relaxed">
@@ -23,7 +34,9 @@
   <header class="fixed top-0 left-0 w-full bg-[#100d1a] border-b border-[#2e2e2e] z-50 flex items-center justify-center px-6 py-4">
     <!-- Logo clicável -->
     <a href="#" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="flex-shrink-0">
-      <img src="assets/images/noheroes logo.png" alt="NoHeroes" class="h-20 drop-shadow-glow cursor-pointer"/>
+      <div class="logo-container">
+        <img src="assets/images/noheroes logo.png" alt="NoHeroes" class="drop-shadow-glow cursor-pointer"/>
+      </div>
     </a>
     <!-- Links desktop -->
     <nav class="hidden md:flex space-x-6 items-center">
