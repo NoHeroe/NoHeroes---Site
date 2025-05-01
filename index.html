@@ -17,15 +17,34 @@
     .hidden { display: none; }
     /* Ajustes para o topo fixo */
     header {
-      height: 50px; /* Ajusta a altura do topo */
-    }
-    header .logo-container {
-      position: relative;
-      top: 30px; /* Move a logo para cima, ultrapassando o topo */
-    }
-    header img {
-      height: 100px; /* Tamanho da logo */
-    }
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #100d1a;
+  border-bottom: 1px solid #2e2e2e;
+  height: 50px; /* Cabeçalho permanece compacto */
+}
+
+header .logo-container {
+  position: absolute;
+  left: 50%; /* Centraliza horizontalmente na página */
+  transform: translateX(-50%); /* Garante alinhamento ao centro */
+}
+
+header img {
+  height: 100px; /* Intencionalmente ultrapassando o cabeçalho */
+}
+
+header a {
+  color: #ccc;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+header a:hover {
+  color: #8f4fff;
+}
   </style>
 </head>
 <body class="leading-relaxed">
