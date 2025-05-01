@@ -471,15 +471,6 @@ document.addEventListener('DOMContentLoaded', () => {
     currentIndex = (currentIndex - 1 + cards.length) % cards.length;
     updateCarousel();
   });
-
-  // Auto-scroll
-  setInterval(() => {
-    btnNext.click();
-  }, 10000);
-
-  // Inicializa
-  updateCarousel();
-});
 </script>
 </body>
 </html>
