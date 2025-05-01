@@ -378,41 +378,50 @@
   </script>
 
   <!-- Carrossel de Personagens -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const carousel = document.getElementById("carousel");
-      const cards = document.querySelectorAll(".carousel-card");
-      const btnPrev = document.getElementById("prev");
-      const btnNext = document.getElementById("next");
-      let currentIndex = 0;
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const container = document.querySelector('.carousel-container')
+    const cards = document.querySelectorAll('.carousel-card')
+    const btnPrev = document.getElementById('prev')
+    const btnNext = document.getElementById('next')
 
-      function updateCarousel() {
-        cards.forEach((card, i) => {
-          const offset = i - currentIndex;
-          card.style.transform = `translateX(${offset * 110}%) scale(${offset === 0 ? 1 : 0.8})`;
-          card.style.opacity = offset === 0 ? '1' : '0.5';
-          card.style.filter  = offset === 0 ? 'none' : 'blur(3px)';
-        });
-      }
+    // Funções de navegação por scroll
+    btnNext.addEventListener('click', () => {
+      container.scrollBy({ left: container.offsetWidth, behavior: 'smooth' })
+    })
+    btnPrev.addEventListener('click', () => {
+      container.scrollBy({ left: -container.offsetWidth, behavior: 'smooth' })
+    })
 
-      btnNext.addEventListener("click", () => {
-        currentIndex = (currentIndex + 1) % cards.length;
-        updateCarousel();
-      });
-      btnPrev.addEventListener("click", () => {
-        currentIndex = (currentIndex - 1 + cards.length) % cards.length;
-        updateCarousel();
-      });
+    // Atualiza visual de cada card conforme posição centralizada
+    function updateCarousel() {
+      const centerX = container.scrollLeft + container.offsetWidth / 2
 
-      setInterval(() => {
-        if (!document.activeElement.closest("#carousel")) {
-          currentIndex = (currentIndex + 1) % cards.length;
-          updateCarousel();
+      cards.forEach(card => {
+        const cardCenter = card.offsetLeft + card.offsetWidth / 2
+        const distance = Math.abs(centerX - cardCenter)
+
+        if (distance < card.offsetWidth / 2) {
+          card.style.transform = 'scale(1)'
+          card.style.filter = 'blur(0px)'
+          card.style.opacity = '1'
+        } else {
+          card.style.transform = 'scale(0.8)'
+          card.style.filter = 'blur(3px)'
+          card.style.opacity = '0.5'
         }
-      }, 10000);
+      })
+    }
 
-      updateCarousel();
-    });
-  </script>
+    // Dispara a atualização no scroll e no load
+    container.addEventListener('scroll', updateCarousel)
+    window.addEventListener('load', updateCarousel)
+
+    // Auto-scroll a cada 10s
+    setInterval(() => {
+      container.scrollBy({ left: container.offsetWidth, behavior: 'smooth' })
+    }, 10000)
+  })
+</script>
 </body>
 </html>
