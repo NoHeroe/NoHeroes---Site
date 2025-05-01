@@ -144,20 +144,54 @@
       </div>
     </section>
 
-<section id="lenda-roar" class="relative py-16 px-8 max-w-5xl mx-auto text-center bg-gradient-to-b from-[#1c1c1c] to-black rounded-lg shadow-md">
+<section id="lenda-roar" x-data="{ open: null }" class="relative py-16 px-8 max-w-5xl mx-auto text-center bg-gradient-to-b from-[#1c1c1c] to-black rounded-lg shadow-md">
   <h2 class="text-3xl font-bold text-[#8f4fff] mb-6">A Lenda de ROAR</h2>
-  <p class="italic text-lg text-gray-300 mb-4">“novo texto”</p>
+  <p class="italic text-lg text-gray-300 mb-4">“No Heroes: ROAR (Rebirth of Order and Relentless Spirit) é uma obra de dark fantasy épica que mergulha o leitor em um mundo em ruínas, onde a magia pulsa nas entrelinhas da existência e cada escolha ecoa além da carne. Criada por No Heroe, ROAR é um grito de resistência, um lamento e uma esperança rasgada no tecido do caos.”</p>
   <p class="text-base leading-relaxed text-[#ccc]">
-    novo texto 
+    <!-- Introdução cativante aparece completa -->
+    No Heroes: ROAR (Rebirth of Order and Relentless Spirit) ecoa como um chamado sombrio em um continente à beira do colapso, onde cada batalha revela tanto a força quanto a vulnerabilidade da alma humana.
     <br><br>
-    novo texto
+    <!-- Títulos que abrem modals -->
+    <button @click="open = 'mundo'" class="underline hover:text-[#8f4fff]">1. Um mundo em colapso</button>
     <br><br>
-   novo texto
+    <button @click="open = 'conflito'" class="underline hover:text-[#8f4fff]">2. O coração do conflito</button>
     <br><br>
-    novo texto  
+    <button @click="open = 'diferenciais'" class="underline hover:text-[#8f4fff]">3. O que torna ROAR único</button>
     <br><br>
-novo texto
-  </p>
+    <button @click="open = 'estetica'" class="underline hover:text-[#8f4fff]">4. Estética e inspiração</button>
+  </p>  <!-- Modal: Um mundo em colapso -->  <div x-show="open === 'mundo'" @click.away="open = null" x-transition class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-lg text-left">
+      <h3 class="text-2xl font-bold text-[#8f4fff] mb-4">Um mundo em colapso</h3>
+      <p class="text-[#ccc] leading-relaxed">
+        Caelum, um continente outrora equilibrado pelas energias vital, positiva e negativa, afunda na decadência. Clãs que mantinham a ordem se esfacelam em intrigas e traições, enquanto dragões e demônios assombram céus e sombras. A magia, antes fonte de luz, hoje alimenta o caos.
+      </p>
+      <button @click="open = null" class="mt-4 px-4 py-2 bg-[#8f4fff] rounded-md">Fechar</button>
+    </div>
+  </div>  <!-- Modal: O coração do conflito -->  <div x-show="open === 'conflito'" @click.away="open = null" x-transition class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-lg text-left">
+      <h3 class="text-2xl font-bold text-[#8f4fff] mb-4">O coração do conflito</h3>
+      <p class="text-[#ccc] leading-relaxed">
+        Entre a utopia fragmentada de Kaleidos e o autoritarismo de Aeon, emerge uma ameaça mais profunda: o desequilíbrio das próprias verdades. ROAR revela que o maior inimigo talvez resida não só fora, mas dentro de cada um — na dúvida, no medo e na traição silenciosa.
+      </p>
+      <button @click="open = null" class="mt-4 px-4 py-2 bg-[#8f4fff] rounded-md">Fechar</button>
+    </div>
+  </div>  <!-- Modal: O que torna ROAR único -->  <div x-show="open === 'diferenciais'" @click.away="open = null" x-transition class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-lg text-left">
+      <h3 class="text-2xl font-bold text-[#8f4fff] mb-4">O que torna ROAR único</h3>
+      <p class="text-[#ccc] leading-relaxed">
+        ROAR une a brutalidade de batalhas épicas à sensibilidade do espírito humano. Seu sistema mágico transforma emoções em poder real, e cada clã traz raízes inspiradas em culturas ancestrais. É uma fantasia viva, onde lendas dracônicas e mitos antigos se entrelaçam a traumas pessoais.
+      </p>
+      <button @click="open = null" class="mt-4 px-4 py-2 bg-[#8f4fff] rounded-md">Fechar</button>
+    </div>
+  </div>  <!-- Modal: Estética e inspiração -->  <div x-show="open === 'estetica'" @click.away="open = null" x-transition class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-lg text-left">
+      <h3 class="text-2xl font-bold text-[#8f4fff] mb-4">Estética e inspiração</h3>
+      <p class="text-[#ccc] leading-relaxed">
+        Com toques de Berserk, Fullmetal Alchemist e ambientação soulslike, ROAR adota um visual ritualístico e intenso. Suas batalhas testam não só o corpo, mas a alma, e a narrativa não entrega respostas fáceis — cada vitória deixa cicatrizes e perguntas sem resposta.
+      </p>
+      <button @click="open = null" class="mt-4 px-4 py-2 bg-[#8f4fff] rounded-md">Fechar</button>
+    </div>
+  </div>
 </section>
 
 <!-- 7.5 Evento Caótico -->
