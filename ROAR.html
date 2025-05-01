@@ -343,6 +343,48 @@ ScrollReveal().reveal('#lenda-roar', {
   easing: 'ease-in-out',
   reset: false
 });
+<script>
+  const carousel = document.getElementById("carousel");
+  const cards = document.querySelectorAll(".carousel-card");
+  const btnPrev = document.getElementById("prev");
+  const btnNext = document.getElementById("next");
+
+  let currentIndex = 0;
+
+  // Função para atualizar o carrossel
+  function updateCarousel() {
+    cards.forEach((card, index) => {
+      const offset = index - currentIndex;
+      card.style.transform = `translateX(${offset * 110}%)`;
+      card.style.opacity = offset === 0 ? 1 : 0.5;
+      card.style.filter = offset === 0 ? "none" : "blur(3px)";
+      card.style.transform += offset === 0 ? " scale(1)" : " scale(0.8)";
+    });
+  }
+
+  // Clique no botão "Próximo"
+  btnNext.addEventListener("click", () => {
+    currentIndex = (currentIndex + 1) % cards.length;
+    updateCarousel();
+  });
+
+  // Clique no botão "Anterior"
+  btnPrev.addEventListener("click", () => {
+    currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+    updateCarousel();
+  });
+
+  // Rolagem automática
+  setInterval(() => {
+    if (!document.activeElement.closest("#carousel")) {
+      currentIndex = (currentIndex + 1) % cards.length;
+      updateCarousel();
+    }
+  }, 10000); // A cada 10 segundos
+
+  // Inicializar o carrossel
+  updateCarousel();
+</script>
   </script>
 </body>
 </html>
