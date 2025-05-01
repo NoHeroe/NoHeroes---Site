@@ -11,69 +11,74 @@
     rel="stylesheet"/>
 <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <script src="https://unpkg.com/scrollreveal"></script>
-  <style>
   /* Estilos gerais */
-  body { 
-    font-family: 'Inter', sans-serif; 
-    background: #0a0a0a; 
-    color: #e5e5e5; 
-  }
-  h1, h2, h3 { 
-    font-family: 'Playfair Display', serif; 
-  }
-  html { 
-    scroll-behavior: smooth; 
-  }
-  .overlay { 
-    position: absolute; 
-    inset: 0; 
-    background: rgba(0, 0, 0, 0.6); 
-  }
-  .accordion-body { 
-    display: none; 
-  }
+body { 
+  font-family: 'Inter', sans-serif; 
+  background: #0a0a0a; 
+  color: #e5e5e5; 
+}
+h1, h2, h3 { 
+  font-family: 'Playfair Display', serif; 
+}
+html { 
+  scroll-behavior: smooth; 
+}
+.overlay { 
+  position: absolute; 
+  inset: 0; 
+  background: rgba(0, 0, 0, 0.6); 
+}
+.accordion-body { 
+  display: none; 
+}
 
-  /* Estilos do carrossel */
-  .carousel-card {
-    flex: 0 0 80%; /* O card central ocupa 80% da largura */
-    max-width: 300px;
-    text-align: center;
-    transition: transform 0.5s ease, opacity 0.5s ease;
-  }
-  .carousel-card img.character-img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 8px;
-  }
-  .carousel-card h3.character-title {
-    font-size: 1.25rem;
-    font-weight: bold;
-    margin: 0.5rem 0;
-  }
-  .carousel-card p.character-description {
-    font-size: 0.875rem;
-    color: #ccc;
-  }
-  .carousel-card:not(:first-child):not(:last-child) {
-    opacity: 0.5;
-    filter: blur(3px);
-    transform: scale(0.8);
-  }
+/* Carrossel */
+.carousel-container {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+}
+.carousel-track {
+  display: flex;
+  gap: 1rem;
+}
+.carousel-card {
+  scroll-snap-align: center;
+  flex: 0 0 80%;
+  max-width: 300px;
+  text-align: center;
+  transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
+}
+.carousel-card img.character-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.carousel-card h3.character-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin: 0.5rem 0;
+}
+.carousel-card p.character-description {
+  font-size: 0.875rem;
+  color: #ccc;
+}
 
-  /* Botões do carrossel */
-  #prev, #next {
-    z-index: 10; /* Garante que os botões fiquem acima do carrossel */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  #prev:hover, #next:hover {
-    background-color: #6c3cc9; /* Cor mais escura ao passar o mouse */
-  }
-</style>
+/* Botões do carrossel */
+#prev, #next {
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+#prev:hover, #next:hover {
+  background-color: #6c3cc9;
+}
 </head>
 <body class="leading-relaxed">
 
