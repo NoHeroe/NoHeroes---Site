@@ -433,27 +433,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnPrev   = document.getElementById('prev');
   const btnNext   = document.getElementById('next');
   
-  // gap em pixels entre cards (vindo do CSS)
+  // pega o gap em pixels definido no CSS
   const style    = getComputedStyle(track);
   const gap      = parseInt(style.getPropertyValue('gap')) || 0;
   
   let currentIndex = 0;
   const cardWidth = cards[0].offsetWidth + gap;
 
-  // Reposiciona o track e marca classes
+  // Reposiciona o track e aplica classes
   function updateCarousel() {
-    // desliza o track
+    // move todo o conjunto
     track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
 
-    // limpa e reatribui classes
+    // aplica estado active/adjacent
     cards.forEach((card, i) => {
-      card.classList.remove('active','adjacent');
-      // central
+      card.classList.remove('active', 'adjacent');
       if (i === currentIndex) {
         card.classList.add('active');
-      }
-      // adjacentes
-      else if (
+      } else if (
         i === (currentIndex + 1) % cards.length ||
         i === (currentIndex - 1 + cards.length) % cards.length
       ) {
@@ -462,19 +459,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Próximo / Anterior
+  // avançar
   btnNext.addEventListener('click', () => {
     currentIndex = (currentIndex + 1) % cards.length;
     updateCarousel();
   });
+
+  // retroceder
   btnPrev.addEventListener('click', () => {
     currentIndex = (currentIndex - 1 + cards.length) % cards.length;
     updateCarousel();
   });
-btnNext.addEventListener(…);
-  btnPrev.addEventListener(…);
 
-  // **inicialização**
+  // chamada inicial para posicionar tudo
   updateCarousel();
 });
 </script>
