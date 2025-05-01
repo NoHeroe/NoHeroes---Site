@@ -1,5 +1,12 @@
 {
   "posts": [
+{
+      "id": "2025-04-30-patch-0-0-7",
+      "date": "30/04/2025",
+      "category": "Atualizações",
+      "title": "Patch 0.0.7 — Página Home",
+      "content": "<p>O restante das alterações da página home foram concluídas. Com isso a entrada da página é a primeira página Completa, faltando apenas imagens e animações.</p>"
+    },
     {
       "id": "2025-04-30-patch-0-0-6",
       "date": "30/04/2025",
