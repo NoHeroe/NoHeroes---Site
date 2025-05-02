@@ -364,127 +364,170 @@ Vitalista misterioso com poderes do sangue e da luz. Ator dos bastidores, guardi
   updateCarousel();
 </script>
 
-    <!-- Universo & Ambientação Section --><section id="universo" class="py-16 px-6 bg-[#0a0a0a] text-[#e5e5e5]">
-  <div class="max-w-5xl mx-auto space-y-8">
-    <!-- Title & Subtitle -->
-    <div class="text-center">
-      <h2 class="text-4xl font-bold text-[#8f4fff]">Universo & Ambientação</h2>
-      <p class="mt-2 text-lg italic text-[#ccc]">
-        “Caelum não é um mundo. É um campo de guerra entre monstros, memórias e ambições.”
-      </p>
-    </div><!-- Map Image -->
-<div class="w-full">
-  <img src="assets/images/caelum-map.jpg" alt="Mapa de Caelum" class="w-full rounded-lg shadow-lg" />
-</div>
-
-<!-- Introduction Text -->
-<div class="prose prose-invert mx-auto max-w-3xl">
-  <p><em>Em ROAR, o mundo não é apenas cenário — ele é um personagem.</em><br>
-  Caelum é um continente forjado por guerras, criaturas colossais e segredos enterrados. Aqui, magia não é fantasia, é maldição ou redenção. Humanos sobrevivem entre muralhas, ruínas e fé quebrada.</p>
-  <p>Este é o solo onde Azuos desperta, marcado, caçado e escolhido para algo que ele ainda não entende.</p>
-  <p><strong>Bem-vindo a Caelum.</strong> Onde cada nome carrega uma maldição. E cada passo… um destino.</p>
-</div>
-
-<!-- Tabs / Buttons -->
-<div class="flex justify-center gap-4 flex-wrap">
-  <button data-tab="nacoes" class="tab-btn px-4 py-2 bg-[#1c1c1c] rounded-lg hover:bg-[#2a2a2a] transition">Nações, Clãs & Facções</button>
-  <button data-tab="magia" class="tab-btn px-4 py-2 bg-[#1c1c1c] rounded-lg hover:bg-[#2a2a2a] transition">Magia & Regras</button>
-  <button data-tab="mitos" class="tab-btn px-4 py-2 bg-[#1c1c1c] rounded-lg hover:bg-[#2a2a2a] transition">Mitos & Lendas</button>
-  <button data-tab="magitec" class="tab-btn px-4 py-2 bg-[#1c1c1c] rounded-lg hover:bg-[#2a2a2a] transition">Magitecnologia</button>
-</div>
-
-<!-- Tab Contents -->
-<div id="tab-contents" class="mt-8 space-y-12">
-  <!-- Nações, Clãs & Facções -->
-  <div id="nacoes" class="tab-content">
-    <h3 class="text-2xl font-semibold text-[#8f4fff] mb-4">Nações</h3>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div class="bg-[#111] p-6 rounded-lg shadow-md">
-        <h4 class="font-bold">Aeon — Teocracia totalitária</h4>
-        <p class="mt-2 text-[#ccc]"><em>Uma nação que diz servir aos deuses, mas age como se fosse um.</em><br>
-        Ordens são decretos divinos. Rebeliões são pecados. Com arquitetura monumental e templos que rasgam o céu, Aeon doutrina o mundo com luz — e aço.</p>
-        <img src="assets/images/aeon-cathedral.jpg" alt="Catedral de Aeon" class="mt-4 rounded" />
-      </div>
-      <div class="bg-[#111] p-6 rounded-lg shadow-md">
-        <h4 class="font-bold">Kaleidos — Democracia rebelde</h4>
-        <p class="mt-2 text-[#ccc]"><em>Fragmentada, multicultural, e por isso, perigosa.</em><br>
-        Aqui, cada bairro é uma cultura. Cada praça, uma ideologia. Unidos pela liberdade e pelo ódio à tirania de Aeon.</p>
-        <img src="assets/images/kaleidos-city.jpg" alt="Cidadela de Kaleidos" class="mt-4 rounded" />
-      </div>
-    </div>
-    <h3 class="text-2xl font-semibold text-[#8f4fff] mt-8 mb-4">Clãs Principais</h3>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <!-- Repeat similar for each clan -->
-      <div class="bg-[#111] p-6 rounded-lg shadow-md">
-        <h4 class="font-bold">Clã da Lua</h4>
-        <p class="mt-2 text-[#ccc]"><em>Espiões. Silêncio. Vingança.</em><br>
-        Escondem-se entre sombras e máscaras. Inspirados na honra oriental e nos ventos do Japão antigo, são assassinos poéticos. O inimigo só percebe que errou... quando sente a lâmina.</p>
-        <img src="assets/images/clan-lua.jpg" alt="Clã da Lua" class="mt-4 rounded" />
-      </div>
-      <!-- Additional clan cards... -->
-    </div>
-    <h3 class="text-2xl font-semibold text-[#8f4fff] mt-8 mb-4">Facções Alternativas</h3>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div class="bg-[#111] p-6 rounded-lg shadow-md">
-        <h4 class="font-bold">Culto do Vazio</h4>
-        <p class="mt-2 text-[#ccc]"><em>Silêncio. Corrupção. Eternidade.</em><br>
-        Não desejam reinos. Desejam o fim das nações. Alimentam dragões com dor, criam demônios com rituais esquecidos. Crescem nas rachaduras do mundo — e agora, preparam-se para abri-las.</p>
-        <img src="assets/images/culto-vazio.jpg" alt="Culto do Vazio" class="mt-4 rounded" />
-      </div>
-      <!-- Guilda de Aventureiros card -->
-    </div>
+    <!-- === UNIVERSO & AMBIENTAÇÃO === -->
+<section id="universo" class="py-16 px-6 bg-[#111] rounded-lg">
+  <h2 class="text-3xl text-[#8f4fff] font-bold mb-4">Universo & Ambientação</h2>
+  <p class="italic mb-6 text-gray-400">
+    “Caelum não é um mundo. É um campo de guerra entre monstros, memórias e ambições.”
+  </p>
+  <!-- Mapa de fundo -->
+  <div class="mb-8">
+    <img src="assets/images/caelum-map.jpg" alt="Mapa de Caelum"
+         class="w-full rounded-lg shadow-lg"/>
   </div>
 
-  <!-- Magia & Regras -->
-  <div id="magia" class="tab-content hidden">
-    <h3 class="text-2xl font-semibold text-[#8f4fff] mb-4">Sistema de Magia & Regras</h3>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div class="bg-[#111] p-6 rounded-lg shadow-md">
-        <h4 class="font-bold">Fontes de Energia</h4>
-        <ul class="list-disc list-inside mt-2 text-[#ccc]">
-          <li><strong>Vital:</strong> Energia da vida. Até 90% mana básica; 91%+ desencadeia Vitalistas.</li>
-          <li><strong>Positiva:</strong> Luz que cura e gera seres celestiais.</li>
-          <li><strong>Negativa:</strong> Destruição que alimenta demônios e dragões.</li>
-        </ul>
-      </div>
-      <div class="bg-[#111] p-6 rounded-lg shadow-md">
-        <h4 class="font-bold">Usuários & Regras</h4>
-        <ul class="list-disc list-inside mt-2 text-[#ccc]">
-          <li><strong>Inertes:</strong> Sem conexão.</li>
-          <li><strong>Magos:</strong> Conjuram feitiços com mana e artefatos.</li>
-          <li><strong>Vitalistas:</strong> Libertam sua essência e absorvem habilidades.</li>
-        </ul>
-        <p class="mt-4 text-[#ccc]"><em>Regras:</em>
+  <!-- Botões de aba -->
+  <div id="uni-tabs" class="flex flex-wrap gap-4 mb-8">
+    <button data-tab="tab-nações"
+            class="uni-tab-btn px-4 py-2 bg-[#222] hover:bg-[#333] text-white rounded"
+            aria-selected="true">
+      Nações, Clãs & Facções
+    </button>
+    <button data-tab="tab-magia"
+            class="uni-tab-btn px-4 py-2 bg-[#222] hover:bg-[#333] text-white rounded"
+            aria-selected="false">
+      Magia & Regras
+    </button>
+    <button data-tab="tab-mitos"
+            class="uni-tab-btn px-4 py-2 bg-[#222] hover:bg-[#333] text-white rounded"
+            aria-selected="false">
+      Mitos & Lendas
+    </button>
+    <button data-tab="tab-tech"
+            class="uni-tab-btn px-4 py-2 bg-[#222] hover:bg-[#333] text-white rounded"
+            aria-selected="false">
+      Magitecnologia
+    </button>
+  </div>
 
-1. Só magia negra mexe com vida e morte.
+  <!-- Conteúdos das abas -->
+  <div id="uni-content">
+    <!-- 1. Nações, Clãs & Facções -->
+    <div id="tab-nações" class="uni-panel">
+      <h3 class="text-2xl font-semibold text-[#8f4fff] mb-4">Nações, Clãs & Facções</h3>
+      <p class="mb-6 text-[#ccc]">“O equilíbrio entre as nações é mantido por quatro clãs. Mas o fio da paz está se partindo.”</p>
+      <h4 class="font-bold text-lg text-[#39ff14] mt-4">Aeon</h4>
+      <p class="mb-4 text-[#ddd]">
+        <em>Teocracia totalitária.</em> “Uma nação que diz servir aos deuses, mas age como se fosse um.”
+      </p>
+      <h4 class="font-bold text-lg text-[#8f4fff]">Kaleidos</h4>
+      <p class="mb-6 text-[#ddd]">
+        <em>Democracia rebelde.</em> “Fragmentada, multicultural, unida pela liberdade e pelo ódio à tirania de Aeon.”
+      </p>
+      <h4 class="font-bold text-lg text-[#fuchsia]">Clã da Lua</h4>
+      <p class="mb-4 text-[#ddd]">
+        “Espiões poéticos, inspirados no Japão antigo. A lâmina só se revela quando a vítima já está caindo.”
+      </p>
+      <h4 class="font-bold text-lg text-[#goldenrod]">Clã do Sol</h4>
+      <p class="mb-4 text-[#ddd]">
+        “Guardião do saber arcano e do deserto – vestes douradas, obeliscos e magos que dominam o vento.”
+      </p>
+      <h4 class="font-bold text-lg text-[#lime]">Clã das Feras</h4>
+      <p class="mb-4 text-[#ddd]">
+        “Druidas xamânicos em simbiose com a natureza – peles de guerra, totens e metamorfoses colossais.”
+      </p>
+      <h4 class="font-bold text-lg text-[#cyan]">Clã das Runas</h4>
+      <p class="mb-6 text-[#ddd]">
+        “Antigos imperiais reduzidos a clã – seu poder rúnico ainda molda a própria realidade.”
+      </p>
+      <h4 class="font-bold text-lg text-[#ff4757]">Culto do Vazio</h4>
+      <p class="mb-4 text-[#ddd]">
+        “Mestres da corrupção – alimentam dragões e demônios para rasgar fendas na alma do mundo.”
+      </p>
+      <h4 class="font-bold text-lg text-[#1e90ff]">Guilda de Aventureiros</h4>
+      <p class="text-[#ddd]">
+        “Sobreviventes de todas as cores – heróis, ladrões e mercenários unidos pelo ouro.”
+      </p>
+    </div>
 
+    <!-- 2. Sistema de Magia & Regras -->
+    <div id="tab-magia" class="uni-panel hidden">
+      <h3 class="text-2xl font-semibold text-[#8f4fff] mb-4">Sistema de Magia & Regras</h3>
+      <p class="mb-4 text-[#ddd]">“Aqui, poder não é privilégio. É herança, fardo... ou ruína.”</p>
+      <h4 class="font-bold">Fontes de Energia</h4>
+      <ul class="list-disc list-inside mb-4 text-[#ccc]">
+        <li><strong>Vital:</strong> energia da vida. Até 90% = magia. ≥91% = Vitalista.</li>
+        <li><strong>Positiva:</strong> luz que cura e gera anjos.</li>
+        <li><strong>Negativa:</strong> dor que convoca demônios e dragões.</li>
+      </ul>
+      <h4 class="font-bold">Tipos de Usuários</h4>
+      <ul class="list-disc list-inside mb-4 text-[#ccc]">
+        <li><strong>Inertes:</strong> sem poderes.</li>
+        <li><strong>Magos:</strong> fórmulas, manas e artefatos.</li>
+        <li><strong>Vitalistas:</strong> liberam a essência e absorvem outras habilidades.</li>
+      </ul>
+      <h4 class="font-bold">Regras do Mundo</h4>
+      <ol class="list-decimal list-inside text-[#ccc]">
+        <li>Só magia negra mexe com vida e morte.</li>
+        <li>Vitalistas superam magos comuns.</li>
+        <li>Magia exige preparo; vitalismo, impulso.</li>
+        <li>Criar vida é impossível.</li>
+        <li>Dragões, demônios e anjos são exceções natas.</li>
+      </ol>
+      <p class="mt-4 italic text-gray-400">“A pergunta não é o que você faz com o poder... mas o que ele fará com você.”</p>
+    </div>
 
-2. Magia exige fórmulas; vitalismo, impulso.
+    <!-- 3. Mitos & Lendas -->
+    <div id="tab-mitos" class="uni-panel hidden">
+      <h3 class="text-2xl font-semibold text-[#8f4fff] mb-4">Mitos & Lendas de Caelum</h3>
+      <p class="mb-4 text-[#ddd]">“Os mitos sustentam o que a razão não explica. E alguns... estão vivos.”</p>
+      <ul class="space-y-4 text-[#ccc]">
+        <li>
+          <strong>Oni Vagante:</strong> espadachim mascarado imortal – nunca caiu ante a morte.
+        </li>
+        <li>
+          <strong>O Bom Dragão:</strong> oráculo alado, só se revela a almas puras.
+        </li>
+        <li>
+          <strong>Dragões Barões Anciãos:</strong> criaram forma humana ao devorarem a dor.
+        </li>
+        <li>
+          <strong>Valdaryon:</strong> draconianos escondidos sob o solo, guardiões do passado.
+        </li>
+        <li>
+          <strong>Floresta Negra (Viva):</strong> selva consciente que devora tudo em seu caminho.
+        </li>
+      </ul>
+    </div>
 
-
-3. Criar vida é impossível.
-
-
-4. Dragões, demônios e anjos são exceções.
-
-
-5. Todo feitiço consome mana; todo rugido consome alma.
-
-
-6. Demônios renascem sem memórias.</p> </div> </div> <p class="mt-6 italic text-center text-[#ccc]">“A pergunta não é o que você pode fazer com poder... mas o que ele vai fazer com você.”</p>
-
-   </div>   <!-- Mitos & Lendas -->   <div id="mitos" class="tab-content hidden">
-     <h3 class="text-2xl font-semibold text-[#8f4fff] mb-4">Mitos & Lendas</h3>
-     <div class="space-y-6">
-       <div>
-         <h4 class="font-bold">Oni Vagante</h4>
-         <p class="text-[#ccc]"><em>Um espadachim mascarado. Imortal. Nunca vencido.</em></p>
-       </div>
-       <!-- Other myths similarly -->
-     </div>
-   </div>   <!-- Magitecnologia -->   <div id="magitec" class="tab-content hidden">
-     <h3 class
+    <!-- 4. Magitecnologia -->
+    <div id="tab-tech" class="uni-panel hidden">
+      <h3 class="text-2xl font-semibold text-[#8f4fff] mb-4">Magitecnologia</h3>
+      <p class="mb-4 text-[#ddd]">“Ciência não morreu. Ela apenas foi devorada pela magia.”</p>
+      <ul class="list-disc list-inside text-[#ccc]">
+        <li>Armas encantadas</li>
+        <li>Zepelins flutuantes</li>
+        <li>Montarias vivas de mana</li>
+        <li>Portais interdimensionais</li>
+        <li>Relógios rúnicos que entortam o tempo</li>
+      </ul>
+      <p class="mt-6 italic text-gray-400">
+        “Caelum não quer heróis. Só almas fortes o bastante para sobreviver a ele.”
+      </p>
+    </div>
+  </div>
 </section>
+
+<!-- === FIM DO BLOCO UNIVERSO === -->
+
+<!-- === JS PARA CONTROLE DE ABAS === -->
+<script>
+  document.querySelectorAll('#uni-tabs .uni-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Atualiza atributos aria-selected e classes
+      document.querySelectorAll('#uni-tabs .uni-tab-btn').forEach(b => {
+        b.setAttribute('aria-selected','false');
+      });
+      btn.setAttribute('aria-selected','true');
+
+      // Mostra o painel correto
+      const target = btn.getAttribute('data-tab');
+      document.querySelectorAll('.uni-panel').forEach(panel => {
+        panel.classList.toggle('hidden', panel.id !== target);
+      });
+    });
+  });
+</script>
 
 
     <!-- 6. Linha do Tempo -->
