@@ -1,167 +1,214 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>FREQ — Frequency Reality Quest</title>
+  <!-- Tailwind + Fontes -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
+  <!-- ScrollReveal -->
   <script src="https://unpkg.com/scrollreveal"></script>
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0a0a0a;
-      color: #e5e5e5;
-    }
-    h1, h2 {
-      font-family: 'Playfair Display', serif;
-    }
-    html {
-      scroll-behavior: smooth;
-    }
+    body { font-family:'Inter',sans-serif; background:#1a1a1a; color:#e5e5e5; }
+    h1,h2,h3 { font-family:'Playfair Display',serif; }
+    html { scroll-behavior:smooth; }
+    .overlay { position:absolute; inset:0; background:rgba(0,0,0,0.6); }
+    .hidden { display:none; }
   </style>
 </head>
 <body class="leading-relaxed">
 
   <!-- NAVBAR -->
-  <header class="fixed top-0 left-0 w-full bg-[#0f1a14] border-b border-[#2e2e2e] z-50 px-8 py-4 flex justify-between items-center">
-    <div class="text-[#39ff14] text-2xl font-bold uppercase tracking-wide"> FREQ</div>
-    <!-- Botão de Menu para Mobile -->
-    <button id="mobile-menu-button" class="md:hidden text-[#39ff14] focus:outline-none">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-      </svg>
-    </button>
-    <!-- Links de Navegação -->
-    <nav>
-      <ul id="mobile-menu" class="hidden md:flex space-x-6 text-sm flex-col md:flex-row md:items-center">
-        <li><a href="#sobre" class="hover:text-[#39ff14]">Sobre</a></li>
-        <li><a href="#personagens" class="hover:text-[#39ff14]">Personagens</a></li>
-        <li><a href="#mundo" class="hover:text-[#39ff14]">Terra</a></li>
-        <li><a href="#faccoes" class="hover:text-[#39ff14]">Facções</a></li>
-        <li><a href="#vitalismo" class="hover:text-[#39ff14]">Tribo</a></li>
-        <li><a href="#evento" class="hover:text-[#39ff14]">Evento</a></li>
-        <li><a href="#explorar" class="hover:text-[#39ff14]">Explorar</a></li>
-      </ul>
+  <header class="fixed top-0 left-0 w-full bg-[#222] border-b border-[#333] z-50 px-6 py-4 flex justify-between items-center">
+    <div class="text-[#39ff14] text-2xl font-bold uppercase">FREQ</div>
+    <nav class="hidden md:flex space-x-6 text-sm">
+      <a href="#hero"           class="hover:text-[#39ff14]">Início</a>
+      <a href="#sinopse"        class="hover:text-[#39ff14]">Sinopse</a>
+      <a href="#trailer"        class="hover:text-[#39ff14]">Trailer</a>
+      <a href="#personagens"    class="hover:text-[#39ff14]">Personagens</a>
+      <a href="#universo"       class="hover:text-[#39ff14]">Terra</a>
+      <a href="#faccoes"        class="hover:text-[#39ff14]">Facções</a>
+      <a href="#tribo-real"     class="hover:text-[#39ff14]">Tribo Real</a>
+      <a href="#timeline"       class="hover:text-[#39ff14]">Linha-Tempo</a>
+      <a href="#bastidores"     class="hover:text-[#39ff14]">Bastidores</a>
+      <a href="#lenda"          class="hover:text-[#39ff14]">Lenda</a>
+      <a href="#equipe"         class="hover:text-[#39ff14]">Criador</a>
+      <a href="#cta"            class="hover:text-[#39ff14]">Apoiar</a>
     </nav>
+    <button id="mobile-menu-button" class="md:hidden text-[#39ff14]">☰</button>
   </header>
 
-  <!-- Título Principal -->
-  <section id="titulo-principal" class="text-center bg-[#0a0a0a] text-[#39ff14] pt-28 pb-8">
-    <h1 class="text-4xl font-bold"> FREQ — Frequency Reality Quest</h1>
+  <!-- HERO -->
+  <section id="hero" class="relative h-screen bg-cover bg-center" style="background-image:url('assets/images/freq-hero.jpg')">
+    <div class="overlay"></div>
+    <div class="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
+      <h1 class="text-4xl md:text-6xl text-[#39ff14] font-bold mb-4">
+        FREQ<br>
+        <span class="text-2xl text-[#bbbbbb]">Frequency Reality Quest</span>
+      </h1>
+      <p class="text-lg md:text-2xl italic mb-8 text-[#bbbbbb]">
+        “🔲 INSERIR TEASER CURTO…”
+      </p>
+      <a href="#sinopse" class="bg-[#39ff14] text-black px-6 py-3 rounded-lg hover:opacity-90 transition">
+        Leia a Sinopse
+      </a>
+      <div class="mt-12 animate-bounce text-[#39ff14]">↓</div>
+    </div>
   </section>
 
-  <!-- MAIN CONTENT -->
-  <main class="pt-28 px-6 max-w-5xl mx-auto space-y-24">
-    <!-- Sobre a Obra -->
-    <section id="sobre">
-      <h2 class="text-3xl font-bold text-[#39ff14] mb-4">Sobre a Obra</h2>
-      <p class="text-lg italic mb-4">“Num mundo onde magia é tabu e o vício é norma, um jovem desperta uma força esquecida — e inicia uma guerra contra tudo que o mantém adormecido.”</p>
-      <p class="text-base">FREQ é uma fantasia urbana com tons de sci-fi, espiritualidade e crítica social. Ryu, filho de Azuos, é lançado na Terra sem memórias e sem rumo. Crescendo em um mundo decadente, desconectado de suas raízes, ele precisa despertar sua verdadeira essência e reconectar dois mundos prestes a ruir.</p>
+  <main class="pt-32 space-y-24 px-6 max-w-5xl mx-auto">
+
+    <!-- 1. SINOPSE -->
+    <section id="sinopse">
+      <h2 class="text-3xl font-bold text-[#39ff14] mb-4">Sinopse</h2>
+      <p class="text-lg italic text-[#bbbbbb] mb-4">
+        “🔲 INSERIR SINOPSE CINEMATOGRÁFICA…”
+      </p>
+      <p class="text-base text-[#ccc]">
+        🔲 INSERIR DESCRIÇÃO RESUMIDA…
+      </p>
     </section>
 
-    <!-- Personagens -->
+    <!-- 2. TRAILER -->
+    <section id="trailer" class="text-center">
+      <h2 class="text-3xl font-bold text-[#39ff14] mb-4">Trailer & Prévia</h2>
+      <div class="max-w-4xl mx-auto">
+        <!-- vídeo ou placeholder -->
+        <div class="bg-[#333] h-48 flex items-center justify-center text-[#777]">
+          🔲 VIDEO / TEASER AQUI
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. PERSONAGENS -->
     <section id="personagens">
       <h2 class="text-3xl font-bold text-[#39ff14] mb-4">Personagens Principais</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="p-6 bg-[#1c1c1c] border border-[#333] rounded-lg shadow-md transition hover:scale-105">
-          <strong>Ryu:</strong> Vitalista da Frequência. Perdido entre realidades, busca sua mãe e seu verdadeiro poder.
-        </div>
-        <div class="p-6 bg-[#1c1c1c] border border-[#333] rounded-lg shadow-md transition hover:scale-105">
-          <strong>Francisco:</strong> Mestre oculto da Tribo. Mistura sabedoria ancestral com técnicas modernas de sobrevivência.
-        </div>
-        <div class="p-6 bg-[#1c1c1c] border border-[#333] rounded-lg shadow-md transition hover:scale-105">
-          <strong>Bruno:</strong> Vitalista do tempo. Acelera processos de cura e evolução. Mentor relutante.
-        </div>
-        <div class="p-6 bg-[#1c1c1c] border border-[#333] rounded-lg shadow-md transition hover:scale-105">
-          <strong>Yohan:</strong> Ritualista e curandeiro. Domina cerimônias antigas de restauração vital.
-        </div>
-        <div class="p-6 bg-[#1c1c1c] border border-[#333] rounded-lg shadow-md transition hover:scale-105">
-          <strong>Luiz:</strong> Mago da ciência. Traduz magia para lógica e tecnologia.
-        </div>
-        <div class="p-6 bg-[#1c1c1c] border border-[#333] rounded-lg shadow-md transition hover:scale-105">
-          <strong>Gabriel (Sr. Egg):</strong> Guia espiritual. Enxerga a frequência além do visível.
-        </div>
+        <div class="p-6 bg-[#222] border border-[#333] rounded-lg">🔲 Ryu –Descrição mínima…</div>
+        <div class="p-6 bg-[#222] border border-[#333] rounded-lg">🔲 Francisco –…</div>
+        <div class="p-6 bg-[#222] border border-[#333] rounded-lg">🔲 Bruno –…</div>
+        <div class="p-6 bg-[#222] border border-[#333] rounded-lg">🔲 Yohan –…</div>
+        <div class="p-6 bg-[#222] border border-[#333] rounded-lg">🔲 Luiz –…</div>
+        <div class="p-6 bg-[#222] border border-[#333] rounded-lg">🔲 Gabriel –…</div>
       </div>
     </section>
 
-    <!-- Terra: O Mundo de FREQ -->
-    <section id="mundo">
-      <h2 class="text-3xl font-bold text-[#39ff14] mb-8">Terra: O Mundo de FREQ</h2>
-      <div class="space-y-4">
-        <div class="p-6 bg-[#1c1c1c] border border-[#333] rounded-lg">
-          <p><strong>Brasil, 2034:</strong> Reflexo sombrio da humanidade: natureza exuberante em ruínas urbanas. Florestas e biomas preservados contrastam com cidades em colapso. Saúde mental, espiritual e física da população em decadência.</p>
-          <p><strong>Tecnologia:</strong> Avançada mas desestruturada. IA, robôs e realidade aumentada são comuns, mas não resolvem o vazio existencial.</p>
-          <p><strong>Magia:</strong> Existe, mas foi esquecida. Vitalistas são vistos como lunáticos. Magia natural sufocada por vícios, poluição e desconexão.</p>
-        </div>
+    <!-- 4. UNIVERSO (TERRA) -->
+    <section id="universo">
+      <h2 class="text-3xl font-bold text-[#39ff14] mb-4">Terra: O Mundo de FREQ</h2>
+      <div class="p-6 bg-[#222] border border-[#333] rounded-lg space-y-3 text-[#ccc]">
+        🔲 INSERIR PÁRAGRAFOS SOBRE AMBIENTAÇÃO…
       </div>
     </section>
 
-    <!-- Facções & Oposição -->
+    <!-- 5. FACÇÕES & OPOSIÇÃO -->
     <section id="faccoes">
-      <h2 class="text-3xl font-bold text-[#39ff14] mb-8">Facções & Oposição</h2>
-      <div class="space-y-4">
-        <div class="p-6 bg-[#1c1c1c] border border-[#333] rounded-lg">
-          <h3 class="text-2xl font-bold mb-4">O Sistema</h3>
-          <p>Controla tudo: mídia, tecnologia, finanças, comunicação. Elimina divergências, suprime a espiritualidade, usa IA e robôs para manter a ordem e apaga o livre-arbítrio, mascarando-se de progresso.</p>
+      <h2 class="text-3xl font-bold text-[#39ff14] mb-4">Facções & Oposição</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-6 bg-[#222] border border-[#333] rounded-lg">
+          <h3 class="font-bold mb-2">O Sistema</h3>
+          🔲 DESCRIÇÃO…
         </div>
-        <div class="p-6 bg-[#1c1c1c] border border-[#333] rounded-lg">
-          <h3 class="text-2xl font-bold mb-4">A Tribo</h3>
-          <p>Ordem descentralizada que vive segundo ensinamentos ancestrais. Conectada à natureza, espiritualidade e frequência vital. Resiste ao sistema com sabedoria prática, rituais e arte.</p>
+        <div class="p-6 bg-[#222] border border-[#333] rounded-lg">
+          <h3 class="font-bold mb-2">A Tribo</h3>
+          🔲 DESCRIÇÃO…
         </div>
       </div>
     </section>
 
-    <!-- Tribo Real -->
-    <section id="vitalismo">
+    <!-- 6. TRIBO REAL -->
+    <section id="tribo-real">
       <h2 class="text-3xl font-bold text-[#39ff14] mb-4">Tribo Real</h2>
-      <p>A história se baseia em uma comunidade real que compartilha o mesmo propósito de reconexão com a natureza, espiritualidade e frequência vital. Essa tribo está esperando por você para se juntar a ela e caminhar em direção a um propósito maior.</p>
+      <p class="text-[#ccc]">
+        🔲 INSERIR BREVE EXPLICAÇÃO…
+      </p>
     </section>
 
-    <!-- Evento Dimensional -->
-    <section id="evento">
-      <h2 class="text-3xl font-bold text-[#39ff14] mb-4">Evento Dimensional</h2>
-      <p class="italic mb-2">“Quando o colapso dimensional rasgou os céus, Caelum e Terra deixaram de ser apenas mundos distantes.”</p>
-      <p>Portais abriram-se. Demônios atravessaram. Ryu caiu na Terra. A magia adoeceu. E um novo ciclo começou.</p>
-      <a href="ROAR.html" class="inline-block mt-4 bg-[#39ff14] px-4 py-2 rounded text-black font-semibold">Entenda o Outro Lado →</a>
+    <!-- 7. LINHA DO TEMPO -->
+    <section id="timeline">
+      <h2 class="text-3xl font-bold text-[#39ff14] mb-4">Linha do Tempo</h2>
+      <div class="overflow-x-auto">
+        <ul class="flex space-x-8">
+          <li class="min-w-[200px]"><div class="font-bold">Ato I</div><div class="text-[#ccc]">Título I</div></li>
+          <li class="min-w-[200px]"><div class="font-bold">Ato II</div><div class="text-[#ccc]">Título II</div></li>
+          <li class="min-w-[200px]"><div class="font-bold">Ato III</div><div class="text-[#ccc]">Título III</div></li>
+          <li class="min-w-[200px]"><div class="font-bold">Ato IV</div><div class="text-[#ccc]">Título IV</div></li>
+          <li class="min-w-[200px]"><div class="font-bold">Ato V</div><div class="text-[#ccc]">Título V</div></li>
+        </ul>
+      </div>
     </section>
 
-    <!-- Explorar o Universo -->
-    <section id="explorar">
-      <h2 class="text-3xl font-bold text-[#39ff14] mb-4">Explorar o Universo</h2>
-      <ul class="space-y-2">
-        <li><a href="ROAR.html" class="underline hover:text-[#39ff14]">Página ROAR</a></li>
-        <li><a href="index.html" class="underline hover:text-[#39ff14]">Universo Geral (NoHeroes)</a></li>
-        <li><a href="#" class="underline hover:text-[#39ff14]">Loja & Produtos (em breve)</a></li>
-        <li><a href="#" class="underline hover:text-[#39ff14]">Mentorias & Cursos</a></li>
+    <!-- 8. BASTIDORES -->
+    <section id="bastidores">
+      <h2 class="text-3xl font-bold text-[#39ff14] mb-4">Bastidores & Processo Criativo</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-[#222] h-32 flex items-center justify-center text-[#777]">🔲 IMG1</div>
+        <div class="bg-[#222] h-32 flex items-center justify-center text-[#777]">🔲 IMG2</div>
+        <div class="bg-[#222] h-32 flex items-center justify-center text-[#777]">🔲 IMG3</div>
+      </div>
+    </section>
+
+    <!-- 9. LENDA -->
+    <section id="lenda">
+      <h2 class="text-3xl font-bold text-[#39ff14] mb-4">Mitos & Lendas</h2>
+      <ul class="space-y-4 text-[#ccc]">
+        <li>🔲 Oni Vagante</li>
+        <li>🔲 O Bom Dragão</li>
+        <li>🔲 Dragões Barões Anciãos</li>
+        <li>🔲 Valdaryon</li>
+        <li>🔲 Floresta Negra</li>
       </ul>
     </section>
+
+    <!-- 10. EQUIPE / CRIADOR -->
+    <section id="equipe" class="text-center">
+      <h2 class="text-3xl font-bold text-[#39ff14] mb-2">Criado por NoHeroe</h2>
+      <p class="text-[#bbbbbb] mb-4">Raul Souza Silva — o primeiro brasileiro produzindo um anime original.</p>
+      <a href="sobre.html" class="underline hover:text-[#39ff14]">Saiba mais →</a>
+    </section>
+
+    <!-- 11. CTA / APOIO -->
+    <section id="cta" class="text-center bg-[#222] p-8 rounded-lg">
+      <h2 class="text-3xl font-bold text-[#39ff14] mb-4">Quer apoiar?</h2>
+      <div class="flex flex-col md:flex-row justify-center gap-4">
+        <a href="apoiar.html" class="px-6 py-3 bg-[#39ff14] text-black rounded">Seja Patrono</a>
+        <a href="#" class="px-6 py-3 border border-[#39ff14] rounded hover:bg-[#39ff14]">Newsletter</a>
+      </div>
+    </section>
+
+    <!-- 12. DEPOIMENTOS (oculto) -->
+    <section id="depoimentos" class="hidden text-center">
+      <h2 class="text-3xl font-bold text-[#39ff14] mb-2">Reações da Comunidade</h2>
+      <p class="text-[#bbbbbb]">Em breve!</p>
+    </section>
+
   </main>
 
-  <!-- Rodapé -->
-  <footer class="text-center py-8 text-sm text-[#777] mt-24 border-t border-[#333]">
-    <p>&copy; 2025 NoHeroes. Todos os direitos reservados.</p>
-    <p class="italic">Explore. Escolha. Caia. Evolua.</p>
+  <!-- RODAPÉ -->
+  <footer class="py-8 text-center text-sm text-[#777] mt-16 border-t border-[#333]">
+    <nav class="space-x-4 mb-4">
+      <a href="#hero" class="hover:text-[#39ff14]">Topo</a>
+      <a href="freq.html" class="hover:text-[#39ff14]">FREQ</a>
+      <a href="ROAR.html" class="hover:text-[#39ff14]">ROAR</a>
+      <a href="contato.html" class="hover:text-[#39ff14]">Contato</a>
+    </nav>
+    <p>© 2025 NoHeroes. Explore. Escolha. Caia. Evolua.</p>
   </footer>
 
-  <!-- ScrollReveal Config -->
+  <!-- SCRIPTS -->
   <script>
-    // ScrollReveal Configuração
-    ScrollReveal().reveal('section', { 
-      delay: 200, 
-      duration: 1000, 
-      origin: 'bottom', 
-      distance: '50px', 
-      reset: true
+    // ScrollReveal
+    ScrollReveal().reveal('section', {
+      delay:200, duration:1000, origin:'bottom', distance:'50px', reset:true
     });
-
-    // Mobile Menu Toggle
-    document.getElementById('mobile-menu-button').addEventListener('click', function () {
-      const menu = document.getElementById('mobile-menu');
-      menu.classList.toggle('hidden'); // Adiciona ou remove a classe "hidden"
-      menu.classList.toggle('flex');  // Garante que o menu seja exibido como flex no mobile
-    });
+    // Mobile menu
+    document.getElementById('mobile-menu-button')
+      .addEventListener('click',()=> {
+        const m = document.getElementById('mobile-menu');
+        m.classList.toggle('hidden');
+        m.classList.toggle('flex');
+      });
   </script>
 </body>
 </html>
