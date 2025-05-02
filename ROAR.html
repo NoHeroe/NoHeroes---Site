@@ -130,10 +130,22 @@
 </head>
 <body class="leading-relaxed">
 
-  <!-- NAVBAR -->
-  <header class="fixed top-0 left-0 w-full bg-[#100d1a] border-b border-[#2e2e2e] z-50 px-8 py-4 flex justify-between items-center">
+  <!-- NAVBAR (substitua seu header inteiro por este) -->
+  <header x-data="{ open: false }"
+          class="fixed top-0 left-0 w-full bg-[#100d1a] border-b border-[#2e2e2e] z-50 px-4 py-3 flex justify-between items-center">
+    <!-- Logo / Título -->
     <div class="text-[#8f4fff] text-2xl font-bold uppercase">ROAR</div>
-    <nav class="hidden md:flex space-x-6">
+
+    <!-- Botão Mobile -->
+    <button @click="open = !open"
+            class="md:hidden text-2xl text-[#8f4fff] focus:outline-none">
+      <span x-show="!open">☰</span>
+      <span x-show="open">✕</span>
+    </button>
+
+    <!-- Menu (desktop + mobile) -->
+    <nav :class="open ? 'flex flex-col space-y-4 mt-3 bg-[#100d1a] p-4 rounded-lg shadow-lg absolute top-full left-0 w-full md:static md:flex md:flex-row md:space-y-0 md:space-x-6 md:bg-transparent md:p-0 md:shadow-none' 
+                      : 'hidden md:flex md:space-x-6'">
       <a href="#lenda-roar" class="hover:text-[#8f4fff]">Sobre</a>
       <a href="#personagens" class="hover:text-[#8f4fff]">Personagens</a>
       <a href="#universo" class="hover:text-[#8f4fff]">Mundo</a>
@@ -141,7 +153,6 @@
       <a href="#bastidores" class="hover:text-[#8f4fff]">Bastidores</a>
       <a href="#cta" class="hover:text-[#8f4fff]">Apoiar</a>
     </nav>
-    <button id="mobile-menu-button" class="md:hidden text-2xl text-[#8f4fff]">☰</button>
   </header>
 
   <!-- Hero Section -->
