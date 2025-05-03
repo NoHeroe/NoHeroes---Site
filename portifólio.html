@@ -30,17 +30,22 @@ h1, h2, h3 {
   </section>
 
   <!-- SOBRE MIM -->
-  <section class="py-20 px-6 max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center">
-    <div>
-      <h2 class="text-3xl font-semibold mb-4">Sobre Mim</h2>
-      <p class="text-lg leading-relaxed">
-        Criador de histórias e desenvolvedor independente. De narrativas à identidade visual, trago vida a projetos com estilo único, trazendo peso e presença.
-      </p>
-    </div>
-    <div class="flex justify-center">
-      <img src="/caminho-da-sua-foto.jpg" alt="Foto de Raul" class="w-64 h-64 rounded-lg shadow-lg object-cover">
-    </div>
-  </section>
+  <section class="relative bg-black text-white py-20 px-6 flex flex-col md:flex-row items-center justify-between max-w-7xl mx-auto">
+  <!-- TEXTO -->
+  <div class="md:w-1/2 z-10">
+    <h1 class="text-6xl font-bold mb-4 leading-tight">RAUL</h1>
+    <h2 class="text-2xl italic mb-6">Criador Digital & Freelancer</h2>
+    <p class="text-lg max-w-md">
+      Criador de histórias, roteirista, artista digital e desenvolvedor de páginas.<br>
+      “Misturo criatividade com tecnologia pra entregar sites e conteúdos únicos.”
+    </p>
+  </div>
+
+  <!-- IMAGEM DE FUNDO À DIREITA -->
+  <div class="absolute right-0 top-0 w-full md:w-1/2 h-full opacity-40 md:opacity-100">
+    <img src="/imgs/raul-hooded.png" alt="Ilustração Raul" class="w-full h-full object-cover object-right" />
+  </div>
+</section>
 
   <!-- SERVIÇOS -->
   <section class="bg-gray-900 py-20 px-6">
