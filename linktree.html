@@ -26,6 +26,13 @@
     .shadow-pulse {
       box-shadow: 0 0 20px rgba(57, 255, 20, 0.3);
     }
+    .glow-gold {
+  animation: pulseGold 2s infinite;
+}
+@keyframes pulseGold {
+  0%, 100% { filter: drop-shadow(0 0 6px #facc15); }
+  50% { filter: drop-shadow(0 0 15px #facc15); }
+}
   </style>
 </head>
 <body class="text-center py-12 px-4">
@@ -49,6 +56,9 @@
     </a>
     <a href="FREQ.html" class="block bg-[#1c1c1c] px-6 py-3 rounded-lg shadow-pulse hover:bg-[#39ff14] hover:text-black transition">
       Projeto FREQ
+    </a>
+    <a href="portifolio.html" class="block bg-black px-6 py-3 rounded-lg text-yellow-400 font-semibold border border-yellow-500 shadow-lg hover:bg-yellow-400 hover:text-black transition glow-gold">
+  Ver Portfólio Profissional
     </a>
     <a href="#" class="block bg-[#1c1c1c] px-6 py-3 rounded-lg opacity-40 cursor-not-allowed" title="Disponível em breve">
       Mentorias e Bastidores (em breve)
