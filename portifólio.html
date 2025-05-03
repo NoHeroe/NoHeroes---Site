@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="pt-br"><head>
+<!DOCTYPE html><html lang="pt-br">
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RAUL | Criador Digital & Freelancer</title>
@@ -12,6 +13,26 @@
     }
     h1, h2, h3 {
       font-family: 'EB Garamond', serif;
+    }
+    .modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0,0,0,0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .modal-content {
+      background-color: #1a1a1a;
+      padding: 2rem;
+      max-width: 800px;
+      width: 100%;
+      border-radius: 0.5rem;
+      box-shadow: 0 0 20px #a855f7;
+    }
+    .modal.active {
+      display: flex;
     }
   </style>
 </head>
@@ -39,53 +60,41 @@
     <div class="flex justify-center">
       <img src="/imgs/foto-raul.jpg" alt="Foto de Raul" class="w-64 h-64 rounded-lg shadow-lg object-cover">
     </div>
-  </section>  <div class="border-t border-purple-500 shadow-[0_0_8px_#a855f7] my-12"></div>  <!-- SERVIÇOS -->  <section class="bg-gray-900 py-20 px-6">
+  </section>  <div class="border-t border-purple-500 shadow-[0_0_8px_#a855f7] my-12"></div>  <!-- SERVIÇOS COM MODAIS -->  <section class="bg-gray-900 py-20 px-6">
     <h2 class="text-3xl font-semibold text-center mb-12">Serviços</h2>
     <div class="grid md:grid-cols-4 gap-10 max-w-6xl mx-auto">
-      <div class="bg-black border border-gray-700 rounded-lg p-6 text-center shadow-md">
+      <div onclick="openModal('modal-web')" class="cursor-pointer bg-black border border-gray-700 rounded-lg p-6 text-center shadow-md hover:shadow-purple-500/40 transition">
         <img src="/assets/images/webdesign.jpg" alt="Web Design" class="w-full h-40 object-cover rounded mb-4">
         <h3 class="text-xl font-bold mb-2">Web Design</h3>
-        <p class="mb-4">Criação de websites sob medida, funcionais e com presença visual.</p>
-        <a href="/webdesign.html" class="inline-block px-4 py-2 rounded bg-purple-600 text-white hover:bg-purple-500 transition">Ver projetos</a>
+        <p>Criação de websites sob medida, funcionais e com identidade visual marcante.</p>
       </div>
-      <div class="bg-black border border-gray-700 rounded-lg p-6 text-center shadow-md">
+      <div onclick="openModal('modal-escrita')" class="cursor-pointer bg-black border border-gray-700 rounded-lg p-6 text-center shadow-md hover:shadow-purple-500/40 transition">
         <img src="/assets/images/feather.jpg" alt="Escrita" class="w-full h-40 object-cover rounded mb-4">
         <h3 class="text-xl font-bold mb-2">Escrita</h3>
-        <p class="mb-4">Roteiros, storytelling e conteúdo criativo para vídeos ou projetos.</p>
-        <a href="/escrita.html" class="inline-block px-4 py-2 rounded bg-purple-600 text-white hover:bg-purple-500 transition">Ler amostras</a>
+        <p>Roteiros e storytelling para projetos audiovisuais ou autorais.</p>
       </div>
-      <div class="bg-black border border-gray-700 rounded-lg p-6 text-center shadow-md">
+      <div onclick="openModal('modal-arte')" class="cursor-pointer bg-black border border-gray-700 rounded-lg p-6 text-center shadow-md hover:shadow-purple-500/40 transition">
         <img src="/assets/images/arte.jpg" alt="Arte Digital" class="w-full h-40 object-cover rounded mb-4">
         <h3 class="text-xl font-bold mb-2">Arte Digital</h3>
-        <p class="mb-4">Ilustrações, logos, concept art e character design personalizados.</p>
-        <a href="/arte.html" class="inline-block px-4 py-2 rounded bg-purple-600 text-white hover:bg-purple-500 transition">Ver ilustrações</a>
+        <p>Ilustrações, logos, concept art e character design personalizados.</p>
       </div>
-      <div class="bg-black border border-gray-700 rounded-lg p-6 text-center shadow-md">
+      <div onclick="openModal('modal-consultoria')" class="cursor-pointer bg-black border border-gray-700 rounded-lg p-6 text-center shadow-md hover:shadow-purple-500/40 transition">
         <img src="/assets/images/consultoria.jpg" alt="Consultoria Criativa" class="w-full h-40 object-cover rounded mb-4">
-        <h3 class="text-xl font-bold mb-2">Consultoria Criativa</h3>
-        <p class="mb-4">Aconselhamento em identidade visual, branding e estrutura de conteúdo.</p>
-        <a href="/consultoria.html" class="inline-block px-4 py-2 rounded bg-purple-600 text-white hover:bg-purple-500 transition">Saiba mais</a>
+        <h3 class="text-xl font-bold mb-2">Consultoria</h3>
+        <p>Estratégias criativas para identidade e narrativa visual.</p>
       </div>
     </div>
   </section>  <div class="border-t border-purple-500 shadow-[0_0_8px_#a855f7] my-12"></div>  <!-- PROJETOS -->  <section class="py-20 px-6 max-w-6xl mx-auto">
     <h2 class="text-3xl font-semibold text-center mb-12">Projetos</h2>
     <div class="grid md:grid-cols-2 gap-10">
-      <div class="bg-cover bg-center rounded-lg h-64 flex items-end p-6 text-white relative" style="background-image: url('/imgs/roar.jpg');">
+      <a href="/roar.html" class="block bg-cover bg-center rounded-lg h-64 flex items-end p-6 text-white relative hover:opacity-90 transition" style="background-image: url('/imgs/roar.jpg');">
         <div class="bg-black bg-opacity-50 w-full h-full absolute top-0 left-0 rounded-lg"></div>
         <h3 class="text-2xl font-bold relative z-10">ROAR</h3>
-      </div>
-      <div class="bg-cover bg-center rounded-lg h-64 flex items-end p-6 text-white relative" style="background-image: url('/imgs/noheroes.jpg');">
+      </a>
+      <a href="/noheroes.html" class="block bg-cover bg-center rounded-lg h-64 flex items-end p-6 text-white relative hover:opacity-90 transition" style="background-image: url('/imgs/noheroes.jpg');">
         <div class="bg-black bg-opacity-50 w-full h-full absolute top-0 left-0 rounded-lg"></div>
         <h3 class="text-2xl font-bold relative z-10">NOHEROES</h3>
-      </div>
-      <div class="bg-cover bg-center rounded-lg h-64 flex items-end p-6 text-white relative" style="background-image: url('/imgs/freq.jpg');">
-        <div class="bg-black bg-opacity-50 w-full h-full absolute top-0 left-0 rounded-lg"></div>
-        <h3 class="text-2xl font-bold relative z-10">FREQ</h3>
-      </div>
-      <div class="bg-cover bg-center rounded-lg h-64 flex items-end p-6 text-white relative" style="background-image: url('/imgs/azuos.jpg');">
-        <div class="bg-black bg-opacity-50 w-full h-full absolute top-0 left-0 rounded-lg"></div>
-        <h3 class="text-2xl font-bold relative z-10">AZUOS</h3>
-      </div>
+      </a>
     </div>
   </section>  <footer class="bg-gray-950 py-10 mt-20 text-center text-gray-400 text-sm">
     <p class="mb-2">© 2025 Raul – Todos os direitos reservados.</p>
@@ -96,6 +105,15 @@
       <a href="https://github.com/seuusuario" target="_blank" class="hover:underline">GitHub</a>
       <a href="https://www.linkedin.com/in/seuusuario" target="_blank" class="hover:underline">LinkedIn</a>
     </div>
-  </footer>
-</body>
+  </footer>  <!-- MODAIS (EXEMPLOS) -->  <div id="modal-web" class="modal"><div class="modal-content"><h2 class="text-2xl font-bold mb-4">Web Design</h2><p>Conteúdo detalhado sobre projetos de web design vai aqui.</p><button onclick="closeModal('modal-web')" class="mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Fechar</button></div></div>
+  <div id="modal-escrita" class="modal"><div class="modal-content"><h2 class="text-2xl font-bold mb-4">Escrita</h2><p>Conteúdo sobre roteiros e storytelling aqui.</p><button onclick="closeModal('modal-escrita')" class="mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Fechar</button></div></div>
+  <div id="modal-arte" class="modal"><div class="modal-content"><h2 class="text-2xl font-bold mb-4">Arte Digital</h2><p>Galeria ou descrição de artes digitais.</p><button onclick="closeModal('modal-arte')" class="mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Fechar</button></div></div>
+  <div id="modal-consultoria" class="modal"><div class="modal-content"><h2 class="text-2xl font-bold mb-4">Consultoria Criativa</h2><p>Explicação sobre serviço de consultoria criativa.</p><button onclick="closeModal('modal-consultoria')" class="mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Fechar</button></div></div>  <script>
+    function openModal(id) {
+      document.getElementById(id).classList.add('active');
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+    }
+  </script></body>
 </html>
