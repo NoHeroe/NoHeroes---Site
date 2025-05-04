@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,160 +8,216 @@
   <script src="https://unpkg.com/scrollreveal"></script>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    /* tipografia e fundo */
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #0a0a0a;
-      color: #e5e5e5;
-    }
-    h1, h2, h3 {
-      font-family: 'EB Garamond', serif;
-    }/* estilo base dos modais */
-.modal {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(0,0,0,0.8);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-.modal.active {
-  display: flex;
-}
-.modal-content {
-  background: linear-gradient(135deg, #2e003e, #0a0014);
-  padding: 2rem;
-  max-width: 800px;
-  width: 90%;
-  border-radius: 0.5rem;
-  box-shadow: 0 0 20px #a855f7;
-  color: #e5e5e5;
-  position: relative;
-}
-
-/* grelha de mini-thumbnails */
-.project-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px,1fr));
-  gap: 0.75rem;
-  margin: 1rem 0;
-}
-.project-grid img {
-  width: 100%;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition: transform .2s;
-}
-.project-grid img:hover { transform: scale(1.05); }
-
-/* carrossel interno */
-.carousel {
-  position: relative;
-  overflow: hidden;
-  margin-top: 1rem;
-}
-.slide { display: none; }
-.carousel img {
-  width: 100%;
-  border-radius: .5rem;
-}
-.carousel button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0,0,0,0.6);
-  border: none;
-  padding: .5rem;
-  border-radius: 9999px;
-  cursor: pointer;
-  color: white;
-  font-size: 1.25rem;
-  line-height: 1;
-}
-.carousel .prev { left: .5rem; }
-.carousel .next { right: .5rem; }
-
+    body { font-family:'Inter',sans-serif; background:#0a0a0a; color:#e5e5e5; }
+    h1,h2,h3 { font-family:'EB Garamond',serif; }
+    .modal { position:fixed; inset:0; background:rgba(0,0,0,0.8); display:none; align-items:center; justify-content:center; z-index:1000; }
+    .modal.active { display:flex; }
+    .modal-content { background:linear-gradient(135deg,#2e003e,#0a0014); padding:2rem; max-width:800px; width:90%; border-radius:.5rem; box-shadow:0 0 20px #a855f7; color:#e5e5e5; position:relative; }
+    .project-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(100px,1fr)); gap:.75rem; margin:1rem 0; }
+    .project-grid img { width:100%; border-radius:.5rem; cursor:pointer; transition:transform .2s; }
+    .project-grid img:hover { transform:scale(1.05); }
+    .carousel { position:relative; overflow:hidden; margin-top:1rem; }
+    .slide { display:none; }
+    .carousel img { width:100%; border-radius:.5rem; }
+    .carousel button { position:absolute; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.6); border:none; padding:.5rem; border-radius:9999px; cursor:pointer; color:#fff; font-size:1.25rem; }
+    .carousel .prev { left:.5rem; } .carousel .next { right:.5rem; }
   </style>
 </head>
-<body class="bg-black text-white">  <!-- HERO SECTION COM DEGRADÊ -->  <section class="relative py-20 px-6 max-w-7xl mx-auto overflow-hidden">
+<body class="bg-black text-white">
+
+  <!-- HERO -->
+  <section class="relative py-20 px-6 max-w-7xl mx-auto overflow-hidden">
     <div class="absolute inset-0">
-      <img src="/assets/images/raulhero.jpg" alt="Imagem Raul" class="w-full h-full object-cover object-right opacity-40 md:opacity-100" />
+      <img src="/assets/images/raulhero.jpg" class="w-full h-full object-cover opacity-40 md:opacity-100">
       <div class="absolute inset-0 bg-gradient-to-l from-black via-black/70 to-transparent"></div>
     </div>
     <div class="relative z-10 md:w-1/2">
-      <h1 class="text-6xl font-bold mb-4 leading-tight">RAUL</h1>
+      <h1 class="text-6xl font-bold mb-4">RAUL</h1>
       <h2 class="text-2xl italic mb-6">Criador Digital & Freelancer</h2>
       <p class="text-lg max-w-md">
         Criador de histórias, roteirista, artista digital e desenvolvedor de páginas.<br>
         “Misturo criatividade com tecnologia pra entregar sites e conteúdos únicos.”
       </p>
     </div>
-  </section>  <div class="border-t border-purple-500 shadow-[0_0_8px_#a855f7] my-12"></div>  <!-- SOBRE MIM -->  <section class="py-20 px-6 max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+  </section>
+
+  <div class="border-t border-purple-500 shadow-md my-12"></div>
+
+  <!-- SOBRE MIM -->
+  <section class="py-20 px-6 max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center">
     <div>
       <h2 class="text-3xl font-semibold mb-4">Sobre Mim</h2>
       <p class="text-lg leading-relaxed">
-        Criador de histórias e desenvolvedor independente. De narrativas à identidade visual, 
+        Criador de histórias e desenvolvedor independente. De narrativas à identidade visual,
         trago vida a projetos com estilo único, trazendo peso e presença.
       </p>
     </div>
     <div class="flex justify-center">
-      <img src="/imgs/foto-raul.jpg" alt="Foto de Raul" 
-           class="w-64 h-64 rounded-lg border border-purple-600 shadow-[0_0_16px_#a855f7] object-cover">
+      <img src="/imgs/foto-raul.jpg" class="w-64 h-64 rounded-lg border border-purple-600 shadow-lg object-cover">
     </div>
-  </section>  <div class="border-t border-purple-500 shadow-[0_0_8px_#a855f7] my-12"></div>  <!-- SERVIÇOS COM ANIMAÇÃO -->  <section class="bg-gray-900 py-20 px-6">
+  </section>
+
+  <div class="border-t border-purple-500 shadow-md my-12"></div>
+
+  <!-- SERVIÇOS -->
+  <section class="bg-gray-900 py-20 px-6">
     <h2 class="text-3xl font-semibold text-center mb-12">Serviços</h2>
     <div class="grid md:grid-cols-5 gap-10 max-w-6xl mx-auto">
-      <!-- serviço Web Design -->
-      <div class="servico bg-black border border-gray-700 rounded-lg p-6 text-center shadow-md hover:shadow-purple-500/40 transition cursor-pointer"
-           onclick="openModal('modal-web')">
-        <img src="/assets/images/webdesign.jpg" class="w-full h-40 object-cover rounded mb-4">
-        <h3 class="text-xl font-bold mb-2">Web Design</h3>
-        <p>Criação de websites com presença visual marcante.</p>
+      <div class="servico cursor-pointer" onclick="openModal('modal-web')">
+        <img src="/assets/images/webdesign.jpg" class="w-full h-40 rounded mb-4">
+        <h3 class="text-xl font-bold">Web Design</h3>
       </div>
-      <!-- serviço Escrita -->
-      <div class="servico bg-black border border-gray-700 rounded-lg p-6 text-center shadow-md hover:shadow-purple-500/40 transition cursor-pointer"
-           onclick="openModal('modal-escrita')">
-        <img src="/assets/images/feather.jpg" class="w-full h-40 object-cover rounded mb-4">
-        <h3 class="text-xl font-bold mb-2">Escrita</h3>
-        <p>Storytelling, roteiros e narrativas impactantes.</p>
+      <div class="servico cursor-pointer" onclick="openModal('modal-escrita')">
+        <img src="/assets/images/feather.jpg" class="w-full h-40 rounded mb-4">
+        <h3 class="text-xl font-bold">Escrita</h3>
       </div>
-      <!-- serviço Arte Digital -->
-      <div class="servico bg-black border border-gray-700 rounded-lg p-6 text-center shadow-md hover:shadow-purple-500/40 transition cursor-pointer"
-           onclick="openModal('modal-arte')">
-        <img src="/assets/images/arte.jpg" class="w-full h-40 object-cover rounded mb-4">
-        <h3 class="text-xl font-bold mb-2">Arte Digital</h3>
-        <p>Concept arts, ilustrações e design de personagens.</p>
+      <div class="servico cursor-pointer" onclick="openModal('modal-arte')">
+        <img src="/assets/images/arte.jpg" class="w-full h-40 rounded mb-4">
+        <h3 class="text-xl font-bold">Arte Digital</h3>
       </div>
-      <!-- serviço Consultoria -->
-      <div class="servico bg-black border border-gray-700 rounded-lg p-6 text-center shadow-md hover:shadow-purple-500/40 transition cursor-pointer"
-           onclick="openModal('modal-consultoria')">
-        <img src="/assets/images/consultoria.jpg" class="w-full h-40 object-cover rounded mb-4">
-        <h3 class="text-xl font-bold mb-2">Consultoria</h3>
-        <p>Branding e identidade criativa para seu projeto.</p>
+      <div class="servico cursor-pointer" onclick="openModal('modal-consultoria')">
+        <img src="/assets/images/consultoria.jpg" class="w-full h-40 rounded mb-4">
+        <h3 class="text-xl font-bold">Consultoria</h3>
       </div>
-      <!-- serviço Desenvolvimento -->
-      <div class="servico bg-black border border-gray-700 rounded-lg p-6 text-center shadow-md hover:shadow-purple-500/40 transition cursor-pointer"
-           onclick="openModal('modal-projetos')">
-        <img src="/assets/images/projetos.jpg" class="w-full h-40 object-cover rounded mb-4">
-        <h3 class="text-xl font-bold mb-2">Desenvolvimento</h3>
-        <p>Planejamento e execução de projetos criativos do zero.</p>
+      <div class="servico cursor-pointer" onclick="openModal('modal-projetos')">
+        <img src="/assets/images/projetos.jpg" class="w-full h-40 rounded mb-4">
+        <h3 class="text-xl font-bold">Desenvolvimento</h3>
       </div>
     </div>
-  </section>  <div class="border-t border-purple-500 shadow-[0_0_8px_#a855f7] my-12"></div>  <!-- MODAIS PRINCIPAIS (grid de miniaturas) -->  <div id="modal-web" class="modal">
+  </section>
+
+  <div class="border-t border-purple-500 shadow-md my-12"></div>
+
+  <!-- PROJETOS -->
+  <section class="py-20 px-6 max-w-6xl mx-auto">
+    <h2 class="text-3xl font-semibold text-center mb-12">Projetos</h2>
+    <div class="grid md:grid-cols-2 gap-10">
+      <a href="/ROAR.html" class="block bg-cover rounded-lg h-64 relative hover:scale-105 transition-transform" style="background-image:url('/assets/images/roar.jpg')">
+        <div class="absolute inset-0 bg-black bg-opacity-50 rounded-lg"></div>
+        <h3 class="relative z-10 text-2xl font-bold text-white p-6">ROAR</h3>
+      </a>
+      <a href="/index.html" class="block bg-cover rounded-lg h-64 relative hover:scale-105 transition-transform" style="background-image:url('/assets/images/noheroes1.jpg')">
+        <div class="absolute inset-0 bg-black bg-opacity-50 rounded-lg"></div>
+        <h3 class="relative z-10 text-2xl font-bold text-white p-6">NOHEROES</h3>
+      </a>
+    </div>
+  </section>
+
+  <div class="border-t border-purple-500 shadow-md my-12"></div>
+
+  <!-- RODAPÉ -->
+  <footer class="bg-gray-950 py-10 text-center text-gray-400 text-sm">
+    <p>© 2025 Raul – Todos os direitos reservados.</p>
+    <p class="italic">Feito com alma e propósito.</p>
+    <div class="mt-4 flex justify-center gap-6 text-white">
+      <a href="mailto:raul@email.com">Email</a>
+      <a href="https://instagram.com/_noheroe" target="_blank">Instagram</a>
+      <a href="https://github.com/seuusuario" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/in/seuusuario" target="_blank">LinkedIn</a>
+    </div>
+  </footer>
+
+  <!-- MODAIS PRINCIPAIS -->
+  <div id="modal-web" class="modal">
     <div class="modal-content">
       <h2 class="text-2xl font-bold mb-4">Web Design</h2>
       <div class="project-grid">
-        <img src="/assets/images/noheroes-thumb.jpg" alt="NoHeroes" onclick="openSubModal('modal-web-noheroes')">
-        <img src="/assets/images/site2-thumb.jpg"   alt="Projeto 2" onclick="openSubModal('modal-web-projeto2')">
+        <img src="/assets/images/noheroes-thumb.jpg" onclick="openSubModal('modal-web-noheroes')">
+        <img src="/assets/images/site2-thumb.jpg" onclick="openSubModal('modal-web-projeto2')">
       </div>
-      <button onclick="closeModal('modal-web')" class="mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Fechar</button>
+      <button onclick="closeModal('modal-web')" class="px-4 py-2 bg-purple-600 rounded">Fechar</button>
     </div>
-  </div>  <div id="modal-escrita" class="modal">
+  </div>
+
+  <div id="modal-escrita" class="modal">
     <div class="modal-content">
       <h2 class="text-2xl font-bold mb-4">Escrita & Roteiro</h2>
       <div class="project-grid">
-        <img src="/assets/images/roar-thumb.jpg" alt="ROAR" onclick="openSubModal('modal-escrita-roar')">
-        <img src="/assets/images/texto2-thumb.jpg" alt="Projeto 2" onclick="openSubModal('modal-escrita-projeto2')">
+        <img src="/assets/images/roar-thumb.jpg" onclick="openSubModal('modal-escrita-roar')">
+        <img src="/assets/images/texto2-thumb.jpg" onclick="openSubModal('modal-escrita-projeto2')">
       </div>
-      <button onclick="closeModal('modal-escrita')" class="mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-
+      <button onclick="closeModal('modal-escrita')" class="px-4 py-2 bg-purple-600 rounded">Fechar</button>
+    </div>
+  </div>
+
+  <div id="modal-arte" class="modal">
+    <div class="modal-content">
+      <h2 class="text-2xl font-bold mb-4">Arte Digital</h2>
+      <div class="project-grid">
+        <img src="/assets/images/char-thumb.jpg" onclick="openSubModal('modal-arte-char')">
+        <img src="/assets/images/art2-thumb.jpg" onclick="openSubModal('modal-arte-projeto2')">
+      </div>
+      <button onclick="closeModal('modal-arte')" class="px-4 py-2 bg-purple-600 rounded">Fechar</button>
+    </div>
+  </div>
+
+  <div id="modal-consultoria" class="modal">
+    <div class="modal-content">
+      <h2 class="text-2xl font-bold mb-4">Consultoria Criativa</h2>
+      <div class="project-grid">
+        <img src="/assets/images/brand-thumb.jpg" onclick="openSubModal('modal-consultoria-brand')">
+        <img src="/assets/images/consulta2-thumb.jpg" onclick="openSubModal('modal-consultoria-projeto2')">
+      </div>
+      <button onclick="closeModal('modal-consultoria')" class="px-4 py-2 bg-purple-600 rounded">Fechar</button>
+    </div>
+  </div>
+
+  <div id="modal-projetos" class="modal">
+    <div class="modal-content">
+      <h2 class="text-2xl font-bold mb-4">Desenvolvimento de Projetos</h2>
+      <div class="project-grid">
+        <img src="/assets/images/freq-thumb.jpg" onclick="openSubModal('modal-projetos-freq')">
+        <img src="/assets/images/proj2-thumb.jpg" onclick="openSubModal('modal-projetos-projeto2')">
+      </div>
+      <button onclick="closeModal('modal-projetos')" class="px-4 py-2 bg-purple-600 rounded">Fechar</button>
+    </div>
+  </div>
+
+  <!-- SUBMODAIS COM CARROSSEL -->
+  <div id="modal-web-noheroes" class="modal">
+    <div class="modal-content">
+      <h2 class="text-2xl font-bold mb-2">NoHeroes</h2>
+      <p>Site completo com design dark fantasy e animações interativas.</p>
+      <div class="carousel">
+        <div class="slide"><img src="/assets/images/noheroes-1.jpg"></div>
+        <div class="slide"><img src="/assets/images/noheroes-2.jpg"></div>
+        <button class="prev" onclick="changeSlide('modal-web-noheroes',-1)">‹</button>
+        <button class="next" onclick="changeSlide('modal-web-noheroes',1)">›</button>
+      </div>
+      <div class="mt-4 flex gap-2">
+        <a href="https://noheroes.vercel.app" target="_blank" class="px-4 py-2 bg-purple-600 rounded">Ver site</a>
+        <button onclick="openModal('modal-web')" class="px-4 py-2 bg-gray-700 rounded">Voltar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Outros submodais seguem o mesmo padrão... -->
+
+  <script>
+    ScrollReveal().reveal('.servico:nth-child(odd)',{origin:'left',distance:'50px',duration:1000});
+    ScrollReveal().reveal('.servico:nth-child(even)',{origin:'right',distance:'50px',duration:1000});
+
+    const slideIndices = {};
+    function openModal(id) {
+      document.querySelectorAll('.modal').forEach(m=>m.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+    }
+    function openSubModal(id) {
+      openModal(id);
+      const slides = document.querySelectorAll(`#${id} .slide`);
+      slideIndices[id] = 0;
+      slides.forEach((s,i)=> s.style.display = i===0?'block':'none');
+    }
+    function changeSlide(id,n) {
+      const slides = document.querySelectorAll(`#${id} .slide`);
+      let idx = slideIndices[id]||0;
+      idx = (idx + n + slides.length) % slides.length;
+      slideIndices[id] = idx;
+      slides.forEach((s,i)=> s.style.display = i===idx?'block':'none');
+    }
+  </script>
+</body>
+</html>
