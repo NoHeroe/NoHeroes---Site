@@ -155,7 +155,7 @@
 
     <!-- Cabeçalho fixo: título + fechar -->
     <div class="flex justify-between items-center mb-4">
-      <h2 class="text-2xl font-bold">Arte Digital</h2>
+      <h2 class="text-2xl font-bold text-purple-400">Arte Digital</h2>
       <button onclick="closeModal('modal-arte')" 
               class="px-3 py-1 bg-gray-700 rounded hover:bg-gray-600">
         Fechar
@@ -163,29 +163,31 @@
     </div>
 
     <!-- Descrição do serviço -->
-    <p class="mb-6">
-      Concept arts, ilustrações e design de personagens em estilo dark fantasy.
-      Aqui você encontra meus principais trabalhos de portfólio.
+    <p class="mb-6 text-gray-300 text-sm">
+      Ilustrações e concept arts em dark fantasy.<br>
+      Clique em qualquer imagem para ampliar.
     </p>
 
-    <!-- Grid estilo Instagram -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <!-- Imagem 1 -->
-      <img src="/assets/images/arte1.jpg" alt="Arte 1" 
-           class="w-full h-auto rounded-lg shadow-md object-cover">
-      <!-- Imagem 2 -->
-      <img src="/assets/images/arte2.jpg" alt="Arte 2" 
-           class="w-full h-auto rounded-lg shadow-md object-cover">
-      <!-- Imagem 3 -->
-      <img src="/assets/images/arte3.jpg" alt="Arte 3" 
-           class="w-full h-auto rounded-lg shadow-md object-cover">
-      <!-- Imagem 4 -->
-      <img src="/assets/images/arte4.jpg" alt="Arte 4" 
-           class="w-full h-auto rounded-lg shadow-md object-cover">
-      <!-- Adicione quantas imagens quiser seguindo o padrão acima -->
+    <!-- Galeria tipo “masonry” responsiva -->
+    <div class="columns-1 sm:columns-2 md:columns-3 gap-4 space-y-4">
+      <a href="/assets/images/arte1.jpg" onclick="event.stopPropagation(); showImageModal(this.href); return false;">
+        <img src="/assets/images/arte1.jpg" alt="Arte 1"
+             class="w-full rounded shadow-md break-inside-avoid cursor-pointer hover:opacity-90" />
+      </a>
+      <a href="/assets/images/arte2.jpg" onclick="event.stopPropagation(); showImageModal(this.href); return false;">
+        <img src="/assets/images/arte2.jpg" alt="Arte 2"
+             class="w-full rounded shadow-md break-inside-avoid cursor-pointer hover:opacity-90" />
+      </a>
+      <a href="/assets/images/arte3.jpg" onclick="event.stopPropagation(); showImageModal(this.href); return false;">
+        <img src="/assets/images/arte3.jpg" alt="Arte 3"
+             class="w-full rounded shadow-md break-inside-avoid cursor-pointer hover:opacity-90" />
+      </a>
+      <a href="/assets/images/arte4.jpg" onclick="event.stopPropagation(); showImageModal(this.href); return false;">
+        <img src="/assets/images/arte4.jpg" alt="Arte 4"
+             class="w-full rounded shadow-md break-inside-avoid cursor-pointer hover:opacity-90" />
+      </a>
+      <!-- adicione aqui mais <a><img>…</a> seguindo o mesmo padrão -->
     </div>
-
-  </div>
 </div>
 
   <div id="modal-consultoria" class="modal">
@@ -256,5 +258,16 @@
       slides.forEach((s,i)=> s.style.display = i===idx?'block':'none');
     }
   </script>
+<!-- Lightbox simples -->
+<div id="image-viewer" class="modal" onclick="this.classList.remove('active')">
+  <img id="full-image" class="max-w-3xl w-full max-h-[90vh] object-contain rounded shadow-xl" />
+</div>
+
+<script>
+  function showImageModal(src) {
+    document.getElementById('full-image').src = src;
+    document.getElementById('image-viewer').classList.add('active');
+  }
+</script>
 </body>
 </html>
