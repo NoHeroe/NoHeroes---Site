@@ -35,7 +35,7 @@
       background: linear-gradient(135deg, #2e003e, #0a0014);
       padding: 2rem;
       max-width: 800px;
-      width: 100%;
+      width: 90%;
       border-radius: 0.5rem;
       box-shadow: 0 0 20px #a855f7;
       color: #e5e5e5;
@@ -96,7 +96,10 @@
     <div class="relative z-10 md:w-1/2">
       <h1 class="text-6xl font-bold mb-4 leading-tight">RAUL</h1>
       <h2 class="text-2xl italic mb-6">Criador Digital & Freelancer</h2>
-      <p class="text-lg max-w-md">Criador de histórias, roteirista, artista digital e desenvolvedor de páginas.<br>“Misturo criatividade com tecnologia pra entregar sites e conteúdos únicos.”</p>
+      <p class="text-lg max-w-md">
+        Criador de histórias, roteirista, artista digital e desenvolvedor de páginas.<br>
+        “Misturo criatividade com tecnologia pra entregar sites e conteúdos únicos.”
+      </p>
     </div>
   </section>
 
@@ -106,10 +109,14 @@
   <section class="py-20 px-6 max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center">
     <div>
       <h2 class="text-3xl font-semibold mb-4">Sobre Mim</h2>
-      <p class="text-lg leading-relaxed">Criador de histórias e desenvolvedor independente. De narrativas à identidade visual, trago vida a projetos com estilo único, trazendo peso e presença.</p>
+      <p class="text-lg leading-relaxed">
+        Criador de histórias e desenvolvedor independente. De narrativas à identidade visual, 
+        trago vida a projetos com estilo único, trazendo peso e presença.
+      </p>
     </div>
     <div class="flex justify-center">
-      <img src="/imgs/foto-raul.jpg" alt="Foto de Raul" class="w-64 h-64 rounded-lg border border-purple-600 shadow-[0_0_16px_#a855f7] object-cover">
+      <img src="/imgs/foto-raul.jpg" alt="Foto de Raul" 
+           class="w-64 h-64 rounded-lg border border-purple-600 shadow-[0_0_16px_#a855f7] object-cover">
     </div>
   </section>
 
@@ -119,27 +126,37 @@
   <section class="bg-gray-900 py-20 px-6">
     <h2 class="text-3xl font-semibold text-center mb-12">Serviços</h2>
     <div class="grid md:grid-cols-5 gap-10 max-w-6xl mx-auto">
-      <div class="servico bg-black border border-gray-700 rounded-lg p-6 text-center shadow-md hover:shadow-purple-500/40 transition cursor-pointer" onclick="openModal('modal-web')">
+      <!-- serviço Web Design -->
+      <div class="servico bg-black border border-gray-700 rounded-lg p-6 text-center shadow-md hover:shadow-purple-500/40 transition cursor-pointer"
+           onclick="openModal('modal-web')">
         <img src="/assets/images/webdesign.jpg" class="w-full h-40 object-cover rounded mb-4">
         <h3 class="text-xl font-bold mb-2">Web Design</h3>
         <p>Criação de websites com presença visual marcante.</p>
       </div>
-      <div class="servico bg-black border border-gray-700 rounded-lg p-6 text-center shadow-md hover:shadow-purple-500/40 transition cursor-pointer" onclick="openModal('modal-escrita')">
+      <!-- serviço Escrita -->
+      <div class="servico bg-black border border-gray-700 rounded-lg p-6 text-center shadow-md hover:shadow-purple-500/40 transition cursor-pointer"
+           onclick="openModal('modal-escrita')">
         <img src="/assets/images/feather.jpg" class="w-full h-40 object-cover rounded mb-4">
         <h3 class="text-xl font-bold mb-2">Escrita</h3>
         <p>Storytelling, roteiros e narrativas impactantes.</p>
       </div>
-      <div class="servico bg-black border border-gray-700 rounded-lg p-6 text-center shadow-md hover:shadow-purple-500/40 transition cursor-pointer" onclick="openModal('modal-arte')">
+      <!-- serviço Arte Digital -->
+      <div class="servico bg-black border border-gray-700 rounded-lg p-6 text-center shadow-md hover:shadow-purple-500/40 transition cursor-pointer"
+           onclick="openModal('modal-arte')">
         <img src="/assets/images/arte.jpg" class="w-full h-40 object-cover rounded mb-4">
         <h3 class="text-xl font-bold mb-2">Arte Digital</h3>
         <p>Concept arts, ilustrações e design de personagens.</p>
       </div>
-      <div class="servico bg-black border border-gray-700 rounded-lg p-6 text-center shadow-md hover:shadow-purple-500/40 transition cursor-pointer" onclick="openModal('modal-consultoria')">
+      <!-- serviço Consultoria -->
+      <div class="servico bg-black border border-gray-700 rounded-lg p-6 text-center shadow-md hover:shadow-purple-500/40 transition cursor-pointer"
+           onclick="openModal('modal-consultoria')">
         <img src="/assets/images/consultoria.jpg" class="w-full h-40 object-cover rounded mb-4">
         <h3 class="text-xl font-bold mb-2">Consultoria</h3>
         <p>Branding e identidade criativa para seu projeto.</p>
       </div>
-      <div class="servico bg-black border border-gray-700 rounded-lg p-6 text-center shadow-md hover:shadow-purple-500/40 transition cursor-pointer" onclick="openModal('modal-projetos')">
+      <!-- serviço Desenvolvimento -->
+      <div class="servico bg-black border border-gray-700 rounded-lg p-6 text-center shadow-md hover:shadow-purple-500/40 transition cursor-pointer"
+           onclick="openModal('modal-projetos')">
         <img src="/assets/images/projetos.jpg" class="w-full h-40 object-cover rounded mb-4">
         <h3 class="text-xl font-bold mb-2">Desenvolvimento</h3>
         <p>Planejamento e execução de projetos criativos do zero.</p>
@@ -149,7 +166,7 @@
 
   <div class="border-t border-purple-500 shadow-[0_0_8px_#a855f7] my-12"></div>
 
-  <!-- PROJETOS -->
+  <!-- PROJETOS EM DESTAQUE -->
   <section class="py-20 px-6 max-w-6xl mx-auto">
     <h2 class="text-3xl font-semibold text-center mb-12">Projetos</h2>
     <div class="grid md:grid-cols-2 gap-10">
@@ -179,6 +196,8 @@
   </footer>
 
   <!-- ===== MODAIS DE 1º NÍVEL ===== -->
+
+  <!-- Web Design -->
   <div id="modal-web" class="modal">
     <div class="modal-content">
       <h2 class="text-2xl font-bold mb-4">Web Design</h2>
@@ -190,9 +209,10 @@
     </div>
   </div>
 
+  <!-- Escrita -->
   <div id="modal-escrita" class="modal">
     <div class="modal-content">
-      <h2 class="text-2xl font-bold mb-4">Escrita</h2>
+      <h2 class="text-2xl font-bold mb-4">Escrita & Roteiro</h2>
       <div class="project-grid">
         <img src="/assets/images/roar-thumb.jpg" alt="ROAR" onclick="openSubModal('modal-escrita-roar')">
         <img src="/assets/images/texto2-thumb.jpg" alt="Projeto 2" onclick="openSubModal('modal-escrita-projeto2')">
@@ -201,6 +221,7 @@
     </div>
   </div>
 
+  <!-- Arte Digital -->
   <div id="modal-arte" class="modal">
     <div class="modal-content">
       <h2 class="text-2xl font-bold mb-4">Arte Digital</h2>
@@ -212,6 +233,7 @@
     </div>
   </div>
 
+  <!-- Consultoria Criativa -->
   <div id="modal-consultoria" class="modal">
     <div class="modal-content">
       <h2 class="text-2xl font-bold mb-4">Consultoria Criativa</h2>
@@ -223,9 +245,10 @@
     </div>
   </div>
 
+  <!-- Desenvolvimento de Projetos -->
   <div id="modal-projetos" class="modal">
     <div class="modal-content">
-      <h2 class="text-2xl font-bold mb-4">Desenvolvimento</h2>
+      <h2 class="text-2xl font-bold mb-4">Desenvolvimento de Projetos</h2>
       <div class="project-grid">
         <img src="/assets/images/freq-thumb.jpg" alt="FREQ" onclick="openSubModal('modal-projetos-freq')">
         <img src="/assets/images/proj2-thumb.jpg"  alt="Projeto 2" onclick="openSubModal('modal-projetos-projeto2')">
@@ -234,9 +257,9 @@
     </div>
   </div>
 
-  <!-- ===== SUBMODAIS (Exemplos) ===== -->
+  <!-- ===== SUBMODAIS COM CARROSSEL ===== -->
 
-  <!-- Web → NoHeroes -->
+  <!-- Submodal Web → NoHeroes -->
   <div id="modal-web-noheroes" class="modal">
     <div class="modal-content">
       <h2 class="text-2xl font-bold mb-2">NoHeroes</h2>
@@ -254,7 +277,7 @@
     </div>
   </div>
 
-  <!-- Web → Projeto 2 -->
+  <!-- Submodal Web → Projeto 2 -->
   <div id="modal-web-projeto2" class="modal">
     <div class="modal-content">
       <h2 class="text-2xl font-bold mb-2">Projeto 2</h2>
@@ -271,7 +294,67 @@
     </div>
   </div>
 
-  <!-- Você pode duplicar e ajustar abaixo para cada submodal de escrita, arte, consultoria e desenvolvimento -->
+  <!-- Submodal Escrita → ROAR -->
+  <div id="modal-escrita-roar" class="modal">
+    <div class="modal-content">
+      <h2 class="text-2xl font-bold mb-2">ROAR — Mangá</h2>
+      <p>Sinopse e detalhes do mangá ROAR.</p>
+      <div class="carousel">
+        <div class="slide"><img src="/assets/images/roar-1.jpg" alt=""></div>
+        <div class="slide"><img src="/assets/images/roar-2.jpg" alt=""></div>
+        <div class="slide"><img src="/assets/images/roar-3.jpg" alt=""></div>
+        <button class="prev" onclick="changeSlide('modal-escrita-roar', -1)">‹</button>
+        <button class="next" onclick="changeSlide('modal-escrita-roar', 1)">›</button>
+      </div>
+      <button onclick="openModal('modal-escrita')" class="mt-4 px-4 py-2 bg-gray-700 rounded hover:bg-gray-600">Voltar</button>
+    </div>
+  </div>
+
+  <!-- Submodal Arte → Character Design -->
+  <div id="modal-arte-char" class="modal">
+    <div class="modal-content">
+      <h2 class="text-2xl font-bold mb-2">Character Design</h2>
+      <p>Exemplos de design de personagens em estilo dark fantasy.</p>
+      <div class="carousel">
+        <div class="slide"><img src="/assets/images/char-1.jpg" alt=""></div>
+        <div class="slide"><img src="/assets/images/char-2.jpg" alt=""></div>
+        <div class="slide"><img src="/assets/images/char-3.jpg" alt=""></div>
+        <button class="prev" onclick="changeSlide('modal-arte-char', -1)">‹</button>
+        <button class="next" onclick="changeSlide('modal-arte-char', 1)">›</button>
+      </div>
+      <button onclick="openModal('modal-arte')" class="mt-4 px-4 py-2 bg-gray-700 rounded hover:bg-gray-600">Voltar</button>
+    </div>
+  </div>
+
+  <!-- Submodal Consultoria → Branding -->
+  <div id="modal-consultoria-brand" class="modal">
+    <div class="modal-content">
+      <h2 class="text-2xl font-bold mb-2">Branding</h2>
+      <p>Projetos de branding e identidade visual.</p>
+      <div class="carousel">
+        <div class="slide"><img src="/assets/images/brand-1.jpg" alt=""></div>
+        <div class="slide"><img src="/assets/images/brand-2.jpg" alt=""></div>
+        <button class="prev" onclick="changeSlide('modal-consultoria-brand', -1)">‹</button>
+        <button class="next" onclick="changeSlide('modal-consultoria-brand', 1)">›</button>
+      </div>
+      <button onclick="openModal('modal-consultoria')" class="mt-4 px-4 py-2 bg-gray-700 rounded hover:bg-gray-600">Voltar</button>
+    </div>
+  </div>
+
+  <!-- Submodal Projetos → FREQ -->
+  <div id="modal-projetos-freq" class="modal">
+    <div class="modal-content">
+      <h2 class="text-2xl font-bold mb-2">FREQ — Anime</h2>
+      <p>Prévia animada e conceito de FREQ.</p>
+      <div class="carousel">
+        <div class="slide"><img src="/assets/images/freq-1.jpg" alt=""></div>
+        <div class="slide"><img src="/assets/images/freq-2.jpg" alt=""></div>
+        <button class="prev" onclick="changeSlide('modal-projetos-freq', -1)">‹</button>
+        <button class="next" onclick="changeSlide('modal-projetos-freq', 1)">›</button>
+      </div>
+      <button onclick="openModal('modal-projetos')" class="mt-4 px-4 py-2 bg-gray-700 rounded hover:bg-gray-600">Voltar</button>
+    </div>
+  </div>
 
   <!-- Scripts -->
   <script>
