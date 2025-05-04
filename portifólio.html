@@ -319,18 +319,24 @@
     function closeModal(id) {
       document.getElementById(id).classList.remove('active');
     }
-    function openSubModal(id) {
-      openModal(id);
-      const slides = document.querySelectorAll(`#${id} .slide`);
-      slideIndices[id] = 0;
-      slides.forEach((s,i)=> s.style.display = i===0?'block':'none');
-    }
-    function changeSlide(id,n) {
-      const slides = document.querySelectorAll(`#${id} .slide`);
-      let idx = slideIndices[id]||0;
-      idx = (idx + n + slides.length) % slides.length;
-      slideIndices[id] = idx;
-      slides.forEach((s,i)=> s.style.display = i===idx?'block':'none');
+    function openModal(id) {
+  document.body.style.overflow = 'hidden';          // bloqueia scroll do fundo
+  document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('active');
+  document.body.style.overflow = '';                // libera scroll do fundo
+}
+
+// Se você também tiver openSubModal, substitua a chamada a openModal(id) automaticamente:
+function openSubModal(id) {
+  openModal(id);
+  const slides = document.querySelectorAll(`#${id} .slide`);
+  slideIndices[id] = 0;
+  slides.forEach((s,i) => s.style.display = i===0 ? 'block' : 'none');
+}
     }
   </script>
 
