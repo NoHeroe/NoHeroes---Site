@@ -154,41 +154,48 @@
   <div class="modal-content">
 
     <!-- Cabeçalho fixo: título + fechar -->
-    <div class="flex justify-between items-center mb-4">
-      <h2 class="text-2xl font-bold text-purple-400">Arte Digital</h2>
-      <button onclick="closeModal('modal-arte')" 
-              class="px-3 py-1 bg-gray-700 rounded hover:bg-gray-600">
-        Fechar
-      </button>
-    </div>
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-2xl font-bold text-purple-400">Arte Digital</h2>
+    <button onclick="closeModal('modal-arte')" 
+            class="px-3 py-1 bg-gray-700 rounded hover:bg-gray-600">
+      Fechar
+    </button>
+  </div>
 
-    <!-- Descrição do serviço -->
-    <p class="mb-6 text-gray-300 text-sm">
-      Ilustrações e concept arts em dark fantasy.<br>
-      Clique em qualquer imagem para ampliar.
-    </p>
+  <!-- Descrição do serviço -->
+  <p class="mb-6 text-gray-300 text-sm">
+    Ilustrações e concept arts em dark fantasy.<br>
+    Clique em qualquer imagem para ampliar.
+  </p>
 
-    <!-- Galeria tipo “masonry” responsiva -->
-    <div class="columns-1 sm:columns-2 md:columns-3 gap-4 space-y-4">
-      <a href="/assets/images/arte1.jpg" onclick="event.stopPropagation(); showImageModal(this.href); return false;">
-        <img src="/assets/images/arte1.jpg" alt="Arte 1"
-             class="w-full rounded shadow-md break-inside-avoid cursor-pointer hover:opacity-90" />
-      </a>
-      <a href="/assets/images/arte2.jpg" onclick="event.stopPropagation(); showImageModal(this.href); return false;">
-        <img src="/assets/images/arte2.jpg" alt="Arte 2"
-             class="w-full rounded shadow-md break-inside-avoid cursor-pointer hover:opacity-90" />
-      </a>
-      <a href="/assets/images/arte3.jpg" onclick="event.stopPropagation(); showImageModal(this.href); return false;">
-        <img src="/assets/images/arte3.jpg" alt="Arte 3"
-             class="w-full rounded shadow-md break-inside-avoid cursor-pointer hover:opacity-90" />
-      </a>
-      <a href="/assets/images/arte4.jpg" onclick="event.stopPropagation(); showImageModal(this.href); return false;">
-        <img src="/assets/images/arte4.jpg" alt="Arte 4"
-             class="w-full rounded shadow-md break-inside-avoid cursor-pointer hover:opacity-90" />
-      </a>
-      <!-- adicione aqui mais <a><img>…</a> seguindo o mesmo padrão -->
-    </div>
-</div>
+  <!-- Galeria tipo “masonry” responsiva -->
+  <div class="columns-1 sm:columns-2 md:columns-3 gap-4 space-y-4">
+    <a href="/assets/images/arte1.jpg"
+       onclick="event.stopPropagation();
+                showImageModal(
+                  this.href,
+                  'Personagem <strong>Azuos</strong> — criação para o mangá ROAR. ' +
+                  '<a href=&quot;https://roar.com&quot; target=&quot;_blank&quot; ' +
+                  'class=&quot;text-purple-300 underline&quot;>Ver site</a>'
+                );
+                return false;">
+      <img src="/assets/images/arte1.jpg" alt="Arte 1"
+           class="w-full rounded shadow-md break-inside-avoid cursor-pointer hover:opacity-90" />
+    </a>
+    <a href="/assets/images/arte2.jpg"
+       onclick="event.stopPropagation();
+                showImageModal(
+                  this.href,
+                  'Logo <strong>NoHeroes</strong> — identidade visual criada em 2024. ' +
+                  '<a href=&quot;https://noheroes.vercel.app&quot; target=&quot;_blank&quot; ' +
+                  'class=&quot;text-purple-300 underline&quot;>Visitar</a>'
+                );
+                return false;">
+      <img src="/assets/images/arte2.jpg" alt="Arte 2"
+           class="w-full rounded shadow-md break-inside-avoid cursor-pointer hover:opacity-90" />
+    </a>
+    <!-- Continue adicionando <a><img>…</a> no mesmo padrão para as demais artes -->
+  </div>
 
   <div id="modal-consultoria" class="modal">
     <div class="modal-content">
@@ -262,12 +269,27 @@
 <div id="image-viewer" class="modal" onclick="this.classList.remove('active')">
   <img id="full-image" class="max-w-3xl w-full max-h-[90vh] object-contain rounded shadow-xl" />
 </div>
-
+function showImageModal(src, captionHTML = '') {
+  document.getElementById('full-image').src = src;
+  document.getElementById('image-caption').innerHTML = captionHTML;
+  document.getElementById('image-viewer').classList.add('active');
+}
 <script>
   function showImageModal(src) {
     document.getElementById('full-image').src = src;
     document.getElementById('image-viewer').classList.add('active');
   }
 </script>
+<!-- Lightbox com legenda clicável -->
+<div id="image-viewer" class="modal" onclick="this.classList.remove('active')">
+  <div class="modal-content max-w-3xl w-full max-h-[90vh] p-0 flex flex-col items-center"
+       onclick="event.stopPropagation()">
+    <img id="full-image" class="w-full object-contain rounded-t shadow-xl" />
+    <div id="image-caption"
+         class="w-full bg-black/50 text-gray-200 text-sm p-4 rounded-b text-center">
+      <!-- legenda = HTML aqui -->
+    </div>
+  </div>
+</div>
 </body>
 </html>
