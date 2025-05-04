@@ -16,11 +16,14 @@
     .modal {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background-color: rgba(0,0,0,0.8);
+      background-color: rgba(0,0,0,0.85);
       display: none;
       align-items: center;
       justify-content: center;
       z-index: 1000;
+    }
+    .modal.active {
+      display: flex;
     }
     .modal-content {
       background-color: #1a1a1a;
@@ -30,106 +33,60 @@
       border-radius: 0.5rem;
       box-shadow: 0 0 20px #a855f7;
     }
-    .modal.active {
-      display: flex;
-    }
     .project-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
       gap: 1rem;
     }
-    .project-grid img {
-      border-radius: 0.5rem;
-      cursor: pointer;
-      transition: transform 0.2s ease;
+    .carousel {
+      overflow-x: auto;
+      white-space: nowrap;
     }
-    .project-grid img:hover {
-      transform: scale(1.05);
+    .carousel img {
+      display: inline-block;
+      height: 200px;
+      margin-right: 1rem;
+      border-radius: 0.5rem;
     }
   </style>
 </head>
-<body class="bg-black text-white">
-  <!-- TODO: Todas as seções anteriores permanecem aqui -->  <!-- MODAIS DE SERVIÇOS -->  <div id="modal-web" class="modal">
-    <div class="modal-content">
-      <h2 class="text-2xl font-bold mb-4">Web Design</h2>
-      <div class="project-grid">
-        <img src="/imgs/noheroes-thumb.jpg" alt="NoHeroes" onclick="openSubModal('modal-noheroes')">
-      </div>
-      <button onclick="closeModal('modal-web')" class="mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Fechar</button>
+<body class="bg-black text-white"><!-- MODAIS DOS SERVIÇOS --><div id="modal-web" class="modal">
+  <div class="modal-content">
+    <h2 class="text-2xl font-bold mb-4">Web Design</h2>
+    <div class="project-grid">
+      <img src="/imgs/noheroes-thumb.jpg" alt="NoHeroes" onclick="openSubModal('modal-noheroes')">
+      <img src="/imgs/projeto2-thumb.jpg" alt="Outro projeto" onclick="openSubModal('modal-projeto2')">
     </div>
-  </div>  <div id="modal-escrita" class="modal">
-    <div class="modal-content">
-      <h2 class="text-2xl font-bold mb-4">Escrita</h2>
-      <div class="project-grid">
-        <img src="/imgs/placeholder.jpg" alt="Projeto Escrita" onclick="openSubModal('modal-escrita-projeto1')">
-      </div>
-      <button onclick="closeModal('modal-escrita')" class="mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Fechar</button>
+    <button onclick="closeModal('modal-web')" class="mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Fechar</button>
+  </div>
+</div><!-- SUBMODAL NOHEROES --><div id="modal-noheroes" class="modal">
+  <div class="modal-content">
+    <h2 class="text-2xl font-bold mb-4">NoHeroes</h2>
+    <p class="mb-4">Site completo com design dark fantasy, múltiplas páginas, animações e responsividade. Feito com Next.js + Tailwind + Framer Motion.</p>
+    <div class="carousel">
+      <img src="/imgs/noheroes1.jpg">
+      <img src="/imgs/noheroes2.jpg">
+      <img src="/imgs/noheroes3.jpg">
     </div>
-  </div>  <div id="modal-arte" class="modal">
-    <div class="modal-content">
-      <h2 class="text-2xl font-bold mb-4">Arte Digital</h2>
-      <div class="project-grid">
-        <img src="/imgs/placeholder.jpg" alt="Projeto Arte" onclick="openSubModal('modal-arte-projeto1')">
-      </div>
-      <button onclick="closeModal('modal-arte')" class="mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Fechar</button>
-    </div>
-  </div>  <div id="modal-consultoria" class="modal">
-    <div class="modal-content">
-      <h2 class="text-2xl font-bold mb-4">Consultoria</h2>
-      <div class="project-grid">
-        <img src="/imgs/placeholder.jpg" alt="Projeto Consultoria" onclick="openSubModal('modal-consultoria-projeto1')">
-      </div>
-      <button onclick="closeModal('modal-consultoria')" class="mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Fechar</button>
-    </div>
-  </div>  <div id="modal-projetos" class="modal">
-    <div class="modal-content">
-      <h2 class="text-2xl font-bold mb-4">Desenvolvimento de Projetos</h2>
-      <div class="project-grid">
-        <img src="/imgs/placeholder.jpg" alt="Projeto Dev" onclick="openSubModal('modal-dev-projeto1')">
-      </div>
-      <button onclick="closeModal('modal-projetos')" class="mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Fechar</button>
-    </div>
-  </div>  <!-- SUBMODAIS (placeholder para todos os serviços) -->  <div id="modal-noheroes" class="modal">
-    <div class="modal-content">
-      <h2 class="text-2xl font-bold mb-4">NoHeroes</h2>
-      <p class="mb-4">Site completo com múltiplas páginas, animações e visual dark fantasy. Criado com Next.js + Tailwind.</p>
-      <a href="https://noheroes.vercel.app" target="_blank" class="inline-block px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-500 transition">Ver site</a>
-      <button onclick="closeModal('modal-noheroes')" class="block mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Voltar</button>
-    </div>
-  </div>  <div id="modal-escrita-projeto1" class="modal">
-    <div class="modal-content">
-      <h2 class="text-2xl font-bold mb-4">Projeto de Escrita</h2>
-      <p class="mb-4">Espaço reservado para detalhar roteiros e storytelling futuros.</p>
-      <button onclick="closeModal('modal-escrita-projeto1')" class="block mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Voltar</button>
-    </div>
-  </div>  <div id="modal-arte-projeto1" class="modal">
-    <div class="modal-content">
-      <h2 class="text-2xl font-bold mb-4">Projeto de Arte</h2>
-      <p class="mb-4">Espaço reservado para ilustrar artes e concept futuros.</p>
-      <button onclick="closeModal('modal-arte-projeto1')" class="block mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Voltar</button>
-    </div>
-  </div>  <div id="modal-consultoria-projeto1" class="modal">
-    <div class="modal-content">
-      <h2 class="text-2xl font-bold mb-4">Consultoria Criativa</h2>
-      <p class="mb-4">Consultorias realizadas ou modelos prontos para descrever no futuro.</p>
-      <button onclick="closeModal('modal-consultoria-projeto1')" class="block mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Voltar</button>
-    </div>
-  </div>  <div id="modal-dev-projeto1" class="modal">
-    <div class="modal-content">
-      <h2 class="text-2xl font-bold mb-4">Projeto de Desenvolvimento</h2>
-      <p class="mb-4">Acompanhamento de um projeto completo, da ideia à entrega.</p>
-      <button onclick="closeModal('modal-dev-projeto1')" class="block mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Voltar</button>
-    </div>
-  </div>  <script>
-    function openModal(id) {
-      document.getElementById(id).classList.add('active');
-    }
-    function closeModal(id) {
-      document.getElementById(id).classList.remove('active');
-    }
-    function openSubModal(id) {
-      document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-    }
-  </script></body>
+    <a href="https://noheroes.vercel.app" target="_blank" class="inline-block mt-6 px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-500 transition">Ver site</a>
+    <button onclick="closeModal('modal-noheroes')" class="block mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Voltar</button>
+  </div>
+</div><!-- SUBMODAL PROJETO 2 (Placeholder) --><div id="modal-projeto2" class="modal">
+  <div class="modal-content">
+    <h2 class="text-2xl font-bold mb-4">Projeto Futuro</h2>
+    <p class="mb-4">Espaço reservado para um futuro projeto.</p>
+    <button onclick="closeModal('modal-projeto2')" class="block mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Voltar</button>
+  </div>
+</div><script>
+  function openModal(id) {
+    document.getElementById(id).classList.add('active');
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('active');
+  }
+  function openSubModal(id) {
+    document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+</script></body>
 </html>
