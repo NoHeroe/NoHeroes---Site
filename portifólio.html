@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<!DOCTYPE html><html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,79 +15,75 @@
     }
     h1, h2, h3 {
       font-family: 'EB Garamond', serif;
-    }
+    }/* estilo base dos modais */
+.modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0,0,0,0.8);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal.active {
+  display: flex;
+}
+.modal-content {
+  background: linear-gradient(135deg, #2e003e, #0a0014);
+  padding: 2rem;
+  max-width: 800px;
+  width: 90%;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 20px #a855f7;
+  color: #e5e5e5;
+  position: relative;
+}
 
-    /* estilo base dos modais */
-    .modal {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: rgba(0,0,0,0.8);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-    }
-    .modal.active {
-      display: flex;
-    }
-    .modal-content {
-      background: linear-gradient(135deg, #2e003e, #0a0014);
-      padding: 2rem;
-      max-width: 800px;
-      width: 90%;
-      border-radius: 0.5rem;
-      box-shadow: 0 0 20px #a855f7;
-      color: #e5e5e5;
-      position: relative;
-    }
+/* grelha de mini-thumbnails */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px,1fr));
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+.project-grid img {
+  width: 100%;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: transform .2s;
+}
+.project-grid img:hover { transform: scale(1.05); }
 
-    /* grelha de mini-thumbnails */
-    .project-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(100px,1fr));
-      gap: 0.75rem;
-      margin: 1rem 0;
-    }
-    .project-grid img {
-      width: 100%;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      transition: transform .2s;
-    }
-    .project-grid img:hover { transform: scale(1.05); }
+/* carrossel interno */
+.carousel {
+  position: relative;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+.slide { display: none; }
+.carousel img {
+  width: 100%;
+  border-radius: .5rem;
+}
+.carousel button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.6);
+  border: none;
+  padding: .5rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  color: white;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+.carousel .prev { left: .5rem; }
+.carousel .next { right: .5rem; }
 
-    /* carrossel interno */
-    .carousel {
-      position: relative;
-      overflow: hidden;
-      margin-top: 1rem;
-    }
-    .slide { display: none; }
-    .carousel img {
-      width: 100%;
-      border-radius: .5rem;
-    }
-    .carousel button {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0,0,0,0.6);
-      border: none;
-      padding: .5rem;
-      border-radius: 9999px;
-      cursor: pointer;
-      color: white;
-      font-size: 1.25rem;
-      line-height: 1;
-    }
-    .carousel .prev { left: .5rem; }
-    .carousel .next { right: .5rem; }
   </style>
 </head>
-<body class="bg-black text-white">
-
-  <!-- HERO SECTION COM DEGRADÊ -->
-  <section class="relative py-20 px-6 max-w-7xl mx-auto overflow-hidden">
+<body class="bg-black text-white">  <!-- HERO SECTION COM DEGRADÊ -->  <section class="relative py-20 px-6 max-w-7xl mx-auto overflow-hidden">
     <div class="absolute inset-0">
       <img src="/assets/images/raulhero.jpg" alt="Imagem Raul" class="w-full h-full object-cover object-right opacity-40 md:opacity-100" />
       <div class="absolute inset-0 bg-gradient-to-l from-black via-black/70 to-transparent"></div>
@@ -101,12 +96,7 @@
         “Misturo criatividade com tecnologia pra entregar sites e conteúdos únicos.”
       </p>
     </div>
-  </section>
-
-  <div class="border-t border-purple-500 shadow-[0_0_8px_#a855f7] my-12"></div>
-
-  <!-- SOBRE MIM -->
-  <section class="py-20 px-6 max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+  </section>  <div class="border-t border-purple-500 shadow-[0_0_8px_#a855f7] my-12"></div>  <!-- SOBRE MIM -->  <section class="py-20 px-6 max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center">
     <div>
       <h2 class="text-3xl font-semibold mb-4">Sobre Mim</h2>
       <p class="text-lg leading-relaxed">
@@ -118,12 +108,7 @@
       <img src="/imgs/foto-raul.jpg" alt="Foto de Raul" 
            class="w-64 h-64 rounded-lg border border-purple-600 shadow-[0_0_16px_#a855f7] object-cover">
     </div>
-  </section>
-
-  <div class="border-t border-purple-500 shadow-[0_0_8px_#a855f7] my-12"></div>
-
-  <!-- SERVIÇOS COM ANIMAÇÃO -->
-  <section class="bg-gray-900 py-20 px-6">
+  </section>  <div class="border-t border-purple-500 shadow-[0_0_8px_#a855f7] my-12"></div>  <!-- SERVIÇOS COM ANIMAÇÃO -->  <section class="bg-gray-900 py-20 px-6">
     <h2 class="text-3xl font-semibold text-center mb-12">Serviços</h2>
     <div class="grid md:grid-cols-5 gap-10 max-w-6xl mx-auto">
       <!-- serviço Web Design -->
@@ -162,43 +147,7 @@
         <p>Planejamento e execução de projetos criativos do zero.</p>
       </div>
     </div>
-  </section>
-
-  <div class="border-t border-purple-500 shadow-[0_0_8px_#a855f7] my-12"></div>
-
-  <!-- PROJETOS EM DESTAQUE -->
-  <section class="py-20 px-6 max-w-6xl mx-auto">
-    <h2 class="text-3xl font-semibold text-center mb-12">Projetos</h2>
-    <div class="grid md:grid-cols-2 gap-10">
-      <a href="/ROAR.html" class="block bg-cover bg-center rounded-lg h-64 flex items-end p-6 text-white relative hover:scale-105 transition-transform"
-         style="background-image: url('/assets/images/roar.jpg');">
-        <div class="bg-black bg-opacity-50 w-full h-full absolute top-0 left-0 rounded-lg"></div>
-        <h3 class="text-2xl font-bold relative z-10">ROAR</h3>
-      </a>
-      <a href="/index.html" class="block bg-cover bg-center rounded-lg h-64 flex items-end p-6 text-white relative hover:scale-105 transition-transform"
-         style="background-image: url('/assets/images/noheroes1.jpg');">
-        <div class="bg-black bg-opacity-50 w-full h-full absolute top-0 left-0 rounded-lg"></div>
-        <h3 class="text-2xl font-bold relative z-10">NOHEROES</h3>
-      </a>
-    </div>
-  </section>
-
-  <!-- RODAPÉ -->
-  <footer class="bg-gray-950 py-10 mt-20 text-center text-gray-400 text-sm">
-    <p class="mb-2">© 2025 Raul – Todos os direitos reservados.</p>
-    <p class="italic">Feito com alma e propósito.</p>
-    <div class="mt-4 flex justify-center gap-6 text-white">
-      <a href="mailto:raul@email.com" class="hover:underline">Email</a>
-      <a href="https://instagram.com/_noheroe" target="_blank" class="hover:underline">Instagram</a>
-      <a href="https://github.com/seuusuario" target="_blank" class="hover:underline">GitHub</a>
-      <a href="https://www.linkedin.com/in/seuusuario" target="_blank" class="hover:underline">LinkedIn</a>
-    </div>
-  </footer>
-
-  <!-- ===== MODAIS DE 1º NÍVEL ===== -->
-
-  <!-- Web Design -->
-  <div id="modal-web" class="modal">
+  </section>  <div class="border-t border-purple-500 shadow-[0_0_8px_#a855f7] my-12"></div>  <!-- MODAIS PRINCIPAIS (grid de miniaturas) -->  <div id="modal-web" class="modal">
     <div class="modal-content">
       <h2 class="text-2xl font-bold mb-4">Web Design</h2>
       <div class="project-grid">
@@ -207,186 +156,11 @@
       </div>
       <button onclick="closeModal('modal-web')" class="mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Fechar</button>
     </div>
-  </div>
-
-  <!-- Escrita -->
-  <div id="modal-escrita" class="modal">
+  </div>  <div id="modal-escrita" class="modal">
     <div class="modal-content">
       <h2 class="text-2xl font-bold mb-4">Escrita & Roteiro</h2>
       <div class="project-grid">
         <img src="/assets/images/roar-thumb.jpg" alt="ROAR" onclick="openSubModal('modal-escrita-roar')">
         <img src="/assets/images/texto2-thumb.jpg" alt="Projeto 2" onclick="openSubModal('modal-escrita-projeto2')">
       </div>
-      <button onclick="closeModal('modal-escrita')" class="mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Fechar</button>
-    </div>
-  </div>
-
-  <!-- Arte Digital -->
-  <div id="modal-arte" class="modal">
-    <div class="modal-content">
-      <h2 class="text-2xl font-bold mb-4">Arte Digital</h2>
-      <div class="project-grid">
-        <img src="/assets/images/char-thumb.jpg" alt="Character Design" onclick="openSubModal('modal-arte-char')">
-        <img src="/assets/images/art2-thumb.jpg"  alt="Projeto 2" onclick="openSubModal('modal-arte-projeto2')">
-      </div>
-      <button onclick="closeModal('modal-arte')" class="mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Fechar</button>
-    </div>
-  </div>
-
-  <!-- Consultoria Criativa -->
-  <div id="modal-consultoria" class="modal">
-    <div class="modal-content">
-      <h2 class="text-2xl font-bold mb-4">Consultoria Criativa</h2>
-      <div class="project-grid">
-        <img src="/assets/images/brand-thumb.jpg" alt="Branding" onclick="openSubModal('modal-consultoria-brand')">
-        <img src="/assets/images/consulta2-thumb.jpg" alt="Projeto 2"  onclick="openSubModal('modal-consultoria-projeto2')">
-      </div>
-      <button onclick="closeModal('modal-consultoria')" class="mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Fechar</button>
-    </div>
-  </div>
-
-  <!-- Desenvolvimento de Projetos -->
-  <div id="modal-projetos" class="modal">
-    <div class="modal-content">
-      <h2 class="text-2xl font-bold mb-4">Desenvolvimento de Projetos</h2>
-      <div class="project-grid">
-        <img src="/assets/images/freq-thumb.jpg" alt="FREQ" onclick="openSubModal('modal-projetos-freq')">
-        <img src="/assets/images/proj2-thumb.jpg"  alt="Projeto 2" onclick="openSubModal('modal-projetos-projeto2')">
-      </div>
-      <button onclick="closeModal('modal-projetos')" class="mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Fechar</button>
-    </div>
-  </div>
-
-  <!-- ===== SUBMODAIS COM CARROSSEL ===== -->
-
-  <!-- Submodal Web → NoHeroes -->
-  <div id="modal-web-noheroes" class="modal">
-    <div class="modal-content">
-      <h2 class="text-2xl font-bold mb-2">NoHeroes</h2>
-      <p>Site completo com design dark fantasy e animações interativas.</p>
-      <div class="carousel">
-        <div class="slide"><img src="/assets/images/noheroes-1.jpg" alt=""></div>
-        <div class="slide"><img src="/assets/images/noheroes-2.jpg" alt=""></div>
-        <button class="prev" onclick="changeSlide('modal-web-noheroes', -1)">‹</button>
-        <button class="next" onclick="changeSlide('modal-web-noheroes', 1)">›</button>
-      </div>
-      <div class="mt-4 flex gap-2">
-        <a href="https://noheroes.vercel.app" target="_blank" class="px-4 py-2 bg-purple-600 rounded hover:bg-purple-500">Ver site</a>
-        <button onclick="openModal('modal-web')" class="px-4 py-2 bg-gray-700 rounded hover:bg-gray-600">Voltar</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Submodal Web → Projeto 2 -->
-  <div id="modal-web-projeto2" class="modal">
-    <div class="modal-content">
-      <h2 class="text-2xl font-bold mb-2">Projeto 2</h2>
-      <p>Descrição resumida para editar depois.</p>
-      <div class="carousel">
-        <div class="slide"><img src="/assets/images/site2-1.jpg" alt=""></div>
-        <div class="slide"><img src="/assets/images/site2-2.jpg" alt=""></div>
-        <button class="prev" onclick="changeSlide('modal-web-projeto2', -1)">‹</button>
-        <button class="next" onclick="changeSlide('modal-web-projeto2', 1)">›</button>
-      </div>
-      <div class="mt-4 flex gap-2">
-        <button onclick="openModal('modal-web')" class="px-4 py-2 bg-gray-700 rounded hover:bg-gray-600">Voltar</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Submodal Escrita → ROAR -->
-  <div id="modal-escrita-roar" class="modal">
-    <div class="modal-content">
-      <h2 class="text-2xl font-bold mb-2">ROAR — Mangá</h2>
-      <p>Sinopse e detalhes do mangá ROAR.</p>
-      <div class="carousel">
-        <div class="slide"><img src="/assets/images/roar-1.jpg" alt=""></div>
-        <div class="slide"><img src="/assets/images/roar-2.jpg" alt=""></div>
-        <div class="slide"><img src="/assets/images/roar-3.jpg" alt=""></div>
-        <button class="prev" onclick="changeSlide('modal-escrita-roar', -1)">‹</button>
-        <button class="next" onclick="changeSlide('modal-escrita-roar', 1)">›</button>
-      </div>
-      <button onclick="openModal('modal-escrita')" class="mt-4 px-4 py-2 bg-gray-700 rounded hover:bg-gray-600">Voltar</button>
-    </div>
-  </div>
-
-  <!-- Submodal Arte → Character Design -->
-  <div id="modal-arte-char" class="modal">
-    <div class="modal-content">
-      <h2 class="text-2xl font-bold mb-2">Character Design</h2>
-      <p>Exemplos de design de personagens em estilo dark fantasy.</p>
-      <div class="carousel">
-        <div class="slide"><img src="/assets/images/char-1.jpg" alt=""></div>
-        <div class="slide"><img src="/assets/images/char-2.jpg" alt=""></div>
-        <div class="slide"><img src="/assets/images/char-3.jpg" alt=""></div>
-        <button class="prev" onclick="changeSlide('modal-arte-char', -1)">‹</button>
-        <button class="next" onclick="changeSlide('modal-arte-char', 1)">›</button>
-      </div>
-      <button onclick="openModal('modal-arte')" class="mt-4 px-4 py-2 bg-gray-700 rounded hover:bg-gray-600">Voltar</button>
-    </div>
-  </div>
-
-  <!-- Submodal Consultoria → Branding -->
-  <div id="modal-consultoria-brand" class="modal">
-    <div class="modal-content">
-      <h2 class="text-2xl font-bold mb-2">Branding</h2>
-      <p>Projetos de branding e identidade visual.</p>
-      <div class="carousel">
-        <div class="slide"><img src="/assets/images/brand-1.jpg" alt=""></div>
-        <div class="slide"><img src="/assets/images/brand-2.jpg" alt=""></div>
-        <button class="prev" onclick="changeSlide('modal-consultoria-brand', -1)">‹</button>
-        <button class="next" onclick="changeSlide('modal-consultoria-brand', 1)">›</button>
-      </div>
-      <button onclick="openModal('modal-consultoria')" class="mt-4 px-4 py-2 bg-gray-700 rounded hover:bg-gray-600">Voltar</button>
-    </div>
-  </div>
-
-  <!-- Submodal Projetos → FREQ -->
-  <div id="modal-projetos-freq" class="modal">
-    <div class="modal-content">
-      <h2 class="text-2xl font-bold mb-2">FREQ — Anime</h2>
-      <p>Prévia animada e conceito de FREQ.</p>
-      <div class="carousel">
-        <div class="slide"><img src="/assets/images/freq-1.jpg" alt=""></div>
-        <div class="slide"><img src="/assets/images/freq-2.jpg" alt=""></div>
-        <button class="prev" onclick="changeSlide('modal-projetos-freq', -1)">‹</button>
-        <button class="next" onclick="changeSlide('modal-projetos-freq', 1)">›</button>
-      </div>
-      <button onclick="openModal('modal-projetos')" class="mt-4 px-4 py-2 bg-gray-700 rounded hover:bg-gray-600">Voltar</button>
-    </div>
-  </div>
-
-  <!-- Scripts -->
-  <script>
-    ScrollReveal().reveal('.servico:nth-child(odd)',  { origin: 'left',  distance: '50px', duration: 1000 });
-    ScrollReveal().reveal('.servico:nth-child(even)', { origin: 'right', distance: '50px', duration: 1000 });
-
-    function openModal(id) {
-      document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-    }
-    function closeModal(id) {
-      document.getElementById(id).classList.remove('active');
-    }
-
-    const slideIndices = {};
-    function openSubModal(id) {
-      openModal(id);
-      initCarousel(id);
-    }
-    function initCarousel(modalId) {
-      const slides = document.querySelectorAll(`#${modalId} .slide`);
-      slideIndices[modalId] = 0;
-      slides.forEach((s,i) => s.style.display = i === 0 ? 'block' : 'none');
-    }
-    function changeSlide(modalId, n) {
-      const slides = document.querySelectorAll(`#${modalId} .slide`);
-      let idx = slideIndices[modalId] ?? 0;
-      idx = (idx + n + slides.length) % slides.length;
-      slideIndices[modalId] = idx;
-      slides.forEach((s,i) => s.style.display = i === idx ? 'block' : 'none');
-    }
-  </script>
-
-</body>
-</html>
+      <button onclick="closeModal('modal-escrita')" class="mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-
