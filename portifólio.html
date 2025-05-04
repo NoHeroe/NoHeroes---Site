@@ -140,16 +140,44 @@
     </div>
   </div>
 
-  <div id="modal-arte" class="modal">
-    <div class="modal-content">
-      <h2 class="text-2xl font-bold mb-4">Arte Digital</h2>
-      <div class="project-grid">
-        <img src="/assets/images/char-thumb.jpg" onclick="openSubModal('modal-arte-char')">
-        <img src="/assets/images/art2-thumb.jpg" onclick="openSubModal('modal-arte-projeto2')">
-      </div>
-      <button onclick="closeModal('modal-arte')" class="px-4 py-2 bg-purple-600 rounded">Fechar</button>
+  <!-- Arte Digital (modal único com grid de artes) -->
+<div id="modal-arte" class="modal">
+  <div class="modal-content">
+
+    <!-- Cabeçalho fixo: título + fechar -->
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-2xl font-bold">Arte Digital</h2>
+      <button onclick="closeModal('modal-arte')" 
+              class="px-3 py-1 bg-gray-700 rounded hover:bg-gray-600">
+        Fechar
+      </button>
     </div>
+
+    <!-- Descrição do serviço -->
+    <p class="mb-6">
+      Concept arts, ilustrações e design de personagens em estilo dark fantasy.
+      Aqui você encontra meus principais trabalhos de portfólio.
+    </p>
+
+    <!-- Grid estilo Instagram -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <!-- Imagem 1 -->
+      <img src="/assets/images/arte1.jpg" alt="Arte 1" 
+           class="w-full h-auto rounded-lg shadow-md object-cover">
+      <!-- Imagem 2 -->
+      <img src="/assets/images/arte2.jpg" alt="Arte 2" 
+           class="w-full h-auto rounded-lg shadow-md object-cover">
+      <!-- Imagem 3 -->
+      <img src="/assets/images/arte3.jpg" alt="Arte 3" 
+           class="w-full h-auto rounded-lg shadow-md object-cover">
+      <!-- Imagem 4 -->
+      <img src="/assets/images/arte4.jpg" alt="Arte 4" 
+           class="w-full h-auto rounded-lg shadow-md object-cover">
+      <!-- Adicione quantas imagens quiser seguindo o padrão acima -->
+    </div>
+
   </div>
+</div>
 
   <div id="modal-consultoria" class="modal">
     <div class="modal-content">
@@ -185,7 +213,7 @@
         <button class="next" onclick="changeSlide('modal-web-noheroes',1)">›</button>
       </div>
       <div class="mt-4 flex gap-2">
-        <a href="https://noheroes.vercel.app" target="_blank" class="px-4 py-2 bg-purple-600 rounded">Ver site</a>
+        <a href="https://noheroes.com.br" target="_blank" class="px-4 py-2 bg-purple-600 rounded">Ver site</a>
         <button onclick="openModal('modal-web')" class="px-4 py-2 bg-gray-700 rounded">Voltar</button>
       </div>
     </div>
