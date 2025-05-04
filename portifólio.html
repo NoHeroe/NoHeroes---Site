@@ -176,12 +176,24 @@
                     showImageModal(
                       this.href,
                       'Logo <strong>NoHeroes</strong> — identidade visual criada em 2024. ' +
-                      '<a href=&quot;https://noheroes.vercel.app&quot; target=&quot;_blank&quot; class=&quot;text-purple-300 underline&quot;>Visitar</a>'
+                      '<a href=&quot;https://noheroes.com.br&quot; target=&quot;_blank&quot; class=&quot;text-purple-300 underline&quot;>Visitar</a>'
                     );
                     return false;">
           <img src="/assets/images/arte2.jpg" alt="Arte 2"
                class="w-full rounded shadow-md break-inside-avoid cursor-pointer hover:opacity-90" />
         </a>
+<a href="/assets/images/arte3.jpg"
+   onclick="event.stopPropagation();
+            showImageModal(
+              this.href,
+              'Concept art para <strong>Cliente X</strong>. ' +
+              '<a href=&quot;https://clienteX.com&quot; target=&quot;_blank&quot; class=&quot;text-purple-300 underline&quot;>Ver projeto</a>'
+            );
+            return false;">
+  <img src="/assets/images/arte3.jpg" alt="Arte 3"
+       class="w-full rounded shadow-md break-inside-avoid cursor-pointer hover:opacity-90" />
+</a>
+
         <!-- continue adicionando mais <a><img>…</a> conforme necessário -->
       </div>
     </div>
