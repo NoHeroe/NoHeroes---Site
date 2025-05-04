@@ -12,7 +12,9 @@
     h1,h2,h3 { font-family:'EB Garamond',serif; }
     .modal { position:fixed; inset:0; background:rgba(0,0,0,0.8); display:none; align-items:center; justify-content:center; z-index:1000; }
     .modal.active { display:flex; }
-    .modal-content { background:linear-gradient(135deg,#2e003e,#0a0014); padding:2rem; max-width:800px; width:90%; border-radius:.5rem; box-shadow:0 0 20px #a855f7; color:#e5e5e5; position:relative; }
+    .modal-content { background:linear-gradient(135deg,#2e003e,#0a0014); padding:2rem; max-width:800px; width:90%; border-radius:.5rem; box-shadow:0 0 20px #a855f7; color:#e5e5e5; position:relative; max-height: 90vh;
+  overflow-y: auto;
+}
     .project-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(100px,1fr)); gap:.75rem; margin:1rem 0; }
     .project-grid img { width:100%; border-radius:.5rem; cursor:pointer; transition:transform .2s; }
     .project-grid img:hover { transform:scale(1.05); }
