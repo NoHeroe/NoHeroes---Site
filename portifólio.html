@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
+<!DOCTYPE html><html lang="pt-br"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RAUL | Criador Digital & Freelancer</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/scrollreveal"></script>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <style>
     body {
@@ -12,231 +11,113 @@
       background-color: #0a0a0a;
       color: #e5e5e5;
     }
-    h1,h2,h3 {
+    h1, h2, h3 {
       font-family: 'EB Garamond', serif;
     }
-    /* GRID DE PROJETOS (mini-galeria) */
-    .project-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-      gap: 1rem;
-    }
-    .project-grid img {
-      width: 100%;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-    .project-grid img:hover { transform: scale(1.05); }
-
-    /* MODAL GERAL */
     .modal {
-      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
       background-color: rgba(0,0,0,0.8);
       display: none;
-      align-items: center; justify-content: center;
+      align-items: center;
+      justify-content: center;
       z-index: 1000;
-    }
-    .modal.active {
-      display: flex;
     }
     .modal-content {
       background-color: #1a1a1a;
       padding: 2rem;
-      max-width: 900px; width: 90%;
+      max-width: 800px;
+      width: 100%;
       border-radius: 0.5rem;
       box-shadow: 0 0 20px #a855f7;
-      position: relative;
     }
-
-    /* CARROSSEL INTERNO */
-    .carousel { position: relative; overflow: hidden; }
-    .slide { display: none; }
-    .carousel img { width: 100%; border-radius: 0.5rem; }
-    .carousel button {
-      position: absolute; top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0,0,0,0.6);
-      border: none; padding: 0.5rem;
-      border-radius: 9999px;
-      cursor: pointer;
+    .modal.active {
+      display: flex;
     }
-    .carousel .prev { left: 1rem; }
-    .carousel .next { right: 1rem; }
   </style>
 </head>
 <body class="bg-black text-white">
-
-  <!-- OUTRO CONTEÚDO DA SUA PÁGINA AQUI (header, sobre, etc) -->
-
-  <!-- ===== SEÇÃO: SERVIÇOS ===== -->
-  <section id="services" class="py-16">
-    <h2 class="text-4xl font-bold text-center mb-8">Serviços</h2>
-    <div class="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
-      <button onclick="openModal('modal-web')" class="p-6 bg-gray-800 rounded-lg hover:bg-gray-700 transition">Web Design</button>
-      <button onclick="openModal('modal-escrita')" class="p-6 bg-gray-800 rounded-lg hover:bg-gray-700 transition">Escrita & Roteiro</button>
-      <button onclick="openModal('modal-arte')" class="p-6 bg-gray-800 rounded-lg hover:bg-gray-700 transition">Arte Digital</button>
-      <button onclick="openModal('modal-projetos')" class="p-6 bg-gray-800 rounded-lg hover:bg-gray-700 transition">Projetos</button>
+  <!-- HERO SECTION COM DEGRADÊ -->
+  <section class="relative py-20 px-6 max-w-7xl mx-auto overflow-hidden">
+    <div class="absolute inset-0">
+      <img src="/assets/images/raulhero.jpg" alt="Imagem Raul" class="w-full h-full object-cover object-right opacity-40 md:opacity-100" />
+      <div class="absolute inset-0 bg-gradient-to-l from-black via-black/70 to-transparent"></div>
     </div>
-  </section>
-
-  <!-- ===== MODAIS DE 1º NÍVEL (Categorias) ===== -->
-
-  <!-- Web Design -->
-  <div id="modal-web" class="modal">
-    <div class="modal-content">
-      <h2 class="text-2xl font-bold mb-4">Web Design</h2>
-      <div class="project-grid">
-        <img src="/imgs/noheroes-thumb.jpg" alt="NoHeroes" onclick="openSubModal('modal-web-noheroes')">
-        <img src="/imgs/projeto2-thumb.jpg" alt="Outro Projeto" onclick="openSubModal('modal-web-projeto2')">
+    <div class="relative z-10 md:w-1/2">
+      <h1 class="text-6xl font-bold mb-4 leading-tight">RAUL</h1>
+      <h2 class="text-2xl italic mb-6">Criador Digital & Freelancer</h2>
+      <p class="text-lg max-w-md">Criador de histórias, roteirista, artista digital e desenvolvedor de páginas.<br>“Misturo criatividade com tecnologia pra entregar sites e conteúdos únicos.”</p>
+    </div>
+  </section>  <div class="border-t border-purple-500 shadow-[0_0_8px_#a855f7] my-12"></div>  <!-- SOBRE MIM -->  <section class="py-20 px-6 max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+    <div>
+      <h2 class="text-3xl font-semibold mb-4">Sobre Mim</h2>
+      <p class="text-lg leading-relaxed">Criador de histórias e desenvolvedor independente. De narrativas à identidade visual, trago vida a projetos com estilo único, trazendo peso e presença.</p>
+    </div>
+    <div class="flex justify-center">
+      <img src="/imgs/foto-raul.jpg" alt="Foto de Raul" class="w-64 h-64 rounded-lg border border-purple-600 shadow-[0_0_16px_#a855f7] object-cover">
+    </div>
+  </section>  <div class="border-t border-purple-500 shadow-[0_0_8px_#a855f7] my-12"></div>  <!-- SERVIÇOS COM ANIMAÇÃO -->  <section class="bg-gray-900 py-20 px-6">
+    <h2 class="text-3xl font-semibold text-center mb-12">Serviços</h2>
+    <div class="grid md:grid-cols-5 gap-10 max-w-6xl mx-auto">
+      <div class="servico bg-black border border-gray-700 rounded-lg p-6 text-center shadow-md hover:shadow-purple-500/40 transition cursor-pointer" onclick="openModal('modal-web')">
+        <img src="/assets/images/webdesign.jpg" class="w-full h-40 object-cover rounded mb-4">
+        <h3 class="text-xl font-bold mb-2">Web Design</h3>
+        <p>Criação de websites com presença visual marcante.</p>
       </div>
-      <button onclick="closeModal('modal-web')" class="mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Fechar</button>
-    </div>
-  </div>
-
-  <!-- Escrita & Roteiro -->
-  <div id="modal-escrita" class="modal">
-    <div class="modal-content">
-      <h2 class="text-2xl font-bold mb-4">Escrita & Roteiro</h2>
-      <div class="project-grid">
-        <img src="/imgs/roar-thumb.jpg" alt="ROAR" onclick="openSubModal('modal-escrita-roar')">
-        <img src="/imgs/projetoX-thumb.jpg" alt="Outro Projeto" onclick="openSubModal('modal-escrita-projetoX')">
+      <div class="servico bg-black border border-gray-700 rounded-lg p-6 text-center shadow-md hover:shadow-purple-500/40 transition cursor-pointer" onclick="openModal('modal-escrita')">
+        <img src="/assets/images/feather.jpg" class="w-full h-40 object-cover rounded mb-4">
+        <h3 class="text-xl font-bold mb-2">Escrita</h3>
+        <p>Storytelling, roteiros e narrativas impactantes.</p>
       </div>
-      <button onclick="closeModal('modal-escrita')" class="mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Fechar</button>
-    </div>
-  </div>
-
-  <!-- Arte Digital -->
-  <div id="modal-arte" class="modal">
-    <div class="modal-content">
-      <h2 class="text-2xl font-bold mb-4">Arte Digital</h2>
-      <div class="project-grid">
-        <img src="/imgs/char-design-thumb.jpg" alt="Character Design" onclick="openSubModal('modal-arte-char')">
-        <img src="/imgs/projetoY-thumb.jpg" alt="Outro Projeto" onclick="openSubModal('modal-arte-projetoY')">
+      <div class="servico bg-black border border-gray-700 rounded-lg p-6 text-center shadow-md hover:shadow-purple-500/40 transition cursor-pointer" onclick="openModal('modal-arte')">
+        <img src="/assets/images/arte.jpg" class="w-full h-40 object-cover rounded mb-4">
+        <h3 class="text-xl font-bold mb-2">Arte Digital</h3>
+        <p>Concept arts, ilustrações e design de personagens.</p>
       </div>
-      <button onclick="closeModal('modal-arte')" class="mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Fechar</button>
-    </div>
-  </div>
-
-  <!-- Projetos -->
-  <div id="modal-projetos" class="modal">
-    <div class="modal-content">
-      <h2 class="text-2xl font-bold mb-4">Projetos</h2>
-      <div class="project-grid">
-        <img src="/imgs/freq-thumb.jpg" alt="FREQ" onclick="openSubModal('modal-projetos-freq')">
-        <img src="/imgs/projetoZ-thumb.jpg" alt="Outro Projeto" onclick="openSubModal('modal-projetos-projetoZ')">
+      <div class="servico bg-black border border-gray-700 rounded-lg p-6 text-center shadow-md hover:shadow-purple-500/40 transition cursor-pointer" onclick="openModal('modal-consultoria')">
+        <img src="/assets/images/consultoria.jpg" class="w-full h-40 object-cover rounded mb-4">
+        <h3 class="text-xl font-bold mb-2">Consultoria</h3>
+        <p>Branding e identidade criativa para seu projeto.</p>
       </div>
-      <button onclick="closeModal('modal-projetos')" class="mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Fechar</button>
-    </div>
-  </div>
-
-  <!-- ===== SUBMODAIS (cada projeto, com carrossel) ===== -->
-
-  <!-- Web → NoHeroes -->
-  <div id="modal-web-noheroes" class="modal">
-    <div class="modal-content">
-      <h2 class="text-2xl font-bold mb-4">NoHeroes</h2>
-      <p class="mb-4">Site completo com múltiplas páginas, design dark fantasy, animações com Framer Motion e modais interativos. Criado com Next.js + Tailwind.</p>
-      <div class="carousel mb-4">
-        <div class="slide"><img src="/imgs/noheroes-1.jpg" alt="NoHeroes 1"></div>
-        <div class="slide"><img src="/imgs/noheroes-2.jpg" alt="NoHeroes 2"></div>
-        <div class="slide"><img src="/imgs/noheroes-3.jpg" alt="NoHeroes 3"></div>
-        <button class="prev" onclick="changeSlide('modal-web-noheroes', -1)">‹</button>
-        <button class="next" onclick="changeSlide('modal-web-noheroes', 1)">›</button>
+      <div class="servico bg-black border border-gray-700 rounded-lg p-6 text-center shadow-md hover:shadow-purple-500/40 transition cursor-pointer" onclick="openModal('modal-projetos')">
+        <img src="/assets/images/projetos.jpg" class="w-full h-40 object-cover rounded mb-4">
+        <h3 class="text-xl font-bold mb-2">Desenvolvimento</h3>
+        <p>Planejamento e execução de projetos criativos do zero.</p>
       </div>
-      <a href="https://noheroes.vercel.app" target="_blank" class="inline-block px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-500 transition">Ver site</a>
-      <button onclick="openModal('modal-web')" class="block mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Voltar</button>
     </div>
-  </div>
-
-  <!-- Web → Outro Projeto -->
-  <div id="modal-web-projeto2" class="modal">
-    <div class="modal-content">
-      <h2 class="text-2xl font-bold mb-4">Outro Projeto</h2>
-      <p class="mb-4">Descrição resumida para você editar depois.</p>
-      <div class="carousel mb-4">
-        <div class="slide"><img src="/imgs/projeto2-1.jpg" alt="Proj2 1"></div>
-        <div class="slide"><img src="/imgs/projeto2-2.jpg" alt="Proj2 2"></div>
-        <button class="prev" onclick="changeSlide('modal-web-projeto2', -1)">‹</button>
-        <button class="next" onclick="changeSlide('modal-web-projeto2', 1)">›</button>
-      </div>
-      <button onclick="openModal('modal-web')" class="block mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Voltar</button>
+  </section>  <div class="border-t border-purple-500 shadow-[0_0_8px_#a855f7] my-12"></div>  <!-- PROJETOS -->  <section class="py-20 px-6 max-w-6xl mx-auto">
+    <h2 class="text-3xl font-semibold text-center mb-12">Projetos</h2>
+    <div class="grid md:grid-cols-2 gap-10">
+      <a href="/ROAR.html" class="block bg-cover bg-center rounded-lg h-64 flex items-end p-6 text-white relative hover:scale-105 transition-transform" style="background-image: url('/assets/images/roar.jpg');">
+        <div class="bg-black bg-opacity-50 w-full h-full absolute top-0 left-0 rounded-lg"></div>
+        <h3 class="text-2xl font-bold relative z-10">ROAR</h3>
+      </a>
+      <a href="/index.html" class="block bg-cover bg-center rounded-lg h-64 flex items-end p-6 text-white relative hover:scale-105 transition-transform" style="background-image: url('/assets/images/noheroes1.jpg');">
+        <div class="bg-black bg-opacity-50 w-full h-full absolute top-0 left-0 rounded-lg"></div>
+        <h3 class="text-2xl font-bold relative z-10">NOHEROES</h3>
+      </a>
     </div>
-  </div>
-
-  <!-- Escrita → ROAR -->
-  <div id="modal-escrita-roar" class="modal">
-    <div class="modal-content">
-      <h2 class="text-2xl font-bold mb-4">ROAR — Mangá</h2>
-      <p class="mb-4">Sinopse e detalhes do mangá ROAR. (Ajuste o texto aqui.)</p>
-      <div class="carousel mb-4">
-        <div class="slide"><img src="/imgs/roar-1.jpg" alt="ROAR 1"></div>
-        <div class="slide"><img src="/imgs/roar-2.jpg" alt="ROAR 2"></div>
-        <button class="prev" onclick="changeSlide('modal-escrita-roar', -1)">‹</button>
-        <button class="next" onclick="changeSlide('modal-escrita-roar', 1)">›</button>
-      </div>
-      <button onclick="openModal('modal-escrita')" class="block mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Voltar</button>
+  </section>  <!-- RODAPÉ -->  <footer class="bg-gray-950 py-10 mt-20 text-center text-gray-400 text-sm">
+    <p class="mb-2">© 2025 Raul – Todos os direitos reservados.</p>
+    <p class="italic">Feito com alma e propósito.</p>
+    <div class="mt-4 flex justify-center gap-6 text-white">
+      <a href="mailto:raul@email.com" class="hover:underline">Email</a>
+      <a href="https://instagram.com/_noheroe" target="_blank" class="hover:underline">Instagram</a>
+      <a href="https://github.com/seuusuario" target="_blank" class="hover:underline">GitHub</a>
+      <a href="https://www.linkedin.com/in/seuusuario" target="_blank" class="hover:underline">LinkedIn</a>
     </div>
-  </div>
-
-  <!-- Arte → Character Design -->
-  <div id="modal-arte-char" class="modal">
-    <div class="modal-content">
-      <h2 class="text-2xl font-bold mb-4">Character Design</h2>
-      <p class="mb-4">Exemplos de design de personagens em estilo dark fantasy.</p>
-      <div class="carousel mb-4">
-        <div class="slide"><img src="/imgs/char-1.jpg" alt="Char 1"></div>
-        <div class="slide"><img src="/imgs/char-2.jpg" alt="Char 2"></div>
-        <button class="prev" onclick="changeSlide('modal-arte-char', -1)">‹</button>
-        <button class="next" onclick="changeSlide('modal-arte-char', 1)">›</button>
-      </div>
-      <button onclick="openModal('modal-arte')" class="block mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Voltar</button>
-    </div>
-  </div>
-
-  <!-- Projetos → FREQ -->
-  <div id="modal-projetos-freq" class="modal">
-    <div class="modal-content">
-      <h2 class="text-2xl font-bold mb-4">FREQ — Anime</h2>
-      <p class="mb-4">Prévia animada e conceito de FREQ. (Edite o texto.)</p>
-      <div class="carousel mb-4">
-        <div class="slide"><img src="/imgs/freq-1.jpg" alt="FREQ 1"></div>
-        <div class="slide"><img src="/imgs/freq-2.jpg" alt="FREQ 2"></div>
-        <button class="prev" onclick="changeSlide('modal-projetos-freq', -1)">‹</button>
-        <button class="next" onclick="changeSlide('modal-projetos-freq', 1)">›</button>
-      </div>
-      <button onclick="openModal('modal-projetos')" class="block mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Voltar</button>
-    </div>
-  </div>
-
-  <!-- ===== SCRIPTS ===== -->
-  <script>
-    const slideIndices = {};
-
+  </footer>  <!-- MODAIS -->  <div id="modal-web" class="modal"><div class="modal-content"><h2 class="text-2xl font-bold mb-4">Web Design</h2><p>Exemplos de sites construídos com identidade única e estrutura funcional.</p><button onclick="closeModal('modal-web')" class="mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Fechar</button></div></div>
+  <div id="modal-escrita" class="modal"><div class="modal-content"><h2 class="text-2xl font-bold mb-4">Escrita</h2><p>Histórias, roteiros e universos autorais criados com profundidade e ritmo narrativo.</p><button onclick="closeModal('modal-escrita')" class="mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Fechar</button></div></div>
+  <div id="modal-arte" class="modal"><div class="modal-content"><h2 class="text-2xl font-bold mb-4">Arte Digital</h2><p>Arte autoral, personagens originais, logos e cenários criados com estilo próprio.</p><button onclick="closeModal('modal-arte')" class="mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Fechar</button></div></div>
+  <div id="modal-consultoria" class="modal"><div class="modal-content"><h2 class="text-2xl font-bold mb-4">Consultoria Criativa</h2><p>Mentorias e análises para construção de marcas, identidades e estratégias visuais.</p><button onclick="closeModal('modal-consultoria')" class="mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Fechar</button></div></div>
+  <div id="modal-projetos" class="modal"><div class="modal-content"><h2 class="text-2xl font-bold mb-4">Desenvolvimento de Projetos</h2><p>Acompanhamento completo: desde o planejamento até a entrega de projetos audiovisuais, roteiros ou campanhas digitais.</p><button onclick="closeModal('modal-projetos')" class="mt-6 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500">Fechar</button></div></div>  <script>
+    ScrollReveal().reveal('.servico:nth-child(odd)', { origin: 'left', distance: '50px', duration: 1000 });
+    ScrollReveal().reveal('.servico:nth-child(even)', { origin: 'right', distance: '50px', duration: 1000 });
     function openModal(id) {
-      document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
       document.getElementById(id).classList.add('active');
     }
     function closeModal(id) {
       document.getElementById(id).classList.remove('active');
     }
-    function openSubModal(id) {
-      openModal(id);
-      initCarousel(id);
-    }
-    function initCarousel(modalId) {
-      const slides = document.querySelectorAll(`#${modalId} .slide`);
-      slideIndices[modalId] = 0;
-      slides.forEach((s,i) => s.style.display = i===0 ? 'block' : 'none');
-    }
-    function changeSlide(modalId, n) {
-      const slides = document.querySelectorAll(`#${modalId} .slide`);
-      let idx = slideIndices[modalId] ?? 0;
-      idx = (idx + n + slides.length) % slides.length;
-      slideIndices[modalId] = idx;
-      slides.forEach((s,i) => s.style.display = i===idx ? 'block' : 'none');
-    }
-  </script>
-
-</body>
+  </script></body>
 </html>
