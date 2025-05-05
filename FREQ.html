@@ -1,214 +1,203 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>FREQ — Frequency Reality Quest</title>
-  <!-- Tailwind + Fontes -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FREQ — Family, Rituals & Emergent Quest</title>
+
+  <!-- Tailwind e fontes -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
-  <!-- ScrollReveal -->
+
+  <!-- Alpine.js e ScrollReveal -->
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <script src="https://unpkg.com/scrollreveal"></script>
+
   <style>
-    body { font-family:'Inter',sans-serif; background:#1a1a1a; color:#e5e5e5; }
-    h1,h2,h3 { font-family:'Playfair Display',serif; }
-    html { scroll-behavior:smooth; }
-    .overlay { position:absolute; inset:0; background:rgba(0,0,0,0.6); }
-    .hidden { display:none; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #ffffff;
+      color: #111827;
+    }
+    h1,h2,h3 {
+      font-family: 'Playfair Display', serif;
+    }
+    a { text-decoration: none; }
+    .overlay {
+      position: absolute; inset: 0;
+      background: rgba(255, 255, 255, 0.7);
+    }
+    html { scroll-behavior: smooth; }
   </style>
 </head>
 <body class="leading-relaxed">
 
   <!-- NAVBAR -->
-  <header class="fixed top-0 left-0 w-full bg-[#222] border-b border-[#333] z-50 px-6 py-4 flex justify-between items-center">
-    <div class="text-[#39ff14] text-2xl font-bold uppercase">FREQ</div>
-    <nav class="hidden md:flex space-x-6 text-sm">
-      <a href="#hero"           class="hover:text-[#39ff14]">Início</a>
-      <a href="#sinopse"        class="hover:text-[#39ff14]">Sinopse</a>
-      <a href="#trailer"        class="hover:text-[#39ff14]">Trailer</a>
-      <a href="#personagens"    class="hover:text-[#39ff14]">Personagens</a>
-      <a href="#universo"       class="hover:text-[#39ff14]">Terra</a>
-      <a href="#faccoes"        class="hover:text-[#39ff14]">Facções</a>
-      <a href="#tribo-real"     class="hover:text-[#39ff14]">Tribo Real</a>
-      <a href="#timeline"       class="hover:text-[#39ff14]">Linha-Tempo</a>
-      <a href="#bastidores"     class="hover:text-[#39ff14]">Bastidores</a>
-      <a href="#lenda"          class="hover:text-[#39ff14]">Lenda</a>
-      <a href="#equipe"         class="hover:text-[#39ff14]">Criador</a>
-      <a href="#cta"            class="hover:text-[#39ff14]">Apoiar</a>
+  <header x-data="{ open: false }"
+          class="fixed top-0 left-0 w-full bg-white border-b border-gray-200 z-50 px-4 py-3 flex justify-between items-center">
+    <div class="text-emerald-500 text-2xl font-bold uppercase">FREQ</div>
+    <button @click="open = !open" class="md:hidden text-emerald-500 text-2xl">
+      <span x-show="!open">☰</span>
+      <span x-show="open">✕</span>
+    </button>
+    <nav :class="open 
+        ? 'flex flex-col space-y-4 mt-3 bg-white p-4 rounded-lg shadow-lg absolute top-full left-0 w-full md:static md:flex md:flex-row md:space-x-6 md:bg-transparent md:p-0 md:shadow-none'
+        : 'hidden md:flex md:space-x-6'">
+      <a href="#sinopse" class="hover:text-emerald-500">Sinopse</a>
+      <a href="#trailer" class="hover:text-emerald-500">Trailer</a>
+      <a href="#personagens" class="hover:text-emerald-500">Personagens</a>
+      <a href="#universo" class="hover:text-emerald-500">Universo</a>
+      <a href="#tribo-real" class="hover:text-emerald-500">Tribo Real</a>
+      <a href="#equipe" class="hover:text-emerald-500">Equipe</a>
+      <a href="#cta" class="hover:text-emerald-500">Apoiar</a>
     </nav>
-    <button id="mobile-menu-button" class="md:hidden text-[#39ff14]">☰</button>
   </header>
 
-  <!-- HERO -->
-  <section id="hero" class="relative h-screen bg-cover bg-center" style="background-image:url('assets/images/freq-hero.jpg')">
+  <!-- Hero Section -->
+  <section id="principal" class="relative h-screen bg-emerald-50 bg-cover bg-center" style="background-image:url('assets/images/freq-hero.jpg')">
     <div class="overlay"></div>
     <div class="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
-      <h1 class="text-4xl md:text-6xl text-[#39ff14] font-bold mb-4">
-        FREQ<br>
-        <span class="text-2xl text-[#bbbbbb]">Frequency Reality Quest</span>
-      </h1>
-      <p class="text-lg md:text-2xl italic mb-8 text-[#bbbbbb]">
-        “🔲 INSERIR TEASER CURTO…”
-      </p>
-      <a href="#sinopse" class="bg-[#39ff14] text-black px-6 py-3 rounded-lg hover:opacity-90 transition">
-        Leia a Sinopse
-      </a>
-      <div class="mt-12 animate-bounce text-[#39ff14]">↓</div>
+      <h1 class="text-4xl md:text-6xl text-emerald-500 font-bold mb-4">FREQ<br/><span class="text-xl md:text-2xl text-gray-700">Family, Rituals & Emergent Quest</span></h1>
+      <p class="text-lg md:text-xl italic mb-8 text-gray-600">Inserir texto</p>
+      <a href="#sinopse" class="bg-emerald-500 text-white px-6 py-3 rounded-xl hover:bg-emerald-600 transition">Leia a Sinopse</a>
+      <div class="mt-12 animate-bounce text-emerald-500">↓</div>
     </div>
   </section>
 
-  <main class="pt-32 space-y-24 px-6 max-w-5xl mx-auto">
+  <main class="pt-32 space-y-24">
 
-    <!-- 1. SINOPSE -->
-    <section id="sinopse">
-      <h2 class="text-3xl font-bold text-[#39ff14] mb-4">Sinopse</h2>
-      <p class="text-lg italic text-[#bbbbbb] mb-4">
-        “🔲 INSERIR SINOPSE CINEMATOGRÁFICA…”
-      </p>
-      <p class="text-base text-[#ccc]">
-        🔲 INSERIR DESCRIÇÃO RESUMIDA…
-      </p>
+    <!-- 2. Sinopse -->
+    <section id="sinopse" class="py-16 px-6 bg-white">
+      <h2 class="text-3xl text-emerald-500 font-bold mb-6">Sinopse</h2>
+      <div class="max-w-3xl mx-auto text-gray-700">
+        <p>Inserir texto</p>
+      </div>
     </section>
 
-    <!-- 2. TRAILER -->
-    <section id="trailer" class="text-center">
-      <h2 class="text-3xl font-bold text-[#39ff14] mb-4">Trailer & Prévia</h2>
+    <!-- 3. Trailer -->
+    <section id="trailer" class="py-16 px-6 text-center">
+      <h2 class="text-3xl text-emerald-500 font-bold mb-6">Trailer & Prévia</h2>
       <div class="max-w-4xl mx-auto">
-        <!-- vídeo ou placeholder -->
-        <div class="bg-[#333] h-48 flex items-center justify-center text-[#777]">
-          🔲 VIDEO / TEASER AQUI
+        <!-- Vídeo -->
+        <video controls class="w-full rounded-lg shadow-lg">
+          <source src="assets/videos/freq-teaser.mp4" type="video/mp4">
+          Seu navegador não suporta vídeo.
+        </video>
+      </div>
+    </section>
+
+    <!-- 4. Personagens Principais -->
+    <section id="personagens" class="py-16 px-6 bg-white">
+      <h2 class="text-3xl text-emerald-500 font-bold mb-6 text-center">Personagens Principais</h2>
+      <div class="overflow-hidden relative max-w-lg mx-auto">
+        <!-- carrossel simplificado, manter estrutura original -->
+        <div id="carousel-track" class="flex transition-transform duration-500 ease-in-out">
+          <!-- inserir cards conforme template ROAR -->
+          <div class="flex-shrink-0 w-full px-4">
+            <div class="bg-white border-2 border-emerald-500 rounded-xl shadow p-4">
+              <p>Inserir texto</p>
+            </div>
+          </div>
+          <!-- mais cards... -->
         </div>
+        <button onclick="prevCard()" class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-emerald-500 text-white p-3 rounded-full hover:bg-emerald-600">←</button>
+        <button onclick="nextCard()" class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-emerald-500 text-white p-3 rounded-full hover:bg-emerald-600">→</button>
       </div>
     </section>
 
-    <!-- 3. PERSONAGENS -->
-    <section id="personagens">
-      <h2 class="text-3xl font-bold text-[#39ff14] mb-4">Personagens Principais</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="p-6 bg-[#222] border border-[#333] rounded-lg">🔲 Ryu –Descrição mínima…</div>
-        <div class="p-6 bg-[#222] border border-[#333] rounded-lg">🔲 Francisco –…</div>
-        <div class="p-6 bg-[#222] border border-[#333] rounded-lg">🔲 Bruno –…</div>
-        <div class="p-6 bg-[#222] border border-[#333] rounded-lg">🔲 Yohan –…</div>
-        <div class="p-6 bg-[#222] border border-[#333] rounded-lg">🔲 Luiz –…</div>
-        <div class="p-6 bg-[#222] border border-[#333] rounded-lg">🔲 Gabriel –…</div>
+    <!-- 5. Universo & Ambientação -->
+    <section id="universo" class="py-16 px-8 max-w-5xl mx-auto bg-white rounded-lg shadow-md">
+      <h2 class="text-3xl font-bold text-emerald-500 mb-4">Universo & Ambientação</h2>
+      <p class="text-gray-700 mb-4">Inserir texto</p>
+      <!-- Tabs -->
+      <div class="flex flex-wrap gap-4 justify-center mb-6">
+        <button data-tab="tab-fracoes" class="tab-btn px-4 py-2 bg-green-50 hover:bg-green-100 rounded text-emerald-500">Fações</button>
+        <button data-tab="tab-magias" class="tab-btn px-4 py-2 bg-green-50 hover:bg-green-100 rounded text-emerald-500">Magia</button>
+        <!-- etc -->
+      </div>
+      <div id="tab-fracoes" class="tab-content space-y-4 hidden">
+        <p>Inserir texto</p>
+      </div>
+      <div id="tab-magias" class="tab-content space-y-4 hidden">
+        <p>Inserir texto</p>
+      </div>
+      <!-- mais tabs -->
+    </section>
+
+    <!-- 6. Tribo Real (substitui evento caótico) -->
+    <section id="tribo-real" class="py-16 px-6 bg-white">
+      <h2 class="text-3xl text-emerald-500 font-bold mb-6 text-center">Tribo Real</h2>
+      <div class="max-w-4xl mx-auto text-gray-700 space-y-4">
+        <p>Inserir texto</p>
       </div>
     </section>
 
-    <!-- 4. UNIVERSO (TERRA) -->
-    <section id="universo">
-      <h2 class="text-3xl font-bold text-[#39ff14] mb-4">Terra: O Mundo de FREQ</h2>
-      <div class="p-6 bg-[#222] border border-[#333] rounded-lg space-y-3 text-[#ccc]">
-        🔲 INSERIR PÁRAGRAFOS SOBRE AMBIENTAÇÃO…
-      </div>
+    <!-- 7. Equipe / Criador -->
+    <section id="equipe" class="py-20 px-6 bg-white text-center">
+      <h2 class="text-4xl font-bold text-emerald-500 mb-4">Por trás de FREQ</h2>
+      <p class="text-gray-700 italic mb-6">Inserir texto</p>
     </section>
 
-    <!-- 5. FACÇÕES & OPOSIÇÃO -->
-    <section id="faccoes">
-      <h2 class="text-3xl font-bold text-[#39ff14] mb-4">Facções & Oposição</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="p-6 bg-[#222] border border-[#333] rounded-lg">
-          <h3 class="font-bold mb-2">O Sistema</h3>
-          🔲 DESCRIÇÃO…
-        </div>
-        <div class="p-6 bg-[#222] border border-[#333] rounded-lg">
-          <h3 class="font-bold mb-2">A Tribo</h3>
-          🔲 DESCRIÇÃO…
-        </div>
-      </div>
-    </section>
-
-    <!-- 6. TRIBO REAL -->
-    <section id="tribo-real">
-      <h2 class="text-3xl font-bold text-[#39ff14] mb-4">Tribo Real</h2>
-      <p class="text-[#ccc]">
-        🔲 INSERIR BREVE EXPLICAÇÃO…
-      </p>
-    </section>
-
-    <!-- 7. LINHA DO TEMPO -->
-    <section id="timeline">
-      <h2 class="text-3xl font-bold text-[#39ff14] mb-4">Linha do Tempo</h2>
-      <div class="overflow-x-auto">
-        <ul class="flex space-x-8">
-          <li class="min-w-[200px]"><div class="font-bold">Ato I</div><div class="text-[#ccc]">Título I</div></li>
-          <li class="min-w-[200px]"><div class="font-bold">Ato II</div><div class="text-[#ccc]">Título II</div></li>
-          <li class="min-w-[200px]"><div class="font-bold">Ato III</div><div class="text-[#ccc]">Título III</div></li>
-          <li class="min-w-[200px]"><div class="font-bold">Ato IV</div><div class="text-[#ccc]">Título IV</div></li>
-          <li class="min-w-[200px]"><div class="font-bold">Ato V</div><div class="text-[#ccc]">Título V</div></li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- 8. BASTIDORES -->
-    <section id="bastidores">
-      <h2 class="text-3xl font-bold text-[#39ff14] mb-4">Bastidores & Processo Criativo</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-[#222] h-32 flex items-center justify-center text-[#777]">🔲 IMG1</div>
-        <div class="bg-[#222] h-32 flex items-center justify-center text-[#777]">🔲 IMG2</div>
-        <div class="bg-[#222] h-32 flex items-center justify-center text-[#777]">🔲 IMG3</div>
-      </div>
-    </section>
-
-    <!-- 9. LENDA -->
-    <section id="lenda">
-      <h2 class="text-3xl font-bold text-[#39ff14] mb-4">Mitos & Lendas</h2>
-      <ul class="space-y-4 text-[#ccc]">
-        <li>🔲 Oni Vagante</li>
-        <li>🔲 O Bom Dragão</li>
-        <li>🔲 Dragões Barões Anciãos</li>
-        <li>🔲 Valdaryon</li>
-        <li>🔲 Floresta Negra</li>
-      </ul>
-    </section>
-
-    <!-- 10. EQUIPE / CRIADOR -->
-    <section id="equipe" class="text-center">
-      <h2 class="text-3xl font-bold text-[#39ff14] mb-2">Criado por NoHeroe</h2>
-      <p class="text-[#bbbbbb] mb-4">Raul Souza Silva — o primeiro brasileiro produzindo um anime original.</p>
-      <a href="sobre.html" class="underline hover:text-[#39ff14]">Saiba mais →</a>
-    </section>
-
-    <!-- 11. CTA / APOIO -->
-    <section id="cta" class="text-center bg-[#222] p-8 rounded-lg">
-      <h2 class="text-3xl font-bold text-[#39ff14] mb-4">Quer apoiar?</h2>
+    <!-- 8. CTA -->
+    <section id="cta" class="py-16 px-6 bg-emerald-50 text-center rounded-lg">
+      <h2 class="text-3xl text-emerald-700 font-bold mb-6">Quer apoiar esse universo?</h2>
       <div class="flex flex-col md:flex-row justify-center gap-4">
-        <a href="apoiar.html" class="px-6 py-3 bg-[#39ff14] text-black rounded">Seja Patrono</a>
-        <a href="#" class="px-6 py-3 border border-[#39ff14] rounded hover:bg-[#39ff14]">Newsletter</a>
+        <a href="#" class="px-6 py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition">Seja Patrono</a>
+        <a href="#" class="px-6 py-3 bg-white text-emerald-500 border border-emerald-500 rounded-lg hover:bg-emerald-50 transition">Saiba Mais</a>
       </div>
     </section>
 
-    <!-- 12. DEPOIMENTOS (oculto) -->
-    <section id="depoimentos" class="hidden text-center">
-      <h2 class="text-3xl font-bold text-[#39ff14] mb-2">Reações da Comunidade</h2>
-      <p class="text-[#bbbbbb]">Em breve!</p>
+    <!-- 9. Depoimentos (oculto) -->
+    <section id="depoimentos" class="py-16 px-6 hidden">
+      <h2 class="text-3xl text-emerald-500 font-bold mb-6">Reações da Comunidade</h2>
+      <p class="text-gray-700">Em breve!</p>
     </section>
 
   </main>
 
-  <!-- RODAPÉ -->
-  <footer class="py-8 text-center text-sm text-[#777] mt-16 border-t border-[#333]">
-    <nav class="space-x-4 mb-4">
-      <a href="#hero" class="hover:text-[#39ff14]">Topo</a>
-      <a href="freq.html" class="hover:text-[#39ff14]">FREQ</a>
-      <a href="ROAR.html" class="hover:text-[#39ff14]">ROAR</a>
-      <a href="contato.html" class="hover:text-[#39ff14]">Contato</a>
+  <!-- Rodapé -->
+  <footer class="py-8 text-center text-gray-600 border-t border-gray-200 mt-12">
+    <a href="#principal" class="block mb-4 hover:text-emerald-500">Voltar ao Topo</a>
+    <nav class="space-x-4">
+      <a href="freq.html" class="hover:text-emerald-500">FREQ</a>
+      <a href="sobre.html" class="hover:text-emerald-500">Sobre</a>
+      <a href="contato.html" class="hover:text-emerald-500">Contato</a>
     </nav>
-    <p>© 2025 NoHeroes. Explore. Escolha. Caia. Evolua.</p>
+    <p class="mt-4 italic">Explore. Escolha. Evolua.</p>
+    <p class="mt-2">© 2025 FREQ. Todos os direitos reservados.</p>
   </footer>
 
-  <!-- SCRIPTS -->
+  <!-- Scripts -->
   <script>
+    // carrossel personagens (simples)
+    const track = document.getElementById('carousel-track');
+    let idx = 0, total = track ? track.children.length : 0;
+    function updateCarousel() { track.style.transform = `translateX(-${idx * 100}%)`; }
+    function nextCard(){ idx = (idx+1)%total; updateCarousel(); }
+    function prevCard(){ idx = (idx-1+total)%total; updateCarousel(); }
+    if(track) updateCarousel();
+
+    // Tabs
+    document.querySelectorAll('.tab-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        document.querySelectorAll('.tab-content').forEach(tc=>tc.classList.add('hidden'));
+        document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('bg-emerald-100','text-emerald-700'));
+        const tab = document.getElementById(btn.dataset.tab);
+        tab.classList.remove('hidden');
+        btn.classList.add('bg-emerald-100','text-emerald-700');
+      });
+    });
+    // inicializa primeiro tab
+    const firstBtn = document.querySelector('.tab-btn');
+    if(firstBtn) firstBtn.click();
+
+    // Mobile menu already via Alpine.js
+
     // ScrollReveal
     ScrollReveal().reveal('section', {
-      delay:200, duration:1000, origin:'bottom', distance:'50px', reset:true
+      delay: 200, duration: 1000, origin: 'bottom', distance: '50px', reset: false
     });
-    // Mobile menu
-    document.getElementById('mobile-menu-button')
-      .addEventListener('click',()=> {
-        const m = document.getElementById('mobile-menu');
-        m.classList.toggle('hidden');
-        m.classList.toggle('flex');
-      });
   </script>
 </body>
 </html>
