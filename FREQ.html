@@ -296,31 +296,66 @@ Jovem vitalista atormentado por um segredo terrível. Carrega cicatrizes física
 </section>
 
     <!-- 5. Universo & Ambientação -->
-    <section id="universo" class="py-16 px-8 max-w-5xl mx-auto bg-white rounded-lg shadow-md">
-      <h2 class="text-3xl font-bold text-emerald-500 mb-4">Universo & Ambientação</h2>
-      <p class="text-gray-700 mb-4">Inserir texto</p>
-      <!-- Tabs -->
-      <div class="flex flex-wrap gap-4 justify-center mb-6">
-        <button data-tab="tab-fracoes" class="tab-btn px-4 py-2 bg-green-50 hover:bg-green-100 rounded text-emerald-500">Fações</button>
-        <button data-tab="tab-magias" class="tab-btn px-4 py-2 bg-green-50 hover:bg-green-100 rounded text-emerald-500">Magia</button>
-        <!-- etc -->
-      </div>
-      <div id="tab-fracoes" class="tab-content space-y-4 hidden">
-        <p>Inserir texto</p>
-      </div>
-      <div id="tab-magias" class="tab-content space-y-4 hidden">
-        <p>Inserir texto</p>
-      </div>
-      <!-- mais tabs -->
-    </section>
+<section id="universo" class="py-16 px-8 max-w-5xl mx-auto bg-white rounded-lg shadow-md">
+  <h2 class="text-3xl font-bold text-emerald-500 mb-6">Universo & Ambientação</h2>
+  <div class="text-gray-700 space-y-6">
+    <p>
+      Em <strong>FREQ</strong>, o palco é um Brasil futurista de 2034, 
+      ecoando o mesmo peso e misticismo de <em>ROAR</em>, mas agora ancorado numa realidade terrestre. 
+      As avenidas brilham com letreiros de néon enquanto prédios inteligentes se erguem sobre 
+      córregos poluídos e favelas que se espalham pelos morros.  
+    </p>
+    <p>
+      <strong>Tecnologia em colapso:</strong> robôs e IA fazem parte da rotina, 
+      mas a infraestrutura falha — trens parados, energia oscilante,  
+      cidades que respiram decadência entre avanços desconexos.  
+    </p>
+    <p>
+      <strong>Sociedade alienada:</strong> vícios industriais e conforto instantâneo 
+      criaram uma legião de seres desconectados de si mesmos.  
+      O “Sistema” – uma teia de corporações e algoritmos – suprime a individualidade 
+      e persegue quem ousa manifestar poderes além do comum.
+    </p>
+    <p>
+      <strong>Magia rarefeita:</strong> as leis místicas de Caelum continuam atuando na Terra, 
+      mas foram sufocadas por poluição e ceticismo.  
+      Vitalistas, como Ryu, são vistos como aberrações, caçados ou usados como cobaias.
+    </p>
+    <p>
+      <strong>Brasil, 2034:</strong> pouco mudou na exuberância dos biomas — 
+      a Amazônia, o Pantanal, a Mata Atlântica ainda resistem.  
+      Mas a capital pulsa num ritmo frenético, entre favelas verticais e arranha-céus 
+      que se desfazem no abandono. É nesse contraste que Ryu busca vestígios de seu passado.
+    </p>
+    <p>
+      <strong>Conexão com Caelum:</strong> as dimensões rasgadas carregaram outros como ele.  
+      Alguns se adaptaram e escolheram permanecer; outros viram na Tribo um farol de equilíbrio.  
+      Entre memórias fragmentadas e sussurros ancestrais, Ryu descobre que a única forma de  
+      restaurar a magia — e a si mesmo — é harmonizar a frequência dos dois mundos.
+    </p>
+  </div>
+</section>
 
     <!-- 6. Tribo Real (substitui evento caótico) -->
-    <section id="tribo-real" class="py-16 px-6 bg-white">
-      <h2 class="text-3xl text-emerald-500 font-bold mb-6 text-center">Tribo Real</h2>
-      <div class="max-w-4xl mx-auto text-gray-700 space-y-4">
-        <p>Inserir texto</p>
-      </div>
-    </section>
+    <section id="tribo" class="py-16 px-6 bg-white text-gray-700 max-w-4xl mx-auto space-y-4">
+  <h2 class="text-3xl text-emerald-500 font-bold mb-6 text-center">Tribo</h2>
+  <p>
+    Em um mundo onde a espiritualidade ancestral se entrelaça com a modernidade, uma tribo emerge como guardiã de saberes esquecidos.
+    Seus membros, conectados por laços de sangue e propósito, vivem em harmonia com a natureza, buscando equilíbrio entre corpo, mente e espírito.
+  </p>
+  <p>
+    Cada personagem carrega consigo uma missão, um dom e um desafio — refletindo as complexidades da existência humana em sua forma mais pura.
+  </p>
+
+  <!-- Botão para abrir o modal -->
+<div class="text-center mt-6">
+  <button onclick="document.getElementById('modalTriboReal').classList.remove('hidden')"
+          class="bg-emerald-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-emerald-600 transition duration-300">
+    Tribo Real
+  </button>
+</div>
+
+
 
     <!-- 7. Equipe / Criador -->
     <section id="equipe" class="py-20 px-6 bg-white text-center">
@@ -425,5 +460,44 @@ function closeModal() {
   document.getElementById('img-modal').classList.add('hidden');
 }
   </script>
+<!-- Modal -->
+<div id="modalTriboReal"
+     class="fixed inset-0 z-50 hidden bg-gradient-to-br from-emerald-100 via-white to-emerald-200 bg-opacity-95 flex items-center justify-center">
+  <div class="bg-white p-6 rounded-2xl shadow-2xl max-w-md w-full animate-fade-in border border-emerald-400 relative text-gray-800">
+    <button onclick="document.getElementById('modalTriboReal').classList.add('hidden')"
+            class="absolute top-3 right-3 text-gray-500 hover:text-emerald-600 text-xl font-bold">&times;</button>
+    <h2 class="text-2xl font-bold text-emerald-600 mb-4">Tribo Real</h2>
+    <p class="mb-4">
+      A tribo apresentada neste universo é inspirada em uma <strong>comunidade real</strong>, composta por indivíduos que vivem e compartilham valores semelhantes aos retratados. Cada personagem tem como base uma <strong>pessoa existente</strong>, cujas histórias e experiências enriquecem a narrativa e conferem <strong>autenticidade</strong> ao enredo.
+    </p>
+    <h3 class="text-xl font-semibold text-emerald-700 mb-2">Neantropia</h3>
+    <p class="mb-4">
+      <strong>Neantropia</strong> é um movimento idealizado por <strong>Gabriel Egg</strong>, que propõe um retorno às raízes da humanidade, resgatando a <strong>essência perdida</strong> do ser humano. Baseando-se em princípios de <strong>ancestralidade</strong>, <strong>transcendência</strong> e <strong>plenitude biológica</strong>, a Neantropia busca despertar a <strong>condição divina</strong> inerente a cada indivíduo, promovendo uma revolução <strong>interior e coletiva</strong> em direção a um novo paradigma de existência.
+    </p>
+    <div class="text-right">
+      <button onclick="document.getElementById('modalTriboReal').classList.add('hidden')"
+              class="mt-4 bg-emerald-500 text-white px-4 py-2 rounded hover:bg-emerald-600 transition">
+        Fechar
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Animação CSS -->
+<style>
+  @keyframes fadeInModal {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  .animate-fade-in {
+    animation: fadeInModal 0.5s ease-out;
+  }
+</style>
 </body>
 </html>
