@@ -80,7 +80,10 @@
         <p>Quando as dimensões rasgaram-se como véus de papel, Ryu foi engolido pelo caos.<br>
       Ainda menino, viu sua mãe ser ferida por algo que não compreendia — pouco antes de ser puxado para o abismo.
     </p>
-    <p>
+    <div x-data="{ aberto: false }">
+      <template x-if="aberto">
+        <div class="space-y-4">
+          <p>
       Despertou em outro mundo. Um mundo saturado por luzes artificiais, ruído constante e corpos que se arrastavam entre concreto e promessas quebradas.<br>
       Sem magia. Sem essência. Sem memória clara do que havia perdido.
     </p>
@@ -105,8 +108,17 @@
     <p class="italic text-[#2fc184] font-medium">
       FREQ é o grito de um vitalista esquecido... que decidiu acordar.
 </p>
-      </div>
-    </section>
+        </div>
+      </template>
+
+      <button @click="aberto = !aberto"
+              class="mt-4 text-emerald-600 hover:underline font-semibold">
+        <span x-show="!aberto">Ler mais...</span>
+        <span x-show="aberto">Ocultar</span>
+      </button>
+    </div>
+  </div>
+</section>
 
     <!-- 3. Trailer -->
     <section id="trailer" class="py-16 px-6 text-center">
