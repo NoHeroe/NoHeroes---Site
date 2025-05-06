@@ -29,6 +29,12 @@
       background: rgba(255, 255, 255, 0.7);
     }
     html { scroll-behavior: smooth; }
+#carousel-track {
+  scroll-snap-type: x mandatory;
+}
+#carousel-track > * {
+  scroll-snap-align: center;
+}
   </style>
 </head>
 <body class="leading-relaxed">
@@ -344,13 +350,29 @@ Jovem vitalista atormentado por um segredo terrível. Carrega cicatrizes física
 
   <!-- Scripts -->
   <script>
-    // carrossel personagens (simples)
-    const track = document.getElementById('carousel-track');
-    let idx = 0, total = track ? track.children.length : 0;
-    function updateCarousel() { track.style.transform = `translateX(-${idx * 100}%)`; }
-    function nextCard(){ idx = (idx+1)%total; updateCarousel(); }
-    function prevCard(){ idx = (idx-1+total)%total; updateCarousel(); }
-    if(track) updateCarousel();
+  const track = document.getElementById('carousel-track');
+  let idx = 0;
+  const cards = track ? Array.from(track.children) : [];
+  const total = cards.length;
+
+  function updateCarousel() {
+    if (!track || cards.length === 0) return;
+    const gap = parseFloat(getComputedStyle(track).gap) || 0;
+    const cardWidth = cards[0].getBoundingClientRect().width + gap;
+    track.scrollTo({ left: idx * cardWidth, behavior: 'smooth' });
+  }
+
+  function nextCard() {
+    idx = Math.min(idx + 1, total - 1);
+    updateCarousel();
+  }
+  function prevCard() {
+    idx = Math.max(idx - 1, 0);
+    updateCarousel();
+  }
+
+  // inicia no primeiro card
+  updateCarousel();
 
     // Tabs
     document.querySelectorAll('.tab-btn').forEach(btn=>{
