@@ -317,7 +317,10 @@ Jovem vitalista atormentado por um segredo terrível. Carrega cicatrizes física
       As avenidas brilham com letreiros de néon enquanto prédios inteligentes se erguem sobre 
       córregos poluídos e favelas que se espalham pelos morros.  
     </p>
-    <p>
+    <div x-data="{ aberto: false }">
+      <template x-if="aberto">
+        <div class="space-y-4">
+          <p>
       <strong>Tecnologia em colapso:</strong> robôs e IA fazem parte da rotina, 
       mas a infraestrutura falha — trens parados, energia oscilante,  
       cidades que respiram decadência entre avanços desconexos.  
@@ -345,6 +348,15 @@ Jovem vitalista atormentado por um segredo terrível. Carrega cicatrizes física
       Entre memórias fragmentadas e sussurros ancestrais, Ryu descobre que a única forma de  
       restaurar a magia — e a si mesmo — é harmonizar a frequência dos dois mundos.
     </p>
+        </div>
+      </template>
+
+      <button @click="aberto = !aberto"
+              class="mt-4 text-emerald-600 hover:underline font-semibold">
+        <span x-show="!aberto">Ler mais...</span>
+        <span x-show="aberto">Ocultar</span>
+      </button>
+    </div>
   </div>
 </section>
 
