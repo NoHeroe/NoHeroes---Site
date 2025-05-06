@@ -117,42 +117,41 @@
     <!-- 4. Personagens Principais -->
     <section id="personagens" class="py-16 px-6 bg-white">
       <h2 class="text-3xl text-emerald-500 font-bold mb-6 text-center">Personagens Principais</h2>
-      <div class="overflow-hidden relative max-w-lg mx-auto">
-        <!-- carrossel simplificado, manter estrutura original -->
-        <div id="carousel-track" class="flex transition-transform duration-500 ease-in-out">
-          <!-- inserir cards conforme template ROAR -->
-          <div class="flex-shrink-0 w-full px-4">
-            <div class="bg-white border-2 border-emerald-500 rounded-xl shadow p-4">
-              <p>Inserir texto</p>
+
+      <div class="relative max-w-3xl mx-auto">
+
+        <!-- TRACK DO CARROSSEL -->
+        <div id="carousel-track"
+             class="flex gap-6 overflow-hidden snap-x snap-mandatory transition-transform duration-500 ease-in-out">
+          <!-- Cole aqui todos os seus cards (cada bloco .flex-shrink-0) -->
+          <!-- Exemplo de dois cards: -->
+          <div class="flex-shrink-0 w-full px-4 snap-center">
+            <!-- Card Ryu -->
+            <div class="relative w-[300px] h-[450px] bg-[#1c1c1c] rounded-xl shadow-lg overflow-hidden mx-auto">
+              <img src="assets/images/ryu.jpg" alt="Ryu" class="w-full h-full object-cover"/>
+              <button class="absolute top-2 right-2 bg-white bg-opacity-50 rounded-full p-1"
+                      onclick="openModal('assets/images/ryu.jpg','Ryu')">🔎</button>
+              <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-70 p-4">
+                <h3 class="text-xl font-bold text-[#8f4fff]">Ryu</h3>
+                <p class="text-sm text-gray-200">Vitalista da frequência (protagonista).</p>
+              </div>
             </div>
           </div>
-<!-- Card Ryu -->
-<div class="flex-shrink-0 w-full px-4 flex justify-center">
-  <div class="relative w-[300px] h-[450px] bg-[#1c1c1c] rounded-xl shadow-lg overflow-hidden">
-    <img src="assets/images/ryu.jpg" alt="Ryu" class="w-full h-full object-cover"/>
-    <button class="absolute top-2 right-2 bg-white bg-opacity-50 rounded-full p-1"
-            onclick="openModal('assets/images/ryu.jpg','Ryu')">🔎</button>
-    <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-70 p-4">
-      <h3 class="text-xl font-bold text-[#8f4fff]">Ryu</h3>
-      <p class="text-sm text-gray-200">Vitalista da frequência (protagonista).</p>
-    </div>
-  </div>
-</div>
 
-<!-- Card Gabriel -->
-<div class="flex-shrink-0 w-full px-4 flex justify-center">
-  <div class="relative w-[300px] h-[450px] bg-[#1c1c1c] rounded-xl shadow-lg overflow-hidden">
-    <img src="assets/images/gabriel.jpg" alt="Gabriel" class="w-full h-full object-cover"/>
-    <button class="absolute top-2 right-2 bg-white bg-opacity-50 rounded-full p-1"
-            onclick="openModal('assets/images/gabriel.jpg','Gabriel')">🔎</button>
-    <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-70 p-4">
-      <h3 class="text-xl font-bold text-[#8f4fff]">Gabriel</h3>
-      <p class="text-sm text-gray-200">Ancião da tribo.</p>
-    </div>
-  </div>
-</div>
+          <div class="flex-shrink-0 w-full px-4 snap-center">
+            <!-- Card Gabriel -->
+            <div class="relative w-[300px] h-[450px] bg-[#1c1c1c] rounded-xl shadow-lg overflow-hidden mx-auto">
+              <img src="assets/images/gabriel.jpg" alt="Gabriel" class="w-full h-full object-cover"/>
+              <button class="absolute top-2 right-2 bg-white bg-opacity-50 rounded-full p-1"
+                      onclick="openModal('assets/images/gabriel.jpg','Gabriel')">🔎</button>
+              <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-70 p-4">
+                <h3 class="text-xl font-bold text-[#8f4fff]">Gabriel</h3>
+                <p class="text-sm text-gray-200">Ancião da tribo.</p>
+              </div>
+            </div>
+          </div>
 
-<!-- Card Arbon -->
+          <!-- Card Arbon -->
 <div class="flex-shrink-0 w-full px-4 flex justify-center">
   <div class="relative w-[300px] h-[450px] bg-[#1c1c1c] rounded-xl shadow-lg overflow-hidden">
     <img src="assets/images/arbon.jpg" alt="Arbon" class="w-full h-full object-cover"/>
@@ -264,10 +263,19 @@
               <h3 class="text-xl font-bold text-[#8f4fff]">Azuos</h3>
               <p class="text-sm text-gray-200">O portador da Marca Negra.
 Jovem vitalista atormentado por um segredo terrível. Carrega cicatrizes físicas e emocionais. Busca respostas sobre seu passado e sobre a entidade que habita sua alma.</p>
-  <!-- mais cards... -->
+
         </div>
-        <button onclick="prevCard()" class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-emerald-500 text-white p-3 rounded-full hover:bg-emerald-600">←</button>
-        <button onclick="nextCard()" class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-emerald-500 text-white p-3 rounded-full hover:bg-emerald-600">→</button>
+
+        <!-- BOTÕES DE NAVEGAÇÃO -->
+        <button onclick="prevCard()"
+                class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-emerald-500 text-white p-3 rounded-full hover:bg-emerald-600">
+          ←
+        </button>
+        <button onclick="nextCard()"
+                class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-emerald-500 text-white p-3 rounded-full hover:bg-emerald-600">
+          →
+        </button>
+
       </div>
     </section>
 
