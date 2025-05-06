@@ -177,7 +177,11 @@
           <p class="italic text-lg text-gray-300 mb-4">“Quando o espírito é esmagado... o rugido é a única resposta.”</p>
   <p class="text-base leading-relaxed text-[#ccc]">
     Ele correu pelas sombras, sem memória clara... apenas dor. O que o perseguia, talvez fosse mais antigo que os próprios deuses.  
-    <br><br>
+<p>
+<div x-data="{ aberto: false }">
+  <template x-if="aberto">
+    <div class="space-y-4 text-[#b58dff]">
+      <p>
     Azuos foi encontrado desacordado na floresta, marcado por algo que não devia existir — uma marca negra que arde como um lembrete de que ele não é mais apenas humano.  
     <br><br>
     Em Sublicus, terra dilacerada por feras mágicas, guerras esquecidas e a tirania dos dragões, sobreviver é uma arte. As nações Aeon e Kaleidos estão prestes a colidir. Apenas quatro clãs mantêm o frágil equilíbrio... por enquanto.  
@@ -187,6 +191,15 @@
     Mas há ecos... memórias soterradas, cicatrizes que falam. E quando tudo que resta é silêncio  
     <strong>…ele ruge.</strong>
   </p>
+    </div>
+  </template>
+
+  <button @click="aberto = !aberto"
+          class="mt-4 text-[#b58dff] hover:underline font-semibold">
+    <span x-show="!aberto">Ler mais...</span>
+    <span x-show="aberto">Ocultar</span>
+  </button>
+</div>
 </section>
 
     <!-- 3. Trailer ou Prévia -->
