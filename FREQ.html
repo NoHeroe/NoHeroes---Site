@@ -359,9 +359,45 @@ Jovem vitalista atormentado por um segredo terrível. Carrega cicatrizes física
 
     <!-- 7. Equipe / Criador -->
     <section id="equipe" class="py-20 px-6 bg-white text-center">
-      <h2 class="text-4xl font-bold text-emerald-500 mb-4">Por trás de FREQ</h2>
-      <p class="text-gray-700 italic mb-6">Inserir texto</p>
-    </section>
+  <h2 class="text-4xl font-bold text-emerald-500 mb-4">Por trás de FREQ</h2>
+
+  <div class="max-w-3xl mx-auto text-gray-700 text-left">
+    <p class="italic mb-4">
+      FREQ nasceu da colisão entre dois mundos: o que existe fora — saturado de estímulos, algoritmos e ruído — e o que pulsa dentro, feito de silêncio, dor e verdade.
+    </p>
+
+    <div x-data="{ aberto: false }">
+      <template x-if="aberto">
+        <div class="space-y-4">
+          <p>
+            A obra é inspirada em vivências reais. Cada personagem representa mais do que uma figura fictícia: são espelhos de pessoas vivas, parte de uma tribo que ousa trilhar um caminho fora da norma.
+          </p>
+          <p>
+            Criado como uma ponte entre realidades, <strong>FREQ é também um chamado</strong> — para os esquecidos de si, para os cansados da ilusão, para os que sentem que há algo mais.
+          </p>
+          <p>
+            O autor canaliza experiências de crise, cura e reconexão com o que há de mais ancestral, traduzindo isso em uma jornada visual e simbólica. Este projeto é uma oferenda ao tempo, ao espírito... e àqueles que ainda escutam.
+          </p>
+          <p>
+            Embora tenha identidade própria, <strong>FREQ funciona como um complemento ao universo de ROAR</strong>. Enquanto ROAR mergulha em temas densos e uma jornada épica marcada por dor, fé e redenção, FREQ propõe um caminho mais leve, acessível e voltado ao despertar de consciência por meio do entretenimento.
+          </p>
+          <p>
+            Com uma narrativa menos violenta e estética mais lúdica, FREQ é pensado para alcançar também o público mais jovem — sem abrir mão da profundidade. <strong>É uma obra de iniciação</strong>, que transmite ensinamentos, provoca reflexões e diverte ao mesmo tempo.
+          </p>
+          <p>
+            Curiosamente, Ryu foi inicialmente concebido como um aliado de Azuos, em uma futura expansão do universo de ROAR — o que <em>ainda pode se concretizar</em>. Mas antes disso, ele precisava de sua própria voz. FREQ é essa voz.
+          </p>
+        </div>
+      </template>
+
+      <button @click="aberto = !aberto"
+              class="mt-4 text-emerald-600 hover:underline font-semibold">
+        <span x-show="!aberto">Ler mais...</span>
+        <span x-show="aberto">Ocultar</span>
+      </button>
+    </div>
+  </div>
+</section>
 
     <!-- 8. CTA -->
     <section id="cta" class="py-16 px-6 bg-emerald-50 text-center rounded-lg">
