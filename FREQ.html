@@ -48,7 +48,7 @@
       <span x-show="open">✕</span>
     </button>
     <nav :class="open 
-        ? 'flex flex-col space-y-4 mt-3 bg-white p-4 rounded-lg shadow-lg absolute top-full left-0 w-full md:static md:flex md:flex-row md:space-x-6 md:bg-transparent md:p-0 md:shadow-none'
+        ? 'flex flex-col space-y-4 mt-3 bg-white p-4 rounded-lg shadow-lg absolute top-full left-0 w-full md:static md:flex md:flex-row md:space-x-4 md:bg-transparent md:p-0 md:shadow-none'
         : 'hidden md:flex md:space-x-6'">
       <a href="#sinopse" class="hover:text-emerald-500">Sinopse</a>
       <a href="#trailer" class="hover:text-emerald-500">Trailer</a>
@@ -344,6 +344,17 @@ Jovem vitalista atormentado por um segredo terrível. Carrega cicatrizes física
     </section>
 
   </main>
+<!-- LIGHTBOX DE IMAGENS -->
+<div id="img-modal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50" onclick="closeModal()">
+  <div class="relative" onclick="event.stopPropagation()">
+    <img id="modal-img" class="max-w-[90vw] max-h-[90vh] rounded-lg shadow-lg" src="" />
+    <button
+      class="absolute top-2 right-2 text-white text-2xl"
+      onclick="closeModal()"
+    >✕</button>
+    <div id="modal-caption" class="mt-2 text-center text-white text-sm"></div>
+  </div>
+</div>
 
   <!-- Rodapé -->
   <footer class="py-8 text-center text-gray-600 border-t border-gray-200 mt-12">
@@ -404,6 +415,15 @@ Jovem vitalista atormentado por um segredo terrível. Carrega cicatrizes física
     ScrollReveal().reveal('section', {
       delay: 200, duration: 1000, origin: 'bottom', distance: '50px', reset: false
     });
+function openModal(src, caption = '') {
+  document.getElementById('modal-img').src = src;
+  document.getElementById('modal-caption').innerHTML = caption;
+  document.getElementById('img-modal').classList.remove('hidden');
+}
+
+function closeModal() {
+  document.getElementById('img-modal').classList.add('hidden');
+}
   </script>
 </body>
 </html>
