@@ -169,5 +169,99 @@
   createParticles(150);
   animate();
 </script>
+<canvas id="brasasCanvas"></canvas> <img src="lobo_freq_esquerda.png" alt="Lobo FREQ" class="lobo lobo-esquerda"> <img src="lobo_roar_direita.png" alt="Lobo ROAR" class="lobo lobo-direita">
+
+<style>
+  #brasasCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+  }
+  .lobo {
+    position: fixed;
+    top: 0;
+    width: 200px;
+    max-width: 30vw;
+    z-index: 0;
+    opacity: 0.9;
+    pointer-events: none;
+    animation: fadeInLobo 2s ease-in-out forwards;
+  }
+  .lobo-esquerda {
+    left: 0;
+  }
+  .lobo-direita {
+    right: 0;
+  }
+  @keyframes fadeInLobo {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 0.9; transform: translateY(0); }
+  }
+</style><script>
+  const canvas = document.getElementById("brasasCanvas");
+  const ctx = canvas.getContext("2d");
+  let particles = [];
+  let w, h;
+
+  function resizeCanvas() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+
+  window.addEventListener("resize", resizeCanvas);
+  resizeCanvas();
+
+  class Particle {
+    constructor() {
+      this.reset(true);
+    }
+
+    reset(initial = false) {
+      this.x = Math.random() * w;
+      this.y = initial ? Math.random() * h : h + Math.random() * 100;
+      this.size = 1 + Math.random() * 2.5;
+      this.speed = 0.2 + Math.random() * 0.5;
+      this.alpha = 0.4 + Math.random() * 0.3;
+      this.drift = (Math.random() - 0.5) * 0.5;
+    }
+
+    update() {
+      this.y -= this.speed;
+      this.x += this.drift;
+      if (this.y < -10 || this.x < -50 || this.x > w + 50) this.reset();
+    }
+
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`;
+      ctx.shadowColor = "#a855f7";
+      ctx.shadowBlur = 12;
+      ctx.fill();
+    }
+  }
+
+  function createParticles(count) {
+    for (let i = 0; i < count; i++) {
+      particles.push(new Particle());
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, w, h);
+    for (const p of particles) {
+      p.update();
+      p.draw();
+    }
+    requestAnimationFrame(animate);
+  }
+
+  createParticles(150);
+  animate();
+</script>
 </body>
 </html>
