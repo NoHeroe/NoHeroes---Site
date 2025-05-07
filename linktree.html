@@ -22,6 +22,13 @@
       0%, 100% { filter: drop-shadow(0 0 4px #c084fc); }
       50% { filter: drop-shadow(0 0 12px #c084fc); }
     }
+    .glow-gold {
+      animation: pulseGold 3s ease-in-out infinite;
+    }
+    @keyframes pulseGold {
+      0%, 100% { filter: drop-shadow(0 0 2px #facc15); }
+      50% { filter: drop-shadow(0 0 6px #facc15); }
+    }
   </style>
 </head>
 <body class="text-center py-12 px-4">  <!-- TOPO: LOGO -->  <div class="mb-6">
@@ -40,7 +47,7 @@
     <a href="FREQ.html" class="block bg-black text-[#c084fc] px-6 py-3 rounded-lg font-semibold border border-[#c084fc] shadow-lg hover:bg-[#c084fc] hover:text-black transition glow-roxo">
       Projeto FREQ
     </a>
-    <a href="portifólio.html" class="block bg-black text-[#c084fc] px-6 py-3 rounded-lg font-semibold border border-[#c084fc] shadow-lg hover:bg-[#c084fc] hover:text-black transition glow-roxo">
+    <a href="portifólio.html" class="block bg-black text-yellow-400 px-6 py-3 rounded-lg font-semibold border border-yellow-500 shadow-lg hover:bg-yellow-400 hover:text-black transition glow-gold">
       Ver Portfólio Profissional
     </a>
     <a href="#" class="block bg-[#1c1c1c] px-6 py-3 rounded-lg opacity-40 cursor-not-allowed" title="Disponível em breve">
