@@ -5,6 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Parceiros & Colaboradores</title>
   <script src="https://cdn.tailwindcss.com"></script>
+<style>
+  button[data-status="vazio"] {
+    opacity: 0.4;
+    filter: grayscale(1);
+  }
+
+  button[data-status="vazio"]::after {
+    content: "✕";
+    color: red;
+    font-size: 3rem;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+</style>
 </head>
 <body class="bg-black text-white font-sans">
 
