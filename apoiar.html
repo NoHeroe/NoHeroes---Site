@@ -188,40 +188,49 @@ function copyPixKey() {
 }
   // Função para abrir os formulários dinâmicos
   function openForm(type) {
-    const modal = document.getElementById('formModal');
-    const title = document.getElementById('formTitle');
-    const content = document.getElementById('formContent');
-    modal.classList.remove('hidden');
+  const modal = document.getElementById('formModal');
+  const title = document.getElementById('formTitle');
+  const content = document.getElementById('formContent');
 
-    // Configurar formulários conforme o tipo
-    if (type === 'ajudarOutrasFormas') {
-  title.innerText = 'Quero ajudar de outras formas';
-  content.innerHTML = `
-  <input type="hidden" name="_subject" value="Apoio — Quero ajudar de outras formas">
-  <input type="hidden" name="_captcha" value="false">
-  <input type="hidden" name="_next" value="https://noheroes.com.br/agradecimento.html">
+  modal.classList.remove('hidden');
 
-  <label class="block text-sm">Como deseja ajudar?</label>
-  <select name="forma_de_ajuda" required class="w-full p-2 bg-[#333] text-white rounded">
-    <option value="" disabled selected>Selecione uma opção</option>
-    <option>Moderar a comunidade do Discord</option>
-    <option>Moderar grupo WhatsApp</option>
-    <option>Contribuir com artes</option>
-    <option>Colaborar nas animações</option>
-    <option>Divulgar o projeto</option>
-    <option>Outras habilidades</option>
-  </select>
+  if (type === 'ajudarOutrasFormas') {
+    title.innerText = 'Quero ajudar de outras formas';
 
-  <label class="block text-sm mt-4">Detalhes</label>
-  <textarea name="detalhes" required class="w-full p-2 bg-[#333] text-white rounded" rows="5"
-    placeholder="Fale sobre suas habilidades. Como você pode ajudar nosso projeto? O que te faz desejar ajudar esse projeto?"></textarea>
+    // SETA action e method direto no form
+    content.setAttribute("action", "https://formsubmit.co/azuosraul999@gmail.com");
+    content.setAttribute("method", "POST");
 
-  <label class="block text-sm mt-4">Seu contato</label>
-  <input type="text" name="contato" required class="w-full p-2 bg-[#333] text-white rounded"
-    placeholder="Ex: seuemail@exemplo.com ou @seudiscord">
+    content.innerHTML = `
+      <input type="hidden" name="_subject" value="Apoio — Quero ajudar de outras formas">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="https://noheroes.com.br/agradecimento.html">
 
-  <button type="submit" class="bg-[#8f4fff] text-black px-4 py-2 mt-4 rounded hover:bg-[#39ff14]">Enviar</button>
-`;
+      <label class="block text-sm">Como deseja ajudar?</label>
+      <select name="forma_de_ajuda" required class="w-full p-2 bg-[#333] text-white rounded">
+        <option value="" disabled selected>Selecione uma opção</option>
+        <option>Moderar a comunidade do Discord</option>
+        <option>Moderar grupo WhatsApp</option>
+        <option>Contribuir com artes</option>
+        <option>Colaborar nas animações</option>
+        <option>Divulgar o projeto</option>
+        <option>Outras habilidades</option>
+      </select>
+
+      <label class="block text-sm mt-4">Detalhes</label>
+      <textarea name="detalhes" required class="w-full p-2 bg-[#333] text-white rounded" rows="5"
+        placeholder="Fale sobre suas habilidades. Como você pode ajudar nosso projeto? O que te faz desejar ajudar esse projeto?"></textarea>
+
+      <label class="block text-sm mt-4">Seu contato</label>
+      <input type="text" name="contato" required class="w-full p-2 bg-[#333] text-white rounded"
+        placeholder="Ex: seuemail@exemplo.com ou @seudiscord">
+
+      <button type="submit" class="bg-[#8f4fff] text-black px-4 py-2 mt-4 rounded hover:bg-[#39ff14]">Enviar</button>
+    `;
+  }
+
+  // Adicione os outros casos como já estavam...
+}
     } else if (type === 'fazerParceria') {
       title.innerText = 'Quero fazer uma parceria';
       content.innerHTML = `
