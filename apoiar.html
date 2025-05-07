@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Apoio Vitalista | NoHeroes</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -11,8 +11,12 @@
       background-color: #0a0a0a;
       color: #e5e5e5;
     }
-    h1, h2 { font-family: 'Playfair Display', serif; }
-    html { scroll-behavior: smooth; }
+    h1, h2 {
+      font-family: 'Playfair Display', serif;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
     .logo-glow {
       animation: glow 2s infinite ease-in-out;
     }
@@ -20,50 +24,70 @@
       0%, 100% { filter: drop-shadow(0 0 8px #8f4fff); }
       50% { filter: drop-shadow(0 0 16px #8f4fff); }
     }
+    .glow-gold {
+      animation: gold-glow 2s infinite alternate ease-in-out;
+      box-shadow: 0 0 20px #FFD700, 0 0 40px #FFD700, 0 0 60px #FFD700;
+    }
+    @keyframes gold-glow {
+      0% { box-shadow: 0 0 20px #FFD700, 0 0 40px #FFD700, 0 0 60px #FFD700; }
+      100% { box-shadow: 0 0 30px #FFA500, 0 0 50px #FFD700, 0 0 70px #FFD700; }
+    }
   </style>
 </head>
 <body class="text-center p-6">
-  <!-- Logo -->
   <a href="index.html">
-    <img src="assets/images/noheroes logo.png" alt="Logo NoHeroes" class="mx-auto w-40 logo-glow">
+    <img src="assets/images/noheroes logo.png" alt="Logo NoHeroes" class="mx-auto w-40 logo-glow" />
   </a>
-
   <h2 class="text-xl italic mt-6 opacity-70">“Até mesmo os mundos mais sombrios precisam de luz para existir.”</h2>
-  <p class="mt-4 max-w-xl mx-auto text-base">
-    Você está prestes a alimentar não um projeto, mas um universo inteiro. Criado do zero, com alma e suor, por um criador que quer mudar vidas com arte, anime e verdade. 
-    <strong>Ajude a manter Caelum vivo. Torne-se um Vitalista, ou uma das sombras de Caelum.</strong>
-  </p>
+  <p class="mt-4 max-w-xl mx-auto text-base">Você está prestes a alimentar não um projeto, mas um universo inteiro. Criado do zero, com alma e suor, por um criador que quer mudar vidas com arte, anime e verdade. Aqui, cada contribuição fortalece uma ideia que já é maior do que eu. <strong>Ajude a manter Caelum vivo. Torne-se um Vitalista, ou uma das sombras de Caelum.</strong></p>
 
-  <!-- Botões -->
   <div class="mt-12 space-y-4">
-    <button onclick="openForm('ajudarOutrasFormas')" class="bg-[#8f4fff] text-black px-6 py-3 rounded hover:scale-105">Quero ajudar de outras formas</button>
-    <button onclick="openForm('fazerParceria')" class="bg-[#222] border border-[#555] text-white px-6 py-3 rounded hover:border-[#8f4fff]">Quero fazer uma parceria</button>
-    <button onclick="openForm('investirProjeto')" class="bg-[#222] border border-[#555] text-white px-6 py-3 rounded hover:border-[#8f4fff]">Quero investir no projeto</button>
-    <button onclick="openForm('apoioProjeto')" class="bg-[#222] border border-[#555] text-white px-6 py-3 rounded hover:border-[#8f4fff]">Preciso de apoio no meu projeto</button>
-    <button onclick="openForm('falarCriador')" class="bg-[#222] border border-[#555] text-white px-6 py-3 rounded hover:border-[#8f4fff]">Falar com o criador</button>
-    <button onclick="openForm('outraMensagem')" class="bg-[#222] border border-[#555] text-white px-6 py-3 rounded hover:border-[#8f4fff]">Enviar outra mensagem</button>
+    <button onclick="openPixModal()" class="bg-[#8f4fff] text-black px-6 py-3 rounded-lg font-bold hover:scale-105 transition">Contribuir com Pix</button>
+    <button onclick="openForm('outras')" class="form-btn">Quero ajudar de outras formas</button>
+    <button onclick="openForm('parceria')" class="form-btn">Quero fazer uma parceria</button>
+    <button onclick="openForm('investir')" class="form-btn">Quero investir no projeto</button>
+    <button onclick="openForm('apoio')" class="form-btn">Preciso de apoio no meu projeto</button>
+    <button onclick="openSocials()" class="form-btn">Siga as Sombras</button>
   </div>
 
-  <!-- Modal -->
-  <div id="formModal" class="hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
-    <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-lg w-full text-left relative">
-      <h3 id="formTitle" class="text-2xl font-bold text-[#8f4fff] mb-4">...</h3>
-      <form id="formContent" method="POST" action="https://formsubmit.co/azuosraul999@gmail.com" class="space-y-4">
+  <!-- Modais -->
+  <div id="formModal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
+    <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-lg w-full text-left">
+      <h3 id="formTitle" class="text-2xl font-bold text-[#8f4fff] mb-4"></h3>
+      <form id="formContent" method="POST" class="space-y-4">
         <input type="hidden" name="_captcha" value="false">
         <input type="hidden" name="_next" value="https://noheroes.com.br/agradecimento.html">
-        <input type="hidden" name="_subject" id="formSubject" value="Mensagem - NoHeroes">
-
-        <div id="extraFields"></div>
-
-        <label class="block text-sm">Mensagem</label>
-        <textarea name="mensagem" required class="w-full p-2 bg-[#333] text-white rounded" rows="4" placeholder="Digite sua mensagem..."></textarea>
-
-        <label class="block text-sm">Contato (email, WhatsApp ou Discord)</label>
-        <input name="contato" type="text" required class="w-full p-2 bg-[#333] text-white rounded" placeholder="Ex: seuemail@exemplo.com">
-
-        <button type="submit" class="bg-[#8f4fff] text-black px-4 py-2 rounded hover:bg-[#39ff14]">Enviar</button>
+        <input type="hidden" name="_subject" id="formSubject" value="Contato">
+        <div id="formFields"></div>
+        <button type="submit" class="bg-[#8f4fff] text-black px-4 py-2 mt-2 rounded hover:bg-[#39ff14]">Enviar</button>
       </form>
-      <button onclick="closeModal()" class="absolute top-3 right-4 text-[#8f4fff] text-lg">×</button>
+      <button onclick="closeModal('formModal')" class="mt-4 text-[#8f4fff] underline">Fechar</button>
+    </div>
+  </div>
+
+  <div id="pixModal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center">
+    <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-lg w-full text-left">
+      <h3 class="text-2xl font-bold text-[#8f4fff] mb-4">Contribuir com Pix</h3>
+      <div class="text-center">
+        <h4 class="text-lg text-[#8f4fff] mb-4">Escaneie o QR Code abaixo ou copie a chave Pix:</h4>
+        <img src="assets/images/qr-code.png" alt="QR Code Pix" class="mx-auto w-64 mb-4">
+        <button onclick="copyPixKey()" class="bg-[#8f4fff] text-black px-4 py-2 rounded hover:bg-[#39ff14] block mx-auto mb-4">Copiar chave Pix</button>
+        <button onclick="closeModal('pixModal')" class="mt-4 text-[#8f4fff] underline">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="socialsModal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center">
+    <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-lg w-full text-center">
+      <h3 class="text-2xl font-bold text-[#8f4fff] mb-4">Siga as Sombras</h3>
+      <ul class="space-y-4">
+        <li><a href="https://instagram.com/_noheroe" target="_blank" class="text-[#8f4fff] hover:underline">Instagram</a></li>
+        <li><a href="https://tiktok.com/@_noheroe" target="_blank" class="text-[#8f4fff] hover:underline">TikTok</a></li>
+        <li><a href="#" target="_blank" class="text-[#8f4fff] hover:underline">YouTube</a></li>
+        <li><a href="https://discord.gg/" target="_blank" class="text-[#8f4fff] hover:underline">Discord</a></li>
+        <li><a href="https://chat.whatsapp.com/" target="_blank" class="text-[#8f4fff] hover:underline">WhatsApp</a></li>
+      </ul>
+      <button onclick="closeModal('socialsModal')" class="mt-4 text-[#8f4fff] underline">Fechar</button>
     </div>
   </div>
 
@@ -73,70 +97,88 @@
   </footer>
 
   <script>
-    const modal = document.getElementById('formModal');
-    const form = document.getElementById('formContent');
-    const title = document.getElementById('formTitle');
-    const subject = document.getElementById('formSubject');
-    const extraFields = document.getElementById('extraFields');
+    const pixKey = "azuosraul999@gmail.com";
 
-    function openForm(type) {
-      modal.classList.remove('hidden');
-      let config = {
-        ajudarOutrasFormas: {
-          title: 'Quero ajudar de outras formas',
-          subject: 'Apoio — Quero ajudar de outras formas',
-          fields: `
-            <label class="block text-sm">Como deseja ajudar?</label>
-            <select name="forma_de_ajuda" required class="w-full p-2 bg-[#333] text-white rounded">
-              <option value="" disabled selected>Selecione uma opção</option>
-              <option>Moderar comunidade</option>
-              <option>Artes ou animação</option>
-              <option>Divulgação</option>
-              <option>Outros</option>
-            </select>`
-        },
-        fazerParceria: {
-          title: 'Quero fazer uma parceria',
-          subject: 'Contato — Parceria',
-          fields: `
-            <label class="block text-sm">Nome do projeto ou marca</label>
-            <input type="text" name="nome_projeto" required class="w-full p-2 bg-[#333] text-white rounded">`
-        },
-        investirProjeto: {
-          title: 'Quero investir no projeto',
-          subject: 'Contato — Investidor',
-          fields: `
-            <label class="block text-sm">Valor ou tipo de investimento</label>
-            <input type="text" name="investimento" required class="w-full p-2 bg-[#333] text-white rounded">`
-        },
-        apoioProjeto: {
-          title: 'Preciso de apoio no meu projeto',
-          subject: 'Solicitação — Apoio externo',
-          fields: `
-            <label class="block text-sm">Tipo de apoio desejado</label>
-            <input type="text" name="tipo_apoio" required class="w-full p-2 bg-[#333] text-white rounded">`
-        },
-        falarCriador: {
-          title: 'Falar com o criador',
-          subject: 'Contato — Mensagem direta',
-          fields: ''
-        },
-        outraMensagem: {
-          title: 'Enviar outra mensagem',
-          subject: 'Contato — Diversos',
-          fields: ''
-        }
-      };
-
-      const cfg = config[type];
-      title.textContent = cfg.title;
-      subject.value = cfg.subject;
-      extraFields.innerHTML = cfg.fields;
+    function openPixModal() {
+      document.getElementById('pixModal').classList.remove('hidden');
     }
 
-    function closeModal() {
-      modal.classList.add('hidden');
-      form.reset();
+    function copyPixKey() {
+      navigator.clipboard.writeText(pixKey).then(() => alert("Chave Pix copiada!"));
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+
+    function openSocials() {
+      document.getElementById('socialsModal').classList.remove('hidden');
+    }
+
+    function openForm(tipo) {
+      const modal = document.getElementById('formModal');
+      const title = document.getElementById('formTitle');
+      const subject = document.getElementById('formSubject');
+      const fields = document.getElementById('formFields');
+      const form = document.getElementById('formContent');
+      form.setAttribute("action", "https://formsubmit.co/eco.noheroes@gmail.com");
+
+      modal.classList.remove('hidden');
+      fields.innerHTML = "";
+
+      if (tipo === 'outras') {
+        title.innerText = "Quero ajudar de outras formas";
+        subject.value = "Apoio — Quero ajudar de outras formas";
+        fields.innerHTML = `
+          <label>Como deseja ajudar?</label>
+          <select name="forma_de_ajuda" required class="w-full p-2 bg-[#333] text-white rounded">
+            <option value="" disabled selected>Selecione uma opção</option>
+            <option>Moderar a comunidade do Discord</option>
+            <option>Moderar grupo WhatsApp</option>
+            <option>Contribuir com artes</option>
+            <option>Colaborar nas animações</option>
+            <option>Divulgar o projeto</option>
+            <option>Outras habilidades</option>
+          </select>
+          <label>Detalhes</label>
+          <textarea name="detalhes" required class="w-full p-2 bg-[#333] text-white rounded" rows="5" placeholder="Fale sobre suas habilidades e como pode ajudar."></textarea>
+          <label>Seu contato</label>
+          <input type="text" name="contato" required class="w-full p-2 bg-[#333] text-white rounded" placeholder="E-mail, WhatsApp ou Discord">
+        `;
+      } else if (tipo === 'parceria') {
+        title.innerText = "Quero fazer uma parceria";
+        subject.value = "Contato — Parceria";
+        fields.innerHTML = `
+          <label>Nome da Marca ou Projeto</label>
+          <input type="text" name="marca" required class="w-full p-2 bg-[#333] text-white rounded">
+          <label>Ideia da Parceria</label>
+          <textarea name="detalhes" required class="w-full p-2 bg-[#333] text-white rounded" rows="4"></textarea>
+          <label>Seu contato</label>
+          <input type="text" name="contato" required class="w-full p-2 bg-[#333] text-white rounded">
+        `;
+      } else if (tipo === 'investir') {
+        title.innerText = "Quero investir no projeto";
+        subject.value = "Contato — Investimento";
+        fields.innerHTML = `
+          <label>Motivo do interesse</label>
+          <textarea name="detalhes" required class="w-full p-2 bg-[#333] text-white rounded" rows="4"></textarea>
+          <label>Seu contato</label>
+          <input type="text" name="contato" required class="w-full p-2 bg-[#333] text-white rounded">
+        `;
+      } else if (tipo === 'apoio') {
+        title.innerText = "Preciso de apoio no meu projeto";
+        subject.value = "Solicitação — Apoio em projeto";
+        fields.innerHTML = `
+          <label>Nome do seu projeto</label>
+          <input type="text" name="projeto" required class="w-full p-2 bg-[#333] text-white rounded">
+          <label>Em que precisa de ajuda?</label>
+          <textarea name="detalhes" required class="w-full p-2 bg-[#333] text-white rounded" rows="4"></textarea>
+          <label>Link de portfólio ou referência</label>
+          <input type="url" name="portfolio" required class="w-full p-2 bg-[#333] text-white rounded">
+          <label>Seu contato</label>
+          <input type="text" name="contato" required class="w-full p-2 bg-[#333] text-white rounded">
+        `;
+      }
     }
   </script>
 </body>
