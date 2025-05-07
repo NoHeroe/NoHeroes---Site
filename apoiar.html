@@ -40,39 +40,6 @@
   background-size: cover;
   background-attachment: scroll;
     }
-  .moeda {
-    position: absolute;
-    width: 18px;
-    height: 18px;
-    background-image: url('assets/images/coin.png'); /* substitua pelo caminho correto da moeda transparente */
-    background-size: cover;
-    animation: cair linear infinite;
-    z-index: 10;
-    opacity: 0.9;
-    pointer-events: none;
-  }
-
-  @keyframes cair {
-    0% {
-      transform: translateY(-20px) rotate(0deg);
-      opacity: 1;
-    }
-    100% {
-      transform: translateY(100vh) rotate(360deg);
-      opacity: 0;
-    }
-  }
-
-  .moedas-wrapper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 10;
-  }
   </style>
 </head>
 <body class="text-center p-6">
@@ -240,15 +207,53 @@
         `;
       }
     }
+    <canvas id="coinCanvas" class="fixed inset-0 z-0 pointer-events-none"></canvas>
+  const canvas = document.getElementById("coinCanvas");
+  const ctx = canvas.getContext("2d");
+  let coins = [];
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  window.addEventListener("resize", resizeCanvas);
+  resizeCanvas();
+
+  function createCoin() {
+    return {
+      x: Math.random() * canvas.width,
+      y: -20,
+      radius: 4 + Math.random() * 3,
+      speedY: 1 + Math.random() * 3,
+      alpha: 0.8 + Math.random() * 0.2
+    };
+  }
+
+  function drawCoin(c) {
+    ctx.beginPath();
+    ctx.arc(c.x, c.y, c.radius, 0, 2 * Math.PI);
+    ctx.fillStyle = `rgba(255, 215, 0, ${c.alpha})`; // dourado
+    ctx.shadowColor = "#FFD700";
+    ctx.shadowBlur = 10;
+    ctx.fill();
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    if (coins.length < 100) coins.push(createCoin());
+
+    coins.forEach((c, i) => {
+      c.y += c.speedY;
+      drawCoin(c);
+      if (c.y > canvas.height) coins.splice(i, 1);
+    });
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
   </script>
-  <div class="moedas-wrapper">
-  <span class="moeda" style="left: 5%; animation-duration: 6s; animation-delay: 0s;"></span>
-  <span class="moeda" style="left: 15%; animation-duration: 5s; animation-delay: 1s;"></span>
-  <span class="moeda" style="left: 25%; animation-duration: 7s; animation-delay: 2s;"></span>
-  <span class="moeda" style="left: 40%; animation-duration: 4s; animation-delay: 0.5s;"></span>
-  <span class="moeda" style="left: 60%; animation-duration: 6s; animation-delay: 1.2s;"></span>
-  <span class="moeda" style="left: 75%; animation-duration: 5.5s; animation-delay: 0.8s;"></span>
-  <span class="moeda" style="left: 90%; animation-duration: 6.5s; animation-delay: 1.5s;"></span>
-  </div>
 </body>
 </html>
