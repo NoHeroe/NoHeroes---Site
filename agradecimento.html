@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agradecimento | NoHeroes</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      @apply flex items-center justify-center h-screen text-white text-center bg-black overflow-hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .magic-glow {
+      animation: glowPulse 2s ease-in-out infinite;
+      filter: drop-shadow(0 0 8px #8f4fff);
+    }
+
+    @keyframes glowPulse {
+      0%, 100% { filter: drop-shadow(0 0 8px #8f4fff); }
+      50% { filter: drop-shadow(0 0 20px #8f4fff); }
+    }
+
+    .bg-animated {
+      background: linear-gradient(-45deg, #0a0a0a, #1a0f2a, #140d26, #0a0a0a);
+      background-size: 400% 400%;
+      animation: gradientFlow 15s ease infinite;
+    }
+
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  </style>
+</head>
+<body class="bg-animated">
+
+  <div class="p-6 max-w-xl">
+    <h1 class="text-3xl md:text-5xl font-bold magic-glow">“Sua energia foi recebida pelas Sombras.”</h1>
+    <p class="mt-6 text-lg opacity-80">Agora ela ecoa em Caelum. Você não apoiou apenas um projeto — deu fôlego a um novo mundo.</p>
+
+    <a href="/linktree.html" class="inline-block mt-10 bg-[#8f4fff] text-black px-6 py-3 rounded-lg font-semibold hover:bg-[#39ff14] transition">
+      Retornar às Raízes
+    </a>
+  </div>
+
+</body>
+</html>
