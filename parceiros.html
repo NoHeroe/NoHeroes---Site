@@ -62,5 +62,27 @@
     function closeModal() {
       document.getElementById('modal-container').classList.remove('active');
     }
-  </script></body>
+  </script>
+<script>
+  const modal = document.getElementById("modal-parceiro");
+  const modalTitle = document.getElementById("modal-title");
+  const modalDesc = document.getElementById("modal-desc");
+  const modalBtn = document.getElementById("modal-btn");
+
+  function abrirModal(nome, descricao, link) {
+    modal.classList.remove("hidden");
+    modalTitle.textContent = nome;
+    modalDesc.textContent = descricao;
+    modalBtn.href = link;
+  }
+
+  function fecharModal() {
+    modal.classList.add("hidden");
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("modal-close").addEventListener("click", fecharModal);
+  });
+</script>
+</body>
 </html>
