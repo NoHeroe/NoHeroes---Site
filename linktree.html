@@ -16,11 +16,11 @@
       font-family: 'Playfair Display', serif;
     }
     .glow-roxo {
-      animation: pulseRoxo 2s infinite;
+      animation: pulseRoxo 3s ease-in-out infinite;
     }
     @keyframes pulseRoxo {
-      0%, 100% { filter: drop-shadow(0 0 4px #c084fc); }
-      50% { filter: drop-shadow(0 0 12px #c084fc); }
+      0%, 100% { filter: drop-shadow(0 0 2px #c084fc); }
+      50% { filter: drop-shadow(0 0 6px #c084fc); }
     }
     .glow-gold {
       animation: pulseGold 3s ease-in-out infinite;
@@ -29,10 +29,17 @@
       0%, 100% { filter: drop-shadow(0 0 2px #facc15); }
       50% { filter: drop-shadow(0 0 6px #facc15); }
     }
+    .glow-logo {
+      animation: pulseLogo 3s ease-in-out infinite;
+    }
+    @keyframes pulseLogo {
+      0%, 100% { filter: drop-shadow(0 0 4px #c084fc); }
+      50% { filter: drop-shadow(0 0 16px #c084fc); }
+    }
   </style>
 </head>
 <body class="text-center py-12 px-4">  <!-- TOPO: LOGO -->  <div class="mb-6">
-    <img src="assets/images/noheroes logo.png" alt="Logotipo do NoHeroes" class="mx-auto w-32 glow-roxo">
+    <img src="assets/images/noheroes logo.png" alt="Logotipo do NoHeroes" class="mx-auto w-32 glow-logo">
     <p class="mt-4 text-gray-400 italic">
       Do zero. Sem apoio. Com alma.<br>
       Criei mundos e quero te mostrar como.
