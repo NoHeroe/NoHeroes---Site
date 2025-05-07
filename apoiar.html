@@ -32,6 +32,12 @@
       0% { box-shadow: 0 0 20px #FFD700, 0 0 40px #FFD700, 0 0 60px #FFD700; }
       100% { box-shadow: 0 0 30px #FFA500, 0 0 50px #FFD700, 0 0 70px #FFD700; }
     }
+    .rodape-com-fundo {
+  background: linear-gradient(to top, #0a0a0a 0%, rgba(0,0,0,0.9) 20%, rgba(0,0,0,0.3) 70%, transparent 100%), 
+              url('assets/images/fundo-caverna-ouro.jpg') no-repeat center bottom / cover;
+  background-attachment: scroll;
+  background-size: cover;
+    }
   </style>
 </head>
 <body class="text-center p-6">
@@ -110,13 +116,7 @@
       <button onclick="closeModal('socialsModal')" class="mt-4 text-[#8f4fff] underline">Fechar</button>
     </div>
   </div>
-
-<!-- Seção de Ouro Subindo -->
-<div class="relative z-0 h-[500px] w-full bg-cover bg-center" style="background-image: url('assets/images/fundo-caverna-ouro.jpg');">
-  <div class="absolute inset-0 bg-black bg-opacity-60"></div>
-</div>
- <!-- Rodapé escuro sobre o ouro -->
-<footer class="relative z-10 bg-black py-12 px-4 text-center text-sm text-[#ddd]">
+<footer class="rodape-com-fundo pt-32 pb-10 px-4 text-center text-sm text-[#ddd] relative z-10">
   <p class="mb-1">© 2025 NoHeroes. Todos os direitos reservados.</p>
   <p class="italic">Explore. Escolha. Caia. Evolua.</p>
 </footer>
