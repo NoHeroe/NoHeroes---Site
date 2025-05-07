@@ -110,9 +110,17 @@
   const audio = document.getElementById("bg-music");
   const toggleBtn = document.getElementById("toggle-audio");
 
+  // Tenta dar play automático com volume suave
+  window.addEventListener("DOMContentLoaded", () => {
+    audio.volume = 0.6;
+    audio.play().catch(() => {
+      // Se o navegador bloquear, deixa como OFF
+      toggleBtn.textContent = "Som: OFF";
+    });
+  });
+
   toggleBtn.addEventListener("click", () => {
     if (audio.paused) {
-      audio.volume = 0.6;
       audio.play();
       toggleBtn.textContent = "Som: ON";
     } else {
