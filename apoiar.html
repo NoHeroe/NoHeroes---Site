@@ -197,31 +197,35 @@ function copyPixKey() {
 
     // Configurar formulários conforme o tipo
     if (type === 'ajudarOutrasFormas') {
-      title.innerText = 'Quero ajudar de outras formas';
-      content.innerHTML = <form action="https://formsubmit.co/azuosraul999@gmail.com" method="POST" class="space-y-4">
-  <input type="hidden" name="_subject" value="Apoio — Quero ajudar de outras formas">
-  <input type="hidden" name="_captcha" value="false">
-  <input type="hidden" name="_next" value="https://noheroes.com.br/agradecimento.html">
+  title.innerText = 'Quero ajudar de outras formas';
+  content.innerHTML = `
+    <form action="https://formsubmit.co/azuosraul999@gmail.com" method="POST" class="space-y-4">
+      <input type="hidden" name="_subject" value="Apoio — Quero ajudar de outras formas">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="https://noheroes.com.br/agradecimento.html">
 
-  <label class="block text-sm">Como deseja ajudar?</label>
-  <select name="forma_de_ajuda" required class="w-full p-2 bg-[#333] text-white rounded">
-    <option value="" disabled selected>Selecione uma opção</option>
-    <option>Moderar a comunidade do Discord</option>
-    <option>Moderar grupo WhatsApp</option>
-    <option>Contribuir com artes</option>
-    <option>Colaborar nas animações</option>
-    <option>Divulgar o projeto</option>
-    <option>Outras habilidades</option>
-  </select>
+      <label class="block text-sm">Como deseja ajudar?</label>
+      <select name="forma_de_ajuda" required class="w-full p-2 bg-[#333] text-white rounded">
+        <option value="" disabled selected>Selecione uma opção</option>
+        <option>Moderar a comunidade do Discord</option>
+        <option>Moderar grupo WhatsApp</option>
+        <option>Contribuir com artes</option>
+        <option>Colaborar nas animações</option>
+        <option>Divulgar o projeto</option>
+        <option>Outras habilidades</option>
+      </select>
 
-  <label class="block text-sm">Detalhes</label>
-  <textarea name="detalhes" required class="w-full p-2 bg-[#333] text-white rounded" rows="5" placeholder="Fale sobre suas habilidades. Como você pode ajudar nosso projeto? O que te faz desejar ajudar esse projeto?"></textarea>
+      <label class="block text-sm">Detalhes</label>
+      <textarea name="detalhes" required class="w-full p-2 bg-[#333] text-white rounded" rows="5"
+        placeholder="Fale sobre suas habilidades. Como você pode ajudar nosso projeto? O que te faz desejar ajudar esse projeto?"></textarea>
 
-  <label class="block text-sm">Seu contato (e-mail, WhatsApp, Discord etc)</label>
-  <input type="text" name="contato" required class="w-full p-2 bg-[#333] text-white rounded" placeholder="Ex: seuemail@exemplo.com ou @seudiscord">
+      <label class="block text-sm">Seu contato (e-mail, WhatsApp, Discord etc)</label>
+      <input type="text" name="contato" required class="w-full p-2 bg-[#333] text-white rounded"
+        placeholder="Ex: seuemail@exemplo.com ou @seudiscord">
 
-  <button type="submit" class="bg-[#8f4fff] text-black px-4 py-2 mt-2 rounded hover:bg-[#39ff14]">Enviar</button>
-</form>;
+      <button type="submit" class="bg-[#8f4fff] text-black px-4 py-2 mt-2 rounded hover:bg-[#39ff14]">Enviar</button>
+    </form>
+  `;
 }
     } else if (type === 'fazerParceria') {
       title.innerText = 'Quero fazer uma parceria';
