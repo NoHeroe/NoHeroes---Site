@@ -123,28 +123,30 @@
 
   class Particle {
     constructor() {
-      this.reset();
+      this.reset(true);
     }
 
-    reset() {
+    reset(initial = false) {
       this.x = Math.random() * w;
-      this.y = h + Math.random() * 100;
-      this.size = 1 + Math.random() * 2;
-      this.speed = 0.5 + Math.random() * 1;
-      this.alpha = 0.2 + Math.random() * 0.3;
+      this.y = initial ? Math.random() * h : h + Math.random() * 100;
+      this.size = 1 + Math.random() * 2.5;
+      this.speed = 0.2 + Math.random() * 0.5;
+      this.alpha = 0.4 + Math.random() * 0.3;
+      this.drift = (Math.random() - 0.5) * 0.5; // movimento lateral aleatório
     }
 
     update() {
       this.y -= this.speed;
-      if (this.y < -10) this.reset();
+      this.x += this.drift;
+      if (this.y < -10 || this.x < -50 || this.x > w + 50) this.reset();
     }
 
     draw() {
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(192, 132, 252, ${this.alpha})`;
-      ctx.shadowColor = "#c084fc";
-      ctx.shadowBlur = 10;
+      ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`; // roxo mais saturado
+      ctx.shadowColor = "#a855f7";
+      ctx.shadowBlur = 12;
       ctx.fill();
     }
   }
