@@ -94,5 +94,78 @@
   </div>  <!-- RODAPÉ -->  <footer class="mt-16 text-gray-500 text-sm">
     <p>&copy; 2025 NoHeroes. Todos os direitos reservados.</p>
     <p class="italic mt-2">Explore. Escolha. Caia. Evolua.</p>
-  </footer></body>
+  </footer>
+<canvas id="brasasCanvas"></canvas>
+
+<style>
+  #brasasCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+  }
+</style><script>
+  const canvas = document.getElementById("brasasCanvas");
+  const ctx = canvas.getContext("2d");
+  let particles = [];
+  let w, h;
+
+  function resizeCanvas() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+
+  window.addEventListener("resize", resizeCanvas);
+  resizeCanvas();
+
+  class Particle {
+    constructor() {
+      this.reset();
+    }
+
+    reset() {
+      this.x = Math.random() * w;
+      this.y = h + Math.random() * 100;
+      this.size = 1 + Math.random() * 2;
+      this.speed = 0.5 + Math.random() * 1;
+      this.alpha = 0.2 + Math.random() * 0.3;
+    }
+
+    update() {
+      this.y -= this.speed;
+      if (this.y < -10) this.reset();
+    }
+
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(192, 132, 252, ${this.alpha})`;
+      ctx.shadowColor = "#c084fc";
+      ctx.shadowBlur = 10;
+      ctx.fill();
+    }
+  }
+
+  function createParticles(count) {
+    for (let i = 0; i < count; i++) {
+      particles.push(new Particle());
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, w, h);
+    for (const p of particles) {
+      p.update();
+      p.draw();
+    }
+    requestAnimationFrame(animate);
+  }
+
+  createParticles(150);
+  animate();
+</script>
+</body>
 </html>
