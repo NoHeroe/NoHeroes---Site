@@ -43,6 +43,7 @@
   </style>
 </head>
 <body class="text-center p-6">
+  <canvas id="coinCanvas" class="fixed top-0 left-0 w-full h-full z-0 pointer-events-none"></canvas>
   <a href="index.html">
     <img src="assets/images/noheroes logo.png" alt="Logo NoHeroes" class="mx-auto w-40 logo-glow" />
   </a>
@@ -239,6 +240,123 @@
     ctx.fill();
   }
 
+<script>
+  const pixKey = "azuosraul999@gmail.com";
+
+  function openPixModal() {
+    document.getElementById('pixModal').classList.remove('hidden');
+  }
+
+  function copyPixKey() {
+    navigator.clipboard.writeText(pixKey).then(() => alert("Chave Pix copiada!"));
+  }
+
+  function closeModal(id) {
+    document.getElementById(id).classList.add('hidden');
+  }
+
+  function openSocials() {
+    document.getElementById('socialsModal').classList.remove('hidden');
+  }
+
+  function openForm(tipo) {
+    const modal = document.getElementById('formModal');
+    const title = document.getElementById('formTitle');
+    const subject = document.getElementById('formSubject');
+    const fields = document.getElementById('formFields');
+    const form = document.getElementById('formContent');
+    form.setAttribute("action", "https://formsubmit.co/eco.noheroes@gmail.com");
+
+    modal.classList.remove('hidden');
+    fields.innerHTML = "";
+
+    if (tipo === 'outras') {
+      title.innerText = "Quero ajudar de outras formas";
+      subject.value = "Apoio — Quero ajudar de outras formas";
+      fields.innerHTML = `
+        <label>Como deseja ajudar?</label>
+        <select name="forma_de_ajuda" required class="w-full p-2 bg-[#333] text-white rounded">
+          <option value="" disabled selected>Selecione uma opção</option>
+          <option>Moderar a comunidade do Discord</option>
+          <option>Moderar grupo WhatsApp</option>
+          <option>Contribuir com artes</option>
+          <option>Colaborar nas animações</option>
+          <option>Divulgar o projeto</option>
+          <option>Outras habilidades</option>
+        </select>
+        <label>Detalhes</label>
+        <textarea name="detalhes" required class="w-full p-2 bg-[#333] text-white rounded" rows="5" placeholder="Fale sobre suas habilidades e como pode ajudar."></textarea>
+        <label>Seu contato</label>
+        <input type="text" name="contato" required class="w-full p-2 bg-[#333] text-white rounded" placeholder="E-mail, WhatsApp ou Discord">
+      `;
+    } else if (tipo === 'parceria') {
+      title.innerText = "Quero fazer uma parceria";
+      subject.value = "Contato — Parceria";
+      fields.innerHTML = `
+        <label>Nome da Marca ou Projeto</label>
+        <input type="text" name="marca" required class="w-full p-2 bg-[#333] text-white rounded">
+        <label>Ideia da Parceria</label>
+        <textarea name="detalhes" required class="w-full p-2 bg-[#333] text-white rounded" rows="4"></textarea>
+        <label>Seu contato</label>
+        <input type="text" name="contato" required class="w-full p-2 bg-[#333] text-white rounded">
+      `;
+    } else if (tipo === 'investir') {
+      title.innerText = "Quero investir no projeto";
+      subject.value = "Contato — Investimento";
+      fields.innerHTML = `
+        <label>Motivo do interesse</label>
+        <textarea name="detalhes" required class="w-full p-2 bg-[#333] text-white rounded" rows="4"></textarea>
+        <label>Seu contato</label>
+        <input type="text" name="contato" required class="w-full p-2 bg-[#333] text-white rounded">
+      `;
+    } else if (tipo === 'apoio') {
+      title.innerText = "Preciso de apoio no meu projeto";
+      subject.value = "Solicitação — Apoio em projeto";
+      fields.innerHTML = `
+        <label>Nome do seu projeto</label>
+        <input type="text" name="projeto" required class="w-full p-2 bg-[#333] text-white rounded">
+        <label>Em que precisa de ajuda?</label>
+        <textarea name="detalhes" required class="w-full p-2 bg-[#333] text-white rounded" rows="4"></textarea>
+        <label>Link de portfólio ou referência</label>
+        <input type="url" name="portfolio" required class="w-full p-2 bg-[#333] text-white rounded">
+        <label>Seu contato</label>
+        <input type="text" name="contato" required class="w-full p-2 bg-[#333] text-white rounded">
+      `;
+    }
+  }
+
+  // Animação de moedas douradas
+  const canvas = document.getElementById("coinCanvas");
+  const ctx = canvas.getContext("2d");
+  let coins = [];
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  window.addEventListener("resize", resizeCanvas);
+  resizeCanvas();
+
+  function createCoin() {
+    return {
+      x: Math.random() * canvas.width,
+      y: -20,
+      radius: 4 + Math.random() * 3,
+      speedY: 1 + Math.random() * 3,
+      alpha: 0.8 + Math.random() * 0.2
+    };
+  }
+
+  function drawCoin(c) {
+    ctx.beginPath();
+    ctx.arc(c.x, c.y, c.radius, 0, 2 * Math.PI);
+    ctx.fillStyle = `rgba(255, 215, 0, ${c.alpha})`; // dourado
+    ctx.shadowColor = "#FFD700";
+    ctx.shadowBlur = 10;
+    ctx.fill();
+  }
+
   function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -254,6 +372,6 @@
   }
 
   animate();
-  </script>
+</script>
 </body>
 </html>
