@@ -32,11 +32,11 @@
       0% { box-shadow: 0 0 20px #FFD700, 0 0 40px #FFD700, 0 0 60px #FFD700; }
       100% { box-shadow: 0 0 30px #FFA500, 0 0 50px #FFD700, 0 0 70px #FFD700; }
     }
-    .rodape-com-fundo {
-  background: linear-gradient(to top, #0a0a0a 0%, rgba(0,0,0,0.9) 20%, rgba(0,0,0,0.3) 70%, transparent 100%), 
-              url('assets/images/fundo-caverna-ouro.jpg') no-repeat center bottom / cover;
-  background-attachment: scroll;
+    body {
+  background: linear-gradient(to top, rgba(10,10,10,1) 0%, rgba(10,10,10,0.9) 20%, rgba(10,10,10,0.5) 60%, rgba(10,10,10,0) 100%),
+              url('assets/images/tesouro-fundo.png') no-repeat bottom center;
   background-size: cover;
+  background-attachment: fixed;
     }
   </style>
 </head>
@@ -116,7 +116,7 @@
       <button onclick="closeModal('socialsModal')" class="mt-4 text-[#8f4fff] underline">Fechar</button>
     </div>
   </div>
-<footer class="rodape-com-fundo pt-32 pb-10 px-4 text-center text-sm text-[#ddd] relative z-10">
+<footer class="pt-32 pb-10 px-4 text-center text-sm text-[#ddd] relative z-10">
   <p class="mb-1">© 2025 NoHeroes. Todos os direitos reservados.</p>
   <p class="italic">Explore. Escolha. Caia. Evolua.</p>
 </footer>
