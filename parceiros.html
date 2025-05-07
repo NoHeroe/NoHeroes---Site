@@ -1,59 +1,67 @@
-<!DOCTYPE html><html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Parceiros & Colaboradores</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-black text-white">  <!-- Botão Torne-se Colaborador -->  <div class="text-center my-6">
-    <a href="#final" class="bg-yellow-500 text-black px-4 py-2 rounded hover:bg-yellow-600 transition">Torne-se Colaborador</a>
-  </div>  <!-- Grade de Parceiros -->  <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 max-w-6xl mx-auto px-4">
-    <!-- 20 espaços de logo -->
-    <!-- Placeholder padrão -->
-    <!-- Use JS depois para personalizar dinamicamente -->
-    <!-- Substitua os nomes e links quando necessário -->
-    <!-- Imagem de placeholder: assets/images/logo-noheroes-mini.png --><!-- Gerado 20 vezes -->
-<!-- Início -->
-<!-- Você pode copiar e colar este bloco para duplicar -->
-<!-- Trocar nome/link conforme cada colaborador for inserido -->
-<!-- As imagens devem estar no caminho correto -->
+<body class="bg-black text-white">
 
-<!-- START CARDS -->
-<!-- Cada bloco representa 1 parceiro -->
-<!-- Replicado 20 vezes -->
-<!-- Começo -->
-<script>
-  const parceiros = Array.from({ length: 20 }, (_, i) => ({
-    nome: `Parceiro ${i + 1}`,
-    descricao: "Descrição do colaborador será exibida aqui futuramente.",
-    link: "https://noheroes.com.br"
-  }));
+  <!-- Botão Torne-se Colaborador -->
+  <div class="text-center my-6">
+    <a href="#final" class="bg-yellow-500 text-black px-4 py-2 rounded hover:bg-yellow-600 transition">
+      Torne-se Colaborador
+    </a>
+  </div>
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const container = document.querySelector(".grid");
-    parceiros.forEach(parceiro => {
-      const btn = document.createElement("button");
-      btn.className = "bg-zinc-800 rounded overflow-hidden";
-      btn.innerHTML = `
-        <img src="assets/images/logo-noheroes-mini.png" alt="${parceiro.nome}" onerror="this.src='assets/images/fallback.png'" class="w-full h-auto" />
-      `;
-      btn.onclick = () => abrirModal(parceiro.nome, parceiro.descricao, parceiro.link);
-      container.appendChild(btn);
+  <!-- Grade de Parceiros -->
+  <div id="gradeParceiros" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 max-w-6xl mx-auto px-4"></div>
+
+  <!-- Script para criar os 20 botões dinamicamente -->
+  <script>
+    const parceiros = Array.from({ length: 20 }, (_, i) => ({
+      nome: `Parceiro ${i + 1}`,
+      descricao: "Descrição do colaborador será exibida aqui futuramente.",
+      link: "https://noheroes.com.br"
+    }));
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const container = document.getElementById("gradeParceiros");
+      parceiros.forEach(parceiro => {
+        const btn = document.createElement("button");
+        btn.className = "bg-zinc-800 rounded overflow-hidden";
+        btn.innerHTML = `
+          <img src="assets/images/logo-noheroes-mini.png" alt="${parceiro.nome}" 
+          onerror="this.src='assets/images/fallback.png'" class="w-full h-auto" />
+        `;
+        btn.onclick = () => abrirModal(parceiro.nome, parceiro.descricao, parceiro.link);
+        container.appendChild(btn);
+      });
     });
-  });
-</script>
-<!-- END CARDS -->
+  </script>
 
-  </div>  <!-- Modal -->  <div id="modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50">
+  <!-- Modal -->
+  <div id="modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50">
     <div class="bg-zinc-900 p-6 rounded-lg max-w-md text-center relative">
       <button onclick="fecharModal()" class="absolute top-2 right-3 text-white text-xl">&times;</button>
       <h2 id="modalTitle" class="text-xl font-semibold mb-2">Nome do Parceiro</h2>
       <p id="modalDescription" class="mb-4 text-sm text-gray-300">Descrição aqui</p>
-      <a id="modalLink" href="#" target="_blank" class="bg-yellow-500 text-black px-4 py-2 rounded hover:bg-yellow-600 transition">Visitar Página</a>
+      <a id="modalLink" href="#" target="_blank" class="bg-yellow-500 text-black px-4 py-2 rounded hover:bg-yellow-600 transition">
+        Visitar Página
+      </a>
     </div>
-  </div>  <!-- Área final -->  <div id="final" class="text-center mt-16">
-    <a href="/apoio.html" class="bg-yellow-500 text-black px-6 py-3 rounded hover:bg-yellow-600 transition">Apoiar / Tornar-se Colaborador</a>
-  </div>  <!-- Script Modal -->  <script>
+  </div>
+
+  <!-- Área final -->
+  <div id="final" class="text-center mt-16">
+    <a href="/apoio.html" class="bg-yellow-500 text-black px-6 py-3 rounded hover:bg-yellow-600 transition">
+      Apoiar / Tornar-se Colaborador
+    </a>
+  </div>
+
+  <!-- Script Modal -->
+  <script>
     const modal = document.getElementById('modal');
     const title = document.getElementById('modalTitle');
     const description = document.getElementById('modalDescription');
@@ -71,5 +79,7 @@
       modal.classList.add('hidden');
       document.body.style.overflow = '';
     }
-  </script></body>
+  </script>
+
+</body>
 </html>
