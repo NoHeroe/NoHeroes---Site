@@ -1,88 +1,67 @@
-<!DOCTYPE html><html lang="pt-BR">
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Parceiros & Colaboradores</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    .modal {
-      display: none;
-    }
-    .modal.active {
-      display: flex;
-    }
-  </style>
 </head>
-<body class="bg-black text-white font-sans">
-  <!-- Botão topo -->
-  <div class="text-center py-10">
-    <button onclick="document.getElementById('colab-section').scrollIntoView({ behavior: 'smooth' })" class="bg-yellow-400 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-300 transition">
-      Torne-se Colaborador
-    </button>
-  </div>  <!-- Grade de Parceiros -->  <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-6 p-6">
-    <!-- 20 blocos -->
-    <!-- Cada item -->
-    <!-- Substitua 'logo1.png' e 'parceiro1' conforme necessário -->
-    <!-- Placeholder: logo noheroes -->
-    <template id="partner-template">
-      <div class="cursor-pointer" onclick="openModal(this.dataset.partner)">
-        <img src="assets/logos/noheroes-mini.png" alt="Logo" class="w-full h-28 object-contain bg-white rounded" />
-      </div>
-    </template><!-- Replicar 20 blocos -->
-<script>
-  const container = document.currentScript.parentElement;
-  const template = document.getElementById('partner-template');
-  for (let i = 1; i <= 20; i++) {
-    const clone = template.content.cloneNode(true);
-    clone.querySelector('div').dataset.partner = `parceiro${i}`;
-    container.appendChild(clone);
-  }
-</script>
+<body class="bg-black text-white">
 
-  </div>  <!-- Modais -->  <div id="modal-container" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center modal z-50">
-    <div class="bg-gray-800 p-6 rounded-lg w-11/12 max-w-md text-center relative">
-      <button onclick="closeModal()" class="absolute top-2 right-4 text-white text-2xl">&times;</button>
-      <h2 id="modal-title" class="text-2xl font-bold mb-4">Nome do Parceiro</h2>
-      <p id="modal-content" class="mb-4">Descrição do colaborador será exibida aqui futuramente.</p>
-      <a id="modal-link" href="#" target="_blank" class="inline-block bg-yellow-400 text-black px-4 py-2 rounded hover:bg-yellow-300 transition">Visitar Página</a>
+  <!-- Botão Torne-se Colaborador -->
+  <div class="text-center my-6">
+    <a href="#final" class="bg-yellow-500 text-black px-4 py-2 rounded hover:bg-yellow-600 transition">Torne-se Colaborador</a>
+  </div>
+
+  <!-- Grade de Parceiros -->
+  <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 max-w-6xl mx-auto px-4">
+    <!-- Card de parceiro (exemplo com placeholder) -->
+    <button onclick="abrirModal('Nome do Parceiro', 'Descrição do colaborador será exibida aqui futuramente.', 'https://noheroes.com.br')" class="bg-zinc-800 rounded overflow-hidden">
+      <img src="assets/images/logo-noheroes-mini.png" alt="Parceiro" class="w-full h-auto" />
+    </button>
+    
+    <!-- Repita o botão acima 20x com logos diferentes quando houver -->
+
+    <!-- 19 placeholders -->
+    <!-- Use JS depois para preencher dinamicamente se preferir -->
+    <!-- ... -->
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50">
+    <div class="bg-zinc-900 p-6 rounded-lg max-w-md text-center relative">
+      <button onclick="fecharModal()" class="absolute top-2 right-3 text-white text-xl">&times;</button>
+      <h2 id="modalTitle" class="text-xl font-semibold mb-2">Nome do Parceiro</h2>
+      <p id="modalDescription" class="mb-4 text-sm text-gray-300">Descrição aqui</p>
+      <a id="modalLink" href="#" target="_blank" class="bg-yellow-500 text-black px-4 py-2 rounded hover:bg-yellow-600 transition">Visitar Página</a>
     </div>
-  </div>  <!-- Seção Final -->  <div id="colab-section" class="text-center py-16">
-    <p class="mb-4 text-lg">Quer se tornar um colaborador ou parceiro do projeto?</p>
-    <a href="apoio-vitalista.html" class="bg-yellow-400 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-300 transition">
-      Enviar Proposta de Colaboração
-    </a>
-  </div>  <script>
-    function openModal(id) {
-      document.getElementById('modal-title').innerText = "Parceiro " + id.replace('parceiro', '');
-      document.getElementById('modal-content').innerText = "Informações sobre o colaborador " + id + ".";
-      document.getElementById('modal-link').href = "#";
-      document.getElementById('modal-container').classList.add('active');
+  </div>
+
+  <!-- Área final -->
+  <div id="final" class="text-center mt-16">
+    <a href="/apoio.html" class="bg-yellow-500 text-black px-6 py-3 rounded hover:bg-yellow-600 transition">Apoiar / Tornar-se Colaborador</a>
+  </div>
+
+  <!-- Script -->
+  <script>
+    const modal = document.getElementById('modal');
+    const title = document.getElementById('modalTitle');
+    const description = document.getElementById('modalDescription');
+    const link = document.getElementById('modalLink');
+
+    function abrirModal(nome, texto, url) {
+      title.textContent = nome;
+      description.textContent = texto;
+      link.href = url;
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
     }
 
-    function closeModal() {
-      document.getElementById('modal-container').classList.remove('active');
+    function fecharModal() {
+      modal.classList.add('hidden');
+      document.body.style.overflow = '';
     }
   </script>
-<script>
-  const modal = document.getElementById("modal-parceiro");
-  const modalTitle = document.getElementById("modal-title");
-  const modalDesc = document.getElementById("modal-desc");
-  const modalBtn = document.getElementById("modal-btn");
 
-  function abrirModal(nome, descricao, link) {
-    modal.classList.remove("hidden");
-    modalTitle.textContent = nome;
-    modalDesc.textContent = descricao;
-    modalBtn.href = link;
-  }
-
-  function fecharModal() {
-    modal.classList.add("hidden");
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("modal-close").addEventListener("click", fecharModal);
-  });
-</script>
 </body>
 </html>
