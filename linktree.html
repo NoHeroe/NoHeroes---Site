@@ -146,6 +146,9 @@
     height: 100vh;
     z-index: 0;
     pointer-events: none;
+will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
   }
   .lobo {
     position: fixed;
@@ -254,14 +257,6 @@
     }
     requestAnimationFrame(animate);
   }
-
-  createParticles(150);
-  animate();
-#brasasCanvas {
-  will-change: transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
 </script>
 </body>
 </html>
