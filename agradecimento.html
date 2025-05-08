@@ -6,6 +6,10 @@
   <title>Agradecimento | NoHeroes</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
     .magic-glow {
       animation: glowPulse 2s ease-in-out infinite;
       filter: drop-shadow(0 0 8px #8f4fff);
@@ -27,21 +31,58 @@
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
+
+    @keyframes chaosPulse {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 15px #8f4fff55, 0 0 5px #8f4fff55;
+      }
+      25% {
+        transform: scale(1.01) rotate(-0.3deg);
+        box-shadow: 0 0 25px #8f4fff88, 0 0 10px #8f4fff66;
+      }
+      50% {
+        transform: scale(1.015) rotate(0.3deg);
+        box-shadow: 0 0 18px #8f4fff99, 0 0 8px #8f4fff55;
+      }
+      75% {
+        transform: scale(1.01) rotate(-0.2deg);
+        box-shadow: 0 0 28px #8f4fff77, 0 0 12px #8f4fff55;
+      }
+    }
+
+    .chaos-box {
+      animation: chaosPulse 3.2s infinite ease-in-out;
+      transition: all 0.3s ease;
+    }
   </style>
 </head>
-<body class="bg-animated text-white flex items-center justify-center h-screen text-center overflow-hidden font-[Inter,sans-serif]">
+<body class="bg-animated text-white flex items-center justify-center h-screen text-center overflow-hidden">
 
-  <div class="p-6 max-w-xl">
-    <h1 class="text-3xl md:text-5xl font-bold magic-glow">“Sua energia foi recebida pelo Abismo.”</h1>
-    <p class="mt-6 text-lg italic text-purple-300">
-  As sombras de Caelum consumiram sua oferenda com prazer. <br>
-  Agora você caminha guardado pela benção de um <span class="text-[#FFD700] font-semibold">Guardião Divino</span>.<br>
-  <span class="text-sm text-white/70">Obrigado por sua coragem, Vitalista.</span>
-</p>
+  <!-- Vídeo de fundo com vultos -->
+  <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+    <video autoplay muted loop playsinline class="w-full h-full object-cover opacity-10">
+      <source src="assets/videos/fantasma-fundo.mp4" type="video/mp4" />
+    </video>
+  </div>
 
-    <a href="/linktree.html" class="inline-block mt-10 bg-[#8f4fff] text-black px-6 py-3 rounded-lg font-semibold shadow-md hover:bg-[#39ff14] transition-all duration-300">
-      Retornar às Raízes
-    </a>
+  <!-- Caixa de agradecimento -->
+  <div class="relative z-10 max-w-xl w-full px-6">
+    <div class="p-8 rounded-xl border border-purple-600 bg-black/40 backdrop-blur-md chaos-box text-purple-300 text-lg italic leading-relaxed">
+      <h1 class="text-3xl md:text-5xl font-bold text-white mb-6 magic-glow">
+        “Sua energia foi recebida pelo Abismo.”
+      </h1>
+
+      <p>
+        As sombras de Caelum consumiram sua oferenda com prazer. <br>
+        Agora você caminha guardado pela benção de um <span class="text-[#FFD700] font-semibold">Guardião Divino</span>.<br>
+        <span class="text-sm text-white/70 block mt-2">Obrigado por sua coragem, Vitalista.</span>
+      </p>
+
+      <a href="/linktree.html" class="inline-block mt-10 bg-[#8f4fff] text-black px-6 py-3 rounded-lg font-semibold shadow-md hover:bg-[#39ff14] transition-all duration-300">
+        Retornar às Raízes
+      </a>
+    </div>
   </div>
 
 </body>
