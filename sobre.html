@@ -43,38 +43,45 @@
       </div>
     </div>
   <!-- Universos (ROAR + FREQ integrados) -->
-<section id="universos" class="py-20 bg-[#0a0a12] px-4 text-center relative overflow-hidden">
-  <h2 class="text-4xl font-bold mb-10 text-white z-10 relative">Os Universos</h2>
+<section id="universos" class="py-20 bg-[#0a0a0a] px-4 text-center relative">
+  <h2 class="text-4xl font-bold mb-4">Os Universos</h2>
 
-  <!-- Imagem por trás do título -->
-  <div class="relative inline-block">
-    <img src="assets/images/ryu-azuos.png" alt="Ryu e Azuos" class="w-60 md:w-72 mx-auto -mb-12 z-0 relative opacity-90" />
-    <h3 class="text-3xl md:text-4xl font-bold tracking-wide z-10 relative -mt-4">
-      <span class="text-[#8f4fff]">ROAR</span> <span class="text-[#39ff14]">& FREQ</span>
-    </h3>
+  <!-- Imagem de Ryu e Azuos -->
+  <div class="flex justify-center">
+    <img src="assets/images/ryu-e-azuos.png" alt="Ryu e Azuos" class="w-64 md:w-80 -mb-6 z-10 relative">
   </div>
 
-<div class="mt-2 flex justify-center">
-  <button onclick="toggleUniversoTexto()" class="bg-black text-white px-10 py-3 rounded-lg text-base font-semibold border border-white hover:bg-white hover:text-black transition-all duration-300 -mt-6 z-20 relative">
-    Ler mais...
-  </button>
-</div>
+  <!-- Título estilizado -->
+  <div class="mt-4 text-3xl font-extrabold tracking-wide z-10 relative">
+    <span class="text-purple-500">ROAR</span>
+    <span class="text-white">&</span>
+    <span class="text-green-500">FREQ</span>
+  </div>
 
-  <!-- Texto oculto -->
-  <div id="universoTexto" class="mt-6 max-w-3xl mx-auto text-lg text-white/80 hidden">
+  <!-- Botão alinhado com largura do título -->
+  <div class="mt-6 flex justify-center">
+    <button onclick="toggleUniversoTexto()" class="bg-black text-white px-16 py-3 rounded-lg text-base font-semibold border border-white hover:bg-white hover:text-black transition-all duration-300">
+      Ler mais...
+    </button>
+  </div>
+
+  <!-- Texto expansível -->
+  <div id="universoTexto" class="max-w-3xl mx-auto mt-8 text-lg text-gray-300 hidden">
     <p>
-      ROAR e FREQ são dois pilares que sustentam o universo de NoHeroes. ROAR mergulha no drama espiritual de um guerreiro entre a morte e a verdade. FREQ, por outro lado, explora uma distopia sonora onde o protagonista precisa evoluir para sobreviver.
-      Ambos os projetos estão sendo desenvolvidos como mangá e anime, interligando mitologia, som e crítica social em uma experiência audiovisual profunda.
+      ROAR e FREQ são duas obras que compartilham o mesmo universo, mas exploram realidades distintas.  
+      ROAR mergulha na redenção, no orgulho e nos fantasmas de um passado sagrado.  
+      FREQ distorce o presente com crítica social, um herói deslocado e uma estética sonora única.  
+      Ambos os projetos terão mangá e anime autorais, buscando romper com padrões e criar uma experiência visceral.
     </p>
   </div>
+</section>
 
-  <script>
-    function toggleUniversoTexto() {
-      const txt = document.getElementById("universoTexto");
-      txt.classList.toggle("hidden");
-    }
-  </script>
-</section>  <!-- A Experiência Sensorial -->  <section id="sensoria" class="py-20 px-4 text-center">
+<script>
+  function toggleUniversoTexto() {
+    const texto = document.getElementById('universoTexto');
+    texto.classList.toggle('hidden');
+  }
+</script>  <!-- A Experiência Sensorial -->  <section id="sensoria" class="py-20 px-4 text-center">
     <h2 class="text-4xl font-bold">A Experiência Sensorial</h2>
     <p class="mt-4 max-w-2xl mx-auto text-lg">Muito além da narrativa: música original, efeitos sonoros cinematográficos e atmosfera imersiva.</p>
     <div class="mt-8 flex flex-wrap justify-center gap-12">
