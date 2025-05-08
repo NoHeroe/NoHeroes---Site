@@ -139,13 +139,16 @@
 
 <style>
   #brasasCanvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 0;
-    pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
   }
   .lobo {
     position: fixed;
