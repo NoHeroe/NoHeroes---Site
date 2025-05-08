@@ -42,34 +42,34 @@
         <p class="mt-2">Sombras pulsantes, música imersiva e arte visceral.</p>
       </div>
     </div>
-  </section>  <!-- Os Universos (ROAR e FREQ) -->  <section id="universos" class="py-20 bg-gray-900 px-4 text-center">
   <!-- Universos (ROAR + FREQ integrados) -->
-<section id="universos" class="py-24 px-6 text-center bg-gray-900 relative">
-
-  <h2 class="text-4xl font-bold mb-12">Os Universos</h2>
-
-  <!-- Imagem -->
-  <div class="flex justify-center">
-    <img src="assets/images/ryu-azuos.png" alt="Ryu e Azuos" class="w-64 md:w-80 mb-6 drop-shadow-lg">
+<section id="universos" class="relative py-24 px-6 text-center bg-gray-900 overflow-hidden" x-data="{ open: false }">
+  
+  <!-- Imagem sobreposta ao fundo -->
+  <div class="absolute inset-0 flex justify-center opacity-10 pointer-events-none z-0">
+    <img src="assets/images/ryu-azuos.png" alt="Ryu e Azuos" class="object-contain w-80 md:w-96">
   </div>
 
-  <!-- Título secundário -->
-  <h3 class="text-3xl font-semibold text-white mb-4">ROAR & FREQ</h3>
+  <!-- Conteúdo -->
+  <div class="relative z-10 max-w-3xl mx-auto">
+    <h2 class="text-4xl font-bold mb-4">Os Universos</h2>
+    <h3 class="text-3xl font-bold mb-6">
+      <span class="text-[#8f4fff]">ROAR</span> <span class="text-white">&</span> <span class="text-[#39ff14]">FREQ</span>
+    </h3>
 
-  <!-- Texto expansível -->
-  <div x-data="{ open: false }" class="max-w-3xl mx-auto">
-    <button @click="open = !open" class="mb-4 px-6 py-2 border-2 border-white rounded hover:bg-white hover:text-black transition">
+    <!-- Botão -->
+    <button @click="open = !open" class="mb-6 px-6 py-2 border-2 border-white rounded hover:bg-white hover:text-black transition">
       <span x-text="open ? 'Fechar' : 'Ler mais...'"></span>
     </button>
 
-    <div x-show="open" x-transition class="text-lg text-white/80 leading-relaxed space-y-4">
-      <p><strong>ROAR</strong> e <strong>FREQ</strong> são dois mundos distintos, mas entrelaçados pela essência do projeto NoHeroes: narrativas intensas, simbólicas e visualmente impactantes.</p>
-      <p>Em <strong>ROAR</strong>, acompanhamos Azuos em uma jornada espiritual marcada por perda, morte e renascimento, enquanto confronta os próprios demônios em meio a um mundo brutal e místico. O mangá se aprofunda na dor humana, na construção de lendas e nos sacrifícios que moldam o destino.</p>
-      <p>Já <strong>FREQ</strong> apresenta Ryu, seu filho, arrastado para uma realidade distorcida e decadente onde o som e a essência espiritual se tornam ferramentas de resistência. A trama mistura crítica social, sci-fi e magia enfraquecida, onde a tecnologia molda a percepção e o caos domina.</p>
-      <p>Ambos serão lançados como mangás e posteriormente ganharão versões animadas com som autoral, ambiência cinematográfica e linguagem visual própria.</p>
+    <!-- Texto -->
+    <div x-show="open" x-transition class="text-white/80 text-lg leading-relaxed space-y-4">
+      <p><strong>ROAR</strong> e <strong>FREQ</strong> são partes de um mesmo universo sombrio — obras conectadas por um legado, mas com tons, ritmos e propostas únicas.</p>
+      <p><strong>ROAR</strong> mergulha no renascimento brutal de Azuos, guiado por dor, mitologia e redenção. Um mangá carregado de sacrifício, alma e intensidade.</p>
+      <p><strong>FREQ</strong> revela o destino de Ryu, seu filho, jogado num mundo podre onde magia enfraqueceu e o som se tornou arma. Um reflexo distorcido de nós mesmos.</p>
+      <p>Ambos caminham para o mangá e a animação, com trilha original, imersão sensorial e identidade única.</p>
     </div>
   </div>
-
 </section>  <!-- A Experiência Sensorial -->  <section id="sensoria" class="py-20 px-4 text-center">
     <h2 class="text-4xl font-bold">A Experiência Sensorial</h2>
     <p class="mt-4 max-w-2xl mx-auto text-lg">Muito além da narrativa: música original, efeitos sonoros cinematográficos e atmosfera imersiva.</p>
