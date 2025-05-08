@@ -245,16 +245,150 @@
   </div>
 </section>
 
- <!-- 8. Sobre o Criador ± Equipe & Colaboradores -->  <section id="criador">...</section>
-  <section id="equipe">...</section> 
+ <!-- 8. Sobre o Criador & Equipe -->
+<section id="criador" class="py-24 px-4 bg-gray-900 text-center text-white">
+  <div class="max-w-4xl mx-auto">
 
- <!-- 9. Press Kit / Mídia -->  <section id="presskit">...</section>
+    <!-- Título -->
+    <h2 class="text-4xl font-bold mb-4">Por trás da sombra...</h2>
+    <p class="text-lg italic text-gray-300 max-w-3xl mx-auto">
+      “...há um criador. Raul. Um escritor, artista digital e pai — que transforma angústias em arte e silêncio em som.”
+    </p>
 
-  <!-- 10. FAQ -->  <section id="faq">...</section> 
+    <!-- Avatar Criador -->
+    <img src="noheroe-avatar.png" alt="NoHeroes como entidade" class="mx-auto mt-8 w-48 h-48 rounded-full border-4 border-gray-700 shadow-lg" />
 
- <!-- 11. Comunidade -->  <section id="comunidade">...</section> 
+    <!-- Redes -->
+    <div class="mt-6 flex justify-center space-x-6">
+      <a href="https://instagram.com/noheroe" aria-label="Instagram">
+        <img src="icon-instagram.png" alt="Instagram" class="w-6 h-6" />
+      </a>
+      <a href="https://twitter.com/noheroe" aria-label="Twitter">
+        <img src="icon-twitter.png" alt="Twitter" class="w-6 h-6" />
+      </a>
+      <a href="mailto:contato@noheroes.com" aria-label="Email">
+        <img src="icon-email.png" alt="Email" class="w-6 h-6" />
+      </a>
+    </div>
 
- <!-- 12. Contato -->  <section id="contato">...</section>  
+    <!-- Separador visual -->
+    <div class="mt-16 border-t border-gray-700"></div>
 
-<!-- 13. Rodapé -->  <footer>...</footer></body>
-</html>
+    <!-- Equipe -->
+    <h3 class="text-3xl font-bold mt-12 mb-6">Equipe & Colaboradores</h3>
+    <p class="text-gray-400 mb-12 max-w-xl mx-auto">
+      O universo NoHeroes é construído com esforço conjunto. Seja com ideias, artes, código ou apoio — todos fazem parte da trama.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <!-- Raul -->
+      <div class="bg-gray-800 p-6 rounded-xl shadow-md">
+        <img src="noheroe-avatar.png" alt="Raul / NoHeroe" class="w-24 h-24 mx-auto rounded-full mb-4"/>
+        <h4 class="text-xl font-semibold">Raul “NoHeroe” Souza</h4>
+        <p class="text-gray-400 text-sm">Criador, roteirista & artista digital</p>
+      </div>
+
+      <!-- GPT -->
+      <div class="bg-gray-800 p-6 rounded-xl shadow-md">
+        <img src="icon-gpt.png" alt="ChatGPT" class="w-24 h-24 mx-auto rounded-full mb-4"/>
+        <h4 class="text-xl font-semibold">ChatGPT</h4>
+        <p class="text-gray-400 text-sm">Co-pesquisador & assistente de conteúdo</p>
+      </div>
+
+      <!-- Botão para indicar -->
+      <a href="/parceiros.html" class="flex items-center justify-center bg-emerald-500 hover:bg-emerald-600 text-black font-semibold text-center rounded-xl p-6 transition">
+        Tornar-se ou Recomendar Colaborador
+      </a>
+
+      <!-- Espaço disponível -->
+      <div class="bg-gray-800 p-6 rounded-xl shadow-inner flex items-center justify-center">
+        <p class="text-gray-500 italic text-center">Até 20 vagas disponíveis</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+ <!-- 9. Press Kit / Mídia -->  
+<section id="presskit" class="py-20 px-4 text-center">
+      <h2 class="text-4xl font-bold mb-4">Press Kit & Mídia</h2>
+      <p class="text-gray-400 mb-8">Logos, imagens em alta resolução e material de divulgação.</p>
+      <div class="flex justify-center gap-6">
+        <a href="/presskit/logos.zip" class="px-6 py-3 border border-white rounded-lg hover:bg-white hover:text-black transition">
+          Baixar Logos
+        </a>
+        <a href="/presskit/kit-completo.zip" class="px-6 py-3 border border-white rounded-lg hover:bg-white hover:text-black transition">
+          Baixar Kit Completo
+        </a>
+      </div>
+    </section>
+
+  <!-- 10. FAQ -->  
+<section id="faq" class="py-20 px-4 bg-white text-black rounded-lg max-w-3xl mx-auto">
+      <h2 class="text-4xl font-bold mb-6">Perguntas Frequentes</h2>
+      <div class="space-y-4">
+        <div x-data="{ open: false }" class="border-b pb-4">
+          <button @click="open = !open" class="w-full text-left font-semibold">
+            Quando sai o próximo capítulo?
+          </button>
+          <div x-show="open" class="mt-2 text-gray-700">
+            A cada mês lançamos um novo segmento do mangá. Fique de olho na seção “Novidades”.
+          </div>
+        </div>
+        <div x-data="{ open: false }" class="border-b pb-4">
+          <button @click="open = !open" class="w-full text-left font-semibold">
+            Onde posso acompanhar ROAR e FREQ?
+          </button>
+          <div x-show="open" class="mt-2 text-gray-700">
+            Todos os capítulos estão disponíveis aqui no site e em nossas redes sociais.
+          </div>
+        </div>
+        <!-- adicione mais Q&A conforme surgir -->
+      </div>
+    </section>
+
+ <!-- 11. Comunidade -->  
+<section id="comunidade" class="py-20 px-4 text-center">
+      <h2 class="text-4xl font-bold mb-4">Comunidade & Futuro</h2>
+      <p class="text-lg mb-6">NoHeroes está vivo e em constante evolução. Junte-se a nós nas plataformas:</p>
+      <div class="flex flex-wrap justify-center gap-6 mb-8">
+        <a href="https://discord.gg/..." class="px-6 py-3 bg-purple-600 rounded-lg">Discord</a>
+        <a href="https://chat.whatsapp.com/..." class="px-6 py-3 bg-green-600 rounded-lg">WhatsApp</a>
+        <a href="https://patreon.com/noheroe" class="px-6 py-3 bg-emerald-500 rounded-lg">Patreon</a>
+      </div>
+      <button class="px-6 py-3 border-2 border-white rounded-lg hover:bg-white hover:text-black transition">
+        Assine o Círculo Interno
+      </button>
+    </section>
+
+ <!-- 12. Contato -->  
+<section id="contato" class="py-20 px-4 bg-gray-900 text-center">
+      <h2 class="text-4xl font-bold mb-4">Fale Conosco</h2>
+      <p class="text-gray-400 mb-6">Sugestões, parcerias ou imprensa: mande um e-mail ou use o formulário abaixo.</p>
+      <a href="mailto:contato@noheroes.com" class="px-6 py-3 border-2 border-white rounded-lg hover:bg-white hover:text-black transition">
+        contato@noheroes.com
+      </a>
+    </section>
+
+<!-- Rodapé / Termos de Uso e Aviso Legal -->
+<footer class="py-10 bg-gray-800 text-center text-sm text-white space-y-4">
+
+  <!-- Navegação Superior -->
+  <nav class="space-x-6 text-base font-medium">
+    <a href="/" class="hover:text-emerald-400 transition">Início</a>
+    <a href="/news.html" class="hover:text-emerald-400 transition">Blog / News</a>
+    <a href="/raul" class="hover:text-emerald-400 transition">Portfólio</a>
+    <a href="/linktree.html" class="hover:text-emerald-400 transition">Linktree</a>
+  </nav>
+
+  <!-- Aviso legal -->
+  <div class="text-gray-400">
+    <p>© 2025 NoHeroes. Todos os direitos reservados.</p>
+    <p>Proibida a cópia e reprodução sem autorização.</p>
+    <p>
+      <a href="/termos.html" class="underline hover:text-emerald-400 transition">Termos de Uso</a> &nbsp;|&nbsp;
+      <a href="/privacidade.html" class="underline hover:text-emerald-400 transition">Política de Privacidade</a>
+    </p>
+  </div>
+</footer>
+<body>
+<html>
