@@ -1,5 +1,12 @@
 {
   "posts": [
+    {
+      "id": "2025-05-07-patch-0-1-1",
+      "date": "07/05/2025",
+      "category": "Atualizações",
+      "title": "Patch 0.1.1 — Colaboradores, Parceiros & Apoiadores",
+      "content": "<p>Adicionamos a página Parceiros e Colaboradores de forma ilustrada para exposição. Deixamos também um aviso, temos apenas 20 vagas para colaboradores, e não aceitaremos qualquer pessoa participando ativamente do projeto. Alem disso a Página de Apoio foi atualizada e completamente finalizada. Agora vcs podem entrar em contato diretamente conosco por lá! Página de agradecimento também foi adicionada e finalizada! Desejamos uma ótima Noite, e Obrigado pelo apoio! Sds NoHeroe.</p>"
+    },
 {
       "id": "2025-05-06-patch-0-1-0",
       "date": "06/05/2025",
