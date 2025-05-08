@@ -144,7 +144,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: -1;
+    z-index: 0;
     pointer-events: none;
   }
   .lobo {
@@ -257,6 +257,11 @@
 
   createParticles(150);
   animate();
+#brasasCanvas {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
 </script>
 </body>
 </html>
