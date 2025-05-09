@@ -191,7 +191,7 @@
   </div>
 </section>
 
- <!-- 6. Depoimentos / Parcerias -->  <<section id="depoimentos" class="py-20 px-4 bg-gradient-to-br from-black via-gray-900 to-black text-center text-white">
+ <!-- 6. Depoimentos / Parcerias -->  <section id="depoimentos" class="py-20 px-4 bg-gradient-to-br from-black via-gray-900 to-black text-center text-white">
   <h2 class="text-4xl font-bold mb-4">Vozes que Ecoam</h2>
   <p class="text-gray-400 mb-8 max-w-2xl mx-auto italic">Algumas mensagens não precisam ser editadas — só sentidas.</p>
 
@@ -336,8 +336,8 @@
       <!-- Raul -->
       <div class="bg-gray-800 p-6 rounded-xl shadow-md">
         <img src="noheroe-avatar.png" alt="Raul / NoHeroe" class="w-24 h-24 mx-auto rounded-full mb-4"/>
-        <h4 class="text-xl font-semibold">Raul “NoHeroe” Souza</h4>
-        <p class="text-gray-400 text-sm">Criador, roteirista & artista digital</p>
+        <h4 class="text-xl font-semibold">Raul S. Silva “NoHeroe”</h4>
+        <p class="text-gray-400 text-sm">Criador, roteirista, artista digital & desenvolvedor</p>
       </div>
 
       <!-- GPT -->
@@ -379,21 +379,49 @@
       <h2 class="text-4xl font-bold mb-6">Perguntas Frequentes</h2>
       <div class="space-y-4">
         <div x-data="{ open: false }" class="border-b pb-4">
-          <button @click="open = !open" class="w-full text-left font-semibold">
-            Quando sai o próximo capítulo?
-          </button>
-          <div x-show="open" class="mt-2 text-gray-700">
-            A cada mês lançamos um novo segmento do mangá. Fique de olho na seção “Novidades”.
-          </div>
-        </div>
-        <div x-data="{ open: false }" class="border-b pb-4">
-          <button @click="open = !open" class="w-full text-left font-semibold">
-            Onde posso acompanhar ROAR e FREQ?
-          </button>
-          <div x-show="open" class="mt-2 text-gray-700">
-            Todos os capítulos estão disponíveis aqui no site e em nossas redes sociais.
-          </div>
-        </div>
+  <button @click="open = !open" class="w-full text-left font-semibold">
+    Como posso apoiar o projeto?
+  </button>
+  <div x-show="open" class="mt-2 text-gray-700">
+    Você pode contribuir via Pix ou participar como colaborador nas áreas de arte, som, animação ou divulgação. Acesse a aba “Apoio Vitalista”.
+  </div>
+</div>
+
+<div x-data="{ open: false }" class="border-b pb-4">
+  <button @click="open = !open" class="w-full text-left font-semibold">
+    Posso colaborar mesmo sem experiência profissional?
+  </button>
+  <div x-show="open" class="mt-2 text-gray-700">
+    Sim. Buscamos pessoas com vontade de aprender e criar junto. Se você tem paixão por arte, som, narrativa ou cultura geek, há espaço pra você.
+  </div>
+</div>
+
+<div x-data="{ open: false }" class="border-b pb-4">
+  <button @click="open = !open" class="w-full text-left font-semibold">
+    Como recebo atualizações do projeto?
+  </button>
+  <div x-show="open" class="mt-2 text-gray-700">
+    Publicamos novidades no blog, redes sociais e também por e-mail para quem faz parte do Círculo Interno.
+  </div>
+</div>
+
+<div x-data="{ open: false }" class="border-b pb-4">
+  <button @click="open = !open" class="w-full text-left font-semibold">
+    As animações já estão disponíveis?
+  </button>
+  <div x-show="open" class="mt-2 text-gray-700">
+    Ainda não. Estamos desenvolvendo as primeiras animações de forma independente. Em breve, soltaremos trechos e trailers nas redes.
+  </div>
+</div>
+
+<div x-data="{ open: false }" class="border-b pb-4">
+  <button @click="open = !open" class="w-full text-left font-semibold">
+    Vocês aceitam parcerias com marcas ou criadores?
+  </button>
+  <div x-show="open" class="mt-2 text-gray-700">
+    Sim. Se você tem um projeto, marca ou canal com afinidade ao universo NoHeroes, acesse a aba “Parcerias” e envie sua proposta.
+  </div>
+</div>
         <!-- adicione mais Q&A conforme surgir -->
       </div>
     </section>
