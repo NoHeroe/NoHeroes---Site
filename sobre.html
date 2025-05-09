@@ -191,9 +191,34 @@
   </div>
 </section>
 
- <!-- 6. Depoimentos / Parcerias -->  <section id="depoimentos" class="py-20 px-4 bg-gray-900 text-center hidden">
-      <h2 class="text-4xl font-bold mb-4">Depoimentos & Parcerias</h2>
-      <p class="text-gray-500">Ainda estamos construindo este espaço. Em breve, parceiros e feedbacks da comunidade!</p>
+ <!-- 6. Depoimentos / Parcerias -->  <<section id="depoimentos" class="py-20 px-4 bg-gradient-to-br from-black via-gray-900 to-black text-center text-white">
+  <h2 class="text-4xl font-bold mb-4">Vozes que Ecoam</h2>
+  <p class="text-gray-400 mb-8 max-w-2xl mx-auto italic">Algumas mensagens não precisam ser editadas — só sentidas.</p>
+
+  <!-- Primeiro Depoimento -->
+  <div class="flex justify-center">
+    <div class="bg-black/60 border border-purple-700 rounded-xl shadow-xl p-4 backdrop-blur-md max-w-md">
+      <img src="assets/images/depoimento-01.jpg" alt="Depoimento real" class="rounded-lg w-full h-auto" />
+    </div>
+  </div>
+
+  <!-- Container Oculto com Outros Depoimentos -->
+  <div id="depoimentosExtras" class="mt-6 space-y-6 hidden">
+    <div class="flex justify-center">
+      <div class="bg-black/60 border border-purple-700 rounded-xl shadow-xl p-4 backdrop-blur-md max-w-md">
+        <img src="assets/images/depoimento-02.jpg" alt="Depoimento adicional" class="rounded-lg w-full h-auto" />
+      </div>
+    </div>
+    <!-- Adicione mais depoimentos aqui no mesmo formato -->
+  </div>
+
+  <!-- Botão Ver Mais -->
+  <div class="mt-8">
+    <button onclick="document.getElementById('depoimentosExtras').classList.remove('hidden'); this.classList.add('hidden');"
+      class="px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition">
+      Ver mais depoimentos
+    </button>
+  </div>
 <div class="mt-8">
   <p class="text-gray-400 mb-4">Fique atento às atualizações:</p>
   <a href="/news.html" class="inline-block px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition">
