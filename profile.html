@@ -1,42 +1,73 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<!DOCTYPE html><html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Perfil | NoHeroes</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body { background-color: #0a0a0a; color: #e5e5e5; font-family: 'Inter', sans-serif; }
+    body {
+      background-color: #0a0a0a;
+      color: #e5e5e5;
+      font-family: 'Inter', sans-serif;
+    }
+    .card {
+      @apply bg-[#111] border border-purple-700 rounded-xl p-6 shadow-lg hover:shadow-purple-800 transition duration-300;
+    }
+    .grid-item {
+      @apply flex flex-col items-center gap-2;
+    }
+    .card img {
+      @apply w-16 h-16 object-contain;
+    }
   </style>
 </head>
-<body class="flex items-center justify-center min-h-screen px-4">
-  <div class="w-full max-w-md bg-[#111] p-8 rounded-lg shadow-lg border border-purple-600">
-    <h2 class="text-3xl font-bold mb-4 text-purple-400 text-center">Bem-vindo(a)</h2>
-    <div id="userInfo" class="space-y-4 text-sm text-white/90"></div>
-    <button onclick="logout()" class="mt-6 w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded font-semibold transition">Sair</button>
-  </div>
+<body class="min-h-screen px-6 py-10 flex flex-col items-center">
+  <!-- Header -->
+  <header class="w-full flex justify-between items-center mb-10">
+    <div></div>
+    <img src="assets/images/noheroes_logo.png" alt="Logo NoHeroes" class="h-10">
+    <button class="text-sm text-gray-400 hover:text-white transition">⚙️</button>
+  </header>  <!-- Saudações -->  <h1 class="text-3xl font-bold text-purple-400 mb-6">Bem-vindo(a)</h1>  <!-- Grid de Acessos -->  <div class="grid grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-4xl">
+    <!-- Personagem -->
+    <div class="card grid-item">
+      <img src="assets/images/placeholder-char.png" alt="Personagem">
+      <p class="font-semibold">Meu Personagem</p>
+    </div><!-- Conquistas -->
+<div class="card grid-item">
+  <img src="assets/images/placeholder-trophy.png" alt="Conquistas">
+  <p class="font-semibold">Conquistas</p>
+</div>
 
-  <script>
-    // Redireciona se não estiver logado
-    if (localStorage.getItem("noheroes_logged_in") !== "true") {
-      window.location.href = "login.html";
-    }
+<!-- Loja -->
+<div class="card grid-item">
+  <img src="assets/images/placeholder-shop.png" alt="Loja">
+  <p class="font-semibold">Loja NoHeroes</p>
+</div>
 
-    // Carrega dados do usuário
-    const user = JSON.parse(localStorage.getItem("noheroes_user"));
-    if (user) {
-      const info = `
-        <p><strong>Nome:</strong> ${user.nome}</p>
-        <p><strong>Email:</strong> ${user.email}</p>
-        <p><strong>Conta criada em:</strong> ${user.dataCriacao || 'N/A'}</p>
-      `;
-      document.getElementById("userInfo").innerHTML = info;
-    }
+<!-- Blog -->
+<div class="card grid-item">
+  <img src="assets/images/placeholder-news.png" alt="Novidades">
+  <p class="font-semibold">Novidades</p>
+</div>
 
+<!-- Comunidade -->
+<div class="card grid-item">
+  <img src="assets/images/placeholder-chat.png" alt="Comunidade">
+  <p class="font-semibold">Comunidade</p>
+</div>
+
+<!-- Explorar Universo -->
+<div class="card grid-item">
+  <img src="assets/images/placeholder-explore.png" alt="Explorar">
+  <p class="font-semibold">Explorar Universo</p>
+</div>
+
+  </div>  <!-- Logout -->  <button onclick="logout()" class="mt-12 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+    Sair
+  </button>  <script>
     function logout() {
       localStorage.removeItem("noheroes_logged_in");
       window.location.href = "login.html";
     }
-  </script>
-</body>
+  </script></body>
 </html>
