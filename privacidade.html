@@ -1,52 +1,78 @@
-<!DOCTYPE html><html lang="pt-BR">
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NoHeroes | Página Inativa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Política de Privacidade | NoHeroes</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      background: #1a1a1a;
+      background-color: #0a0a0a;
       color: #e5e5e5;
     }
     h1, h2 {
       font-family: 'Playfair Display', serif;
     }
-    .inactive-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(50, 50, 50, 0.9);
-      pointer-events: all;
-      z-index: 40;
-    }
-    .inactive-overlay * {
-      pointer-events: none;
-    }
-    /* exceção: footer button clicável */
-    .footer-button {
-      pointer-events: auto;
-    }
-    html { scroll-behavior: smooth; }
   </style>
 </head>
-<body class="relative">
-  <!-- TOPO FIXO -->
-  <header class="fixed top-0 left-0 w-full bg-[#100d1a] border-b border-[#2e2e2e] z-50 flex items-center justify-between px-6 py-4">
+<body class="px-6 py-12 max-w-5xl mx-auto leading-relaxed">
+
+  <h1 class="text-4xl font-bold mb-6 text-center">Política de Privacidade</h1>
+  <p class="mb-10 text-center text-gray-400 text-sm">Atualizado em: 2025</p>
+
+  <section class="space-y-12 text-base text-white/90">
+
     <div>
-      <img src="assets/images/noheroes logo.png" alt="NoHeroes" class="h-16" />
+      <h2 class="text-2xl font-semibold mb-2">1. Coleta de Dados</h2>
+      <p>Coletamos informações fornecidas voluntariamente por usuários que preenchem formulários, assinam newsletters ou interagem com conteúdos do site. Isso pode incluir nome, e-mail, dados de contato e preferências artísticas.</p>
     </div>
-  </header>  <!-- RODAPÉ -->  <footer class="fixed bottom-0 left-0 w-full bg-[#100d1a] border-t border-[#2e2e2e] text-center py-4 z-50">
-    <button onclick="window.location.href='index.html'" class="footer-button px-6 py-2 bg-[#8f4fff] text-black rounded-lg font-semibold hover:bg-[#a16fff] transition">
-      Início
-    </button>
-  </footer>  <!-- Overlay de Inatividade -->  <div class="inactive-overlay flex flex-col items-center justify-center text-center px-4">
-    <!-- Espaço para nome da página -->
-    <h2 id="Termos & Privacidade" class="text-2xl md:text-4xl font-bold mb-4 text-[#8f4fff]"></h2>
-    <h1 class="text-5xl md:text-7xl font-extrabold">EM BREVE</h1>
-  </div>  <!-- Espaço para futuro conteúdo das páginas -->  <div class="pt-20 pb-20">
-    <!-- Conteúdo inicial (logo, cabeçalho e rodapé) já estão fixos. --
-  </div>
+
+    <div>
+      <h2 class="text-2xl font-semibold mb-2">2. Uso das Informações</h2>
+      <p>As informações são utilizadas para melhorar a experiência dos visitantes, responder dúvidas, enviar novidades sobre o projeto NoHeroes e desenvolver funcionalidades personalizadas de comunidade e interação.</p>
+    </div>
+
+    <div>
+      <h2 class="text-2xl font-semibold mb-2">3. Compartilhamento</h2>
+      <p>Não compartilhamos seus dados com terceiros, exceto quando necessário para viabilizar funcionalidades técnicas do site ou quando exigido por lei.</p>
+    </div>
+
+    <div>
+      <h2 class="text-2xl font-semibold mb-2">4. Cookies e Tecnologias</h2>
+      <p>Utilizamos cookies e scripts para melhorar o desempenho do site, entender o comportamento dos visitantes e aprimorar nossas estratégias de conteúdo e design. Você pode desativar cookies nas configurações do seu navegador.</p>
+    </div>
+
+    <div>
+      <h2 class="text-2xl font-semibold mb-2">5. Proteção de Dados</h2>
+      <p>Adotamos medidas técnicas e administrativas para proteger seus dados contra acesso não autorizado, destruição ou vazamento. Seus dados são armazenados em ambiente seguro e restrito.</p>
+    </div>
+
+    <div>
+      <h2 class="text-2xl font-semibold mb-2">6. Direitos do Usuário</h2>
+      <p>Você pode solicitar a exclusão dos seus dados, revisar ou corrigir informações pessoais a qualquer momento. Para isso, entre em contato através do e-mail <strong>contato@noheroes.com.br</strong>.</p>
+    </div>
+
+    <div>
+      <h2 class="text-2xl font-semibold mb-2">7. Arte, Ficção e Interpretações</h2>
+      <p>O conteúdo presente em NoHeroes é de natureza artística e ficcional. As informações não têm caráter médico, psicológico ou legal. Interpretar qualquer mensagem como conselho pessoal é de responsabilidade do usuário.</p>
+    </div>
+
+    <div>
+      <h2 class="text-2xl font-semibold mb-2">8. Alterações na Política</h2>
+      <p>Esta política pode ser atualizada a qualquer momento. Recomendamos revisar periodicamente para se manter informado sobre alterações.</p>
+    </div>
+
+    <div>
+      <h2 class="text-2xl font-semibold mb-2">9. Contato</h2>
+      <p>Para dúvidas ou solicitações relacionadas à privacidade, envie uma mensagem para <strong>contato@noheroes.com.br</strong>.</p>
+    </div>
+
+  </section>
+
+  <footer class="mt-16 text-center text-sm text-gray-600">
+    <p>© 2025 NoHeroes. Todos os direitos reservados.</p>
+  </footer>
+
 </body>
-  </html>
+</html>
