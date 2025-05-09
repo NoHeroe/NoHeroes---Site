@@ -14,27 +14,34 @@
     <h2 class="text-3xl font-bold mb-6 text-center text-purple-400">Login</h2>
     <form id="loginForm" class="space-y-4">
       <div>
-        <label>Email</label>
+        <label class="text-sm text-gray-300">Email</label>
         <input type="email" id="email" required class="w-full mt-1 p-2 rounded bg-black border border-gray-700 text-white" />
       </div>
       <div>
-        <label>Senha</label>
+        <label class="text-sm text-gray-300">Senha</label>
         <input type="password" id="password" required class="w-full mt-1 p-2 rounded bg-black border border-gray-700 text-white" />
       </div>
       <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded font-semibold transition">Entrar</button>
       <p id="error" class="text-red-400 text-sm mt-2 hidden">Credenciais inválidas. Tente novamente.</p>
     </form>
+
+    <!-- Link para cadastro -->
+    <p class="mt-6 text-center text-sm text-gray-400">
+      Ainda não tem uma conta?
+      <a href="register.html" class="text-purple-400 hover:underline">Crie a sua</a>
+    </p>
   </div>
 
   <script>
     document.getElementById("loginForm").addEventListener("submit", function (e) {
       e.preventDefault();
-      const email = document.getElementById("email").value;
+      const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value;
-      const saved = JSON.parse(localStorage.getItem("noheroes_user"));
+      const saved = JSON.parse(localStorage.getItem(`noheroes_user_${email}`));
 
-      if (saved && saved.email === email && saved.password === password) {
+      if (saved && saved.password === password) {
         localStorage.setItem("noheroes_logged_in", "true");
+        localStorage.setItem("currentUser", JSON.stringify(saved));
         window.location.href = "perfil.html";
       } else {
         document.getElementById("error").classList.remove("hidden");
