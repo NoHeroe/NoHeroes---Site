@@ -1,52 +1,45 @@
-<!DOCTYPE html><html lang="pt-BR">
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NoHeroes | Página Inativa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | NoHeroes</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #1a1a1a;
-      color: #e5e5e5;
-    }
-    h1, h2 {
-      font-family: 'Playfair Display', serif;
-    }
-    .inactive-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(50, 50, 50, 0.9);
-      pointer-events: all;
-      z-index: 40;
-    }
-    .inactive-overlay * {
-      pointer-events: none;
-    }
-    /* exceção: footer button clicável */
-    .footer-button {
-      pointer-events: auto;
-    }
-    html { scroll-behavior: smooth; }
+    body { background-color: #0a0a0a; color: #e5e5e5; font-family: 'Inter', sans-serif; }
   </style>
 </head>
-<body class="relative">
-  <!-- TOPO FIXO -->
-  <header class="fixed top-0 left-0 w-full bg-[#100d1a] border-b border-[#2e2e2e] z-50 flex items-center justify-between px-6 py-4">
-    <div>
-      <img src="assets/images/noheroes logo.png" alt="NoHeroes" class="h-16" />
-    </div>
-  </header>  <!-- RODAPÉ -->  <footer class="fixed bottom-0 left-0 w-full bg-[#100d1a] border-t border-[#2e2e2e] text-center py-4 z-50">
-    <button onclick="window.location.href='index.html'" class="footer-button px-6 py-2 bg-[#8f4fff] text-black rounded-lg font-semibold hover:bg-[#a16fff] transition">
-      Início
-    </button>
-  </footer>  <!-- Overlay de Inatividade -->  <div class="inactive-overlay flex flex-col items-center justify-center text-center px-4">
-    <!-- Espaço para nome da página -->
-    <h2 id="LOGIN" class="text-2xl md:text-4xl font-bold mb-4 text-[#8f4fff]"></h2>
-    <h1 class="text-5xl md:text-7xl font-extrabold">EM BREVE</h1>
-  </div>  <!-- Espaço para futuro conteúdo das páginas -->  <div class="pt-20 pb-20">
-    <!-- Conteúdo inicial (logo, cabeçalho e rodapé) já estão fixos. --
+<body class="flex items-center justify-center min-h-screen px-4">
+  <div class="w-full max-w-md bg-[#111] p-8 rounded-lg shadow-lg border border-purple-600">
+    <h2 class="text-3xl font-bold mb-6 text-center text-purple-400">Login</h2>
+    <form id="loginForm" class="space-y-4">
+      <div>
+        <label>Email</label>
+        <input type="email" id="email" required class="w-full mt-1 p-2 rounded bg-black border border-gray-700 text-white" />
+      </div>
+      <div>
+        <label>Senha</label>
+        <input type="password" id="password" required class="w-full mt-1 p-2 rounded bg-black border border-gray-700 text-white" />
+      </div>
+      <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded font-semibold transition">Entrar</button>
+      <p id="error" class="text-red-400 text-sm mt-2 hidden">Credenciais inválidas. Tente novamente.</p>
+    </form>
   </div>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const saved = JSON.parse(localStorage.getItem("noheroes_user"));
+
+      if (saved && saved.email === email && saved.password === password) {
+        localStorage.setItem("noheroes_logged_in", "true");
+        window.location.href = "perfil.html";
+      } else {
+        document.getElementById("error").classList.remove("hidden");
+      }
+    });
+  </script>
 </body>
-  </html>
+</html>
