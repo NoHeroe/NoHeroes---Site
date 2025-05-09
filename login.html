@@ -42,7 +42,7 @@
       if (saved && saved.password === password) {
         localStorage.setItem("noheroes_logged_in", "true");
         localStorage.setItem("currentUser", JSON.stringify(saved));
-        window.location.href = "perfil.html";
+        window.location.href = "profile.html";
       } else {
         document.getElementById("error").classList.remove("hidden");
       }
