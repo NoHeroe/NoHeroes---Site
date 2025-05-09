@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro | NoHeroes</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-color: #0a0a0a;
+      color: #e5e5e5;
+      font-family: 'Inter', sans-serif;
+    }
+    input::placeholder {
+      color: #999;
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen px-4">
+  <!-- Container centralizado -->
+  <div class="bg-[#111111] rounded-xl shadow-xl p-8 max-w-md w-full border border-purple-900">
+    <h1 class="text-3xl font-bold text-center text-purple-400 mb-6">Criar Conta</h1><form id="registerForm" class="space-y-5">
+  <input type="text" id="name" placeholder="Seu nome" required class="w-full px-4 py-2 rounded bg-black text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500" />
+
+  <input type="email" id="email" placeholder="Email" required class="w-full px-4 py-2 rounded bg-black text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500" />
+
+  <input type="password" id="password" placeholder="Senha" required class="w-full px-4 py-2 rounded bg-black text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500" />
+
+  <input type="password" id="confirmPassword" placeholder="Confirmar Senha" required class="w-full px-4 py-2 rounded bg-black text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500" />
+
+  <button type="submit" class="w-full py-2 rounded bg-purple-600 hover:bg-purple-700 transition font-semibold">Cadastrar</button>
+</form>
+
+<p class="text-sm text-gray-400 text-center mt-4">
+  Já tem uma conta? <a href="login.html" class="text-purple-400 underline">Faça login</a>
+</p>
+
+  </div>  <script>
+    const form = document.getElementById("registerForm");
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      if (password !== confirmPassword) {
+        alert("As senhas não coincidem.");
+        return;
+      }
+
+      const userData = { name, email, password };
+      localStorage.setItem(`noheroes_user_${email}`, JSON.stringify(userData));
+      alert("Cadastro realizado com sucesso!");
+      window.location.href = "login.html";
+    });
+  </script></body>
+</html>
