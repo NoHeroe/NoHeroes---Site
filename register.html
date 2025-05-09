@@ -34,25 +34,26 @@
   Já tem uma conta? <a href="login.html" class="text-purple-400 underline">Faça login</a>
 </p>
 
-  </div>  <script>
-    const form = document.getElementById("registerForm");
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
+  </div> 
+<script>
+  const form = document.getElementById("loginForm");
 
-      const name = document.getElementById("name").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
-      const confirmPassword = document.getElementById("confirmPassword").value;
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-      if (password !== confirmPassword) {
-        alert("As senhas não coincidem.");
-        return;
-      }
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
 
-      const userData = { name, email, password };
-      localStorage.setItem(`noheroes_user_${email}`, JSON.stringify(userData));
-      alert("Cadastro realizado com sucesso!");
-      window.location.href = "login.html";
-    });
-  </script></body>
+    const storedUser = JSON.parse(localStorage.getItem(`noheroes_user_${email}`));
+
+    if (storedUser && storedUser.password === password) {
+      localStorage.setItem("loggedIn", "true");
+      localStorage.setItem("currentUser", JSON.stringify(storedUser));
+      window.location.href = "profile.html"; // redireciona para onde quiser
+    } else {
+      alert("Credenciais inválidas. Tente novamente.");
+    }
+  });
+</script>
+</body>
 </html>
