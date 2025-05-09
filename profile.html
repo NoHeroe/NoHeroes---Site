@@ -11,60 +11,76 @@
       font-family: 'Inter', sans-serif;
     }
     .card {
-      @apply bg-[#111] border border-purple-700 rounded-xl p-6 shadow-lg hover:shadow-purple-800 transition duration-300;
-    }
-    .grid-item {
-      @apply flex flex-col items-center gap-2;
-    }
-    .card img {
-      @apply w-16 h-16 object-contain;
+      background-color: #111;
+      border: 1px solid #333;
+      border-radius: 1rem;
     }
   </style>
 </head>
-<body class="min-h-screen px-6 py-10 flex flex-col items-center">
-  <!-- Header -->
-  <header class="w-full flex justify-between items-center mb-10">
-    <div></div>
-    <img src="assets/images/noheroes_logo.png" alt="Logo NoHeroes" class="h-10">
-    <button class="text-sm text-gray-400 hover:text-white transition">⚙️</button>
-  </header>  <!-- Saudações -->  <h1 class="text-3xl font-bold text-purple-400 mb-6">Bem-vindo(a)</h1>  <!-- Grid de Acessos -->  <div class="grid grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-4xl">
-    <!-- Personagem -->
-    <div class="card grid-item">
-      <img src="assets/images/placeholder-char.png" alt="Personagem">
-      <p class="font-semibold">Meu Personagem</p>
-    </div><!-- Conquistas -->
-<div class="card grid-item">
-  <img src="assets/images/placeholder-trophy.png" alt="Conquistas">
-  <p class="font-semibold">Conquistas</p>
-</div>
+<body class="min-h-screen flex flex-col">
+  <!-- TOPO -->
+  <header class="flex justify-between items-center px-6 py-4 border-b border-purple-800">
+    <div class="flex gap-4 items-center">
+      <button title="Lista de Amigos" class="text-purple-400">[=]</button>
+      <button title="Adicionar Amigos" class="text-purple-400">[+]</button>
+    </div>
+    <nav class="flex gap-6 text-white font-semibold">
+      <a href="#">Home</a>
+      <a href="#">Perfil</a>
+      <a href="#">Chats</a>
+    </nav>
+    <div class="flex gap-3 items-center">
+      <button onclick="logout()" class="text-red-500 font-bold">Logout</button>
+      <button class="text-purple-400">Config</button>
+    </div>
+  </header>  <!-- HERO -->  <section class="relative overflow-hidden py-10 px-6">
+    <div class="flex gap-4 overflow-x-auto pb-4">
+      <!-- Slide 1 - Personagem -->
+      <div class="min-w-full card p-6 text-center">
+        <img src="assets/images/personagem.jpg" alt="Personagem" class="mx-auto w-40 h-40 object-contain" />
+        <button class="mt-4 px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700">Personagem</button>
+        <img src="assets/images/logo-noheroes.png" alt="NoHeroes" class="absolute top-4 left-4 w-24" />
+      </div>
+      <!-- Slide 2 - Skills -->
+      <div class="min-w-full card p-6 text-center">
+        <img src="assets/images/skills.jpg" alt="Skills" class="mx-auto w-60 h-60 object-contain" />
+      </div>
+    </div>
+  </section>  <!-- CONTEÚDO PRINCIPAL -->  <main class="grid grid-cols-1 md:grid-cols-3 gap-8 px-6 pb-10">
+    <!-- Loja -->
+    <section>
+      <h3 class="text-xl font-bold text-purple-300 mb-2">Loja</h3>
+      <div class="flex gap-4">
+        <img src="assets/images/item1.jpg" alt="Item 1" class="w-20 h-20 rounded" />
+        <img src="assets/images/item2.jpg" alt="Item 2" class="w-20 h-20 rounded" />
+      </div>
+      <button class="mt-2 text-sm underline text-purple-400">Ver Mais</button>
+    </section><!-- Conquistas -->
+<section>
+  <h3 class="text-xl font-bold text-purple-300 mb-2">Conquistas</h3>
+  <div class="flex flex-col gap-2">
+    <div class="bg-black p-2 rounded text-sm border border-purple-800">Primeira Login</div>
+    <div class="bg-black p-2 rounded text-sm border border-purple-800">Explorador Inicial</div>
+  </div>
+</section>
 
-<!-- Loja -->
-<div class="card grid-item">
-  <img src="assets/images/placeholder-shop.png" alt="Loja">
-  <p class="font-semibold">Loja NoHeroes</p>
-</div>
+<!-- Acessos Rápidos -->
+<section class="flex flex-col gap-4">
+  <button class="card p-4 text-left hover:bg-purple-800">
+    <h4 class="text-lg font-bold text-purple-400">ROAR</h4>
+    <p class="text-sm text-gray-400">Acesse o mundo de ROAR</p>
+  </button>
+  <button class="card p-4 text-left hover:bg-purple-800">
+    <h4 class="text-lg font-bold text-green-400">FREQ</h4>
+    <p class="text-sm text-gray-400">Explore o universo de FREQ</p>
+  </button>
+  <button class="card p-4 text-left hover:bg-purple-800">
+    <h4 class="text-lg font-bold text-white">Explorar</h4>
+    <p class="text-sm text-gray-400">Descubra o que mais temos</p>
+  </button>
+</section>
 
-<!-- Blog -->
-<div class="card grid-item">
-  <img src="assets/images/placeholder-news.png" alt="Novidades">
-  <p class="font-semibold">Novidades</p>
-</div>
-
-<!-- Comunidade -->
-<div class="card grid-item">
-  <img src="assets/images/placeholder-chat.png" alt="Comunidade">
-  <p class="font-semibold">Comunidade</p>
-</div>
-
-<!-- Explorar Universo -->
-<div class="card grid-item">
-  <img src="assets/images/placeholder-explore.png" alt="Explorar">
-  <p class="font-semibold">Explorar Universo</p>
-</div>
-
-  </div>  <!-- Logout -->  <button onclick="logout()" class="mt-12 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-    Sair
-  </button>  <script>
+  </main>  <script>
     function logout() {
       localStorage.removeItem("noheroes_logged_in");
       window.location.href = "login.html";
