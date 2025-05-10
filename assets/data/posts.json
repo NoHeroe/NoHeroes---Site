@@ -1,5 +1,19 @@
 {
   "posts": [
+{
+      "id": "2025-05-10-patch-0-1-3",
+      "date": "10/05/2025",
+      "category": "Notícias",
+      "title": "Patch 0.1.3 — Novo Servidor",
+      "content": "<p>Como foi informado no patch 0.1.2, a adição de contas e login está sendo feito. Entretanto como pelo github nossos recursos são mais limitado, decidimos fazer um servidor local. esse será temporário e improvisado até que consigamos investimento o suficiente para fazer um upgrade nos aparelhos que sustentarão toda essa estrutura. estamos ansiosos pelo que está chegando para vocês! SDS NoHeroe!</p>"
+    },
+{
+      "id": "2025-05-10-patch-0-1-2",
+      "date": "10/05/2025",
+      "category": "Atualizações",
+      "title": "Patch 0.1.2 — Sobre NoHeroes,conta, login e perfil",
+      "content": "<p>Adicionamos informações e polimos a página sobre, que agora está completa! Adicionamos as páginas login, registrar e perfil, onde já é visível a estrutura futura de como funcionará nosso sistema futuro, entretanto ainda está no rascunho. Obs: também adicionamos as páginas termos e política de privacidade.</p>"
+    },
     {
       "id": "2025-05-07-patch-0-1-1",
       "date": "07/05/2025",
