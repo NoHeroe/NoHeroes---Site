@@ -1,6 +1,13 @@
 {
   "posts": [
 {
+  "id": "2025-05-12-patch-0-1-4",
+  "date": "12/05/2025",
+  "category": "Notícias",
+  "title": "Patch 0.1.4 — Backend Base Finalizado",
+  "content": "<p>Concluímos oficialmente a Etapa 1 do backend NoHeroes! Agora o servidor local está funcionando de forma completa e estável.</p><p>Status do progresso técnico:</p><ul><li>Backend funcional com Express + Sequelize ✅</li><li>Banco sincronizado sem apagar dados ✅</li><li>Registro de usuário seguro com bcrypt ✅</li><li>Login com JWT token ✅</li><li>Autenticação via middleware ✅</li><li>Remoção do password no profile ✅</li><li>Padronização de respostas JSON ✅</li><li>PM2 rodando e monitorando backend ✅</li></ul><p>A base do backend NoHeroes está oficialmente pronta para avançar para a próxima fase de desenvolvimento!</p>"
+},
+{
       "id": "2025-05-10-patch-0-1-3",
       "date": "10/05/2025",
       "category": "Notícias",
