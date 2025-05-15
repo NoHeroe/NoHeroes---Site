@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,7 +18,10 @@
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col">  <!-- TOPO -->  <header class="flex justify-between items-center px-6 py-4 border-b border-purple-800">
+<body class="min-h-screen flex flex-col">
+
+  <!-- TOPO -->
+  <header class="flex justify-between items-center px-6 py-4 border-b border-purple-800">
     <div class="flex gap-4 items-center">
       <a href="amigos.html" title="Lista de Amigos" class="text-purple-400">[=]</a>
       <a href="adicionar_amigo.html" title="Adicionar Amigos" class="text-purple-400">[+]</a>
@@ -29,9 +33,12 @@
     </nav>
     <div class="flex gap-3 items-center">
       <button onclick="logout()" class="text-red-500 font-bold">Logout</button>
-      <a href="config.html" class="text-purple-400">Config</a>
+      <button onclick="document.getElementById('configModal').showModal()" class="text-purple-400">Config</button>
     </div>
-  </header>  <!-- HERO -->  <section class="relative overflow-hidden py-10 px-6">
+  </header>
+
+  <!-- HERO -->
+  <section class="relative overflow-hidden py-10 px-6">
     <div class="flex gap-4 overflow-x-auto pb-4">
       <!-- Slide 1 - Personagem -->
       <div class="min-w-full card p-6 text-center">
@@ -44,7 +51,10 @@
         <img src="assets/images/skills.jpg" alt="Skills" class="mx-auto w-60 h-60 object-contain" />
       </div>
     </div>
-  </section>  <!-- CONTEÚDO PRINCIPAL -->  <main class="grid grid-cols-1 md:grid-cols-3 gap-8 px-6 pb-10">
+  </section>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="grid grid-cols-1 md:grid-cols-3 gap-8 px-6 pb-10">
     <!-- Loja -->
     <section>
       <h3 class="text-xl font-bold text-purple-300 mb-2">Loja</h3>
@@ -53,35 +63,67 @@
         <img src="assets/images/item2.jpg" alt="Item 2" class="w-20 h-20 rounded" />
       </div>
       <a href="store.html" class="mt-2 inline-block text-sm underline text-purple-400">Ver Mais</a>
-    </section><!-- Conquistas -->
-<section>
-  <h3 class="text-xl font-bold text-purple-300 mb-2">Conquistas</h3>
-  <div class="flex flex-col gap-2">
-    <div class="bg-black p-2 rounded text-sm border border-purple-800">Primeiro Login</div>
-    <div class="bg-black p-2 rounded text-sm border border-purple-800">Explorador Inicial</div>
-  </div>
-</section>
+    </section>
 
-<!-- Acessos Rápidos -->
-<section class="flex flex-col gap-4">
-  <a href="ROAR.html" class="card p-4 text-left hover:bg-purple-800">
-    <h4 class="text-lg font-bold text-purple-400">ROAR</h4>
-    <p class="text-sm text-gray-400">Acesse o mundo de ROAR</p>
-  </a>
-  <a href="FREQ.html" class="card p-4 text-left hover:bg-purple-800">
-    <h4 class="text-lg font-bold text-green-400">FREQ</h4>
-    <p class="text-sm text-gray-400">Explore o universo de FREQ</p>
-  </a>
-  <a href="explore.html" class="card p-4 text-left hover:bg-purple-800">
-    <h4 class="text-lg font-bold text-white">Explorar</h4>
-    <p class="text-sm text-gray-400">Descubra o que mais temos</p>
-  </a>
-</section>
+    <!-- Conquistas -->
+    <section>
+      <h3 class="text-xl font-bold text-purple-300 mb-2">Conquistas</h3>
+      <div class="flex flex-col gap-2">
+        <div class="bg-black p-2 rounded text-sm border border-purple-800">Primeiro Login</div>
+        <div class="bg-black p-2 rounded text-sm border border-purple-800">Explorador Inicial</div>
+      </div>
+    </section>
 
-  </main>  <script>
+    <!-- Acessos Rápidos -->
+    <section class="flex flex-col gap-4">
+      <a href="ROAR.html" class="card p-4 text-left hover:bg-purple-800">
+        <h4 class="text-lg font-bold text-purple-400">ROAR</h4>
+        <p class="text-sm text-gray-400">Acesse o mundo de ROAR</p>
+      </a>
+      <a href="FREQ.html" class="card p-4 text-left hover:bg-purple-800">
+        <h4 class="text-lg font-bold text-green-400">FREQ</h4>
+        <p class="text-sm text-gray-400">Explore o universo de FREQ</p>
+      </a>
+      <a href="explore.html" class="card p-4 text-left hover:bg-purple-800">
+        <h4 class="text-lg font-bold text-white">Explorar</h4>
+        <p class="text-sm text-gray-400">Descubra o que mais temos</p>
+      </a>
+    </section>
+  </main>
+
+  <!-- MODAL CONFIG -->
+  <dialog id="configModal" class="rounded-xl p-6 w-full max-w-md bg-[#111] text-white border border-purple-800 shadow-xl">
+    <form method="dialog" class="flex flex-col gap-4">
+      <h2 class="text-2xl font-bold text-purple-400 mb-2">Configurações da Conta</h2>
+
+      <label class="text-sm">Nome
+        <input type="text" class="mt-1 w-full p-2 rounded bg-black border border-gray-600" placeholder="Seu nome" />
+      </label>
+
+      <label class="text-sm">Email
+        <input type="email" class="mt-1 w-full p-2 rounded bg-black border border-gray-600" placeholder="Seu email" />
+      </label>
+
+      <label class="text-sm">Avatar (URL)
+        <input type="url" class="mt-1 w-full p-2 rounded bg-black border border-gray-600" placeholder="https://..." />
+      </label>
+
+      <label class="text-sm">Nova Senha
+        <input type="password" class="mt-1 w-full p-2 rounded bg-black border border-gray-600" />
+      </label>
+
+      <div class="flex justify-between mt-4">
+        <button type="submit" class="px-4 py-2 rounded bg-purple-600 hover:bg-purple-700">Salvar</button>
+        <button type="button" onclick="document.getElementById('configModal').close()" class="text-sm text-gray-400 hover:underline">Fechar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script>
     function logout() {
       localStorage.removeItem("noheroes_logged_in");
       window.location.href = "login.html";
     }
-  </script></body>
+  </script>
+</body>
 </html>
