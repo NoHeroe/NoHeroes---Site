@@ -60,16 +60,19 @@
     </div>
 
     <nav class="flex gap-6 font-semibold">
-      <a href="profile.html" class="hover:text-purple-400">Home</a>
-      <a href="profile.html" class="hover:text-purple-400">Perfil</a>
-      <a href="chats.html" class="hover:text-purple-400">Chats</a>
-    </nav>
+      <a href="index.html" class="hover:text-purple-400">Home</a>
+</nav>
 
     <div class="flex gap-4 items-center">
       <button id="btnLogout" class="text-red-500 font-bold hover:underline">Logout</button>
       <button onclick="document.getElementById('configModal').showModal()"
-        class="text-purple-400 hover:underline">Config</button>
-    </div>
+  class="p-2 bg-[#222] rounded hover:bg-[#333]">
+  <!-- ícone de engrenagem -->
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+      d="M11.049 2.927c.3-.921 1.603-.921 1.902 0…"/>
+  </svg>
+</button>
   </header>
 
   <!-- SEÇÃO PRINCIPAL -->
@@ -141,23 +144,6 @@
       </a>
     </section>
   </main>
-
-  <!-- ====== HEADER ====== -->
-<header class="flex justify-between items-center px-6 py-4 border-b border-purple-800">
-  <!-- ... seus outros botões ... -->
-  <div class="flex gap-4 items-center">
-    <button id="btnLogout" class="text-red-500 font-bold hover:underline">Logout</button>
-    <!-- Ícone de engrenagem -->
-    <button onclick="document.getElementById('configModal').showModal()"
-      class="p-2 bg-[#222] rounded hover:bg-[#333]">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-400" fill="none"
-           viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M11.049 2.927c.3-.921 1.603-.921 1.902 0a1.724 1.724 0 002.562 1.04c.816-.47 1.79.38 1.523 1.283a1.724 1.724 0 001.708 2.174c.995.083 1.43 1.29.654 1.917a1.724 1.724 0 00-.502 1.675c.294.978-.643 1.786-1.555 1.34a1.724 1.724 0 00-1.868.35c-.69.69-1.809.19-1.868-.792a1.724 1.724 0 00-1.372-1.837c-1.004-.24-1.004-1.654 0-1.894a1.724 1.724 0 001.04-2.562 1.724 1.724 0 00-1.675-.502c-1.004.24-1.654-.707-1.283-1.523.47-.816-.38-1.79-1.283-1.523a1.724 1.724 0 00-1.04 2.562z" />
-      </svg>
-    </button>
-  </div>
-</header>
 
 <!-- ====== MODAL CONFIGURAÇÕES ====== -->
 <dialog id="configModal" class="relative rounded-xl overflow-hidden w-full max-w-lg bg-[#111] text-white border border-purple-800 shadow-xl">
