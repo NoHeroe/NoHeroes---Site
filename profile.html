@@ -40,40 +40,56 @@
 
   <!-- HEADER -->
   <header class="flex justify-between items-center px-6 py-4 border-b border-purple-800">
-    <div class="flex gap-4">
-      <!-- Ícone Amigos -->
-      <button title="Lista de Amigos" onclick="document.getElementById('friendsModal').showModal()"
-        class="p-2 bg-[#222] rounded hover:bg-[#333]">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M17 20h5v-2a4 4 0 00-3-3.87M9 20h6M9 20H4v-2a4 4 0 013-3.87M16 7a4 4 0 11-8 0 4 4 0 018 0z" />
-        </svg>
-      </button>
-      <!-- Ícone Adicionar Amigo -->
-      <button title="Adicionar Amigos" onclick="document.getElementById('addFriendModal').showModal()"
-        class="p-2 bg-[#222] rounded hover:bg-[#333]">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M18 9v6M15 12h6M6 18a4 4 0 100-8 4 4 0 000 8zm6 2H6a6 6 0 016-6v6z" />
-        </svg>
-      </button>
-    </div>
+  <!-- Lado esquerdo: logo + ações de amigo -->
+  <div class="flex items-center gap-4">
+    <!-- Logo clicável -->
+    <a href="index.html" class="block">
+      <img src="assets/images/logo-noheroes.png" alt="NoHeroes" class="h-8 w-auto" />
+    </a>
 
-    <nav class="flex gap-6 font-semibold">
-      <a href="index.html" class="hover:text-purple-400">Home</a>
-</nav>
+    <!-- Ícone: Lista de Amigos -->
+    <button
+      title="Seus Amigos"
+      onclick="document.getElementById('friendsModal').showModal()"
+      class="p-2 bg-[#222] rounded hover:bg-[#333]"
+    >
+      <!-- Ícone de Amigos -->
+      <img src="assets/icons/friends.svg" alt="" class="h-6 w-6 text-purple-400" />
+    </button>
 
-    <div class="flex gap-4 items-center">
-      <button id="btnLogout" class="text-red-500 font-bold hover:underline">Logout</button>
-      <button onclick="document.getElementById('configModal').showModal()"
-  class="p-2 bg-[#222] rounded hover:bg-[#333]">
-  <!-- ícone de engrenagem -->
-  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-      d="M11.049 2.927c.3-.921 1.603-.921 1.902 0…"/>
-  </svg>
-</button>
-  </header>
+    <!-- Ícone: Adicionar Amigos -->
+    <button
+      title="Adicionar Amigos"
+      onclick="document.getElementById('addFriendModal').showModal()"
+      class="p-2 bg-[#222] rounded hover:bg-[#333]"
+    >
+      <!-- Ícone de Adicionar -->
+      <img src="assets/icons/add-friend.svg" alt="" class="h-6 w-6 text-purple-400" />
+    </button>
+  </div>
+
+  <!-- Navegação principal -->
+  <nav class="flex gap-6 font-semibold">
+    <a href="profile.html" class="hover:text-purple-400">Perfil</a>
+    <a href="chats.html" class="hover:text-purple-400">Chats</a>
+  </nav>
+
+  <!-- Lado direito: logout + configurações -->
+  <div class="flex items-center gap-4">
+    <!-- Logout -->
+    <button id="btnLogout" class="text-red-500 font-bold hover:underline">Logout</button>
+
+    <!-- Ícone: Configurações -->
+    <button
+      title="Configurações"
+      onclick="document.getElementById('configModal').showModal()"
+      class="p-2 bg-[#222] rounded hover:bg-[#333]"
+    >
+      <!-- Ícone de Engrenagem -->
+      <img src="assets/icons/settings.svg" alt="" class="h-6 w-6 text-purple-400" />
+    </button>
+  </div>
+</header>
 
   <!-- SEÇÃO PRINCIPAL -->
   <section class="relative overflow-hidden py-10 px-6">
