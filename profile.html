@@ -1,120 +1,209 @@
-<!DOCTYPE html><html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Perfil | NoHeroes</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body {
-      background-color: #0a0a0a;
-      color: #e5e5e5;
-      font-family: 'Inter', sans-serif;
-    }
-    .card {
-      background-color: #111;
-      border: 1px solid #333;
-      border-radius: 1rem;
-    }
+    body { background-color: #0a0a0a; color: #e5e5e5; font-family: 'Inter', sans-serif; }
+    .card { background-color: #111; border: 1px solid #333; border-radius: 1rem; }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
 </head>
-<body class="min-h-screen flex flex-col">  <!-- TOPO -->  <header class="flex justify-between items-center px-6 py-4 border-b border-purple-800">
-    <div class="flex gap-4 items-center">
-      <a href="amigos.html" title="Lista de Amigos" class="text-purple-400">[=]</a>
-      <a href="adicionar_amigo.html" title="Adicionar Amigos" class="text-purple-400">[+]</a>
+<body class="min-h-screen flex flex-col">
+
+  <!-- CONFIRMAÇÃO DE LOGOUT -->
+  <dialog id="logoutModal" class="rounded-xl p-6 bg-[#111] border border-red-600">
+    <h2 class="text-xl font-bold text-red-500 mb-4">Confirmar Logout?</h2>
+    <p class="mb-4">Você será desconectado em <span id="logoutTimer" class="font-mono">5</span>s</p>
+    <div class="flex justify-end gap-4">
+      <button id="cancelLogout" class="px-4 py-2 bg-gray-700 rounded hover:bg-gray-600">Cancelar</button>
+      <button id="confirmLogout" class="px-4 py-2 bg-red-600 rounded hover:bg-red-700 disabled:opacity-50" disabled>Logout</button>
     </div>
-    <nav class="flex gap-6 text-white font-semibold">
-      <a href="profile.html">Home</a>
-      <a href="profile.html">Perfil</a>
-      <a href="chats.html">Chats</a>
+  </dialog>
+
+  <!-- MODAL DE AMIGOS -->
+  <dialog id="friendsModal" class="rounded-xl p-6 bg-[#111] border border-purple-800 max-w-md">
+    <h2 class="text-2xl font-bold text-purple-400 mb-4">Seus Amigos</h2>
+    <p class="text-gray-400">A lista de amigos vai aparecer aqui.</p>
+    <button onclick="document.getElementById('friendsModal').close()" class="mt-6 px-4 py-2 bg-purple-600 rounded hover:bg-purple-700">Fechar</button>
+  </dialog>
+
+  <!-- MODAL DE ADICIONAR AMIGO -->
+  <dialog id="addFriendModal" class="rounded-xl p-6 bg-[#111] border border-purple-800 max-w-md">
+    <h2 class="text-2xl font-bold text-purple-400 mb-4">Adicionar Amigo</h2>
+    <p class="text-gray-400">Formulário de adicionar amigo aqui.</p>
+    <button onclick="document.getElementById('addFriendModal').close()" class="mt-6 px-4 py-2 bg-purple-600 rounded hover:bg-purple-700">Fechar</button>
+  </dialog>
+
+  <!-- HEADER -->
+  <header class="flex justify-between items-center px-6 py-4 border-b border-purple-800">
+    <div class="flex gap-4">
+      <!-- Ícone Amigos -->
+      <button title="Lista de Amigos" onclick="document.getElementById('friendsModal').showModal()"
+        class="p-2 bg-[#222] rounded hover:bg-[#333]">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M17 20h5v-2a4 4 0 00-3-3.87M9 20h6M9 20H4v-2a4 4 0 013-3.87M16 7a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+      </button>
+      <!-- Ícone Adicionar Amigo -->
+      <button title="Adicionar Amigos" onclick="document.getElementById('addFriendModal').showModal()"
+        class="p-2 bg-[#222] rounded hover:bg-[#333]">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M18 9v6M15 12h6M6 18a4 4 0 100-8 4 4 0 000 8zm6 2H6a6 6 0 016-6v6z" />
+        </svg>
+      </button>
+    </div>
+
+    <nav class="flex gap-6 font-semibold">
+      <a href="profile.html" class="hover:text-purple-400">Home</a>
+      <a href="profile.html" class="hover:text-purple-400">Perfil</a>
+      <a href="chats.html" class="hover:text-purple-400">Chats</a>
     </nav>
-    <div class="flex gap-3 items-center">
-      <button onclick="logout()" class="text-red-500 font-bold">Logout</button>
-      <button onclick="document.getElementById('configModal').showModal()" class="text-purple-400">Config</button>
+
+    <div class="flex gap-4 items-center">
+      <button id="btnLogout" class="text-red-500 font-bold hover:underline">Logout</button>
+      <button onclick="document.getElementById('configModal').showModal()"
+        class="text-purple-400 hover:underline">Config</button>
     </div>
-  </header>  <!-- HERO -->  <section class="relative overflow-hidden py-10 px-6">
-    <div class="flex gap-4 overflow-x-auto pb-4">
-      <!-- Slide 1 - Personagem -->
-      <div class="min-w-full card p-6 text-center">
-        <img src="assets/images/personagem.jpg" alt="Personagem" class="mx-auto w-40 h-40 object-contain" />
-        <a href="personagem.html" class="mt-4 px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 inline-block">Personagem</a>
-        <img src="assets/images/logo-noheroes.png" alt="NoHeroes" class="absolute top-4 left-4 w-24" />
+  </header>
+
+  <!-- SEÇÃO PRINCIPAL -->
+  <section class="relative overflow-hidden py-10 px-6">
+    <div class="flex gap-4 overflow-x-auto hide-scrollbar pb-4">
+      <!-- Card Personagem -->
+      <div class="min-w-full card p-6 text-center relative">
+        <img src="assets/images/personagem.jpg" alt="Personagem"
+          class="mx-auto w-40 h-40 object-contain rounded-full ring-4 ring-purple-600" />
+        <button class="mt-4 px-6 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 uppercase tracking-wide">Personagem</button>
+        <img src="assets/images/logo-noheroes.png" alt="NoHeroes"
+          class="absolute top-4 left-4 w-24 opacity-60" />
       </div>
-      <!-- Slide 2 - Skills -->
+      <!-- Card Skills -->
       <div class="min-w-full card p-6 text-center">
-        <img src="assets/images/skills.jpg" alt="Skills" class="mx-auto w-60 h-60 object-contain" />
+        <img src="assets/images/skills.jpg" alt="Skills"
+          class="mx-auto w-60 h-60 object-contain rounded-lg" />
       </div>
     </div>
-  </section>  <!-- CONTEÚDO PRINCIPAL -->  <main class="grid grid-cols-1 md:grid-cols-3 gap-8 px-6 pb-10">
+  </section>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="grid grid-cols-1 md:grid-cols-3 gap-8 px-6 pb-10">
     <!-- Loja -->
     <section>
-      <h3 class="text-xl font-bold text-purple-300 mb-2">Loja</h3>
+      <h3 class="text-2xl font-bold text-purple-300 mb-4">Loja</h3>
       <div class="flex gap-4">
-        <img src="assets/images/item1.jpg" alt="Item 1" class="w-20 h-20 rounded" />
-        <img src="assets/images/item2.jpg" alt="Item 2" class="w-20 h-20 rounded" />
+        <div class="w-20 h-20 bg-gray-800 rounded-lg flex items-center justify-center">
+          <span class="text-sm text-gray-500">Item 1</span>
+        </div>
+        <div class="w-20 h-20 bg-gray-800 rounded-lg flex items-center justify-center">
+          <span class="text-sm text-gray-500">Item 2</span>
+        </div>
       </div>
-      <a href="store.html" class="mt-2 inline-block text-sm underline text-purple-400">Ver Mais</a>
-    </section><!-- Conquistas -->
-<section>
-  <h3 class="text-xl font-bold text-purple-300 mb-2">Conquistas</h3>
-  <div class="flex flex-col gap-2">
-    <div class="bg-black p-2 rounded text-sm border border-purple-800">Primeiro Login</div>
-    <div class="bg-black p-2 rounded text-sm border border-purple-800">Explorador Inicial</div>
-  </div>
-</section>
+      <a href="#" class="mt-4 inline-block text-sm underline text-purple-400">Ver Mais</a>
+    </section>
 
-<!-- Acessos Rápidos -->
-<section class="flex flex-col gap-4">
-  <a href="ROAR.html" class="card p-4 text-left hover:bg-purple-800">
-    <h4 class="text-lg font-bold text-purple-400">ROAR</h4>
-    <p class="text-sm text-gray-400">Acesse o mundo de ROAR</p>
-  </a>
-  <a href="FREQ.html" class="card p-4 text-left hover:bg-purple-800">
-    <h4 class="text-lg font-bold text-green-400">FREQ</h4>
-    <p class="text-sm text-gray-400">Explore o universo de FREQ</p>
-  </a>
-  <a href="explore.html" class="card p-4 text-left hover:bg-purple-800">
-    <h4 class="text-lg font-bold text-white">Explorar</h4>
-    <p class="text-sm text-gray-400">Descubra o que mais temos</p>
-  </a>
-</section>
+    <!-- Conquistas -->
+    <section>
+      <h3 class="text-2xl font-bold text-purple-300 mb-4">Conquistas</h3>
+      <ul class="space-y-3">
+        <li class="card p-3 text-sm border border-purple-800">Primeiro Login</li>
+        <li class="card p-3 text-sm border border-purple-800">Explorador Inicial</li>
+      </ul>
+    </section>
 
-  </main>  <!-- MODAL CONFIG COM VISUALIZAÇÃO DOS DADOS ATUAIS -->  <dialog id="configModal" class="rounded-xl p-6 w-full max-w-md bg-[#111] text-white border border-purple-800 shadow-xl">
+    <!-- Acessos Rápidos -->
+    <section class="space-y-4">
+      <a href="#" class="card p-4 flex items-center gap-4 hover:bg-purple-800">
+        <div class="w-8 h-8 bg-purple-600 rounded-full"></div>
+        <div>
+          <h4 class="text-lg font-bold text-purple-400">ROAR</h4>
+          <p class="text-sm text-gray-400">Acesse o mundo de ROAR</p>
+        </div>
+      </a>
+      <a href="#" class="card p-4 flex items-center gap-4 hover:bg-purple-800">
+        <div class="w-8 h-8 bg-green-500 rounded-full"></div>
+        <div>
+          <h4 class="text-lg font-bold text-green-400">FREQ</h4>
+          <p class="text-sm text-gray-400">Explore o universo de FREQ</p>
+        </div>
+      </a>
+      <a href="#" class="card p-4 flex items-center gap-4 hover:bg-purple-800">
+        <div class="w-8 h-8 bg-gray-500 rounded-full"></div>
+        <div>
+          <h4 class="text-lg font-bold text-white">Explorar</h4>
+          <p class="text-sm text-gray-400">Descubra o que mais temos</p>
+        </div>
+      </a>
+    </section>
+  </main>
+
+  <!-- MODAL CONFIGURAÇÕES -->
+  <dialog id="configModal" class="rounded-xl p-6 w-full max-w-md bg-[#111] text-white border border-purple-800 shadow-xl">
     <form method="dialog" class="flex flex-col gap-4">
-      <h2 class="text-2xl font-bold text-purple-400 mb-2">Sua Conta</h2><div>
-    <p class="text-sm text-gray-400">Nome atual: <span class="font-semibold text-white">RaulTestUser</span></p>
-    <label class="text-sm mt-1 block">Alterar nome
-      <input type="text" class="mt-1 w-full p-2 rounded bg-black border border-gray-600" placeholder="Novo nome" />
-    </label>
-  </div>
+      <h2 class="text-2xl font-bold text-purple-400 mb-2">Sua Conta</h2>
+      <div>
+        <p class="text-sm text-gray-400 mb-1">Nome atual: <span class="font-semibold">RaulTestUser</span></p>
+        <input type="text" class="w-full p-2 rounded bg-black border border-gray-600" placeholder="Novo nome" />
+      </div>
+      <div>
+        <p class="text-sm text-gray-400 mb-1">Email atual: <span class="font-semibold">raultestuser@email.com</span></p>
+        <input type="email" class="w-full p-2 rounded bg-black border border-gray-600" placeholder="Novo email" />
+      </div>
+      <div>
+        <p class="text-sm text-gray-400 mb-1">Avatar atual: <span class="text-purple-300">[sem avatar]</span></p>
+        <input type="url" class="w-full p-2 rounded bg-black border border-gray-600" placeholder="URL do avatar" />
+      </div>
+      <div>
+        <p class="text-sm text-gray-400 mb-1">Nova senha</p>
+        <input type="password" class="w-full p-2 rounded bg-black border border-gray-600" placeholder="Nova senha" />
+      </div>
+      <div class="flex justify-end gap-4 mt-4">
+        <button type="submit" class="px-4 py-2 bg-purple-600 rounded hover:bg-purple-700">Salvar</button>
+        <button type="button" onclick="document.getElementById('configModal').close()"
+          class="px-4 py-2 bg-gray-800 rounded hover:bg-gray-700">Fechar</button>
+      </div>
+    </form>
+  </dialog>
 
-  <div>
-    <p class="text-sm text-gray-400">Email atual: <span class="font-semibold text-white">raultestuser@email.com</span></p>
-    <label class="text-sm mt-1 block">Alterar email
-      <input type="email" class="mt-1 w-full p-2 rounded bg-black border border-gray-600" placeholder="Novo email" />
-    </label>
-  </div>
+  <script>
+    // Logout com timer
+    const btnLogout = document.getElementById('btnLogout');
+    const logoutModal = document.getElementById('logoutModal');
+    const logoutTimerEl = document.getElementById('logoutTimer');
+    let logoutInterval;
 
-  <div>
-    <p class="text-sm text-gray-400">Avatar atual: <span class="text-purple-300">[sem avatar definido]</span></p>
-    <label class="text-sm mt-1 block">Alterar avatar (URL)
-      <input type="url" class="mt-1 w-full p-2 rounded bg-black border border-gray-600" placeholder="https://..." />
-    </label>
-  </div>
+    btnLogout.addEventListener('click', () => {
+      logoutModal.showModal();
+      let time = 5;
+      logoutTimerEl.textContent = time;
+      const btnConfirm = document.getElementById('confirmLogout');
+      btnConfirm.disabled = true;
 
-  <label class="text-sm">Nova senha
-    <input type="password" class="mt-1 w-full p-2 rounded bg-black border border-gray-600" />
-  </label>
+      logoutInterval = setInterval(() => {
+        time--;
+        logoutTimerEl.textContent = time;
+        if (time <= 0) {
+          clearInterval(logoutInterval);
+          btnConfirm.disabled = false;
+        }
+      }, 1000);
+    });
 
-  <div class="flex justify-between mt-4">
-    <button type="submit" class="px-4 py-2 rounded bg-purple-600 hover:bg-purple-700">Salvar</button>
-    <button type="button" onclick="document.getElementById('configModal').close()" class="text-sm text-gray-400 hover:underline">Fechar</button>
-  </div>
-</form>
+    document.getElementById('cancelLogout').addEventListener('click', () => {
+      clearInterval(logoutInterval);
+      logoutModal.close();
+    });
 
-  </dialog>  <script>
-    function logout() {
-      localStorage.removeItem("noheroes_logged_in");
-      window.location.href = "login.html";
-    }
-  </script></body>
+    document.getElementById('confirmLogout').addEventListener('click', () => {
+      // aqui a lógica de logout
+      logoutModal.close();
+      // ex: window.location.href = 'login.html';
+    });
+  </script>
+</body>
 </html>
