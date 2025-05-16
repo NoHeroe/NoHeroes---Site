@@ -328,7 +328,7 @@
     <!-- Avatar com trigger de modal -->
     <img src="noheroe-avatar.png" alt="NoHeroes como entidade"
       class="mx-auto mt-8 w-48 h-48 rounded-full border-4 border-gray-700 shadow-lg cursor-pointer hover:scale-105 transition"
-      onclick="document.getElementById('criadorModal').showModal()" />
+      onclick="abrirModal()" />
 
     <!-- Redes -->
     <div class="mt-6 flex justify-center space-x-6">
@@ -344,11 +344,11 @@
     </div>
 
     <!-- Modal Sobre o Criador (corrigido) -->
-<dialog id="criadorModal" class="w-full max-w-2xl p-0 rounded-xl backdrop:bg-black/60 text-white font-playfair overflow-hidden">
-  <div class="bg-gradient-to-br from-purple-800 via-black to-red-900 p-6 sm:p-8 rounded-xl shadow-xl h-full">
-    <button onclick="document.getElementById('criadorModal').close()" class="absolute top-4 right-4 text-white text-xl">×</button>
+<dialog id="criadorModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop:bg-black/70">
+  <div class="bg-gradient-to-br from-purple-800 via-black to-red-900 p-6 sm:p-8 rounded-xl shadow-xl max-h-[90vh] w-full max-w-2xl overflow-y-auto relative font-playfair text-white">
+    <button onclick="fecharModal()" class="absolute top-4 right-4 text-white text-2xl font-bold">×</button>
     <h2 class="text-3xl font-bold text-purple-300 mb-4">Sobre o Criador</h2>
-    <div class="text-base leading-relaxed text-gray-200 space-y-4 max-h-[80vh] overflow-y-auto pr-2">
+    <div class="text-base leading-relaxed text-gray-200 space-y-4">
       <p>Eu nasci sem ter escolhido estar aqui. Cresci inserido num sistema que nunca pedi pra fazer parte — e que, mesmo prometendo segurança e justiça, só me cobra, explora e me prende.</p>
       <p>Quando algo dá errado, ninguém aparece pra me proteger. Se eu erro, sou punido. Se sou roubado, azar o meu. A lógica é simples: o sistema exige tudo, mas entrega quase nada.</p>
       <p>Por isso eu criei o <strong class="text-purple-400">NoHeroes</strong>. Não só como uma história. Mas como um grito. Um universo onde as leis são claras, o valor é real e quem constrói é quem decide.</p>
@@ -357,8 +357,7 @@
       <p>Este projeto é minha forma de resistir. De viver do que eu acredito, com quem acredita junto. E se você também sente que o mundo tá do avesso — talvez <strong class="text-purple-400">NoHeroes</strong> seja o seu lugar.</p>
     </div>
     <div class="mt-6 text-center">
-      <button onclick="document.getElementById('criadorModal').close()"
-        class="px-6 py-3 rounded-md bg-gradient-to-l from-red-900 to-purple-700 hover:from-purple-700 hover:to-red-900 font-semibold transition">
+      <button onclick="fecharModal()" class="px-6 py-3 rounded-md bg-gradient-to-l from-red-900 to-purple-700 hover:from-purple-700 hover:to-red-900 font-semibold transition">
         Fechar Manifesto
       </button>
     </div>
@@ -509,5 +508,16 @@
     </p>
   </div>
 </footer>
+<script>
+  function abrirModal() {
+    document.getElementById('criadorModal').showModal();
+    document.body.style.overflow = 'hidden';
+  }
+
+  function fecharModal() {
+    document.getElementById('criadorModal').close();
+    document.body.style.overflow = '';
+  }
+</script>
 <body>
 <html>
