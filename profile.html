@@ -142,59 +142,88 @@
     </section>
   </main>
 
-  <!-- MODAL CONFIGURAÇÕES (VISUAL REIMAGINADO) -->
-<dialog id="configModal" class="relative rounded-xl p-0 w-full max-w-lg bg-[#111] text-white border border-purple-800 shadow-xl">
-  <!-- Cabeçalho de Abas -->
-  <div class="flex border-b border-purple-800">
-    <button data-tab="security" class="flex-1 py-3 text-center font-semibold hover:bg-[#222] active:bg-[#222]" aria-selected="true">
+  <!-- ====== HEADER ====== -->
+<header class="flex justify-between items-center px-6 py-4 border-b border-purple-800">
+  <!-- ... seus outros botões ... -->
+  <div class="flex gap-4 items-center">
+    <button id="btnLogout" class="text-red-500 font-bold hover:underline">Logout</button>
+    <!-- Ícone de engrenagem -->
+    <button onclick="document.getElementById('configModal').showModal()"
+      class="p-2 bg-[#222] rounded hover:bg-[#333]">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-400" fill="none"
+           viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M11.049 2.927c.3-.921 1.603-.921 1.902 0a1.724 1.724 0 002.562 1.04c.816-.47 1.79.38 1.523 1.283a1.724 1.724 0 001.708 2.174c.995.083 1.43 1.29.654 1.917a1.724 1.724 0 00-.502 1.675c.294.978-.643 1.786-1.555 1.34a1.724 1.724 0 00-1.868.35c-.69.69-1.809.19-1.868-.792a1.724 1.724 0 00-1.372-1.837c-1.004-.24-1.004-1.654 0-1.894a1.724 1.724 0 001.04-2.562 1.724 1.724 0 00-1.675-.502c-1.004.24-1.654-.707-1.283-1.523.47-.816-.38-1.79-1.283-1.523a1.724 1.724 0 00-1.04 2.562z" />
+      </svg>
+    </button>
+  </div>
+</header>
+
+<!-- ====== MODAL CONFIGURAÇÕES ====== -->
+<dialog id="configModal" class="relative rounded-xl overflow-hidden w-full max-w-lg bg-[#111] text-white border border-purple-800 shadow-xl">
+  <!-- Header do Modal com Close -->
+  <div class="flex items-center justify-between px-6 py-4 border-b border-purple-800">
+    <h2 class="text-xl font-bold text-purple-400">Configurações</h2>
+    <button onclick="document.getElementById('configModal').close()"
+      class="text-red-500 hover:text-red-600">
+      &times;
+    </button>
+  </div>
+
+  <!-- Abas -->
+  <div class="flex px-6 bg-[#111]">
+    <button data-tab="security"
+      class="flex-1 py-2 text-center border-b-2 border-transparent hover:border-purple-500
+             active:border-purple-400 font-semibold"
+      aria-selected="true">
       Senha & Segurança
     </button>
-    <button data-tab="profile" class="flex-1 py-3 text-center font-semibold hover:bg-[#222]">
+    <button data-tab="profile"
+      class="flex-1 py-2 text-center border-b-2 border-transparent hover:border-purple-500
+             font-semibold">
       Dados Pessoais
     </button>
-    <button data-tab="permissions" class="flex-1 py-3 text-center font-semibold hover:bg-[#222]">
+    <button data-tab="permissions"
+      class="flex-1 py-2 text-center border-b-2 border-transparent hover:border-purple-500
+             font-semibold">
       Permissões
     </button>
   </div>
 
   <!-- Conteúdo das Abas -->
-  <section id="tab-security" class="p-6">
-    <h2 class="text-2xl font-bold text-purple-400 mb-4">Senha & Segurança</h2>
-    <div class="space-y-4">
+  <div class="px-6 py-4">
+    <section id="tab-security" class="space-y-4">
       <div>
         <label class="block text-sm text-gray-400 mb-1">Senha Atual</label>
-        <input type="password" placeholder="••••••••" class="w-full p-2 rounded bg-black border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500" />
+        <input type="password" placeholder="••••••••"
+               class="w-full p-2 rounded bg-black border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500" />
       </div>
       <div>
         <label class="block text-sm text-gray-400 mb-1">Nova Senha</label>
-        <input type="password" placeholder="Digite nova senha" class="w-full p-2 rounded bg-black border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500" />
+        <input type="password" placeholder="Digite nova senha"
+               class="w-full p-2 rounded bg-black border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500" />
       </div>
-      <button class="mt-4 px-4 py-2 bg-purple-600 rounded hover:bg-purple-700">Salvar Senha</button>
-    </div>
-  </section>
+    </section>
 
-  <section id="tab-profile" class="hidden p-6">
-    <h2 class="text-2xl font-bold text-purple-400 mb-4">Dados Pessoais</h2>
-    <div class="space-y-4">
+    <section id="tab-profile" class="hidden space-y-4">
       <div>
         <label class="block text-sm text-gray-400 mb-1">Nome</label>
-        <input type="text" placeholder="Seu nome" class="w-full p-2 rounded bg-black border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500" />
+        <input type="text" placeholder="Seu nome"
+               class="w-full p-2 rounded bg-black border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500" />
       </div>
       <div>
         <label class="block text-sm text-gray-400 mb-1">Email</label>
-        <input type="email" placeholder="seu@email.com" class="w-full p-2 rounded bg-black border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500" />
+        <input type="email" placeholder="seu@email.com"
+               class="w-full p-2 rounded bg-black border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500" />
       </div>
       <div>
         <label class="block text-sm text-gray-400 mb-1">Avatar (URL)</label>
-        <input type="url" placeholder="https://..." class="w-full p-2 rounded bg-black border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500" />
+        <input type="url" placeholder="https://..."
+               class="w-full p-2 rounded bg-black border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500" />
       </div>
-      <button class="mt-4 px-4 py-2 bg-purple-600 rounded hover:bg-purple-700">Salvar Dados</button>
-    </div>
-  </section>
+    </section>
 
-  <section id="tab-permissions" class="hidden p-6">
-    <h2 class="text-2xl font-bold text-purple-400 mb-4">Permissões & Privacidade</h2>
-    <div class="space-y-4">
+    <section id="tab-permissions" class="hidden space-y-4">
       <label class="flex items-center gap-2">
         <input type="checkbox" class="form-checkbox h-5 w-5 text-purple-500 bg-black border-gray-600 rounded" />
         <span class="text-sm text-gray-400">Permitir mensagens de desconhecidos</span>
@@ -203,29 +232,25 @@
         <input type="checkbox" class="form-checkbox h-5 w-5 text-purple-500 bg-black border-gray-600 rounded" />
         <span class="text-sm text-gray-400">Exibir perfil público</span>
       </label>
-      <button class="mt-4 px-4 py-2 bg-purple-600 rounded hover:bg-purple-700">Salvar Preferências</button>
-    </div>
-  </section>
+    </section>
+  </div>
 
-  <!-- Botão de Fechar -->
-  <button onclick="document.getElementById('configModal').close()"
-    class="absolute top-4 right-4 text-gray-400 hover:text-white">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-      viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="M6 18L18 6M6 6l12 12" />
-    </svg>
-  </button>
+  <!-- Footer do Modal -->
+  <div class="flex justify-end gap-4 px-6 py-4 border-t border-purple-800">
+    <button onclick="document.getElementById('configModal').close()"
+            class="px-4 py-2 bg-gray-800 rounded hover:bg-gray-700">Fechar</button>
+    <button class="px-4 py-2 bg-purple-600 rounded hover:bg-purple-700">Salvar</button>
+  </div>
 </dialog>
 
-<!-- Script para alternar abas -->
+<!-- Script de abas (mantenha após todos os dialogs) -->
 <script>
   document.querySelectorAll('[data-tab]').forEach(btn => {
     btn.addEventListener('click', () => {
-      // desmarcar todas
+      // remover seleção
       document.querySelectorAll('[data-tab]').forEach(b => b.setAttribute('aria-selected','false'));
       document.querySelectorAll('section[id^="tab-"]').forEach(sec => sec.classList.add('hidden'));
-      // ativar a aba clicada
+      // ativar clicado
       btn.setAttribute('aria-selected','true');
       document.getElementById('tab-' + btn.dataset.tab).classList.remove('hidden');
     });
