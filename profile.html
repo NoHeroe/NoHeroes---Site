@@ -142,35 +142,94 @@
     </section>
   </main>
 
-  <!-- MODAL CONFIGURAÇÕES -->
-  <dialog id="configModal" class="rounded-xl p-6 w-full max-w-md bg-[#111] text-white border border-purple-800 shadow-xl">
-    <form method="dialog" class="flex flex-col gap-4">
-      <h2 class="text-2xl font-bold text-purple-400 mb-2">Sua Conta</h2>
-      <div>
-        <p class="text-sm text-gray-400 mb-1">Nome atual: <span class="font-semibold">RaulTestUser</span></p>
-        <input type="text" class="w-full p-2 rounded bg-black border border-gray-600" placeholder="Novo nome" />
-      </div>
-      <div>
-        <p class="text-sm text-gray-400 mb-1">Email atual: <span class="font-semibold">raultestuser@email.com</span></p>
-        <input type="email" class="w-full p-2 rounded bg-black border border-gray-600" placeholder="Novo email" />
-      </div>
-      <div>
-        <p class="text-sm text-gray-400 mb-1">Avatar atual: <span class="text-purple-300">[sem avatar]</span></p>
-        <input type="url" class="w-full p-2 rounded bg-black border border-gray-600" placeholder="URL do avatar" />
-      </div>
-      <div>
-        <p class="text-sm text-gray-400 mb-1">Nova senha</p>
-        <input type="password" class="w-full p-2 rounded bg-black border border-gray-600" placeholder="Nova senha" />
-      </div>
-      <div class="flex justify-end gap-4 mt-4">
-        <button type="submit" class="px-4 py-2 bg-purple-600 rounded hover:bg-purple-700">Salvar</button>
-        <button type="button" onclick="document.getElementById('configModal').close()"
-          class="px-4 py-2 bg-gray-800 rounded hover:bg-gray-700">Fechar</button>
-      </div>
-    </form>
-  </dialog>
+  <!-- MODAL CONFIGURAÇÕES (VISUAL REIMAGINADO) -->
+<dialog id="configModal" class="relative rounded-xl p-0 w-full max-w-lg bg-[#111] text-white border border-purple-800 shadow-xl">
+  <!-- Cabeçalho de Abas -->
+  <div class="flex border-b border-purple-800">
+    <button data-tab="security" class="flex-1 py-3 text-center font-semibold hover:bg-[#222] active:bg-[#222]" aria-selected="true">
+      Senha & Segurança
+    </button>
+    <button data-tab="profile" class="flex-1 py-3 text-center font-semibold hover:bg-[#222]">
+      Dados Pessoais
+    </button>
+    <button data-tab="permissions" class="flex-1 py-3 text-center font-semibold hover:bg-[#222]">
+      Permissões
+    </button>
+  </div>
 
-  <script>
+  <!-- Conteúdo das Abas -->
+  <section id="tab-security" class="p-6">
+    <h2 class="text-2xl font-bold text-purple-400 mb-4">Senha & Segurança</h2>
+    <div class="space-y-4">
+      <div>
+        <label class="block text-sm text-gray-400 mb-1">Senha Atual</label>
+        <input type="password" placeholder="••••••••" class="w-full p-2 rounded bg-black border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500" />
+      </div>
+      <div>
+        <label class="block text-sm text-gray-400 mb-1">Nova Senha</label>
+        <input type="password" placeholder="Digite nova senha" class="w-full p-2 rounded bg-black border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500" />
+      </div>
+      <button class="mt-4 px-4 py-2 bg-purple-600 rounded hover:bg-purple-700">Salvar Senha</button>
+    </div>
+  </section>
+
+  <section id="tab-profile" class="hidden p-6">
+    <h2 class="text-2xl font-bold text-purple-400 mb-4">Dados Pessoais</h2>
+    <div class="space-y-4">
+      <div>
+        <label class="block text-sm text-gray-400 mb-1">Nome</label>
+        <input type="text" placeholder="Seu nome" class="w-full p-2 rounded bg-black border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500" />
+      </div>
+      <div>
+        <label class="block text-sm text-gray-400 mb-1">Email</label>
+        <input type="email" placeholder="seu@email.com" class="w-full p-2 rounded bg-black border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500" />
+      </div>
+      <div>
+        <label class="block text-sm text-gray-400 mb-1">Avatar (URL)</label>
+        <input type="url" placeholder="https://..." class="w-full p-2 rounded bg-black border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500" />
+      </div>
+      <button class="mt-4 px-4 py-2 bg-purple-600 rounded hover:bg-purple-700">Salvar Dados</button>
+    </div>
+  </section>
+
+  <section id="tab-permissions" class="hidden p-6">
+    <h2 class="text-2xl font-bold text-purple-400 mb-4">Permissões & Privacidade</h2>
+    <div class="space-y-4">
+      <label class="flex items-center gap-2">
+        <input type="checkbox" class="form-checkbox h-5 w-5 text-purple-500 bg-black border-gray-600 rounded" />
+        <span class="text-sm text-gray-400">Permitir mensagens de desconhecidos</span>
+      </label>
+      <label class="flex items-center gap-2">
+        <input type="checkbox" class="form-checkbox h-5 w-5 text-purple-500 bg-black border-gray-600 rounded" />
+        <span class="text-sm text-gray-400">Exibir perfil público</span>
+      </label>
+      <button class="mt-4 px-4 py-2 bg-purple-600 rounded hover:bg-purple-700">Salvar Preferências</button>
+    </div>
+  </section>
+
+  <!-- Botão de Fechar -->
+  <button onclick="document.getElementById('configModal').close()"
+    class="absolute top-4 right-4 text-gray-400 hover:text-white">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+      viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  </button>
+</dialog>
+
+<!-- Script para alternar abas -->
+<script>
+  document.querySelectorAll('[data-tab]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      // desmarcar todas
+      document.querySelectorAll('[data-tab]').forEach(b => b.setAttribute('aria-selected','false'));
+      document.querySelectorAll('section[id^="tab-"]').forEach(sec => sec.classList.add('hidden'));
+      // ativar a aba clicada
+      btn.setAttribute('aria-selected','true');
+      document.getElementById('tab-' + btn.dataset.tab).classList.remove('hidden');
+    });
+  });
     // Logout com timer
     const btnLogout = document.getElementById('btnLogout');
     const logoutModal = document.getElementById('logoutModal');
