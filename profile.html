@@ -39,53 +39,33 @@
   </dialog>
 
   <!-- HEADER -->
-  <header class="flex justify-between items-center px-6 py-4 border-b border-purple-800">
-  <!-- Lado esquerdo: logo + ações de amigo -->
+  <header class="grid grid-cols-3 items-center px-6 py-4 border-b border-purple-800">
+  <!-- Coluna 1: ações de amigos -->
   <div class="flex items-center gap-4">
-    <!-- Logo clicável -->
-    <a href="index.html" class="block">
-      <img src="assets/images/logo-noheroes.png" alt="NoHeroes" class="h-8 w-auto" />
-    </a>
-
     <!-- Ícone: Lista de Amigos -->
-    <button
-      title="Seus Amigos"
-      onclick="document.getElementById('friendsModal').showModal()"
-      class="p-2 bg-[#222] rounded hover:bg-[#333]"
-    >
-      <!-- Ícone de Amigos -->
+    <button title="Seus Amigos" onclick="document.getElementById('friendsModal').showModal()"
+      class="p-2 bg-[#222] rounded hover:bg-[#333]">
       <img src="assets/icons/friends.svg" alt="" class="h-6 w-6 text-purple-400" />
     </button>
-
     <!-- Ícone: Adicionar Amigos -->
-    <button
-      title="Adicionar Amigos"
-      onclick="document.getElementById('addFriendModal').showModal()"
-      class="p-2 bg-[#222] rounded hover:bg-[#333]"
-    >
-      <!-- Ícone de Adicionar -->
+    <button title="Adicionar Amigos" onclick="document.getElementById('addFriendModal').showModal()"
+      class="p-2 bg-[#222] rounded hover:bg-[#333]">
       <img src="assets/icons/add-friend.svg" alt="" class="h-6 w-6 text-purple-400" />
     </button>
   </div>
 
-  <!-- Navegação principal -->
-  <nav class="flex gap-6 font-semibold">
-    <a href="profile.html" class="hover:text-purple-400">Perfil</a>
-    <a href="chats.html" class="hover:text-purple-400">Chats</a>
-  </nav>
+  <!-- Coluna 2 (centro): logo -->
+  <div class="flex justify-center">
+    <a href="index.html">
+      <img src="assets/images/logo-noheroes.png" alt="NoHeroes" class="h-8 w-auto" />
+    </a>
+  </div>
 
-  <!-- Lado direito: logout + configurações -->
-  <div class="flex items-center gap-4">
-    <!-- Logout -->
+  <!-- Coluna 3: logout + configurações -->
+  <div class="flex items-center justify-end gap-4">
     <button id="btnLogout" class="text-red-500 font-bold hover:underline">Logout</button>
-
-    <!-- Ícone: Configurações -->
-    <button
-      title="Configurações"
-      onclick="document.getElementById('configModal').showModal()"
-      class="p-2 bg-[#222] rounded hover:bg-[#333]"
-    >
-      <!-- Ícone de Engrenagem -->
+    <button title="Configurações" onclick="document.getElementById('configModal').showModal()"
+      class="p-2 bg-[#222] rounded hover:bg-[#333]">
       <img src="assets/icons/settings.svg" alt="" class="h-6 w-6 text-purple-400" />
     </button>
   </div>
