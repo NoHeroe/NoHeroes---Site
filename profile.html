@@ -76,19 +76,20 @@
 <section class="relative overflow-hidden py-10 px-6">
   <div class="flex gap-4 overflow-x-auto hide-scrollbar pb-4">
 
-    <!-- Card Nome do Personagem -->
-    <div class="min-w-full md:min-w-[400px] card p-6 flex flex-col justify-center">
-      <h2 class="text-3xl font-bold text-purple-400 mb-2">Nome do Personagem</h2>
-      <p class="text-gray-400 text-sm mb-4">Descrição breve do personagem, afiliação, nível ou título.</p>
-      <button class="mt-auto px-6 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 uppercase tracking-wide w-fit">Editar Perfil</button>
-    </div>
-
-    <!-- Card Avatar -->
-    <div class="min-w-full md:min-w-[300px] card p-6 flex flex-col items-center justify-center">
-      <img src="assets/images/personagem.jpg" alt="Personagem"
-        class="w-40 h-40 object-contain rounded-full ring-4 ring-purple-600" />
-      <button class="mt-4 px-6 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 uppercase tracking-wide">Personagem</button>
-    </div>
+    <!-- Card Nome + Avatar do Personagem -->
+<div class="min-w-full card p-6 relative flex flex-col justify-center md:flex-row md:items-center md:justify-between gap-6">
+  <!-- Texto do personagem -->
+  <div class="md:w-2/3">
+    <h2 class="text-2xl font-bold text-purple-400 mb-2">Nome do Personagem</h2>
+    <p class="text-gray-400 text-sm mb-4">Descrição breve do personagem, afiliação, nível ou título.</p>
+    <button class="px-6 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 uppercase tracking-wide">Editar Perfil</button>
+  </div>
+  <!-- Avatar -->
+  <div class="md:w-1/3 flex justify-center">
+    <img src="assets/images/personagem.jpg" alt="Personagem"
+      class="w-36 h-36 object-contain rounded-full ring-4 ring-purple-600" />
+  </div>
+</div>
 
     <!-- Card Skills -->
     <div class="min-w-full md:min-w-[400px] card p-6 text-center">
