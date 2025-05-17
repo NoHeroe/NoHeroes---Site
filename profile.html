@@ -70,30 +70,35 @@
 </header>
 
   <!-- SEÇÃO PRINCIPAL -->
-<section class="relative overflow-hidden py-10 px-6">
-  <div class="flex gap-4 overflow-x-auto hide-scrollbar pb-4">
+<section class="relative overflow-hidden py-10">
+  <div class="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar">
     
-    <!-- Card Personagem com avatar à direita -->
-    <div class="min-w-full md:min-w-[500px] card flex items-center justify-between gap-6 p-6">
-      <!-- Texto à esquerda -->
-      <div class="flex-1">
-        <h2 class="text-xl font-bold text-purple-400 mb-2">Nome do Personagem</h2>
-        <p class="text-sm text-gray-400 mb-4">Descrição breve do personagem, afiliação, nível ou título.</p>
-        <button class="px-4 py-2 bg-purple-600 text-white text-sm font-semibold rounded hover:bg-purple-700 transition">
-          Editar Perfil
-        </button>
-      </div>
-      <!-- Avatar à direita -->
-      <div class="flex-shrink-0">
-        <img src="assets/images/personagem.jpg" alt="Personagem"
-          class="w-32 h-32 object-cover rounded-full ring-4 ring-purple-600" />
+    <!-- Card Personagem -->
+    <div class="w-screen flex-shrink-0 snap-start px-6">
+      <div class="card flex flex-col md:flex-row justify-between items-center gap-6 p-6 w-full h-full">
+        <!-- Texto -->
+        <div class="flex-1 text-left">
+          <h2 class="text-xl font-bold text-purple-400 mb-2">Nome do Personagem</h2>
+          <p class="text-sm text-gray-400 mb-4">Descrição breve do personagem, afiliação, nível ou título.</p>
+          <button class="px-4 py-2 bg-purple-600 text-white text-sm font-semibold rounded hover:bg-purple-700 transition">
+            Editar Perfil
+          </button>
+        </div>
+        <!-- Avatar -->
+        <div class="flex-shrink-0">
+          <img src="assets/images/personagem.jpg" alt="Personagem"
+            class="w-32 h-32 object-cover rounded-full ring-4 ring-purple-600" />
+        </div>
       </div>
     </div>
 
-    <!-- Card Skills (sem alteração) -->
-    <div class="min-w-full md:min-w-[500px] card p-6 text-center">
-      <img src="assets/images/skills.jpg" alt="Skills"
-        class="mx-auto w-60 h-60 object-contain rounded-lg" />
+    <!-- Card Skills -->
+    <div class="w-screen flex-shrink-0 snap-start px-6">
+      <div class="card p-6 text-center w-full h-full">
+        <h2 class="text-xl font-bold text-purple-400 mb-4">Skills</h2>
+        <img src="assets/images/skills.jpg" alt="Skills"
+          class="mx-auto w-60 h-60 object-contain rounded-lg" />
+      </div>
     </div>
 
   </div>
