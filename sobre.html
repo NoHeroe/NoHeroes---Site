@@ -10,6 +10,10 @@
     html { scroll-behavior: smooth; }
     .fade-in { animation: fadeIn 1.5s ease-in forwards; opacity: 0; }
     @keyframes fadeIn { to { opacity: 1; } }
+body.modal-aberto {
+  overflow: hidden;
+  height: 100vh;
+}
   </style>
 </head>
 <body class="bg-black text-white font-sans leading-relaxed">  
@@ -510,14 +514,16 @@
 </footer>
 <script>
   function abrirModal() {
-    document.getElementById('criadorModal').showModal();
-    document.body.style.overflow = 'hidden';
-  }
+  const modal = document.getElementById('criadorModal');
+  if (!modal.open) modal.showModal();
+  document.body.classList.add('modal-aberto');
+}
 
-  function fecharModal() {
-    document.getElementById('criadorModal').close();
-    document.body.style.overflow = '';
-  }
+function fecharModal() {
+  const modal = document.getElementById('criadorModal');
+  if (modal.open) modal.close();
+  document.body.classList.remove('modal-aberto');
+}
 </script>
 <body>
 <html>
