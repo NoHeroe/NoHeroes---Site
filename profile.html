@@ -91,20 +91,23 @@
   <!-- CONTEÚDO PRINCIPAL -->
   <main class="grid grid-cols-1 md:grid-cols-3 gap-8 px-6 pb-10">
     
-   <!-- Cartel Velado (Loja e Mercado Negro) -->
+   <!-- Cartel Velado -->
 <section class="md:col-span-2">
   <h3 class="text-2xl font-bold text-purple-300 mb-1">Cartel Velado</h3>
   <p class="text-sm text-gray-400 mb-4">Você pode comprar. Mas nem tudo está à mostra.</p>
   <div class="flex flex-wrap gap-4">
     <!-- Loja -->
-    <a href="loja.html" class="w-[140px] sm:w-[180px] bg-[#1a1a1a] rounded-xl overflow-hidden border border-purple-700 shadow-md hover:brightness-110 transition-all duration-300">
+    <a href="loja.html" class="basis-[45%] max-w-[150px] md:max-w-[160px] bg-[#1a1a1a] rounded-xl overflow-hidden border border-purple-700 shadow-md hover:brightness-110 transition-all duration-300">
       <img src="assets/images/lojanoheroes.png" alt="Loja" class="w-full h-auto object-cover" />
     </a>
-    <!-- Mercado Negro -->
-    <div class="w-[140px] sm:w-[180px] bg-[#111] rounded-xl overflow-hidden border border-gray-700 shadow-inner cursor-not-allowed opacity-60">
+
+    <!-- Mercado Negro com botão de bloqueio -->
+    <button onclick="document.getElementById('lockedModal').showModal()"
+      class="basis-[45%] max-w-[150px] md:max-w-[160px] bg-[#111] rounded-xl overflow-hidden border border-gray-700 shadow-inner cursor-not-allowed opacity-60">
       <img src="assets/images/mercadonegro.png" alt="Mercado Negro" class="w-full h-auto object-cover" />
-    </div>
+    </button>
   </div>
+
   <div class="mt-4">
     <a href="inventario.html" class="inline-block px-4 py-2 bg-purple-600 text-white text-sm font-semibold rounded hover:bg-purple-700 transition">Inventário</a>
   </div>
@@ -228,12 +231,13 @@
     <button class="px-4 py-2 bg-purple-600 rounded hover:bg-purple-700">Salvar</button>
   </div>
 </dialog>
-<!-- Modal Mercado Negro Bloqueado -->
-<dialog id="mercadoNegroModal" class="rounded-xl p-6 bg-[#111] border border-gray-700 max-w-md text-center text-white shadow-lg">
-  <h2 class="text-2xl font-bold text-red-500 mb-4">Acesso Negado</h2>
-  <p class="text-sm text-gray-400">Nível insuficiente para acessar o Mercado Negro.</p>
-  <button onclick="document.getElementById('mercadoNegroModal').close()"
-    class="mt-6 px-6 py-2 bg-gray-700 rounded hover:bg-gray-600">Fechar</button>
+
+<!-- Modal Bloqueado -->
+<dialog id="lockedModal" class="rounded-xl p-6 bg-[#111] border border-purple-800 text-center text-white max-w-sm">
+  <h2 class="text-xl font-bold text-purple-400 mb-4">Acesso Negado</h2>
+  <p class="text-sm text-gray-400">Você precisa subir de nível para acessar o Mercado Negro.</p>
+  <button onclick="document.getElementById('lockedModal').close()"
+    class="mt-6 px-4 py-2 bg-purple-600 rounded hover:bg-purple-700">Fechar</button>
 </dialog>
 
 <!-- Script de abas (mantenha após todos os dialogs) -->
