@@ -91,23 +91,23 @@
   <!-- CONTEÚDO PRINCIPAL -->
   <main class="grid grid-cols-1 md:grid-cols-3 gap-8 px-6 pb-10">
     
-   <!-- Mercado de Itens -->
-<section>
- <h3 class="text-2xl font-bold text-purple-300 mb-1">Cartel Velado</h3>
-<p class="text-sm text-gray-500">Você pode comprar. Mas nem tudo está à mostra.</p>
-    <!-- Loja Normal -->
-    <a href="loja.html" class="rounded-xl overflow-hidden border-2 border-purple-600 hover:scale-105 transition-transform">
-      <img src="assets/images/lojanoheroes.png" alt="Loja" class="w-full h-auto object-cover rounded-xl" />
+   <!-- Cartel Velado (Loja e Mercado Negro) -->
+<section class="md:col-span-2">
+  <h3 class="text-2xl font-bold text-purple-300 mb-1">Cartel Velado</h3>
+  <p class="text-sm text-gray-400 mb-4">Você pode comprar. Mas nem tudo está à mostra.</p>
+  <div class="flex flex-wrap gap-4">
+    <!-- Loja -->
+    <a href="loja.html" class="w-[140px] sm:w-[180px] bg-[#1a1a1a] rounded-xl overflow-hidden border border-purple-700 shadow-md hover:brightness-110 transition-all duration-300">
+      <img src="assets/images/lojanoheroes.png" alt="Loja" class="w-full h-auto object-cover" />
     </a>
-
-    <!-- Mercado Negro (Bloqueado) -->
-    <button onclick="document.getElementById('mercadoNegroModal').showModal()"
-      class="rounded-xl overflow-hidden border-2 border-gray-700 grayscale hover:cursor-not-allowed">
-      <img src="assets/images/mercadonegro.png" alt="Mercado Negro" class="w-full h-auto object-cover rounded-xl" />
-    </button>
+    <!-- Mercado Negro -->
+    <div class="w-[140px] sm:w-[180px] bg-[#111] rounded-xl overflow-hidden border border-gray-700 shadow-inner cursor-not-allowed opacity-60">
+      <img src="assets/images/mercadonegro.png" alt="Mercado Negro" class="w-full h-auto object-cover" />
+    </div>
   </div>
-
-  <a href="inventario.html" class="mt-4 inline-block px-4 py-2 bg-purple-600 text-white text-sm rounded hover:bg-purple-700 transition-all">Inventário</a>
+  <div class="mt-4">
+    <a href="inventario.html" class="inline-block px-4 py-2 bg-purple-600 text-white text-sm font-semibold rounded hover:bg-purple-700 transition">Inventário</a>
+  </div>
 </section>
 
     <!-- Conquistas -->
