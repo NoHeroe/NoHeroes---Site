@@ -40,37 +40,32 @@
 
   <!-- HEADER -->
   <header class="grid grid-cols-3 items-center px-6 py-4 border-b border-purple-800">
-  <!-- Coluna 1: ações de amigos -->
+  <!-- Coluna 1: Botões de Amigos -->
   <div class="flex items-center gap-4">
-    <!-- Ícone: Lista de Amigos -->
-<button title="Seus Amigos" onclick="document.getElementById('friendsModal').showModal()"
-  class="p-2 bg-[#222] rounded-2xl hover:bg-[#333] w-12 h-12 flex items-center justify-center">
-  <img src="assets/icons/friends.png" alt="" class="h-8 w-8" />
-</button>
+    <button title="Seus Amigos" onclick="document.getElementById('friendsModal').showModal()"
+      class="bg-[#222] hover:bg-[#333] rounded-xl w-11 h-11 flex items-center justify-center shadow-inner border border-[#444]">
+      <img src="assets/icons/friends.png" alt="Amigos" class="h-6 w-6" />
+    </button>
+    <button title="Adicionar Amigo" onclick="document.getElementById('addFriendModal').showModal()"
+      class="bg-[#222] hover:bg-[#333] rounded-xl w-11 h-11 flex items-center justify-center shadow-inner border border-[#444]">
+      <img src="assets/icons/add-friend.png" alt="Adicionar" class="h-6 w-6" />
+    </button>
+  </div>
 
-<!-- Ícone: Adicionar Amigos -->
-<button title="Adicionar Amigos" onclick="document.getElementById('addFriendModal').showModal()"
-  class="p-2 bg-[#222] rounded-2xl hover:bg-[#333] w-12 h-12 flex items-center justify-center">
-  <img src="assets/icons/add-friend.png" alt="" class="h-8 w-8" />
-</button>
-
-
-  <!-- Coluna 2 (centro): logo -->
+  <!-- Coluna 2: Logo central -->
   <div class="flex justify-center">
     <a href="index.html">
-      <img src="assets/images/noheroes logo.png" alt="NoHeroes" class="h-8 w-auto" />
+      <img src="assets/images/noheroes logo.png" alt="NoHeroes" class="h-6 sm:h-8 w-auto" />
     </a>
   </div>
 
-  <!-- Coluna 3: logout + configurações -->
+  <!-- Coluna 3: Logout + Config -->
   <div class="flex items-center justify-end gap-4">
     <button id="btnLogout" class="text-red-500 font-bold hover:underline">Logout</button>
-
-    <!-- Ícone: Configurações -->
-<button title="Configurações" onclick="document.getElementById('configModal').showModal()"
-  class="p-2 bg-[#222] rounded-2xl hover:bg-[#333] w-12 h-12 flex items-center justify-center">
-  <img src="assets/icons/settings.png" alt="" class="h-8 w-8" />
-</button>
+    <button title="Configurações" onclick="document.getElementById('configModal').showModal()"
+      class="bg-[#222] hover:bg-[#333] rounded-xl w-11 h-11 flex items-center justify-center shadow-inner border border-[#444]">
+      <img src="assets/icons/settings.png" alt="Config" class="h-6 w-6" />
+    </button>
   </div>
 </header>
 
