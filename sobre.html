@@ -348,7 +348,7 @@ body.modal-aberto {
     </div>
 
     <!-- Modal Sobre o Criador (corrigido) -->
-<dialog id="criadorModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop:bg-black/70">
+<dialog id="criadorModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 backdrop:bg-black/70">
   <div class="bg-gradient-to-br from-purple-800 via-black to-red-900 p-6 sm:p-8 rounded-xl shadow-xl max-h-[90vh] w-full max-w-2xl overflow-y-auto relative font-playfair text-white">
     <button onclick="fecharModal()" class="absolute top-4 right-4 text-white text-2xl font-bold">×</button>
     <h2 class="text-3xl font-bold text-purple-300 mb-4">Sobre o Criador</h2>
@@ -514,16 +514,18 @@ body.modal-aberto {
 </footer>
 <script>
   function abrirModal() {
-  const modal = document.getElementById('criadorModal');
-  if (!modal.open) modal.showModal();
-  document.body.classList.add('modal-aberto');
-}
+    const modal = document.getElementById('criadorModal');
+    modal.classList.remove('hidden');
+    if (!modal.open) modal.showModal();
+    document.body.classList.add('modal-aberto');
+  }
 
-function fecharModal() {
-  const modal = document.getElementById('criadorModal');
-  if (modal.open) modal.close();
-  document.body.classList.remove('modal-aberto');
-}
+  function fecharModal() {
+    const modal = document.getElementById('criadorModal');
+    if (modal.open) modal.close();
+    modal.classList.add('hidden');
+    document.body.classList.remove('modal-aberto');
+  }
 </script>
 <body>
 <html>
