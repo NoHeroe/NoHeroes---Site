@@ -96,9 +96,12 @@
     <h3 class="text-2xl font-bold text-purple-300 mb-1">Cartel Velado</h3>
     <p class="text-sm text-gray-400 mb-4">Você pode comprar. Mas nem tudo está à mostra.</p>
     <div class="flex flex-wrap gap-4">
+      <!-- Loja -->
       <a href="loja.html" class="basis-[45%] max-w-[160px] bg-[#1a1a1a] rounded-xl overflow-hidden border border-purple-700 shadow-md hover:brightness-110 transition-all duration-300">
         <img src="assets/images/lojanoheroes.png" alt="Loja" class="w-full h-auto object-cover" />
       </a>
+
+      <!-- Mercado Negro -->
       <button onclick="document.getElementById('lockedModal').showModal()"
         class="basis-[45%] max-w-[160px] bg-[#111] rounded-xl overflow-hidden border border-gray-700 shadow-inner cursor-not-allowed opacity-60">
         <img src="assets/images/mercadonegro.png" alt="Mercado Negro" class="w-full h-auto object-cover" />
@@ -109,44 +112,39 @@
     </div>
   </section>
 
-  <!-- Coluna lateral (Conquistas + Acessos) -->
-  <div class="md:col-span-2 flex flex-col gap-6">
+  <!-- Conquistas -->
+  <section class="md:col-span-1">
+    <h3 class="text-2xl font-bold text-purple-300 mb-4">Conquistas</h3>
+    <ul class="space-y-3">
+      <li class="card p-3 text-sm border border-purple-800">Primeiro Login</li>
+      <li class="card p-3 text-sm border border-purple-800">Explorador Inicial</li>
+    </ul>
+  </section>
 
-    <!-- Conquistas -->
-    <section>
-      <h3 class="text-2xl font-bold text-purple-300 mb-4">Conquistas</h3>
-      <ul class="space-y-3">
-        <li class="card p-3 text-sm border border-purple-800">Primeiro Login</li>
-        <li class="card p-3 text-sm border border-purple-800">Explorador Inicial</li>
-      </ul>
-    </section>
-
-    <!-- Acessos Rápidos -->
-    <section class="space-y-4">
-      <a href="#" class="card p-4 flex items-center gap-4 hover:bg-purple-800">
-        <div class="w-8 h-8 bg-purple-600 rounded-full"></div>
-        <div>
-          <h4 class="text-lg font-bold text-purple-400">ROAR</h4>
-          <p class="text-sm text-gray-400">Acesse o mundo de ROAR</p>
-        </div>
-      </a>
-      <a href="#" class="card p-4 flex items-center gap-4 hover:bg-purple-800">
-        <div class="w-8 h-8 bg-green-500 rounded-full"></div>
-        <div>
-          <h4 class="text-lg font-bold text-green-400">FREQ</h4>
-          <p class="text-sm text-gray-400">Explore o universo de FREQ</p>
-        </div>
-      </a>
-      <a href="#" class="card p-4 flex items-center gap-4 hover:bg-purple-800">
-        <div class="w-8 h-8 bg-gray-500 rounded-full"></div>
-        <div>
-          <h4 class="text-lg font-bold text-white">Explorar</h4>
-          <p class="text-sm text-gray-400">Descubra o que mais temos</p>
-        </div>
-      </a>
-    </section>
-
-  </div>
+  <!-- Acessos Rápidos -->
+  <section class="md:col-span-1 space-y-4">
+    <a href="#" class="card p-4 flex items-center gap-4 hover:bg-purple-800">
+      <div class="w-8 h-8 bg-purple-600 rounded-full"></div>
+      <div>
+        <h4 class="text-lg font-bold text-purple-400">ROAR</h4>
+        <p class="text-sm text-gray-400">Acesse o mundo de ROAR</p>
+      </div>
+    </a>
+    <a href="#" class="card p-4 flex items-center gap-4 hover:bg-purple-800">
+      <div class="w-8 h-8 bg-green-500 rounded-full"></div>
+      <div>
+        <h4 class="text-lg font-bold text-green-400">FREQ</h4>
+        <p class="text-sm text-gray-400">Explore o universo de FREQ</p>
+      </div>
+    </a>
+    <a href="#" class="card p-4 flex items-center gap-4 hover:bg-purple-800">
+      <div class="w-8 h-8 bg-gray-500 rounded-full"></div>
+      <div>
+        <h4 class="text-lg font-bold text-white">Explorar</h4>
+        <p class="text-sm text-gray-400">Descubra o que mais temos</p>
+      </div>
+    </a>
+  </section>
 
 </main>
 
