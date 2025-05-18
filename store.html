@@ -147,7 +147,21 @@ section {
   -ms-overflow-style: none;  /* IE/Edge */
   scrollbar-width: none;     /* Firefox */
 }
+/* ── FAZ A CAIXA FICAR CENTRADA E COM MARGENS IGUAIS ── */
+section {
+  /* diminui a seção pra sobrar espaço preto por cima/embaixo */
+  padding: 5vh 0; 
+  /* reduz a margem entre slides (para o gutter preto) */
+  margin-bottom: 5vh !important;
+}
 
+.section-content {
+  /* ocupa 80% da viewport, centralizado */
+  width: 80vw;
+  height: 80vh;
+  /* garante que a caixa sempre fique no meio, mesmo que mude o padding */
+  margin: auto;
+}
 /* 2) esconder scrollbar da carousel também (pra ninguém ver aquele mini-scroll) */
 .horizontal-scroll {
   -ms-overflow-style: none;
