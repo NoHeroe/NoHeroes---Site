@@ -1,8 +1,9 @@
-<!-- Loja | NoHeroes - Versões Desktop e Mobile Separadas --><!DOCTYPE html><html lang="pt-br">
+<!-- Loja | NoHeroes - Versões Desktop e Mobile Independentes --><!DOCTYPE html><html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Loja | NoHeroes</n  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <title>Loja | NoHeroes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
     /* reset */
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -52,7 +53,7 @@
     </div>
     <div id="container-desktop">
       <!-- bloco1 -->
-      <section class="desktop-section">
+      <section id="bloco1" class="desktop-section">
         <div class="bg-box" style="background-image:url('assets/bg-oriental.jpg')">
           <button class="btn-tenda" onclick="goTo('bloco2')">Entrar na Loja</button>
           <img src="assets/npc-principal.png" class="npc" alt="Vendedor" />
@@ -60,7 +61,7 @@
         </div>
       </section>
       <!-- bloco2 Mangás -->
-      <section class="desktop-section">
+      <section id="bloco2" class="desktop-section">
         <div class="bg-box" style="background-image:url('assets/bg-subterraneo-1.jpg')">
           <h2 style="font-size:2rem; margin-bottom:1rem;">Mangás</h2>
           <div class="carousel-wrapper">
@@ -77,7 +78,7 @@
         </div>
       </section>
       <!-- bloco3 Animes -->
-      <section class="desktop-section">
+      <section id="bloco3" class="desktop-section">
         <div class="bg-box" style="background-image:url('assets/bg-subterraneo-2.jpg')">
           <h2 style="font-size:2rem; margin-bottom:1rem;">Animes</h2>
           <div class="carousel-wrapper">
@@ -94,7 +95,7 @@
         </div>
       </section>
       <!-- bloco4 Ebooks -->
-      <section class="desktop-section">
+      <section id="bloco4" class="desktop-section">
         <div class="bg-box" style="background-image:url('assets/bg-subterraneo-3.jpg')">
           <h2 style="font-size:2rem; margin-bottom:1rem;">Ebooks</h2>
           <div class="carousel-wrapper">
@@ -111,7 +112,7 @@
         </div>
       </section>
       <!-- bloco5 Mentorias -->
-      <section class="desktop-section">
+      <section id="bloco5" class="desktop-section">
         <div class="bg-box" style="background-image:url('assets/bg-subterraneo-4.jpg')">
           <h2 style="font-size:2rem; margin-bottom:1rem;">Mentorias</h2>
           <div class="carousel-wrapper">
@@ -128,7 +129,7 @@
         </div>
       </section>
       <!-- bloco6 Extras -->
-      <section class="desktop-section">
+      <section id="bloco6" class="desktop-section">
         <div class="bg-box" style="background-image:url('assets/bg-subterraneo-5.jpg')">
           <h2 style="font-size:2rem; margin-bottom:1rem;">Extras</h2>
           <div class="carousel-wrapper">
@@ -146,7 +147,7 @@
       </section>
     </div>
   </div>  <!-- MOBILE -->  <div class="mobile-layout">
-    <section class="mobile-section" style="background-image:url('assets/bg-oriental-mobile.jpg')">
+    <section id="bloco1m" class="mobile-section" style="background-image:url('assets/bg-oriental-mobile.jpg')">
       <div class="mobile-title">Tenda Principal</div>
       <div style="display:flex;flex-wrap:wrap;justify-center;gap:0.5rem;">
         <button class="btn-tenda" onclick="goTo('bloco2')">Mangás</button>
@@ -157,45 +158,25 @@
       </div>
       <img src="assets/npc-principal.png" class="npc" alt="Vendedor Principal" />
     </section>
-    <section class="mobile-section" style="background-image:url('assets/bg-subterraneo-1-mobile.jpg')">
+    <section id="bloco2m" class="mobile-section" style="background-image:url('assets/bg-subterraneo-1-mobile.jpg')">
       <div class="mobile-title">Mangás</div>
-      <div class="product-list">
-        <div class="product-card-mobile">Mangá 1</div>
-        <div class="product-card-mobile">Mangá 2</div>
-        <div class="product-card-mobile">Mangá 3</div>
-      </div>
+      <div class="product-list">  <div class="product-card-mobile">Mangá 1</div>  <div class="product-card-mobile">Mangá 2</div>  <div class="product-card-mobile">Mangá 3</div></div>
     </section>
-    <section class="mobile-section" style="background-image:url('assets/bg-subterraneo-2-mobile.jpg')">
+    <section id="bloco3m" class="mobile-section" style="background-image:url('assets/bg-subterraneo-2-mobile.jpg')">
       <div class="mobile-title">Animes</div>
-      <div class="product-list">
-        <div class="product-card-mobile">Anime 1</div>
-        <div class="product-card-mobile">Anime 2</div>
-        <div class="product-card-mobile">Anime 3</div>
-      </div>
+      <div class="product-list">  <div class="product-card-mobile">Anime 1</div>  <div class="product-card-mobile">Anime 2</div>  <div class="product-card-mobile">Anime 3</div></div>
     </section>
-    <section class="mobile-section" style="background-image:url('assets/bg-subterraneo-3-mobile.jpg')">
+    <section id="bloco4m" class="mobile-section" style="background-image:url('assets/bg-subterraneo-3-mobile.jpg')">
       <div class="mobile-title">Ebooks</div>
-      <div class="product-list">
-        <div class="product-card-mobile">eBook 1</div>
-        <div class="product-card-mobile">eBook 2</div>
-        <div class="product-card-mobile">eBook 3</div>
-      </div>
+      <div class="product-list">  <div class="product-card-mobile">eBook 1</div>  <div class="product-card-mobile">eBook 2</div>  <div class="product-card-mobile">eBook 3</div></div>
     </section>
-    <section class="mobile-section" style="background-image:url('assets/bg-subterraneo-4-mobile.jpg')">
+    <section id="bloco5m" class="mobile-section" style="background-image:url('assets/bg-subterraneo-4-mobile.jpg')">
       <div class="mobile-title">Mentorias</div>
-      <div class="product-list">
-        <div class="product-card-mobile">Mentoria 1</div>
-        <div class="product-card-mobile">Mentoria 2</div>
-        <div class="product-card-mobile">Mentoria 3</div>
-      </div>
+      <div class="product-list">  <div class="product-card-mobile">Mentoria 1</div>  <div class="product-card-mobile">Mentoria 2</div>  <div class="product-card-mobile">Mentoria 3</div></div>
     </section>
-    <section class="mobile-section" style="background-image:url('assets/bg-subterraneo-5-mobile.jpg')">
+    <section id="bloco6m" class="mobile-section" style="background-image:url('assets/bg-subterraneo-5-mobile.jpg')">
       <div class="mobile-title">Extras</div>
-      <div class="product-list">
-        <div class="product-card-mobile">Conteúdo VIP</div>
-        <div class="product-card-mobile">Arte Conceito</div>
-        <div class="product-card-mobile">Soundtrack</div>
-      </div>
+      <div class="product-list">  <div class="product-card-mobile">Conteúdo VIP</div>  <div class="product-card-mobile">Arte Conceito</div>  <div class="product-card-mobile">Soundtrack</div></div>
     </section>
   </div>  <script>
     function goTo(id) {
@@ -204,8 +185,10 @@
     }
     function scrollCarousel(sec, dir) {
       const c = document.getElementById('carousel-' + sec);
-      const w = c.querySelector('.product-card').offsetWidth + parseFloat(getComputedStyle(c).gap);
-      c.scrollBy({ left: w*dir, behavior:'smooth' });
+      if (!c) return;
+      const gap = parseFloat(getComputedStyle(c).gap) || 16;
+      const w = c.querySelector('.product-card').offsetWidth + gap;
+      c.scrollBy({ left: w * dir, behavior:'smooth' });
     }
   </script></body>
 </html>
