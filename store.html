@@ -132,32 +132,36 @@ html, body {
 
 /* ───────── DESKTOP OVERRIDES ───────── */
 @media (min-width: 768px) {
-  /* 1) Permite scroll nativo no html/body, mas isola o container */
+  /* 1. Permitir scroll nativo no html/body */
   html, body {
-    height: 100vh;
-    overflow: hidden;
-  }
-  .desktop-visual #container {
-    height: 100vh;
-    overflow-y: auto;
+    height: 100%;
+    overflow: auto;
   }
 
-  /* 2) Cada slide tem 5vh de “gutter” acima e abaixo (10vh total) */
+  /* 2. Padding no container gera gutter acima e abaixo */
+  .desktop-visual #container {
+    height: 100%;
+    overflow-y: auto;
+    padding: 5vh 0;              /* <─ 5vh de espaço preto em cima e embaixo */
+    scroll-snap-type: y mandatory;
+  }
+
+  /* 3. Cada section = 90vh (sobram 10vh do padding do container) */
   section {
-    height: calc(100vh - 10vh);
-    margin: 5vh auto;
+    height: 90vh;
     scroll-snap-align: start;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 0;                   /* sem margin extra */
   }
 
-  /* 3) A caixa interna preenche 100% dessa área disponível */
+  /* 4. A caixa interna preenche 100% dessa seção de 90vh */
   .section-content {
     width: 80vw;
     max-width: 1200px;
     height: 100%;
-    margin: 0 auto;
+    margin: 0 auto;             /* centraliza perfeitamente */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
