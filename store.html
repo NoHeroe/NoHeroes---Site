@@ -4,80 +4,67 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Loja | NoHeroes</title>
   <style>
-    /* reset */
-* { margin:0; padding:0; box-sizing:border-box; }
-
-/* Desktop: deixa html/body scrollável, mas restrito ao container */
-@media (min-width: 768px) {
-  html, body {
-    height: 100%;
-    overflow: auto;      /* permite scroll via touch/mouse */
-  }
-  .desktop-visual #container {
-    height: 100vh;
-    overflow-y: auto;    /* só o container controla o scroll */
-  }
+    /* ─────────────── RESET ─────────────── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+/* ─── WRAPPERS PARA VISORES ─── */
+.desktop-visual { display: block; }
+.mobile-visual  { display: none; }
+@media (max-width: 768px) {
+  .desktop-visual { display: none; }
+  .mobile-visual  { display: block; }
+}
+
+/* ───────────── BASE ───────────── */
 html, body {
   font-family: 'Inter', sans-serif;
   background: #000;
   color: #fff;
 }
 
-/* container principal */
+/* ─── SCROLL-SNAP GERAL ─── */
 #container {
-  height: 100%; 
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
 }
+/* esconde scrollbar do container */
+#container::-webkit-scrollbar { display: none; }
+#container { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* cada slide ocupa 100vh e é centrado */
-section {
-  height: 100vh;
-  scroll-snap-align: start;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0;            /* remove gap extra */
-}
-
-/* caixa interna: sempre 80% da viewport, gerando bordas pretas iguais ao redor */
-.section-content {
-  width: 80vw;
-  max-width: 1200px;
-  height: 80vh;         /* 20vh de “gutter” automático (10vh acima, 10vh abaixo) */
-  background-size: cover;      /* cobre toda a caixa sem distorcer */
-  background-position: center;
-  background-repeat: no-repeat;
-  border-radius: 16px;
-  box-shadow: 0 0 30px rgba(147,51,234,0.7);
-  position: relative;
+/* ─────────── MENU LATERAL ─────────── */
+.menu {
+  position: fixed;
+  top: 20px; left: 20px;
+  z-index: 20;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-}
-/* fixed menu on the left */
-.menu {
-  position: fixed; top: 20px; left: 20px; z-index: 20;
-  display: flex; flex-direction: column; gap: 0.5rem;
+  gap: .5rem;
 }
 .menu button {
-  background: #4b0082; color: #fff;
-  border: none; padding: 0.5rem 1rem;
-  border-radius: 8px; cursor: pointer;
-  transition: transform 0.2s;
-  font-size: 0.9rem;
+  background: #4b0082;
+  color: #fff;
+  border: none;
+  padding: .5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform .2s;
+  font-size: .9rem;
 }
 .menu button:hover { transform: scale(1.05); }
-/* NPC position */
+
+/* ───────────── NPC ───────────── */
 .npc {
-  position: absolute; bottom: 20px; right: 20px;
-  width: 120px; height: auto; z-index: 10;
+  position: absolute;
+  bottom: 20px; right: 20px;
+  width: 120px;
+  z-index: 10;
 }
-/* horizontal carousel container */
+
+/* ────────── CARROSSEL ────────── */
 .carousel-wrapper {
   width: 60%;
   position: relative;
@@ -92,21 +79,24 @@ section {
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   gap: 1rem;
-  padding: 0.5rem 0;
+  padding: .5rem 0;
 }
+/* esconde scrollbar do carrossel */
 .horizontal-scroll::-webkit-scrollbar { display: none; }
-/* product cards: show one small card at a time */
+.horizontal-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+
 .product-card {
-  flex: 0 0 50%; /* small */
+  flex: 0 0 50%;
   scroll-snap-align: center;
   background: rgba(17,17,17,0.8);
   border: 1px solid #333;
   border-radius: 12px;
   padding: 1rem;
   text-align: center;
-  font-size: 0.9rem;
+  font-size: .9rem;
 }
-/* arrows near the carousel's edges */
+
+/* setas do carrossel */
 .arrow {
   position: absolute;
   top: 50%;
@@ -114,66 +104,73 @@ section {
   background: rgba(0,0,0,0.6);
   color: #fff;
   border: none;
-  padding: 0.5rem;
+  padding: .5rem;
   border-radius: 9999px;
   cursor: pointer;
   z-index: 5;
 }
-/* left arrow sits just outside left of carousel */
-.arrow.left { left: calc(20% - 1rem); }
-/* right arrow just outside right */
+.arrow.left  { left: calc(20% - 1rem); }
 .arrow.right { right: calc(20% - 1rem); }
-/* tenda buttons in main menu */
+
+/* ──────── BOTÕES DE TENDA ──────── */
 .btn-tenda {
   background: linear-gradient(135deg,#6b21a8,#9333ea);
   padding: 8px 16px;
   border-radius: 9999px;
   font-weight: bold;
-  font-size: 0.9rem;
+  font-size: .9rem;
   color: #fff;
   box-shadow: 0 0 20px rgba(147,51,234,0.5);
   transition: all .3s;
   cursor: pointer;
-  margin: 0.25rem;
+  margin: .25rem;
 }
 .btn-tenda:hover {
   background: #7e22ce;
   transform: scale(1.05);
 }
-/* mobile adjustments can be added under .mobile-visual section */
-/* 1) esconder qualquer scrollbar do container principal */
-#container::-webkit-scrollbar { display: none; }
-#container {
-  -ms-overflow-style: none;  /* IE/Edge */
-  scrollbar-width: none;     /* Firefox */
-}
-/* ── FAZ A CAIXA FICAR CENTRADA E COM MARGENS IGUAIS ── */
-section {
-  /* diminui a seção pra sobrar espaço preto por cima/embaixo */
-  padding: 5vh 0; 
-  /* reduz a margem entre slides (para o gutter preto) */
-  margin-bottom: 5vh !important;
-}
 
-.section-content {
-  /* ocupa 80% da viewport, centralizado */
-  width: 80vw;
-  height: 80vh;
-  /* garante que a caixa sempre fique no meio, mesmo que mude o padding */
-  margin: auto;
-}
-/* 2) esconder scrollbar da carousel também (pra ninguém ver aquele mini-scroll) */
-.horizontal-scroll {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-.horizontal-scroll::-webkit-scrollbar { display: none; }
+/* ───────── DESKTOP OVERRIDES ───────── */
+@media (min-width: 768px) {
+  /* 1) Permite scroll nativo no html/body, mas isola o container */
+  html, body {
+    height: 100vh;
+    overflow: hidden;
+  }
+  .desktop-visual #container {
+    height: 100vh;
+    overflow-y: auto;
+  }
 
-/* 3) força o scroll-snap a sempre parar no início da seção */
-section {
-  scroll-snap-stop: always;
-}
+  /* 2) Cada slide tem 5vh de “gutter” acima e abaixo (10vh total) */
+  section {
+    height: calc(100vh - 10vh);
+    margin: 5vh auto;
+    scroll-snap-align: start;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
+  /* 3) A caixa interna preenche 100% dessa área disponível */
+  .section-content {
+    width: 80vw;
+    max-width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 16px;
+    box-shadow: 0 0 30px rgba(147,51,234,0.7);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+}
   </style>
 </head>
 <body>
