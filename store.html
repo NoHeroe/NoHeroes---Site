@@ -1,248 +1,211 @@
-<!DOCTYPE html><html lang="pt-BR">
+<!-- Loja | NoHeroes - Versões Desktop e Mobile Separadas --><!DOCTYPE html><html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Loja | NoHeroes</title>  <style>
+  <title>Loja | NoHeroes</n  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
     /* reset */
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body {
-      height: 100%; overflow: hidden;
-      font-family: 'Inter', sans-serif;
-      background: #000; color: #fff;
+    html, body { height: 100%; overflow: hidden; font-family: 'Inter', sans-serif; background: #000; color: #fff; }
+    /* layout toggles */
+    .desktop-layout { display: block; }
+    .mobile-layout  { display: none; }
+    @media(max-width:1023px) {
+      .desktop-layout { display: none; }
+      .mobile-layout  { display: block; }
     }
-    /* vertical scroll container */
-    #container {
-      height: 100%; overflow-y: scroll;
-      scroll-snap-type: y mandatory;
-      scroll-behavior: smooth;
-    }
-    /* each section acts as a slide with black gutter below */
-    section {
-      height: 100vh;
-      scroll-snap-align: start;
-      background-color: #000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 10vh; /* black gap so you never see two backgrounds */
-    }
-    /* inner wrapper with the actual background image, rounded and glow */
-    .section-content {
-      width: 90vw;
-      max-width: 1200px;
-      height: 90vh;
-      background-size: contain;
-      background-position: center;
-      background-repeat: no-repeat;
-      border-radius: 16px;
-      box-shadow: 0 0 30px rgba(147,51,234,0.7);
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-    }
-    /* fixed menu on the left */
-    .menu {
-      position: fixed; top: 20px; left: 20px; z-index: 20;
-      display: flex; flex-direction: column; gap: 0.5rem;
-    }
-    .menu button {
-      background: #4b0082; color: #fff;
-      border: none; padding: 0.5rem 1rem;
-      border-radius: 8px; cursor: pointer;
-      transition: transform 0.2s;
-      font-size: 0.9rem;
-    }
+    /* ==== DESKTOP STYLE ==== */
+    #container-desktop { height: 100vh; overflow-y: auto; scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+    .desktop-section { position: relative; height: 100vh; scroll-snap-align: start; scroll-snap-stop: always; display: flex; align-items: center; justify-content: center; margin-bottom:10vh; }
+    .bg-box { width:90vw; max-width:1200px; height:90vh; background-size: contain; background-position: center; background-repeat: no-repeat; border-radius:1rem; box-shadow: 0 0 80px 10px rgba(147,51,234,0.4); position: relative; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+    .menu { position: fixed; top: 1rem; left: 1rem; z-index: 50; display: flex; flex-direction: column; gap:0.5rem; }
+    .menu button { background:#4b0082; color:#fff; border:none; padding:0.5rem 1rem; border-radius:8px; cursor:pointer; transition:transform .2s; font-size:0.9rem; }
     .menu button:hover { transform: scale(1.05); }
-    /* NPC position */
-    .npc {
-      position: absolute; bottom: 20px; right: 20px;
-      width: 120px; height: auto; z-index: 10;
-    }
-    /* horizontal carousel container */
-    .carousel-wrapper {
-      width: 60%;
-      position: relative;
-      display: flex;
-      align-items: center;
-      margin: 1rem 0;
-    }
-    .horizontal-scroll {
-      flex: 1;
-      display: flex;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      scroll-behavior: smooth;
-      gap: 1rem;
-      padding: 0.5rem 0;
-    }
-    .horizontal-scroll::-webkit-scrollbar { display: none; }
-    /* product cards: show one small card at a time */
-    .product-card {
-      flex: 0 0 50%; /* small */
-      scroll-snap-align: center;
-      background: rgba(17,17,17,0.8);
-      border: 1px solid #333;
-      border-radius: 12px;
-      padding: 1rem;
-      text-align: center;
-      font-size: 0.9rem;
-    }
-    /* arrows near the carousel's edges */
-    .arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0,0,0,0.6);
-      color: #fff;
-      border: none;
-      padding: 0.5rem;
-      border-radius: 9999px;
-      cursor: pointer;
-      z-index: 5;
-    }
-    /* left arrow sits just outside left of carousel */
-    .arrow.left { left: calc(20% - 1rem); }
-    /* right arrow just outside right */
-    .arrow.right { right: calc(20% - 1rem); }
-    /* tenda buttons in main menu */
-    .btn-tenda {
-      background: linear-gradient(135deg,#6b21a8,#9333ea);
-      padding: 8px 16px;
-      border-radius: 9999px;
-      font-weight: bold;
-      font-size: 0.9rem;
-      color: #fff;
-      box-shadow: 0 0 20px rgba(147,51,234,0.5);
-      transition: all .3s;
-      cursor: pointer;
-      margin: 0.25rem;
-    }
-    .btn-tenda:hover {
-      background: #7e22ce;
-      transform: scale(1.05);
-    }
-  </style></head>
+    .npc { position:absolute; bottom:2rem; right:2rem; width:140px; }
+    .tenda { position:absolute; bottom:30%; left:50%; transform: translate(-50%,50%); width:300px; }
+    .btn-tenda { background:linear-gradient(135deg,#6b21a8,#9333ea); padding:12px 24px; border-radius:9999px; color:#fff; font-weight:bold; border:none; cursor:pointer; box-shadow:0 0 20px rgba(147,51,234,0.5); margin:0.5rem; }
+    .btn-tenda:hover { transform:scale(1.05); background:#7e22ce; }
+    .carousel-wrapper { position: relative; width:80%; max-width:800px; margin:1.5rem auto; display:flex; align-items:center; }
+    .horizontal-scroll { flex:1; display:flex; overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth; gap:1rem; padding:0.5rem 0; }
+    .horizontal-scroll::-webkit-scrollbar { display:none; }
+    .product-card { flex:0 0 50%; scroll-snap-align:center; background:rgba(17,17,17,0.8); border:1px solid #333; border-radius:12px; padding:1rem; text-align:center; font-size:0.9rem; }
+    .arrow { position:absolute; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.6); color:#fff; border:none; width:2.5rem; height:2.5rem; border-radius:50%; font-size:1.5rem; cursor:pointer; }
+    .arrow.left  { left:calc(10% - 1.5rem); }
+    .arrow.right { right:calc(10% - 1.5rem); }
+    /* ==== MOBILE STYLE ==== */
+    .mobile-section { min-height:100vh; background-size:cover; background-position:center; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:1.5rem 1rem; }
+    .mobile-title { font-size:1.5rem; font-weight:600; margin-bottom:1rem; }
+    .product-list { width:100%; }
+    .product-card-mobile { background:rgba(0,0,0,0.6); margin:0.5rem auto; padding:1rem; border-radius:1rem; text-align:center; width:90%; font-size:1rem; }
+  </style>
+</head>
 <body>
-  <!-- menu lateral -->
-  <div class="menu">
-    <button onclick="goTo('bloco1')">Início</button>
-    <button onclick="goTo('bloco2')">Mangás</button>
-    <button onclick="goTo('bloco3')">Animes</button>
-    <button onclick="goTo('bloco4')">Ebooks</button>
-    <button onclick="goTo('bloco5')">Mentorias</button>
-    <button onclick="goTo('bloco6')">Extras</button>
-  </div>  <div id="container"><!-- Bloco 1: Início -->
-<section id="bloco1">
-  <div class="section-content" style="background-image:url('assets/bg-oriental.jpg')">
-    <h1 style="font-size:2rem;margin-bottom:1rem;">Tenda Principal</h1>
-    <p style="margin-bottom:1.5rem;">Escolha um tipo de produto</p>
-    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:0.75rem;">
-      <button class="btn-tenda" onclick="goTo('bloco2')">Mangás</button>
-      <button class="btn-tenda" onclick="goTo('bloco3')">Animes</button>
-      <button class="btn-tenda" onclick="goTo('bloco4')">Ebooks</button>
-      <button class="btn-tenda" onclick="goTo('bloco5')">Mentorias</button>
-      <button class="btn-tenda" onclick="goTo('bloco6')">Extras</button>
+  <!-- DESKTOP -->
+  <div class="desktop-layout">
+    <div class="menu">
+      <button onclick="goTo('bloco1')">Início</button>
+      <button onclick="goTo('bloco2')">Mangás</button>
+      <button onclick="goTo('bloco3')">Animes</button>
+      <button onclick="goTo('bloco4')">Ebooks</button>
+      <button onclick="goTo('bloco5')">Mentorias</button>
+      <button onclick="goTo('bloco6')">Extras</button>
     </div>
-    <img src="assets/npc-principal.png" class="npc" alt="Vendedor Principal">
-  </div>
-</section>
-
-<!-- Bloco 2: Mangás -->
-<section id="bloco2">
-  <div class="section-content" style="background-image:url('assets/bg-subterraneo-1.jpg')">
-    <h2 style="font-size:1.8rem;margin-bottom:1rem;">Mangás</h2>
-    <div class="carousel-wrapper">
-      <button class="arrow left" onclick="scrollCarousel('bloco2', -1)">&larr;</button>
-      <div class="horizontal-scroll" id="carousel-bloco2">
-        <div class="product-card">Mangá 1</div>
-        <div class="product-card">Mangá 2</div>
-        <div class="product-card">Mangá 3</div>
+    <div id="container-desktop">
+      <!-- bloco1 -->
+      <section class="desktop-section">
+        <div class="bg-box" style="background-image:url('assets/bg-oriental.jpg')">
+          <button class="btn-tenda" onclick="goTo('bloco2')">Entrar na Loja</button>
+          <img src="assets/npc-principal.png" class="npc" alt="Vendedor" />
+          <img src="assets/tenda-principal.png" class="tenda" alt="Tenda" />
+        </div>
+      </section>
+      <!-- bloco2 Mangás -->
+      <section class="desktop-section">
+        <div class="bg-box" style="background-image:url('assets/bg-subterraneo-1.jpg')">
+          <h2 style="font-size:2rem; margin-bottom:1rem;">Mangás</h2>
+          <div class="carousel-wrapper">
+            <button class="arrow left" onclick="scrollCarousel('bloco2',-1)">&larr;</button>
+            <div class="horizontal-scroll" id="carousel-bloco2">
+              <div class="product-card">Mangá 1</div>
+              <div class="product-card">Mangá 2</div>
+              <div class="product-card">Mangá 3</div>
+            </div>
+            <button class="arrow right" onclick="scrollCarousel('bloco2',1)">&rarr;</button>
+          </div>
+          <img src="assets/npc-manga.png" class="npc" alt="Vendedor Mangás" />
+          <img src="assets/tenda-manga.png" class="tenda" alt="Tenda Mangás" />
+        </div>
+      </section>
+      <!-- bloco3 Animes -->
+      <section class="desktop-section">
+        <div class="bg-box" style="background-image:url('assets/bg-subterraneo-2.jpg')">
+          <h2 style="font-size:2rem; margin-bottom:1rem;">Animes</h2>
+          <div class="carousel-wrapper">
+            <button class="arrow left" onclick="scrollCarousel('bloco3',-1)">&larr;</button>
+            <div class="horizontal-scroll" id="carousel-bloco3">
+              <div class="product-card">Anime 1</div>
+              <div class="product-card">Anime 2</div>
+              <div class="product-card">Anime 3</div>
+            </div>
+            <button class="arrow right" onclick="scrollCarousel('bloco3',1)">&rarr;</button>
+          </div>
+          <img src="assets/npc-anime.png" class="npc" alt="Vendedor Animes" />
+          <img src="assets/tenda-anime.png" class="tenda" alt="Tenda Animes" />
+        </div>
+      </section>
+      <!-- bloco4 Ebooks -->
+      <section class="desktop-section">
+        <div class="bg-box" style="background-image:url('assets/bg-subterraneo-3.jpg')">
+          <h2 style="font-size:2rem; margin-bottom:1rem;">Ebooks</h2>
+          <div class="carousel-wrapper">
+            <button class="arrow left" onclick="scrollCarousel('bloco4',-1)">&larr;</button>
+            <div class="horizontal-scroll" id="carousel-bloco4">
+              <div class="product-card">eBook 1</div>
+              <div class="product-card">eBook 2</div>
+              <div class="product-card">eBook 3</div>
+            </div>
+            <button class="arrow right" onclick="scrollCarousel('bloco4',1)">&rarr;</button>
+          </div>
+          <img src="assets/npc-ebook.png" class="npc" alt="Vendedor eBooks" />
+          <img src="assets/tenda-ebook.png" class="tenda" alt="Tenda eBooks" />
+        </div>
+      </section>
+      <!-- bloco5 Mentorias -->
+      <section class="desktop-section">
+        <div class="bg-box" style="background-image:url('assets/bg-subterraneo-4.jpg')">
+          <h2 style="font-size:2rem; margin-bottom:1rem;">Mentorias</h2>
+          <div class="carousel-wrapper">
+            <button class="arrow left" onclick="scrollCarousel('bloco5',-1)">&larr;</button>
+            <div class="horizontal-scroll" id="carousel-bloco5">
+              <div class="product-card">Mentoria 1</div>
+              <div class="product-card">Mentoria 2</div>
+              <div class="product-card">Mentoria 3</div>
+            </div>
+            <button class="arrow right" onclick="scrollCarousel('bloco5',1)">&rarr;</button>
+          </div>
+          <img src="assets/npc-mentoria.png" class="npc" alt="Vendedor Mentorias" />
+          <img src="assets/tenda-mentoria.png" class="tenda" alt="Tenda Mentorias" />
+        </div>
+      </section>
+      <!-- bloco6 Extras -->
+      <section class="desktop-section">
+        <div class="bg-box" style="background-image:url('assets/bg-subterraneo-5.jpg')">
+          <h2 style="font-size:2rem; margin-bottom:1rem;">Extras</h2>
+          <div class="carousel-wrapper">
+            <button class="arrow left" onclick="scrollCarousel('bloco6',-1)">&larr;</button>
+            <div class="horizontal-scroll" id="carousel-bloco6">
+              <div class="product-card">Conteúdo VIP</div>
+              <div class="product-card">Arte Conceito</div>
+              <div class="product-card">Soundtrack</div>
+            </div>
+            <button class="arrow right" onclick="scrollCarousel('bloco6',1)">&rarr;</button>
+          </div>
+          <img src="assets/npc-extras.png" class="npc" alt="Vendedor Extras" />
+          <img src="assets/tenda-extras.png" class="tenda" alt="Tenda Extras" />
+        </div>
+      </section>
+    </div>
+  </div>  <!-- MOBILE -->  <div class="mobile-layout">
+    <section class="mobile-section" style="background-image:url('assets/bg-oriental-mobile.jpg')">
+      <div class="mobile-title">Tenda Principal</div>
+      <div style="display:flex;flex-wrap:wrap;justify-center;gap:0.5rem;">
+        <button class="btn-tenda" onclick="goTo('bloco2')">Mangás</button>
+        <button class="btn-tenda" onclick="goTo('bloco3')">Animes</button>
+        <button class="btn-tenda" onclick="goTo('bloco4')">Ebooks</button>
+        <button class="btn-tenda" onclick="goTo('bloco5')">Mentorias</button>
+        <button class="btn-tenda" onclick="goTo('bloco6')">Extras</button>
       </div>
-      <button class="arrow right" onclick="scrollCarousel('bloco2', 1)">&rarr;</button>
-    </div>
-    <img src="assets/npc-manga.png" class="npc" alt="Vendedor de Mangás">
-  </div>
-</section>
-
-<!-- Bloco 3: Animes -->
-<section id="bloco3">
-  <div class="section-content" style="background-image:url('assets/bg-subterraneo-2.jpg')">
-    <h2 style="font-size:1.8rem;margin-bottom:1rem;">Animes</h2>
-    <div class="carousel-wrapper">
-      <button class="arrow left" onclick="scrollCarousel('bloco3', -1)">&larr;</button>
-      <div class="horizontal-scroll" id="carousel-bloco3">
-        <div class="product-card">Anime 1</div>
-        <div class="product-card">Anime 2</div>
-        <div class="product-card">Anime 3</div>
+      <img src="assets/npc-principal.png" class="npc" alt="Vendedor Principal" />
+    </section>
+    <section class="mobile-section" style="background-image:url('assets/bg-subterraneo-1-mobile.jpg')">
+      <div class="mobile-title">Mangás</div>
+      <div class="product-list">
+        <div class="product-card-mobile">Mangá 1</div>
+        <div class="product-card-mobile">Mangá 2</div>
+        <div class="product-card-mobile">Mangá 3</div>
       </div>
-      <button class="arrow right" onclick="scrollCarousel('bloco3', 1)">&rarr;</button>
-    </div>
-    <img src="assets/npc-anime.png" class="npc" alt="Vendedor de Animes">
-  </div>
-</section>
-
-<!-- Bloco 4: Ebooks -->
-<section id="bloco4">
-  <div class="section-content" style="background-image:url('assets/bg-subterraneo-3.jpg')">
-    <h2 style="font-size:1.8rem;margin-bottom:1rem;">Ebooks</h2>
-    <div class="carousel-wrapper">
-      <button class="arrow left" onclick="scrollCarousel('bloco4', -1)">&larr;</button>
-      <div class="horizontal-scroll" id="carousel-bloco4">
-        <div class="product-card">eBook 1</div>
-        <div class="product-card">eBook 2</div>
-        <div class="product-card">eBook 3</div>
+    </section>
+    <section class="mobile-section" style="background-image:url('assets/bg-subterraneo-2-mobile.jpg')">
+      <div class="mobile-title">Animes</div>
+      <div class="product-list">
+        <div class="product-card-mobile">Anime 1</div>
+        <div class="product-card-mobile">Anime 2</div>
+        <div class="product-card-mobile">Anime 3</div>
       </div>
-      <button class="arrow right" onclick="scrollCarousel('bloco4', 1)">&rarr;</button>
-    </div>
-    <img src="assets/npc-ebook.png" class="npc" alt="Vendedor de Ebooks">
-  </div>
-</section>
-
-<!-- Bloco 5: Mentorias -->
-<section id="bloco5">
-  <div class="section-content" style="background-image:url('assets/bg-subterraneo-4.jpg')">
-    <h2 style="font-size:1.8rem;margin-bottom:1rem;">Mentorias</h2>
-    <div class="carousel-wrapper">
-      <button class="arrow left" onclick="scrollCarousel('bloco5', -1)">&larr;</button>
-      <div class="horizontal-scroll" id="carousel-bloco5">
-        <div class="product-card">Mentoria 1</div>
-        <div class="product-card">Mentoria 2</div>
-        <div class="product-card">Mentoria 3</div>
+    </section>
+    <section class="mobile-section" style="background-image:url('assets/bg-subterraneo-3-mobile.jpg')">
+      <div class="mobile-title">Ebooks</div>
+      <div class="product-list">
+        <div class="product-card-mobile">eBook 1</div>
+        <div class="product-card-mobile">eBook 2</div>
+        <div class="product-card-mobile">eBook 3</div>
       </div>
-      <button class="arrow right" onclick="scrollCarousel('bloco5', 1)">&rarr;</button>
-    </div>
-    <img src="assets/npc-mentoria.png" class="npc" alt="Vendedor de Mentorias">
-  </div>
-</section>
-
-<!-- Bloco 6: Extras -->
-<section id="bloco6">
-  <div class="section-content" style="background-image:url('assets/bg-subterraneo-5.jpg')">
-    <h2 style="font-size:1.8rem;margin-bottom:1rem;">Extras</h2>
-    <div class="carousel-wrapper">
-      <button class="arrow left" onclick="scrollCarousel('bloco6', -1)">&larr;</button>
-      <div class="horizontal-scroll" id="carousel-bloco6">
-        <div class="product-card">Conteúdo VIP</div>
-        <div class="product-card">Arte Conceito</div>
-        <div class="product-card">Soundtrack</div>
+    </section>
+    <section class="mobile-section" style="background-image:url('assets/bg-subterraneo-4-mobile.jpg')">
+      <div class="mobile-title">Mentorias</div>
+      <div class="product-list">
+        <div class="product-card-mobile">Mentoria 1</div>
+        <div class="product-card-mobile">Mentoria 2</div>
+        <div class="product-card-mobile">Mentoria 3</div>
       </div>
-      <button class="arrow right" onclick="scrollCarousel('bloco6', 1)">&rarr;</button>
-    </div>
-    <img src="assets/npc-extras.png" class="npc" alt="Vendedor de Extras">
-  </div>
-</section>
-
+    </section>
+    <section class="mobile-section" style="background-image:url('assets/bg-subterraneo-5-mobile.jpg')">
+      <div class="mobile-title">Extras</div>
+      <div class="product-list">
+        <div class="product-card-mobile">Conteúdo VIP</div>
+        <div class="product-card-mobile">Arte Conceito</div>
+        <div class="product-card-mobile">Soundtrack</div>
+      </div>
+    </section>
   </div>  <script>
     function goTo(id) {
-      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
     }
-    function scrollCarousel(sectionId, direction) {
-      const carousel = document.getElementById('carousel-' + sectionId);
-      const cardWidth = carousel.querySelector('.product-card').offsetWidth + parseFloat(getComputedStyle(carousel).gap);
-      carousel.scrollBy({ left: cardWidth * direction, behavior: 'smooth' });
+    function scrollCarousel(sec, dir) {
+      const c = document.getElementById('carousel-' + sec);
+      const w = c.querySelector('.product-card').offsetWidth + parseFloat(getComputedStyle(c).gap);
+      c.scrollBy({ left: w*dir, behavior:'smooth' });
     }
   </script></body>
 </html>
