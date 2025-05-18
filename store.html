@@ -5,47 +5,49 @@
   <title>Loja | NoHeroes</title>
   <style>
     /* reset */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    @media (min-width: 768px) {
+* { margin:0; padding:0; box-sizing:border-box; }
+
+/* Desktop: deixa html/body scrollável, mas restrito ao container */
+@media (min-width: 768px) {
   html, body {
     height: 100%;
-    overflow: hidden;
+    overflow: auto;      /* permite scroll via touch/mouse */
+  }
+  .desktop-visual #container {
+    height: 100vh;
+    overflow-y: auto;    /* só o container controla o scroll */
   }
 }
+
 html, body {
   font-family: 'Inter', sans-serif;
   background: #000;
   color: #fff;
-}/* wrappers para controlar visual distintas */
-.desktop-visual { display: block; }
-.mobile-visual  { display: none; }
-@media (max-width: 768px) {
-  .desktop-visual { display: none; }
-  .mobile-visual  { display: block; }
 }
 
-/* vertical scroll container */
+/* container principal */
 #container {
-  height: 100%; overflow-y: scroll;
+  height: 100%; 
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
 }
-/* each section acts as a slide with black gutter below */
+
+/* cada slide ocupa 100vh e é centrado */
 section {
   height: 100vh;
   scroll-snap-align: start;
-  background-color: #000;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10vh; /* black gap so you never see two backgrounds */
+  margin: 0;            /* remove gap extra */
 }
-/* inner wrapper with the actual background image, rounded and glow */
+
+/* caixa interna: sempre 80% da viewport, gerando bordas pretas iguais ao redor */
 .section-content {
-  width: 90vw;
+  width: 80vw;
   max-width: 1200px;
-  height: 90vh;
-  background-size: contain;
+  height: 80vh;         /* 20vh de “gutter” automático (10vh acima, 10vh abaixo) */
+  background-size: cover;      /* cobre toda a caixa sem distorcer */
   background-position: center;
   background-repeat: no-repeat;
   border-radius: 16px;
