@@ -141,6 +141,24 @@ section {
   transform: scale(1.05);
 }
 /* mobile adjustments can be added under .mobile-visual section */
+/* 1) esconder qualquer scrollbar do container principal */
+#container::-webkit-scrollbar { display: none; }
+#container {
+  -ms-overflow-style: none;  /* IE/Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+/* 2) esconder scrollbar da carousel também (pra ninguém ver aquele mini-scroll) */
+.horizontal-scroll {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.horizontal-scroll::-webkit-scrollbar { display: none; }
+
+/* 3) força o scroll-snap a sempre parar no início da seção */
+section {
+  scroll-snap-stop: always;
+}
 
   </style>
 </head>
