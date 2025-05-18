@@ -258,16 +258,63 @@ section {
           <button class="btn-tenda" onclick="goTo('bloco6m')">Extras</button>
         </div>
       </section>
-      <!-- cada bloco mobile repete estrutura com 'm' no id -->
-      <section id="bloco2m" class="section-content" style="background-image:url('assets/bg-subterraneo-1-mobile.jpg')">
-        <h2 style="font-size:1.8rem;margin-bottom:1rem;">Mangás</h2>
-        <div style="display:flex;flex-direction:column;gap:1rem;">
-          <div class="product-card">Mangá 1</div>
-          <div class="product-card">Mangá 2</div>
-          <div class="product-card">Mangá 3</div>
-        </div>
-      </section>
-      <!-- outros blocos mobile... -->
+      <!-- cada bloco mobile repete a estrutura com 'm' no id -->
+<section id="bloco1m" class="section-content" style="background-image:url('assets/bg-oriental-mobile.jpg')">
+  <h1 style="font-size:2rem; margin-bottom:1rem;">Tenda Principal</h1>
+  <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:0.75rem;">
+    <button class="btn-tenda" onclick="goTo('bloco2m')">Mangás</button>
+    <button class="btn-tenda" onclick="goTo('bloco3m')">Animes</button>
+    <button class="btn-tenda" onclick="goTo('bloco4m')">Ebooks</button>
+    <button class="btn-tenda" onclick="goTo('bloco5m')">Mentorias</button>
+    <button class="btn-tenda" onclick="goTo('bloco6m')">Extras</button>
+  </div>
+</section>
+
+<section id="bloco2m" class="section-content" style="background-image:url('assets/bg-subterraneo-1-mobile.jpg')">
+  <h2 style="font-size:1.8rem; margin-bottom:1rem;">Mangás</h2>
+  <div style="display:flex; flex-direction:column; gap:1rem;">
+    <div class="product-card">Mangá 1</div>
+    <div class="product-card">Mangá 2</div>
+    <div class="product-card">Mangá 3</div>
+  </div>
+</section>
+
+<section id="bloco3m" class="section-content" style="background-image:url('assets/bg-subterraneo-2-mobile.jpg')">
+  <h2 style="font-size:1.8rem; margin-bottom:1rem;">Animes</h2>
+  <div style="display:flex; flex-direction:column; gap:1rem;">
+    <div class="product-card">Anime 1</div>
+    <div class="product-card">Anime 2</div>
+    <div class="product-card">Anime 3</div>
+  </div>
+</section>
+
+<section id="bloco4m" class="section-content" style="background-image:url('assets/bg-subterraneo-3-mobile.jpg')">
+  <h2 style="font-size:1.8rem; margin-bottom:1rem;">Ebooks</h2>
+  <div style="display:flex; flex-direction:column; gap:1rem;">
+    <div class="product-card">eBook 1</div>
+    <div class="product-card">eBook 2</div>
+    <div class="product-card">eBook 3</div>
+  </div>
+</section>
+
+<section id="bloco5m" class="section-content" style="background-image:url('assets/bg-subterraneo-4-mobile.jpg')">
+  <h2 style="font-size:1.8rem; margin-bottom:1rem;">Mentorias</h2>
+  <div style="display:flex; flex-direction:column; gap:1rem;">
+    <div class="product-card">Mentoria 1</div>
+    <div class="product-card">Mentoria 2</div>
+    <div class="product-card">Mentoria 3</div>
+  </div>
+</section>
+
+<section id="bloco6m" class="section-content" style="background-image:url('assets/bg-subterraneo-5-mobile.jpg')">
+  <h2 style="font-size:1.8rem; margin-bottom:1rem;">Extras</h2>
+  <div style="display:flex; flex-direction:column; gap:1rem;">
+    <div class="product-card">Conteúdo VIP</div>
+    <div class="product-card">Arte Conceito</div>
+    <div class="product-card">Soundtrack</div>
+  </div>
+</section>
+
     </div>
   </div>  <script>
     function goTo(id) {
