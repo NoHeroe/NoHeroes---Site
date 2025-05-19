@@ -22,7 +22,9 @@
   scroll-behavior: smooth;
   padding: 5vh 0;
 }
-.desktop-visual #container-desktop::-webkit-scrollbar { display: none; }
+.desktop-visual #container-desktop::-webkit-scrollbar { display: flex;
+  flex-direction: column;
+  gap: 5vh; }
 .desktop-visual #container-desktop { -ms-overflow-style: none; scrollbar-width: none; }
 
 /* SECTION DESKTOP */
@@ -32,6 +34,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+scroll-snap-stop: always;
 }
 .desktop-visual .section-content {
   width: 80vw;
@@ -48,6 +51,7 @@
   justify-content: center;
   padding: 2rem;
   position: relative;
+overflow: hidden;
 }
 
 /* MENU FIXO */
@@ -75,7 +79,7 @@
 .horizontal-scroll::-webkit-scrollbar { display: none; }
 .horizontal-scroll { -ms-overflow-style: none; scrollbar-width: none; }
 .product-card {
-  flex: 0 0 50%; scroll-snap-align: center;
+  flex: 0 0 30%; max-width: 300px; scroll-snap-align: center;
   background: rgba(17,17,17,0.8); border: 1px solid #333;
   border-radius: 12px; padding: 1rem; text-align: center;
   font-size: .9rem;
@@ -175,6 +179,12 @@
   width: 90px;
 }
   </style>
+<script>
+  function goTo(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }
+</script>
 </head>
 <body>
 
