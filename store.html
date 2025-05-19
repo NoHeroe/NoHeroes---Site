@@ -6,7 +6,7 @@
   <style>
     /* RESET */
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { font-family: 'Inter', sans-serif; background: #000; color: #fff; height: 100%; overflow: hidden; }/* VISUAL DESKTOP */
+    html, body { font-family: 'Inter', sans-serif; background: #000; color: #fff; height: 100%; overflow-x: hidden; }/* VISUAL DESKTOP */
 .desktop-visual { display: block; }
 .mobile-visual  { display: none; }
 @media (max-width: 768px) {
@@ -20,6 +20,9 @@
   overflow-y: auto;
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
+  display: flex;
+  flex-direction: column;
+  gap: 5vh;
   padding: 5vh 0;
 }
 .desktop-visual #container-desktop::-webkit-scrollbar { display: flex;
@@ -79,10 +82,14 @@ overflow: hidden;
 .horizontal-scroll::-webkit-scrollbar { display: none; }
 .horizontal-scroll { -ms-overflow-style: none; scrollbar-width: none; }
 .product-card {
-  flex: 0 0 30%; max-width: 300px; scroll-snap-align: center;
-  background: rgba(17,17,17,0.8); border: 1px solid #333;
-  border-radius: 12px; padding: 1rem; text-align: center;
-  font-size: .9rem;
+  flex: 0 0 clamp(180px, 25%, 240px);
+  scroll-snap-align: center;
+  background: rgba(17,17,17,0.8);
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.85rem;
 }
 .arrow {
   position: absolute; top: 50%; transform: translateY(-50%);
@@ -188,7 +195,7 @@ overflow: hidden;
 </head>
 <body>
 
-<<!-- DESKTOP VISUAL COM NPC INTERATIVO --><div class="desktop-visual">
+<!-- DESKTOP VISUAL COM NPC INTERATIVO --><div class="desktop-visual">
   <!-- Menu lateral fixo -->
   <div class="menu">
     <button onclick="goTo('bloco1')">Início</button>
