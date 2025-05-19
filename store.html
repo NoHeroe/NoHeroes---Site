@@ -166,6 +166,14 @@
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+/* NPCs no mobile: posicionamento adaptado */
+.npc1m { position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%); }
+.npc2m { position: absolute; bottom: 20px; left: 16px; }
+
+/* Tamanho reduzido no mobile */
+.mobile-visual .npc img {
+  width: 90px;
+}
   </style>
 </head>
 <body>
@@ -231,10 +239,53 @@
 
   </div>
 </div>
+
+<!-- MOBILE VISUAL COM NPC E FALA -->
+<div class="mobile-visual">
+  <div id="container-mobile">
+
+    <!-- BLOCO 1M -->
+    <section id="bloco1m" class="section-content" style="background-image:url('assets/bg-oriental-mobile.jpg')">
+      <h1 style="font-size:2rem;margin-bottom:1rem;">Tenda Principal</h1>
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:0.75rem;">
+        <button class="btn-tenda" onclick="goTo('bloco2m')">Mangás</button>
+        <button class="btn-tenda" onclick="goTo('bloco3m')">Animes</button>
+        <button class="btn-tenda" onclick="goTo('bloco4m')">Ebooks</button>
+        <button class="btn-tenda" onclick="goTo('bloco5m')">Mentorias</button>
+        <button class="btn-tenda" onclick="goTo('bloco6m')">Extras</button>
+      </div>
+      <div class="npc npc1m">
+        <img src="assets/npc-principal.gif" alt="NPC Tenda Principal">
+        <div class="fala escondida" id="fala-bloco1m">...</div>
+      </div>
+    </section>
+
+    <!-- BLOCO 2M -->
+    <section id="bloco2m" class="section-content" style="background-image:url('assets/bg-subterraneo-1-mobile.jpg')">
+      <h2 style="font-size:1.8rem;margin-bottom:1rem;">Mangás</h2>
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        <div class="product-card" onclick="falar('bloco2m')">Mangá 1</div>
+        <div class="product-card" onclick="falar('bloco2m')">Mangá 2</div>
+        <div class="product-card" onclick="falar('bloco2m')">Mangá 3</div>
+      </div>
+      <div class="npc npc2m">
+        <img src="assets/npc-manga.gif" alt="NPC Mangás">
+        <div class="fala escondida" id="fala-bloco2m">...</div>
+      </div>
+    </section>
+
+    <!-- BLOCO 3M a 6M seguem a mesma lógica -->
+    <!-- Se quiser que eu já mande todos os blocos até o 6m agora, só avisar -->
+
+  </div>
+</div>
  <script>
+
 const falasRPG = {
   bloco1: ["Você chegou à tenda central, viajante.", "Escolha seu caminho com sabedoria."],
-  bloco2: ["Esses pergaminhos foram roubados da Torre Quebrada.", "Todo mangá carrega um fragmento da essência."]
+  bloco2: ["Esses pergaminhos foram roubados da Torre Quebrada.", "Todo mangá carrega um fragmento da essência."],
+  bloco1m: ["Salve, viajante da tela pequena!", "Cada botão leva a um destino sombrio."],
+  bloco2m: ["Mesmo nas sombras do celular, os mangás brilham.", "Leve um e descubra o mistério por trás das runas."]
 };
 
 function falar(blocoId) {
