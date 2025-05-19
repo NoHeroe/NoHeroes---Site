@@ -470,5 +470,20 @@ function falar(blocoId) {
     el.classList.add("escondida");
   }, 5000);
 }
-</script></body>
+  // Função de rolagem para cada section
+  function goTo(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Função de rolagem horizontal para os itens da loja
+  function scrollCarousel(sectionId, direction) {
+    const carousel = document.getElementById('carousel-' + sectionId);
+    if (!carousel) return;
+    const gap = parseFloat(getComputedStyle(carousel).gap) || 16;
+    const width = carousel.querySelector('.product-card')?.offsetWidth || 200;
+    carousel.scrollBy({ left: (width + gap) * direction, behavior: 'smooth' });
+  }
+</script>
+</body>
 </html>
