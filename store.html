@@ -213,6 +213,16 @@ overflow: hidden;
 .mobile-visual .npc img {
   width: 90px;
 }
+.tenda-principal {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  max-width: 80vw;
+  z-index: 3;
+  pointer-events: none;
+}
   </style>
 <script>
   function goTo(id) {
@@ -239,6 +249,7 @@ overflow: hidden;
   <div class="section-content" style="background-image: url('assets/bg-oriental.jpg')">
     <h1 class="titulo-bloco titulo-centralizado cor-branca">Tenda Principal</h1>
     <p style="margin-top: 5rem; margin-bottom:1.5rem;">Escolha um tipo de produto</p>
+<img src="assets/tenda-principal.png" alt="Tenda Principal" class="tenda-principal">
     <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem;">
       <button class="btn-tenda" onclick="goTo('bloco2')">Mangás</button>
       <button class="btn-tenda" onclick="goTo('bloco3')">Animes</button>
