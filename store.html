@@ -129,207 +129,128 @@
   align-items: center;
   padding: 1.5rem;
 }
+.npc {
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
+.npc img {
+  width: 120px;
+}
+
+.fala {
+  background: rgba(0,0,0,0.85);
+  border: 2px solid #9333ea;
+  border-radius: 10px;
+  padding: 0.75rem;
+  color: #fff;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+  max-width: 260px;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.fala.escondida {
+  display: none;
+}
+
+/* Posições específicas por bloco */
+.npc1 { bottom: 20px; right: 30px; }
+.npc2 { bottom: 30px; left: 40px; }
+/* npc3, npc4... pode ser adicionado conforme a seção */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
   </style>
 </head>
 <body>
 <!-- HTML e estrutura principal continuam como estavam -->
 <!-- Apenas substitua os wrappers: #container por #container-desktop ou #container-mobile respectivamente -->
 <!-- Todas as funções JavaScript seguem funcionando normalmente -->
- <!-- desktop visual -->
-  <div class="desktop-visual">
-    <!-- menu lateral -->
-    <div class="menu">
-      <button onclick="goTo('bloco1')">Início</button>
-      <button onclick="goTo('bloco2')">Mangás</button>
-      <button onclick="goTo('bloco3')">Animes</button>
-      <button onclick="goTo('bloco4')">Ebooks</button>
-      <button onclick="goTo('bloco5')">Mentorias</button>
-      <button onclick="goTo('bloco6')">Extras</button>
-    </div>
-    <div id="container">
-      <!-- Bloco 1: Início -->
-      <section id="bloco1">
-        <div class="section-content" style="background-image:url('assets/bg-oriental.jpg')">
-          <h1 style="font-size:2rem;margin-bottom:1rem;">Tenda Principal</h1>
-          <p style="margin-bottom:1.5rem;">Escolha um tipo de produto</p>
-          <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:0.75rem;">
-            <button class="btn-tenda" onclick="goTo('bloco2')">Mangás</button>
-            <button class="btn-tenda" onclick="goTo('bloco3')">Animes</button>
-            <button class="btn-tenda" onclick="goTo('bloco4')">Ebooks</button>
-            <button class="btn-tenda" onclick="goTo('bloco5')">Mentorias</button>
-            <button class="btn-tenda" onclick="goTo('bloco6')">Extras</button>
-          </div>
-          <img src="assets/npc-principal.png" class="npc" alt="Vendedor Principal">
-        </div>
-      </section><!-- Bloco 2: Mangás -->
-  <section id="bloco2">
-    <div class="section-content" style="background-image:url('assets/bg-subterraneo-1.jpg')">
-      <h2 style="font-size:1.8rem;margin-bottom:1rem;">Mangás</h2>
-      <div class="carousel-wrapper">
-        <button class="arrow left" onclick="scrollCarousel('bloco2', -1)">&larr;</button>
-        <div class="horizontal-scroll" id="carousel-bloco2">
-          <div class="product-card">Mangá 1</div>
-          <div class="product-card">Mangá 2</div>
-          <div class="product-card">Mangá 3</div>
-        </div>
-        <button class="arrow right" onclick="scrollCarousel('bloco2', 1)">&rarr;</button>
-      </div>
-      <img src="assets/npc-manga.png" class="npc" alt="Vendedor de Mangás">
-    </div>
-  </section>
+<!-- DESKTOP VISUAL COM NPC INTERATIVO -->
+<div class="desktop-visual">
+  <!-- Menu lateral fixo -->
+  <div class="menu">
+    <button onclick="goTo('bloco1')">Início</button>
+    <button onclick="goTo('bloco2')">Mangás</button>
+    <button onclick="goTo('bloco3')">Animes</button>
+    <button onclick="goTo('bloco4')">Ebooks</button>
+    <button onclick="goTo('bloco5')">Mentorias</button>
+    <button onclick="goTo('bloco6')">Extras</button>
+  </div>
 
-  <!-- Bloco 3: Animes -->
-  <section id="bloco3">
-    <div class="section-content" style="background-image:url('assets/bg-subterraneo-2.jpg')">
-      <h2 style="font-size:1.8rem;margin-bottom:1rem;">Animes</h2>
-      <div class="carousel-wrapper">
-        <button class="arrow left" onclick="scrollCarousel('bloco3', -1)">&larr;</button>
-        <div class="horizontal-scroll" id="carousel-bloco3">
-          <div class="product-card">Anime 1</div>
-          <div class="product-card">Anime 2</div>
-          <div class="product-card">Anime 3</div>
-        </div>
-        <button class="arrow right" onclick="scrollCarousel('bloco3', 1)">&rarr;</button>
-      </div>
-      <img src="assets/npc-anime.png" class="npc" alt="Vendedor de Animes">
-    </div>
-  </section>
+  <!-- Container scrollável -->
+  <div id="container-desktop">
 
-  <!-- Bloco 4: Ebooks -->
-  <section id="bloco4">
-    <div class="section-content" style="background-image:url('assets/bg-subterraneo-3.jpg')">
-      <h2 style="font-size:1.8rem;margin-bottom:1rem;">Ebooks</h2>
-      <div class="carousel-wrapper">
-        <button class="arrow left" onclick="scrollCarousel('bloco4', -1)">&larr;</button>
-        <div class="horizontal-scroll" id="carousel-bloco4">
-          <div class="product-card">eBook 1</div>
-          <div class="product-card">eBook 2</div>
-          <div class="product-card">eBook 3</div>
-        </div>
-        <button class="arrow right" onclick="scrollCarousel('bloco4', 1)">&rarr;</button>
-      </div>
-      <img src="assets/npc-ebook.png" class="npc" alt="Vendedor de Ebooks">
-    </div>
-  </section>
-
-  <!-- Bloco 5: Mentorias -->
-  <section id="bloco5">
-    <div class="section-content" style="background-image:url('assets/bg-subterraneo-4.jpg')">
-      <h2 style="font-size:1.8rem;margin-bottom:1rem;">Mentorias</h2>
-      <div class="carousel-wrapper">
-        <button class="arrow left" onclick="scrollCarousel('bloco5', -1)">&larr;</button>
-        <div class="horizontal-scroll" id="carousel-bloco5">
-          <div class="product-card">Mentoria 1</div>
-          <div class="product-card">Mentoria 2</div>
-          <div class="product-card">Mentoria 3</div>
-        </div>
-        <button class="arrow right" onclick="scrollCarousel('bloco5', 1)">&rarr;</button>
-      </div>
-      <img src="assets/npc-mentoria.png" class="npc" alt="Vendedor de Mentorias">
-    </div>
-  </section>
-
-  <!-- Bloco 6: Extras -->
-  <section id="bloco6">
-    <div class="section-content" style="background-image:url('assets/bg-subterraneo-5.jpg')">
-      <h2 style="font-size:1.8rem;margin-bottom:1rem;">Extras</h2>
-      <div class="carousel-wrapper">
-        <button class="arrow left" onclick="scrollCarousel('bloco6', -1)">&larr;</button>
-        <div class="horizontal-scroll" id="carousel-bloco6">
-          <div class="product-card">Conteúdo VIP</div>
-          <div class="product-card">Arte Conceito</div>
-          <div class="product-card">Soundtrack</div>
-        </div>
-        <button class="arrow right" onclick="scrollCarousel('bloco6', 1)">&rarr;</button>
-      </div>
-      <img src="assets/npc-extras.png" class="npc" alt="Vendedor de Extras">
-    </div>
-  </section>
-</div>
-
-  </div>  <!-- mobile visual (reaproveite funções, só estilização específica) -->  <div class="mobile-visual">
-    <div id="container">
-      <!-- Mobile sections id devem bater com goTo -->
-      <section id="bloco1m" class="section-content" style="background-image:url('assets/bg-oriental-mobile.jpg')">
+    <!-- BLOCO 1 - Tenda Principal -->
+    <section id="bloco1">
+      <div class="section-content" style="background-image: url('assets/bg-oriental.jpg')">
         <h1 style="font-size:2rem;margin-bottom:1rem;">Tenda Principal</h1>
-        <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:0.75rem;">
-          <button class="btn-tenda" onclick="goTo('bloco2m')">Mangás</button>
-          <button class="btn-tenda" onclick="goTo('bloco3m')">Animes</button>
-          <button class="btn-tenda" onclick="goTo('bloco4m')">Ebooks</button>
-          <button class="btn-tenda" onclick="goTo('bloco5m')">Mentorias</button>
-          <button class="btn-tenda" onclick="goTo('bloco6m')">Extras</button>
+        <p style="margin-bottom:1.5rem;">Escolha um tipo de produto</p>
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem;">
+          <button class="btn-tenda" onclick="goTo('bloco2')">Mangás</button>
+          <button class="btn-tenda" onclick="goTo('bloco3')">Animes</button>
+          <button class="btn-tenda" onclick="goTo('bloco4')">Ebooks</button>
+          <button class="btn-tenda" onclick="goTo('bloco5')">Mentorias</button>
+          <button class="btn-tenda" onclick="goTo('bloco6')">Extras</button>
         </div>
-      </section>
-      <!-- cada bloco mobile repete a estrutura com 'm' no id -->
-<section id="bloco1m" class="section-content" style="background-image:url('assets/bg-oriental-mobile.jpg')">
-  <h1 style="font-size:2rem; margin-bottom:1rem;">Tenda Principal</h1>
-  <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:0.75rem;">
-    <button class="btn-tenda" onclick="goTo('bloco2m')">Mangás</button>
-    <button class="btn-tenda" onclick="goTo('bloco3m')">Animes</button>
-    <button class="btn-tenda" onclick="goTo('bloco4m')">Ebooks</button>
-    <button class="btn-tenda" onclick="goTo('bloco5m')">Mentorias</button>
-    <button class="btn-tenda" onclick="goTo('bloco6m')">Extras</button>
-  </div>
-</section>
+        <!-- NPC + Fala -->
+        <div class="npc npc1">
+          <img src="assets/npc-principal.gif" alt="NPC Principal">
+          <div class="fala escondida" id="fala-bloco1">...</div>
+        </div>
+      </div>
+    </section>
 
-<section id="bloco2m" class="section-content" style="background-image:url('assets/bg-subterraneo-1-mobile.jpg')">
-  <h2 style="font-size:1.8rem; margin-bottom:1rem;">Mangás</h2>
-  <div style="display:flex; flex-direction:column; gap:1rem;">
-    <div class="product-card">Mangá 1</div>
-    <div class="product-card">Mangá 2</div>
-    <div class="product-card">Mangá 3</div>
-  </div>
-</section>
+    <!-- BLOCO 2 - Mangás -->
+    <section id="bloco2">
+      <div class="section-content" style="background-image: url('assets/bg-subterraneo-1.jpg')">
+        <h2 style="font-size:1.8rem;margin-bottom:1rem;">Mangás</h2>
+        <div class="carousel-wrapper">
+          <button class="arrow left" onclick="scrollCarousel('bloco2', -1)">&larr;</button>
+          <div class="horizontal-scroll" id="carousel-bloco2">
+            <div class="product-card" onclick="falar('bloco2')">Mangá 1</div>
+            <div class="product-card" onclick="falar('bloco2')">Mangá 2</div>
+            <div class="product-card" onclick="falar('bloco2')">Mangá 3</div>
+          </div>
+          <button class="arrow right" onclick="scrollCarousel('bloco2', 1)">&rarr;</button>
+        </div>
+        <div class="npc npc2">
+          <img src="assets/npc-manga.gif" alt="NPC Mangás">
+          <div class="fala escondida" id="fala-bloco2">...</div>
+        </div>
+      </div>
+    </section>
 
-<section id="bloco3m" class="section-content" style="background-image:url('assets/bg-subterraneo-2-mobile.jpg')">
-  <h2 style="font-size:1.8rem; margin-bottom:1rem;">Animes</h2>
-  <div style="display:flex; flex-direction:column; gap:1rem;">
-    <div class="product-card">Anime 1</div>
-    <div class="product-card">Anime 2</div>
-    <div class="product-card">Anime 3</div>
-  </div>
-</section>
+    <!-- Adicione mais blocos seguindo o mesmo padrão -->
 
-<section id="bloco4m" class="section-content" style="background-image:url('assets/bg-subterraneo-3-mobile.jpg')">
-  <h2 style="font-size:1.8rem; margin-bottom:1rem;">Ebooks</h2>
-  <div style="display:flex; flex-direction:column; gap:1rem;">
-    <div class="product-card">eBook 1</div>
-    <div class="product-card">eBook 2</div>
-    <div class="product-card">eBook 3</div>
   </div>
-</section>
+</div>
+ <script>
+const falasRPG = {
+  bloco1: ["Você chegou à tenda central, viajante.", "Escolha seu caminho com sabedoria."],
+  bloco2: ["Esses pergaminhos foram roubados da Torre Quebrada.", "Todo mangá carrega um fragmento da essência."]
+};
 
-<section id="bloco5m" class="section-content" style="background-image:url('assets/bg-subterraneo-4-mobile.jpg')">
-  <h2 style="font-size:1.8rem; margin-bottom:1rem;">Mentorias</h2>
-  <div style="display:flex; flex-direction:column; gap:1rem;">
-    <div class="product-card">Mentoria 1</div>
-    <div class="product-card">Mentoria 2</div>
-    <div class="product-card">Mentoria 3</div>
-  </div>
-</section>
+function falar(blocoId) {
+  const el = document.getElementById('fala-' + blocoId);
+  if (!el) return;
 
-<section id="bloco6m" class="section-content" style="background-image:url('assets/bg-subterraneo-5-mobile.jpg')">
-  <h2 style="font-size:1.8rem; margin-bottom:1rem;">Extras</h2>
-  <div style="display:flex; flex-direction:column; gap:1rem;">
-    <div class="product-card">Conteúdo VIP</div>
-    <div class="product-card">Arte Conceito</div>
-    <div class="product-card">Soundtrack</div>
-  </div>
-</section>
+  const frases = falasRPG[blocoId];
+  if (!frases) return;
 
-    </div>
-  </div>  <script>
-    function goTo(id) {
-      const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    }
-    function scrollCarousel(sectionId, direction) {
-      const carousel = document.getElementById('carousel-' + sectionId);
-      if (!carousel) return;
-      const gap = parseFloat(getComputedStyle(carousel).gap) || 16;
-      const width = carousel.querySelector('.product-card').offsetWidth + gap;
-      carousel.scrollBy({ left: width * direction, behavior: 'smooth' });
-    }
-  </script></body>
+  const random = frases[Math.floor(Math.random() * frases.length)];
+  el.textContent = random;
+  el.classList.remove("escondida");
+
+  setTimeout(() => {
+    el.classList.add("escondida");
+  }, 5000);
+}
+</script></body>
 </html>
