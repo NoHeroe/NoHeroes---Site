@@ -23,21 +23,13 @@
 }
 
 /* CONTAINER DESKTOP */
- #container-desktop {
+ .desktop-visual #container-desktop {
   height: 100vh;
   overflow-y: auto;
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
-  display: flex;
-  flex-direction: column;
-  gap: 5vh;
   padding: 5vh 0;
 }
-.desktop-visual #container-desktop::-webkit-scrollbar { display: flex;
-  flex-direction: column;
-  gap: 5vh; }
-.desktop-visual #container-desktop { -ms-overflow-style: none; scrollbar-width: none; }
-
 /* SECTION DESKTOP */
 .desktop-visual section {
   height: 90vh;
