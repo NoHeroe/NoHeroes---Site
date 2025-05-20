@@ -252,6 +252,25 @@ overflow: hidden;
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   }
+.mato-topo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw; /* pode ajustar para controlar largura */
+  max-height: 40vh; /* controle de altura opcional */
+  pointer-events: none;
+  z-index: 25;
+}
+
+.gramado-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  max-height: 25vh;
+  pointer-events: none;
+  z-index: 25;
+}
 </script>
 </head>
 <body>
