@@ -223,6 +223,26 @@ overflow: hidden;
   pointer-events: none;
   filter: drop-shadow(0 0 10px rgba(147, 51, 234, 0.4));
 }
+.botao-tenda {
+  position: absolute;
+  bottom: 11vh;
+  transform: translateX(-50%);
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: white;
+  box-shadow: 0 0 10px rgba(0,0,0,0.6);
+  border: none;
+  cursor: pointer;
+  z-index: 15;
+}
+
+.botao-manga     { background-color: #9333ea; left: 28%; }
+.botao-anime     { background-color: #3b82f6; left: 39%; }
+.botao-ebook     { background-color: #22c55e; left: 50%; }
+.botao-mentoria  { background-color: #dc2626; left: 61%; }
+.botao-extras    { background-color: #facc15; color: black; left: 72%; }
   </style>
 <script>
   function goTo(id) {
@@ -246,18 +266,18 @@ overflow: hidden;
 
 <!-- BLOCO 1 -->
 <section id="bloco1">
-  <div class="section-content" style="background-image: url('assets/bg-oriental.jpg')">
-<img src="assets/npc-mercador.png" class="npc-mercador" alt="NPC Mercador">
-    <h1 class="titulo-bloco titulo-centralizado cor-branca">Tenda Principal</h1>
-    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem;">
-      <button class="btn-tenda" onclick="goTo('bloco2')">Mangás</button>
-      <button class="btn-tenda" onclick="goTo('bloco3')">Animes</button>
-      <button class="btn-tenda" onclick="goTo('bloco4')">Ebooks</button>
-      <button class="btn-tenda" onclick="goTo('bloco5')">Mentorias</button>
-      <button class="btn-tenda" onclick="goTo('bloco6')">Extras</button>
-    </div>
-    <div class="npc npc1">
-      <img src="assets/npc-principal.gif" alt="NPC Principal">
+  <div class="section-content" style="background-image: url('assets/bg-oriental.jpg'); position: relative;">
+    <h1 class="titulo-tenda">Tenda Principal</h1>
+
+    <!-- Botões de produto -->
+    <button class="botao-tenda botao-manga" onclick="goTo('bloco2')">Mangás</button>
+    <button class="botao-tenda botao-anime" onclick="goTo('bloco3')">Animes</button>
+    <button class="botao-tenda botao-ebook" onclick="goTo('bloco4')">Ebooks</button>
+    <button class="botao-tenda botao-mentoria" onclick="goTo('bloco5')">Mentorias</button>
+    <button class="botao-tenda botao-extras" onclick="goTo('bloco6')">Extras</button>
+
+    <!-- NPC Mercador -->
+    <img src="assets/npc-mercador.png" alt="NPC Mercador" class="npc-mercador">
       <div class="fala escondida" id="fala-bloco1">...</div>
     </div>
   </div>
