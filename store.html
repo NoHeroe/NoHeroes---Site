@@ -243,6 +243,31 @@ overflow: hidden;
 .botao-ebook     { background-color: #22c55e; left: 50%; }
 .botao-mentoria  { background-color: #dc2626; left: 60%; }
 .botao-extras    { background-color: #facc15; color: black; left: 69%; }
+.petal-layer {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 8;
+  overflow: hidden;
+}
+
+.petal {
+  position: absolute;
+  opacity: 0.8;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-10vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
   </style>
 <script>
   function goTo(id) {
@@ -267,6 +292,8 @@ overflow: hidden;
 <!-- BLOCO 1 -->
 <section id="bloco1">
   <div class="section-content" style="background-image: url('assets/bg-oriental.jpg'); position: relative;">
+<!-- Camada de pétalas -->
+<div class="petal-layer"></div>
     <h1 class="titulo-bloco">Tenda Principal</h1>
 
     <!-- Botões de produto -->
@@ -277,8 +304,8 @@ overflow: hidden;
     <button class="botao-tenda botao-extras" onclick="goTo('bloco6')">Extras</button>
 
     <!-- NPC Mercador -->
-    <img src="assets/npc-mercador.png" alt="NPC Mercador" class="npc-mercador">
-      <div class="fala escondida" id="fala-bloco1">...</div>
+    <img src="assets/npc-mercador.png" alt="NPC Mercador" class="npc-mercador" onclick="falar('bloco1')">
+<div class="fala escondida" id="fala-bloco1"></div>
     </div>
 </section>
 
@@ -543,6 +570,41 @@ function falar(blocoId) {
     const width = carousel.querySelector('.product-card')?.offsetWidth || 200;
     carousel.scrollBy({ left: (width + gap) * direction, behavior: 'smooth' });
   }
+// Falas específicas do NPC Mercador
+falasRPG["bloco1"] = [
+  "Bem-vindo, viajante... cada botão é uma escolha.",
+  "A noite está calma, mas o destino nunca dorme.",
+  "A moeda gira... Qual será seu próximo passo?",
+  "Toque em um destino, e ele tocará você de volta.",
+  "Cada aba da loja guarda mais do que produtos... guarda segredos.",
+];
+
+// Pétalas caindo lateralmente com variações
+const petalLayer = document.querySelector("#bloco1 .petal-layer");
+
+function gerarPetalaDirecional() {
+  const p = document.createElement("img");
+  p.src = "assets/petal.png";
+  p.className = "petal";
+
+  const lado = Math.random() < 0.5 ? 'left' : 'right';
+  const posH = lado === 'left' 
+    ? (Math.random() * 40) + 'vw' 
+    : (60 + Math.random() * 40) + 'vw';
+
+  const tamanho = 20 + Math.random() * 20;
+  const duracao = 8 + Math.random() * 4;
+
+  p.style.width = tamanho + "px";
+  p.style.left = posH;
+  p.style.animationDuration = duracao + "s";
+
+  petalLayer.appendChild(p);
+  setTimeout(() => p.remove(), duracao * 1000);
+}
+
+// Loop contínuo de pétalas
+setInterval(gerarPetalaDirecional, 700);
 </script>
 </body>
 </html>
