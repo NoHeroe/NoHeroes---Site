@@ -243,6 +243,7 @@ overflow: hidden;
 .botao-ebook     { background-color: #22c55e; left: 50%; }
 .botao-mentoria  { background-color: #dc2626; left: 60%; }
 .botao-extras    { background-color: #facc15; color: black; left: 69%; }
+
 .petal-layer {
   position: absolute;
   top: 0; left: 0;
@@ -266,6 +267,7 @@ overflow: hidden;
   opacity: 0.8;
   will-change: transform;
   pointer-events: none;
+filter: brightness(0.6) saturate(0.9) contrast(1.1);
 }
   </style>
 <script>
@@ -620,7 +622,7 @@ function criarPetala() {
 }
 
 setInterval(() => {
-  for (let i = 0; i < 3; i++) criarPetala();
+  for (let i = 0; i < 1.5; i++) criarPetala();
 }, 250);
 </script>
 </body>
