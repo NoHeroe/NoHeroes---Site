@@ -252,30 +252,20 @@ overflow: hidden;
   overflow: hidden;
 }
 
+.petal-layer {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 20;
+  overflow: hidden;
+}
+
 .petal {
   position: absolute;
   opacity: 0.8;
-  animation: fall linear forwards;
-}
-
-@keyframes fall {
-  0% {
-    transform: translateY(-10vh) translateX(0vw) rotate(0deg);
-    opacity: 1;
-  }
-  25% {
-    transform: translateY(25vh) translateX(-2vw) rotate(90deg);
-  }
-  50% {
-    transform: translateY(50vh) translateX(2vw) rotate(180deg);
-  }
-  75% {
-    transform: translateY(75vh) translateX(-2vw) rotate(270deg);
-  }
-  100% {
-    transform: translateY(110vh) translateX(0vw) rotate(360deg);
-    opacity: 0;
-  }
+  will-change: transform;
+  pointer-events: none;
 }
   </style>
 <script>
@@ -588,34 +578,48 @@ falasRPG["bloco1"] = [
   "Cada aba da loja guarda mais do que produtos... guarda segredos.",
 ];
 
-// Pétalas caindo lateralmente com variações
+// Pétalas com queda realista e ziguezague fluido
 const petalLayer = document.querySelector("#bloco1 .petal-layer");
+const petalImg = "assets/petal.png"; // certifique-se que existe
 
-function gerarPetalaDirecional() {
+function criarPetala() {
   const p = document.createElement("img");
-  p.src = "assets/petal.png";
+  p.src = petalImg;
   p.className = "petal";
 
-  const lado = Math.random() < 0.5 ? 'left' : 'right';
-  const posH = lado === 'left' 
-    ? (Math.random() * 40) + 'vw' 
-    : (60 + Math.random() * 40) + 'vw';
+  const size = 18 + Math.random() * 18;
+  const speed = 0.5 + Math.random() * 1.2;
+  const startX = Math.random() * window.innerWidth;
+  const amplitude = 20 + Math.random() * 20;
+  const frequency = 0.002 + Math.random() * 0.001;
 
-  const tamanho = 16 + Math.random() * 16;
-  const duracao = 8 + Math.random() * 4;
-
-  p.style.width = tamanho + "px";
-  p.style.left = posH;
-  p.style.animationDuration = duracao + "s";
-
+  p.style.width = `${size}px`;
+  p.style.top = `-40px`;
+  p.style.left = `${startX}px`;
   petalLayer.appendChild(p);
-  setTimeout(() => p.remove(), duracao * 1000);
+
+  let y = -40;
+  let t = 0;
+
+  function animar() {
+    y += speed;
+    t += 1;
+    const offsetX = Math.sin(t * frequency * 1000) * amplitude;
+    p.style.transform = `translate(${offsetX}px, ${y}px) rotate(${t}deg)`;
+
+    if (y < window.innerHeight + 50) {
+      requestAnimationFrame(animar);
+    } else {
+      p.remove();
+    }
+  }
+
+  requestAnimationFrame(animar);
 }
 
-// Loop contínuo de pétalas
 setInterval(() => {
-  for (let i = 0; i < 3; i++) gerarPetalaDirecional();
-}, 500);
+  for (let i = 0; i < 3; i++) criarPetala();
+}, 300);
 </script>
 </body>
 </html>
