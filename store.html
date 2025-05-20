@@ -580,7 +580,7 @@ falasRPG["bloco1"] = [
 
 // Pétalas com queda realista e ziguezague fluido
 const petalLayer = document.querySelector("#bloco1 .petal-layer");
-const petalImg = "assets/petal.png"; // certifique-se que existe
+const petalImg = "assets/petal.png";
 
 function criarPetala() {
   const p = document.createElement("img");
@@ -588,10 +588,10 @@ function criarPetala() {
   p.className = "petal";
 
   const size = 18 + Math.random() * 18;
-  const speed = 0.5 + Math.random() * 1.2;
+  const speed = 0.4 + Math.random() * 0.6;
   const startX = Math.random() * window.innerWidth;
-  const amplitude = 20 + Math.random() * 20;
-  const frequency = 0.002 + Math.random() * 0.001;
+  const amplitude = 15 + Math.random() * 10;
+  const frequency = 0.0015 + Math.random() * 0.001;
 
   p.style.width = `${size}px`;
   p.style.top = `-40px`;
@@ -599,13 +599,15 @@ function criarPetala() {
   petalLayer.appendChild(p);
 
   let y = -40;
-  let t = 0;
+  let x = startX;
+  let t0 = performance.now();
 
-  function animar() {
+  function animar(now) {
+    const t = now - t0;
     y += speed;
-    t += 1;
-    const offsetX = Math.sin(t * frequency * 1000) * amplitude;
-    p.style.transform = `translate(${offsetX}px, ${y}px) rotate(${t}deg)`;
+
+    const offsetX = Math.sin(t * frequency) * amplitude;
+    p.style.transform = `translate(${offsetX}px, ${y}px) rotate(${t * 0.05}deg)`;
 
     if (y < window.innerHeight + 50) {
       requestAnimationFrame(animar);
@@ -619,7 +621,7 @@ function criarPetala() {
 
 setInterval(() => {
   for (let i = 0; i < 3; i++) criarPetala();
-}, 300);
+}, 250);
 </script>
 </body>
 </html>
