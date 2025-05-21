@@ -260,12 +260,13 @@ overflow: hidden;
 }
 .gramado-bottom {
   position: absolute;
-  bottom: 0; /* NÃO usa negativo aqui */
+  bottom: 0;
   left: 50%;
-  transform: translateX(-50%) translateY(20%); /* empurra pra baixo sem sair do container */
+  transform: translateX(-50%);
   width: auto;
   height: auto;
-  max-width: 120%;
+  max-width: none;
+  max-height: none;
   pointer-events: none;
   z-index: 21;
 }
