@@ -246,12 +246,6 @@ overflow: hidden;
 .botao-ebook     { background-color: #22c55e; left: 50%; }
 .botao-mentoria  { background-color: #dc2626; left: 60%; }
 .botao-extras    { background-color: #facc15; color: black; left: 69%; }
-  </style>
-<script>
-  function goTo(id) {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  }
 .mato-topo {
   position: absolute;
   top: 10;
@@ -271,6 +265,12 @@ overflow: hidden;
   pointer-events: none;
   z-index: 21;
 }
+  </style>
+<script>
+  function goTo(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }
 </script>
 </head>
 <body>
