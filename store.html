@@ -5,10 +5,6 @@
   <title>Loja | NoHeroes</title>
 
   <style>
-section { outline: 2px solid red; }
-
-.section-content { outline: 2px dashed lime; }
-
 /* RESET */
 
 { margin: 0; padding: 0; box-sizing: border-box; } html, body { font-family: 'Inter', sans-serif; background: #000; color: #fff; height: 100%; overflow-x: hidden; overflow-y: auto; }
@@ -22,7 +18,11 @@ section { outline: 2px solid red; }
 
 /* VISUAL DESKTOP */ .desktop-visual { display: block; } .mobile-visual  { display: none; } @media (max-width: 768px) { .desktop-visual { display: none; } .mobile-visual  { display: block; } }
 
-/* CONTAINER DESKTOP */ .desktop-visual #container-desktop { height: 100vh; overflow-y: auto; scroll-snap-type: y mandatory; scroll-behavior: smooth; padding: 0; }
+/* CONTAINER DESKTOP */ .desktop-visual #container-desktop {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  padding: 0;
+}
 
 /* SECTION DESKTOP */ .desktop-visual section { height: 88vh; scroll-snap-align: start; scroll-snap-stop: always; display: flex; align-items: center; justify-content: center; }
 
