@@ -88,6 +88,17 @@ section { outline: 2px solid red; }
 
 /* ESPAÇADOR */ .espacador { height: 90vh; flex-shrink: 0; pointer-events: none; }
 
+/* Oculta scroll vertical e horizontal, mantendo funcionalidade */
+html, body {
+  scrollbar-width: none;           /* Firefox */
+  -ms-overflow-style: none;        /* IE e Edge */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;                   /* Chrome, Safari */
+}
+
 </style>
 
 <script>
