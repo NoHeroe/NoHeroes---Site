@@ -260,15 +260,13 @@ overflow: hidden;
 }
 .gramado-bottom {
   position: absolute;
-  bottom: -10;
-  left: 50%;
-  transform: translateX(-50%);
-  width: auto;
-  height: auto;
-  max-width: none;
-  max-height: none;
+  bottom: 0;
+  left: 0;
+  width: 100vw;         /* ocupa toda a largura da tela */
+  height: auto;         /* mantém proporção vertical */
   pointer-events: none;
-  z-index: 10;
+  z-index: 21;
+  object-fit: cover;
 }
   </style>
 <script>
