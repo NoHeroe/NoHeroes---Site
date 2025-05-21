@@ -4,327 +4,69 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Loja | NoHeroes</title>
   <style>
-section {
-  outline: 2px solid red;
-}
+/* Debug Outlines */ section { outline: 2px solid red; }
 
-.section-content {
-  outline: 2px dashed lime;
-}
-    /* RESET */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body {
-  font-family: 'Inter', sans-serif;
-  background: #000;
-  color: #fff;
-  height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-/* TÍTULOS DOS BLOCOS DESKTOP */
-.titulo-bloco {
-  position: absolute;
-  top: 1rem;
-  left: 1.5rem;
-  font-size: 2rem;
-  font-weight: bold;
-  text-shadow: 0 0 10px currentColor;
-  z-index: 10;
-}
+.section-content { outline: 2px dashed lime; }
 
-.titulo-centralizado {
-  top: 1rem;
-  left: 50%;
-  transform: translateX(-50%);
-}
+/* RESET */
 
-.cor-roxa { color: #c084fc; text-shadow: 0 0 20px #c084fc; }
-.cor-azul { color: #3b82f6; text-shadow: 0 0 20px #3b82f6; }
-.cor-verde { color: #4ade80; text-shadow: 0 0 20px #4ade80; }
-.cor-vermelho { color: #f43f5e; text-shadow: 0 0 20px #f43f5e; }
-.cor-dourado { color: #facc15; text-shadow: 0 0 20px #facc15; }
-.cor-branca { color: #fff;
-text-shadow: 0 0 20px #ffffff; }
+{ margin: 0; padding: 0; box-sizing: border-box; } html, body { font-family: 'Inter', sans-serif; background: #000; color: #fff; height: 100%; overflow-x: hidden; overflow-y: auto; }
 
-/* VISUAL DESKTOP */
-.desktop-visual { display: block; }
-.mobile-visual  { display: none; }
-@media (max-width: 768px) {
-  .desktop-visual { display: none; }
-  .mobile-visual  { display: block; }
-}
 
-/* CONTAINER DESKTOP */
- .desktop-visual #container-desktop {
-  height: 100vh;
-  overflow-y: auto;
-  scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
-  padding: 0;
-}
-/* SECTION DESKTOP */
-.desktop-visual section {
-  height: 90vh;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.desktop-visual .section-content {
-  width: 80vw;
-  max-width: 1200px;
-  height: 80vh;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  border-radius: 16px;
-  box-shadow: 0 0 30px rgba(147,51,234,0.7);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  position: relative;
-overflow: hidden;
-}
+/* ============================= TÍTULOS E CORES ============================= */ .titulo-bloco { position: absolute; top: 1rem; left: 1.5rem; font-size: 2rem; font-weight: bold; text-shadow: 0 0 10px currentColor; z-index: 10; }
 
-/* MENU FIXO */
-.menu {
-  position: fixed; top: 20px; left: 20px; z-index: 20;
-  display: flex; flex-direction: column; gap: .5rem;
-}
-.menu button {
-  background: #4b0082; color: #fff; border: none;
-  padding: .5rem 1rem; border-radius: 8px; cursor: pointer;
-  font-size: .9rem; transition: transform .2s;
-}
-.menu button:hover { transform: scale(1.05); }
+.titulo-centralizado { top: 1rem; left: 50%; transform: translateX(-50%); }
 
-.npc { position: absolute; bottom: 20px; right: 20px; width: 120px; z-index: 5; }
+.cor-roxa    { color: #c084fc; text-shadow: 0 0 20px #c084fc; } .cor-azul    { color: #3b82f6; text-shadow: 0 0 20px #3b82f6; } .cor-verde   { color: #4ade80; text-shadow: 0 0 20px #4ade80; } .cor-vermelho{ color: #f43f5e; text-shadow: 0 0 20px #f43f5e; } .cor-dourado { color: #facc15; text-shadow: 0 0 20px #facc15; } .cor-branca  { color: #fff;    text-shadow: 0 0 20px #ffffff; }
 
-.carousel-wrapper {
-  width: 60%; position: relative; display: flex; align-items: center; margin: 1rem 0;
-}
-.horizontal-scroll {
-  flex: 1; display: flex; overflow-x: auto;
-  scroll-snap-type: x mandatory; scroll-behavior: smooth;
-  gap: 1rem; padding: .5rem 0;
-}
-.horizontal-scroll::-webkit-scrollbar { display: none; }
-.horizontal-scroll { -ms-overflow-style: none; scrollbar-width: none; }
-.product-card {
-  flex: 0 0 clamp(180px, 25%, 240px);
-  scroll-snap-align: center;
-  background: rgba(17,17,17,0.8);
-  border: 1px solid #333;
-  border-radius: 12px;
-  padding: 1rem;
-  text-align: center;
-  font-size: 0.85rem;
-}
-.arrow {
-  position: absolute; top: 50%; transform: translateY(-50%);
-  background: rgba(0,0,0,0.6); color: #fff; border: none;
-  padding: 0.5rem; border-radius: 9999px; cursor: pointer; z-index: 5;
-}
-.arrow.left  { left: calc(20% - 1rem); }
-.arrow.right { right: calc(20% - 1rem); }
+/* ============================= LAYOUT DESKTOP ============================= */ .desktop-visual { display: block; } @media (max-width: 768px) { .desktop-visual { display: none; } .mobile-visual  { display: block; } }
 
-.btn-tenda {
-  background: linear-gradient(135deg,#6b21a8,#9333ea);
-  padding: 8px 16px; border-radius: 9999px;
-  font-weight: bold; font-size: .9rem; color: #fff;
-  box-shadow: 0 0 20px rgba(147,51,234,0.5);
-  transition: transform 0.2s; cursor: pointer; margin: 0.25rem;
-}
-.btn-tenda:hover { background: #7e22ce; transform: scale(1.05); }
+/* Container principal com scroll snapping */ .desktop-visual #container-desktop { height: 100vh; overflow-y: auto; scroll-snap-type: y mandatory; scroll-behavior: smooth; padding: 0; }
 
-/* CONTAINER MOBILE */
-.mobile-visual #container-mobile {
-  height: 100vh;
-  overflow-y: auto;
-  scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
-  padding: 2vh 0;
-}
-.mobile-visual #container-mobile::-webkit-scrollbar { display: none; }
-.mobile-visual #container-mobile { -ms-overflow-style: none; scrollbar-width: none; }
+/* Seções com snap */ .desktop-visual section { height: 90vh; scroll-snap-align: start; scroll-snap-stop: always; display: flex; align-items: center; justify-content: center; }
 
-.mobile-visual section {
-  height: 96vh;
-  scroll-snap-align: start;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.mobile-visual .section-content {
-  width: 92vw;
-  height: 90vh;
-  border-radius: 16px;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  box-shadow: 0 0 25px rgba(147,51,234,0.6);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 1.5rem;
-}
-.npc {
-  position: absolute;
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+.desktop-visual .section-content { width: 80vw; max-width: 1200px; height: 80vh; background-size: cover; background-position: center; background-repeat: no-repeat; border-radius: 16px; box-shadow: 0 0 30px rgba(147,51,234,0.7); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; position: relative; overflow: hidden; }
 
-.npc img {
-  width: 120px;
-}
+/* Espaçador entre blocos */ .espacador { height: 90vh; flex-shrink: 0; pointer-events: none; }
 
-.fala {
-  background: rgba(0,0,0,0.85);
-  border: 2px solid #9333ea;
-  border-radius: 10px;
-  padding: 0.75rem;
-  color: #fff;
-  font-size: 0.9rem;
-  margin-bottom: 8px;
-  max-width: 260px;
-  animation: fadeIn 0.3s ease forwards;
-}
-#fala-bloco1 {
-  margin-bottom: 60px; 
-  position: relative; 
-  z-index: 20; 
-}
+/* ============================= MENU FIXO ============================= */ .menu { position: fixed; top: 20px; left: 20px; z-index: 20; display: flex; flex-direction: column; gap: 0.5rem; }
 
-.fala.escondida {
-  display: none;
-}
+.menu button { background: #4b0082; color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-size: 0.9rem; transition: transform 0.2s; } .menu button:hover { transform: scale(1.05); }
 
-/* Posições específicas por bloco */
-.npc1 { bottom: 20px; right: 30px; }
-.npc2 { bottom: 30px; left: 40px; }
-/* npc3, npc4... pode ser adicionado conforme a seção */
+/* ============================= CAROUSEL & PRODUTOS ============================= */ .carousel-wrapper { width: 60%; position: relative; display: flex; align-items: center; margin: 1rem 0; }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-/* NPCs no mobile: posicionamento adaptado */
-.npc1m { position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%); }
-.npc2m { position: absolute; bottom: 20px; left: 16px; }
+.horizontal-scroll { flex: 1; display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; gap: 1rem; padding: 0.5rem 0; } .horizontal-scroll::-webkit-scrollbar { display: none; } .horizontal-scroll { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* Tamanho reduzido no mobile */
-.mobile-visual .npc img {
-  width: 90px;
-}
-.npc-mercador {
-  position: absolute;
-  bottom: 20vh; /* ajustado para subir um pouco */
-  left: 51.5%;  /* ligeiramente à direita */
-  transform: translateX(-50%);
-  height: 200px; /* ligeiramente menor */
-  z-index: 10;
-  pointer-events: auto;
-  filter: drop-shadow(0 0 10px rgba(147, 51, 234, 0.4));
-}
-.botao-tenda {
-  position: absolute;
-  bottom: 16vh;
-  transform: translateX(-50%);
-  padding: 6px 12px;
-  border-radius: 9999px;
-  font-weight: bold;
-  font-size: 0.75rem;
-  color: white;
-  box-shadow: 0 0 10px rgba(0,0,0,0.6);
-  border: none;
-  cursor: pointer;
-  z-index: 15;
-}
+.product-card { flex: 0 0 clamp(180px, 25%, 240px); scroll-snap-align: center; background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 1rem; text-align: center; font-size: 0.85rem; }
 
-.botao-manga     { background-color: #9333ea; left: 31%; }
-.botao-anime     { background-color: #3b82f6; left: 41%; }
-.botao-ebook     { background-color: #22c55e; left: 50%; }
-.botao-mentoria  { background-color: #dc2626; left: 60%; }
-.botao-extras    { background-color: #facc15; color: black; left: 69%; }
+.arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: #fff; border: none; padding: 0.5rem; border-radius: 50%; cursor: pointer; z-index: 5; } .arrow.left  { left: calc(20% - 1rem); } .arrow.right { right: calc(20% - 1rem); }
 
-.mato-topo {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: auto;
-  width: auto;
-  max-width: 600px; /* ajuste conforme o visual */
-  max-height: 40vh;
-  pointer-events: none;
-  z-index: 1;
-}
-.gramado-bottom {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100vw;
-  height: auto;
-  pointer-events: none;
-  z-index: 21;
-  transform: translateY(10%); /* aqui você controla o quanto quer “enfiar” a grama */
-}
-#vagalumes {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  pointer-events: none;
-  z-index: 30;
-  overflow: hidden;
-}
+/* Botões de tenda */ .btn-tenda { background: linear-gradient(135deg,#6b21a8,#9333ea); padding: 8px 16px; border-radius: 9999px; font-weight: bold; font-size: 0.9rem; color: #fff; box-shadow: 0 0 20px rgba(147,51,234,0.5); transition: transform 0.2s; cursor: pointer; margin: 0.25rem; } .btn-tenda:hover { background: #7e22ce; transform: scale(1.05); }
 
-.vagalume {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #caff6a, transparent 70%);
-  opacity: 0.2;
-  transition: transform 10s linear, opacity 1s ease;
-}
-.npc-manga {
-  position: absolute;
-  bottom: 20vh; /* você pode ajustar para subir ou descer */
-  left: 6vw; /* ajuste horizontal */
-  height: 200px;
-  z-index: 10;
-  pointer-events: auto;
-  filter: drop-shadow(0 0 10px rgba(147, 51, 234, 0.4));
-}
+/* ============================= NPC & FALA PADRÃO ============================= / / NPC base */ .npc { position: absolute; z-index: 10; display: flex; flex-direction: column; align-items: center; } .npc img { width: 120px; }
 
-#fala-bloco2 {
-  background: rgba(0, 0, 0, 0.85);
-  border: 2px solid #9333ea;
-  border-radius: 10px;
-  padding: 0.75rem;
-  color: #fff;
-  font-size: 0.9rem;
-  max-width: 260px;
-  position: absolute;
-  bottom: 36vh; /* altura da fala – você pode ajustar aqui */
-  left: 6vw;
-  z-index: 20;
-  animation: fadeIn 0.3s ease forwards;
-}
+/* Fala base */ .fala { position: absolute; background: rgba(0,0,0,0.85); border: 2px solid #9333ea; border-radius: 10px; padding: 0.75rem; color: #fff; font-size: 0.9rem; max-width: 260px; animation: fadeIn 0.3s ease forwards; display: none; } .fala.escondida { display: none; }
 
-#fala-bloco2.escondida {
-  display: none;
-}
-.espacador {
-  height: 90vh;           /* altura entre blocos */
-  flex-shrink: 0;
-  pointer-events: none;   /* impede interação */
-}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to   { opacity: 1; transform: translateY(0); } }
+
+/* NPCs específicos e posições */ .npc-mercador, .npc-manga, .npc-anime, .npc-ebook, .npc-mentoria, .npc-extras { bottom: 20vh; left: 50%; transform: translateX(-50%); height: 200px; pointer-events: auto; filter: drop-shadow(0 0 10px rgba(147, 51, 234, 0.4)); }
+
+/* Fala por bloco (ajuste vertical) */ #fala-bloco1 { bottom: 32vh; left: 50%; transform: translateX(-50%); } #fala-bloco2 { bottom: 36vh; left: 50%; transform: translateX(-50%); } #fala-bloco3 { bottom: 32vh; left: 50%; transform: translateX(-50%); } #fala-bloco4 { bottom: 30vh; left: 50%; transform: translateX(-50%); } #fala-bloco5 { bottom: 36vh; left: 50%; transform: translateX(-50%); } #fala-bloco6 { bottom: 38vh; left: 50%; transform: translateX(-50%); }
+
+/* ============================= VAGALUMES ============================= */ #vagalumes { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 30; overflow: hidden; }
+
+.vagalume { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: radial-gradient(circle, #caff6a, transparent 70%); opacity: 0.2; transition: transform 10s linear, opacity 1s ease; }
+
+/* ============================= MOBILE LAYOUT ============================= */ .mobile-visual { display: none; } @media (max-width: 768px) { .desktop-visual { display: none; } .mobile-visual  { display: block; } }
+
+.mobile-visual #container-mobile { height: 100vh; overflow-y: auto; scroll-snap-type: y mandatory; scroll-behavior: smooth; padding: 2vh 0; } .mobile-visual #container-mobile::-webkit-scrollbar { display: none; } .mobile-visual #container-mobile { -ms-overflow-style: none; scrollbar-width: none; }
+
+.mobile-visual section { height: 96vh; scroll-snap-align: start; display: flex; align-items: center; justify-content: center; }
+
+.mobile-visual .section-content { width: 92vw; height: 90vh; background-size: cover; background-position: center; background-repeat: no-repeat; box-shadow: 0 0 25px rgba(147,51,234,0.6); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1.5rem; border-radius: 16px; }
+
+/* Ajustes de NPC no mobile */ .npc1m { position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%); } .npc2m { position: absolute; bottom: 20px; left: 16px; } .mobile-visual .npc img { width: 90px; }
+
 </style>
 
 <script>
@@ -384,8 +126,9 @@ overflow: hidden;
 
 <!-- BLOCO 2 -->
 <section id="bloco2">
-  <div class="section-content" style="background-image: url('assets/bg-subterraneo-1.jpg')">
+  <div class="section-content" style="background-image: url('assets/bg-subterraneo-1.jpg'); position: relative;">
     <h2 class="titulo-bloco cor-roxa">Mangás</h2>
+
     <div class="carousel-wrapper">
       <button class="arrow left" onclick="scrollCarousel('bloco2', -1)">&larr;</button>
       <div class="horizontal-scroll" id="carousel-bloco2">
@@ -395,13 +138,12 @@ overflow: hidden;
       </div>
       <button class="arrow right" onclick="scrollCarousel('bloco2', 1)">&rarr;</button>
     </div>
-    <!-- NPC Mangás -->
-<img src="assets/npc-manga.png" alt="NPC Mangás" class="npc-manga" onclick="falar('bloco2')">
-<div class="fala escondida" id="fala-bloco2"></div>
-    </div>
+
+    <!-- NPC Mangás (mesmo padrão do bloco 1) -->
+    <img src="assets/npc-manga.png" alt="NPC Mangás" class="npc-mercador" onclick="falar('bloco2')">
+    <div class="fala escondida" id="fala-bloco2"></div>
   </div>
 </section>
-
 <div class="espacador"></div>
 
 <!-- BLOCO 3 -->
