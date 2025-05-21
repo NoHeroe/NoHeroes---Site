@@ -282,9 +282,14 @@ overflow: hidden;
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: radial-gradient(circle, #caff6a, #0000);
-  opacity: 0;
-  transition: opacity 1s ease, transform 1s ease;
+  background: radial-gradient(circle, #caff6a, transparent 70%);
+  opacity: 0.2;
+  animation: piscar 4s ease-in-out infinite;
+  transition: transform 10s linear, opacity 1s ease;
+}
+@keyframes piscar {
+  0%, 100% { opacity: 0.2; }
+  50%      { opacity: 1; }
 }
   </style>
 <script>
@@ -310,7 +315,17 @@ overflow: hidden;
 <!-- BLOCO 1 -->
 <section id="bloco1">
   <div class="section-content" style="background-image: url('assets/bg-oriental.jpg'); position: relative;">
-<div id="vagalumes"></div>
+<div id="vagalumes">
+  <div class="vagalume"></div>
+  <div class="vagalume"></div>
+  <div class="vagalume"></div>
+  <div class="vagalume"></div>
+  <div class="vagalume"></div>
+  <div class="vagalume"></div>
+  <div class="vagalume"></div>
+  <div class="vagalume"></div>
+  <div class="vagalume"></div>
+</div>
     <h1 class="titulo-bloco">Tenda Principal</h1>
   <!-- Foreground do topo esquerdo -->
   <img src="assets/mato-topo.png" class="mato-topo" alt="folhagem topo">
@@ -599,60 +614,34 @@ falasRPG["bloco1"] = [
   "Toque em um destino, e ele tocará você de volta.",
   "Cada aba da loja guarda mais do que produtos... guarda segredos.",
 ];
-const maxVagalumes = 9;
-
-function criarVagalume() {
+function iniciarVooVagalumes() {
   const container = document.getElementById("vagalumes");
-  if (!container || container.childElementCount >= maxVagalumes) return;
-
-  const el = document.createElement("div");
-  el.classList.add("vagalume");
+  if (!container) return;
 
   const cw = container.offsetWidth;
   const ch = container.offsetHeight;
 
-  // posição inicial
-  let x = Math.random() * cw;
-  let y = Math.random() * ch;
-  el.style.transform = `translate(${x}px, ${y}px)`;
+  const vagalumes = container.querySelectorAll(".vagalume");
 
-  container.appendChild(el);
+  vagalumes.forEach((el, index) => {
+    function mover() {
+      const x = Math.random() * cw;
+      const y = Math.random() * ch;
+      el.style.transform = `translate(${x}px, ${y}px)`;
 
-  // animação viva
-  const move = () => {
-    x += Math.random() * 60 - 30;
-    y += Math.random() * 60 - 30;
+      // novo destino a cada 6–10 segundos
+      const tempo = 6000 + Math.random() * 4000;
+      setTimeout(mover, tempo);
+    }
 
-    x = Math.max(0, Math.min(cw, x));
-    y = Math.max(0, Math.min(ch, y));
-
-    el.style.transform = `translate(${x}px, ${y}px)`;
-
-    // piscar aleatório
-    el.style.opacity = Math.random() < 0.7 ? 1 : 0;
-
-    // continuar voando
-    const delay = 1000 + Math.random() * 2000;
-    setTimeout(move, delay);
-  };
-
-  // início com fade in e primeiro movimento
-  el.style.opacity = 0;
-  setTimeout(() => {
-    el.style.opacity = 1;
-    move();
-  }, 300);
-
-  // remover após ~20s
-  setTimeout(() => {
-    el.remove();
-  }, 20000);
+    // posição inicial aleatória e início do voo
+    setTimeout(() => {
+      mover();
+    }, index * 300); // atraso em cascata
+  });
 }
 
-// criação contínua
-setInterval(() => {
-  criarVagalume();
-}, 1500);
+window.addEventListener("DOMContentLoaded", iniciarVooVagalumes);
 </script>
 </body>
 </html>
