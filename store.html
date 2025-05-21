@@ -603,6 +603,7 @@ falasRPG["bloco1"] = [
   "Toque em um destino, e ele tocará você de volta.",
   "Cada aba da loja guarda mais do que produtos... guarda segredos.",
 ];
+
 function iniciarVooVagalumes() {
   const container = document.getElementById("vagalumes");
   if (!container) return;
@@ -613,18 +614,15 @@ function iniciarVooVagalumes() {
   const vagalumes = container.querySelectorAll(".vagalume");
 
   vagalumes.forEach((el, index) => {
-    // função de voo contínuo
     function mover() {
       const x = Math.random() * cw;
       const y = Math.random() * ch;
       el.style.transform = `translate(${x}px, ${y}px)`;
 
-      // tempo aleatório para novo destino
       const tempo = 6000 + Math.random() * 3000;
       setTimeout(mover, tempo);
     }
 
-    // função de piscar com tempo e intensidade únicos
     function piscarAleatorio() {
       const loop = () => {
         const tempoPiscar = 2000 + Math.random() * 4000;
@@ -635,7 +633,6 @@ function iniciarVooVagalumes() {
       loop();
     }
 
-    // iniciar voo e piscar com leve atraso escalonado
     setTimeout(() => {
       mover();
       piscarAleatorio();
