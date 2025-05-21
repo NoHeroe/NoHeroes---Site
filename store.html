@@ -284,19 +284,8 @@ overflow: hidden;
   border-radius: 50%;
   background: radial-gradient(circle, #caff6a, transparent 70%);
   opacity: 0.2;
-  animation: piscar 4s ease-in-out infinite;
   transition: transform 10s linear, opacity 1s ease;
 }
-@keyframes piscar {
-  0%, 100% { opacity: 0.2; }
-  50%      { opacity: 1; }
-}
-  </style>
-<script>
-  function goTo(id) {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  }
 </script>
 </head>
 <body>
@@ -624,20 +613,33 @@ function iniciarVooVagalumes() {
   const vagalumes = container.querySelectorAll(".vagalume");
 
   vagalumes.forEach((el, index) => {
+    // função de voo contínuo
     function mover() {
       const x = Math.random() * cw;
       const y = Math.random() * ch;
       el.style.transform = `translate(${x}px, ${y}px)`;
 
-      // novo destino a cada 6–10 segundos
-      const tempo = 6000 + Math.random() * 4000;
+      // tempo aleatório para novo destino
+      const tempo = 6000 + Math.random() * 3000;
       setTimeout(mover, tempo);
     }
 
-    // posição inicial aleatória e início do voo
+    // função de piscar com tempo e intensidade únicos
+    function piscarAleatorio() {
+      const loop = () => {
+        const tempoPiscar = 2000 + Math.random() * 4000;
+        const intensidade = Math.random() * 0.8 + 0.2;
+        el.style.opacity = intensidade.toFixed(2);
+        setTimeout(loop, tempoPiscar);
+      };
+      loop();
+    }
+
+    // iniciar voo e piscar com leve atraso escalonado
     setTimeout(() => {
       mover();
-    }, index * 300); // atraso em cascata
+      piscarAleatorio();
+    }, index * 300);
   });
 }
 
