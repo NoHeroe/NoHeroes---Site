@@ -133,6 +133,11 @@
       <h2 class="text-2xl font-bold mb-4">Web Design</h2>
       <div class="project-grid">
         <img src="/assets/images/noheroes-thumb.jpg" onclick="openSubModal('modal-web-noheroes')">
+<div class="project-grid">
+  <img src="/assets/images/noheroes-thumb.jpg" onclick="openSubModal('modal-web-noheroes')">
+  <img src="/assets/images/luiz-thumb.jpg" onclick="openSubModal('modal-web-luiz')">
+  <img src="/assets/images/proposal-thumb.jpg" onclick="openSubModal('modal-web-proposal')">
+</div>
         <img src="/assets/images/site2-thumb.jpg" onclick="openSubModal('modal-web-projeto2')">
       </div>
       <button onclick="closeModal('modal-web')" class="px-4 py-2 bg-purple-600 rounded">Fechar</button>
@@ -301,11 +306,48 @@
         <button class="next" onclick="changeSlide('modal-web-noheroes',1)">›</button>
       </div>
       <div class="mt-4 flex gap-2">
-        <a href="https://noheroes.com.br" target="_blank" class="px-4 py-2 bg-purple-600 rounded">Ver site</a>
+        <a href="https://noheroes.com.br/linktree.html" target="_blank" class="px-4 py-2 bg-purple-600 rounded">Ver site</a>
         <button onclick="openModal('modal-web')" class="px-4 py-2 bg-gray-700 rounded">Voltar</button>
       </div>
     </div>
   </div>
+<!-- Projeto: Site do Luiz -->
+<div id="modal-web-luiz" class="modal">
+  <div class="modal-content">
+    <h2 class="text-2xl font-bold mb-2">Site Luiz | Clínica de Saúde</h2>
+    <p>Website institucional com ambientação simbólica e layout responsivo.</p>
+    <div class="carousel">
+      <div class="slide"><img src="/assets/images/luiz-1.jpg"></div>
+      <div class="slide"><img src="/assets/images/luiz-2.jpg"></div>
+      <div class="slide"><img src="/assets/images/luiz-3.jpg"></div>
+      <button class="prev" onclick="changeSlide('modal-web-luiz',-1)">‹</button>
+      <button class="next" onclick="changeSlide('modal-web-luiz',1)">›</button>
+    </div>
+    <div class="mt-4 flex gap-2">
+      <a href="https://noheroe.github.io/Site---Luiz-Projeto-1/" target="_blank" class="px-4 py-2 bg-purple-600 rounded">Ver site</a>
+      <button onclick="openModal('modal-web')" class="px-4 py-2 bg-gray-700 rounded">Voltar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Projeto: Proposal Page -->
+<div id="modal-web-proposal" class="modal">
+  <div class="modal-content">
+    <h2 class="text-2xl font-bold mb-2">Proposal Page | Pedido de Casamento</h2>
+    <p>Página interativa com trilha sonora, efeitos e storytelling pessoal.</p>
+    <div class="carousel">
+      <div class="slide"><img src="/assets/images/proposal-1.jpg"></div>
+      <div class="slide"><img src="/assets/images/proposal-2.jpg"></div>
+      <div class="slide"><img src="/assets/images/proposal-3.jpg"></div>
+      <button class="prev" onclick="changeSlide('modal-web-proposal',-1)">‹</button>
+      <button class="next" onclick="changeSlide('modal-web-proposal',1)">›</button>
+    </div>
+    <div class="mt-4 flex gap-2">
+      <a href="https://noheroe.github.io/Proposal-page" target="_blank" class="px-4 py-2 bg-purple-600 rounded">Ver página</a>
+      <button onclick="openModal('modal-web')" class="px-4 py-2 bg-gray-700 rounded">Voltar</button>
+    </div>
+  </div>
+</div>
     <!-- logo antes do Lightbox: -->
   <script>
     // 1) ScrollReveal nas .servico
