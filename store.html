@@ -90,15 +90,18 @@ section { outline: 2px solid red; }
 
 /* Oculta scroll vertical e horizontal, mantendo funcionalidade */
 html, body {
+  overflow: hidden;
+}
+
+#container-desktop {
+  height: 100vh;
+  overflow-y: auto;
   scrollbar-width: none;           /* Firefox */
   -ms-overflow-style: none;        /* IE e Edge */
 }
-
-html::-webkit-scrollbar,
-body::-webkit-scrollbar {
+#container-desktop::-webkit-scrollbar {
   display: none;                   /* Chrome, Safari */
 }
-
 </style>
 
 <script>
