@@ -53,7 +53,7 @@ text-shadow: 0 0 20px #ffffff; }
   overflow-y: auto;
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
-  padding: 5vh 0;
+  padding: 0;
 }
 /* SECTION DESKTOP */
 .desktop-visual section {
@@ -313,6 +313,11 @@ overflow: hidden;
 #fala-bloco2.escondida {
   display: none;
 }
+.espacador {
+  height: 90vh;           /* altura entre blocos */
+  flex-shrink: 0;
+  pointer-events: none;   /* impede interação */
+}
 </style>
 
 <script>
@@ -368,6 +373,8 @@ overflow: hidden;
     </div>
 </section>
 
+<div class="espacador"></div>
+
 <!-- BLOCO 2 -->
 <section id="bloco2">
   <div class="section-content" style="background-image: url('assets/bg-subterraneo-1.jpg')">
@@ -387,6 +394,8 @@ overflow: hidden;
     </div>
   </div>
 </section>
+
+<div class="espacador"></div>
 
 <!-- BLOCO 3 -->
 <section id="bloco3">
@@ -408,6 +417,8 @@ overflow: hidden;
   </div>
 </section>
 
+<div class="espacador"></div>
+
 <!-- BLOCO 4 -->
 <section id="bloco4">
   <div class="section-content" style="background-image: url('assets/bg-subterraneo-3.jpg')">
@@ -428,6 +439,8 @@ overflow: hidden;
   </div>
 </section>
 
+<div class="espacador"></div>
+
 <!-- BLOCO 5 -->
 <section id="bloco5">
   <div class="section-content" style="background-image: url('assets/bg-subterraneo-4.jpg')">
@@ -447,6 +460,8 @@ overflow: hidden;
     </div>
   </div>
 </section>
+
+<div class="espacador"></div>
 
 <!-- BLOCO 6 -->
 <section id="bloco6">
