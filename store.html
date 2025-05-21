@@ -289,6 +289,34 @@ overflow: hidden;
   opacity: 0.2;
   transition: transform 10s linear, opacity 1s ease;
 }
+.npc-manga {
+  position: absolute;
+  bottom: 20vh; /* você pode ajustar para subir ou descer */
+  left: 6vw; /* ajuste horizontal */
+  height: 200px;
+  z-index: 10;
+  pointer-events: auto;
+  filter: drop-shadow(0 0 10px rgba(147, 51, 234, 0.4));
+}
+
+#fala-bloco2 {
+  background: rgba(0, 0, 0, 0.85);
+  border: 2px solid #9333ea;
+  border-radius: 10px;
+  padding: 0.75rem;
+  color: #fff;
+  font-size: 0.9rem;
+  max-width: 260px;
+  position: absolute;
+  bottom: 36vh; /* altura da fala – você pode ajustar aqui */
+  left: 6vw;
+  z-index: 20;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+#fala-bloco2.escondida {
+  display: none;
+}
 </style>
 
 <script>
@@ -357,9 +385,9 @@ overflow: hidden;
       </div>
       <button class="arrow right" onclick="scrollCarousel('bloco2', 1)">&rarr;</button>
     </div>
-    <div class="npc npc2">
-      <img src="assets/npc-manga.gif" alt="NPC Mangás">
-      <div class="fala escondida" id="fala-bloco2">...</div>
+    <!-- NPC Mangás -->
+<img src="assets/npc-manga.png" alt="NPC Mangás" class="npc-manga" onclick="falar('bloco2')">
+<div class="fala escondida" id="fala-bloco2"></div>
     </div>
   </div>
 </section>
@@ -541,7 +569,7 @@ overflow: hidden;
 
 const falasRPG = {
   bloco1m: ["Salve, viajante da tela pequena!", "Cada botão leva a um destino sombrio."],
-  bloco2m: ["Mesmo nas sombras do celular, os mangás brilham.", "Leve um e descubra o mistério por trás das runas."],
+  bloco2m: ["Não permitirei que toque em nada antes que o dinheiro esteja comigo!", "Leve um e descubra o mistério por trás de Caelum.""Se está aqui o mestre deve ter autorizado sua visita, ao contrário nem estaria vivo...", "Não subestime essas escrituras, o valor delas deveria ser bem mais alto."],
   bloco3m: [
     "Esses registros animados foram selados em cristais há séculos.",
     "Cada anime contém fragmentos de memória dos ancestrais.",
