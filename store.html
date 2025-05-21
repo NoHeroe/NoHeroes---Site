@@ -256,15 +256,17 @@ overflow: hidden;
   max-width: 600px; /* ajuste conforme o visual */
   max-height: 40vh;
   pointer-events: none;
-  z-index: 21;
+  z-index: 10;
 }
 
 .gramado-bottom {
   position: absolute;
   bottom: 0;
-  left: 0;
-  width: 100vw;
-  max-height: 25vh;
+  left: 50%;
+  transform: translateX(-50%);
+  height: auto;
+  width: auto;
+  max-width: 120%; /* ou 130% se quiser mais impacto */
   pointer-events: none;
   z-index: 21;
 }
