@@ -111,6 +111,9 @@ html, body {
   color: #ccc;
   padding: 2rem;
 }
+.gramado-bottom.invertido {
+  transform: scaleX(-1);
+}
 </style>
 
 <script>
@@ -152,7 +155,7 @@ html, body {
   <img src="assets/mato-topo.png" class="mato-topo" alt="folhagem topo">
 
   <!-- Foreground do gramado inferior -->
-  <img src="assets/gramado-bottom.png" class="gramado-bottom" alt="gramado inferior">
+  <img src="assets/gramado-bottom.png" class="gramado-bottom invertido" alt="gramado invertido">
     <!-- Botões de produto -->
     <button class="botao-tenda botao-manga" onclick="goTo('bloco2')">Mangás</button>
     <button class="botao-tenda botao-anime" onclick="goTo('bloco3')">Animes</button>
