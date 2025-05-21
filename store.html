@@ -1,4 +1,4 @@
-1<!DOCTYPE html><html lang="pt-BR">
+<!DOCTYPE html><html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -260,13 +260,13 @@ overflow: hidden;
 }
 .gramado-bottom {
   position: absolute;
-  bottom: -10;
+  bottom: 0;
   left: 0;
-  width: 100vw;         /* ocupa toda a largura da tela */
-  height: auto;         /* mantém proporção vertical */
+  width: 100vw;
+  height: auto;
   pointer-events: none;
   z-index: 21;
-  object-fit: cover;
+  transform: translateY(10%); /* aqui você controla o quanto quer “enfiar” a grama */
 }
   </style>
 <script>
