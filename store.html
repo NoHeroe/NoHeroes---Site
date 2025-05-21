@@ -286,6 +286,12 @@ overflow: hidden;
   opacity: 0.2;
   transition: transform 10s linear, opacity 1s ease;
 }
+<style>
+<script>
+  function goTo(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }
 </script>
 </head>
 <body>
