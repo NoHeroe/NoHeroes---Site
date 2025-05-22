@@ -435,28 +435,46 @@
 
     // 2) Carrossel interno
     const slideIndices = {};
-    function openModal(id) {
-      document.body.style.overflow = 'hidden';                  // trava scroll do body
-      document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
+
+function openModal(id) {
+  document.body.style.overflow = 'hidden';
+  document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function closeModal(id) {
+  const modal = document.getElementById(id);
+  if (modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+
+function openSubModal(id) {
+  openModal(id);
+  const slides = document.querySelectorAll(`#${id} .slide`);
+  slideIndices[id] = 0;
+  slides.forEach((s, i) => s.style.display = i === 0 ? 'block' : 'none');
+}
+
+function changeSlide(id, n) {
+  const slides = document.querySelectorAll(`#${id} .slide`);
+  let idx = slideIndices[id] || 0;
+  idx = (idx + n + slides.length) % slides.length;
+  slideIndices[id] = idx;
+  slides.forEach((s, i) => s.style.display = i === idx ? 'block' : 'none');
+}
+
+// Clique fora da modal fecha
+document.addEventListener('click', function (event) {
+  document.querySelectorAll('.modal.active').forEach(modal => {
+    const content = modal.querySelector('.modal-content');
+    if (!content.contains(event.target)) {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
     }
-    function closeModal(id) {
-      document.getElementById(id).classList.remove('active');
-      document.body.style.overflow = '';                        // libera scroll do body
-    }
-    function openSubModal(id) {
-      openModal(id);
-      const slides = document.querySelectorAll(`#${id} .slide`);
-      slideIndices[id] = 0;
-      slides.forEach((s,i) => s.style.display = i === 0 ? 'block' : 'none');
-    }
-    function changeSlide(id, n) {
-      const slides = document.querySelectorAll(`#${id} .slide`);
-      let idx = slideIndices[id] || 0;
-      idx = (idx + n + slides.length) % slides.length;
-      slideIndices[id] = idx;
-      slides.forEach((s,i) => s.style.display = i === idx ? 'block' : 'none');
-    }
+  });
+});
   </script>
 
   <!-- Lightbox com legenda -->
