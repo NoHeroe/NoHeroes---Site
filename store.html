@@ -181,6 +181,39 @@ html, body {
   color: #ccc;
   padding: 2rem;
 }
+/* NPC Mangás posicionado e dobrado */
+.npc-manga {
+  position: absolute;
+  bottom: 5vh;
+  right: 4vw;
+  height: 400px;
+  z-index: 10;
+  pointer-events: auto;
+  filter: drop-shadow(0 0 15px rgba(147, 51, 234, 0.6));
+}
+
+/* ───────── Novo layout de cards únicos ───────── */
+#bloco2 .card-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+#bloco2 .card-display .product-card {
+  flex: 0 0 clamp(300px, 50%, 360px);
+  background: rgba(17,17,17,0.85);
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+  cursor: pointer;
+  scroll-snap-align: none;
+}
+#bloco2 .card-display .arrow {
+  /* reaproveita seu estilo de setas */
+}
 </style>
 
 <script>
@@ -243,21 +276,32 @@ html, body {
   <div class="section-content" style="background-image: url('assets/bg-subterraneo-1.jpg'); position: relative;">
     <h2 class="titulo-bloco cor-roxa">Mangás</h2>
 
-    <div class="carousel-wrapper">
-      <button class="arrow left" onclick="scrollCarousel('bloco2', -1)">&larr;</button>
-      <div class="horizontal-scroll" id="carousel-bloco2">
-        <div class="product-card" onclick="falar('bloco2')">Mangá 1</div>
-        <div class="product-card" onclick="falar('bloco2')">Mangá 2</div>
-        <div class="product-card" onclick="falar('bloco2')">Mangá 3</div>
-      </div>
-      <button class="arrow right" onclick="scrollCarousel('bloco2', 1)">&rarr;</button>
-    </div>
+    <!-- Bloco 2 - Visual com placeholder -->
+<div class="card-display">
+  <button class="arrow left" onclick="navegarCardBloco2(-1)">&larr;</button>
 
-    <!-- NPC Mangás (mesmo padrão do bloco 1) -->
-    <img src="assets/npc-manga.png" alt="NPC Mangás" class="npc-mercador" onclick="falar('bloco2')">
-    <div class="fala escondida" id="fala-bloco2"></div>
+  <div
+    class="product-card"
+    id="card-bloco2"
+    onclick="falar('bloco2')"
+  >
+    <!-- Conteúdo será injetado via JS -->
+    <em style="opacity: 0.4;">Carregando mangás...</em>
+  </div>
+
+  <button class="arrow right" onclick="navegarCardBloco2(1)">&rarr;</button>
+</div>
+
+<!-- NPC Mangás ajustado -->
+<img
+  src="assets/npc-manga.png"
+  alt="NPC Mangás"
+  class="npc-manga"
+  onclick="falar('bloco2')"
+/></div>
   </div>
 </section>
+
 <div class="espacador"></div>
 
 <!-- BLOCO 3 -->
