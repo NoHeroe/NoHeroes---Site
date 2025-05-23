@@ -608,6 +608,34 @@ function iniciarVooVagalumes() {
 }
 
 window.addEventListener("DOMContentLoaded", iniciarVooVagalumes);
+// Lista de produtos vinda do "backend" (simulação inicial)
+const produtosBloco2 = [
+  { nome: "ROAR Vol. 1", status: "em breve" },
+  { nome: "ROAR Vol. 2", status: "em breve" },
+  { nome: "ROAR Vol. 3", status: "em breve" },
+  { nome: "FREQ Vol. 1", status: "em breve" },
+  { nome: "Echoes Vol. 1", status: "em breve" }
+];
+
+let indexAtualBloco2 = 0;
+
+function navegarCardBloco2(direcao) {
+  if (!produtosBloco2.length) return;
+  indexAtualBloco2 = (indexAtualBloco2 + direcao + produtosBloco2.length) % produtosBloco2.length;
+  renderizarCardBloco2();
+}
+
+function renderizarCardBloco2() {
+  const el = document.getElementById("card-bloco2");
+  if (!el) return;
+  const p = produtosBloco2[indexAtualBloco2];
+  el.innerHTML = `<strong>${p.nome}</strong><br><span style="opacity: 0.6;">(${p.status})</span>`;
+}
+
+// Chamada inicial (futuramente será feita após fetch dos dados reais)
+document.addEventListener("DOMContentLoaded", () => {
+  renderizarCardBloco2();
+});
 </script>
 </body>
 </html>
