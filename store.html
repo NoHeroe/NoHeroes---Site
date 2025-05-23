@@ -106,10 +106,6 @@
 
 /* CAROUSEL */ .carousel-wrapper { width: 60%; position: relative; display: flex; align-items: center; margin: 1rem 0; }
 
-.horizontal-scroll { flex: 1; display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; gap: 1rem; padding: .5rem 0; }
-
-.horizontal-scroll::-webkit-scrollbar { display: none; } .horizontal-scroll { -ms-overflow-style: none; scrollbar-width: none; }
-
 .product-card { flex: 0 0 clamp(180px, 25%, 240px); scroll-snap-align: center; background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 1rem; text-align: center; font-size: 0.85rem; }
 
 .arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: #fff; border: none; padding: 0.5rem; border-radius: 9999px; cursor: pointer; z-index: 5; }
@@ -495,189 +491,173 @@ html, body {
 </section>
 
  <script>
+  // ─────────── FALAS DOS NPCs ───────────
+  const falasRPG = {
+    // Desktop
+    bloco1: [
+      "Bem-vindo, viajante... cada botão é uma escolha.",
+      "A noite está calma, mas o destino nunca dorme.",
+      "A moeda gira... Qual será seu próximo passo?",
+      "Toque em um destino, e ele tocará você de volta.",
+      "Cada aba da loja guarda mais do que produtos... guarda segredos."
+    ],
+    bloco2: [
+      "Não permitirei que toque em nada antes que o dinheiro esteja comigo!",
+      "Leve um e descubra o mistério por trás de Caelum.",
+      "Se está aqui o mestre deve ter autorizado sua visita, ao contrário nem estaria vivo...",
+      "Não subestime essas escrituras, o valor delas deveria ser bem mais alto."
+    ],
+    bloco3: [
+      "Esses registros animados foram selados em cristais há séculos.",
+      "Cada anime contém fragmentos de memória dos ancestrais.",
+      "O portador que decifrar essa sequência verá o passado com novos olhos.",
+      "Cuidado... alguns episódios foram proibidos pelo Conselho da Luz.",
+      "O som e a imagem se unem aqui como feitiço vivo.",
+      "Não se deixe enganar, viajante. Mesmo ilusão pode conter verdade."
+    ],
+    bloco4: [
+      "Antigos grimórios traduzidos para mentes modernas.",
+      "Cada eBook é um feitiço digital em forma de palavras.",
+      "Leitores atentos verão mais do que o texto revela.",
+      "Esses pergaminhos foram preservados na Biblioteca Oculta.",
+      "Um bom mentor começa com um bom manuscrito.",
+      "Os dados contidos aqui ecoam as vozes dos sábios esquecidos."
+    ],
+    bloco5: [
+      "Mentorias não são aulas, são pactos de transformação.",
+      "A cada sessão, uma parte sua será moldada novamente.",
+      "Se fores digno, o conhecimento virá como uma lâmina afiada.",
+      "O preço da sabedoria é o sacrifício da ignorância.",
+      "Aprender aqui é um ritual. Respeite-o.",
+      "Nem todo mestre ensina... alguns apenas despertam."
+    ],
+    bloco6: [
+      "Esses itens são raros... e nem todos deveriam estar à venda.",
+      "A Arte Conceito revela visões antes do nascimento das formas.",
+      "Ouça, e as trilhas sonoras te guiarão pelos Reinos do Subconsciente.",
+      "Apenas os verdadeiros viajantes saberão usar o conteúdo VIP corretamente.",
+      "Esses bônus foram forjados para os olhos dos ousados.",
+      "Nem todo Extra é supérfluo. Às vezes, é o segredo."
+    ],
 
-const falasRPG = {
-  bloco1m: ["Salve, viajante da tela pequena!", "Cada botão leva a um destino sombrio."],
-  bloco2m: [
-    "Não permitirei que toque em nada antes que o dinheiro esteja comigo!",
-    "Leve um e descubra o mistério por trás de Caelum.",
-    "Se está aqui o mestre deve ter autorizado sua visita, ao contrário nem estaria vivo...",
-    "Não subestime essas escrituras, o valor delas deveria ser bem mais alto."
-  ],
-  bloco2: [
-    "Não permitirei que toque em nada antes que o dinheiro esteja comigo!",
-    "Leve um e descubra o mistério por trás de Caelum.",
-    "Se está aqui o mestre deve ter autorizado sua visita, ao contrário nem estaria vivo...",
-    "Não subestime essas escrituras, o valor delas deveria ser bem mais alto."
-  ],
-  bloco3m: [
-    "Esses registros animados foram selados em cristais há séculos.",
-    "Cada anime contém fragmentos de memória dos ancestrais.",
-    "O portador que decifrar essa sequência verá o passado com novos olhos.",
-    "Cuidado... alguns episódios foram proibidos pelo Conselho da Luz.",
-    "O som e a imagem se unem aqui como feitiço vivo.",
-    "Não se deixe enganar, viajante. Mesmo ilusão pode conter verdade."
-  ],
-  bloco3: [
-    "Esses registros animados foram selados em cristais há séculos.",
-    "Cada anime contém fragmentos de memória dos ancestrais.",
-    "O portador que decifrar essa sequência verá o passado com novos olhos.",
-    "Cuidado... alguns episódios foram proibidos pelo Conselho da Luz.",
-    "O som e a imagem se unem aqui como feitiço vivo.",
-    "Não se deixe enganar, viajante. Mesmo ilusão pode conter verdade."
-  ],
-  bloco4m: [
-    "Antigos grimórios traduzidos para mentes modernas.",
-    "Cada eBook é um feitiço digital em forma de palavras.",
-    "Leitores atentos verão mais do que o texto revela.",
-    "Esses pergaminhos foram preservados na Biblioteca Oculta.",
-    "Um bom mentor começa com um bom manuscrito.",
-    "Os dados contidos aqui ecoam as vozes dos sábios esquecidos."
-  ],
-  bloco4: [
-    "Antigos grimórios traduzidos para mentes modernas.",
-    "Cada eBook é um feitiço digital em forma de palavras.",
-    "Leitores atentos verão mais do que o texto revela.",
-    "Esses pergaminhos foram preservados na Biblioteca Oculta.",
-    "Um bom mentor começa com um bom manuscrito.",
-    "Os dados contidos aqui ecoam as vozes dos sábios esquecidos."
-  ],
-  bloco5m: [
-    "Mentorias não são aulas, são pactos de transformação.",
-    "A cada sessão, uma parte sua será moldada novamente.",
-    "Se fores digno, o conhecimento virá como uma lâmina afiada.",
-    "O preço da sabedoria é o sacrifício da ignorância.",
-    "Aprender aqui é um ritual. Respeite-o.",
-    "Nem todo mestre ensina... alguns apenas despertam."
-  ],
-  bloco5: [
-    "Mentorias não são aulas, são pactos de transformação.",
-    "A cada sessão, uma parte sua será moldada novamente.",
-    "Se fores digno, o conhecimento virá como uma lâmina afiada.",
-    "O preço da sabedoria é o sacrifício da ignorância.",
-    "Aprender aqui é um ritual. Respeite-o.",
-    "Nem todo mestre ensina... alguns apenas despertam."
-  ],
-  bloco6m: [
-    "Esses itens são raros... e nem todos deveriam estar à venda.",
-    "A Arte Conceito revela visões antes do nascimento das formas.",
-    "Ouça, e as trilhas sonoras te guiarão pelos Reinos do Subconsciente.",
-    "Apenas os verdadeiros viajantes saberão usar o conteúdo VIP corretamente.",
-    "Esses bônus foram forjados para os olhos dos ousados.",
-    "Nem todo Extra é supérfluo. Às vezes, é o segredo."
-  ],
-  bloco6: [
-    "Esses itens são raros... e nem todos deveriam estar à venda.",
-    "A Arte Conceito revela visões antes do nascimento das formas.",
-    "Ouça, e as trilhas sonoras te guiarão pelos Reinos do Subconsciente.",
-    "Apenas os verdadeiros viajantes saberão usar o conteúdo VIP corretamente.",
-    "Esses bônus foram forjados para os olhos dos ousados.",
-    "Nem todo Extra é supérfluo. Às vezes, é o segredo."
-  ] };
+    // Mobile
+    bloco1m: [
+      "Salve, viajante da tela pequena!",
+      "Cada botão leva a um destino sombrio."
+    ],
+    bloco2m: [
+      "Não permitirei que toque em nada antes que o dinheiro esteja comigo!",
+      "Leve um e descubra o mistério por trás de Caelum.",
+      "Se está aqui o mestre deve ter autorizado sua visita, ao contrário nem estaria vivo...",
+      "Não subestime essas escrituras, o valor delas deveria ser bem mais alto."
+    ],
+    bloco3m: [
+      "Esses registros animados foram selados em cristais há séculos.",
+      "Cada anime contém fragmentos de memória dos ancestrais.",
+      "O portador que decifrar essa sequência verá o passado com novos olhos.",
+      "Cuidado... alguns episódios foram proibidos pelo Conselho da Luz.",
+      "O som e a imagem se unem aqui como feitiço vivo.",
+      "Não se deixe enganar, viajante. Mesmo ilusão pode conter verdade."
+    ],
+    bloco4m: [
+      "Antigos grimórios traduzidos para mentes modernas.",
+      "Cada eBook é um feitiço digital em forma de palavras.",
+      "Leitores atentos verão mais do que o texto revela.",
+      "Esses pergaminhos foram preservados na Biblioteca Oculta.",
+      "Um bom mentor começa com um bom manuscrito.",
+      "Os dados contidos aqui ecoam as vozes dos sábios esquecidos."
+    ],
+    bloco5m: [
+      "Mentorias não são aulas, são pactos de transformação.",
+      "A cada sessão, uma parte sua será moldada novamente.",
+      "Se fores digno, o conhecimento virá como uma lâmina afiada.",
+      "O preço da sabedoria é o sacrifício da ignorância.",
+      "Aprender aqui é um ritual. Respeite-o.",
+      "Nem todo mestre ensina... alguns apenas despertam."
+    ],
+    bloco6m: [
+      "Esses itens são raros... e nem todos deveriam estar à venda.",
+      "A Arte Conceito revela visões antes do nascimento das formas.",
+      "Ouça, e as trilhas sonoras te guiarão pelos Reinos do Subconsciente.",
+      "Apenas os verdadeiros viajantes saberão usar o conteúdo VIP corretamente.",
+      "Esses bônus foram forjados para os olhos dos ousados.",
+      "Nem todo Extra é supérfluo. Às vezes, é o segredo."
+    ]
+  };
 
-function falar(blocoId) {
-  const el = document.getElementById('fala-' + blocoId);
-  if (!el) return;
+  // ─────────── Função de fala interativa ───────────
+  function falar(blocoId) {
+    const el = document.getElementById("fala-" + blocoId);
+    if (!el) return;
+    const frases = falasRPG[blocoId];
+    if (!frases) return;
+    const random = frases[Math.floor(Math.random() * frases.length)];
+    el.textContent = random;
+    el.classList.remove("escondida");
+    setTimeout(() => el.classList.add("escondida"), 5000);
+  }
 
-  const frases = falasRPG[blocoId];
-  if (!frases) return;
-
-  const random = frases[Math.floor(Math.random() * frases.length)];
-  el.textContent = random;
-  el.classList.remove("escondida");
-
-  setTimeout(() => {
-    el.classList.add("escondida");
-  }, 5000);
-}
-  // Função de rolagem para cada section
+  // ─────────── Rolagem suave entre seções ───────────
   function goTo(id) {
     const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
-  // Função de rolagem horizontal para os itens da loja
-  function scrollCarousel(sectionId, direction) {
-    const carousel = document.getElementById('carousel-' + sectionId);
-    if (!carousel) return;
-    const gap = parseFloat(getComputedStyle(carousel).gap) || 16;
-    const width = carousel.querySelector('.product-card')?.offsetWidth || 200;
-    carousel.scrollBy({ left: (width + gap) * direction, behavior: 'smooth' });
+  // ─────────── Vagalumes animados ───────────
+  function iniciarVooVagalumes() {
+    const container = document.getElementById("vagalumes");
+    if (!container) return;
+    const cw = container.offsetWidth,
+      ch = container.offsetHeight;
+    const vagalumes = container.querySelectorAll(".vagalume");
+
+    vagalumes.forEach((el, i) => {
+      function mover() {
+        el.style.transform = `translate(${Math.random() * cw}px, ${
+          Math.random() * ch
+        }px)`;
+        setTimeout(mover, 6000 + Math.random() * 3000);
+      }
+      function piscar() {
+        (function loop() {
+          el.style.opacity = (Math.random() * 0.8 + 0.2).toFixed(2);
+          setTimeout(loop, 2000 + Math.random() * 4000);
+        })();
+      }
+      setTimeout(() => {
+        mover();
+        piscar();
+      }, i * 300);
+    });
   }
-// Falas específicas do NPC Mercador
-falasRPG["bloco1"] = [
-  "Bem-vindo, viajante... cada botão é uma escolha.",
-  "A noite está calma, mas o destino nunca dorme.",
-  "A moeda gira... Qual será seu próximo passo?",
-  "Toque em um destino, e ele tocará você de volta.",
-  "Cada aba da loja guarda mais do que produtos... guarda segredos.",
-];
+  window.addEventListener("DOMContentLoaded", iniciarVooVagalumes);
 
-function iniciarVooVagalumes() {
-  const container = document.getElementById("vagalumes");
-  if (!container) return;
+  // ─────────── Produtos do Bloco 2 ───────────
+  const produtosBloco2 = [
+    { nome: "ROAR Vol. 1", status: "em breve" },
+    { nome: "ROAR Vol. 2", status: "em breve" },
+    { nome: "ROAR Vol. 3", status: "em breve" },
+    { nome: "FREQ Vol. 1", status: "em breve" },
+    { nome: "Echoes Vol. 1", status: "em breve" }
+  ];
+  let indexAtualBloco2 = 0;
 
-  const cw = container.offsetWidth;
-  const ch = container.offsetHeight;
+  function navegarCardBloco2(direcao) {
+    if (!produtosBloco2.length) return;
+    indexAtualBloco2 =
+      (indexAtualBloco2 + direcao + produtosBloco2.length) %
+      produtosBloco2.length;
+    renderizarCardBloco2();
+  }
 
-  const vagalumes = container.querySelectorAll(".vagalume");
-
-  vagalumes.forEach((el, index) => {
-    function mover() {
-      const x = Math.random() * cw;
-      const y = Math.random() * ch;
-      el.style.transform = `translate(${x}px, ${y}px)`;
-
-      const tempo = 6000 + Math.random() * 3000;
-      setTimeout(mover, tempo);
-    }
-
-    function piscarAleatorio() {
-      const loop = () => {
-        const tempoPiscar = 2000 + Math.random() * 4000;
-        const intensidade = Math.random() * 0.8 + 0.2;
-        el.style.opacity = intensidade.toFixed(2);
-        setTimeout(loop, tempoPiscar);
-      };
-      loop();
-    }
-
-    setTimeout(() => {
-      mover();
-      piscarAleatorio();
-    }, index * 300);
-  });
-}
-
-window.addEventListener("DOMContentLoaded", iniciarVooVagalumes);
-// Lista de produtos vinda do "backend" (simulação inicial)
-const produtosBloco2 = [
-  { nome: "ROAR Vol. 1", status: "em breve" },
-  { nome: "ROAR Vol. 2", status: "em breve" },
-  { nome: "ROAR Vol. 3", status: "em breve" },
-  { nome: "FREQ Vol. 1", status: "em breve" },
-  { nome: "Echoes Vol. 1", status: "em breve" }
-];
-
-let indexAtualBloco2 = 0;
-
-function navegarCardBloco2(direcao) {
-  if (!produtosBloco2.length) return;
-  indexAtualBloco2 = (indexAtualBloco2 + direcao + produtosBloco2.length) % produtosBloco2.length;
+  function renderizarCardBloco2() {
+    const el = document.getElementById("card-bloco2");
+    if (!el) return;
+    const p = produtosBloco2[indexAtualBloco2];
+    el.innerHTML = `<strong>${p.nome}</strong><br><span style="opacity:0.6">(${p.status})</span>`;
+  }
+  // Inicializa o card ao carregar
   renderizarCardBloco2();
-}
-
-function renderizarCardBloco2() {
-  const el = document.getElementById("card-bloco2");
-  if (!el) return;
-  const p = produtosBloco2[indexAtualBloco2];
-  el.innerHTML = `<strong>${p.nome}</strong><br><span style="opacity: 0.6;">(${p.status})</span>`;
-}
-
-// Chamada inicial (futuramente será feita após fetch dos dados reais)
-document.addEventListener("DOMContentLoaded", () => {
-  renderizarCardBloco2();
-});
 </script>
 </body>
 </html>
