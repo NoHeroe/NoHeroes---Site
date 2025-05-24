@@ -658,14 +658,12 @@ function renderizarCardBloco2() {
   const el = document.getElementById("card-bloco2");
   if (!el) return;
   const p = produtosBloco2[indexAtualBloco2];
-
   el.innerHTML = `
-    <img src="assets/produtos/${p.imagem}" alt="${p.nome}" style="width: 100%; border-radius: 8px; object-fit: cover;" />
+    <img src="assets/produtos/${p.imagem}" alt="${p.nome}" />
     <strong>${p.nome}</strong>
     <span style="opacity: 0.6;">(${p.status})</span>
   `;
 }
-
 document.addEventListener("DOMContentLoaded", renderizarCardBloco2);
 
 </script>
