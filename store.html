@@ -190,35 +190,49 @@ html, body {
 
 #bloco2 .card-display {
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 0.75rem; /* Espaço entre setas e card */
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 1rem;
   width: 100%;
 }
 
-#bloco2 .card-display .arrow {
-  background: rgba(0,0,0,0.6);
-  color: #fff;
-  border: none;
-  padding: 0.5rem;
-  border-radius: 9999px;
-  cursor: pointer;
-  font-size: 1.2rem;
-  z-index: 5;
-  position: relative;
-  flex-shrink: 0;
-}
-
 #bloco2 .card-display .product-card {
-  width: clamp(220px, 28%, 300px); /* 25% menor que antes */
-  background: rgba(17,17,17,0.85);
+  width: clamp(240px, 28%, 300px);
+  background: rgba(17, 17, 17, 0.85);
   border: 1px solid #333;
   border-radius: 12px;
-  padding: 1.5rem;
+  padding: 1rem;
   text-align: center;
   font-size: 0.9rem;
   cursor: pointer;
-  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#bloco2 .card-display .product-card img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+#bloco2 .card-controls {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  width: 100%;
+}
+
+#bloco2 .card-controls .arrow {
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  font-size: 1.2rem;
 }
 </style>
 <script>
@@ -631,11 +645,11 @@ html, body {
 
   // ─────────── Produtos do Bloco 2 ───────────
   const produtosBloco2 = [
-  { nome: "ROAR Vol. 1", status: "em breve" },
-  { nome: "ROAR Vol. 2", status: "em breve" },
-  { nome: "ROAR Vol. 3", status: "em breve" },
-  { nome: "FREQ Vol. 1", status: "em breve" },
-  { nome: "Echoes Vol. 1", status: "em breve" }
+  { nome: "ROAR Vol. 1", status: "em breve", imagem: "roar1.jpg" },
+  { nome: "ROAR Vol. 2", status: "em breve", imagem: "roar2.jpg" },
+  { nome: "ROAR Vol. 3", status: "em breve", imagem: "roar3.jpg" },
+  { nome: "FREQ Vol. 1", status: "em breve", imagem: "freq1.jpg" },
+  { nome: "Echoes Vol. 1", status: "em breve", imagem: "echoes1.jpg" }
 ];
 
 let indexAtualBloco2 = 0;
@@ -650,7 +664,12 @@ function renderizarCardBloco2() {
   const el = document.getElementById("card-bloco2");
   if (!el) return;
   const p = produtosBloco2[indexAtualBloco2];
-  el.innerHTML = `<strong>${p.nome}</strong><br><span style="opacity: 0.6;">(${p.status})</span>`;
+
+  el.innerHTML = `
+    <img src="assets/produtos/${p.imagem}" alt="${p.nome}" />
+    <strong>${p.nome}</strong>
+    <span style="opacity: 0.6;">(${p.status})</span>
+  `;
 }
 
 document.addEventListener("DOMContentLoaded", renderizarCardBloco2);
