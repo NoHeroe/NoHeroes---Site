@@ -188,15 +188,13 @@ html, body {
   filter: drop-shadow(0 0 15px rgba(147, 51, 234, 0.6));
 }
 
-/* ───────── Novo layout de cards únicos ───────── */
 #bloco2 .card-display {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start; /* card vai pra direita visual */
   margin: 2rem 0;
-}
-#bloco2 .card-display .arrow {
-  margin: 0 0.5rem;
+  padding-left: 10%; /* move o grupo mais pra direita */
+  gap: 0.5rem; /* espaço entre botões e card */
 }
 #bloco2 .card-display .product-card {
   flex: 0 0 clamp(300px, 50%, 360px);
