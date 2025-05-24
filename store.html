@@ -288,13 +288,26 @@ html, body {
 
     <div class="card-display">
       <button class="arrow left" onclick="navegarCardBloco2(-1)">&larr;</button>
-      <div class="product-card" id="card-bloco2" onclick="falar('bloco2')">
+
+      <div
+        class="product-card"
+        id="card-bloco2"
+        onclick="falar('bloco2')"
+      >
+        <!-- Conteúdo será injetado via JS -->
         <em style="opacity: 0.4;">Carregando mangás...</em>
       </div>
+
       <button class="arrow right" onclick="navegarCardBloco2(1)">&rarr;</button>
     </div>
 
-    <img src="assets/npc-manga.png" alt="NPC Mangás" class="npc-manga" onclick="falar('bloco2')">
+    <!-- NPC Mangás -->
+    <img
+      src="assets/npc-manga.png"
+      alt="NPC Mangás"
+      class="npc-manga"
+      onclick="falar('bloco2')"
+    />
     <div class="fala escondida" id="fala-bloco2"></div>
   </div>
 </section>
