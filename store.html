@@ -650,11 +650,11 @@ html, body {
 
   // ─────────── Produtos do Bloco 2 ───────────
   const produtosBloco2 = [
-  { nome: "ROAR Vol. 1", status: "em breve", imagem: "roar1.jpg" },
-  { nome: "ROAR Vol. 2", status: "em breve", imagem: "roar2.jpg" },
-  { nome: "ROAR Vol. 3", status: "em breve", imagem: "roar3.jpg" },
-  { nome: "FREQ Vol. 1", status: "em breve", imagem: "freq1.jpg" },
-  { nome: "Echoes Vol. 1", status: "em breve", imagem: "echoes1.jpg" }
+  { nome: "ROAR Vol. 1", status: "em breve", imagem: "rebirth-thumb.jpg" },
+  { nome: "ROAR Vol. 2", status: "em breve", imagem: "rebirth-thumb.jpg" },
+  { nome: "ROAR Vol. 3", status: "em breve", imagem: "rebirth-thumb.jpg" },
+  { nome: "FREQ Vol. 1", status: "em breve", imagem: "freq-thumb.jpg" },
+  { nome: "Echoes Vol. 1", status: "em breve", imagem: "echoes-thumb.jpg" }
 ];
 
 let indexAtualBloco2 = 0;
@@ -671,7 +671,7 @@ function renderizarCardBloco2() {
   const p = produtosBloco2[indexAtualBloco2];
 
   el.innerHTML = `
-    <img src="assets/produtos/${p.imagem}" alt="${p.nome}" />
+    <img src="assets/images/${p.imagem}" alt="${p.nome}" />
     <strong>${p.nome}</strong>
     <span style="opacity: 0.6;">(${p.status})</span>
   `;
