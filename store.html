@@ -197,7 +197,7 @@ html, body {
   width: 100%;
 }
 
-#bloco2 .card-display .product-card {
+#bloco2 .product-card {
   width: clamp(240px, 28%, 300px);
   background: rgba(17, 17, 17, 0.85);
   border: 1px solid #333;
@@ -210,12 +210,6 @@ html, body {
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-}
-
-#bloco2 .card-display .product-card img {
-  width: 100%;
-  border-radius: 8px;
-  object-fit: cover;
 }
 
 #bloco2 .card-controls {
@@ -668,7 +662,7 @@ function renderizarCardBloco2() {
   const p = produtosBloco2[indexAtualBloco2];
 
   el.innerHTML = `
-    <img src="assets/produtos/${p.imagem}" alt="${p.nome}" />
+    <img src="assets/produtos/${p.imagem}" alt="${p.nome}" style="width: 100%; border-radius: 8px; object-fit: cover;" />
     <strong>${p.nome}</strong>
     <span style="opacity: 0.6;">(${p.status})</span>
   `;
