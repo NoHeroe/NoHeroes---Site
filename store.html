@@ -237,10 +237,8 @@ html, body {
   cursor: pointer;
   font-size: 1.2rem;
 }
-#bloco3 .card-display,
-#bloco4 .card-display,
-#bloco5 .card-display,
-#bloco6 .card-display {
+/* === BLOCO 3 (Animes) === */
+#bloco3 .card-display-bloco3 {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -252,10 +250,7 @@ html, body {
   gap: 1rem;
 }
 
-#bloco3 .product-card,
-#bloco4 .product-card,
-#bloco5 .product-card,
-#bloco6 .product-card {
+#bloco3 .card-display-bloco3 .product-card-bloco3 {
   background: rgba(17, 17, 17, 0.85);
   border: 1px solid #333;
   border-radius: 12px;
@@ -270,29 +265,176 @@ html, body {
   width: 100%;
 }
 
-#bloco3 .product-card img,
-#bloco4 .product-card img,
-#bloco5 .product-card img,
-#bloco6 .product-card img {
+#bloco3 .product-card-bloco3 img {
   width: 100%;
   border-radius: 8px;
   object-fit: cover;
 }
 
-#bloco3 .card-controls,
-#bloco4 .card-controls,
-#bloco5 .card-controls,
-#bloco6 .card-controls {
+#bloco3 .card-controls-bloco3 {
   display: flex;
   justify-content: center;
   gap: 1rem;
   width: 100%;
 }
 
-#bloco3 .card-controls .arrow,
-#bloco4 .card-controls .arrow,
-#bloco5 .card-controls .arrow,
-#bloco6 .card-controls .arrow {
+#bloco3 .card-controls-bloco3 .arrow-bloco3 {
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+
+/* === BLOCO 4 (Ebooks) === */
+#bloco4 .card-display-bloco4 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  position: absolute;
+  right: 10vw;
+  top: 10%;
+  width: clamp(240px, 28%, 300px);
+  gap: 1rem;
+}
+
+#bloco4 .card-display-bloco4 .product-card-bloco4 {
+  background: rgba(17, 17, 17, 0.85);
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+#bloco4 .product-card-bloco4 img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+#bloco4 .card-controls-bloco4 {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+#bloco4 .card-controls-bloco4 .arrow-bloco4 {
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+
+/* === BLOCO 5 (Mentorias) === */
+#bloco5 .card-display-bloco5 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  position: absolute;
+  right: 10vw;
+  top: 10%;
+  width: clamp(240px, 28%, 300px);
+  gap: 1rem;
+}
+
+#bloco5 .card-display-bloco5 .product-card-bloco5 {
+  background: rgba(17, 17, 17, 0.85);
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+#bloco5 .product-card-bloco5 img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+#bloco5 .card-controls-bloco5 {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+#bloco5 .card-controls-bloco5 .arrow-bloco5 {
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+
+/* === BLOCO 6 (Extras) === */
+#bloco6 .card-display-bloco6 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  position: absolute;
+  right: 10vw;
+  top: 10%;
+  width: clamp(240px, 28%, 300px);
+  gap: 1rem;
+}
+
+#bloco6 .card-display-bloco6 .product-card-bloco6 {
+  background: rgba(17, 17, 17, 0.85);
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+#bloco6 .product-card-bloco6 img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+#bloco6 .card-controls-bloco6 {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+#bloco6 .card-controls-bloco6 .arrow-bloco6 {
   background: rgba(0, 0, 0, 0.6);
   color: #fff;
   border: none;
