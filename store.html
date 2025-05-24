@@ -189,22 +189,33 @@ html, body {
 }
 
 #bloco2 .card-display {
+  width: 60%;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 2rem 0;
-  gap: 0;
+  margin: 1rem 0;
 }
 
-#bloco2 .card-display .arrow {
-  position: static;
-  transform: none;
-  background: transparent;
+#bloco2 .arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.6);
   color: #fff;
-  font-size: 2rem;
-  padding: 0 0.5rem;
   border: none;
+  padding: 0.5rem;
+  border-radius: 9999px;
   cursor: pointer;
+  z-index: 5;
+}
+
+#bloco2 .arrow.left {
+  left: -2rem;
+}
+
+#bloco2 .arrow.right {
+  right: -2rem;
 }
 
 #card-bloco2 {
