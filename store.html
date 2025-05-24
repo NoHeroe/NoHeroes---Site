@@ -60,49 +60,23 @@
 
 /* MENU FIXO */ .menu { position: fixed; top: 20px; left: 20px; z-index: 20; display: flex; flex-direction: column; gap: .5rem; }
 
-.menu button {
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 9999px;
-  font-size: 0.9rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  color: #fff;
-  margin-bottom: 0.25rem;
-}
+/* BOTÕES REESTILIZADOS COM VISUAL DARK + BORDAS COLORIDAS + GLOW */ .menu button { border: 2px solid #444; background-color: #000; border-radius: 12px; font-size: 0.9rem; font-weight: bold; padding: 0.6rem 1.2rem; color: #fff; cursor: pointer; transition: all 0.3s ease; box-shadow: none; position: relative; overflow: hidden; }
 
-.menu button:hover {
-  transform: scale(1.05);
-}
+.menu button::before { content: ""; position: absolute; inset: 0; border-radius: inherit; z-index: -1; filter: blur(6px); opacity: 0.5; }
 
-/* Cores por botão */
-.menu button:nth-child(1) { /* Início */
-  background: linear-gradient(135deg, #ccc, #fff);
-  color: #000;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
-}
-.menu button:nth-child(2) { /* Mangás */
-  background: linear-gradient(135deg, #6b21a8, #9333ea);
-  box-shadow: 0 0 10px rgba(147, 51, 234, 0.5);
-}
-.menu button:nth-child(3) { /* Animes */
-  background: linear-gradient(135deg, #2563eb, #3b82f6);
-  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
-}
-.menu button:nth-child(4) { /* Ebooks */
-  background: linear-gradient(135deg, #16a34a, #4ade80);
-  box-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
-}
-.menu button:nth-child(5) { /* Mentorias */
-  background: linear-gradient(135deg, #b91c1c, #f43f5e);
-  box-shadow: 0 0 10px rgba(244, 63, 94, 0.5);
-}
-.menu button:nth-child(6) { /* Extras */
-  background: linear-gradient(135deg, #facc15, #fde68a);
-  color: #000;
-  box-shadow: 0 0 10px rgba(250, 204, 21, 0.5);
-}
+.menu button:hover { transform: scale(1.05); }
+
+/* BOTÃO: INÍCIO (branco) */ .menu button:nth-child(1) { border-color: #fff; color: #fff; } .menu button:nth-child(1)::before { background: #fff; }
+
+/* BOTÃO: MANGÁS (roxo) */ .menu button:nth-child(2) { border-color: #9333ea; color: #9333ea; } .menu button:nth-child(2)::before { background: #9333ea; }
+
+/* BOTÃO: ANIMES (azul) */ .menu button:nth-child(3) { border-color: #3b82f6; color: #3b82f6; } .menu button:nth-child(3)::before { background: #3b82f6; }
+
+/* BOTÃO: EBOOKS (verde) */ .menu button:nth-child(4) { border-color: #22c55e; color: #22c55e; } .menu button:nth-child(4)::before { background: #22c55e; }
+
+/* BOTÃO: MENTORIAS (vermelho) */ .menu button:nth-child(5) { border-color: #f43f5e; color: #f43f5e; } .menu button:nth-child(5)::before { background: #f43f5e; }
+
+/* BOTÃO: EXTRAS (dourado) */ .menu button:nth-child(6) { border-color: #facc15; color: #facc15; } .menu button:nth-child(6)::before { background: #facc15; }
 
 /* CAROUSEL */ .carousel-wrapper { width: 60%; position: relative; display: flex; align-items: center; margin: 1rem 0; }
 
