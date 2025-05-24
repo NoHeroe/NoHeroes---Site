@@ -192,15 +192,12 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 0;
   margin: 2rem 0;
   position: relative;
 }
 
-#bloco2 .card-display .arrow {
+#bloco2 .arrow {
   position: relative;
-  top: auto;
-  transform: none;
   background: rgba(0, 0, 0, 0.6);
   color: #fff;
   border: none;
@@ -213,7 +210,15 @@ html, body {
   align-items: center;
 }
 
-#bloco2 .card-display .product-card {
+#bloco2 .arrow.left {
+  margin-right: 0.25rem;
+}
+
+#bloco2 .arrow.right {
+  margin-left: 0.25rem;
+}
+
+#card-bloco2 {
   flex: 0 0 clamp(300px, 40%, 360px);
   background: rgba(17,17,17,0.85);
   border: 1px solid #333;
@@ -222,7 +227,6 @@ html, body {
   text-align: center;
   font-size: 0.9rem;
   cursor: pointer;
-  margin: 0 0.5rem;
 }
 </style>
 
@@ -288,26 +292,13 @@ html, body {
 
     <div class="card-display">
       <button class="arrow left" onclick="navegarCardBloco2(-1)">&larr;</button>
-
-      <div
-        class="product-card"
-        id="card-bloco2"
-        onclick="falar('bloco2')"
-      >
-        <!-- Conteúdo será injetado via JS -->
+      <div class="product-card" id="card-bloco2" onclick="falar('bloco2')">
         <em style="opacity: 0.4;">Carregando mangás...</em>
       </div>
-
       <button class="arrow right" onclick="navegarCardBloco2(1)">&rarr;</button>
     </div>
 
-    <!-- NPC Mangás -->
-    <img
-      src="assets/npc-manga.png"
-      alt="NPC Mangás"
-      class="npc-manga"
-      onclick="falar('bloco2')"
-    />
+    <img src="assets/npc-manga.png" alt="NPC Mangás" class="npc-manga" onclick="falar('bloco2')" />
     <div class="fala escondida" id="fala-bloco2"></div>
   </div>
 </section>
