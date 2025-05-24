@@ -190,37 +190,30 @@ html, body {
 
 #bloco2 .card-display {
   display: flex;
-  align-items: center;
   justify-content: flex-end;
+  align-items: center;
   margin: 2rem 0;
-  position: relative;
+  gap: 0.5rem; /* espaçamento entre setas e card */
 }
 
-#bloco2 .arrow {
-  position: relative;
+#bloco2 .card-display .arrow {
   background: rgba(0, 0, 0, 0.6);
   color: #fff;
   border: none;
-  padding: 0.5rem;
+  padding: 0.5rem 0.75rem;
   border-radius: 9999px;
   cursor: pointer;
-  z-index: 5;
-  height: 100%;
-  display: flex;
-  align-items: center;
+  font-size: 1.2rem;
+  transition: transform 0.2s ease;
 }
 
-#bloco2 .arrow.left {
-  margin-right: 0.25rem;
+#bloco2 .card-display .arrow:hover {
+  transform: scale(1.1);
 }
 
-#bloco2 .arrow.right {
-  margin-left: 0.25rem;
-}
-
-#card-bloco2 {
-  flex: 0 0 clamp(300px, 40%, 360px);
-  background: rgba(17,17,17,0.85);
+#bloco2 .card-display .product-card {
+  flex: 0 0 clamp(300px, 40%, 380px);
+  background: rgba(17, 17, 17, 0.85);
   border: 1px solid #333;
   border-radius: 12px;
   padding: 1.5rem;
@@ -640,30 +633,30 @@ html, body {
 
   // ─────────── Produtos do Bloco 2 ───────────
   const produtosBloco2 = [
-    { nome: "ROAR Vol. 1", status: "em breve" },
-    { nome: "ROAR Vol. 2", status: "em breve" },
-    { nome: "ROAR Vol. 3", status: "em breve" },
-    { nome: "FREQ Vol. 1", status: "em breve" },
-    { nome: "Echoes Vol. 1", status: "em breve" }
-  ];
-  let indexAtualBloco2 = 0;
+  { nome: "ROAR Vol. 1", status: "em breve" },
+  { nome: "ROAR Vol. 2", status: "em breve" },
+  { nome: "ROAR Vol. 3", status: "em breve" },
+  { nome: "FREQ Vol. 1", status: "em breve" },
+  { nome: "Echoes Vol. 1", status: "em breve" }
+];
 
-  function navegarCardBloco2(direcao) {
-    if (!produtosBloco2.length) return;
-    indexAtualBloco2 =
-      (indexAtualBloco2 + direcao + produtosBloco2.length) %
-      produtosBloco2.length;
-    renderizarCardBloco2();
-  }
+let indexAtualBloco2 = 0;
 
-  function renderizarCardBloco2() {
-    const el = document.getElementById("card-bloco2");
-    if (!el) return;
-    const p = produtosBloco2[indexAtualBloco2];
-    el.innerHTML = `<strong>${p.nome}</strong><br><span style="opacity:0.6">(${p.status})</span>`;
-  }
-  // Inicializa o card ao carregar
+function navegarCardBloco2(direcao) {
+  if (!produtosBloco2.length) return;
+  indexAtualBloco2 = (indexAtualBloco2 + direcao + produtosBloco2.length) % produtosBloco2.length;
   renderizarCardBloco2();
+}
+
+function renderizarCardBloco2() {
+  const el = document.getElementById("card-bloco2");
+  if (!el) return;
+  const p = produtosBloco2[indexAtualBloco2];
+  el.innerHTML = `<strong>${p.nome}</strong><br><span style="opacity: 0.6;">(${p.status})</span>`;
+}
+
+document.addEventListener("DOMContentLoaded", renderizarCardBloco2);
+
 </script>
 </body>
 </html>
