@@ -191,14 +191,16 @@ html, body {
 #bloco2 .card-display {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: center;
+  position: absolute;
+  right: 10vw; /* equivalente à divisão 2/3 da tela */
+  top: 20%;
+  width: clamp(240px, 28%, 300px);
   gap: 1rem;
-  width: 100%;
 }
 
-#bloco2 .product-card {
-  width: clamp(240px, 28%, 300px);
+#bloco2 .card-display .product-card {
   background: rgba(17, 17, 17, 0.85);
   border: 1px solid #333;
   border-radius: 12px;
@@ -210,12 +212,19 @@ html, body {
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+  width: 100%;
+}
+
+#bloco2 .product-card img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
 }
 
 #bloco2 .card-controls {
   display: flex;
-  gap: 1rem;
   justify-content: center;
+  gap: 1rem;
   width: 100%;
 }
 
@@ -290,12 +299,14 @@ html, body {
     <h2 class="titulo-bloco cor-roxa">Mangás</h2>
 
     <div class="card-display">
-  <div class="product-card" id="card-bloco2"></div>
-  <div class="card-controls">
-    <button class="arrow left" onclick="navegarCardBloco2(-1)">&larr;</button>
-    <button class="arrow right" onclick="navegarCardBloco2(1)">&rarr;</button>
-  </div>
-</div>
+      <div class="product-card" id="card-bloco2" onclick="falar('bloco2')">
+        <em style="opacity:.4">Carregando mangás...</em>
+      </div>
+      <div class="card-controls">
+        <button class="arrow left" onclick="navegarCardBloco2(-1)">&larr;</button>
+        <button class="arrow right" onclick="navegarCardBloco2(1)">&rarr;</button>
+      </div>
+    </div>
 
     <img src="assets/npc-manga.png" alt="NPC Mangás" class="npc-manga" onclick="falar('bloco2')" />
     <div class="fala escondida" id="fala-bloco2"></div>
@@ -658,14 +669,15 @@ function renderizarCardBloco2() {
   const el = document.getElementById("card-bloco2");
   if (!el) return;
   const p = produtosBloco2[indexAtualBloco2];
+
   el.innerHTML = `
     <img src="assets/produtos/${p.imagem}" alt="${p.nome}" />
     <strong>${p.nome}</strong>
     <span style="opacity: 0.6;">(${p.status})</span>
   `;
 }
-document.addEventListener("DOMContentLoaded", renderizarCardBloco2);
 
+document.addEventListener("DOMContentLoaded", renderizarCardBloco2);
 </script>
 </body>
 </html>
