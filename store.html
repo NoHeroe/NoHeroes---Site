@@ -191,10 +191,30 @@ html, body {
 #bloco2 .card-display {
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* card vai pra direita visual */
+  justify-content: center;
   margin: 2rem 0;
-  padding-left: 10%; /* move o grupo mais pra direita */
-  gap: 0.5rem; /* espaço entre botões e card */
+  gap: 0;
+}
+
+#bloco2 .card-display .arrow {
+  position: static;
+  transform: none;
+  background: transparent;
+  color: #fff;
+  font-size: 2rem;
+  padding: 0 0.5rem;
+  border: none;
+  cursor: pointer;
+}
+
+#card-bloco2 {
+  flex: 0 0 clamp(300px, 50%, 360px);
+  background: rgba(17, 17, 17, 0.85);
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  font-size: 0.9rem;
 }
 #bloco2 .card-display .product-card {
   flex: 0 0 clamp(300px, 50%, 360px);
