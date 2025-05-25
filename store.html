@@ -304,9 +304,20 @@
 
 /* ESPAÇADOR */ .espacador { height: 90vh; flex-shrink: 0; pointer-events: none; }
 
-/* Oculta scroll vertical e horizontal, mantendo funcionalidade */
-html, body {
-  overflow: hidden;
+/* Aplica somente no desktop */
+@media (min-width: 769px) {
+  html, body {
+    overflow-x: hidden;
+    overflow-y: hidden; /* Oculta a scrollbar do desktop */
+  }
+}
+
+/* Mobile continua podendo rolar normalmente */
+@media (max-width: 768px) {
+  html, body {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
 }
 
 #container-desktop {
