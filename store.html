@@ -1046,19 +1046,28 @@ Evite fazer perguntas... a curiosidade pode ter um preço.
 <div class="mobile-visual">
   <div id="container-mobile">
 
-    <!-- BLOCO 1M -->
-<section id="bloco1m" class="section-content" style="background-image:url('assets/bg-oriental-mobile.jpg')">
-  <h1 style="font-size:2rem;margin-bottom:1rem;">Tenda Principal</h1>
-  <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:0.75rem;">
-    <button class="btn-tenda" onclick="goTo('bloco2m')">Mangás</button>
-    <button class="btn-tenda" onclick="goTo('bloco3m')">Animes</button>
-    <button class="btn-tenda" onclick="goTo('bloco4m')">Ebooks</button>
-    <button class="btn-tenda" onclick="goTo('bloco5m')">Mentorias</button>
-    <button class="btn-tenda" onclick="goTo('bloco6m')">Extras</button>
-  </div>
-  <div class="npc npc1m">
-    <img src="assets/npc-principal.gif" alt="NPC Tenda">
-    <div class="fala escondida" id="fala-bloco1m">...</div>
+<!-- Estrutura BASE mobile para cada bloco da loja -->
+<section id="bloco2m" class="section-content" style="background-image:url('assets/bg-subterraneo-1-mobile.jpg');">
+  <!-- Parte superior: Card central com controles -->
+  <div style="height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative;">
+    <div class="product-card" style="width: 80vw; max-width: 300px;">
+      <img src="assets/images/rebirth-thumb.jpg" alt="ROAR Vol. 1" style="width: 100%; border-radius: 10px;"/>
+      <strong>ROAR Vol. 1</strong>
+      <span style="opacity: 0.6;">(em breve)</span>
+    </div>
+    <div class="card-controls" style="margin-top: 1rem; display: flex; gap: 2rem;">
+      <button class="arrow left">&larr;</button>
+      <button class="arrow right">&rarr;</button>
+    </div>
+    <button id="btn-carrinho" style="position: absolute; top: 1rem; right: 1rem; background: #9333ea; border-radius: 12px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;">
+      <img src="assets/icons/cart-medieval.png" alt="Carrinho" style="width: 22px; height: 22px;"/>
+    </button>
+  </div>  <!-- Parte inferior: NPC e interações -->  <div style="height: 40vh; position: relative; display: flex; align-items: flex-end; justify-content: space-between; padding: 0 1rem;">
+    <img src="assets/npc-manga.png" alt="NPC Mangás" style="height: 100%; max-height: 200px;"/>
+    <div class="fala" id="fala-bloco2m" style="position: absolute; bottom: 8rem; left: 1rem; max-width: 220px; background: rgba(0,0,0,0.8); border: 1px solid #9333ea; border-radius: 10px; padding: 0.75rem; font-size: 0.9rem; display: none;"></div>
+    <button onclick="abrirModalPersonagem('bloco2m')" style="position: absolute; bottom: 1rem; right: 1rem; background: #9333ea; border-radius: 9999px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;">
+      <img src="assets/icons/info-hooded.png" alt="Sobre personagem" style="width: 20px; height: 20px;"/>
+    </button>
   </div>
 </section>
 
