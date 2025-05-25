@@ -204,34 +204,48 @@
 }
 #nevoeiro-bloco3 {
   position: absolute;
-  top: 0; left: 0;
+  bottom: 0;
+  left: 0;
   width: 100%;
-  height: 100%;
+  height: 60%;
   pointer-events: none;
   z-index: 4;
   overflow: hidden;
 }
 
-#nevoeiro-bloco3::before, #nevoeiro-bloco3::after {
+#nevoeiro-bloco3::before,
+#nevoeiro-bloco3::after {
   content: '';
   position: absolute;
+  bottom: 0;
   width: 200%;
-  height: 100%;
-  background: radial-gradient(circle, rgba(59,130,246,0.3), transparent 30%);
-  animation: nevoa-deslizar 20s linear infinite;
-  opacity: 0.6;
+  height: 120%;
+  background: radial-gradient(ellipse at 50% 100%, rgba(59,130,246,0.15), transparent 70%);
+  filter: blur(25px);
+  opacity: 0.45;
+  animation: nevoa-flutuar 30s ease-in-out infinite;
 }
 
 #nevoeiro-bloco3::after {
   left: -100%;
-  animation-delay: 10s;
+  animation-delay: 15s;
+  opacity: 0.35;
 }
 
-@keyframes nevoa-deslizar {
-  from { transform: translateX(0); }
-  to { transform: translateX(50%); }
+@keyframes nevoa-flutuar {
+  0% {
+    transform: translateX(0) translateY(0) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateX(15%) translateY(-5%) scale(1.05);
+    opacity: 0.45;
+  }
+  100% {
+    transform: translateX(0) translateY(0) scale(1);
+    opacity: 0.3;
+  }
 }
-
 /* MOBILE */ .mobile-visual #container-mobile { height: 100vh; overflow-y: auto; scroll-snap-type: y mandatory; scroll-behavior: smooth; padding: 2vh 0; }
 
 .mobile-visual #container-mobile::-webkit-scrollbar { display: none; } .mobile-visual #container-mobile { -ms-overflow-style: none; scrollbar-width: none; }
