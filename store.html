@@ -254,39 +254,45 @@
   pointer-events: none;
   z-index: 12;
   overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+
+.kanji-coluna {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  gap: 0.5rem;
+  animation: kanji-cair linear infinite;
 }
 
 .kanji {
-  position: absolute;
   color: #facc15;
   font-family: 'Noto Sans JP', sans-serif;
-  font-size: 1.4rem;
-  text-shadow: 0 0 8px #facc15;
-  opacity: 0.8;
-  animation: queda-kanji linear infinite;
+  font-size: 1.2rem;
+  text-shadow: 0 0 6px #facc15, 0 0 10px #facc15;
+  opacity: 0.7;
+  transform: translateY(0);
 }
 
 .kanji::after {
   content: '';
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 4px;
-  height: 24px;
-  background: radial-gradient(circle, rgba(250,204,21,0.3), transparent 60%);
-  filter: blur(3px);
-  opacity: 0.4;
+  display: block;
+  margin: 0 auto;
+  width: 2px;
+  height: 14px;
+  background: radial-gradient(circle, rgba(250,204,21,0.25), transparent 60%);
+  filter: blur(2px);
+  opacity: 0.5;
 }
 
-@keyframes queda-kanji {
-  from {
-    transform: translateY(-10vh);
-    opacity: 0.1;
+@keyframes kanji-cair {
+  0% {
+    transform: translateY(-100%);
   }
-  to {
-    transform: translateY(100vh);
-    opacity: 0.9;
+  100% {
+    transform: translateY(100%);
   }
 }
 /* MOBILE */ .mobile-visual #container-mobile { height: 100vh; overflow-y: auto; scroll-snap-type: y mandatory; scroll-behavior: smooth; padding: 2vh 0; }
@@ -1189,21 +1195,28 @@ function gerarKanjiChuva() {
   if (!container) return;
 
   const kanjis = ["収集者", "破壊者", "収集", "殺す", "進化", "増殖", "支配", "制御"];
+  const colunas = Math.floor(window.innerWidth / 30);
 
-  for (let i = 0; i < 50; i++) {
-    const span = document.createElement("span");
-    span.classList.add("kanji");
+  for (let i = 0; i < colunas; i++) {
+    const coluna = document.createElement("div");
+    coluna.classList.add("kanji-coluna");
+    coluna.style.left = `${i * 30}px`;
 
-    const kanji = kanjis[Math.floor(Math.random() * kanjis.length)];
-    span.textContent = kanji[Math.floor(Math.random() * kanji.length)];
+    const total = 5 + Math.floor(Math.random() * 5);
 
-    span.style.left = Math.random() * 100 + "%";
-    span.style.top = "-5%";
-    span.style.fontSize = `${1 + Math.random()}rem`;
-    span.style.animationDuration = `${4 + Math.random() * 3}s`;
-    span.style.animationDelay = `${Math.random() * 4}s`;
+    for (let j = 0; j < total; j++) {
+      const span = document.createElement("span");
+      span.classList.add("kanji");
+      const kanji = kanjis[Math.floor(Math.random() * kanjis.length)];
+      span.textContent = kanji[Math.floor(Math.random() * kanji.length)];
 
-    container.appendChild(span);
+      span.style.animationDelay = `${j * 0.4}s`;
+      span.style.animationDuration = `${4 + Math.random() * 4}s`;
+
+      coluna.appendChild(span);
+    }
+
+    container.appendChild(coluna);
   }
 }
 
