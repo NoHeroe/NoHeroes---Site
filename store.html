@@ -245,6 +245,36 @@
     opacity: 0;
   }
 }
+#kanji-chuva {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 12;
+  overflow: hidden;
+}
+
+.kanji {
+  position: absolute;
+  color: #facc15;
+  font-size: 1.2rem;
+  font-family: "Noto Sans JP", sans-serif;
+  opacity: 0.7;
+  animation: queda-kanji linear infinite;
+  text-shadow: 0 0 8px #facc15;
+}
+
+@keyframes queda-kanji {
+  from {
+    transform: translateY(-120%);
+    opacity: 0.2;
+  }
+  to {
+    transform: translateY(120%);
+    opacity: 0.8;
+  }
+}
 /* MOBILE */ .mobile-visual #container-mobile { height: 100vh; overflow-y: auto; scroll-snap-type: y mandatory; scroll-behavior: smooth; padding: 2vh 0; }
 
 .mobile-visual #container-mobile::-webkit-scrollbar { display: none; } .mobile-visual #container-mobile { -ms-overflow-style: none; scrollbar-width: none; }
@@ -729,11 +759,16 @@ html, body {
 
 <!-- HTML atualizado do bloco 6 (Extras) -->
 <section id="bloco6">
-  <div class="section-content" style="background-image: url('assets/bg-subterraneo-5.jpg'); position: relative;">
+  <div class="section-content" style="background-image: url('assets/bg-subterraneo-5.jpg'); position: relative;
+
+<div id="kanji-chuva"></div>
+
     <h2 class="titulo-bloco cor-dourado">Extras</h2><div class="card-display">
+
   <div class="product-card" id="card-bloco6" onclick="falar('bloco6')">
     <em style="opacity:.4">Carregando extras...</em>
   </div>
+
   <div class="card-controls">
     <button class="arrow left" onclick="navegarCardBloco6(-1)">&larr;</button>
     <button class="arrow right" onclick="navegarCardBloco6(1)">&rarr;</button>
@@ -1134,6 +1169,31 @@ function gerarParticulasVermelhas() {
 }
 
 document.addEventListener("DOMContentLoaded", gerarParticulasVermelhas);
+
+function gerarKanjiChuva() {
+  const container = document.getElementById("kanji-chuva");
+  if (!container) return;
+
+  const kanjis = ["収集者", "破壊者", "収集", "殺す", "進化", "増殖", "支配", "制御"];
+
+  for (let i = 0; i < 60; i++) {
+    const span = document.createElement("span");
+    span.classList.add("kanji");
+
+    const kanji = kanjis[Math.floor(Math.random() * kanjis.length)];
+    span.textContent = kanji[Math.floor(Math.random() * kanji.length)];
+
+    span.style.left = Math.random() * 100 + "%";
+    span.style.top = "-5%";
+    span.style.fontSize = `${0.8 + Math.random()}rem`;
+    span.style.animationDuration = `${6 + Math.random() * 6}s`;
+    span.style.animationDelay = `${Math.random() * 6}s`;
+
+    container.appendChild(span);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", gerarKanjiChuva);
 </script>
 </body>
 </html>
