@@ -201,6 +201,36 @@
     transform: translateY(-70vh) scale(1);
     opacity: 0;
   }
+#nevoeiro-bloco3 {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+  overflow: hidden;
+}
+
+#nevoeiro-bloco3::before, #nevoeiro-bloco3::after {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(59,130,246,0.1), transparent 70%);
+  animation: nevoa-deslizar 45s linear infinite;
+  opacity: 0.4;
+}
+
+#nevoeiro-bloco3::after {
+  top: 0;
+  left: -100%;
+  animation-delay: 10s;
+}
+
+@keyframes nevoa-deslizar {
+  from { transform: translateX(0); }
+  to { transform: translateX(50%); }
+}
 }
 
 /* MOBILE */ .mobile-visual #container-mobile { height: 100vh; overflow-y: auto; scroll-snap-type: y mandatory; scroll-behavior: smooth; padding: 2vh 0; }
@@ -613,9 +643,16 @@ html, body {
 
 <div class="espacador"></div>
 
-<!-- HTML atualizado do bloco 3 (Animes) --><section id="bloco3">
+<!-- HTML atualizado do bloco 3 (Animes) -->
+<section id="bloco3">
   <div class="section-content" style="background-image: url('assets/bg-subterraneo-2.jpg'); position: relative;">
-    <h2 class="titulo-bloco cor-azul">Animes</h2><div class="card-display">
+
+<!-- Nevoeiro animado -->
+<div id="nevoeiro-bloco3"></div>
+
+    <h2 class="titulo-bloco cor-azul">Animes</h2><div
+
+ class="card-display">
   <div class="product-card" id="card-bloco3" onclick="falar('bloco3')">
     <em style="opacity:.4">Carregando animes...</em>
   </div>
