@@ -1212,41 +1212,39 @@ function gerarChuvaKanji() {
     gerarKanjisNaColuna(coluna, kanjis);
   }
 
-  function gerarKanjisNaColuna(coluna, lista) {
-    let ativo = true;
-    const ciclo = () => {
-      if (!ativo) return;
-      const kanji = document.createElement("span");
-      kanji.classList.add("kanji");
-      kanji.textContent = lista[Math.floor(Math.random() * lista.length)];
-      kanji.style.animationDuration = `${5 + Math.random() * 3}s`;
-      kanji.style.opacity = 0;
+  function gerarChuvaKanjis() {
+  const container = document.getElementById("kanji-chuva");
+  if (!container) return;
+  container.innerHTML = "";
 
-      // Rastro luminoso com pseudo-elemento
-      const rastro = document.createElement("span");
-      rastro.classList.add("kanji-rastro");
-      kanji.appendChild(rastro);
+  const kanjis = ["収集者", "破壊者", "収集", "殺す", "進化", "増殖", "支配", "制御"];
+  const colunas = 30;
 
-      coluna.appendChild(kanji);
+  for (let i = 0; i < colunas; i++) {
+    const coluna = document.createElement("div");
+    coluna.classList.add("kanji-coluna");
 
-      // Fade in/out com opacidade progressiva
-      setTimeout(() => kanji.style.opacity = 1, 50);
-      setTimeout(() => kanji.style.opacity = 0, 3000 + Math.random() * 1000);
-      setTimeout(() => {
-        kanji.remove();
-        if (Math.random() < 0.9) ciclo(); // 90% chance de continuar
-        else {
-          ativo = false;
-          coluna.remove(); // limpa coluna depois de encerrar
-        }
-      }, 5000 + Math.random() * 1000);
-    };
+    const colunaLeft = (i / colunas) * 100;
+    coluna.style.left = `${colunaLeft}%`;
+    coluna.style.animationDelay = `${Math.random() * 6}s`;
 
-    ciclo();
+    const qtdChars = Math.floor(Math.random() * 4) + 4;
+
+    for (let j = 0; j < qtdChars; j++) {
+      const span = document.createElement("span");
+      span.classList.add("kanji-char");
+
+      const palavra = kanjis[Math.floor(Math.random() * kanjis.length)];
+      const char = palavra[Math.floor(Math.random() * palavra.length)];
+      span.textContent = char;
+      span.style.animationDelay = `${j * 0.3 + Math.random()}s`;
+      coluna.appendChild(span);
+    }
+
+    container.appendChild(coluna);
   }
 }
-
-document.addEventListener("DOMContentLoaded", gerarChuvaKanji);
+document.addEventListener("DOMContentLoaded", gerarChuvaKanjis);
 </script>
 </body>
 </html>
