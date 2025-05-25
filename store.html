@@ -1209,15 +1209,18 @@ function gerarKanjiChuva() {
   if (!container) return;
 
   const kanjis = ["収集者", "破壊者", "収集", "殺す", "進化", "増殖", "支配", "制御"];
-  const colunas = 30;
+  const colunas = 21; // 70% da densidade anterior (~30 colunas)
 
   for (let i = 0; i < colunas; i++) {
     const coluna = document.createElement("div");
     coluna.classList.add("kanji-coluna");
-    coluna.style.animationDuration = `${6 + Math.random() * 4}s`;
-    coluna.style.animationDelay = `${Math.random() * 6}s`;
 
-    const caracteresNaColuna = 10 + Math.floor(Math.random() * 5);
+    // atraso variável para a animação
+    const delay = (Math.random() * 6).toFixed(2);
+    coluna.style.setProperty("--delay", `${delay}s`);
+    coluna.style.animationDelay = `0s, ${delay}s`;
+
+    const caracteresNaColuna = 6 + Math.floor(Math.random() * 4); // menos densidade
 
     for (let j = 0; j < caracteresNaColuna; j++) {
       const span = document.createElement("span");
