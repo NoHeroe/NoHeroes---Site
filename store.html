@@ -209,7 +209,7 @@
   width: 100%;
   height: 60%;
   pointer-events: none;
-  z-index: 4;
+  z-index: 6;
   overflow: hidden;
 }
 
@@ -217,25 +217,25 @@
 #nevoeiro-bloco3::after {
   content: '';
   position: absolute;
-  bottom: 0;
   width: 200%;
-  height: 120%;
-  background: radial-gradient(ellipse at 50% 100%, rgba(59,130,246,0.18), transparent 70%);
-  filter: blur(35px);
-  opacity: 0.45;
-  animation: nevoa-flutuar 30s ease-in-out infinite;
+  height: 200%;
+  bottom: -20%;
+  left: -50%;
+  background: radial-gradient(ellipse at 50% 100%, rgba(59,130,246,0.15), transparent 70%);
+  filter: blur(45px);
+  opacity: 0.4;
+  animation: nevoa-flutuar 40s ease-in-out infinite;
 }
 
 #nevoeiro-bloco3::after {
-  left: -100%;
-  animation-delay: 15s;
-  opacity: 0.35;
+  animation-delay: 20s;
+  opacity: 0.3;
 }
 
 @keyframes nevoa-flutuar {
   0%   { transform: translateX(0) translateY(0); }
-  50%  { transform: translateX(10%) translateY(-5%); }
-  100% { transform: translateX(20%) translateY(0); }
+  50%  { transform: translateX(20%) translateY(-5%); }
+  100% { transform: translateX(0%) translateY(0); }
 }
 /* MOBILE */ .mobile-visual #container-mobile { height: 100vh; overflow-y: auto; scroll-snap-type: y mandatory; scroll-behavior: smooth; padding: 2vh 0; }
 
