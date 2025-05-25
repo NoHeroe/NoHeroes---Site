@@ -1209,23 +1209,23 @@ function gerarKanjiChuva() {
     const kanji = kanjis[Math.floor(Math.random() * kanjis.length)];
     span.textContent = kanji[Math.floor(Math.random() * kanji.length)];
 
-    span.style.left = Math.random() * 100 + "%";
+    span.style.left = `${Math.random() * 100}%`;
     span.style.top = "-5%";
     span.style.fontSize = `${0.8 + Math.random()}rem`;
     span.style.animationDuration = `${6 + Math.random() * 6}s`;
-    span.style.animationDelay = `0s`;
 
     container.appendChild(span);
 
-    // Remove depois que ele cair (pra não pesar o site)
-    setTimeout(() => container.removeChild(span), 13000);
+    // Remove o kanji após 14s para evitar sobrecarga
+    setTimeout(() => {
+      if (span.parentElement) span.remove();
+    }, 14000);
   }
 
-  // Aqui está o segredo: repete a criação a cada 150ms
   setInterval(criarKanji, 150);
 }
-document.addEventListener("DOMContentLoaded", gerarChuvaKanjis);
 
+document.addEventListener("DOMContentLoaded", gerarKanjiChuva);
 </script>
 </body>
 </html>
