@@ -175,35 +175,30 @@
 
 #particulas-roxas {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   overflow: hidden;
   pointer-events: none;
   z-index: 5;
 }
 
-.particula {
+.particula-roxa {
   position: absolute;
-  width: 6px;
-  height: 6px;
-  background: radial-gradient(circle, #c084fc, transparent 60%);
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, #c084fc 0%, transparent 70%);
   border-radius: 50%;
-  opacity: 0.4;
-  animation: subir 4s linear infinite;
+  opacity: 0.5;
+  animation: flutuar-roxo linear infinite;
 }
 
-@keyframes subir {
-  0% {
-    transform: translateY(100%);
-    opacity: 0;
+@keyframes flutuar-roxo {
+  from {
+    transform: translateY(100vh) scale(0.5);
+    opacity: 0.3;
   }
-  20% {
-    opacity: 0.6;
-  }
-  100% {
-    transform: translateY(-10%);
+  to {
+    transform: translateY(-10vh) scale(1);
     opacity: 0;
   }
 }
