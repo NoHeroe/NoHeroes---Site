@@ -1196,37 +1196,34 @@ function gerarParticulasVermelhas() {
 
 document.addEventListener("DOMContentLoaded", gerarParticulasVermelhas);
 
-function gerarChuvaKanjis() {
+function gerarKanjiChuva() {
   const container = document.getElementById("kanji-chuva");
   if (!container) return;
-  container.innerHTML = "";
 
   const kanjis = ["収集者", "破壊者", "収集", "殺す", "進化", "増殖", "支配", "制御"];
-  const colunas = 30;
 
-  for (let i = 0; i < colunas; i++) {
-    const coluna = document.createElement("div");
-    coluna.classList.add("kanji-coluna");
+  function criarKanji() {
+    const span = document.createElement("span");
+    span.classList.add("kanji");
 
-    const colunaLeft = (i / colunas) * 100;
-    coluna.style.left = `${colunaLeft}%`;
-    coluna.style.animationDelay = `${Math.random() * 6}s`;
+    const kanji = kanjis[Math.floor(Math.random() * kanjis.length)];
+    span.textContent = kanji[Math.floor(Math.random() * kanji.length)];
 
-    const qtdChars = Math.floor(Math.random() * 4) + 4;
+    span.style.left = Math.random() * 100 + "%";
+    span.style.top = "-5%";
+    span.style.fontSize = `${0.8 + Math.random()}rem`;
+    span.style.animationDuration = `${6 + Math.random() * 6}s`;
+    span.style.animationDelay = `0s`;
 
-    for (let j = 0; j < qtdChars; j++) {
-      const span = document.createElement("span");
-      span.classList.add("kanji-char");
+    container.appendChild(span);
 
-      const palavra = kanjis[Math.floor(Math.random() * kanjis.length)];
-      const char = palavra[Math.floor(Math.random() * palavra.length)];
-      span.textContent = char;
-      span.style.animationDelay = `${j * 0.3 + Math.random()}s`;
-      coluna.appendChild(span);
-    }
-
-    container.appendChild(coluna);
+    // Remove depois que ele cair (pra não pesar o site)
+    setTimeout(() => container.removeChild(span), 13000);
   }
+
+  // Aqui está o segredo: repete a criação a cada 150ms
+  setInterval(criarKanji, 150);
+}
 }
 document.addEventListener("DOMContentLoaded", gerarChuvaKanjis);
 
