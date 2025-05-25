@@ -173,6 +173,41 @@
 
 .vagalume { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: radial-gradient(circle, #caff6a, transparent 70%); opacity: 0.2; transition: transform 10s linear, opacity 1s ease; }
 
+#particulas-roxas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.particula {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: radial-gradient(circle, #c084fc, transparent 60%);
+  border-radius: 50%;
+  opacity: 0.4;
+  animation: subir 4s linear infinite;
+}
+
+@keyframes subir {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-10%);
+    opacity: 0;
+  }
+}
+
 /* MOBILE */ .mobile-visual #container-mobile { height: 100vh; overflow-y: auto; scroll-snap-type: y mandatory; scroll-behavior: smooth; padding: 2vh 0; }
 
 .mobile-visual #container-mobile::-webkit-scrollbar { display: none; } .mobile-visual #container-mobile { -ms-overflow-style: none; scrollbar-width: none; }
@@ -560,7 +595,8 @@ html, body {
 
 <!-- BLOCO 2 -->
 <section id="bloco2">
-  <div class="section-content" style="background-image: url('assets/bg-subterraneo-1.jpg'); position: relative;">
+  <div class="section-content"
+<div id="particulas-roxas"></div> style="background-image: url('assets/bg-subterraneo-1.jpg'); position: relative;">
     <h2 class="titulo-bloco cor-roxa">Mangás</h2>
 
     <div class="card-display">
@@ -999,6 +1035,24 @@ function renderizarCardBloco6() {
   el.innerHTML = `<img src="assets/images/${p.imagem}" alt="${p.nome}" /><strong>${p.nome}</strong><span style="opacity: 0.6;">(${p.status})</span>`;
 }
 document.addEventListener("DOMContentLoaded", renderizarCardBloco6);
+
+function gerarParticulasRoxas() {
+  const container = document.getElementById("particulas-roxas");
+  if (!container) return;
+
+  for (let i = 0; i < 25; i++) {
+    const p = document.createElement("div");
+    p.classList.add("particula");
+    p.style.left = Math.random() * 100 + "%";
+    p.style.bottom = "0";
+    p.style.animationDelay = Math.random() * 4 + "s";
+    p.style.animationDuration = (3 + Math.random() * 2) + "s";
+    p.style.width = p.style.height = 4 + Math.random() * 6 + "px";
+    container.appendChild(p);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", gerarParticulasRoxas);
 </script>
 </body>
 </html>
