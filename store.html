@@ -216,31 +216,31 @@
 }
 #particulas-vermelhas {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   pointer-events: none;
-  overflow: hidden;
   z-index: 10;
+  overflow: hidden;
 }
 
-.particula-vermelha {
+.barra-vermelha {
   position: absolute;
   width: 2px;
   height: 20px;
-  background: linear-gradient(to top, #f43f5e 0%, transparent 80%);
-  opacity: 0.2;
-  animation: subir-particula-vermelha linear infinite;
-  border-radius: 1px;
+  background: linear-gradient(to top, #f43f5e, transparent);
+  opacity: 0.6;
+  animation: subir-barras linear infinite;
 }
 
-@keyframes subir-particula-vermelha {
-  from {
+@keyframes subir-barras {
+  0% {
     transform: translateY(100%);
-    opacity: 0.2;
+    opacity: 0;
   }
-  to {
+  30% {
+    opacity: 0.8;
+  }
+  100% {
     transform: translateY(-120%);
     opacity: 0;
   }
@@ -1157,14 +1157,14 @@ function gerarParticulasVermelhas() {
   const container = document.getElementById("particulas-vermelhas");
   if (!container) return;
 
-  for (let i = 0; i < 35; i++) {
-    const p = document.createElement("div");
-    p.classList.add("particula-vermelha");
-    p.style.left = Math.random() * 100 + "%";
-    p.style.bottom = "0";
-    p.style.animationDelay = Math.random() * 4 + "s";
-    p.style.animationDuration = (3 + Math.random() * 2) + "s";
-    container.appendChild(p);
+  for (let i = 0; i < 50; i++) {
+    const barra = document.createElement("div");
+    barra.classList.add("barra-vermelha");
+    barra.style.left = Math.random() * 100 + "%";
+    barra.style.bottom = "0";
+    barra.style.animationDuration = (2 + Math.random() * 3) + "s";
+    barra.style.animationDelay = (Math.random() * 5) + "s";
+    container.appendChild(barra);
   }
 }
 
