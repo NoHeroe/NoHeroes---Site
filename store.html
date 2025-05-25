@@ -214,6 +214,37 @@
   filter: blur(35px);
   opacity: 0.4;
 }
+#particulas-vermelhas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.particula-vermelha {
+  position: absolute;
+  width: 2px;
+  height: 20px;
+  background: linear-gradient(to top, #f43f5e 0%, transparent 80%);
+  opacity: 0.6;
+  animation: subir-particula-vermelha linear infinite;
+  border-radius: 1px;
+}
+
+@keyframes subir-particula-vermelha {
+  from {
+    transform: translateY(100vh);
+    opacity: 0.6;
+  }
+  to {
+    transform: translateY(-20vh);
+    opacity: 0;
+  }
+}
 /* MOBILE */ .mobile-visual #container-mobile { height: 100vh; overflow-y: auto; scroll-snap-type: y mandatory; scroll-behavior: smooth; padding: 2vh 0; }
 
 .mobile-visual #container-mobile::-webkit-scrollbar { display: none; } .mobile-visual #container-mobile { -ms-overflow-style: none; scrollbar-width: none; }
@@ -668,9 +699,16 @@ html, body {
 <div class="fala escondida" id="fala-bloco4"></div>
 
   </div>
-</section><div class="espacador"></div><!-- HTML atualizado do bloco 5 (Mentorias) --><section id="bloco5">
+</section>
+
+<div class="espacador"></div>
+
+<!-- HTML atualizado do bloco 5 (Mentorias) -->
+<section id="bloco5">
   <div class="section-content" style="background-image: url('assets/bg-subterraneo-4.jpg'); position: relative;">
     <h2 class="titulo-bloco cor-vermelho">Mentorias</h2><div class="card-display">
+
+<div id="particulas-vermelhas"></div>
   <div class="product-card" id="card-bloco5" onclick="falar('bloco5')">
     <em style="opacity:.4">Carregando mentorias...</em>
   </div>
@@ -1073,6 +1111,23 @@ document.addEventListener("DOMContentLoaded", renderizarCardBloco6);
   }
 
   document.addEventListener("DOMContentLoaded", gerarParticulasRoxas);
+
+function gerarParticulasVermelhas() {
+  const container = document.getElementById("particulas-vermelhas");
+  if (!container) return;
+
+  for (let i = 0; i < 35; i++) {
+    const p = document.createElement("div");
+    p.classList.add("particula-vermelha");
+    p.style.left = Math.random() * 100 + "%";
+    p.style.bottom = "0";
+    p.style.animationDelay = Math.random() * 4 + "s";
+    p.style.animationDuration = (3 + Math.random() * 2) + "s";
+    container.appendChild(p);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", gerarParticulasVermelhas);
 </script>
 </body>
 </html>
