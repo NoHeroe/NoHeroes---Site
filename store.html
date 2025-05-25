@@ -1196,23 +1196,7 @@ function gerarParticulasVermelhas() {
 
 document.addEventListener("DOMContentLoaded", gerarParticulasVermelhas);
 
-function gerarChuvaKanji() {
-  const container = document.getElementById("kanji-chuva");
-  if (!container) return;
-
-  const kanjis = ["収集者", "破壊者", "収集", "殺す", "進化", "増殖", "支配", "制御"];
-  const maxColunas = 30;
-
-  for (let i = 0; i < maxColunas; i++) {
-    const coluna = document.createElement("div");
-    coluna.classList.add("kanji-coluna");
-    coluna.style.left = `${Math.random() * 100}%`;
-    container.appendChild(coluna);
-
-    gerarKanjisNaColuna(coluna, kanjis);
-  }
-
-  function gerarChuvaKanjis() {
+function gerarChuvaKanjis() {
   const container = document.getElementById("kanji-chuva");
   if (!container) return;
   container.innerHTML = "";
@@ -1245,6 +1229,7 @@ function gerarChuvaKanji() {
   }
 }
 document.addEventListener("DOMContentLoaded", gerarChuvaKanjis);
+
 </script>
 </body>
 </html>
