@@ -747,6 +747,183 @@ html, body {
   font-weight: bold;
   cursor: pointer;
 }
+/* ========== MOBILE BASE ========== */
+.mobile-visual #container-mobile {
+  height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  padding: 2vh 0;
+}
+
+.mobile-visual section.section-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  scroll-snap-align: start;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  border-radius: 16px;
+  padding: 1.5rem;
+  position: relative;
+}
+
+/* ========== TOPO ========== */
+.mobile-top {
+  position: relative;
+  height: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-mobile-cart {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #9333ea;
+  border-radius: 12px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 50;
+}
+.btn-mobile-cart img {
+  width: 22px;
+  height: 22px;
+}
+
+.mobile-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.card-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+.card-controls .arrow {
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+/* ========== BASE INFERIOR ========== */
+.mobile-bottom {
+  position: relative;
+  height: 40%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+
+.npc-mobile {
+  max-height: 200px;
+  pointer-events: auto;
+}
+
+.btn-mobile-info {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background: #9333ea;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.btn-mobile-info img {
+  width: 20px;
+  height: 20px;
+}
+
+.mobile-bottom .fala {
+  position: absolute;
+  bottom: 6rem;
+  left: 1rem;
+  max-width: 220px;
+  background: rgba(0,0,0,0.8);
+  border-radius: 10px;
+  padding: 0.75rem;
+  font-size: 0.9rem;
+  border: 1px solid #9333ea;
+}
+
+/* ========== BLOCO 1M ========== */
+.mobile-bloco1 .fala {
+  border-color: #ffffff;
+}
+.mobile-bloco1 .btn-mobile-cart,
+.mobile-bloco1 .btn-mobile-info {
+  background: #ffffff;
+  box-shadow: 0 0 6px #ffffff77;
+}
+
+/* ========== BLOCO 2M ========== */
+.mobile-bloco2 .fala {
+  border-color: #9333ea;
+}
+.mobile-bloco2 .btn-mobile-cart,
+.mobile-bloco2 .btn-mobile-info {
+  background: #9333ea;
+  box-shadow: 0 0 6px #9333ea77;
+}
+
+/* ========== BLOCO 3M ========== */
+.mobile-bloco3 .fala {
+  border-color: #3b82f6;
+}
+.mobile-bloco3 .btn-mobile-cart,
+.mobile-bloco3 .btn-mobile-info {
+  background: #3b82f6;
+  box-shadow: 0 0 6px #3b82f677;
+}
+
+/* ========== BLOCO 4M ========== */
+.mobile-bloco4 .fala {
+  border-color: #22c55e;
+}
+.mobile-bloco4 .btn-mobile-cart,
+.mobile-bloco4 .btn-mobile-info {
+  background: #22c55e;
+  box-shadow: 0 0 6px #22c55e77;
+}
+
+/* ========== BLOCO 5M ========== */
+.mobile-bloco5 .fala {
+  border-color: #f43f5e;
+}
+.mobile-bloco5 .btn-mobile-cart,
+.mobile-bloco5 .btn-mobile-info {
+  background: #f43f5e;
+  box-shadow: 0 0 6px #f43f5e77;
+}
+
+/* ========== BLOCO 6M ========== */
+.mobile-bloco6 .fala {
+  border-color: #facc15;
+}
+.mobile-bloco6 .btn-mobile-cart,
+.mobile-bloco6 .btn-mobile-info {
+  background: #facc15;
+  box-shadow: 0 0 6px #facc1577;
+}
 </style>
 <script>
   function goTo(id) {
