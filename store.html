@@ -673,6 +673,80 @@ html, body {
   height: 40px;
   object-fit: cover;
 }
+#botao-carrinho {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background-color: #9333ea; /* roxo */
+  border: 2px solid #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+#botao-carrinho:hover {
+  transform: scale(1.05);
+}
+#botao-carrinho img {
+  width: 24px;
+  height: 24px;
+}
+.modal-carrinho {
+  position: fixed;
+  top: 60px;
+  right: 20px;
+  width: 300px;
+  background: #111;
+  border: 2px solid #9333ea;
+  border-radius: 12px;
+  padding: 1rem;
+  z-index: 49;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(147, 51, 234, 0.5);
+}
+.modal-carrinho.escondido {
+  display: none;
+}
+.modal-carrinho h3 {
+  margin-bottom: 0.5rem;
+}
+.modal-carrinho ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+.modal-carrinho li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #222;
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  font-size: 0.85rem;
+}
+.modal-carrinho li button {
+  background: transparent;
+  border: none;
+  color: #f43f5e;
+  font-weight: bold;
+  cursor: pointer;
+}
+.modal-carrinho button {
+  width: 100%;
+  padding: 0.5rem;
+  background: #9333ea;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
 </style>
 <script>
   function goTo(id) {
@@ -692,8 +766,12 @@ html, body {
     <button onclick="goTo('bloco4')">Ebooks</button>
     <button onclick="goTo('bloco5')">Mentorias</button>
     <button onclick="goTo('bloco6')">Extras</button>
-  </div>  <!-- Container scrollável -->  <div id="container-desktop">
-
+  </div>
+<!-- Botão do Carrinho -->
+<button id="botao-carrinho" onclick="abrirCarrinho()">
+  <img src="assets/icons/cart.svg" alt="Carrinho" />
+</button>
+  <!-- Container scrollável -->  <div id="container-desktop">
 <!-- BLOCO 1 -->
 <section id="bloco1">
   <div class="section-content" style="background-image: url('assets/bg-oriental.jpg'); position: relative;">
@@ -954,6 +1032,14 @@ Evite fazer perguntas... a curiosidade pode ter um preço.
     <p style="font-size: 0.75rem; margin-top: 1rem; color: #666;">© 2025 NoHeroes. Todos os direitos reservados.</p>
   </div>
 </section>
+</div>
+
+<div id="modal-carrinho" class="modal-carrinho escondido">
+  <div class="conteudo-carrinho">
+    <h3>Seu Carrinho</h3>
+    <ul id="lista-carrinho"></ul>
+    <button onclick="comprarAgora()">Comprar</button>
+  </div>
 </div>
 
 <!-- MOBILE VISUAL COM NPC E FALA -->
@@ -1413,6 +1499,41 @@ document.addEventListener('click', function (e) {
     fecharTodosModais();
   }
 });
+const carrinho = [];
+
+function abrirCarrinho() {
+  const modal = document.getElementById("modal-carrinho");
+  modal.classList.toggle("escondido");
+}
+
+function adicionarAoCarrinho(produto) {
+  carrinho.push(produto);
+  atualizarCarrinho();
+}
+
+function removerDoCarrinho(index) {
+  carrinho.splice(index, 1);
+  atualizarCarrinho();
+}
+
+function atualizarCarrinho() {
+  const lista = document.getElementById("lista-carrinho");
+  lista.innerHTML = "";
+
+  carrinho.forEach((item, i) => {
+    const li = document.createElement("li");
+    li.innerHTML = `
+      ${item}
+      <button onclick="removerDoCarrinho(${i})">X</button>
+    `;
+    lista.appendChild(li);
+  });
+}
+
+function comprarAgora() {
+  alert("Processando compra...");
+  // futura integração
+}
 </script>
 </body>
 </html>
