@@ -1033,23 +1033,25 @@ function renderizarCardBloco6() {
 }
 document.addEventListener("DOMContentLoaded", renderizarCardBloco6);
 
-function gerarParticulasRoxas() {
-  const container = document.getElementById("particulas-roxas");
-  if (!container) return;
+  function gerarParticulasRoxas() {
+    const container = document.getElementById("particulas-roxas");
+    if (!container) return;
 
-  for (let i = 0; i < 25; i++) {
-    const p = document.createElement("div");
-    p.classList.add("particula");
-    p.style.left = Math.random() * 100 + "%";
-    p.style.bottom = "0";
-    p.style.animationDelay = Math.random() * 4 + "s";
-    p.style.animationDuration = (3 + Math.random() * 2) + "s";
-    p.style.width = p.style.height = 4 + Math.random() * 6 + "px";
-    container.appendChild(p);
+    for (let i = 0; i < 25; i++) {
+      const p = document.createElement("div");
+      p.classList.add("particula-roxa");      // <— aqui!
+      p.style.left = Math.random() * 100 + "%";
+      p.style.bottom = "0";
+      p.style.animationDelay = Math.random() * 4 + "s";
+      p.style.animationDuration = (3 + Math.random() * 2) + "s";
+      const size = 4 + Math.random() * 6 + "px";
+      p.style.width = size;
+      p.style.height = size;
+      container.appendChild(p);
+    }
   }
-}
 
-document.addEventListener("DOMContentLoaded", gerarParticulasRoxas);
+  document.addEventListener("DOMContentLoaded", gerarParticulasRoxas);
 </script>
 </body>
 </html>
