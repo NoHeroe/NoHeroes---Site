@@ -267,13 +267,19 @@
 }
 
 @keyframes queda-kanji {
-  from {
+  0% {
     transform: translateY(-120%);
-    opacity: 0.2;
+    opacity: 0;
   }
-  to {
-    transform: translateY(120%);
-    opacity: 0.9;
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh); /* agora alcança o final da section */
+    opacity: 0;
   }
 }
 /* MOBILE */ .mobile-visual #container-mobile { height: 100vh; overflow-y: auto; scroll-snap-type: y mandatory; scroll-behavior: smooth; padding: 2vh 0; }
