@@ -270,16 +270,24 @@
   0% {
     transform: translateY(-120%);
     opacity: 0;
+    filter: brightness(1.2);
   }
   10% {
     opacity: 1;
+    filter: brightness(1.1);
+  }
+  70% {
+    opacity: 0.8;
+    filter: brightness(1);
   }
   90% {
-    opacity: 1;
+    opacity: 0.5;
+    filter: brightness(0.6);
   }
   100% {
-    transform: translateY(100vh); /* agora alcança o final da section */
+    transform: translateY(100vh);
     opacity: 0;
+    filter: brightness(0.2);
   }
 }
 /* MOBILE */ .mobile-visual #container-mobile { height: 100vh; overflow-y: auto; scroll-snap-type: y mandatory; scroll-behavior: smooth; padding: 2vh 0; }
