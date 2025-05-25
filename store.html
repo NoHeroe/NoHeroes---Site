@@ -1200,10 +1200,10 @@ function gerarKanjiChuva() {
     span.textContent = kanji[Math.floor(Math.random() * kanji.length)];
 
     span.style.left = Math.random() * 100 + "%";
-    span.style.top = "-5%";
+    span.style.top = "-10%";
     span.style.fontSize = `${0.8 + Math.random()}rem`;
-    span.style.animationDuration = `${6 + Math.random() * 6}s`;
-    span.style.animationDelay = `${Math.random() * 6}s`;
+    span.style.animationDuration = `${3 + Math.random() * 2}s`;
+    span.style.animationDelay = `${Math.random() * 4}s`;
 
     container.appendChild(span);
   }
