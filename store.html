@@ -619,7 +619,54 @@ html, body {
   cursor: pointer;
   font-size: 1.2rem;
 }
+.botao-personagem {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  width: 34px;
+  height: 34px;
+  background: #9333ea;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 30;
+  box-shadow: 0 0 6px #9333ea;
+  transition: transform 0.2s ease;
+}
 
+.botao-personagem:hover {
+  transform: scale(1.1);
+}
+
+.botao-personagem img {
+  width: 20px;
+  height: 20px;
+  filter: invert(1);
+}
+
+.modal-personagem {
+  position: absolute;
+  bottom: 4.5rem;
+  right: 1rem;
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  font-size: 0.85rem;
+  padding: 1rem;
+  border-radius: 10px;
+  max-width: 220px;
+  z-index: 40;
+  box-shadow: 0 0 10px #9333ea88;
+}
+
+.modal-personagem.escondido {
+  display: none;
+}
+
+.modal-personagem .conteudo-modal {
+  pointer-events: none;
+}
 </style>
 <script>
   function goTo(id) {
@@ -655,6 +702,17 @@ html, body {
   <div class="vagalume"></div>
   <div class="vagalume"></div>
 </div>
+<!-- Botão para abrir modal -->
+<div class="botao-personagem" onclick="abrirModal(this)">
+  <img src="assets/icons/hood-icon.png" alt="Personagem" />
+</div>
+
+<!-- Modal do personagem -->
+<div class="modal-personagem escondido" onclick="fecharTodosModais()">
+  <div class="conteudo-modal">
+    <p>Texto do personagem aqui...</p>
+  </div>
+</div>
     <h1 class="titulo-bloco">Tenda Principal</h1>
   <!-- Foreground do topo esquerdo -->
   <img src="assets/mato-topo.png" class="mato-topo" alt="folhagem topo">
@@ -683,7 +741,17 @@ html, body {
 
     <!-- Partículas Roxas -->
     <div id="particulas-roxas"></div>
+<!-- Botão para abrir modal -->
+<div class="botao-personagem" onclick="abrirModal(this)">
+  <img src="assets/icons/hood-icon.png" alt="Personagem" />
+</div>
 
+<!-- Modal do personagem -->
+<div class="modal-personagem escondido" onclick="fecharTodosModais()">
+  <div class="conteudo-modal">
+    <p>Texto do personagem aqui...</p>
+  </div>
+</div>
     <div class="card-display">
       <div class="product-card" id="card-bloco2" onclick="falar('bloco2')">
         <em style="opacity:.4">Carregando mangás...</em>
@@ -709,7 +777,17 @@ html, body {
 
     <!-- Nevoeiro animado -->
     <div id="nevoeiro-bloco3"></div>
+<!-- Botão para abrir modal -->
+<div class="botao-personagem" onclick="abrirModal(this)">
+  <img src="assets/icons/hood-icon.png" alt="Personagem" />
+</div>
 
+<!-- Modal do personagem -->
+<div class="modal-personagem escondido" onclick="fecharTodosModais()">
+  <div class="conteudo-modal">
+    <p>Texto do personagem aqui...</p>
+  </div>
+</div>
     <div class="card-display">
       <div class="product-card" id="card-bloco3" onclick="falar('bloco3')">
         <em style="opacity:.4">Carregando animes...</em>
@@ -730,7 +808,17 @@ html, body {
 
 <!-- HTML atualizado do bloco 4 (Ebooks) -->
 <section id="bloco4">
-  <div class="section-content" style="background-image: url('assets/bg-subterraneo-3.jpg'); position: relative;">
+  <div class="section-content" style="background-image: url('assets/bg-subterraneo-3.jpg'); position: relative;"><!-- Botão para abrir modal -->
+<div class="botao-personagem" onclick="abrirModal(this)">
+  <img src="assets/icons/hood-icon.png" alt="Personagem" />
+</div>
+
+<!-- Modal do personagem -->
+<div class="modal-personagem escondido" onclick="fecharTodosModais()">
+  <div class="conteudo-modal">
+    <p>Texto do personagem aqui...</p>
+  </div>
+</div>
     <h2 class="titulo-bloco cor-verde">Ebooks</h2><div class="card-display">
   <div class="product-card" id="card-bloco4" onclick="falar('bloco4')">
     <em style="opacity:.4">Carregando ebooks...</em>
@@ -753,7 +841,17 @@ html, body {
 <section id="bloco5">
   <div class="section-content" style="background-image: url('assets/bg-subterraneo-4.jpg'); position: relative;">
 
-<div id="particulas-vermelhas"></div>
+<div id="particulas-vermelhas"></div><!-- Botão para abrir modal -->
+<div class="botao-personagem" onclick="abrirModal(this)">
+  <img src="assets/icons/hood-icon.png" alt="Personagem" />
+</div>
+
+<!-- Modal do personagem -->
+<div class="modal-personagem escondido" onclick="fecharTodosModais()">
+  <div class="conteudo-modal">
+    <p>Texto do personagem aqui...</p>
+  </div>
+</div>
     <h2 class="titulo-bloco cor-vermelho">Mentorias</h2><div class="card-display">
 
   <div class="product-card" id="card-bloco5" onclick="falar('bloco5')">
@@ -778,7 +876,17 @@ html, body {
   <div class="section-content" style="background-image: url('assets/bg-subterraneo-5.jpg'); position: relative;">
 
 <div id="kanji-chuva"></div>
+<!-- Botão para abrir modal -->
+<div class="botao-personagem" onclick="abrirModal(this)">
+  <img src="assets/icons/hood-icon.png" alt="Personagem" />
+</div>
 
+<!-- Modal do personagem -->
+<div class="modal-personagem escondido" onclick="fecharTodosModais()">
+  <div class="conteudo-modal">
+    <p>Texto do personagem aqui...</p>
+  </div>
+</div>
     <h2 class="titulo-bloco cor-dourado">Extras</h2><div class="card-display">
 
   <div class="product-card" id="card-bloco6" onclick="falar('bloco6')">
@@ -1245,6 +1353,29 @@ function gerarKanjiChuva() {
 }
 
 document.addEventListener("DOMContentLoaded", gerarKanjiChuva);
+function abrirModal(botao) {
+  // Fecha todos antes
+  document.querySelectorAll('.modal-personagem').forEach(modal => {
+    modal.classList.add('escondido');
+  });
+
+  // Abre o que pertence ao botão clicado
+  const modal = botao.nextElementSibling;
+  if (modal) modal.classList.remove('escondido');
+}
+
+function fecharTodosModais() {
+  document.querySelectorAll('.modal-personagem').forEach(modal => {
+    modal.classList.add('escondido');
+  });
+}
+
+// Fecha modal ao clicar fora de qualquer modal
+document.addEventListener('click', function (e) {
+  if (!e.target.closest('.botao-personagem') && !e.target.closest('.modal-personagem')) {
+    fecharTodosModais();
+  }
+});
 </script>
 </body>
 </html>
