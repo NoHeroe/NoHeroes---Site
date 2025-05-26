@@ -1372,267 +1372,210 @@ Evite fazer perguntas... a curiosidade pode ter um preço.
 
     <!-- BLOCO 1 -->
     <section id="bloco1m">
-      <div class="section-content-m" style="background-image: url('assets/bg-oriental.jpg'); position: relative;">
-
-        <div id="vagalumes">
-          <div class="vagalume"></div>
-          <div class="vagalume"></div>
-          <div class="vagalume"></div>
-          <div class="vagalume"></div>
-          <div class="vagalume"></div>
-          <div class="vagalume"></div>
-          <div class="vagalume"></div>
-          <div class="vagalume"></div>
-          <div class="vagalume"></div>
+  <div class="section-content-m">
+    <div class="bloco-topo">
+      <span class="titulo-bloco-m cor-branca-m">Início</span>
+      <div class="card-display-m">
+        <div class="product-card-m" id="card-inicio">
+          <!-- Conteúdo do card principal -->
+          Bem-vindo à Loja NoHeroes!
         </div>
-
-        <!-- Botão para abrir modal -->
-        <div class="botao-personagem-m" onclick="abrirModalM(this)">
-          <img src="assets/icons/hood-icon.png" alt="Personagem" />
-        </div>
-
-        <!-- Modal do personagem -->
-        <div class="modal-personagem-m escondido-m" onclick="fecharTodosModaisM()">
-          <div class="conteudo-modal-m">
-            <h3>Mercador das Sombras</h3>
-            <p>
-              Um lacaio do Vazio em missão secreta. À primeira vista, parece apenas um vendedor excêntrico,
-              mas é o responsável por guardar os artefatos e convidar visitantes intrigantes para passagens ocultas.
-              Ele é o único com acesso ao sistema de compras e ao carrinho — nada sai da loja sem passar por ele.
-            </p>
-          </div>
-        </div>
-
-        <h1 class="titulo-bloco-m">Tenda Principal</h1>
-
-        <!-- Foreground do topo esquerdo -->
-        <img src="assets/mato-topo.png" class="mato-topo-m" alt="folhagem topo" />
-
-        <!-- Foreground do gramado inferior -->
-        <img src="assets/gramado-bottom.png" class="gramado-bottom-m" alt="gramado inferior" />
-
-        <!-- NPC Mercador -->
-        <img src="assets/npc-mercador.png" alt="NPC Mercador" class="npc-mercador-m" onclick="falar('bloco1')" />
-        <div class="fala escondida" id="fala-bloco1"></div>
-
       </div>
-    </section>
+    </div>
+    <div class="bloco-base">
+      <div id="vagalumes"></div>
+      <img class="npc-mercador-m" src="assets/npc-mercador.png" alt="Mercador" />
+      <div id="fala-bloco1" class="fala escondida">
+        <!-- Frase do NPC principal -->
+        Pronto para explorar um novo mundo?
+      </div>
+      <div class="botao-personagem-m">
+        <img src="assets/icone-personagem.svg" alt="Ver personagem" />
+      </div>
+      <div class="modal-personagem-m escondido-m">
+        <div class="conteudo-modal-m">
+          <!-- Info personagem -->
+          Sobre o Mercador: negociante sombrio do universo NoHeroes.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
     <div class="espacador-m"></div>
 
     <!-- BLOCO 2 -->
     <section id="bloco2m">
-      <div class="section-content-m" style="background-image: url('assets/bg-subterraneo-1.jpg'); position: relative;">
-
-        <h2 class="titulo-bloco-m cor-roxa-m">Mangás</h2>
-
-        <!-- Partículas Roxas -->
-        <div id="particulas-roxas"></div>
-
-        <!-- Botão para abrir modal -->
-        <div class="botao-personagem-m" onclick="abrirModalM(this)">
-          <img src="assets/icons/hood-icon.png" alt="Personagem" />
+  <div class="section-content-m">
+    <div class="bloco-topo">
+      <span class="titulo-bloco-m cor-roxa-m">Mangás</span>
+      <div class="card-display-m">
+        <div class="product-card-m" id="card-manga">
+          <!-- Conteúdo do card manga -->
+          Mangás colecionáveis e exclusivos NoHeroes.
         </div>
-
-        <!-- Modal do personagem -->
-        <div class="modal-personagem-m escondido-m" onclick="fecharTodosModaisM()">
-          <div class="conteudo-modal-m">
-            <h3>Vassala Sombria</h3>
-            <p>
-              Fiel serva do mesmo mestre do Mercador, atua como segurança e avaliadora dos visitantes.
-              Sua frieza e lealdade inquebrantável a tornam implacável. Reluta em interações humanas,
-              mas há quem diga que uma boa conversa ou uma oferta irresistível podem fazê-la hesitar.
-            </p>
-          </div>
+        <div class="card-controls-m">
+          <button class="arrow" id="prev-manga">&#8592;</button>
+          <button class="arrow" id="next-manga">&#8594;</button>
         </div>
-
-        <div class="card-display-m">
-          <div class="product-card-m" id="card-bloco2m" onclick="falar('bloco2')">
-            <em style="opacity:.4">Carregando mangás...</em>
-          </div>
-          <div class="card-controls-m">
-            <button class="arrow left" onclick="navegarCardBloco2m(-1)">&larr;</button>
-            <button class="arrow right" onclick="navegarCardBloco2m(1)">&rarr;</button>
-          </div>
-        </div>
-
-        <img src="assets/npc-manga.png" alt="NPC Mangás" class="npc-manga-m" onclick="falar('bloco2')" />
-        <div class="fala escondida" id="fala-bloco2"></div>
-
       </div>
-    </section>
+    </div>
+    <div class="bloco-base">
+      <div id="particulas-roxas"></div>
+      <img class="npc-manga-m" src="assets/npc-manga.png" alt="NPC Mangá" />
+      <div id="fala-bloco2" class="fala escondida">
+        Colecione volumes lendários!
+      </div>
+      <div class="botao-personagem-m">
+        <img src="assets/icone-personagem.svg" alt="Ver personagem" />
+      </div>
+      <div class="modal-personagem-m escondido-m">
+        <div class="conteudo-modal-m">
+          NPC Mangá: Guardião das histórias proibidas.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
     <div class="espacador-m"></div>
 
     <!-- BLOCO 3 -->
     <section id="bloco3m">
-      <div class="section-content-m" style="background-image: url('assets/bg-subterraneo-2.jpg'); position: relative;">
-
-        <h2 class="titulo-bloco-m cor-azul-m">Animes</h2>
-
-        <!-- Nevoeiro animado -->
-        <div id="nevoeiro-bloco3"></div>
-
-        <!-- Botão para abrir modal -->
-        <div class="botao-personagem-m" onclick="abrirModalM(this)">
-          <img src="assets/icons/hood-icon.png" alt="Personagem" />
+  <div class="section-content-m">
+    <div class="bloco-topo">
+      <span class="titulo-bloco-m cor-azul-m">Animes</span>
+      <div class="card-display-m">
+        <div class="product-card-m" id="card-anime">
+          Animes e episódios especiais NoHeroes.
         </div>
-
-        <!-- Modal do personagem -->
-        <div class="modal-personagem-m escondido-m" onclick="fecharTodosModaisM()">
-          <div class="conteudo-modal-m">
-            <h3>O Velho da Gruta</h3>
-            <p>
-              Preso há séculos em uma caverna esquecida, sobrevive em meio à escuridão vendendo orbes
-              de memória em troca de mantimentos. Suas palavras são desconexas, mas carregadas de sabedoria
-              e pistas sobre mundos perdidos. Ninguém sabe seu verdadeiro nome — apenas que ele observa... sempre.
-            </p>
-          </div>
+        <div class="card-controls-m">
+          <button class="arrow" id="prev-anime">&#8592;</button>
+          <button class="arrow" id="next-anime">&#8594;</button>
         </div>
-
-        <div class="card-display-m">
-          <div class="product-card-m" id="card-bloco3m" onclick="falar('bloco3')">
-            <em style="opacity:.4">Carregando animes...</em>
-          </div>
-          <div class="card-controls-m">
-            <button class="arrow left" onclick="navegarCardBloco3m(-1)">&larr;</button>
-            <button class="arrow right" onclick="navegarCardBloco3m(1)">&rarr;</button>
-          </div>
-        </div>
-
-        <img src="assets/npc-anime.png" alt="NPC Animes" class="npc-anime-m" onclick="falar('bloco3')" />
-        <div class="fala escondida" id="fala-bloco3"></div>
-
       </div>
-    </section>
+    </div>
+    <div class="bloco-base">
+      <div id="nevoeiro-bloco3"></div>
+      <img class="npc-anime-m" src="assets/npc-anime.png" alt="NPC Anime" />
+      <div id="fala-bloco3" class="fala escondida">
+        Assista animações inéditas...
+      </div>
+      <div class="botao-personagem-m">
+        <img src="assets/icone-personagem.svg" alt="Ver personagem" />
+      </div>
+      <div class="modal-personagem-m escondido-m">
+        <div class="conteudo-modal-m">
+          NPC Anime: Protetor dos episódios secretos.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
     <div class="espacador-m"></div>
 
     <!-- BLOCO 4 -->
     <section id="bloco4m">
-      <div class="section-content-m" style="background-image: url('assets/bg-subterraneo-3.jpg'); position: relative;">
-
-        <!-- Botão para abrir modal -->
-        <div class="botao-personagem-m" onclick="abrirModalM(this)">
-          <img src="assets/icons/hood-icon.png" alt="Personagem" />
+  <div class="section-content-m">
+    <div class="bloco-topo">
+      <span class="titulo-bloco-m cor-verde-m">eBooks</span>
+      <div class="card-display-m">
+        <div class="product-card-m" id="card-ebook">
+          Livros digitais para expandir sua jornada.
         </div>
-
-        <!-- Modal do personagem -->
-        <div class="modal-personagem-m escondido-m" onclick="fecharTodosModaisM()">
-          <div class="conteudo-modal-m">
-            <h3>Fories Ortiz</h3>
-            <p>
-              A armadura viva que um dia foi o general supremo de um reino agora extinto.
-              Carrega em si as almas de todo seu batalhão. Isolado na biblioteca ancestral,
-              protege os livros amaldiçoados e os grimórios proibidos de mãos erradas.
-              Seu olhar silencioso julga se o leitor é digno... ou tolo.
-            </p>
-          </div>
+        <div class="card-controls-m">
+          <button class="arrow" id="prev-ebook">&#8592;</button>
+          <button class="arrow" id="next-ebook">&#8594;</button>
         </div>
-
-        <h2 class="titulo-bloco-m cor-verde-m">Ebooks</h2>
-
-        <div class="card-display-m">
-          <div class="product-card-m" id="card-bloco4m" onclick="falar('bloco4')">
-            <em style="opacity:.4">Carregando ebooks...</em>
-          </div>
-          <div class="card-controls-m">
-            <button class="arrow left" onclick="navegarCardBloco4m(-1)">&larr;</button>
-            <button class="arrow right" onclick="navegarCardBloco4m(1)">&rarr;</button>
-          </div>
-        </div>
-
-        <img src="assets/npc-ebook.png" alt="NPC Ebooks" class="npc-ebook-m" onclick="falar('bloco4')" />
-        <div class="fala escondida" id="fala-bloco4"></div>
-
       </div>
-    </section>
+    </div>
+    <div class="bloco-base">
+      <img class="npc-ebook-m" src="assets/npc-ebook.png" alt="NPC Ebook" />
+      <div id="fala-bloco4" class="fala escondida">
+        Domine os segredos dos livros digitais!
+      </div>
+      <div class="botao-personagem-m">
+        <img src="assets/icone-personagem.svg" alt="Ver personagem" />
+      </div>
+      <div class="modal-personagem-m escondido-m">
+        <div class="conteudo-modal-m">
+          NPC Ebook: Guardião da Biblioteca Esquecida.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
     <div class="espacador-m"></div>
 
     <!-- BLOCO 5 -->
     <section id="bloco5m">
-      <div class="section-content-m" style="background-image: url('assets/bg-subterraneo-4.jpg'); position: relative;">
-
-        <div id="particulas-vermelhas"></div>
-
-        <!-- Botão para abrir modal -->
-        <div class="botao-personagem-m" onclick="abrirModalM(this)">
-          <img src="assets/icons/hood-icon.png" alt="Personagem" />
+  <div class="section-content-m">
+    <div class="bloco-topo">
+      <span class="titulo-bloco-m cor-vermelho-m">Mentorias</span>
+      <div class="card-display-m">
+        <div class="product-card-m" id="card-mentoria">
+          Aprenda e evolua com nossos mentores.
         </div>
-
-        <!-- Modal do personagem -->
-        <div class="modal-personagem-m escondido-m" onclick="fecharTodosModaisM()">
-          <div class="conteudo-modal-m">
-            <h3>Ryukess, o Draconiano Ladino</h3>
-            <p>
-              Último sobrevivente de sua linhagem extinta, mestre das artes proibidas e dos ensinamentos perdidos.
-              Motivado por vingança e sabedoria, abriu sua mente e seu esconderijo para oferecer mentorias profundas
-              — únicas em todo o continente. Mas cuidado: seus pactos não são reversíveis.
-            </p>
-          </div>
+        <div class="card-controls-m">
+          <button class="arrow" id="prev-mentoria">&#8592;</button>
+          <button class="arrow" id="next-mentoria">&#8594;</button>
         </div>
-
-        <h2 class="titulo-bloco-m cor-vermelho-m">Mentorias</h2>
-
-        <div class="card-display-m">
-          <div class="product-card-m" id="card-bloco5m" onclick="falar('bloco5')">
-            <em style="opacity:.4">Carregando mentorias...</em>
-          </div>
-          <div class="card-controls-m">
-            <button class="arrow left" onclick="navegarCardBloco5m(-1)">&larr;</button>
-            <button class="arrow right" onclick="navegarCardBloco5m(1)">&rarr;</button>
-          </div>
-        </div>
-
-        <img src="assets/npc-mentoria.png" alt="NPC Mentoria" class="npc-mentoria-m" onclick="falar('bloco5')" />
-        <div class="fala escondida" id="fala-bloco5"></div>
-
       </div>
-    </section>
+    </div>
+    <div class="bloco-base">
+      <div id="particulas-vermelhas"></div>
+      <img class="npc-mentoria-m" src="assets/npc-mentoria.png" alt="NPC Mentoria" />
+      <div id="fala-bloco5" class="fala escondida">
+        Ritualize sua evolução interior.
+      </div>
+      <div class="botao-personagem-m">
+        <img src="assets/icone-personagem.svg" alt="Ver personagem" />
+      </div>
+      <div class="modal-personagem-m escondido-m">
+        <div class="conteudo-modal-m">
+          NPC Mentoria: Mestre dos Rituais Sombrio.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
     <div class="espacador-m"></div>
 
     <!-- BLOCO 6 -->
     <section id="bloco6m">
-      <div class="section-content-m" style="background-image: url('assets/bg-subterraneo-5.jpg'); position: relative;">
-
-        <div id="kanji-chuva"></div>
-
-        <!-- Botão para abrir modal -->
-        <div class="botao-personagem-m" onclick="abrirModalM(this)">
-          <img src="assets/icons/hood-icon.png" alt="Personagem" />
+  <div class="section-content-m">
+    <div class="bloco-topo">
+      <span class="titulo-bloco-m cor-dourado-m">Extras</span>
+      <div class="card-display-m">
+        <div class="product-card-m" id="card-extras">
+          Itens lendários e conteúdo VIP.
         </div>
-
-        <!-- Modal do personagem -->
-        <div class="modal-personagem-m escondido-m" onclick="fecharTodosModaisM()">
-          <div class="conteudo-modal-m">
-            <h3>O Colecionador</h3>
-            <p>
-              Apaixonado por criaturas raras, o Colecionador mantém em seus sarcófagos seres de todos os tipos.
-              Sua origem e motivações são desconhecidas, mas sua presença é sempre seguida de silêncio e temor.
-              Evite fazer perguntas... a curiosidade pode ter um preço.
-            </p>
-          </div>
+        <div class="card-controls-m">
+          <button class="arrow" id="prev-extras">&#8592;</button>
+          <button class="arrow" id="next-extras">&#8594;</button>
         </div>
-
-        <h2 class="titulo-bloco-m cor-dourado-m">Extras</h2>
-
-        <div class="card-display-m">
-          <div class="product-card-m" id="card-bloco6m" onclick="falar('bloco6')">
-            <em style="opacity:.4">Carregando extras...</em>
-          </div>
-          <div class="card-controls-m">
-            <button class="arrow left" onclick="navegarCardBloco6m(-1)">&larr;</button>
-            <button class="arrow right" onclick="navegarCardBloco6m(1)">&rarr;</button>
-          </div>
-        </div>
-
-        <img src="assets/npc-extras.png" alt="NPC Extras" class="npc-extras-m" onclick="falar('bloco6')" />
-        <div class="fala escondida" id="fala-bloco6"></div>
-
       </div>
-    </section>
+    </div>
+    <div class="bloco-base">
+      <div id="kanji-chuva"></div>
+      <img class="npc-extras-m" src="assets/npc-extras.png" alt="NPC Extras" />
+      <div id="fala-bloco6" class="fala escondida">
+        Apenas para os verdadeiros colecionadores...
+      </div>
+      <div class="botao-personagem-m">
+        <img src="assets/icone-personagem.svg" alt="Ver personagem" />
+      </div>
+      <div class="modal-personagem-m escondido-m">
+        <div class="conteudo-modal-m">
+          NPC Extras: Guardião dos Segredos Proibidos.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
     <div class="espacador-m"></div>
 
