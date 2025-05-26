@@ -9,19 +9,14 @@
 
 *{ margin: 0; padding: 0; box-sizing: border-box; } html, body { font-family: 'Inter', sans-serif; background: #000; color: #fff; height: 100%; overflow-x: hidden; overflow-y: auto; }
 
-/* esconder mobile por padrão e desktop por padrão */
+/* — padrões antes do media query — */
 .mobile-visual { display: none; }
 .desktop-visual { display: block; }
 
-/* em telas até 768px, só mostre mobile */
-@media (max-width: 768px) {
+/* — apenas em telas até 768px — */
+@media screen and (max-width: 768px) {
   .desktop-visual { display: none; }
   .mobile-visual  { display: block; }
-}
-/* em telas acima de 768px, só mostre desktop */
-@media (min-width: 769px) {
-  .desktop-visual { display: block; }
-  .mobile-visual  { display: none; }
 }
 
 /* TÍTULOS DOS BLOCOS DESKTOP */ .titulo-bloco { position: absolute; top: 1rem; left: 1.5rem; font-size: 2rem; font-weight: bold; text-shadow: 0 0 10px currentColor; z-index: 10; }
