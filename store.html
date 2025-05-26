@@ -1761,7 +1761,6 @@ Evite fazer perguntas... a curiosidade pode ter um preço.
 
 
  <script>
-  // ─────────── FALAS DOS NPCs ───────────
   const falasRPG = {
     // Desktop
     bloco1: [
@@ -1824,7 +1823,6 @@ Evite fazer perguntas... a curiosidade pode ter um preço.
 ],
   };
 
-  // ─────────── Função de fala interativa ───────────
   function falar(blocoId) {
     const el = document.getElementById("fala-" + blocoId);
     if (!el) return;
@@ -1836,13 +1834,11 @@ Evite fazer perguntas... a curiosidade pode ter um preço.
     setTimeout(() => el.classList.add("escondida"), 5000);
   }
 
-  // ─────────── Rolagem suave entre seções ───────────
   function goTo(id) {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
-  // ─────────── Vagalumes animados ───────────
   function iniciarVooVagalumes() {
     const container = document.getElementById("vagalumes");
     if (!container) return;
@@ -1871,7 +1867,6 @@ Evite fazer perguntas... a curiosidade pode ter um preço.
   }
   window.addEventListener("DOMContentLoaded", iniciarVooVagalumes);
 
-  // ─────────── Produtos do Bloco 2 ───────────
   const produtosBloco2 = [
   { nome: "ROAR Vol. 1", status: "em breve", imagem: "rebirth-thumb.jpg" },
   { nome: "ROAR Vol. 2", status: "em breve", imagem: "rebirth-thumb.jpg" },
@@ -2101,15 +2096,13 @@ function atualizarCarrinho() {
 
 function comprarAgora() {
   alert("Processando compra...");
-  // futura integração
 }
-// —————— Scroll para seções Mobile ——————
 function goToM(id) {
   const el = document.getElementById(id);
   if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-// —————— Carrinho Mobile ——————
+
 function abrirCarrinhoM() {
   document.getElementById("modal-carrinho-m")
     .classList.toggle("escondido-m");
@@ -2118,7 +2111,6 @@ function comprarAgoraM() {
   alert("Processando compra (mobile)…");
 }
 
-// —————— Carrossel Mobile ——————
 const produtosBloco2  = window.produtosBloco2;  // reaproveita arrays desktop
 const produtosBloco3  = window.produtosBloco3;
 const produtosBloco4  = window.produtosBloco4;
@@ -2183,7 +2175,6 @@ document.addEventListener("DOMContentLoaded", () => {
   renderizar6m();
 });
 
-// —————— Modais Personagem Mobile ——————
 function abrirModalM(botao) {
   document.querySelectorAll('.modal-personagem-m')
     .forEach(m => m.classList.add('escondido-m'));
