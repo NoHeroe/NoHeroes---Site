@@ -776,7 +776,7 @@
     z-index: 5;
   }
 
-  .botao-personagem, .botao-carrinho {
+  .botao-personagem, .botao-carrinho2 {
     z-index: 15;
   }
 }
@@ -789,9 +789,9 @@
 
 .espacador { height: 90vh; flex-shrink: 0; pointer-events: none; }
 
-#botao-carrinho { position: fixed; bottom: 20px; left: 20px; width: 60px; height: 60px; border-radius: 12px; background-color: #9333ea; border: 2px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 50; cursor: pointer; transition: transform 0.2s ease; }
+#botao-carrinho2 { position: fixed; bottom: 20px; left: 20px; width: 60px; height: 60px; border-radius: 12px; background-color: #9333ea; border: 2px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 50; cursor: pointer; transition: transform 0.2s ease; }
 
-#botao-carrinho img { width: 55px; height: 55px; }
+#botao-carrinho2 img { width: 55px; height: 55px; }
 
 .botao-personagem { position: fixed; bottom: 20px; right: 20px; width: 34px; height: 34px; background: #9333ea; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 30; box-shadow: 0 0 6px #9333ea; transition: transform 0.2s ease; }
 
@@ -799,9 +799,9 @@
 
 .modal-personagem.escondido { display: none; }
 
-.modal-carrinho { position: fixed; bottom: 80px; left: 20px; width: 90vw; background: #111; border: 2px solid #9333ea; border-radius: 12px; padding: 1rem; z-index: 49; color: #fff; box-shadow: 0 0 20px rgba(147, 51, 234, 0.5); }
+.modal-carrinho2 { position: fixed; bottom: 80px; left: 20px; width: 90vw; background: #111; border: 2px solid #9333ea; border-radius: 12px; padding: 1rem; z-index: 49; color: #fff; box-shadow: 0 0 20px rgba(147, 51, 234, 0.5); }
 
-.modal-carrinho.escondido { display: none; } }
+.modal-carrinho2.escondido { display: none; } }
 
 /* === FIM DO CSS === */
 
@@ -1111,8 +1111,8 @@ Evite fazer perguntas... a curiosidade pode ter um preço.
   </div>
 
   <!-- Botão do Carrinho -->
-  <button id="botao-carrinho" onclick="abrirCarrinho()">
-    <img src="assets/icons/cart.png" alt="Carrinho" />
+  <button id="botao-carrinho2" onclick="abrirCarrinho2()">
+    <img src="assets/icons/cart.png" alt="Carrinho2" />
   </button>
 
   <!-- Container Scrollável -->
