@@ -722,7 +722,129 @@
   cursor: pointer;
 }
 
-/* === MOBILE === */
+/* === RESPONSIVIDADE MOBILE === */
+@media (max-width: 768px) {
+  /* Oculta visual desktop */
+  .desktop-visual {
+    display: none !important;
+  }
+
+  /* Section adaptável */
+  .section-content {
+    width: 92vw;
+    height: auto;
+    padding: 1.5rem;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  /* Título centralizado menor */
+  .titulo-bloco {
+    font-size: 1.5rem;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* Cards centralizados e fluidos */
+  .card-display {
+    position: static;
+    width: 100%;
+    margin-top: 2rem;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .product-card {
+    width: 90vw;
+    font-size: 0.9rem;
+    padding: 1rem;
+  }
+
+  .product-card img {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  /* Controles do carrossel */
+  .card-controls {
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  /* NPCs reposicionados */
+  .npc-mercador,
+  .npc-manga,
+  .npc-anime,
+  .npc-ebook,
+  .npc-mentoria,
+  .npc-extras {
+    bottom: 0;
+    right: 50%;
+    transform: translateX(50%);
+    height: 160px;
+    z-index: 10;
+  }
+
+  /* Oculta elementos decorativos */
+  .mato-topo,
+  .gramado-bottom {
+    display: none;
+  }
+
+  /* Botão do personagem */
+  .botao-personagem {
+    bottom: 80px;
+    right: 16px;
+    width: 34px;
+    height: 34px;
+  }
+
+  .botao-personagem img {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Modal do personagem */
+  .modal-personagem {
+    bottom: 120px;
+    right: 20px;
+    max-width: 85vw;
+    font-size: 0.85rem;
+    padding: 1rem;
+  }
+
+  /* Carrinho fixo inferior */
+  #botao-carrinho {
+    bottom: 20px;
+    right: 20px;
+    top: auto;
+  }
+
+  .modal-carrinho {
+    top: auto;
+    bottom: 100px;
+    right: 20px;
+    width: 90vw;
+  }
+
+  /* Menu compacto */
+  .menu {
+    top: 10px;
+    left: 10px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .menu button {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+  }
+}
 
 </style>
 <script>
