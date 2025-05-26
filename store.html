@@ -2082,19 +2082,7 @@ function atualizarCarrinho() {
 function comprarAgora() {
   alert("Processando compra...");
 }
-// — Alternância entre versão desktop e mobile com base na largura da viewport —
-function ajustarVisual() {
-  const isMobile = window.innerWidth <= 900; // pode ajustar esse valor se quiser
-  const desktop = document.querySelector('.desktop-visual');
-  const mobile  = document.querySelector('.mobile-visual');
-  if (!desktop || !mobile) return;
 
-  desktop.style.display = isMobile ? 'none' : 'block';
-  mobile.style.display  = isMobile ? 'block' : 'none';
-}
-
-window.addEventListener('resize', ajustarVisual);
-window.addEventListener('DOMContentLoaded', ajustarVisual);
 </script>
 </body>
 </html>
