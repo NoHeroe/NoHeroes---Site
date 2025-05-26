@@ -15,8 +15,7 @@
   font-family: 'Inter', sans-serif;
   background: #000;
   color: #fff;
-  height: 100%;
-  overflow-x: hidden;}
+  height: 100%;}
 
 .desktop-visual { display: block; } .mobile-visual  { display: none; }
 
@@ -25,17 +24,6 @@
 .titulo-centralizado { top: 1rem; left: 50%; transform: translateX(-50%); }
 
 .cor-roxa { color: #c084fc; text-shadow: 0 0 20px #c084fc; } .cor-azul { color: #3b82f6; text-shadow: 0 0 20px #3b82f6; } .cor-verde { color: #4ade80; text-shadow: 0 0 20px #4ade80; } .cor-vermelho { color: #f43f5e; text-shadow: 0 0 20px #f43f5e; } .cor-dourado { color: #facc15; text-shadow: 0 0 20px #facc15; } .cor-branca { color: #fff; text-shadow: 0 0 20px #ffffff; }
-
-.desktop-visual #container {
-  scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
-  padding: 0;
-}
-
-.desktop-visual section { height: 88vh; scroll-snap-align: start; scroll-snap-stop: always; display: flex; align-items: center; justify-content: center; }
-
-.desktop-visual 
-.section-content { width: 76vw; max-width: 1200px; height: 76vh; background-size: cover; background-position: center; background-repeat: no-repeat; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; position: relative; overflow: hidden; }
 
 /* Tenda Principal – Glow Branco */
 #bloco1 .section-content {
@@ -971,7 +959,10 @@
 </head>
 <body>
 
-<div id="container" class="desktop-visual mobile-visual">
+<!-- Desktop only -->
+<div class="desktop-visual">
+  <div id="container-desktop">
+   
   <!-- Menu lateral fixo -->
   <div class="menu">
     <button onclick="goTo('bloco1')">Início</button>
@@ -1252,6 +1243,292 @@ Evite fazer perguntas... a curiosidade pode ter um preço.
     <button onclick="comprarAgora()">Comprar</button>
   </div>
 </div>
+
+<!-- Mobile only -->
+<div class="mobile-visual">
+  <div id="container-mobile">
+  
+<!-- Menu lateral fixo -->
+  <div class="menu">
+    <button onclick="goTo('bloco1')">Início</button>
+    <button onclick="goTo('bloco2')">Mangás</button>
+    <button onclick="goTo('bloco3')">Animes</button>
+    <button onclick="goTo('bloco4')">Ebooks</button>
+    <button onclick="goTo('bloco5')">Mentorias</button>
+    <button onclick="goTo('bloco6')">Extras</button>
+  </div>
+<!-- Botão do Carrinho -->
+<button id="botao-carrinho" onclick="abrirCarrinho()">
+  <img src="assets/icons/cart.png" alt="Carrinho" />
+</button>
+
+<!-- BLOCO 1 -->
+<section id="bloco1">
+  <div class="section-content" style="background-image: url('assets/bg-oriental.jpg'); position: relative;">
+<div id="vagalumes">
+  <div class="vagalume"></div>
+  <div class="vagalume"></div>
+  <div class="vagalume"></div>
+  <div class="vagalume"></div>
+  <div class="vagalume"></div>
+  <div class="vagalume"></div>
+  <div class="vagalume"></div>
+  <div class="vagalume"></div>
+  <div class="vagalume"></div>
+</div>
+<!-- Botão para abrir modal -->
+<div class="botao-personagem" onclick="abrirModal(this)">
+  <img src="assets/icons/hood-icon.png" alt="Personagem" />
+</div>
+
+<!-- Modal do personagem -->
+<div class="modal-personagem escondido" onclick="fecharTodosModais()">
+  <div class="conteudo-modal">
+    <p><h3>Mercador das Sombras</h3>
+<p>
+Um lacaio do Vazio em missão secreta. À primeira vista, parece apenas um vendedor excêntrico,
+mas é o responsável por guardar os artefatos e convidar visitantes intrigantes para passagens ocultas.
+Ele é o único com acesso ao sistema de compras e ao carrinho — nada sai da loja sem passar por ele.
+</p></p>
+  </div>
+</div>
+    <h1 class="titulo-bloco">Tenda Principal</h1>
+  <!-- Foreground do topo esquerdo -->
+  <img src="assets/mato-topo.png" class="mato-topo" alt="folhagem topo">
+
+  <!-- Foreground do gramado inferior -->
+  <img src="assets/gramado-bottom.png" class="gramado-bottom" alt="gramado inferior">
+    <!-- NPC Mercador -->
+    <img src="assets/npc-mercador.png" alt="NPC Mercador" class="npc-mercador" onclick="falar('bloco1')">
+<div class="fala escondida" id="fala-bloco1"></div>
+    </div>
+</section>
+
+<div class="espacador"></div>
+
+<!-- BLOCO 2 -->
+<section id="bloco2">
+  <div class="section-content" style="background-image: url('assets/bg-subterraneo-1.jpg'); position: relative;">
+    <h2 class="titulo-bloco cor-roxa">Mangás</h2>
+
+    <!-- Partículas Roxas -->
+    <div id="particulas-roxas"></div>
+<!-- Botão para abrir modal -->
+<div class="botao-personagem" onclick="abrirModal(this)">
+  <img src="assets/icons/hood-icon.png" alt="Personagem" />
+</div>
+
+<!-- Modal do personagem -->
+<div class="modal-personagem escondido" onclick="fecharTodosModais()">
+  <div class="conteudo-modal">
+    <p><h3>Vassala Sombria</h3>
+<p>
+Fiel serva do mesmo mestre do Mercador, atua como segurança e avaliadora dos visitantes.
+Sua frieza e lealdade inquebrantável a tornam implacável. Reluta em interações humanas,
+mas há quem diga que uma boa conversa ou uma oferta irresistível podem fazê-la hesitar.
+</p></p>
+  </div>
+</div>
+    <div class="card-display">
+      <div class="product-card" id="card-bloco2" onclick="falar('bloco2')">
+        <em style="opacity:.4">Carregando mangás...</em>
+      </div>
+      <div class="card-controls">
+        <button class="arrow left" onclick="navegarCardBloco2(-1)">&larr;</button>
+        <button class="arrow right" onclick="navegarCardBloco2(1)">&rarr;</button>
+      </div>
+    </div>
+
+    <img src="assets/npc-manga.png" alt="NPC Mangás" class="npc-manga" onclick="falar('bloco2')" />
+    <div class="fala escondida" id="fala-bloco2"></div>
+  </div>
+</section>
+
+<div class="espacador"></div>
+
+<!-- BLOCO 3 -->
+<section id="bloco3">
+  <div class="section-content" style="background-image: url('assets/bg-subterraneo-2.jpg'); position: relative;">
+
+    <h2 class="titulo-bloco cor-azul">Animes</h2>
+
+    <!-- Nevoeiro animado -->
+    <div id="nevoeiro-bloco3"></div>
+<!-- Botão para abrir modal -->
+<div class="botao-personagem" onclick="abrirModal(this)">
+  <img src="assets/icons/hood-icon.png" alt="Personagem" />
+</div>
+
+<!-- Modal do personagem -->
+<div class="modal-personagem escondido" onclick="fecharTodosModais()">
+  <div class="conteudo-modal">
+    <p><h3>O Velho da Gruta</h3>
+<p>
+Preso há séculos em uma caverna esquecida, sobrevive em meio à escuridão vendendo orbes
+de memória em troca de mantimentos. Suas palavras são desconexas, mas carregadas de sabedoria
+e pistas sobre mundos perdidos. Ninguém sabe seu verdadeiro nome — apenas que ele observa... sempre.
+</p></p>
+  </div>
+</div>
+    <div class="card-display">
+      <div class="product-card" id="card-bloco3" onclick="falar('bloco3')">
+        <em style="opacity:.4">Carregando animes...</em>
+      </div>
+      <div class="card-controls">
+        <button class="arrow left" onclick="navegarCardBloco3(-1)">&larr;</button>
+        <button class="arrow right" onclick="navegarCardBloco3(1)">&rarr;</button>
+      </div>
+    </div>
+
+    <img src="assets/npc-anime.png" alt="NPC Animes" class="npc-anime" onclick="falar('bloco3')" />
+    <div class="fala escondida" id="fala-bloco3"></div>
+
+  </div>
+</section>
+
+<div class="espacador"></div>
+
+<!-- HTML atualizado do bloco 4 (Ebooks) -->
+<section id="bloco4">
+  <div class="section-content" style="background-image: url('assets/bg-subterraneo-3.jpg'); position: relative;"><!-- Botão para abrir modal -->
+<div class="botao-personagem" onclick="abrirModal(this)">
+  <img src="assets/icons/hood-icon.png" alt="Personagem" />
+</div>
+
+<!-- Modal do personagem -->
+<div class="modal-personagem escondido" onclick="fecharTodosModais()">
+  <div class="conteudo-modal">
+    <p><h3>Fories Ortiz</h3>
+<p>
+A armadura viva que um dia foi o general supremo de um reino agora extinto.
+Carrega em si as almas de todo seu batalhão. Isolado na biblioteca ancestral,
+protege os livros amaldiçoados e os grimórios proibidos de mãos erradas.
+Seu olhar silencioso julga se o leitor é digno... ou tolo.
+</p></p>
+  </div>
+</div>
+    <h2 class="titulo-bloco cor-verde">Ebooks</h2><div class="card-display">
+  <div class="product-card" id="card-bloco4" onclick="falar('bloco4')">
+    <em style="opacity:.4">Carregando ebooks...</em>
+  </div>
+  <div class="card-controls">
+    <button class="arrow left" onclick="navegarCardBloco4(-1)">&larr;</button>
+    <button class="arrow right" onclick="navegarCardBloco4(1)">&rarr;</button>
+  </div>
+</div>
+
+<img src="assets/npc-ebook.png" alt="NPC Ebooks" class="npc-ebook" onclick="falar('bloco4')" />
+<div class="fala escondida" id="fala-bloco4"></div>
+
+  </div>
+</section>
+
+<div class="espacador"></div>
+
+<!-- HTML atualizado do bloco 5 (Mentorias) -->
+<section id="bloco5">
+  <div class="section-content" style="background-image: url('assets/bg-subterraneo-4.jpg'); position: relative;">
+
+<div id="particulas-vermelhas"></div><!-- Botão para abrir modal -->
+<div class="botao-personagem" onclick="abrirModal(this)">
+  <img src="assets/icons/hood-icon.png" alt="Personagem" />
+</div>
+
+<!-- Modal do personagem -->
+<div class="modal-personagem escondido" onclick="fecharTodosModais()">
+  <div class="conteudo-modal">
+    <p><h3>Ryukess, o Draconiano Ladino</h3>
+<p>
+Último sobrevivente de sua linhagem extinta, mestre das artes proibidas e dos ensinamentos perdidos.
+Motivado por vingança e sabedoria, abriu sua mente e seu esconderijo para oferecer mentorias profundas
+— únicas em todo o continente. Mas cuidado: seus pactos não são reversíveis.
+</p></p>
+  </div>
+</div>
+    <h2 class="titulo-bloco cor-vermelho">Mentorias</h2><div class="card-display">
+
+  <div class="product-card" id="card-bloco5" onclick="falar('bloco5')">
+    <em style="opacity:.4">Carregando mentorias...</em>
+  </div>
+  <div class="card-controls">
+    <button class="arrow left" onclick="navegarCardBloco5(-1)">&larr;</button>
+    <button class="arrow right" onclick="navegarCardBloco5(1)">&rarr;</button>
+  </div>
+</div>
+
+<img src="assets/npc-mentoria.png" alt="NPC Mentoria" class="npc-mentoria" onclick="falar('bloco5')" />
+<div class="fala escondida" id="fala-bloco5"></div>
+
+  </div>
+</section>
+
+<div class="espacador"></div>
+
+<!-- HTML atualizado do bloco 6 (Extras) -->
+<section id="bloco6">
+  <div class="section-content" style="background-image: url('assets/bg-subterraneo-5.jpg'); position: relative;">
+
+<div id="kanji-chuva"></div>
+<!-- Botão para abrir modal -->
+<div class="botao-personagem" onclick="abrirModal(this)">
+  <img src="assets/icons/hood-icon.png" alt="Personagem" />
+</div>
+
+<!-- Modal do personagem -->
+<div class="modal-personagem escondido" onclick="fecharTodosModais()">
+  <div class="conteudo-modal">
+    <p><h3>O Colecionador</h3>
+<p>
+Apaixonado por criaturas raras, o Colecionador mantém em seus sarcófagos seres de todos os tipos.
+Sua origem e motivações são desconhecidas, mas sua presença é sempre seguida de silêncio e temor.
+Evite fazer perguntas... a curiosidade pode ter um preço.
+</p></p>
+  </div>
+</div>
+    <h2 class="titulo-bloco cor-dourado">Extras</h2><div class="card-display">
+
+  <div class="product-card" id="card-bloco6" onclick="falar('bloco6')">
+    <em style="opacity:.4">Carregando extras...</em>
+  </div>
+
+  <div class="card-controls">
+    <button class="arrow left" onclick="navegarCardBloco6(-1)">&larr;</button>
+    <button class="arrow right" onclick="navegarCardBloco6(1)">&rarr;</button>
+  </div>
+</div>
+
+<img src="assets/npc-extras.png" alt="NPC Extras" class="npc-extras" onclick="falar('bloco6')" />
+<div class="fala escondida" id="fala-bloco6"></div>
+
+  </div>
+</section>
+
+<div class="espacador"></div>
+
+<!-- Rodapé agora DENTRO do container -->
+<section id="rodape">
+  <div class="section-content footer-content">
+    <a href="linktree.html" class="inline-block mb-2">
+      <img src="assets/images/linktree.png" alt="Linktree" class="h-10 mx-auto">
+      <p style="font-size: 0.85rem; color: #aaa; margin-top: 0.25rem;">Linktree</p>
+    </a>
+    <p>Explore. Escolha. Caia. Evolua.</p>
+    <p style="margin-top: 0.5rem;">Toda escolha tem um preço. Toda queda, uma razão.</p>
+    <p style="font-size: 0.75rem; margin-top: 1rem; color: #666;">© 2025 NoHeroes. Todos os direitos reservados.</p>
+  </div>
+</section>
+</div>
+
+<div class="espacador"></div>
+
+<div id="modal-carrinho" class="modal-carrinho escondido">
+  <div class="conteudo-carrinho">
+    <h3>Seu Carrinho</h3>
+    <ul id="lista-carrinho"></ul>
+    <button onclick="comprarAgora()">Comprar</button>
+  </div>
+</div>
+
 
  <script>
   // ─────────── FALAS DOS NPCs ───────────
