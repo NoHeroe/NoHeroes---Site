@@ -21,7 +21,7 @@
 
 .cor-roxa { color: #c084fc; text-shadow: 0 0 20px #c084fc; } .cor-azul { color: #3b82f6; text-shadow: 0 0 20px #3b82f6; } .cor-verde { color: #4ade80; text-shadow: 0 0 20px #4ade80; } .cor-vermelho { color: #f43f5e; text-shadow: 0 0 20px #f43f5e; } .cor-dourado { color: #facc15; text-shadow: 0 0 20px #facc15; } .cor-branca { color: #fff; text-shadow: 0 0 20px #ffffff; }
 
-.desktop-visual #container-desktop {
+.desktop-visual #container {
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
   padding: 0;
@@ -288,13 +288,13 @@
   }
 }
 
-#container-desktop {
+#container {
   height: 100vh;
   overflow-y: auto;
   scrollbar-width: none;           /* Firefox */
   -ms-overflow-style: none;        /* IE e Edge */
 }
-#container-desktop::-webkit-scrollbar {
+#container::-webkit-scrollbar {
   display: none;                   /* Chrome, Safari */
 }
 #rodape .section-content.footer-content {
@@ -731,7 +731,7 @@
     display: block;
   }
 
-  #container-mobile {
+  #container {
     height: auto;
     overflow-y: auto;
     scroll-snap-type: y mandatory;
@@ -980,7 +980,7 @@
 <button id="botao-carrinho" onclick="abrirCarrinho()">
   <img src="assets/icons/cart.png" alt="Carrinho" />
 </button>
-  <!-- Container scrollável -->  <div id="container-desktop">
+  <!-- Container scrollável -->  <div id="container">
 
 <!-- BLOCO 1 -->
 <section id="bloco1">
