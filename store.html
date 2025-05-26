@@ -730,6 +730,415 @@
   cursor: pointer;
 }
 
+/* CONTAINER MOBILE */
+.mobile-visual #container-mobile {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+/* SECTIONS MOBILE */
+.mobile-visual section {
+  height: 100vh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* CONTEÚDO DAS SECTIONS MOBILE */
+.section-content-m {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* GLOWS POR BLOCO MOBILE */
+#bloco1m .section-content-m { box-shadow: 0 0 30px rgba(255,255,255,0.25); }
+#bloco2m .section-content-m { box-shadow: 0 0 30px rgba(147,51,234,0.7); }
+#bloco3m .section-content-m { box-shadow: 0 0 30px rgba(59,130,246,0.7); }
+#bloco4m .section-content-m { box-shadow: 0 0 30px rgba(74,222,128,0.7); }
+#bloco5m .section-content-m { box-shadow: 0 0 30px rgba(244,63,94,0.7); }
+#bloco6m .section-content-m { box-shadow: 0 0 30px rgba(250,204,21,0.7); }
+
+/* TÍTULOS DOS BLOCOS MOBILE */
+.titulo-bloco-m {
+  position: absolute;
+  top: 1rem;
+  left: 1.5rem;
+  font-size: 2rem;
+  font-weight: bold;
+  text-shadow: 0 0 10px currentColor;
+  z-index: 10;
+}
+.titulo-centralizado-m {
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* CORES TEXTUAIS MOBILE */
+.cor-roxa-m      { color: #c084fc; text-shadow: 0 0 20px #c084fc; }
+.cor-azul-m      { color: #3b82f6; text-shadow: 0 0 20px #3b82f6; }
+.cor-verde-m     { color: #4ade80; text-shadow: 0 0 20px #4ade80; }
+.cor-vermelho-m  { color: #f43f5e; text-shadow: 0 0 20px #f43f5e; }
+.cor-dourado-m   { color: #facc15; text-shadow: 0 0 20px #facc15; }
+.cor-branca-m    { color: #fff;    text-shadow: 0 0 20px #ffffff; }
+
+/* MENU FIXO MOBILE */
+.menu-m {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+.menu-m button {
+  border: 2px solid #444;
+  background-color: #000;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+.menu-m button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: -1;
+  filter: blur(6px);
+  opacity: 0.5;
+}
+.menu-m button:hover { transform: scale(1.05); }
+/* INÍCIO */    .menu-m button:nth-child(1) { border-color: #fff;      color: #fff;      } .menu-m button:nth-child(1)::before { background: #fff;      }
+/* MANGÁS */    .menu-m button:nth-child(2) { border-color: #9333ea;  color: #9333ea;  } .menu-m button:nth-child(2)::before { background: #9333ea;  }
+/* ANIMES */    .menu-m button:nth-child(3) { border-color: #3b82f6;  color: #3b82f6;  } .menu-m button:nth-child(3)::before { background: #3b82f6;  }
+/* EBOOKS */    .menu-m button:nth-child(4) { border-color: #22c55e;  color: #22c55e;  } .menu-m button:nth-child(4)::before { background: #22c55e;  }
+/* MENTORIAS */ .menu-m button:nth-child(5) { border-color: #f43f5e;  color: #f43f5e;  } .menu-m button:nth-child(5)::before { background: #f43f5e;  }
+/* EXTRAS */    .menu-m button:nth-child(6) { border-color: #facc15;  color: #facc15;  } .menu-m button:nth-child(6)::before { background: #facc15;  }
+
+/* CARD DISPLAY MOBILE */
+.card-display-m {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.product-card-m {
+  flex: 0 0 clamp(180px, 60%, 240px);
+  background: rgba(17,17,17,0.8);
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.card-controls-m {
+  display: flex;
+  gap: 1rem;
+}
+.card-controls-m .arrow {
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+/* BOTÃO DO PERSONAGEM MOBILE */
+.botao-personagem-m {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  width: 34px;
+  height: 34px;
+  background: #9333ea;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 30;
+  box-shadow: 0 0 6px #9333ea;
+  transition: transform 0.2s ease;
+}
+.botao-personagem-m:hover { transform: scale(1.1); }
+.botao-personagem-m img {
+  width: 20px;
+  height: 20px;
+  filter: invert(1);
+}
+
+/* MODAL PERSONAGEM MOBILE */
+.modal-personagem-m {
+  position: absolute;
+  bottom: 4.5rem;
+  right: 1rem;
+  background: rgba(0,0,0,0.85);
+  padding: 1rem;
+  border-radius: 10px;
+  max-width: 220px;
+  z-index: 40;
+  box-shadow: 0 0 10px #9333ea88;
+}
+.modal-personagem-m.escondido-m { display: none; }
+.modal-personagem-m .conteudo-modal-m { pointer-events: none; }
+
+/* NPCs MOBILE */
+.npc-mercador-m,
+.npc-manga-m,
+.npc-anime-m,
+.npc-ebook-m,
+.npc-mentoria-m,
+.npc-extras-m {
+  position: absolute;
+  bottom: 18vh;
+  height: auto;
+  max-height: 200px;
+  z-index: 10;
+  pointer-events: auto;
+}
+.npc-mercador-m { left: 50%; transform: translateX(-50%); filter: drop-shadow(0 0 10px rgba(255,255,255,0.4)); }
+.npc-manga-m    { left: 6vw; filter: drop-shadow(0 0 10px rgba(147,51,234,0.4)); }
+.npc-anime-m    { left: 6vw; filter: drop-shadow(0 0 10px rgba(59,130,246,0.4)); }
+.npc-ebook-m    { left: 6vw; filter: drop-shadow(0 0 10px rgba(74,222,128,0.4)); }
+.npc-mentoria-m { left: 6vw; filter: drop-shadow(0 0 10px rgba(244,63,94,0.4)); }
+.npc-extras-m   { left: 6vw; filter: drop-shadow(0 0 10px rgba(250,204,21,0.4)); }
+
+/* FALAS DOS NPCs MOBILE */
+.fala,
+#fala-bloco1, #fala-bloco2, #fala-bloco3,
+#fala-bloco4, #fala-bloco5, #fala-bloco6 {
+  background: rgba(0,0,0,0.85);
+  border: 2px solid #9333ea;
+  border-radius: 10px;
+  padding: 0.75rem;
+  color: #fff;
+  font-size: 0.9rem;
+  max-width: 260px;
+  position: absolute;
+  z-index: 20;
+  animation: fadeIn 0.3s ease forwards;
+}
+.fala.escondida { display: none; }
+#fala-bloco1 { bottom: 15vh; left: 50%; transform: translateX(-50%); }
+#fala-bloco2,
+#fala-bloco3,
+#fala-bloco4,
+#fala-bloco5,
+#fala-bloco6 {
+  bottom: 36vh;
+  left: 6vw;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ELEMENTOS VISUAIS MOBILE */
+.mato-topo-m {
+  position: absolute;
+  top: 0; left: 0;
+  max-width: 600px;
+  max-height: 40vh;
+  pointer-events: none;
+  z-index: 1;
+}
+.gramado-bottom-m {
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100vw;
+  transform: translateY(10%);
+  pointer-events: none;
+  z-index: 21;
+}
+#vagalumes {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 30;
+  overflow: hidden;
+}
+.vagalume {
+  position: absolute;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #caff6a, transparent 70%);
+  opacity: 0.2;
+  transition: transform 10s linear, opacity 1s ease;
+}
+
+/* PARTÍCULAS ROXAS MOBILE */
+#particulas-roxas {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 10;
+}
+.particula-roxa {
+  position: absolute;
+  width: 8px; height: 8px;
+  background: radial-gradient(circle, #c084fc 0%, transparent 70%);
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: flutuar-roxo linear infinite;
+}
+@keyframes flutuar-roxo {
+  from { transform: translateY(20vh) scale(0.5); opacity: 0.3; }
+  to   { transform: translateY(-70vh) scale(1);   opacity: 0;   }
+}
+
+/* NEVOEIRO MOBILE */
+#nevoeiro-bloco3 {
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; height: 60%;
+  pointer-events: none;
+  z-index: 6;
+  background: radial-gradient(ellipse at 50% 100%, rgba(59,130,246,0.08), transparent 70%);
+  filter: blur(35px);
+  opacity: 0.4;
+}
+
+/* PARTÍCULAS VERMELHAS MOBILE */
+#particulas-vermelhas {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 10;
+}
+.barra-vermelha {
+  position: absolute;
+  width: 2px; height: 20px;
+  background: linear-gradient(to top, #f43f5e, transparent);
+  opacity: 0.6;
+  animation: subir-barras linear infinite;
+}
+@keyframes subir-barras {
+  0%   { transform: translateY(100vh); opacity: 0; }
+  30%  { opacity: 0.8; }
+  100% { transform: translateY(-100vh); opacity: 0; }
+}
+
+/* CHUVA DE KANJIS MOBILE */
+#kanji-chuva {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 12;
+}
+.kanji {
+  position: absolute;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 1.2rem;
+  text-shadow: 0 0 8px #facc15;
+  opacity: 0.8;
+  color: #facc15;
+  animation: queda-kanji linear infinite;
+}
+@keyframes queda-kanji {
+  0%   { transform: translateY(-120%); opacity: 0;    filter: brightness(1.2); }
+  10%  { opacity: 1;    filter: brightness(1.1); }
+  70%  { opacity: 0.8;  filter: brightness(1);   }
+  90%  { opacity: 0.5;  filter: brightness(0.6); }
+  100% { transform: translateY(100vh);  opacity: 0; filter: brightness(0.2); }
+}
+
+/* ESPAÇADOR MOBILE */
+.espacador-m { height: 90vh; pointer-events: none; }
+
+/* RODAPÉ MOBILE */
+#rodape-m .section-content-m.footer-content-m {
+  background: #000;
+  box-shadow: none;
+  text-align: center;
+  color: #ccc;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .5rem;
+}
+
+/* MODAL CARRINHO MOBILE */
+#modal-carrinho-m {
+  position: fixed;
+  top: 60px;
+  right: 20px;
+  width: 300px;
+  background: #111;
+  border: 2px solid #9333ea;
+  border-radius: 12px;
+  padding: 1rem;
+  z-index: 49;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(147, 51, 234, 0.5);
+}
+#modal-carrinho-m.escondido-m { display: none; }
+.conteudo-carrinho-m h3 { margin-bottom: .5rem; }
+.conteudo-carrinho-m ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+.conteudo-carrinho-m li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #222;
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  font-size: 0.85rem;
+}
+.conteudo-carrinho-m li button {
+  background: transparent;
+  border: none;
+  color: #f43f5e;
+  font-weight: bold;
+  cursor: pointer;
+}
+.conteudo-carrinho-m button {
+  width: 100%;
+  padding: 0.5rem;
+  background: #9333ea;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
 </style>
 <script>
   function goTo(id) {
