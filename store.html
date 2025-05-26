@@ -15,9 +15,24 @@
   font-family: 'Inter', sans-serif;
   background: #000;
   color: #fff;
-  height: 100%;}
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
 
 .desktop-visual { display: block; } .mobile-visual  { display: none; }
+
+.desktop-visual #container-desktop {
+  height: 100vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+.desktop-visual #container-desktop::-webkit-scrollbar {
+  display: none;
+}
 
  .titulo-bloco { position: absolute; top: 1rem; left: 1.5rem; font-size: 2rem; font-weight: bold; text-shadow: 0 0 10px currentColor; z-index: 10; }
 
