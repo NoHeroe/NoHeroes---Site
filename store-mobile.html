@@ -15,15 +15,15 @@
 
 .cor-roxa { color: #c084fc; text-shadow: 0 0 20px #c084fc; } .cor-azul { color: #3b82f6; text-shadow: 0 0 20px #3b82f6; } .cor-verde { color: #4ade80; text-shadow: 0 0 20px #4ade80; } .cor-vermelho { color: #f43f5e; text-shadow: 0 0 20px #f43f5e; } .cor-dourado { color: #facc15; text-shadow: 0 0 20px #facc15; } .cor-branca { color: #fff; text-shadow: 0 0 20px #ffffff; }
 
-/* CONTAINER DESKTOP */ .desktop-visual #container-desktop {
+/* CONTAINER DESKTOP */ .mobile-visual #container-mobile {
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
   padding: 0;
 }
 
-/* SECTION DESKTOP */ .desktop-visual section { height: 88vh; scroll-snap-align: start; scroll-snap-stop: always; display: flex; align-items: center; justify-content: center; }
+.mobile-visual section { height: 88vh; scroll-snap-align: start; scroll-snap-stop: always; display: flex; align-items: center; justify-content: center; }
 
-.desktop-visual .section-content { width: 80vw; max-width: 1200px; height: 76vh; background-size: cover; background-position: center; background-repeat: no-repeat; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; position: relative; overflow: hidden; }
+.mobile-visual .section-content { width: 80vw; max-width: 1200px; height: 76vh; background-size: cover; background-position: center; background-repeat: no-repeat; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; position: relative; overflow: hidden; }
 
 /* Tenda Principal – Glow Branco */
 #bloco1 .section-content {
@@ -83,72 +83,7 @@
 
 .arrow.left  { left: calc(20% - 1rem); } .arrow.right { right: calc(20% - 1rem); }
 
-/* BOTÕES DA TENDA */ .botao-tenda {
-  background: #000;
-  border: 2px solid;
-  border-radius: 12px;
-  padding: 5px 16px;
-  font-weight: bold;
-  font-size: 0.8rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: absolute;
-  bottom: 15vh;
-  transform: translateX(-50%);
-  z-index: 15;
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  text-shadow: none;
-}
 
-/* GRADIENTES COM ANIMAÇÃO */
-@keyframes gradiente {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.botao-manga {
-  left: 31%;
-  border-color: #9333ea;
-  background-image: linear-gradient(270deg, #9333ea, #7e22ce, #9333ea);
-  background-size: 300% 300%;
-  animation: gradiente 4s ease infinite;
-}
-
-.botao-anime {
-  left: 41%;
-  border-color: #3b82f6;
-  background-image: linear-gradient(270deg, #3b82f6, #2563eb, #3b82f6);
-  background-size: 300% 300%;
-  animation: gradiente 6s ease infinite;
-}
-
-.botao-ebook {
-  left: 50%;
-  border-color: #22c55e;
-  background-image: linear-gradient(270deg, #22c55e, #16a34a, #22c55e);
-  background-size: 300% 300%;
-  animation: gradiente 6s ease infinite;
-}
-
-.botao-mentoria {
-  left: 60%;
-  border-color: #ef4444;
-  background-image: linear-gradient(270deg, #ef4444, #b91c1c, #ef4444);
-  background-size: 300% 300%;
-  animation: gradiente 6s ease infinite;
-}
-
-.botao-extras {
-  left: 69%;
-  border-color: #facc15;
-  background-image: linear-gradient(270deg, #facc15, #fde68a, #facc15);
-  background-size: 300% 300%;
-  animation: gradiente 6s ease infinite;
-}
 
 /* NPCs PADRÃO */ .npc-mercador, .npc-manga { position: absolute; bottom: 18vh; height: 200px; z-index: 10; pointer-events: auto; filter: drop-shadow(0 0 10px rgba(147, 51, 234, 0.4)); }
 
@@ -290,13 +225,13 @@
 
 /* ESPAÇADOR */ .espacador { height: 90vh; flex-shrink: 0; pointer-events: none; }
 
-#container-desktop {
+#container-mobile {
   height: 100vh;
   overflow-y: auto;
   scrollbar-width: none;           /* Firefox */
   -ms-overflow-style: none;        /* IE e Edge */
 }
-#container-desktop::-webkit-scrollbar {
+#container-mobile::-webkit-scrollbar {
   display: none;                   /* Chrome, Safari */
 }
 #rodape .section-content.footer-content {
@@ -309,15 +244,6 @@
   padding: 2rem;
 }
 /* NPC Mangás posicionado e dobrado */
-.npc-manga {
-  position: absolute;
-  bottom: 0vh;
-  right: 3vw;
-  height: 400px;
-  z-index: 10;
-  pointer-events: auto;
-  filter: drop-shadow(0 0 15px rgba(147, 51, 234, 0.6));
-}
 /* NPC ANIME - BLOCO 3 */
 .npc-anime {
   position: absolute;
@@ -363,55 +289,30 @@
   filter: drop-shadow(0 0 15px rgba(250, 204, 21, 0.6)); /* dourado */
 }
 
-#bloco2 .card-display {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  position: absolute;
-  right: 10vw; /* equivalente à divisão 2/3 da tela */
-  top: 10%;
-  width: clamp(240px, 28%, 300px);
-  gap: 1rem;
-}
+/* === CSS MOBILE EXATO - BLOCO 2 (MANGÁS) === */
 
-#bloco2 .card-display .product-card {
-  background: rgba(17, 17, 17, 0.85);
-  border: 1px solid #333;
-  border-radius: 12px;
-  padding: 1rem;
-  text-align: center;
-  font-size: 0.9rem;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  width: 100%;
-}
+#bloco2m { position: relative; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; scroll-snap-align: start; min-height: 100vh; width: 100%; padding: 2rem 1rem 1rem; background-size: cover; background-position: center; background-repeat: no-repeat; overflow: hidden; box-shadow: 0 0 30px rgba(147, 51, 234, 0.7); }
 
-#bloco2 .product-card img {
-  width: 100%;
-  border-radius: 8px;
-  object-fit: cover;
-}
+#bloco2m .titulo-bloco { position: relative; font-size: 1.8rem; font-weight: bold; color: #c084fc; text-shadow: 0 0 20px #c084fc; margin-bottom: 1rem; z-index: 10; }
 
-#bloco2 .card-controls {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  width: 100%;
-}
+#bloco2m .card-display { position: relative; width: 90%; max-width: 400px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 1rem; z-index: 15; }
 
-#bloco2 .card-controls .arrow {
-  background: rgba(0, 0, 0, 0.6);
-  color: #fff;
-  border: none;
-  padding: 0.5rem 0.75rem;
-  border-radius: 9999px;
-  cursor: pointer;
-  font-size: 1.2rem;
-}
+#bloco2m .product-card { background: rgba(17, 17, 17, 0.85); border: 1px solid #333; border-radius: 12px; padding: 1rem; text-align: center; font-size: 0.9rem; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; width: 100%; }
+
+#bloco2m .product-card img { width: 100%; border-radius: 8px; object-fit: cover; }
+
+#bloco2m .card-controls { display: flex; justify-content: center; gap: 1rem; width: 100%; }
+
+#bloco2m .card-controls .arrow { background: rgba(0, 0, 0, 0.6); color: #fff; border: none; padding: 0.5rem 0.75rem; border-radius: 9999px; cursor: pointer; font-size: 1.2rem; }
+
+#bloco2m .npc-manga { position: relative; width: 160px; max-width: 50%; margin-top: auto; z-index: 10; pointer-events: auto; filter: drop-shadow(0 0 10px rgba(147, 51, 234, 0.4)); }
+
+#fala-bloco2 { background: rgba(0, 0, 0, 0.85); border: 2px solid #9333ea; border-radius: 10px; padding: 0.75rem; color: #fff; font-size: 0.9rem; max-width: 90%; margin-top: 1rem; text-align: center; z-index: 15; }
+
+/* Nenhum botão flutuante. Carrinho permanece onde está no HTML do bloco. */
+
+
+
 /* BLOCO 3 - ANIMES */
 #bloco3 .card-display {
   display: flex;
