@@ -9,21 +9,39 @@
 
 *{ margin: 0; padding: 0; box-sizing: border-box; } html, body { font-family: 'Inter', sans-serif; background: #000; color: #fff; height: 100%; overflow-x: hidden; overflow-y: auto; }
 
-/* TÍTULOS DOS BLOCOS DESKTOP */ .titulo-bloco { position: absolute; top: 1rem; left: 1.5rem; font-size: 2rem; font-weight: bold; text-shadow: 0 0 10px currentColor; z-index: 10; }
-
-.titulo-centralizado { top: 1rem; left: 50%; transform: translateX(-50%); }
+.section-content .titulo-bloco {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  transform: none !important;
+  font-size: 1.8rem !important;
+  text-align: center !important;
+  margin-bottom: 1rem !important;
+}
 
 .cor-roxa { color: #c084fc; text-shadow: 0 0 20px #c084fc; } .cor-azul { color: #3b82f6; text-shadow: 0 0 20px #3b82f6; } .cor-verde { color: #4ade80; text-shadow: 0 0 20px #4ade80; } .cor-vermelho { color: #f43f5e; text-shadow: 0 0 20px #f43f5e; } .cor-dourado { color: #facc15; text-shadow: 0 0 20px #facc15; } .cor-branca { color: #fff; text-shadow: 0 0 20px #ffffff; }
 
  .mobile-visual #container-mobile {
-  scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
-  padding: 0;
+  padding: 0 1rem;
+  height: auto;
 }
 
-.mobile-visual section { height: 88vh; scroll-snap-align: start; scroll-snap-stop: always; display: flex; align-items: center; justify-content: center; }
+.mobile-visual section {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 2rem;
+}
 
-.mobile-visual .section-content { width: 80vw; max-width: 1200px; height: 76vh; background-size: cover; background-position: center; background-repeat: no-repeat; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; position: relative; overflow: hidden; }
+.mobile-visual .section-content {
+  width: 92vw !important;
+  max-width: 400px !important;
+  height: auto !important;
+  padding: 1.5rem !important;
+}
 
 /* Tenda Principal – Glow Branco */
 #bloco1 .section-content {
