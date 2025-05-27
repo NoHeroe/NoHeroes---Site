@@ -1298,7 +1298,7 @@ function gerarKanjiChuva() {
     // Remove o kanji após 14s para evitar sobrecarga
     setTimeout(() => {
       if (span.parentElement) span.remove();
-    }, 14000);
+    }, 10000);
   }
 
   setInterval(criarKanji, 150);
