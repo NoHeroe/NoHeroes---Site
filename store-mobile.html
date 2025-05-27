@@ -1,1 +1,779 @@
-z
+<!DOCTYPE html><html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Loja | NoHeroes</title>
+
+if (window.innerWidth <= 768) {
+  window.location.href = "store-mobile.html";
+}
+  <style>
+/* RESET */
+
+*{ margin: 0; padding: 0; box-sizing: border-box; } html, body { font-family: 'Inter', sans-serif; background: #000; color: #fff; height: 100%; overflow-x: hidden; overflow-y: auto; }
+
+/* TÍTULOS DOS BLOCOS DESKTOP */ .titulo-bloco { position: absolute; top: 1rem; left: 1.5rem; font-size: 2rem; font-weight: bold; text-shadow: 0 0 10px currentColor; z-index: 10; }
+
+.titulo-centralizado { top: 1rem; left: 50%; transform: translateX(-50%); }
+
+.cor-roxa { color: #c084fc; text-shadow: 0 0 20px #c084fc; } .cor-azul { color: #3b82f6; text-shadow: 0 0 20px #3b82f6; } .cor-verde { color: #4ade80; text-shadow: 0 0 20px #4ade80; } .cor-vermelho { color: #f43f5e; text-shadow: 0 0 20px #f43f5e; } .cor-dourado { color: #facc15; text-shadow: 0 0 20px #facc15; } .cor-branca { color: #fff; text-shadow: 0 0 20px #ffffff; }
+
+/* CONTAINER DESKTOP */ .desktop-visual #container-desktop {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  padding: 0;
+}
+
+/* SECTION DESKTOP */ .desktop-visual section { height: 88vh; scroll-snap-align: start; scroll-snap-stop: always; display: flex; align-items: center; justify-content: center; }
+
+.desktop-visual .section-content { width: 80vw; max-width: 1200px; height: 76vh; background-size: cover; background-position: center; background-repeat: no-repeat; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; position: relative; overflow: hidden; }
+
+/* Tenda Principal – Glow Branco */
+#bloco1 .section-content {
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.25);
+}
+
+/* Mangás – Glow Roxo */
+#bloco2 .section-content {
+  box-shadow: 0 0 30px rgba(147, 51, 234, 0.7);
+}
+
+/* Animes – Glow Azul */
+#bloco3 .section-content {
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.7);
+}
+
+/* Ebooks – Glow Verde */
+#bloco4 .section-content {
+  box-shadow: 0 0 30px rgba(74, 222, 128, 0.7);
+}
+
+/* Mentorias – Glow Vermelho */
+#bloco5 .section-content {
+  box-shadow: 0 0 30px rgba(244, 63, 94, 0.7);
+}
+
+/* Extras – Glow Dourado */
+#bloco6 .section-content {
+  box-shadow: 0 0 30px rgba(250, 204, 21, 0.7);
+}
+
+/* MENU FIXO */ .menu { position: fixed; top: 20px; left: 20px; z-index: 20; display: flex; flex-direction: column; gap: .5rem; }
+
+/* BOTÕES REESTILIZADOS COM VISUAL DARK + BORDAS COLORIDAS + GLOW */ .menu button { border: 2px solid #444; background-color: #000; border-radius: 12px; font-size: 0.9rem; font-weight: bold; padding: 0.6rem 1.2rem; color: #fff; cursor: pointer; transition: all 0.3s ease; box-shadow: none; position: relative; overflow: hidden; }
+
+.menu button::before { content: ""; position: absolute; inset: 0; border-radius: inherit; z-index: -1; filter: blur(6px); opacity: 0.5; }
+
+.menu button:hover { transform: scale(1.05); }
+
+/* BOTÃO: INÍCIO (branco) */ .menu button:nth-child(1) { border-color: #fff; color: #fff; } .menu button:nth-child(1)::before { background: #fff; }
+
+/* BOTÃO: MANGÁS (roxo) */ .menu button:nth-child(2) { border-color: #9333ea; color: #9333ea; } .menu button:nth-child(2)::before { background: #9333ea; }
+
+/* BOTÃO: ANIMES (azul) */ .menu button:nth-child(3) { border-color: #3b82f6; color: #3b82f6; } .menu button:nth-child(3)::before { background: #3b82f6; }
+
+/* BOTÃO: EBOOKS (verde) */ .menu button:nth-child(4) { border-color: #22c55e; color: #22c55e; } .menu button:nth-child(4)::before { background: #22c55e; }
+
+/* BOTÃO: MENTORIAS (vermelho) */ .menu button:nth-child(5) { border-color: #f43f5e; color: #f43f5e; } .menu button:nth-child(5)::before { background: #f43f5e; }
+
+/* BOTÃO: EXTRAS (dourado) */ .menu button:nth-child(6) { border-color: #facc15; color: #facc15; } .menu button:nth-child(6)::before { background: #facc15; }
+
+/* CAROUSEL */ .carousel-wrapper { width: 60%; position: relative; display: flex; align-items: center; margin: 1rem 0; }
+
+.product-card { flex: 0 0 clamp(180px, 25%, 240px); scroll-snap-align: center; background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 1rem; text-align: center; font-size: 0.85rem; }
+
+.arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: #fff; border: none; padding: 0.5rem; border-radius: 9999px; cursor: pointer; z-index: 5; }
+
+.arrow.left  { left: calc(20% - 1rem); } .arrow.right { right: calc(20% - 1rem); }
+
+/* BOTÕES DA TENDA */ .botao-tenda {
+  background: #000;
+  border: 2px solid;
+  border-radius: 12px;
+  padding: 5px 16px;
+  font-weight: bold;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: absolute;
+  bottom: 15vh;
+  transform: translateX(-50%);
+  z-index: 15;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+}
+
+/* GRADIENTES COM ANIMAÇÃO */
+@keyframes gradiente {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.botao-manga {
+  left: 31%;
+  border-color: #9333ea;
+  background-image: linear-gradient(270deg, #9333ea, #7e22ce, #9333ea);
+  background-size: 300% 300%;
+  animation: gradiente 4s ease infinite;
+}
+
+.botao-anime {
+  left: 41%;
+  border-color: #3b82f6;
+  background-image: linear-gradient(270deg, #3b82f6, #2563eb, #3b82f6);
+  background-size: 300% 300%;
+  animation: gradiente 6s ease infinite;
+}
+
+.botao-ebook {
+  left: 50%;
+  border-color: #22c55e;
+  background-image: linear-gradient(270deg, #22c55e, #16a34a, #22c55e);
+  background-size: 300% 300%;
+  animation: gradiente 6s ease infinite;
+}
+
+.botao-mentoria {
+  left: 60%;
+  border-color: #ef4444;
+  background-image: linear-gradient(270deg, #ef4444, #b91c1c, #ef4444);
+  background-size: 300% 300%;
+  animation: gradiente 6s ease infinite;
+}
+
+.botao-extras {
+  left: 69%;
+  border-color: #facc15;
+  background-image: linear-gradient(270deg, #facc15, #fde68a, #facc15);
+  background-size: 300% 300%;
+  animation: gradiente 6s ease infinite;
+}
+
+/* NPCs PADRÃO */ .npc-mercador, .npc-manga { position: absolute; bottom: 18vh; height: 200px; z-index: 10; pointer-events: auto; filter: drop-shadow(0 0 10px rgba(147, 51, 234, 0.4)); }
+
+.npc-mercador { left: 51.5%; transform: translateX(-50%); } .npc-manga    { left: 6vw; } .npc-anime    { left: 6vw; } .npc-ebook    { left: 6vw; } .npc-mentoria { left: 6vw; } .npc-extras   { left: 6vw; }
+
+/* FALAS DOS NPCs */ .fala, #fala-bloco1, #fala-bloco2, #fala-bloco3, #fala-bloco4, #fala-bloco5, #fala-bloco6 { background: rgba(0,0,0,0.85); border: 2px solid #9333ea; border-radius: 10px; padding: 0.75rem; color: #fff; font-size: 0.9rem; max-width: 260px; position: absolute; z-index: 20; animation: fadeIn 0.3s ease forwards; }
+
+#fala-bloco1 { margin-bottom: 60px; position: relative; } #fala-bloco2 { bottom: 36vh; left: 6vw; } #fala-bloco3 { bottom: 36vh; left: 6vw; } #fala-bloco4 { bottom: 36vh; left: 6vw; } #fala-bloco5 { bottom: 36vh; left: 6vw; } #fala-bloco6 { bottom: 36vh; left: 6vw; }
+
+.fala.escondida { display: none; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to   { opacity: 1; transform: translateY(0); } }
+
+/* ELEMENTOS VISUAIS */ .mato-topo { position: absolute; top: 0; left: 0; height: auto; width: auto; max-width: 600px; max-height: 40vh; pointer-events: none; z-index: 1; }
+
+.gramado-bottom { position: absolute; bottom: 0; left: 0; width: 100vw; height: auto; pointer-events: none; z-index: 21; transform: translateY(10%); }
+
+#vagalumes { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 30; overflow: hidden; }
+
+.vagalume { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: radial-gradient(circle, #caff6a, transparent 70%); opacity: 0.2; transition: transform 10s linear, opacity 1s ease; }
+
+#particulas-roxas {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.particula-roxa {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, #c084fc 0%, transparent 70%);
+  border-radius: 50%;
+  opacity: 10;
+  animation: flutuar-roxo linear infinite;
+}
+
+@keyframes flutuar-roxo {
+  from {
+    transform: translateY(20vh) scale(0.5);
+    opacity: 0.3;
+  }
+  to {
+    transform: translateY(-70vh) scale(1);
+    opacity: 0;
+  }
+}
+#nevoeiro-bloco3 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  pointer-events: none;
+  z-index: 6;
+  background: radial-gradient(ellipse at 50% 100%, rgba(59,130,246,0.08), transparent 70%);
+  filter: blur(35px);
+  opacity: 0.4;
+}
+#particulas-vermelhas {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 10;
+  overflow: hidden;
+}
+
+.barra-vermelha {
+  position: absolute;
+  width: 2px;
+  height: 20px;
+  background: linear-gradient(to top, #f43f5e, transparent);
+  opacity: 0.6;
+  animation: subir-barras linear infinite;
+}
+
+@keyframes subir-barras {
+  0% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-100vh);
+    opacity: 0;
+  }
+}
+
+#kanji-chuva {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 12;
+  overflow: hidden;
+}
+
+.kanji {
+  position: absolute;
+  color: #facc15;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 1.2rem;
+  text-shadow: 0 0 8px #facc15;
+  opacity: 0.8;
+  animation: queda-kanji linear infinite;
+}
+
+@keyframes queda-kanji {
+  0% {
+    transform: translateY(-120%);
+    opacity: 0;
+    filter: brightness(1.2);
+  }
+  10% {
+    opacity: 1;
+    filter: brightness(1.1);
+  }
+  70% {
+    opacity: 0.8;
+    filter: brightness(1);
+  }
+  90% {
+    opacity: 0.5;
+    filter: brightness(0.6);
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+    filter: brightness(0.2);
+  }
+}
+
+/* ESPAÇADOR */ .espacador { height: 90vh; flex-shrink: 0; pointer-events: none; }
+
+#container-desktop {
+  height: 100vh;
+  overflow-y: auto;
+  scrollbar-width: none;           /* Firefox */
+  -ms-overflow-style: none;        /* IE e Edge */
+}
+#container-desktop::-webkit-scrollbar {
+  display: none;                   /* Chrome, Safari */
+}
+#rodape .section-content.footer-content {
+  background: #000;
+  box-shadow: none;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #ccc;
+  padding: 2rem;
+}
+/* NPC Mangás posicionado e dobrado */
+.npc-manga {
+  position: absolute;
+  bottom: 0vh;
+  right: 3vw;
+  height: 400px;
+  z-index: 10;
+  pointer-events: auto;
+  filter: drop-shadow(0 0 15px rgba(147, 51, 234, 0.6));
+}
+/* NPC ANIME - BLOCO 3 */
+.npc-anime {
+  position: absolute;
+  bottom: 0vh;
+  right: 3vw;
+  height: 400px;
+  z-index: 10;
+  pointer-events: auto;
+  filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.6)); /* azul */
+}
+
+/* NPC EBOOK - BLOCO 4 */
+.npc-ebook {
+  position: absolute;
+  bottom: 0vh;
+  right: 5vw;
+  height: 300px;
+  z-index: 10;
+  pointer-events: auto;
+  filter: drop-shadow(0 0 15px rgba(34, 197, 94, 0.6));
+}
+
+
+/* NPC MENTORIA - BLOCO 5 */
+.npc-mentoria {
+  position: absolute !important;
+  bottom: 10vh;
+  right: 1vw !important;
+  height: 350px;
+  z-index: 9;
+  pointer-events: auto;
+  filter: drop-shadow(0 0 15px rgba(239, 68, 68, 0.6)); /* vermelho */
+}
+
+/* NPC EXTRAS - BLOCO 6 */
+.npc-extras {
+  position: absolute;
+  bottom: 0vh;
+  right: 4vw;
+  height: 380px;
+  z-index: 15;
+  pointer-events: auto;
+  filter: drop-shadow(0 0 15px rgba(250, 204, 21, 0.6)); /* dourado */
+}
+
+#bloco2 .card-display {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  position: absolute;
+  right: 10vw; /* equivalente à divisão 2/3 da tela */
+  top: 10%;
+  width: clamp(240px, 28%, 300px);
+  gap: 1rem;
+}
+
+#bloco2 .card-display .product-card {
+  background: rgba(17, 17, 17, 0.85);
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+#bloco2 .product-card img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+#bloco2 .card-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+#bloco2 .card-controls .arrow {
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+/* BLOCO 3 - ANIMES */
+#bloco3 .card-display {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  position: absolute;
+  right: 10vw;
+  top: 10%;
+  width: clamp(240px, 28%, 300px);
+  gap: 1rem;
+}
+#bloco3 .product-card {
+  background: rgba(17, 17, 17, 0.85);
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+#bloco3 .product-card img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+#bloco3 .card-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+}
+#bloco3 .card-controls .arrow {
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+/* BLOCO 4 - EBOOKS */
+#bloco4 .card-display {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  position: absolute;
+  right: 10vw;
+  top: 10%;
+  width: clamp(240px, 28%, 300px);
+  gap: 1rem;
+}
+#bloco4 .product-card {
+  background: rgba(17, 17, 17, 0.85);
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+#bloco4 .product-card img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+#bloco4 .card-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+}
+#bloco4 .card-controls .arrow {
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+/* BLOCO 5 - MENTORIAS */
+#bloco5 .card-display {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  position: absolute;
+  right: 10vw;
+  top: 10%;
+  width: clamp(240px, 28%, 300px);
+  gap: 1rem;
+}
+#bloco5 .product-card {
+  background: rgba(17, 17, 17, 0.85);
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+#bloco5 .product-card img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+#bloco5 .card-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+}
+#bloco5 .card-controls .arrow {
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+/* BLOCO 6 - EXTRAS */
+#bloco6 .card-display {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  position: absolute;
+  right: 10vw;
+  top: 10%;
+  width: clamp(240px, 28%, 300px);
+  gap: 1rem;
+}
+#bloco6 .product-card {
+  background: rgba(17, 17, 17, 0.85);
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  z-index: 13;
+}
+#bloco6 .product-card img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+#bloco6 .card-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+}
+#bloco6 .card-controls .arrow {
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+.botao-personagem {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  width: 34px;
+  height: 34px;
+  background: #9333ea;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 30;
+  box-shadow: 0 0 6px #9333ea;
+  transition: transform 0.2s ease;
+}
+
+.botao-personagem:hover {
+  transform: scale(1.1);
+}
+
+.botao-personagem img {
+  width: 20px;
+  height: 20px;
+  filter: invert(1);
+}
+
+.modal-personagem {
+  position: absolute;
+  bottom: 4.5rem;
+  right: 1rem;
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  font-size: 0.85rem;
+  padding: 1rem;
+  border-radius: 10px;
+  max-width: 220px;
+  z-index: 40;
+  box-shadow: 0 0 10px #9333ea88;
+}
+
+.modal-personagem.escondido {
+  display: none;
+}
+
+.modal-personagem .conteudo-modal {
+  pointer-events: none;
+}
+#botao-modal img {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
+#botao-carrinho {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  background-color: #9333ea; /* roxo */
+  border: 2px solid #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+#botao-carrinho:hover {
+  transform: scale(1.05);
+}
+#botao-carrinho img {
+  width: 55px;
+  height: 55px;
+}
+.modal-carrinho {
+  position: fixed;
+  top: 60px;
+  right: 20px;
+  width: 300px;
+  background: #111;
+  border: 2px solid #9333ea;
+  border-radius: 12px;
+  padding: 1rem;
+  z-index: 49;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(147, 51, 234, 0.5);
+}
+.modal-carrinho.escondido {
+  display: none;
+}
+.modal-carrinho h3 {
+  margin-bottom: 0.5rem;
+}
+.modal-carrinho ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+.modal-carrinho li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #222;
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  font-size: 0.85rem;
+}
+.modal-carrinho li button {
+  background: transparent;
+  border: none;
+  color: #f43f5e;
+  font-weight: bold;
+  cursor: pointer;
+}
+.modal-carrinho button {
+  width: 100%;
+  padding: 0.5rem;
+  background: #9333ea;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+</style>
+<script>
+  function goTo(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }
+</script>
+</head>
+<body>
+
+<!-- Desktop only -->
+<div class="desktop-visual">
+  <div id="container-desktop">
+   
+  <!-- Menu lateral fixo -->
+  <div class="menu">
+    <button onclick="goTo('bloco1')">Início</button>
+    <button onclick="goTo('bloco2')">Mangás</button>
+    <button onclick="goTo('bloco3')">Animes</button>
+    <button onclick="goTo('bloco4')">Ebooks</button>
+    <button onclick="goTo('bloco5')">Mentorias</button>
+    <button onclick="goTo('bloco6')">Extras</button>
+  </div>
+<!-- Botão do Carrinho -->
+<button id="botao-carrinho" onclick="abrirCarrinho()">
+  <img src="assets/icons/cart.png" alt="Carrinho" />
+</button>
+
+<!-- BLOCO 1 -->
+<section id="bloco1">
+  <div class="section-content" style="background-image: url('assets/bg-oriental.jpg'); position: relative;">
+<div id="vagalumes">
+  <div class="vagalume"></div>
+  <div class="vagalume"></div>
+  <div class="vagalume"></div>
+  <div class="vagalume"></div>
+  <div class="vagalume"></div>
+  <div class="vagalume"></div>
+  <div class="vagalume"></div>
+  <div class="vagalume"></div>
+  <div class="vagalume"></div>
+</div>
+<!-- Botão para abrir modal -->
+<div class="botao-personagem" onclick="abrirModal(this)">
+  <img src="assets/icons/hood-icon.png" alt=
