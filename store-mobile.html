@@ -23,8 +23,8 @@ body {
   background: var(--fundo);
   color: var(--claro);
   display: flex;
-  overflow: hidden;
   height: 100vh;
+  overflow: hidden;
 }
 
 .nav-lateral {
@@ -37,6 +37,11 @@ body {
   justify-content: space-around;
   padding: 1rem 0;
   border-right: 2px solid var(--roxo);
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1000;
 }
 
 .nav-lateral button {
@@ -56,9 +61,12 @@ body {
 }
 
 .conteudo {
-  flex: 1;
+  margin-left: 20%;
+  width: 80%;
+  height: 100vh;
   overflow-y: auto;
   scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
 }
 
 section {
@@ -177,13 +185,13 @@ section.reveal {
   </main>  <script>
     const abas = document.querySelectorAll('section');
     const botoes = document.querySelectorAll('.nav-lateral button');
+    const conteudo = document.querySelector('.conteudo');
 
     function mostrarAba(indice) {
-      abas.forEach((aba, i) => {
-        aba.scrollIntoView({ behavior: 'smooth' });
-        botoes[i].classList.remove('ativo');
-      });
-      botoes[indice].classList.add('ativo');
+      const target = document.getElementById(`aba-${indice}`);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      botoes.forEach((btn, i) => btn.classList.toggle('ativo', i === indice));
     }
 
     const observer = new IntersectionObserver(entries => {
