@@ -364,20 +364,20 @@
 }
 
 /* Botão de info do personagem */
-#bloco1m .botao-personagem {
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
-  width: 34px;
-  height: 34px;
-  background: #9333ea;
-  border-radius: 50%;
+#bloco1m {
+  position: relative;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
-  cursor: pointer;
-  z-index: 30;
-  box-shadow: 0 0 6px #9333ea;
+  scroll-snap-align: start;
+  height: 100vh;
+  width: 100%;
+  padding: 1rem;
+  background-color: #000;
+  border: 2px solid #fff; /* muda por cor de bloco */
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 /* NPC no canto inferior esquerdo */
@@ -731,12 +731,12 @@
    
   <!-- Menu lateral fixo -->
   <div class="menu">
-    <button onclick="goTo('bloco1')">Início</button>
-    <button onclick="goTo('bloco2')">Mangás</button>
-    <button onclick="goTo('bloco3')">Animes</button>
-    <button onclick="goTo('bloco4')">Ebooks</button>
-    <button onclick="goTo('bloco5')">Mentorias</button>
-    <button onclick="goTo('bloco6')">Extras</button>
+    <button onclick="goTo('bloco1m')">Início</button>
+    <button onclick="goTo('bloco2m')">Mangás</button>
+    <button onclick="goTo('bloco3m')">Animes</button>
+    <button onclick="goTo('bloco4m')">Ebooks</button>
+    <button onclick="goTo('bloco5m')">Mentorias</button>
+    <button onclick="goTo('bloco6m')">Extras</button>
   </div>
 
 <!-- BLOCO 1 -->
