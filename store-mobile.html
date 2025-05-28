@@ -303,35 +303,41 @@
   border: 2px solid #fff;
   overflow: hidden;
   scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* <== foco aqui */
+  align-items: center;
+  min-height: 100vh;
 }
 
 #bloco1m .section-content {
   position: relative;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
 }
 
-/* Título */
+/* Título centralizado na área preta */
 .titulo-bloco {
   font-size: 1.8rem;
   font-weight: bold;
   color: #fff;
   text-shadow: 0 0 20px #fff;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   z-index: 5;
+  text-align: center;
 }
 
-/* Fundo */
+/* Fundo da tenda */
 .bg-fundo {
   position: relative;
   width: 100%;
   height: auto;
   max-height: 260px;
   object-fit: cover;
-  margin-top: 1rem;
   z-index: 1;
+  pointer-events: none;
 }
 
 /* NPC */
