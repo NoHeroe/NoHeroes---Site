@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!DOCTYPE html><html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NoHeroes | Loja</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700&display=swap">
+  <title>NoHeroes | Loja Mobile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/scrollreveal"></script>
   <style>
     :root {
@@ -12,200 +11,189 @@
       --dourado: #facc15;
       --cinza: #1f1f1f;
       --fundo: #0a0a0a;
-      --claro: #f1f1f1;
-    }
+      --claro: #f4f4f4;
+    }* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+body {
+  font-family: 'Unbounded', sans-serif;
+  background: var(--fundo);
+  color: var(--claro);
+  display: flex;
+  overflow: hidden;
+  height: 100vh;
+}
 
-    html, body {
-      font-family: 'Unbounded', sans-serif;
-      background: var(--fundo);
-      color: var(--claro);
-      height: 100%;
-      overflow-x: hidden;
-    }
+.nav-lateral {
+  width: 20%;
+  min-width: 80px;
+  background: var(--cinza);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 1rem 0;
+  border-right: 2px solid var(--roxo);
+}
 
-    .top-nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      display: flex;
-      justify-content: space-around;
-      background: var(--cinza);
-      padding: 0.6rem 0;
-      border-bottom: 1px solid var(--roxo);
-      z-index: 100;
-    }
+.nav-lateral button {
+  background: none;
+  border: none;
+  color: var(--claro);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 1rem;
+  cursor: pointer;
+  margin: 0.5rem 0;
+}
 
-    .top-nav button {
-      background: none;
-      border: none;
-      color: var(--claro);
-      font-size: 1.1rem;
-      padding: 0.5rem 1rem;
-      cursor: pointer;
-      border-radius: 6px;
-    }
+.nav-lateral button.ativo {
+  color: var(--roxo);
+  font-weight: bold;
+}
 
-    .top-nav button.ativo {
-      background: var(--roxo);
-      color: #000;
-    }
+.conteudo {
+  flex: 1;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+}
 
-    main {
-      padding-top: 3.5rem;
-    }
+section {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  opacity: 0;
+  transform: translateX(50px);
+  transition: all 0.6s ease;
+}
 
-    section {
-      padding: 2rem 1rem;
-      scroll-snap-align: start;
-    }
+section.reveal {
+  opacity: 1;
+  transform: translateX(0);
+}
 
-    .titulo-bloco {
-      text-align: center;
-      font-size: 1.4rem;
-      margin-bottom: 1.5rem;
-      color: var(--roxo);
-      text-shadow: 0 0 10px var(--roxo);
-    }
+.titulo-bloco {
+  font-size: 1.4rem;
+  color: var(--roxo);
+  text-shadow: 0 0 10px var(--roxo);
+  margin-bottom: 1rem;
+  text-align: center;
+}
 
-    .card-container {
-      display: flex;
-      gap: 1rem;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      padding-bottom: 1rem;
-    }
+.card {
+  background: #111;
+  border: 1px solid var(--roxo);
+  border-radius: 1rem;
+  width: 80%;
+  max-width: 300px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 0 20px #a855f740;
+}
 
-    .card-container::-webkit-scrollbar {
-      display: none;
-    }
+.card img {
+  width: 100%;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+}
 
-    .card-produto {
-      flex: 0 0 auto;
-      background: #111;
-      border-radius: 12px;
-      border: 1px solid var(--roxo);
-      width: 160px;
-      padding: 1rem;
-      text-align: center;
-      box-shadow: 0 0 10px #a855f750;
-      scroll-snap-align: center;
-    }
+.card p {
+  font-size: 1rem;
+}
 
-    .card-produto img {
-      width: 100%;
-      height: 100px;
-      object-fit: contain;
-      margin-bottom: 0.5rem;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    .fade-section {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.6s ease;
-    }
-
-    .fade-section.revealed {
-      opacity: 1;
-      transform: translateY(0);
-    }
   </style>
 </head>
 <body>
-
-<!-- Navegação no topo -->
-<nav class="top-nav">
-  <button onclick="mudarAba('mangas')" id="tab-mangas" class="ativo">Mangás</button>
-  <button onclick="mudarAba('animes')" id="tab-animes">Animes</button>
-  <button onclick="mudarAba('ebooks')" id="tab-ebooks">Ebooks</button>
-  <button onclick="mudarAba('mentorias')" id="tab-mentorias">Mentorias</button>
-  <button onclick="mudarAba('carrinho')" id="tab-carrinho">Carrinho</button>
-</nav>
-
-<!-- CONTEÚDO -->
-<main id="conteudo">
-
-  <section class="fade-section" id="aba-mangas">
-    <h2 class="titulo-bloco">Mangás</h2>
-    <div class="card-container">
-      <div class="card-produto">
-        <img src="assets/produto-exemplo1.png" alt="Produto">
-        <p>Volume 1</p>
+  <nav class="nav-lateral">
+    <button class="ativo" onclick="mostrarAba(0)">Início</button>
+    <button onclick="mostrarAba(1)">Mangás</button>
+    <button onclick="mostrarAba(2)">Animes</button>
+    <button onclick="mostrarAba(3)">Ebooks</button>
+    <button onclick="mostrarAba(4)">Mentorias</button>
+    <button onclick="mostrarAba(5)">Extras</button>
+    <button onclick="mostrarAba(6)">Carrinho</button>
+  </nav>  <main class="conteudo">
+    <section id="aba-0" class="reveal">
+      <h2 class="titulo-bloco">Bem-vindo à Loja NoHeroes</h2>
+      <div class="card">
+        <img src="assets/logo-noheroes.png" alt="Logo NoHeroes" />
+        <p>Explore produtos únicos de um universo sombrio.</p>
       </div>
-    </div>
-  </section>
+    </section><section id="aba-1">
+  <h2 class="titulo-bloco">Mangás</h2>
+  <div class="card">
+    <img src="assets/manga-exemplo.jpg" alt="Mangá" />
+    <p>Volume 1 - ROAR</p>
+  </div>
+</section>
 
-  <section class="fade-section hidden" id="aba-animes">
-    <h2 class="titulo-bloco">Animes</h2>
-    <div class="card-container">
-      <div class="card-produto">
-        <img src="assets/produto-exemplo2.png" alt="Produto">
-        <p>Teaser FREQ</p>
-      </div>
-    </div>
-  </section>
+<section id="aba-2">
+  <h2 class="titulo-bloco">Animes</h2>
+  <div class="card">
+    <img src="assets/anime-exemplo.jpg" alt="Anime" />
+    <p>Teaser de FREQ</p>
+  </div>
+</section>
 
-  <section class="fade-section hidden" id="aba-ebooks">
-    <h2 class="titulo-bloco">Ebooks</h2>
-    <div class="card-container">
-      <div class="card-produto">
-        <img src="assets/produto-exemplo3.png" alt="Produto">
-        <p>Sistema Vivo</p>
-      </div>
-    </div>
-  </section>
+<section id="aba-3">
+  <h2 class="titulo-bloco">Ebooks</h2>
+  <div class="card">
+    <img src="assets/ebook-exemplo.jpg" alt="Ebook" />
+    <p>Sistema Vivo</p>
+  </div>
+</section>
 
-  <section class="fade-section hidden" id="aba-mentorias">
-    <h2 class="titulo-bloco">Mentorias</h2>
-    <div class="card-container">
-      <div class="card-produto">
-        <img src="assets/produto-exemplo4.png" alt="Produto">
-        <p>Mentoria 1</p>
-      </div>
-    </div>
-  </section>
+<section id="aba-4">
+  <h2 class="titulo-bloco">Mentorias</h2>
+  <div class="card">
+    <img src="assets/mentoria-exemplo.jpg" alt="Mentoria" />
+    <p>Treinamento com Ryukess</p>
+  </div>
+</section>
 
-  <section class="fade-section hidden" id="aba-carrinho">
-    <h2 class="titulo-bloco cor-dourado">Carrinho</h2>
-    <div class="card-container">
-      <p>Nenhum item adicionado ainda.</p>
-    </div>
-  </section>
+<section id="aba-5">
+  <h2 class="titulo-bloco">Extras</h2>
+  <div class="card">
+    <img src="assets/extra-exemplo.jpg" alt="Extras" />
+    <p>Arte conceitual exclusiva</p>
+  </div>
+</section>
 
-</main>
+<section id="aba-6">
+  <h2 class="titulo-bloco">Carrinho</h2>
+  <div class="card">
+    <p>Seu carrinho está vazio.</p>
+  </div>
+</section>
 
-<script>
-  function mudarAba(aba) {
-    const abas = ['mangas', 'animes', 'ebooks', 'mentorias', 'carrinho'];
-    abas.forEach(a => {
-      document.getElementById(`aba-${a}`).classList.add('hidden');
-      document.getElementById(`tab-${a}`).classList.remove('ativo');
-    });
-    document.getElementById(`aba-${aba}`).classList.remove('hidden');
-    document.getElementById(`tab-${aba}`).classList.add('ativo');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+  </main>  <script>
+    const abas = document.querySelectorAll('section');
+    const botoes = document.querySelectorAll('.nav-lateral button');
 
-  ScrollReveal().reveal('.fade-section', {
-    delay: 100,
-    duration: 600,
-    distance: '30px',
-    origin: 'bottom',
-    easing: 'ease-in-out',
-    reset: false,
-    beforeReveal: el => el.classList.add('revealed')
-  });
-</script>
+    function mostrarAba(indice) {
+      abas.forEach((aba, i) => {
+        aba.scrollIntoView({ behavior: 'smooth' });
+        botoes[i].classList.remove('ativo');
+      });
+      botoes[indice].classList.add('ativo');
+    }
 
-</body>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('reveal');
+        }
+      });
+    }, { threshold: 0.5 });
+
+    abas.forEach(aba => observer.observe(aba));
+  </script></body>
 </html>
