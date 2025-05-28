@@ -9,8 +9,6 @@
 
 *{ margin: 0; padding: 0; box-sizing: border-box; } html, body { font-family: 'Inter', sans-serif; background: #000; color: #fff; height: 100%; overflow-x: hidden; overflow-y: auto; }
 
-.cor-roxa { color: #c084fc; text-shadow: 0 0 20px #c084fc; } .cor-azul { color: #3b82f6; text-shadow: 0 0 20px #3b82f6; } .cor-verde { color: #4ade80; text-shadow: 0 0 20px #4ade80; } .cor-vermelho { color: #f43f5e; text-shadow: 0 0 20px #f43f5e; } .cor-dourado { color: #facc15; text-shadow: 0 0 20px #facc15; } .cor-branca { color: #fff; text-shadow: 0 0 20px #ffffff; }
-
 .mobile-visual section {
   min-height: 100vh;
   scroll-snap-align: start;
@@ -51,7 +49,7 @@
   box-shadow: 0 0 30px rgba(250, 204, 21, 0.7);
 }
 
-/* MENU FIXO */ .menu { position: fixed; top: 20px; left: 20px; z-index: 20; display: flex; flex-direction: column; gap: .5rem; }
+/* MENU FIXO */ .menu { position: fixed; top: 16px; left: 16px; z-index: 20; display: flex; flex-direction: column; gap: .4rem; }
 
 /* BOTÕES REESTILIZADOS COM VISUAL DARK + BORDAS COLORIDAS + GLOW */ .menu button { border: 2px solid #444; background-color: #000; border-radius: 12px; font-size: 0.9rem; font-weight: bold; padding: 0.6rem 1.2rem; color: #fff; cursor: pointer; transition: all 0.3s ease; box-shadow: none; position: relative; overflow: hidden; }
 
@@ -79,12 +77,6 @@
 
 .arrow.left  { left: calc(20% - 1rem); } .arrow.right { right: calc(20% - 1rem); }
 
-
-
-/* NPCs PADRÃO */ .npc-mercador, .npc-manga { position: absolute; bottom: 18vh; height: 200px; z-index: 10; pointer-events: auto; filter: drop-shadow(0 0 10px rgba(147, 51, 234, 0.4)); }
-
-.npc-mercador { left: 51.5%; transform: translateX(-50%); } .npc-manga    { left: 6vw; } .npc-anime    { left: 6vw; } .npc-ebook    { left: 6vw; } .npc-mentoria { left: 6vw; } .npc-extras   { left: 6vw; }
-
 /* FALAS DOS NPCs */ .fala, #fala-bloco1, #fala-bloco2, #fala-bloco3, #fala-bloco4, #fala-bloco5, #fala-bloco6 { background: rgba(0,0,0,0.85); border: 2px solid #9333ea; border-radius: 10px; padding: 0.75rem; color: #fff; font-size: 0.9rem; max-width: 260px; position: absolute; z-index: 20; animation: fadeIn 0.3s ease forwards; }
 
 #fala-bloco1 { margin-bottom: 60px; position: relative; } #fala-bloco2 { bottom: 36vh; left: 6vw; } #fala-bloco3 { bottom: 36vh; left: 6vw; } #fala-bloco4 { bottom: 36vh; left: 6vw; } #fala-bloco5 { bottom: 36vh; left: 6vw; } #fala-bloco6 { bottom: 36vh; left: 6vw; }
@@ -93,9 +85,7 @@
 
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to   { opacity: 1; transform: translateY(0); } }
 
-/* ELEMENTOS VISUAIS */ .mato-topo { position: absolute; top: 0; left: 0; height: auto; width: auto; max-width: 600px; max-height: 40vh; pointer-events: none; z-index: 1; }
-
-.gramado-bottom { position: absolute; bottom: 0; left: 0; width: 100vw; height: auto; pointer-events: none; z-index: 21; transform: translateY(10%); }
+/* ELEMENTOS VISUAIS */ 
 
 #vagalumes { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 30; overflow: hidden; }
 
@@ -221,15 +211,6 @@
 
 /* ESPAÇADOR */ .espacador { height: 90vh; flex-shrink: 0; pointer-events: none; }
 
-#container-mobile {
-  height: 100vh;
-  overflow-y: auto;
-  scrollbar-width: none;           /* Firefox */
-  -ms-overflow-style: none;        /* IE e Edge */
-}
-#container-mobile::-webkit-scrollbar {
-  display: none;                   /* Chrome, Safari */
-}
 #rodape .section-content.footer-content {
   background: #000;
   box-shadow: none;
@@ -366,125 +347,6 @@
   height: 145px;
   z-index: 5;
 }
-/* === CSS MOBILE EXATO - BLOCO 2 (MANGÁS) === */
-
-#bloco2m {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  scroll-snap-align: start;
-  height: 100vh;
-  width: 100%;
-  padding: 1rem;
-  background-color: #000;
-  border: 2px solid #9333ea;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-
-#bloco2m .titulo-bloco {
-  position: relative;
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #c084fc;
-  text-shadow: 0 0 20px #c084fc;
-  margin-bottom: 1rem;
-  z-index: 10;
-  text-align: center;
-}
-
-#bloco2m .card-display {
-  position: relative;
-  width: 90%;
-  max-width: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 1rem;
-  z-index: 15;
-}
-
-#bloco2m .product-card {
-  background: rgba(17, 17, 17, 0.85);
-  border: 1px solid #333;
-  border-radius: 12px;
-  padding: 1rem;
-  text-align: center;
-  font-size: 0.9rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  width: 100%;
-}
-
-#bloco2m .product-card img {
-  width: 100%;
-  border-radius: 8px;
-  object-fit: cover;
-}
-
-#bloco2m .card-controls {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  width: 100%;
-}
-
-#bloco2m .card-controls .arrow {
-  background: rgba(0, 0, 0, 0.6);
-  color: #fff;
-  border: none;
-  padding: 0.5rem 0.75rem;
-  border-radius: 9999px;
-  cursor: pointer;
-  font-size: 1.2rem;
-}
-
-#bloco2m .npc-manga {
-  position: absolute;
-  bottom: 1.5rem;
-  left: 1rem;
-  width: 140px;
-  max-width: 50%;
-  z-index: 10;
-  pointer-events: auto;
-  filter: drop-shadow(0 0 10px rgba(147, 51, 234, 0.4));
-}
-
-#bloco2m .botao-personagem {
-  position: absolute;
-  bottom: 1.5rem;
-  right: 1rem;
-  width: 34px;
-  height: 34px;
-  background: #9333ea;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  z-index: 30;
-  box-shadow: 0 0 6px #9333ea;
-}
-
-#fala-bloco2 {
-  background: rgba(0, 0, 0, 0.85);
-  border: 2px solid #9333ea;
-  border-radius: 10px;
-  padding: 0.75rem;
-  color: #fff;
-  font-size: 0.9rem;
-  max-width: 90%;
-  margin-top: 1rem;
-  text-align: center;
-  z-index: 15;
-}
-
-
 
 
 .botao-personagem {
