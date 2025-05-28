@@ -504,38 +504,23 @@
 <!-- BLOCO 1 -->
 <section id="bloco1m">
   <div class="section-content">
-
+    
     <!-- Título -->
     <h1 class="titulo-bloco">Tenda Principal</h1>
 
-    <!-- Partículas (vagalumes) -->
-    <div id="vagalumes">
-      <div class="vagalume"></div>
-      <div class="vagalume"></div>
-      <div class="vagalume"></div>
-      <div class="vagalume"></div>
-      <div class="vagalume"></div>
-      <div class="vagalume"></div>
-      <div class="vagalume"></div>
-      <div class="vagalume"></div>
-      <div class="vagalume"></div>
-    </div>
-
-    <!-- Fundo da tenda (visual inferior) -->
-    <img src="assets/bg-oriental.jpg" alt="Fundo" class="bg-fundo">
+    <!-- Fundo da tenda -->
+    <img src="assets/bg-oriental.jpg" class="bg-fundo" alt="Fundo oriental" />
 
     <!-- NPC -->
-    <img src="assets/npc-mercador.png" alt="NPC Mercador" class="npc-mercador" onclick="falar('bloco1')" />
-
-    <!-- Fala -->
+    <img src="assets/npc-mercador.png" class="npc-mercador" alt="Mercador" onclick="falar('bloco1')" />
     <div class="fala escondida" id="fala-bloco1"></div>
 
-    <!-- Botão Carrinho -->
+    <!-- Botão carrinho -->
     <button id="botao-carrinho" onclick="abrirCarrinho()">
       <img src="assets/icons/cart.png" alt="Carrinho" />
     </button>
 
-    <!-- Botão info personagem -->
+    <!-- Botão personagem -->
     <div class="botao-personagem" onclick="abrirModal(this)">
       <img src="assets/icons/hood-icon.png" alt="Personagem" />
     </div>
@@ -544,9 +529,11 @@
     <div class="modal-personagem escondido" onclick="fecharTodosModais()">
       <div class="conteudo-modal">
         <h3>Mercador das Sombras</h3>
-        <p>Um lacaio do Vazio em missão secreta. À primeira vista, parece apenas um vendedor excêntrico,
-        mas é o responsável por guardar os artefatos e convidar visitantes intrigantes para passagens ocultas.
-        Ele é o único com acesso ao sistema de compras e ao carrinho — nada sai da loja sem passar por ele.</p>
+        <p>
+          Um lacaio do Vazio em missão secreta. À primeira vista, parece apenas um vendedor excêntrico,
+          mas é o responsável por guardar os artefatos e convidar visitantes intrigantes para passagens ocultas.
+          Ele é o único com acesso ao sistema de compras e ao carrinho — nada sai da loja sem passar por ele.
+        </p>
       </div>
     </div>
 
