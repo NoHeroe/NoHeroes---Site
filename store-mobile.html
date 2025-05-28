@@ -71,8 +71,6 @@
 
 /* CAROUSEL */ .carousel-wrapper { width: 60%; position: relative; display: flex; align-items: center; margin: 1rem 0; }
 
-.product-card { flex: 0 0 clamp(180px, 25%, 240px); scroll-snap-align: center; background: rgba(17,17,17,0.8); border: 1px solid #333; border-radius: 12px; padding: 1rem; text-align: center; font-size: 0.85rem; }
-
 .arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: #fff; border: none; padding: 0.5rem; border-radius: 9999px; cursor: pointer; z-index: 5; }
 
 .arrow.left  { left: calc(20% - 1rem); } .arrow.right { right: calc(20% - 1rem); }
@@ -513,26 +511,24 @@
   display: none;
 }
 
+.product-card {
+  width: 220px;
+  height: 120px;
+  background: #111;
+  border: 1px solid #9333ea;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  color: #ccc;
+  box-shadow: 0 0 12px #9333ea88;
+}
+
 .card-display {
   margin-top: 1.5rem;
   position: relative;
   z-index: 5;
-}
-
-.card-controls {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 0.5rem;
-}
-.card-controls .arrow {
-  background: #9333ea;
-  border: none;
-  color: #fff;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
 }
 
 #botao-carrinho:hover {
@@ -673,15 +669,11 @@
 
 <!-- BLOCO 2 -->
 <section id="bloco2m">
-  <!-- Partículas -->
-  <div id="particulas-bloco2"></div>
+  <div class="particulas-roxas-container" id="particulas-bloco2"></div>
 
   <div class="section-content">
-    <h2 class="titulo-bloco cor-roxa">Mangás</h2>
-
-    <img class="bg-fundo" src="assets/bg-subterraneo-1.jpg" alt="Fundo Mangás" />
-
-    <!-- Card -->
+    
+    <!-- CARD: AGORA FICA NO TOPO -->
     <div class="card-display">
       <div class="product-card" id="card-bloco2" onclick="falar('bloco2')">
         <em style="opacity:.4">Carregando mangás...</em>
@@ -691,6 +683,12 @@
         <button class="arrow right" onclick="navegarCardBloco2(1)">&rarr;</button>
       </div>
     </div>
+
+    <h2 class="titulo-bloco cor-roxa">Mangás</h2>
+    
+    <!-- Resto permanece igual -->
+
+    <img class="bg-fundo" src="assets/bg-subterraneo-1.jpg" alt="Fundo Mangás" />
 
     <!-- NPC -->
     <img src="assets/npc-manga.png" alt="NPC Mangás" class="npc-manga" onclick="falar('bloco2')" />
