@@ -294,32 +294,50 @@
 }
 
 /* Título */
-#bloco1m .titulo-bloco {
+#bloco1m {
+  position: relative;
+  width: 100%;
+  background: #000;
+  padding: 2rem 1rem 4rem;
+  box-sizing: border-box;
+  border: 2px solid #fff;
+  overflow: hidden;
+  scroll-snap-align: start;
+}
+
+#bloco1m .section-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* Título */
+.titulo-bloco {
   font-size: 1.8rem;
   font-weight: bold;
   color: #fff;
   text-shadow: 0 0 20px #fff;
-  text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   z-index: 5;
 }
 
-/* Fundo ilustrativo */
-#bloco1m .bg-fundo {
-  position: absolute;
-  bottom: 0;
-  left: 0;
+/* Fundo */
+.bg-fundo {
+  position: relative;
   width: 100%;
-  max-height: 40vh;
+  height: auto;
+  max-height: 260px;
   object-fit: cover;
+  margin-top: 1rem;
   z-index: 1;
-  pointer-events: none;
 }
 
 /* NPC */
-#bloco1m .npc-mercador {
+.npc-mercador {
   position: absolute;
-  bottom: 1rem;
+  bottom: 1.5rem;
   left: 1rem;
   height: 140px;
   z-index: 3;
@@ -341,7 +359,7 @@
   animation: fadeIn 0.3s ease forwards;
 }
 
-/* Botão Carrinho */
+/* Botões */
 #botao-carrinho {
   position: absolute;
   bottom: 1.5rem;
@@ -362,7 +380,6 @@
   height: 32px;
 }
 
-/* Botão de personagem */
 .botao-personagem {
   position: absolute;
   bottom: 1.5rem;
@@ -384,7 +401,6 @@
   filter: invert(1);
 }
 
-/* Modal do personagem */
 .modal-personagem {
   position: absolute;
   bottom: 6.5rem;
@@ -401,11 +417,6 @@
 .modal-personagem.escondido {
   display: none;
 }
-
-.modal-personagem .conteudo-modal {
-  pointer-events: none;
-}
-
 
 #botao-carrinho:hover {
   transform: scale(1.05);
