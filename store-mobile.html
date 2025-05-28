@@ -423,6 +423,118 @@
   display: none;
 }
 
+#bloco2m {
+  position: relative;
+  width: 100%;
+  background: #000;
+  padding: 2rem 1rem 4rem;
+  box-sizing: border-box;
+  overflow: hidden;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  min-height: 100vh;
+}
+
+#bloco2m .section-content {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 16px;
+  box-shadow: 0 0 25px rgba(147, 51, 234, 0.2);
+}
+
+#bloco2m .titulo-bloco {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 20px #9333ea;
+  margin-bottom: 2rem;
+  text-align: center;
+  z-index: 5;
+}
+
+#bloco2m .bg-fundo {
+  position: relative;
+  width: 100%;
+  max-height: 260px;
+  object-fit: cover;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.npc-manga {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1rem;
+  height: 140px;
+  z-index: 3;
+}
+
+.botao-personagem {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 70px;
+  width: 34px;
+  height: 34px;
+  background: #9333ea;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 20;
+  box-shadow: 0 0 6px #9333ea;
+}
+.botao-personagem img {
+  width: 20px;
+  height: 20px;
+  filter: invert(1);
+}
+
+.modal-personagem {
+  position: absolute;
+  bottom: 6.5rem;
+  right: 1rem;
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  font-size: 0.85rem;
+  padding: 1rem;
+  border-radius: 10px;
+  max-width: 240px;
+  z-index: 40;
+  box-shadow: 0 0 10px #9333ea88;
+}
+.modal-personagem.escondido {
+  display: none;
+}
+
+.card-display {
+  margin-top: 1.5rem;
+  position: relative;
+  z-index: 5;
+}
+
+.card-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+.card-controls .arrow {
+  background: #9333ea;
+  border: none;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
 #botao-carrinho:hover {
   transform: scale(1.05);
 }
@@ -561,27 +673,15 @@
 
 <!-- BLOCO 2 -->
 <section id="bloco2m">
-  <div class="section-content" style="background-image: url('assets/bg-subterraneo-1.jpg'); position: relative;">
+  <!-- Partículas -->
+  <div id="particulas-bloco2"></div>
+
+  <div class="section-content">
     <h2 class="titulo-bloco cor-roxa">Mangás</h2>
 
-    <!-- Partículas Roxas -->
-    <div id="particulas-roxas"></div>
-<!-- Botão para abrir modal -->
-<div class="botao-personagem" onclick="abrirModal(this)">
-  <img src="assets/icons/hood-icon.png" alt="Personagem" />
-</div>
+    <img class="bg-fundo" src="assets/bg-subterraneo-1.jpg" alt="Fundo Mangás" />
 
-<!-- Modal do personagem -->
-<div class="modal-personagem escondido" onclick="fecharTodosModais()">
-  <div class="conteudo-modal">
-    <p><h3>Vassala Sombria</h3>
-<p>
-Fiel serva do mesmo mestre do Mercador, atua como segurança e avaliadora dos visitantes.
-Sua frieza e lealdade inquebrantável a tornam implacável. Reluta em interações humanas,
-mas há quem diga que uma boa conversa ou uma oferta irresistível podem fazê-la hesitar.
-</p></p>
-  </div>
-</div>
+    <!-- Card -->
     <div class="card-display">
       <div class="product-card" id="card-bloco2" onclick="falar('bloco2')">
         <em style="opacity:.4">Carregando mangás...</em>
@@ -592,8 +692,29 @@ mas há quem diga que uma boa conversa ou uma oferta irresistível podem fazê-l
       </div>
     </div>
 
+    <!-- NPC -->
     <img src="assets/npc-manga.png" alt="NPC Mangás" class="npc-manga" onclick="falar('bloco2')" />
+
+    <!-- Botões -->
+    <button class="botao-personagem" onclick="abrirModal(this)">
+      <img src="assets/icons/hood-icon.png" alt="Personagem" />
+    </button>
+
+    <!-- Modal -->
+    <div class="modal-personagem escondido" onclick="fecharTodosModais()">
+      <div class="conteudo-modal">
+        <h3>Vassala Sombria</h3>
+        <p>
+          Fiel serva do mesmo mestre do Mercador, atua como segurança e avaliadora dos visitantes.
+          Sua frieza e lealdade inquebrantável a tornam implacável. Reluta em interações humanas,
+          mas há quem diga que uma boa conversa ou uma oferta irresistível podem fazê-la hesitar.
+        </p>
+      </div>
+    </div>
+
+    <!-- Fala -->
     <div class="fala escondida" id="fala-bloco2"></div>
+
   </div>
 </section>
 
