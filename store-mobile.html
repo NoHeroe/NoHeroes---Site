@@ -265,20 +265,32 @@
   pointer-events: auto;
   filter: drop-shadow(0 0 15px rgba(250, 204, 21, 0.6)); /* dourado */
 }
+
+#container-mobile {
+  scroll-snap-type: y mandatory;
+  overflow-y: auto;
+}
+
 #bloco1m {
   position: relative;
+  width: 100%;
+  background: #000;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
-  scroll-snap-align: start;
-  min-height: 100vh;
-  width: 100%;
-  padding: 2rem 1rem 1rem;
-  background: #000;
-  border: 2px solid #fff;
+  padding: 2rem 1rem 4rem;
   box-sizing: border-box;
   overflow: hidden;
+  border: 2px solid #fff;
+  scroll-snap-align: start;
+}
+
+#bloco1m .section-content {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Título */
@@ -288,36 +300,52 @@
   color: #fff;
   text-shadow: 0 0 20px #fff;
   text-align: center;
-  z-index: 10;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  z-index: 5;
 }
 
-/* Fundo fixo na base */
+/* Fundo ilustrativo */
 #bloco1m .bg-fundo {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  max-height: 45vh;
+  max-height: 40vh;
   object-fit: cover;
   z-index: 1;
   pointer-events: none;
 }
 
-/* NPC no canto inferior esquerdo */
+/* NPC */
 #bloco1m .npc-mercador {
   position: absolute;
-  bottom: 0.5rem;
+  bottom: 1rem;
   left: 1rem;
-  height: 145px;
-  z-index: 5;
+  height: 140px;
+  z-index: 3;
 }
 
-/* Botão carrinho */
+/* Fala */
+#fala-bloco1 {
+  position: absolute;
+  bottom: 10rem;
+  left: 1rem;
+  background: rgba(0, 0, 0, 0.85);
+  border: 2px solid #9333ea;
+  border-radius: 10px;
+  padding: 0.75rem;
+  color: #fff;
+  font-size: 0.9rem;
+  max-width: 260px;
+  z-index: 20;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+/* Botão Carrinho */
 #botao-carrinho {
   position: absolute;
   bottom: 1.5rem;
-  right: 1.5rem;
+  right: 1rem;
   width: 48px;
   height: 48px;
   border-radius: 12px;
@@ -329,16 +357,15 @@
   z-index: 20;
   cursor: pointer;
 }
-
 #botao-carrinho img {
   width: 32px;
   height: 32px;
 }
 
-/* Botão info personagem */
+/* Botão de personagem */
 .botao-personagem {
   position: absolute;
-  bottom: 1rem;
+  bottom: 1.5rem;
   right: 70px;
   width: 34px;
   height: 34px;
@@ -348,35 +375,19 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  z-index: 30;
+  z-index: 20;
   box-shadow: 0 0 6px #9333ea;
 }
-
 .botao-personagem img {
   width: 20px;
   height: 20px;
   filter: invert(1);
 }
 
-/* Fala do personagem */
-#fala-bloco1 {
-  position: absolute;
-  bottom: 9rem;
-  left: 1rem;
-  background: rgba(0,0,0,0.85);
-  border: 2px solid #9333ea;
-  border-radius: 10px;
-  padding: 0.75rem;
-  color: #fff;
-  font-size: 0.9rem;
-  max-width: 260px;
-  z-index: 20;
-  animation: fadeIn 0.3s ease forwards;
-}
-
+/* Modal do personagem */
 .modal-personagem {
   position: absolute;
-  bottom: 4.5rem;
+  bottom: 6.5rem;
   right: 1rem;
   background: rgba(0, 0, 0, 0.85);
   color: #fff;
@@ -387,7 +398,6 @@
   z-index: 40;
   box-shadow: 0 0 10px #9333ea88;
 }
-
 .modal-personagem.escondido {
   display: none;
 }
@@ -395,12 +405,7 @@
 .modal-personagem .conteudo-modal {
   pointer-events: none;
 }
-#botao-modal img {
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  object-fit: cover;
-}
+
 
 #botao-carrinho:hover {
   transform: scale(1.05);
@@ -489,47 +494,51 @@
 <section id="bloco1m">
   <div class="section-content">
 
-    <!-- Card ou título -->
+    <!-- Título -->
     <h1 class="titulo-bloco">Tenda Principal</h1>
 
-<div id="vagalumes">
-  <div class="vagalume"></div>
-  <div class="vagalume"></div>
-  <div class="vagalume"></div>
-  <div class="vagalume"></div>
-  <div class="vagalume"></div>
-  <div class="vagalume"></div>
-  <div class="vagalume"></div>
-  <div class="vagalume"></div>
-  <div class="vagalume"></div>
-</div>
+    <!-- Partículas (vagalumes) -->
+    <div id="vagalumes">
+      <div class="vagalume"></div>
+      <div class="vagalume"></div>
+      <div class="vagalume"></div>
+      <div class="vagalume"></div>
+      <div class="vagalume"></div>
+      <div class="vagalume"></div>
+      <div class="vagalume"></div>
+      <div class="vagalume"></div>
+      <div class="vagalume"></div>
+    </div>
 
-    <!-- Imagem de fundo encaixada embaixo -->
+    <!-- Fundo da tenda (visual inferior) -->
     <img src="assets/bg-oriental.jpg" alt="Fundo" class="bg-fundo">
 
-    <!-- Botão do carrinho (flutuante no topo direito) -->
-    <button id="botao-carrinho">
+    <!-- NPC -->
+    <img src="assets/npc-mercador.png" alt="NPC Mercador" class="npc-mercador" onclick="falar('bloco1')" />
+
+    <!-- Fala -->
+    <div class="fala escondida" id="fala-bloco1"></div>
+
+    <!-- Botão Carrinho -->
+    <button id="botao-carrinho" onclick="abrirCarrinho()">
       <img src="assets/icons/cart.png" alt="Carrinho" />
     </button>
 
-    <!-- Botão de info do personagem -->
+    <!-- Botão info personagem -->
     <div class="botao-personagem" onclick="abrirModal(this)">
       <img src="assets/icons/hood-icon.png" alt="Personagem" />
     </div>
 
-    <!-- Modal do personagem -->
+    <!-- Modal personagem -->
     <div class="modal-personagem escondido" onclick="fecharTodosModais()">
       <div class="conteudo-modal">
         <h3>Mercador das Sombras</h3>
         <p>Um lacaio do Vazio em missão secreta. À primeira vista, parece apenas um vendedor excêntrico,
-mas é o responsável por guardar os artefatos e convidar visitantes intrigantes para passagens ocultas.
-Ele é o único com acesso ao sistema de compras e ao carrinho — nada sai da loja sem passar por ele.</p>
+        mas é o responsável por guardar os artefatos e convidar visitantes intrigantes para passagens ocultas.
+        Ele é o único com acesso ao sistema de compras e ao carrinho — nada sai da loja sem passar por ele.</p>
       </div>
     </div>
 
-    <!-- NPC Mercador (canto inferior esquerdo) -->
-    <img src="assets/npc-mercador.png" alt="NPC Mercador" class="npc-mercador" onclick="falar('bloco1')" />
-    <div class="fala escondida" id="fala-bloco1"></div>
   </div>
 </section>
 
@@ -746,8 +755,6 @@ Evite fazer perguntas... a curiosidade pode ter um preço.
   </div>
 </section>
 </div>
-
-<div class="espacador"></div>
 
 <div id="modal-carrinho" class="modal-carrinho escondido">
   <div class="conteudo-carrinho">
