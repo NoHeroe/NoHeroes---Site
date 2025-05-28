@@ -44,32 +44,32 @@
 }
 
 /* Tenda Principal – Glow Branco */
-#bloco1 .section-content {
+#bloco1m .section-content {
   box-shadow: 0 0 30px rgba(255, 255, 255, 0.25);
 }
 
 /* Mangás – Glow Roxo */
-#bloco2 .section-content {
+#bloco2m .section-content {
   box-shadow: 0 0 30px rgba(147, 51, 234, 0.7);
 }
 
 /* Animes – Glow Azul */
-#bloco3 .section-content {
+#bloco3m .section-content {
   box-shadow: 0 0 30px rgba(59, 130, 246, 0.7);
 }
 
 /* Ebooks – Glow Verde */
-#bloco4 .section-content {
+#bloco4m .section-content {
   box-shadow: 0 0 30px rgba(74, 222, 128, 0.7);
 }
 
 /* Mentorias – Glow Vermelho */
-#bloco5 .section-content {
+#bloco5m .section-content {
   box-shadow: 0 0 30px rgba(244, 63, 94, 0.7);
 }
 
 /* Extras – Glow Dourado */
-#bloco6 .section-content {
+#bloco6m .section-content {
   box-shadow: 0 0 30px rgba(250, 204, 21, 0.7);
 }
 
@@ -383,33 +383,128 @@
 /* NPC no canto inferior esquerdo */
 #bloco1m .npc-mercador {
   position: absolute;
-  bottom: 0;
+  bottom: 0.5rem;
+  left: 1rem;
+  height: 145px;
+  z-index: 5;
+}
+/* === CSS MOBILE EXATO - BLOCO 2 (MANGÁS) === */
+
+#bloco2m {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  scroll-snap-align: start;
+  height: 100vh;
+  width: 100%;
+  padding: 1rem;
+  background-color: #000;
+  border: 2px solid #9333ea;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+#bloco2m .titulo-bloco {
+  position: relative;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #c084fc;
+  text-shadow: 0 0 20px #c084fc;
+  margin-bottom: 1rem;
+  z-index: 10;
+  text-align: center;
+}
+
+#bloco2m .card-display {
+  position: relative;
+  width: 90%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  z-index: 15;
+}
+
+#bloco2m .product-card {
+  background: rgba(17, 17, 17, 0.85);
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+#bloco2m .product-card img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+#bloco2m .card-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+#bloco2m .card-controls .arrow {
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+#bloco2m .npc-manga {
+  position: absolute;
+  bottom: 1.5rem;
   left: 1rem;
   width: 140px;
   max-width: 50%;
   z-index: 10;
+  pointer-events: auto;
+  filter: drop-shadow(0 0 10px rgba(147, 51, 234, 0.4));
 }
-/* === CSS MOBILE EXATO - BLOCO 2 (MANGÁS) === */
 
-#bloco2m { position: relative; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; scroll-snap-align: start; min-height: 100vh; width: 100%; padding: 2rem 1rem 1rem; background-size: cover; background-position: center; background-repeat: no-repeat; overflow: hidden; box-shadow: 0 0 30px rgba(147, 51, 234, 0.7); }
+#bloco2m .botao-personagem {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1rem;
+  width: 34px;
+  height: 34px;
+  background: #9333ea;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 30;
+  box-shadow: 0 0 6px #9333ea;
+}
 
-#bloco2m .titulo-bloco { position: relative; font-size: 1.8rem; font-weight: bold; color: #c084fc; text-shadow: 0 0 20px #c084fc; margin-bottom: 1rem; z-index: 10; }
-
-#bloco2m .card-display { position: relative; width: 90%; max-width: 400px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 1rem; z-index: 15; }
-
-#bloco2m .product-card { background: rgba(17, 17, 17, 0.85); border: 1px solid #333; border-radius: 12px; padding: 1rem; text-align: center; font-size: 0.9rem; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; width: 100%; }
-
-#bloco2m .product-card img { width: 100%; border-radius: 8px; object-fit: cover; }
-
-#bloco2m .card-controls { display: flex; justify-content: center; gap: 1rem; width: 100%; }
-
-#bloco2m .card-controls .arrow { background: rgba(0, 0, 0, 0.6); color: #fff; border: none; padding: 0.5rem 0.75rem; border-radius: 9999px; cursor: pointer; font-size: 1.2rem; }
-
-#bloco2m .npc-manga { position: relative; width: 160px; max-width: 50%; margin-top: auto; z-index: 10; pointer-events: auto; filter: drop-shadow(0 0 10px rgba(147, 51, 234, 0.4)); }
-
-#fala-bloco2 { background: rgba(0, 0, 0, 0.85); border: 2px solid #9333ea; border-radius: 10px; padding: 0.75rem; color: #fff; font-size: 0.9rem; max-width: 90%; margin-top: 1rem; text-align: center; z-index: 15; }
-
-/* Nenhum botão flutuante. Carrinho permanece onde está no HTML do bloco. */
+#fala-bloco2 {
+  background: rgba(0, 0, 0, 0.85);
+  border: 2px solid #9333ea;
+  border-radius: 10px;
+  padding: 0.75rem;
+  color: #fff;
+  font-size: 0.9rem;
+  max-width: 90%;
+  margin-top: 1rem;
+  text-align: center;
+  z-index: 15;
+}
 
 
 
