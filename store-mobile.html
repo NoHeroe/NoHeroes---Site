@@ -607,6 +607,11 @@ let carrinho = [];
 function adicionarAoCarrinho(nomeProduto) {
   const todosProdutos = [...produtosBloco2, ...produtosBloco3, ...produtosBloco4, ...produtosBloco5, ...produtosBloco6];
 const produto = todosProdutos.find(p => p.nome === nomeProduto);
+if (produto) {
+    carrinho.push(produto);
+    renderizarCarrinho();
+  }
+}
 
 function removerDoCarrinho(nome) {
   carrinho = carrinho.filter(p => p.nome !== nome);
