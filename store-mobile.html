@@ -196,6 +196,40 @@ section.reveal {
 * {
   max-width: 100vw;
 }
+.carrossel-container {
+  width: 90%;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  display: flex;
+  justify-content: flex-start;
+  padding: 1rem 0;
+}
+
+.carrossel {
+  display: flex;
+  gap: 1rem;
+  padding-left: 1rem;
+  scroll-snap-type: x mandatory;
+}
+
+.item-carrossel {
+  scroll-snap-align: center;
+  flex: 0 0 220px;
+  background: rgba(147, 51, 234, 0.08);
+  border: 1px solid #9333ea66;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 0 12px #9333ea22;
+  backdrop-filter: blur(4px);
+  transition: transform 0.3s ease;
+}
+
+.item-carrossel img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
   </style>
 </head>
 <body>
@@ -221,10 +255,22 @@ section.reveal {
       </div>
     </section><section id="aba-1">
   <h2 class="titulo-bloco">Mangás</h2>
-  <div class="card">
-    <img src="assets/manga-exemplo.jpg" alt="Mangá" />
-    <p>Volume 1 - ROAR</p>
+  <div class="carrossel-container">
+  <div class="carrossel" id="carrossel-manga">
+    <div class="item-carrossel">
+      <img src="assets/manga1.jpg" alt="Mangá 1">
+      <p>Volume 1 - ROAR</p>
+    </div>
+    <div class="item-carrossel">
+      <img src="assets/manga2.jpg" alt="Mangá 2">
+      <p>Volume 2 - ROAR</p>
+    </div>
+    <div class="item-carrossel">
+      <img src="assets/freq1.jpg" alt="FREQ 1">
+      <p>FREQ Volume 1</p>
+    </div>
   </div>
+</div>
 </section>
 
 <section id="aba-2">
@@ -299,5 +345,13 @@ function abrirCarrinho() {
   const modal = document.getElementById("modal-carrinho");
   modal.classList.toggle("escondido");
 }
-  </script></body>
+ const carrossel = document.getElementById("carrossel-manga");
+
+carrossel.addEventListener("scroll", () => {
+  if (carrossel.scrollLeft + carrossel.clientWidth >= carrossel.scrollWidth - 1) {
+    carrossel.scrollTo({ left: 0, behavior: 'smooth' });
+  }
+});
+ </script>
+</body>
 </html>
