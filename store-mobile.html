@@ -117,16 +117,35 @@ section.reveal {
   position: fixed;
   top: 1rem;
   right: 1rem;
-  background: var(--roxo);
-  border: none;
-  border-radius: 50%;
-  width: 42px;
-  height: 42px;
-  font-size: 1.2rem;
-  color: white;
-  z-index: 1001;
-  box-shadow: 0 0 10px var(--roxo);
+  width: 44px;
+  height: 44px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid var(--roxo);
+  border-radius: 10px; /* Quadrado com cantos arredondados */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  z-index: 1001;
+  padding: 0;
+  box-shadow: 0 0 12px var(--roxo);
+  transition: box-shadow 0.3s ease;
+}
+
+#botao-carrinho:hover {
+  box-shadow: 0 0 16px var(--roxo);
+}
+
+#botao-carrinho img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px var(--roxo));
+  transition: transform 0.2s ease;
+}
+
+#botao-carrinho:hover img {
+  transform: scale(1.1);
 }
 .modal-carrinho {
   position: fixed;
@@ -144,38 +163,11 @@ section.reveal {
 .modal-carrinho.escondido {
   display: none;
 }
-#botao-carrinho {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  width: 40px;
-  height: 40px;
-  background: none;
-  border: none;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 999;
-  padding: 0;
-}
 
-#botao-carrinho img {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
-  filter: drop-shadow(0 0 8px #a855f7);
-  transition: transform 0.2s ease;
-}
-
-#botao-carrinho:hover img {
-  transform: scale(1.1);
-}
 * {
   max-width: 100vw;
 }
-/* === CARROSSEL CENTRAL === */
+
 .card-display {
   display: flex;
   justify-content: center;
