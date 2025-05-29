@@ -50,15 +50,24 @@ body {
   color: var(--claro);
   font-size: 0.9rem;
   cursor: pointer;
-  margin: 0.5rem 0;
   white-space: nowrap;
-  transform: none;
-  writing-mode: unset;
+  padding: 1rem 0;
+  width: 100%;
+  text-align: center;
+  border-top: 1px solid #333;
+  border-bottom: 1px solid #111;
+  transition: background 0.3s ease;
+}
+
+.nav-lateral button:hover {
+  background: #222;
 }
 
 .nav-lateral button.ativo {
+  background: #111;
   color: var(--roxo);
   font-weight: bold;
+  border-left: 4px solid var(--roxo);
 }
 
 .conteudo {
