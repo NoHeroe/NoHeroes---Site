@@ -177,40 +177,49 @@ section.reveal {
 }
 .carousel-container {
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  padding: 0 1rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  z-index: 50;
+}
+
+.carousel-container::-webkit-scrollbar {
+  display: none;
 }
 
 .carousel-track {
   display: flex;
   gap: 1rem;
+  padding: 1rem;
+  scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
 }
 
 .carousel-card {
-  flex: 0 0 80vw;
-  scroll-snap-align: center;
-  background: rgba(168, 85, 247, 0.05);
+  flex: 0 0 85vw;
+  max-width: 85vw;
+  background: rgba(168, 85, 247, 0.08);
   border: 1px solid #a855f7;
   border-radius: 1rem;
   padding: 1rem;
-  text-align: center;
-  box-shadow: 0 0 15px rgba(168, 85, 247, 0.2);
+  scroll-snap-align: center;
   backdrop-filter: blur(8px);
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
   color: #fff;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  text-align: center;
+  z-index: 80;
 }
 
 .carousel-card img {
   width: 100%;
   border-radius: 0.5rem;
   margin-bottom: 0.5rem;
-} 
+}
   </style>
 </head>
 <body>
