@@ -223,6 +223,35 @@ section.reveal {
   0%, 100% { opacity: 0.1; }
   50%      { opacity: 0.35; }
 }
+.touch-hint {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 60px;
+  border-radius: 3px;
+  background: linear-gradient(to left, #a855f7aa, transparent);
+  animation: hint-pulse 1.4s ease-in-out infinite;
+  z-index: 50;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+@keyframes hint-pulse {
+  0% {
+    transform: translateY(-50%) translateX(0);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(-50%) translateX(-6px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-50%) translateX(0);
+    opacity: 0.6;
+  }
+}
   </style>
 </head>
 <body>
@@ -253,7 +282,7 @@ section.reveal {
 <div class="scroll-indicator left-indicator"></div>
 <div class="scroll-indicator right-indicator"></div>
   <div class="card-display">
-    <div id="card-bloco2" class="product-card"></div>
+    <div id="card-bloco2" class="product-card"></div><div class="touch-hint"></div>
     </div>
   </div>
 </section>
