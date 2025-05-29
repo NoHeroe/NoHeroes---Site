@@ -180,21 +180,21 @@ section.reveal {
   overflow: hidden;
   display: flex;
   justify-content: center;
+  align-items: center;
   position: relative;
-  touch-action: pan-x;
 }
 
 .carousel-track {
   display: flex;
-  gap: 2rem;
+  transition: transform 0.4s ease;
   align-items: center;
-  transition: transform 0.5s ease;
-  will-change: transform;
+  touch-action: pan-y;
 }
 
 .carousel-card {
-  flex: 0 0 80%;
-  max-width: 260px;
+  min-width: 85vw;
+  max-width: 85vw;
+  margin: 0 auto;
   background: rgba(168, 85, 247, 0.05);
   border: 1px solid #a855f7;
   border-radius: 1rem;
@@ -203,16 +203,7 @@ section.reveal {
   box-shadow: 0 0 15px rgba(168, 85, 247, 0.2);
   backdrop-filter: blur(8px);
   color: #fff;
-  transition: transform 0.3s ease, filter 0.3s ease;
-  opacity: 0.5;
-  transform: scale(0.9);
-  filter: blur(1px);
-}
-
-.carousel-card.active {
-  opacity: 1;
-  transform: scale(1);
-  filter: none;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
   </style>
 </head>
@@ -252,7 +243,7 @@ section.reveal {
         <p>Volume 2 - ROAR</p>
       </div>
       <div class="carousel-card">
-        <img src="assets/freq.jpg" alt="Mangá 3">
+        <img src="assets/freq.jpg" alt="FREQ">
         <p>FREQ Vol. 1</p>
       </div>
     </div>
@@ -331,46 +322,37 @@ function abrirCarrinho() {
   const modal = document.getElementById("modal-carrinho");
   modal.classList.toggle("escondido");
 }
+  const track = document.getElementById("carousel-track");
+  let startX = 0;
+  let scrollLeft = 0;
 
-const track = document.getElementById('carousel-track');
+  track.addEventListener("touchstart", (e) => {
+    startX = e.touches[0].clientX;
+    scrollLeft = track.scrollLeft;
+  });
 
-function rotateForward() {
-  const cards = track.querySelectorAll('.carousel-card');
-  track.appendChild(cards[0]);
-  updateCarousel();
-}
+  track.addEventListener("touchmove", (e) => {
+    const x = e.touches[0].clientX;
+    const walk = (startX - x);
+    track.scrollLeft = scrollLeft + walk;
+  });
 
-function rotateBackward() {
-  const cards = track.querySelectorAll('.carousel-card');
-  track.prepend(cards[cards.length - 1]);
-  updateCarousel();
-}
+  track.addEventListener("scroll", () => {
+    const cards = track.querySelectorAll(".carousel-card");
+    const totalWidth = cards[0].offsetWidth;
+    const scrollLeft = track.scrollLeft;
 
-function updateCarousel() {
-  const cards = track.querySelectorAll('.carousel-card');
-  cards.forEach(card => card.classList.remove('active'));
-  if (cards[1]) cards[1].classList.add('active');
-}
+    if (scrollLeft <= 0) {
+      track.appendChild(cards[0]);
+      track.scrollLeft += totalWidth;
+    }
 
-// Swipe no mobile
-let startX = 0;
-
-track.addEventListener('touchstart', (e) => {
-  startX = e.touches[0].clientX;
-});
-
-track.addEventListener('touchend', (e) => {
-  const endX = e.changedTouches[0].clientX;
-  const diff = startX - endX;
-
-  if (diff > 40) {
-    rotateForward();
-  } else if (diff < -40) {
-    rotateBackward();
-  }
-});
-
-updateCarousel();
+    const maxScroll = track.scrollWidth - track.clientWidth;
+    if (scrollLeft >= maxScroll) {
+      track.prepend(cards[cards.length - 1]);
+      track.scrollLeft -= totalWidth;
+    }
+  });
 </script>
 </body>
 </html>
