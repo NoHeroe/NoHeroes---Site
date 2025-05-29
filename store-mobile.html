@@ -117,6 +117,37 @@ section.reveal {
   font-size: 1rem;
 }
 
+#botao-carrinho {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background: var(--roxo);
+  border: none;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  font-size: 1.2rem;
+  color: white;
+  z-index: 1001;
+  box-shadow: 0 0 10px var(--roxo);
+  cursor: pointer;
+}
+.modal-carrinho {
+  position: fixed;
+  top: 60px;
+  right: 1rem;
+  width: 260px;
+  background: #111;
+  border: 2px solid var(--roxo);
+  border-radius: 12px;
+  padding: 1rem;
+  z-index: 1002;
+  box-shadow: 0 0 20px #a855f780;
+  color: #fff;
+}
+.modal-carrinho.escondido {
+  display: none;
+}
   </style>
 </head>
 <body>
@@ -127,8 +158,12 @@ section.reveal {
     <button onclick="mostrarAba(3)">Ebooks</button>
     <button onclick="mostrarAba(4)">Mentorias</button>
     <button onclick="mostrarAba(5)">Extras</button>
-    <button onclick="mostrarAba(6)">Carrinho</button>
-  </nav>  <main class="conteudo">
+  </nav> 
+<button id="botao-carrinho" onclick="abrirCarrinho()">
+  🛒
+</button>
+
+ <main class="conteudo">
     <section id="aba-0" class="reveal">
       <h2 class="titulo-bloco">Bem-vindo à Loja NoHeroes</h2>
       <div class="card">
@@ -175,14 +210,12 @@ section.reveal {
   </div>
 </section>
 
-<section id="aba-6">
-  <h2 class="titulo-bloco">Carrinho</h2>
-  <div class="card">
-    <p>Seu carrinho está vazio.</p>
-  </div>
-</section>
-
-  </main>  <script>
+  </main> 
+<div id="modal-carrinho" class="modal-carrinho escondido">
+  <h3>Seu Carrinho</h3>
+  <p>Você ainda não adicionou nenhum item.</p>
+</div>
+ <script>
     const abas = document.querySelectorAll('section');
     const botoes = document.querySelectorAll('.nav-lateral button');
     const conteudo = document.querySelector('.conteudo');
@@ -205,5 +238,9 @@ section.reveal {
 }, { threshold: 0.5 });
 
 abas.forEach(aba => observer.observe(aba));
+function abrirCarrinho() {
+  const modal = document.getElementById("modal-carrinho");
+  modal.classList.toggle("escondido");
+}
   </script></body>
 </html>
