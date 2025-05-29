@@ -196,38 +196,40 @@ section.reveal {
 * {
   max-width: 100vw;
 }
-.carrossel-container {
-  width: 90%;
+.carousel-wrapper {
+  display: flex;
   overflow-x: scroll;
-  scroll-behavior: smooth;
-  display: flex;
-  justify-content: flex-start;
-  padding: 1rem 0;
-}
-
-.carrossel {
-  display: flex;
-  gap: 1rem;
-  padding-left: 1rem;
   scroll-snap-type: x mandatory;
+  gap: 1rem;
+  width: 100%;
+  padding: 1rem 0;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  scroll-behavior: smooth;
 }
 
-.item-carrossel {
+.carousel-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-card {
   scroll-snap-align: center;
-  flex: 0 0 220px;
-  background: rgba(147, 51, 234, 0.08);
-  border: 1px solid #9333ea66;
-  border-radius: 12px;
+  flex: 0 0 80%;
+  max-width: 280px;
+  background: rgba(80, 30, 100, 0.2);
+  backdrop-filter: blur(8px);
+  border: 1px solid #a855f7;
+  border-radius: 1rem;
   padding: 1rem;
   text-align: center;
-  box-shadow: 0 0 12px #9333ea22;
-  backdrop-filter: blur(4px);
   transition: transform 0.3s ease;
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
 }
 
-.item-carrossel img {
+.carousel-card img {
   width: 100%;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   margin-bottom: 0.5rem;
 }
   </style>
@@ -253,24 +255,24 @@ section.reveal {
         <img src="assets/logo-noheroes.png" alt="Logo NoHeroes" />
         <p>Explore produtos únicos de um universo sombrio.</p>
       </div>
-    </section><section id="aba-1">
+    </section>
+
+<section id="aba-1">
   <h2 class="titulo-bloco">Mangás</h2>
-  <div class="carrossel-container">
-  <div class="carrossel" id="carrossel-manga">
-    <div class="item-carrossel">
+  <div class="carousel-wrapper" id="carousel-mangas">
+    <div class="carousel-card">
       <img src="assets/manga1.jpg" alt="Mangá 1">
       <p>Volume 1 - ROAR</p>
     </div>
-    <div class="item-carrossel">
+    <div class="carousel-card">
       <img src="assets/manga2.jpg" alt="Mangá 2">
       <p>Volume 2 - ROAR</p>
     </div>
-    <div class="item-carrossel">
-      <img src="assets/freq1.jpg" alt="FREQ 1">
-      <p>FREQ Volume 1</p>
+    <div class="carousel-card">
+      <img src="assets/freq.jpg" alt="Mangá 3">
+      <p>FREQ Vol. 1</p>
     </div>
   </div>
-</div>
 </section>
 
 <section id="aba-2">
@@ -345,12 +347,31 @@ function abrirCarrinho() {
   const modal = document.getElementById("modal-carrinho");
   modal.classList.toggle("escondido");
 }
- const carrossel = document.getElementById("carrossel-manga");
+ const wrapper = document.getElementById("carousel-mangas");
+let isScrolling = false;
 
-carrossel.addEventListener("scroll", () => {
-  if (carrossel.scrollLeft + carrossel.clientWidth >= carrossel.scrollWidth - 1) {
-    carrossel.scrollTo({ left: 0, behavior: 'smooth' });
-  }
+wrapper.addEventListener("scroll", () => {
+  if (isScrolling) return;
+  isScrolling = true;
+
+  setTimeout(() => {
+    const cards = wrapper.querySelectorAll(".carousel-card");
+    if (cards.length <= 1) return;
+
+    const scrollLeft = wrapper.scrollLeft;
+    const cardWidth = cards[0].offsetWidth + 16; // card + gap
+    const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+
+    if (scrollLeft <= 0) {
+      wrapper.appendChild(cards[0]);
+      wrapper.scrollLeft += cardWidth;
+    } else if (scrollLeft >= maxScroll) {
+      wrapper.prepend(cards[cards.length - 1]);
+      wrapper.scrollLeft -= cardWidth;
+    }
+
+    isScrolling = false;
+  }, 300);
 });
  </script>
 </body>
