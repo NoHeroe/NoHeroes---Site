@@ -1,5 +1,33 @@
 {
   "posts": [
+  {
+    "id": "2025-05-28-comunidade-001",
+    "date": "28/05/2025",
+    "category": "Comunidade",
+    "title": "ArizzGod agora faz parte da equipe",
+    "content": "<p>Contratamos oficialmente o influenciador <strong>ArizzGod</strong>! Editor, criador de conteúdo e powerlifter, Arizz chega para fortalecer nossa presença no Instagram com Reels, cortes e conteúdos semanais para impulsionar o universo NoHeroes. Sigam @arizzgod e fiquem atentos às novidades!</p>"
+  },
+  {
+    "id": "2025-05-27-patch-0-1-7",
+    "date": "27/05/2025",
+    "category": "Atualizações",
+    "title": "Patch 0.1.7 — Portfólio Profissional Atualizado",
+    "content": "<p>A página de <strong>portfólio</strong> foi atualizada com novas entradas e categorias. As seções <em>Web Design</em>, <em>Escrita</em> e <em>Arte Digital</em> receberam conteúdo recente e organizado. As seções <em>Mentorias</em> e <em>Projetos</em> ainda aguardam material visual e serão atualizadas em breve!</p>"
+  },
+  {
+    "id": "2025-05-26-patch-0-1-6",
+    "date": "26/05/2025",
+    "category": "Notícias",
+    "title": "Patch 0.1.6 — Loja Mobile Finalizada",
+    "content": "<p>O novo visual mobile da <strong>Loja NoHeroes</strong> foi implementado com sucesso! Interativa, refinada, com design dark fantasy e funcionalidade por abas, ela agora representa o padrão visual definitivo da marca.</p><p>Todos os blocos temáticos, NPCs e categorias estão ajustados, e os testes com Scroll Reveal, modais e carrosséis foram concluídos. Agora nos preparamos para integrar os produtos reais.</p>"
+  },
+  {
+    "id": "2025-05-24-patch-0-1-5",
+    "date": "24/05/2025",
+    "category": "Notícias",
+    "title": "Patch 0.1.5 — Sistema de Conta e Perfil Online",
+    "content": "<p>As páginas de <strong>registro</strong>, <strong>login</strong> e <strong>perfil</strong> estão funcionando com segurança e autenticação completa:</p><ul><li>Criação de conta com criptografia bcrypt ✅</li><li>Login com token JWT ✅</li><li>Redirecionamento para dashboard do usuário ✅</li><li>Design do perfil finalizado (faltando apenas funções avançadas) ✅</li></ul><p>Esse é um dos maiores marcos técnicos da estrutura NoHeroes até agora!</p>"
+  },
 {
   "id": "2025-05-12-patch-0-1-4",
   "date": "12/05/2025",
