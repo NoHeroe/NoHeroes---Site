@@ -181,13 +181,15 @@ section.reveal {
   display: flex;
   justify-content: center;
   position: relative;
+  touch-action: pan-x;
 }
 
 .carousel-track {
   display: flex;
   gap: 2rem;
-  transition: transform 0.5s ease;
   align-items: center;
+  transition: transform 0.5s ease;
+  will-change: transform;
 }
 
 .carousel-card {
@@ -202,23 +204,14 @@ section.reveal {
   backdrop-filter: blur(8px);
   color: #fff;
   transition: transform 0.3s ease, filter 0.3s ease;
-}
-
-.carousel-card img {
-  width: 100%;
-  border-radius: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.carousel-card:not(:nth-child(2)) {
+  opacity: 0.5;
   transform: scale(0.9);
   filter: blur(1px);
-  opacity: 0.5;
 }
 
-.carousel-card:nth-child(2) {
-  transform: scale(1);
+.carousel-card.active {
   opacity: 1;
+  transform: scale(1);
   filter: none;
 }
   </style>
@@ -338,46 +331,46 @@ function abrirCarrinho() {
   const modal = document.getElementById("modal-carrinho");
   modal.classList.toggle("escondido");
 }
- const track = document.getElementById('carousel-track');
 
-function rotateCarousel() {
+const track = document.getElementById('carousel-track');
+
+function rotateForward() {
   const cards = track.querySelectorAll('.carousel-card');
-  const first = cards[0];
-  track.appendChild(first);
-  updateClasses();
+  track.appendChild(cards[0]);
+  updateCarousel();
 }
 
-function rotateCarouselBack() {
+function rotateBackward() {
   const cards = track.querySelectorAll('.carousel-card');
-  const last = cards[cards.length - 1];
-  track.prepend(last);
-  updateClasses();
+  track.prepend(cards[cards.length - 1]);
+  updateCarousel();
 }
 
-function updateClasses() {
+function updateCarousel() {
   const cards = track.querySelectorAll('.carousel-card');
-  cards.forEach((card, index) => {
-    card.style.transform = 'scale(0.9)';
-    card.style.filter = 'blur(1px)';
-    card.style.opacity = '0.5';
-  });
-  if (cards[1]) {
-    cards[1].style.transform = 'scale(1)';
-    cards[1].style.filter = 'none';
-    cards[1].style.opacity = '1';
-  }
+  cards.forEach(card => card.classList.remove('active'));
+  if (cards[1]) cards[1].classList.add('active');
 }
 
-track.addEventListener('wheel', (e) => {
-  e.preventDefault();
-  if (e.deltaY > 0) {
-    rotateCarousel();
-  } else {
-    rotateCarouselBack();
+// Swipe no mobile
+let startX = 0;
+
+track.addEventListener('touchstart', (e) => {
+  startX = e.touches[0].clientX;
+});
+
+track.addEventListener('touchend', (e) => {
+  const endX = e.changedTouches[0].clientX;
+  const diff = startX - endX;
+
+  if (diff > 40) {
+    rotateForward();
+  } else if (diff < -40) {
+    rotateBackward();
   }
 });
 
-updateClasses();
- </script>
+updateCarousel();
+</script>
 </body>
 </html>
