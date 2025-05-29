@@ -148,6 +148,28 @@ section.reveal {
 .modal-carrinho.escondido {
   display: none;
 }
+#botao-carrinho {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 999;
+  padding: 0;
+}
+
+#botao-carrinho img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 4px #a855f7); /* glow roxo */
+  transition: transform 0.2s ease;
+}
+
+#botao-carrinho:hover img {
+  transform: scale(1.1);
+}
   </style>
 </head>
 <body>
@@ -159,8 +181,9 @@ section.reveal {
     <button onclick="mostrarAba(4)">Mentorias</button>
     <button onclick="mostrarAba(5)">Extras</button>
   </nav> 
+
 <button id="botao-carrinho" onclick="abrirCarrinho()">
-  🛒
+  <img src="assets/icons/cart-icon.png" alt="Carrinho" />
 </button>
 
  <main class="conteudo">
