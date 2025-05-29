@@ -535,6 +535,15 @@ function renderizarCardBloco2() {
 
 document.addEventListener("DOMContentLoaded", () => {
   renderizarCardBloco2();
+  renderizarCardBloco3();
+  renderizarCardBloco4();
+  renderizarCardBloco5();
+  renderizarCardBloco6();
+
+swipeConfig("card-bloco3", (dir) => navegarCard("indexAtualBloco3", dir, renderizarCardBloco3));
+swipeConfig("card-bloco4", (dir) => navegarCard("indexAtualBloco4", dir, renderizarCardBloco4));
+swipeConfig("card-bloco5", (dir) => navegarCard("indexAtualBloco5", dir, renderizarCardBloco5));
+swipeConfig("card-bloco6", (dir) => navegarCard("indexAtualBloco6", dir, renderizarCardBloco6));
 
 function criarRenderizador(id, produtos, indexVar) {
   return function() {
@@ -574,18 +583,6 @@ function navegarCard(bloco, direcao, renderFunc) {
   window[bloco] = (window[bloco] + direcao + window["produtos" + bloco.replace("indexAtual", "")].length) % window["produtos" + bloco.replace("indexAtual", "")].length;
   renderFunc();
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  renderizarCardBloco3();
-  renderizarCardBloco4();
-  renderizarCardBloco5();
-  renderizarCardBloco6();
-
-  swipeConfig("card-bloco3", d => navegarCard("indexAtualBloco3", d, renderizarCardBloco3));
-  swipeConfig("card-bloco4", d => navegarCard("indexAtualBloco4", d, renderizarCardBloco4));
-  swipeConfig("card-bloco5", d => navegarCard("indexAtualBloco5", d, renderizarCardBloco5));
-  swipeConfig("card-bloco6", d => navegarCard("indexAtualBloco6", d, renderizarCardBloco6));
-});
 
   // Swipe para mobile
   let touchStartX = 0;
