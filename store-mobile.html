@@ -177,21 +177,20 @@ section.reveal {
 }
 .carousel-container {
   width: 100%;
-  overflow-x: scroll;
+  overflow-x: auto;
   scroll-snap-type: x mandatory;
   display: flex;
-  justify-content: start;
+  justify-content: center;
   align-items: center;
   -webkit-overflow-scrolling: touch;
+  padding: 2rem 0;
 }
 
 .carousel-track {
   display: flex;
-  gap: 2rem;
-  padding: 1rem 0;
+  gap: 1rem;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
-  margin: 0 auto;
 }
 
 .carousel-track::-webkit-scrollbar {
@@ -199,18 +198,25 @@ section.reveal {
 }
 
 .carousel-card {
-  flex: 0 0 85%;
-  max-width: 85%;
-  margin: 0 auto;
+  flex: 0 0 90%;
+  max-width: 300px;
   scroll-snap-align: center;
   background: rgba(168, 85, 247, 0.05);
   border: 1px solid #a855f7;
   border-radius: 1rem;
   padding: 1rem;
   text-align: center;
-  box-shadow: 0 0 15px rgba(168, 85, 247, 0.2);
-  backdrop-filter: blur(8px);
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+  backdrop-filter: blur(6px);
   color: #fff;
+  margin: 0 auto;
+  transition: transform 0.3s ease;
+}
+
+.carousel-card img {
+  width: 100%;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
 }
   </style>
 </head>
@@ -331,16 +337,12 @@ function abrirCarrinho() {
 }
   const track = document.getElementById('carousel-track');
 
-// Detecta fim/início do scroll e reposiciona os elementos
-track.addEventListener('scroll', () => {
-  const scrollLeft = track.scrollLeft;
-  const scrollWidth = track.scrollWidth;
-  const containerWidth = track.clientWidth;
-
+track.addEventListener('touchend', () => {
   const cards = track.querySelectorAll('.carousel-card');
-  const cardWidth = cards[0].offsetWidth + 32; // incluindo gap
+  const scrollLeft = track.scrollLeft;
+  const cardWidth = cards[0].offsetWidth + 16;
 
-  if (scrollLeft + containerWidth >= scrollWidth - 5) {
+  if (scrollLeft + track.offsetWidth >= track.scrollWidth - 1) {
     track.appendChild(cards[0]);
     track.scrollLeft -= cardWidth;
   } else if (scrollLeft <= 0) {
