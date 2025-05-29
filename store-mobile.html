@@ -248,18 +248,20 @@ section.reveal {
 
 <section id="aba-1">
   <h2 class="titulo-bloco">Mangás</h2>
-  <div class="carousel-wrapper" id="carousel-mangas">
-    <div class="carousel-card">
-      <img src="assets/manga1.jpg" alt="Mangá 1">
-      <p>Volume 1 - ROAR</p>
-    </div>
-    <div class="carousel-card">
-      <img src="assets/manga2.jpg" alt="Mangá 2">
-      <p>Volume 2 - ROAR</p>
-    </div>
-    <div class="carousel-card">
-      <img src="assets/freq.jpg" alt="Mangá 3">
-      <p>FREQ Vol. 1</p>
+  <div class="carousel-container">
+    <div class="carousel-track" id="carousel-track">
+      <div class="carousel-card">
+        <img src="assets/manga1.jpg" alt="Mangá 1">
+        <p>Volume 1 - ROAR</p>
+      </div>
+      <div class="carousel-card">
+        <img src="assets/manga2.jpg" alt="Mangá 2">
+        <p>Volume 2 - ROAR</p>
+      </div>
+      <div class="carousel-card">
+        <img src="assets/freq.jpg" alt="Mangá 3">
+        <p>FREQ Vol. 1</p>
+      </div>
     </div>
   </div>
 </section>
@@ -336,32 +338,46 @@ function abrirCarrinho() {
   const modal = document.getElementById("modal-carrinho");
   modal.classList.toggle("escondido");
 }
- const wrapper = document.getElementById("carousel-mangas");
-let isScrolling = false;
+ const track = document.getElementById('carousel-track');
 
-wrapper.addEventListener("scroll", () => {
-  if (isScrolling) return;
-  isScrolling = true;
+function rotateCarousel() {
+  const cards = track.querySelectorAll('.carousel-card');
+  const first = cards[0];
+  track.appendChild(first);
+  updateClasses();
+}
 
-  setTimeout(() => {
-    const cards = wrapper.querySelectorAll(".carousel-card");
-    if (cards.length <= 1) return;
+function rotateCarouselBack() {
+  const cards = track.querySelectorAll('.carousel-card');
+  const last = cards[cards.length - 1];
+  track.prepend(last);
+  updateClasses();
+}
 
-    const scrollLeft = wrapper.scrollLeft;
-    const cardWidth = cards[0].offsetWidth + 16; // card + gap
-    const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+function updateClasses() {
+  const cards = track.querySelectorAll('.carousel-card');
+  cards.forEach((card, index) => {
+    card.style.transform = 'scale(0.9)';
+    card.style.filter = 'blur(1px)';
+    card.style.opacity = '0.5';
+  });
+  if (cards[1]) {
+    cards[1].style.transform = 'scale(1)';
+    cards[1].style.filter = 'none';
+    cards[1].style.opacity = '1';
+  }
+}
 
-    if (scrollLeft <= 0) {
-      wrapper.appendChild(cards[0]);
-      wrapper.scrollLeft += cardWidth;
-    } else if (scrollLeft >= maxScroll) {
-      wrapper.prepend(cards[cards.length - 1]);
-      wrapper.scrollLeft -= cardWidth;
-    }
-
-    isScrolling = false;
-  }, 300);
+track.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  if (e.deltaY > 0) {
+    rotateCarousel();
+  } else {
+    rotateCarouselBack();
+  }
 });
+
+updateClasses();
  </script>
 </body>
 </html>
