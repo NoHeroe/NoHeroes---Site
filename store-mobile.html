@@ -207,28 +207,29 @@ section.reveal {
 }
 .scroll-indicator {
   position: absolute;
-  top: 50%;
-  width: 20px;
-  height: 40px;
-  transform: translateY(-50%);
-  background: radial-gradient(circle, rgba(192,132,252,0.6) 0%, transparent 70%);
-  animation: pulse-scroll 2.5s infinite;
+  top: 10%;
+  height: 80%;
+  width: 3px;
+  background: #c084fc;
+  opacity: 0.15;
+  animation: pulse-bar 2.5s ease-in-out infinite;
+  border-radius: 4px;
   pointer-events: none;
   z-index: 15;
+  box-shadow: 0 0 12px #c084fc;
 }
 
 .left-indicator {
-  left: 10px;
+  left: 0;
 }
 
 .right-indicator {
-  right: 10px;
+  right: 0;
 }
 
-@keyframes pulse-scroll {
-  0%   { opacity: 0; transform: translateY(-50%) scale(0.8); }
-  50%  { opacity: 1; transform: translateY(-50%) scale(1); }
-  100% { opacity: 0; transform: translateY(-50%) scale(0.8); }
+@keyframes pulse-bar {
+  0%, 100% { opacity: 0.1; }
+  50%      { opacity: 0.35; }
 }
   </style>
 </head>
