@@ -205,6 +205,31 @@ section.reveal {
   margin-bottom: 0.5rem;
   object-fit: cover;
 }
+.scroll-indicator {
+  position: absolute;
+  top: 50%;
+  width: 20px;
+  height: 40px;
+  transform: translateY(-50%);
+  background: radial-gradient(circle, rgba(192,132,252,0.6) 0%, transparent 70%);
+  animation: pulse-scroll 2.5s infinite;
+  pointer-events: none;
+  z-index: 15;
+}
+
+.left-indicator {
+  left: 10px;
+}
+
+.right-indicator {
+  right: 10px;
+}
+
+@keyframes pulse-scroll {
+  0%   { opacity: 0; transform: translateY(-50%) scale(0.8); }
+  50%  { opacity: 1; transform: translateY(-50%) scale(1); }
+  100% { opacity: 0; transform: translateY(-50%) scale(0.8); }
+}
   </style>
 </head>
 <body>
@@ -232,6 +257,8 @@ section.reveal {
 
 <section id="aba-1">
   <h2 class="titulo-bloco">Mangás</h2>
+<div class="scroll-indicator left-indicator"></div>
+<div class="scroll-indicator right-indicator"></div>
   <div class="card-display">
     <div id="card-bloco2" class="product-card"></div>
     </div>
