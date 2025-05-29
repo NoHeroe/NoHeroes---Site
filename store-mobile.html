@@ -523,17 +523,6 @@ function renderizarCarrinho() {
 
   totalSpan.textContent = formatarPreco(total);
 }
-  if (carrinho.length === 0) {
-    modal.innerHTML = `<h3>Seu Carrinho</h3><p>Você ainda não adicionou nenhum item.</p>`;
-  } else {
-    modal.innerHTML = `
-      <h3>Seu Carrinho</h3>
-      <ul style="margin-top: 0.5rem; padding-left: 1rem;">
-        ${carrinho.map(item => `<li style="margin-bottom: 0.25rem;">${item}</li>`).join('')}
-      </ul>
-    `;
-  }
-}
 </script>
 </body>
 </html>
