@@ -176,24 +176,22 @@ section.reveal {
   max-width: 100vw;
 }
 .carousel-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 100%;
-  overflow: hidden;
-  position: relative;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  -webkit-overflow-scrolling: touch;
 }
 
 .carousel-track {
   display: flex;
-  overflow-x: scroll;
+  gap: 2rem;
+  padding: 1rem 0;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  width: 100%;
-  padding: 2rem 0;
-  justify-content: center;
-  scroll-padding: 0 10%;
+  margin: 0 auto;
 }
 
 .carousel-track::-webkit-scrollbar {
@@ -201,8 +199,8 @@ section.reveal {
 }
 
 .carousel-card {
-  flex: 0 0 80%;
-  max-width: 90%;
+  flex: 0 0 85%;
+  max-width: 85%;
   margin: 0 auto;
   scroll-snap-align: center;
   background: rgba(168, 85, 247, 0.05);
@@ -210,16 +208,9 @@ section.reveal {
   border-radius: 1rem;
   padding: 1rem;
   text-align: center;
-  box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.2);
   backdrop-filter: blur(8px);
-  z-index: 80;
-  transition: transform 0.3s ease;
-}
-
-.carousel-card img {
-  width: 100%;
-  border-radius: 0.5rem;
-  margin-bottom: 0.5rem;
+  color: #fff;
 }
   </style>
 </head>
@@ -338,37 +329,25 @@ function abrirCarrinho() {
   const modal = document.getElementById("modal-carrinho");
   modal.classList.toggle("escondido");
 }
-  const track = document.getElementById("carousel-track");
-  let startX = 0;
-  let scrollLeft = 0;
+  const track = document.getElementById('carousel-track');
 
-  track.addEventListener("touchstart", (e) => {
-    startX = e.touches[0].clientX;
-    scrollLeft = track.scrollLeft;
-  });
+// Detecta fim/início do scroll e reposiciona os elementos
+track.addEventListener('scroll', () => {
+  const scrollLeft = track.scrollLeft;
+  const scrollWidth = track.scrollWidth;
+  const containerWidth = track.clientWidth;
 
-  track.addEventListener("touchmove", (e) => {
-    const x = e.touches[0].clientX;
-    const walk = (startX - x);
-    track.scrollLeft = scrollLeft + walk;
-  });
+  const cards = track.querySelectorAll('.carousel-card');
+  const cardWidth = cards[0].offsetWidth + 32; // incluindo gap
 
-  track.addEventListener("scroll", () => {
-    const cards = track.querySelectorAll(".carousel-card");
-    const totalWidth = cards[0].offsetWidth;
-    const scrollLeft = track.scrollLeft;
-
-    if (scrollLeft <= 0) {
-      track.appendChild(cards[0]);
-      track.scrollLeft += totalWidth;
-    }
-
-    const maxScroll = track.scrollWidth - track.clientWidth;
-    if (scrollLeft >= maxScroll) {
-      track.prepend(cards[cards.length - 1]);
-      track.scrollLeft -= totalWidth;
-    }
-  });
+  if (scrollLeft + containerWidth >= scrollWidth - 5) {
+    track.appendChild(cards[0]);
+    track.scrollLeft -= cardWidth;
+  } else if (scrollLeft <= 0) {
+    track.prepend(cards[cards.length - 1]);
+    track.scrollLeft += cardWidth;
+  }
+});
 </script>
 </body>
 </html>
