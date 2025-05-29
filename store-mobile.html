@@ -195,13 +195,15 @@ section.reveal {
     }
 
     const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('reveal');
-        }
-      });
-    }, { threshold: 0.5 });
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('reveal');
+    } else {
+      entry.target.classList.remove('reveal'); // Reset ao sair da tela
+    }
+  });
+}, { threshold: 0.5 });
 
-    abas.forEach(aba => observer.observe(aba));
+abas.forEach(aba => observer.observe(aba));
   </script></body>
 </html>
