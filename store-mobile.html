@@ -25,6 +25,8 @@ body {
   display: flex;
   height: 100vh;
   overflow: hidden;
+  width: 100vw;
+  position: relative;
 }
 
 .nav-lateral {
@@ -79,6 +81,7 @@ body {
   width: 80%;
   height: 100vh;
   overflow-y: auto;
+  overflow-x: hidden; /* <- impedimos scroll lateral */
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
 }
@@ -189,6 +192,9 @@ section.reveal {
 
 #botao-carrinho:hover img {
   transform: scale(1.1);
+}
+* {
+  max-width: 100vw;
 }
   </style>
 </head>
