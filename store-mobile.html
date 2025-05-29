@@ -323,54 +323,52 @@ section.reveal {
   font-weight: bold;
   cursor: pointer;
 } 
-.modal-metodo {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #0f0f0f;
-  border: 2px solid var(--roxo);
-  border-radius: 12px;
-  padding: 1.2rem;
-  width: 260px;
-  z-index: 1100;
-  box-shadow: 0 0 20px var(--roxo);
-  display: none;
+
+.pagamento-wrapper {
+  margin-top: 1rem;
+  color: #fff;
 }
 
-.modal-metodo h4 {
-  text-align: center;
-  margin-bottom: 1rem;
-  color: var(--roxo);
-}
-
-.modal-metodo button {
+.pagamento-wrapper label,
+.pagamento-wrapper select {
+  display: block;
+  margin-bottom: 0.5rem;
   width: 100%;
-  padding: 0.6rem;
-  margin-bottom: 0.6rem;
+  font-size: 0.85rem;
+}
+
+.pagamento-wrapper select {
   background: #000;
-  color: var(--claro);
+  color: #fff;
   border: 1px solid var(--roxo);
   border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.3s ease;
+  padding: 0.4rem;
 }
 
-.modal-metodo button:hover {
+.formulario-pagamento {
+  margin-top: 0.75rem;
+}
+
+.formulario-pagamento input {
+  background: #000;
+  color: #fff;
+  border: 1px solid var(--roxo);
+  border-radius: 6px;
+  padding: 0.4rem;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.formulario-pagamento button {
+  width: 100%;
+  padding: 0.5rem;
   background: var(--roxo);
   color: #000;
-}
-
-.overlay-fundo {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0,0,0,0.7);
-  z-index: 1099;
-  display: none;
-}
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+} 
   </style>
 </head>
 <body>
@@ -444,16 +442,18 @@ section.reveal {
   <div class="total-carrinho">
     <p>Total: <span id="valor-total">R$ 0,00</span></p>
     <input type="text" id="cupom" placeholder="Adicionar cupom" />
-    <button class="confirmar-compra">Finalizar compra</button>
-  </div>
-</div>
 
-<div class="overlay-fundo" id="overlay" onclick="fecharMetodoPagamento()"></div>
-<div class="modal-metodo" id="modal-metodo">
-  <h4>Escolha o método de pagamento</h4>
-  <button onclick="escolherMetodo('pix')">PIX</button>
-  <button onclick="escolherMetodo('cartao')">Cartão</button>
-  <button onclick="escolherMetodo('boleto')">Boleto</button>
+<!-- Novo bloco de pagamento -->
+<div class="pagamento-wrapper">
+  <label for="metodo-pagamento">Método de pagamento:</label>
+  <select id="metodo-pagamento" onchange="atualizarFormularioPagamento()">
+    <option value="">Escolha</option>
+    <option value="pix">PIX</option>
+    <option value="cartao">Cartão</option>
+    <option value="boleto">Boleto</option>
+  </select>
+
+  <div id="formulario-pagamento" class="formulario-pagamento"></div>
 </div>
 
  <script>
@@ -579,23 +579,40 @@ function renderizarCarrinho() {
 
   totalSpan.textContent = formatarPreco(total);
 }
-function escolherMetodo(metodo) {
-  fecharMetodoPagamento();
-  alert("Você escolheu pagar por: " + metodo); // Aqui você pode trocar por submodal real
+
+function atualizarFormularioPagamento() {
+  const metodo = document.getElementById("metodo-pagamento").value;
+  const container = document.getElementById("formulario-pagamento");
+
+  if (metodo === "pix") {
+    container.innerHTML = `
+      <input type="text" placeholder="Chave Pix ou QR Code" />
+      <button onclick="confirmarCompraFinal()">Confirmar Pagamento</button>
+    `;
+  } else if (metodo === "cartao") {
+    container.innerHTML = `
+      <input type="text" placeholder="Número do cartão" />
+      <input type="text" placeholder="Validade (MM/AA)" />
+      <input type="text" placeholder="CVV" />
+      <button onclick="confirmarCompraFinal()">Confirmar Pagamento</button>
+    `;
+  } else if (metodo === "boleto") {
+    container.innerHTML = `
+      <input type="text" placeholder="Nome completo" />
+      <input type="text" placeholder="CPF" />
+      <button onclick="confirmarCompraFinal()">Gerar Boleto</button>
+    `;
+  } else {
+    container.innerHTML = "";
+  }
 }
 
-function abrirMetodoPagamento() {
-  document.getElementById("modal-metodo").style.display = "block";
-  document.getElementById("overlay").style.display = "block";
+function confirmarCompraFinal() {
+  alert("Pagamento processado com sucesso! (simulado)");
+  carrinho = [];
+  renderizarCarrinho();
+  abrirCarrinho(); // Fecha modal
 }
-
-function fecharMetodoPagamento() {
-  document.getElementById("modal-metodo").style.display = "none";
-  document.getElementById("overlay").style.display = "none";
-}
-
-// Atualiza o botão de finalizar compra:
-document.querySelector(".confirmar-compra").onclick = abrirMetodoPagamento;
 </script>
 </body>
 </html>
