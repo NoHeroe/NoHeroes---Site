@@ -177,24 +177,24 @@ section.reveal {
 }
 .carousel-container {
   width: 100%;
-  overflow: hidden;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
-  position: relative;
+  padding: 0 1rem;
 }
 
 .carousel-track {
   display: flex;
-  transition: transform 0.4s ease;
-  align-items: center;
-  touch-action: pan-y;
+  gap: 1rem;
+  scroll-behavior: smooth;
 }
 
 .carousel-card {
-  min-width: 85vw;
-  max-width: 85vw;
-  margin: 0 auto;
+  flex: 0 0 80vw;
+  scroll-snap-align: center;
   background: rgba(168, 85, 247, 0.05);
   border: 1px solid #a855f7;
   border-radius: 1rem;
@@ -205,6 +205,12 @@ section.reveal {
   color: #fff;
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
+
+.carousel-card img {
+  width: 100%;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+} 
   </style>
 </head>
 <body>
