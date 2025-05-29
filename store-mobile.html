@@ -245,6 +245,84 @@ section.reveal {
   color: #000;
   box-shadow: 0 0 12px var(--roxo);
 }
+.lista-itens {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.item-carrinho {
+  background: rgba(0,0,0,0.7);
+  border: 1px solid var(--roxo);
+  border-radius: 12px;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: 0 0 10px var(--roxo);
+}
+
+.item-carrinho img {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.item-carrinho .info {
+  flex: 1;
+}
+
+.item-carrinho .info strong {
+  display: block;
+  font-size: 0.9rem;
+}
+
+.item-carrinho .info span {
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
+
+.item-carrinho button.remover {
+  background: transparent;
+  color: #f87171;
+  font-size: 1.1rem;
+  border: none;
+  cursor: pointer;
+}
+
+.total-carrinho {
+  border-top: 1px solid var(--roxo);
+  padding-top: 0.75rem;
+}
+
+.total-carrinho p {
+  margin-bottom: 0.5rem;
+}
+
+.total-carrinho input {
+  width: 100%;
+  background: #000;
+  color: #fff;
+  border: 1px solid var(--roxo);
+  border-radius: 8px;
+  padding: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.confirmar-compra {
+  width: 100%;
+  padding: 0.5rem;
+  background: var(--roxo);
+  border: none;
+  color: #fff;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+} 
   </style>
 </head>
 <body>
@@ -312,8 +390,14 @@ section.reveal {
 
   </main> 
 <div id="modal-carrinho" class="modal-carrinho escondido">
-  <h3>Seu Carrinho</h3>
-  <p>Você ainda não adicionou nenhum item.</p>
+  <h3>Seu carrinho</h3>
+  <div id="itens-carrinho" class="lista-itens"></div>
+
+  <div class="total-carrinho">
+    <p>Total: <span id="valor-total">R$ 0,00</span></p>
+    <input type="text" id="cupom" placeholder="Adicionar cupom" />
+    <button class="confirmar-compra">Finalizar compra</button>
+  </div>
 </div>
 
  <script>
@@ -352,11 +436,11 @@ function abrirCarrinho() {
   modal.classList.toggle("escondido");
 }
 const produtosBloco2 = [
-  { nome: "ROAR Vol. 1", status: "em breve", imagem: "rebirth-thumb.jpg" },
-  { nome: "ROAR Vol. 2", status: "em breve", imagem: "rebirth-thumb.jpg" },
-  { nome: "ROAR Vol. 3", status: "em breve", imagem: "rebirth-thumb.jpg" },
-  { nome: "FREQ Vol. 1", status: "em breve", imagem: "freq-thumb.jpg" },
-  { nome: "Echoes Vol. 1", status: "em breve", imagem: "echoes-thumb.jpg" }
+  { nome: "ROAR Vol. 1", status: "em breve", imagem: "rebirth-thumb.jpg", preco: 29.97 },
+  { nome: "ROAR Vol. 2", status: "em breve", imagem: "rebirth-thumb.jpg", preco: 32.97 },
+  { nome: "ROAR Vol. 3", status: "em breve", imagem: "rebirth-thumb.jpg", preco: 29.97 },
+  { nome: "FREQ Vol. 1", status: "em breve", imagem: "freq-thumb.jpg", preco: 25.97 },
+  { nome: "Echoes Vol. 1", status: "em breve", imagem: "echoes-thumb.jpg", preco: 31.99 }
 ];
 
 let indexAtualBloco2 = 0;
@@ -399,14 +483,46 @@ document.addEventListener("DOMContentLoaded", () => {
 let carrinho = [];
 
 function adicionarAoCarrinho(nomeProduto) {
-  carrinho.push(nomeProduto);
-  atualizarModalCarrinho();
+  const produto = produtosBloco2.find(p => p.nome === nomeProduto);
+  if (!produto || carrinho.find(p => p.nome === produto.nome)) return;
+  carrinho.push(produto);
+  renderizarCarrinho();
 }
 
-function atualizarModalCarrinho() {
-  const modal = document.getElementById("modal-carrinho");
-  if (!modal) return;
+function removerDoCarrinho(nome) {
+  carrinho = carrinho.filter(p => p.nome !== nome);
+  renderizarCarrinho();
+}
 
+function formatarPreco(valor) {
+  return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+}
+
+function renderizarCarrinho() {
+  const lista = document.getElementById("itens-carrinho");
+  const totalSpan = document.getElementById("valor-total");
+  lista.innerHTML = "";
+
+  let total = 0;
+  carrinho.forEach(p => {
+    const item = document.createElement("div");
+    item.className = "item-carrinho";
+    total += p.preco || 0;
+
+    item.innerHTML = `
+      <img src="assets/images/${p.imagem}" alt="${p.nome}" />
+      <div class="info">
+        <strong>${p.nome}</strong>
+        <span>${formatarPreco(p.preco)}</span>
+      </div>
+      <button class="remover" onclick="removerDoCarrinho('${p.nome}')">✕</button>
+    `;
+
+    lista.appendChild(item);
+  });
+
+  totalSpan.textContent = formatarPreco(total);
+}
   if (carrinho.length === 0) {
     modal.innerHTML = `<h3>Seu Carrinho</h3><p>Você ainda não adicionou nenhum item.</p>`;
   } else {
