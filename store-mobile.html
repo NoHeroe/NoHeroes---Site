@@ -270,11 +270,19 @@ section.reveal {
     const conteudo = document.querySelector('.conteudo');
 
     function mostrarAba(indice) {
-      const target = document.getElementById(`aba-${indice}`);
-      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const target = document.getElementById(`aba-${indice}`);
+  if (!target) return;
 
-      botoes.forEach((btn, i) => btn.classList.toggle('ativo', i === indice));
-    }
+  // Força rolar verticalmente dentro da .conteudo sem scroll lateral
+  document.querySelector('.conteudo').scrollTo({
+    top: target.offsetTop,
+    left: 0,
+    behavior: 'smooth'
+  });
+
+  // Atualiza classe ativa
+  botoes.forEach((btn, i) => btn.classList.toggle('ativo', i === indice));
+}
 
     const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
