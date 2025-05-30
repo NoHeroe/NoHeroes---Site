@@ -562,10 +562,14 @@ window.indexAtualBloco6 = indexAtualBloco6;
   const renderizarCardBloco5 = criarRenderizador("card-bloco5", produtosBloco5, "indexAtualBloco5");
   const renderizarCardBloco6 = criarRenderizador("card-bloco6", produtosBloco6, "indexAtualBloco6");
 
-  function navegarCard(bloco, direcao, renderFunc) {
-    window[bloco] = (window[bloco] + direcao + window["produtos" + bloco.replace("indexAtual", "")].length) % window["produtos" + bloco.replace("indexAtual", "")].length;
-    renderFunc();
-  }
+ function navegarCard(bloco, direcao, renderFunc) {
+  const index = window[bloco];
+  const produtos = window["produtos" + bloco.replace("indexAtual", "")];
+  const novoIndex = (index + direcao + produtos.length) % produtos.length;
+
+  window[bloco] = novoIndex;
+  renderFunc();
+}
 
   function navegarCardBloco2(direcao) {
     indexAtualBloco2 = (indexAtualBloco2 + direcao + produtosBloco2.length) % produtosBloco2.length;
