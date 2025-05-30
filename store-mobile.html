@@ -672,28 +672,43 @@ window.indexAtualBloco6 = indexAtualBloco6;
 
   // Execução final após DOM carregar
   document.addEventListener("DOMContentLoaded", () => {
-    renderizarCardBloco2();
+  renderizarCardBloco2();
+  renderizarCardBloco3();
+  renderizarCardBloco4();
+  renderizarCardBloco5();
+  renderizarCardBloco6();
+
+  swipeConfig("card-bloco3", (dir) => {
+    window.indexAtualBloco3 = (window.indexAtualBloco3 + dir + produtosBloco3.length) % produtosBloco3.length;
     renderizarCardBloco3();
-    renderizarCardBloco4();
-    renderizarCardBloco5();
-    renderizarCardBloco6();
-
-    swipeConfig("card-bloco3", (dir) => navegarCard("indexAtualBloco3", dir, renderizarCardBloco3));
-    swipeConfig("card-bloco4", (dir) => navegarCard("indexAtualBloco4", dir, renderizarCardBloco4));
-    swipeConfig("card-bloco5", (dir) => navegarCard("indexAtualBloco5", dir, renderizarCardBloco5));
-    swipeConfig("card-bloco6", (dir) => navegarCard("indexAtualBloco6", dir, renderizarCardBloco6));
-
-    const card2 = document.getElementById("card-bloco2");
-    if (card2) {
-      let touchStartX = 0, touchEndX = 0;
-      card2.addEventListener("touchstart", e => touchStartX = e.changedTouches[0].screenX);
-      card2.addEventListener("touchend", e => {
-        touchEndX = e.changedTouches[0].screenX;
-        if (touchEndX < touchStartX - 30) navegarCardBloco2(1);
-        else if (touchEndX > touchStartX + 30) navegarCardBloco2(-1);
-      });
-    }
   });
+
+  swipeConfig("card-bloco4", (dir) => {
+    window.indexAtualBloco4 = (window.indexAtualBloco4 + dir + produtosBloco4.length) % produtosBloco4.length;
+    renderizarCardBloco4();
+  });
+
+  swipeConfig("card-bloco5", (dir) => {
+    window.indexAtualBloco5 = (window.indexAtualBloco5 + dir + produtosBloco5.length) % produtosBloco5.length;
+    renderizarCardBloco5();
+  });
+
+  swipeConfig("card-bloco6", (dir) => {
+    window.indexAtualBloco6 = (window.indexAtualBloco6 + dir + produtosBloco6.length) % produtosBloco6.length;
+    renderizarCardBloco6();
+  });
+
+  const card2 = document.getElementById("card-bloco2");
+  if (card2) {
+    let touchStartX = 0, touchEndX = 0;
+    card2.addEventListener("touchstart", e => touchStartX = e.changedTouches[0].screenX);
+    card2.addEventListener("touchend", e => {
+      touchEndX = e.changedTouches[0].screenX;
+      if (touchEndX < touchStartX - 30) navegarCardBloco2(1);
+      else if (touchEndX > touchStartX + 30) navegarCardBloco2(-1);
+    });
+  }
+});
 </script>
 </body>
 </html>
