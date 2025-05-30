@@ -516,7 +516,18 @@ section.reveal {
   ];
 
   // Index de navegação
-  let indexAtualBloco2 = 0, indexAtualBloco3 = 0, indexAtualBloco4 = 0, indexAtualBloco5 = 0, indexAtualBloco6 = 0;
+  let indexAtualBloco2 = 0;
+let indexAtualBloco3 = 0;
+let indexAtualBloco4 = 0;
+let indexAtualBloco5 = 0;
+let indexAtualBloco6 = 0;
+
+// Tornar visíveis globalmente
+window.indexAtualBloco2 = indexAtualBloco2;
+window.indexAtualBloco3 = indexAtualBloco3;
+window.indexAtualBloco4 = indexAtualBloco4;
+window.indexAtualBloco5 = indexAtualBloco5;
+window.indexAtualBloco6 = indexAtualBloco6;
 
   // Renderizador genérico
   function criarRenderizador(id, produtos, indexVar) {
