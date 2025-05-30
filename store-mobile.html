@@ -456,100 +456,88 @@ section.reveal {
 </div>
 
  <script>
-    const abas = document.querySelectorAll('section');
-    const botoes = document.querySelectorAll('.nav-lateral button');
-    const conteudo = document.querySelector('.conteudo');
+  const abas = document.querySelectorAll('section');
+  const botoes = document.querySelectorAll('.nav-lateral button');
+  const conteudo = document.querySelector('.conteudo');
 
-    function mostrarAba(indice) {
-  const target = document.getElementById(`aba-${indice}`);
-  if (!target) return;
+  function mostrarAba(indice) {
+    const target = document.getElementById(`aba-${indice}`);
+    if (!target) return;
 
-  // Força rolar verticalmente dentro da .conteudo sem scroll lateral
-  document.querySelector('.conteudo').scrollTo({
-    top: target.offsetTop,
-    left: 0,
-    behavior: 'smooth'
-  });
+    conteudo.scrollTo({
+      top: target.offsetTop,
+      left: 0,
+      behavior: 'smooth'
+    });
 
-  // Atualiza classe ativa
-  botoes.forEach((btn, i) => btn.classList.toggle('ativo', i === indice));
-}
+    botoes.forEach((btn, i) => btn.classList.toggle('ativo', i === indice));
+  }
 
-    const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('reveal');
-    } else {
-      entry.target.classList.remove('reveal'); // Reset ao sair da tela
-    }
-  });
-}, { threshold: 0.5 });
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('reveal');
+      } else {
+        entry.target.classList.remove('reveal');
+      }
+    });
+  }, { threshold: 0.5 });
 
-abas.forEach(aba => observer.observe(aba));
-function abrirCarrinho() {
-  const modal = document.getElementById("modal-carrinho");
-  modal.classList.toggle("escondido");
-}
-const produtosBloco2 = [
-  { nome: "ROAR Vol. 1", status: "em breve", imagem: "rebirth-thumb.jpg", preco: 29.97 },
-  { nome: "ROAR Vol. 2", status: "em breve", imagem: "rebirth-thumb.jpg", preco: 32.97 },
-  { nome: "ROAR Vol. 3", status: "em breve", imagem: "rebirth-thumb.jpg", preco: 29.97 },
-  { nome: "FREQ Vol. 1", status: "em breve", imagem: "freq-thumb.jpg", preco: 25.97 },
-  { nome: "Echoes Vol. 1", status: "em breve", imagem: "echoes-thumb.jpg", preco: 31.99 }
-];
-const produtosBloco3 = [
-  { nome: "Teaser FREQ", status: "em breve", imagem: "anime-teaser.jpg", preco: 1.97 },
-  { nome: "Teaser ROAR", status: "em breve", imagem: "anime-roar.jpg", preco: 11.99 }
-];
-const produtosBloco4 = [
-  { nome: "Sistema Vivo", status: "digital", imagem: "sistemavivo-thumb.jpg", preco: 19.99 },
-  { nome: "Manual das Sombras", status: "digital", imagem: "manualsombras-thumb.jpg", preco: 100.00 }
-];
-const produtosBloco5 = [
-  { nome: "Mentoria Ryukess", status: "mentoria", imagem: "ryukess.jpg", preco: 49.90 },
-  { nome: "Mentoria Criativa", status: "em breve", imagem: "criativo.jpg", preco: 59.90 }
-];
-const produtosBloco6 = [
-  { nome: "Arte Exclusiva", status: "digital", imagem: "arte1.jpg", preco: 99.99 },
-  { nome: "Wallpaper NoHeroes", status: "digital", imagem: "wallpaper.jpg", preco: 54.99 }
-];
+  abas.forEach(aba => observer.observe(aba));
 
-let indexAtualBloco2 = 0;
+  function abrirCarrinho() {
+    const modal = document.getElementById("modal-carrinho");
+    modal.classList.toggle("escondido");
+  }
 
-function navegarCardBloco2(direcao) {
-  indexAtualBloco2 = (indexAtualBloco2 + direcao + produtosBloco2.length) % produtosBloco2.length;
-  renderizarCardBloco2();
-}
+  // Produtos por bloco
+  const produtosBloco2 = [
+    { nome: "ROAR Vol. 1", status: "em breve", imagem: "rebirth-thumb.jpg", preco: 29.97 },
+    { nome: "ROAR Vol. 2", status: "em breve", imagem: "rebirth-thumb.jpg", preco: 32.97 },
+    { nome: "ROAR Vol. 3", status: "em breve", imagem: "rebirth-thumb.jpg", preco: 29.97 },
+    { nome: "FREQ Vol. 1", status: "em breve", imagem: "freq-thumb.jpg", preco: 25.97 },
+    { nome: "Echoes Vol. 1", status: "em breve", imagem: "echoes-thumb.jpg", preco: 31.99 }
+  ];
+  const produtosBloco3 = [
+    { nome: "Teaser FREQ", status: "em breve", imagem: "anime-teaser.jpg", preco: 1.97 },
+    { nome: "Teaser ROAR", status: "em breve", imagem: "anime-roar.jpg", preco: 11.99 }
+  ];
+  const produtosBloco4 = [
+    { nome: "Sistema Vivo", status: "digital", imagem: "sistemavivo-thumb.jpg", preco: 19.99 },
+    { nome: "Manual das Sombras", status: "digital", imagem: "manualsombras-thumb.jpg", preco: 100.00 }
+  ];
+  const produtosBloco5 = [
+    { nome: "Mentoria Ryukess", status: "mentoria", imagem: "ryukess.jpg", preco: 49.90 },
+    { nome: "Mentoria Criativa", status: "em breve", imagem: "criativo.jpg", preco: 59.90 }
+  ];
+  const produtosBloco6 = [
+    { nome: "Arte Exclusiva", status: "digital", imagem: "arte1.jpg", preco: 99.99 },
+    { nome: "Wallpaper NoHeroes", status: "digital", imagem: "wallpaper.jpg", preco: 54.99 }
+  ];
 
-function renderizarCardBloco2() {
-  const el = document.getElementById("card-bloco2");
-  if (!el) return;
-  const p = produtosBloco2[indexAtualBloco2];
-  el.innerHTML = `
-    <img src="assets/images/${p.imagem}" alt="${p.nome}" />
-    <strong>${p.nome}</strong>
-    <span style="opacity: 0.6;">(${p.status})</span>
-    <button class="btn-add" onclick="adicionarAoCarrinho('${p.nome}')">Adicionar ao carrinho</button>
-  `;
-}
+  // Index de navegação
+  let indexAtualBloco2 = 0, indexAtualBloco3 = 0, indexAtualBloco4 = 0, indexAtualBloco5 = 0, indexAtualBloco6 = 0;
 
-document.addEventListener("DOMContentLoaded", () => {
-  renderizarCardBloco2();
-  renderizarCardBloco3();
-  renderizarCardBloco4();
-  renderizarCardBloco5();
-  renderizarCardBloco6();
+  // Renderizador genérico
+  function criarRenderizador(id, produtos, indexVar) {
+    return function () {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const p = produtos[window[indexVar]];
+      el.innerHTML = `
+        <img src="assets/images/${p.imagem}" alt="${p.nome}" />
+        <strong>${p.nome}</strong>
+        <span style="opacity: 0.6;">(${p.status})</span>
+        <button class="btn-add" onclick="adicionarAoCarrinho('${p.nome}')">Adicionar ao carrinho</button>
+      `;
+    };
+  }
 
-swipeConfig("card-bloco3", (dir) => navegarCard("indexAtualBloco3", dir, renderizarCardBloco3));
-swipeConfig("card-bloco4", (dir) => navegarCard("indexAtualBloco4", dir, renderizarCardBloco4));
-swipeConfig("card-bloco5", (dir) => navegarCard("indexAtualBloco5", dir, renderizarCardBloco5));
-swipeConfig("card-bloco6", (dir) => navegarCard("indexAtualBloco6", dir, renderizarCardBloco6));
-
-function criarRenderizador(id, produtos, indexVar) {
-  return function() {
-    const el = document.getElementById(id);
+  // Renderizadores por bloco
+  const renderizarCardBloco2 = () => {
+    const el = document.getElementById("card-bloco2");
     if (!el) return;
-    const p = produtos[window[indexVar]];
+    const p = produtosBloco2[indexAtualBloco2];
     el.innerHTML = `
       <img src="assets/images/${p.imagem}" alt="${p.nome}" />
       <strong>${p.nome}</strong>
@@ -557,127 +545,140 @@ function criarRenderizador(id, produtos, indexVar) {
       <button class="btn-add" onclick="adicionarAoCarrinho('${p.nome}')">Adicionar ao carrinho</button>
     `;
   };
-}
 
-let indexAtualBloco3 = 0, indexAtualBloco4 = 0, indexAtualBloco5 = 0, indexAtualBloco6 = 0;
+  const renderizarCardBloco3 = criarRenderizador("card-bloco3", produtosBloco3, "indexAtualBloco3");
+  const renderizarCardBloco4 = criarRenderizador("card-bloco4", produtosBloco4, "indexAtualBloco4");
+  const renderizarCardBloco5 = criarRenderizador("card-bloco5", produtosBloco5, "indexAtualBloco5");
+  const renderizarCardBloco6 = criarRenderizador("card-bloco6", produtosBloco6, "indexAtualBloco6");
 
-const renderizarCardBloco3 = criarRenderizador("card-bloco3", produtosBloco3, "indexAtualBloco3");
-const renderizarCardBloco4 = criarRenderizador("card-bloco4", produtosBloco4, "indexAtualBloco4");
-const renderizarCardBloco5 = criarRenderizador("card-bloco5", produtosBloco5, "indexAtualBloco5");
-const renderizarCardBloco6 = criarRenderizador("card-bloco6", produtosBloco6, "indexAtualBloco6");
+  function navegarCard(bloco, direcao, renderFunc) {
+    window[bloco] = (window[bloco] + direcao + window["produtos" + bloco.replace("indexAtual", "")].length) % window["produtos" + bloco.replace("indexAtual", "")].length;
+    renderFunc();
+  }
 
-function swipeConfig(cardId, navegarFunc) {
-  const card = document.getElementById(cardId);
-  if (!card) return;
-  let touchStartX = 0, touchEndX = 0;
+  function navegarCardBloco2(direcao) {
+    indexAtualBloco2 = (indexAtualBloco2 + direcao + produtosBloco2.length) % produtosBloco2.length;
+    renderizarCardBloco2();
+  }
 
-  card.addEventListener("touchstart", e => touchStartX = e.changedTouches[0].screenX);
-  card.addEventListener("touchend", e => {
-    touchEndX = e.changedTouches[0].screenX;
-    if (touchEndX < touchStartX - 30) navegarFunc(1);
-    else if (touchEndX > touchStartX + 30) navegarFunc(-1);
-  });
-}
+  function swipeConfig(cardId, navegarFunc) {
+    const card = document.getElementById(cardId);
+    if (!card) return;
+    let touchStartX = 0, touchEndX = 0;
 
-function navegarCard(bloco, direcao, renderFunc) {
-  window[bloco] = (window[bloco] + direcao + window["produtos" + bloco.replace("indexAtual", "")].length) % window["produtos" + bloco.replace("indexAtual", "")].length;
-  renderFunc();
-}
+    card.addEventListener("touchstart", e => touchStartX = e.changedTouches[0].screenX);
+    card.addEventListener("touchend", e => {
+      touchEndX = e.changedTouches[0].screenX;
+      if (touchEndX < touchStartX - 30) navegarFunc(1);
+      else if (touchEndX > touchStartX + 30) navegarFunc(-1);
+    });
+  }
 
-  // Swipe para mobile
-  let touchStartX = 0;
-  let touchEndX = 0;
-  const card = document.getElementById("card-bloco2");
+  // Carrinho
+  let carrinho = [];
 
-  card.addEventListener("touchstart", (e) => {
-    touchStartX = e.changedTouches[0].screenX;
-  });
+  function adicionarAoCarrinho(nomeProduto) {
+    const todosProdutos = [...produtosBloco2, ...produtosBloco3, ...produtosBloco4, ...produtosBloco5, ...produtosBloco6];
+    const produto = todosProdutos.find(p => p.nome === nomeProduto);
+    if (produto) {
+      carrinho.push(produto);
+      renderizarCarrinho();
+    }
+  }
 
-  card.addEventListener("touchend", (e) => {
-    touchEndX = e.changedTouches[0].screenX;
-    if (touchEndX < touchStartX - 30) navegarCardBloco2(1);
-    else if (touchEndX > touchStartX + 30) navegarCardBloco2(-1);
-  });
-});
-let carrinho = [];
-
-function adicionarAoCarrinho(nomeProduto) {
-  const todosProdutos = [...produtosBloco2, ...produtosBloco3, ...produtosBloco4, ...produtosBloco5, ...produtosBloco6];
-const produto = todosProdutos.find(p => p.nome === nomeProduto);
-if (produto) {
-    carrinho.push(produto);
+  function removerDoCarrinho(nome) {
+    carrinho = carrinho.filter(p => p.nome !== nome);
     renderizarCarrinho();
   }
-}
 
-function removerDoCarrinho(nome) {
-  carrinho = carrinho.filter(p => p.nome !== nome);
-  renderizarCarrinho();
-}
-
-function formatarPreco(valor) {
-  return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-}
-
-function renderizarCarrinho() {
-  const lista = document.getElementById("itens-carrinho");
-  const totalSpan = document.getElementById("valor-total");
-  lista.innerHTML = "";
-
-  let total = 0;
-  carrinho.forEach(p => {
-    const item = document.createElement("div");
-    item.className = "item-carrinho";
-    total += p.preco || 0;
-
-    item.innerHTML = `
-      <img src="assets/images/${p.imagem}" alt="${p.nome}" />
-      <div class="info">
-        <strong>${p.nome}</strong>
-        <span>${formatarPreco(p.preco)}</span>
-      </div>
-      <button class="remover" onclick="removerDoCarrinho('${p.nome}')">✕</button>
-    `;
-
-    lista.appendChild(item);
-  });
-
-  totalSpan.textContent = formatarPreco(total);
-}
-
-function atualizarFormularioPagamento() {
-  const metodo = document.getElementById("metodo-pagamento").value;
-  const container = document.getElementById("formulario-pagamento");
-
-  if (metodo === "pix") {
-    container.innerHTML = `
-      <input type="text" placeholder="Chave Pix ou QR Code" />
-      <button onclick="confirmarCompraFinal()">Confirmar Pagamento</button>
-    `;
-  } else if (metodo === "cartao") {
-    container.innerHTML = `
-      <input type="text" placeholder="Número do cartão" />
-      <input type="text" placeholder="Validade (MM/AA)" />
-      <input type="text" placeholder="CVV" />
-      <button onclick="confirmarCompraFinal()">Confirmar Pagamento</button>
-    `;
-  } else if (metodo === "boleto") {
-    container.innerHTML = `
-      <input type="text" placeholder="Nome completo" />
-      <input type="text" placeholder="CPF" />
-      <button onclick="confirmarCompraFinal()">Gerar Boleto</button>
-    `;
-  } else {
-    container.innerHTML = "";
+  function formatarPreco(valor) {
+    return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   }
-}
 
-function confirmarCompraFinal() {
-  alert("Pagamento processado com sucesso! (simulado)");
-  carrinho = [];
-  renderizarCarrinho();
-  abrirCarrinho(); // Fecha modal
-}
+  function renderizarCarrinho() {
+    const lista = document.getElementById("itens-carrinho");
+    const totalSpan = document.getElementById("valor-total");
+    lista.innerHTML = "";
+    let total = 0;
+
+    carrinho.forEach(p => {
+      const item = document.createElement("div");
+      item.className = "item-carrinho";
+      total += p.preco || 0;
+
+      item.innerHTML = `
+        <img src="assets/images/${p.imagem}" alt="${p.nome}" />
+        <div class="info">
+          <strong>${p.nome}</strong>
+          <span>${formatarPreco(p.preco)}</span>
+        </div>
+        <button class="remover" onclick="removerDoCarrinho('${p.nome}')">✕</button>
+      `;
+
+      lista.appendChild(item);
+    });
+
+    totalSpan.textContent = formatarPreco(total);
+  }
+
+  function atualizarFormularioPagamento() {
+    const metodo = document.getElementById("metodo-pagamento").value;
+    const container = document.getElementById("formulario-pagamento");
+
+    if (metodo === "pix") {
+      container.innerHTML = `
+        <input type="text" placeholder="Chave Pix ou QR Code" />
+        <button onclick="confirmarCompraFinal()">Confirmar Pagamento</button>
+      `;
+    } else if (metodo === "cartao") {
+      container.innerHTML = `
+        <input type="text" placeholder="Número do cartão" />
+        <input type="text" placeholder="Validade (MM/AA)" />
+        <input type="text" placeholder="CVV" />
+        <button onclick="confirmarCompraFinal()">Confirmar Pagamento</button>
+      `;
+    } else if (metodo === "boleto") {
+      container.innerHTML = `
+        <input type="text" placeholder="Nome completo" />
+        <input type="text" placeholder="CPF" />
+        <button onclick="confirmarCompraFinal()">Gerar Boleto</button>
+      `;
+    } else {
+      container.innerHTML = "";
+    }
+  }
+
+  function confirmarCompraFinal() {
+    alert("Pagamento processado com sucesso! (simulado)");
+    carrinho = [];
+    renderizarCarrinho();
+    abrirCarrinho();
+  }
+
+  // Execução final após DOM carregar
+  document.addEventListener("DOMContentLoaded", () => {
+    renderizarCardBloco2();
+    renderizarCardBloco3();
+    renderizarCardBloco4();
+    renderizarCardBloco5();
+    renderizarCardBloco6();
+
+    swipeConfig("card-bloco3", (dir) => navegarCard("indexAtualBloco3", dir, renderizarCardBloco3));
+    swipeConfig("card-bloco4", (dir) => navegarCard("indexAtualBloco4", dir, renderizarCardBloco4));
+    swipeConfig("card-bloco5", (dir) => navegarCard("indexAtualBloco5", dir, renderizarCardBloco5));
+    swipeConfig("card-bloco6", (dir) => navegarCard("indexAtualBloco6", dir, renderizarCardBloco6));
+
+    const card2 = document.getElementById("card-bloco2");
+    if (card2) {
+      let touchStartX = 0, touchEndX = 0;
+      card2.addEventListener("touchstart", e => touchStartX = e.changedTouches[0].screenX);
+      card2.addEventListener("touchend", e => {
+        touchEndX = e.changedTouches[0].screenX;
+        if (touchEndX < touchStartX - 30) navegarCardBloco2(1);
+        else if (touchEndX > touchStartX + 30) navegarCardBloco2(-1);
+      });
+    }
+  });
 </script>
 </body>
 </html>
