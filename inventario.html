@@ -1,52 +1,280 @@
-<!DOCTYPE html><html lang="pt-BR">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NoHeroes | Página Inativa</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <title>NoHeroes | Inventário</title>
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --roxo: #a855f7;
+      --roxo-dark: #6d28d9;
+      --cinza-escuro: #17151c;
+      --cinza-medio: #232136;
+      --branco: #f4f4f4;
+      --painel-glass: rgba(36, 20, 52, 0.85);
+    }
     body {
-      font-family: 'Inter', sans-serif;
-      background: #1a1a1a;
-      color: #e5e5e5;
+      background: linear-gradient(120deg, #181022 60%, #2a213c 100%);
+      color: var(--branco);
+      font-family: 'Unbounded', sans-serif;
+      min-height: 100vh;
+      margin: 0;
+      overflow-x: hidden;
+      box-sizing: border-box;
     }
-    h1, h2 {
-      font-family: 'Playfair Display', serif;
+    .inventory-container {
+      max-width: 1100px;
+      margin: 60px auto;
+      background: var(--painel-glass);
+      border-radius: 18px;
+      box-shadow: 0 0 40px #a855f74a, 0 1px 6px #000;
+      padding: 2.5rem 2.5rem 1.5rem 2.5rem;
+      position: relative;
+      border: 2px solid var(--roxo-dark);
+      backdrop-filter: blur(7px);
     }
-    .inactive-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(50, 50, 50, 0.9);
-      pointer-events: all;
-      z-index: 40;
+    .inventory-tabs {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      align-items: center;
+      justify-content: flex-start;
+      border-bottom: 2px solid #a855f755;
     }
-    .inactive-overlay * {
-      pointer-events: none;
+    .inventory-tab {
+      color: var(--branco);
+      background: none;
+      border: none;
+      font-size: 1.15rem;
+      font-weight: 700;
+      padding: 0.5rem 1.2rem 0.6rem 1.2rem;
+      border-radius: 1.5rem 1.5rem 0 0;
+      cursor: pointer;
+      transition: all 0.17s;
+      position: relative;
+      outline: none;
     }
-    /* exceção: footer button clicável */
-    .footer-button {
-      pointer-events: auto;
+    .inventory-tab.active {
+      background: linear-gradient(90deg, var(--roxo-dark) 60%, var(--roxo) 100%);
+      color: #fff;
+      box-shadow: 0 2px 16px #a855f733;
+      border-bottom: 0;
+      z-index: 2;
     }
-    html { scroll-behavior: smooth; }
+    .inventory-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 1.1rem;
+      margin-top: 1.2rem;
+      margin-bottom: 1.5rem;
+      min-height: 260px;
+    }
+    .item-card {
+      background: linear-gradient(150deg, #26193c 60%, #5a32a3 100%);
+      border: 2px solid #a855f7cc;
+      border-radius: 12px;
+      padding: 0.9rem 0.4rem 0.7rem 0.4rem;
+      box-shadow: 0 0 16px #a855f744;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.15s, box-shadow 0.15s;
+      cursor: pointer;
+      position: relative;
+      min-height: 100px;
+    }
+    .item-card.selected,
+    .item-card:hover {
+      transform: scale(1.06);
+      border-color: #fff;
+      box-shadow: 0 0 32px #a855f7dd, 0 1px 12px #000;
+      z-index: 2;
+    }
+    .item-icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 0.6rem;
+      filter: drop-shadow(0 0 8px #a855f7aa);
+    }
+    .item-name {
+      font-size: 1rem;
+      text-align: center;
+      color: #fff;
+      margin-bottom: 0.1rem;
+      font-weight: 700;
+      text-shadow: 0 0 6px #a855f788;
+    }
+    .item-qty {
+      font-size: 0.85rem;
+      color: #c084fc;
+      text-shadow: 0 0 5px #5b21b6;
+    }
+    /* Modal detalhes */
+    .item-details-modal {
+      position: absolute;
+      top: 0; right: -350px;
+      width: 340px;
+      background: linear-gradient(120deg, #22112d 75%, #3a2859 100%);
+      color: var(--branco);
+      border: 2px solid var(--roxo);
+      border-radius: 15px;
+      box-shadow: 0 0 32px #a855f788;
+      z-index: 9;
+      padding: 1.3rem 1.5rem 1.3rem 1.5rem;
+      transition: right 0.22s;
+      min-height: 360px;
+    }
+    .item-details-modal.open {
+      right: -15px;
+      transition: right 0.24s cubic-bezier(.25,.9,.33,1.16);
+    }
+    .item-details-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--roxo);
+      letter-spacing: 0.5px;
+      text-shadow: 0 0 8px #a855f7bb;
+    }
+    .item-details-attr {
+      font-size: 1rem;
+      margin-bottom: 0.6rem;
+      color: #c4b5fd;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .item-details-desc {
+      font-size: 1rem;
+      color: #fff;
+      margin-bottom: 1.2rem;
+      opacity: 0.93;
+    }
+    .item-details-actions {
+      display: flex;
+      gap: 1rem;
+    }
+    .item-details-actions button {
+      background: linear-gradient(120deg, #a855f7 60%, #6d28d9 100%);
+      color: #fff;
+      border: none;
+      border-radius: 9px;
+      padding: 0.7rem 1.1rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 0 12px #a855f7aa;
+      transition: background 0.15s;
+    }
+    .item-details-actions button:hover {
+      background: #fff;
+      color: var(--roxo-dark);
+    }
+    @media (max-width: 900px) {
+      .inventory-container { padding: 1rem 0.5rem; }
+      .inventory-grid { grid-template-columns: repeat(3, 1fr);}
+      .item-details-modal { width: 98vw; left: 0; right: 0; top: 99%; transform: translateY(-100%); border-radius: 18px 18px 0 0;}
+      .item-details-modal.open { top: 60px; right: 0; left: 0; }
+    }
+    @media (max-width: 600px) {
+      .inventory-container { max-width: 98vw; }
+      .inventory-grid { grid-template-columns: repeat(2, 1fr);}
+    }
   </style>
 </head>
-<body class="relative">
-  <!-- TOPO FIXO -->
-  <header class="fixed top-0 left-0 w-full bg-[#100d1a] border-b border-[#2e2e2e] z-50 flex items-center justify-between px-6 py-4">
-    <div>
-      <img src="assets/images/noheroes logo.png" alt="NoHeroes" class="h-16" />
+<body>
+  <div class="inventory-container">
+    <!-- Abas -->
+    <div class="inventory-tabs">
+      <button class="inventory-tab active" data-tab="equip">Equipamentos</button>
+      <button class="inventory-tab" data-tab="consum">Consumíveis</button>
+      <button class="inventory-tab" data-tab="materiais">Materiais</button>
+      <button class="inventory-tab" data-tab="outros">Outros</button>
     </div>
-  </header>  <!-- RODAPÉ -->  <footer class="fixed bottom-0 left-0 w-full bg-[#100d1a] border-t border-[#2e2e2e] text-center py-4 z-50">
-    <button onclick="window.location.href='index.html'" class="footer-button px-6 py-2 bg-[#8f4fff] text-black rounded-lg font-semibold hover:bg-[#a16fff] transition">
-      Início
-    </button>
-  </footer>  <!-- Overlay de Inatividade -->  <div class="inactive-overlay flex flex-col items-center justify-center text-center px-4">
-    <!-- Espaço para nome da página -->
-    <h2 id="STORE" class="text-2xl md:text-4xl font-bold mb-4 text-[#8f4fff]"></h2>
-    <h1 class="text-5xl md:text-7xl font-extrabold">EM BREVE</h1>
-  </div>  <!-- Espaço para futuro conteúdo das páginas -->  <div class="pt-20 pb-20">
-    <!-- Conteúdo inicial (logo, cabeçalho e rodapé) já estão fixos. --
+    <!-- Grade de Itens -->
+    <div class="inventory-grid" id="inventoryGrid">
+      <!-- Itens são renderizados aqui via JS -->
+    </div>
+    <!-- Modal de detalhes do item -->
+    <div class="item-details-modal" id="itemDetailsModal">
+      <div class="item-details-title" id="detailsTitle">Nome do Item</div>
+      <div class="item-details-attr" id="detailsAttr">Tipo: Espada</div>
+      <div class="item-details-desc" id="detailsDesc">Descrição do item exibida aqui...</div>
+      <div class="item-details-actions">
+        <button id="btnUse">Usar</button>
+        <button id="btnEquip">Equipar</button>
+      </div>
+    </div>
   </div>
+  <script>
+    // Mock de itens (vai popular via backend depois)
+    const ITEMS = [
+      {id:1, name:"Espada Sombria", type:"Equipamento", qty:1, icon:"https://cdn-icons-png.flaticon.com/512/194/194401.png", desc:"Espada de aço negra. +30 ATK.", attr:"ATK: +30"},
+      {id:2, name:"Poção de Vida", type:"Consumível", qty:4, icon:"https://cdn-icons-png.flaticon.com/512/590/590685.png", desc:"Recupera 60 de HP.", attr:"HP: +60"},
+      {id:3, name:"Cristal Rúnico", type:"Materiais", qty:2, icon:"https://cdn-icons-png.flaticon.com/512/248/248549.png", desc:"Material mágico raro.", attr:"Uso: Craft"},
+      {id:4, name:"Chave Secreta", type:"Outros", qty:1, icon:"https://cdn-icons-png.flaticon.com/512/3024/3024608.png", desc:"Abre portais ocultos.", attr:"Raro"},
+      {id:5, name:"Elmo Rúnico", type:"Equipamento", qty:1, icon:"https://cdn-icons-png.flaticon.com/512/3318/3318703.png", desc:"Protege contra magia.", attr:"DEF: +15"},
+      {id:6, name:"Poção de Mana", type:"Consumível", qty:2, icon:"https://cdn-icons-png.flaticon.com/512/3135/3135715.png", desc:"Recupera 40 de MP.", attr:"MP: +40"},
+      // Adicione mais itens fictícios se quiser
+    ];
+    // Controle de abas
+    const tabs = document.querySelectorAll('.inventory-tab');
+    const grid = document.getElementById('inventoryGrid');
+    const modal = document.getElementById('itemDetailsModal');
+    // Função para renderizar os itens da aba ativa
+    function renderItems(tab) {
+      grid.innerHTML = '';
+      let tabType = '';
+      if(tab === 'equip') tabType = "Equipamento";
+      else if(tab === 'consum') tabType = "Consumível";
+      else if(tab === 'materiais') tabType = "Materiais";
+      else tabType = "Outros";
+      const filtered = ITEMS.filter(item => {
+        if(tabType === "Materiais") return item.type === "Materiais";
+        if(tabType === "Equipamento") return item.type === "Equipamento";
+        if(tabType === "Consumível") return item.type === "Consumível";
+        return item.type === "Outros";
+      });
+      filtered.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'item-card';
+        card.innerHTML = `
+          <img class="item-icon" src="${item.icon}" alt="${item.name}">
+          <div class="item-name">${item.name}</div>
+          <div class="item-qty">x${item.qty}</div>
+        `;
+        card.onclick = () => showDetails(item);
+        grid.appendChild(card);
+      });
+    }
+    // Troca de abas
+    tabs.forEach(tab => {
+      tab.onclick = () => {
+        tabs.forEach(t=>t.classList.remove('active'));
+        tab.classList.add('active');
+        renderItems(tab.dataset.tab);
+        closeModal();
+      };
+    });
+    // Detalhes do item
+    function showDetails(item) {
+      document.getElementById('detailsTitle').innerText = item.name;
+      document.getElementById('detailsAttr').innerText = item.attr;
+      document.getElementById('detailsDesc').innerText = item.desc;
+      modal.classList.add('open');
+      // TODO: Condição para botões Usar/Equipar
+    }
+    // Fechar modal ao clicar fora
+    grid.onclick = (e) => {
+      if (e.target.classList.contains('item-card')) return;
+      closeModal();
+    }
+    function closeModal() {
+      modal.classList.remove('open');
+    }
+    // Inicializa
+    renderItems('equip');
+  </script>
 </body>
-  </html>
+</html>
