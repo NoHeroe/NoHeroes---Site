@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NoHeroes | Inventário</title>
+  <title>NoHeroes | Inventário (RPG Skeleton)</title>
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -11,270 +11,315 @@
       --roxo-dark: #6d28d9;
       --cinza-escuro: #17151c;
       --cinza-medio: #232136;
-      --branco: #f4f4f4;
-      --painel-glass: rgba(36, 20, 52, 0.85);
+      --cinza-claro: #2a213c;
+      --painel-glass: rgba(36, 20, 52, 0.83);
+      --painel-destaque: rgba(104, 53, 160, 0.16);
+      --borda: #a855f7cc;
+      --txt: #f4f4f4;
     }
     body {
       background: linear-gradient(120deg, #181022 60%, #2a213c 100%);
-      color: var(--branco);
+      color: var(--txt);
       font-family: 'Unbounded', sans-serif;
       min-height: 100vh;
       margin: 0;
       overflow-x: hidden;
       box-sizing: border-box;
     }
-    .inventory-container {
-      max-width: 1100px;
-      margin: 60px auto;
+    .inventory-root {
+      max-width: 1240px;
+      margin: 56px auto;
       background: var(--painel-glass);
       border-radius: 18px;
-      box-shadow: 0 0 40px #a855f74a, 0 1px 6px #000;
-      padding: 2.5rem 2.5rem 1.5rem 2.5rem;
-      position: relative;
-      border: 2px solid var(--roxo-dark);
-      backdrop-filter: blur(7px);
+      box-shadow: 0 0 48px #a855f72c, 0 1px 12px #000;
+      border: 2px solid var(--borda);
+      padding: 0;
+      display: flex;
+      flex-direction: column;
     }
+    /* Abas */
     .inventory-tabs {
       display: flex;
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-      align-items: center;
-      justify-content: flex-start;
+      gap: 2.2rem;
       border-bottom: 2px solid #a855f755;
-    }
-    .inventory-tab {
-      color: var(--branco);
+      padding: 1.1rem 2.5rem 0.7rem 2.5rem;
+      align-items: center;
       background: none;
-      border: none;
       font-size: 1.15rem;
       font-weight: 700;
-      padding: 0.5rem 1.2rem 0.6rem 1.2rem;
-      border-radius: 1.5rem 1.5rem 0 0;
+    }
+    .inventory-tab {
+      color: var(--txt);
+      background: none;
+      border: none;
+      padding: 0.7rem 1.5rem 0.8rem 1.5rem;
+      border-radius: 2rem 2rem 0 0;
       cursor: pointer;
-      transition: all 0.17s;
-      position: relative;
+      transition: all 0.18s;
       outline: none;
+      position: relative;
+      letter-spacing: 0.03em;
+      font-size: 1.08em;
     }
     .inventory-tab.active {
-      background: linear-gradient(90deg, var(--roxo-dark) 60%, var(--roxo) 100%);
+      background: linear-gradient(90deg, var(--roxo-dark) 70%, var(--roxo) 100%);
       color: #fff;
-      box-shadow: 0 2px 16px #a855f733;
+      box-shadow: 0 2px 18px #a855f733;
       border-bottom: 0;
       z-index: 2;
     }
-    .inventory-grid {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 1.1rem;
-      margin-top: 1.2rem;
-      margin-bottom: 1.5rem;
-      min-height: 260px;
+    /* Grid principal */
+    .inventory-main {
+      display: flex;
+      flex-direction: row;
+      gap: 0;
+      width: 100%;
+      min-height: 620px;
+      padding: 0;
     }
-    .item-card {
-      background: linear-gradient(150deg, #26193c 60%, #5a32a3 100%);
-      border: 2px solid #a855f7cc;
-      border-radius: 12px;
-      padding: 0.9rem 0.4rem 0.7rem 0.4rem;
-      box-shadow: 0 0 16px #a855f744;
+    /* Personagem grande */
+    .inventory-avatar-area {
+      flex: 0 0 340px;
+      background: var(--cinza-escuro);
+      border-right: 2px solid #a855f733;
       display: flex;
       flex-direction: column;
       align-items: center;
-      transition: transform 0.15s, box-shadow 0.15s;
-      cursor: pointer;
+      justify-content: flex-start;
+      padding: 2.5rem 0 0 0;
+      min-height: 600px;
       position: relative;
-      min-height: 100px;
     }
-    .item-card.selected,
-    .item-card:hover {
-      transform: scale(1.06);
-      border-color: #fff;
-      box-shadow: 0 0 32px #a855f7dd, 0 1px 12px #000;
-      z-index: 2;
-    }
-    .item-icon {
-      width: 48px;
-      height: 48px;
-      margin-bottom: 0.6rem;
-      filter: drop-shadow(0 0 8px #a855f7aa);
-    }
-    .item-name {
-      font-size: 1rem;
-      text-align: center;
-      color: #fff;
-      margin-bottom: 0.1rem;
-      font-weight: 700;
-      text-shadow: 0 0 6px #a855f788;
-    }
-    .item-qty {
-      font-size: 0.85rem;
-      color: #c084fc;
-      text-shadow: 0 0 5px #5b21b6;
-    }
-    /* Modal detalhes */
-    .item-details-modal {
-      position: absolute;
-      top: 0; right: -350px;
-      width: 340px;
-      background: linear-gradient(120deg, #22112d 75%, #3a2859 100%);
-      color: var(--branco);
-      border: 2px solid var(--roxo);
-      border-radius: 15px;
-      box-shadow: 0 0 32px #a855f788;
-      z-index: 9;
-      padding: 1.3rem 1.5rem 1.3rem 1.5rem;
-      transition: right 0.22s;
-      min-height: 360px;
-    }
-    .item-details-modal.open {
-      right: -15px;
-      transition: right 0.24s cubic-bezier(.25,.9,.33,1.16);
-    }
-    .item-details-title {
-      font-size: 1.3rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      color: var(--roxo);
-      letter-spacing: 0.5px;
-      text-shadow: 0 0 8px #a855f7bb;
-    }
-    .item-details-attr {
-      font-size: 1rem;
-      margin-bottom: 0.6rem;
-      color: #c4b5fd;
+    .avatar-placeholder {
+      width: 170px;
+      height: 230px;
+      border-radius: 1.2rem;
+      background: linear-gradient(120deg, #181022 65%, #39155c 100%);
+      border: 2.5px dashed #a855f799;
+      margin-bottom: 1.2rem;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      justify-content: center;
+      color: #a855f7;
+      font-size: 2.1rem;
+      font-weight: 700;
+      text-shadow: 0 0 24px #a855f7aa;
     }
-    .item-details-desc {
-      font-size: 1rem;
-      color: #fff;
-      margin-bottom: 1.2rem;
-      opacity: 0.93;
+    .avatar-name {
+      font-size: 1.22rem;
+      font-weight: 700;
+      color: var(--roxo);
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.03em;
+      text-shadow: 0 0 10px #a855f7bb;
     }
-    .item-details-actions {
+    /* Status */
+    .inventory-status-area {
+      flex: 1 1 auto;
+      padding: 2.7rem 2.7rem 2.7rem 2.2rem;
       display: flex;
-      gap: 1rem;
+      flex-direction: column;
+      justify-content: flex-start;
+      min-width: 280px;
+      max-width: 380px;
     }
-    .item-details-actions button {
-      background: linear-gradient(120deg, #a855f7 60%, #6d28d9 100%);
-      color: #fff;
-      border: none;
-      border-radius: 9px;
-      padding: 0.7rem 1.1rem;
-      font-size: 1rem;
+    .status-block {
+      margin-bottom: 2.5rem;
+    }
+    .status-title {
+      color: var(--roxo);
+      font-size: 1.09rem;
+      font-weight: 700;
+      margin-bottom: 0.85rem;
+      letter-spacing: 0.02em;
+    }
+    .status-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.35rem 1.7rem;
+      font-size: 1.01rem;
+      color: #e5e5ff;
+    }
+    .status-label {
       font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 0 12px #a855f7aa;
-      transition: background 0.15s;
+      color: #c084fc;
     }
-    .item-details-actions button:hover {
-      background: #fff;
-      color: var(--roxo-dark);
+    /* Talento e skills */
+    .talent-block {
+      margin-bottom: 2.1rem;
     }
-    @media (max-width: 900px) {
-      .inventory-container { padding: 1rem 0.5rem; }
-      .inventory-grid { grid-template-columns: repeat(3, 1fr);}
-      .item-details-modal { width: 98vw; left: 0; right: 0; top: 99%; transform: translateY(-100%); border-radius: 18px 18px 0 0;}
-      .item-details-modal.open { top: 60px; right: 0; left: 0; }
+    .talent-title {
+      color: var(--roxo);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.7rem;
     }
-    @media (max-width: 600px) {
-      .inventory-container { max-width: 98vw; }
-      .inventory-grid { grid-template-columns: repeat(2, 1fr);}
+    .talent-desc {
+      font-size: 1rem;
+      color: #fff;
+      opacity: 0.92;
+    }
+    /* Área dos slots */
+    .inventory-equip-area {
+      flex: 0 0 360px;
+      background: var(--painel-destaque);
+      border-left: 2px solid #a855f722;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      padding: 2.8rem 1.5rem 2.8rem 1.5rem;
+      min-width: 320px;
+      min-height: 600px;
+      position: relative;
+      gap: 2rem;
+    }
+    .slot-section {
+      margin-bottom: 1.8rem;
+    }
+    .slot-title {
+      color: var(--roxo);
+      font-size: 1.07rem;
+      font-weight: 700;
+      margin-bottom: 0.7rem;
+    }
+    .slots-list {
+      display: flex;
+      gap: 1.1rem;
+      flex-wrap: wrap;
+    }
+    .slot-vazio {
+      width: 62px;
+      height: 62px;
+      border-radius: 0.75rem;
+      background: linear-gradient(120deg, #2b203e 65%, #4a1988 100%);
+      border: 2.2px dashed #a855f799;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.55rem;
+      color: #fff;
+      opacity: 0.36;
+    }
+    /* Skills */
+    .skills-list {
+      display: flex;
+      gap: 1.2rem;
+    }
+    .skill-vazio {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(120deg, #19122a 60%, #3a2755 100%);
+      border: 2px dashed #a855f799;
+      opacity: 0.43;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      color: #fff;
+    }
+    @media (max-width: 1150px) {
+      .inventory-main {
+        flex-direction: column;
+      }
+      .inventory-avatar-area, .inventory-equip-area {
+        flex: 0 0 auto;
+        min-width: 0;
+        min-height: 220px;
+        border: none;
+        border-bottom: 2px solid #a855f722;
+        border-right: none;
+      }
+      .inventory-equip-area { border: none; }
+      .inventory-status-area { padding: 2rem 1rem 2rem 1rem; }
+    }
+    @media (max-width: 750px) {
+      .inventory-root { max-width: 100vw; }
+      .inventory-main { flex-direction: column; }
+      .inventory-avatar-area,
+      .inventory-status-area,
+      .inventory-equip-area { min-width: 0; padding: 1rem 0.2rem 1rem 0.2rem; }
     }
   </style>
 </head>
 <body>
-  <div class="inventory-container">
+  <div class="inventory-root">
     <!-- Abas -->
     <div class="inventory-tabs">
-      <button class="inventory-tab active" data-tab="equip">Equipamentos</button>
-      <button class="inventory-tab" data-tab="consum">Consumíveis</button>
-      <button class="inventory-tab" data-tab="materiais">Materiais</button>
-      <button class="inventory-tab" data-tab="outros">Outros</button>
+      <button class="inventory-tab active">Overview</button>
+      <button class="inventory-tab">Atributos</button>
+      <button class="inventory-tab">Equipamento</button>
+      <button class="inventory-tab">Inventário</button>
+      <button class="inventory-tab">Skills</button>
+      <button class="inventory-tab">Loja</button>
     </div>
-    <!-- Grade de Itens -->
-    <div class="inventory-grid" id="inventoryGrid">
-      <!-- Itens são renderizados aqui via JS -->
-    </div>
-    <!-- Modal de detalhes do item -->
-    <div class="item-details-modal" id="itemDetailsModal">
-      <div class="item-details-title" id="detailsTitle">Nome do Item</div>
-      <div class="item-details-attr" id="detailsAttr">Tipo: Espada</div>
-      <div class="item-details-desc" id="detailsDesc">Descrição do item exibida aqui...</div>
-      <div class="item-details-actions">
-        <button id="btnUse">Usar</button>
-        <button id="btnEquip">Equipar</button>
+    <!-- Área principal -->
+    <div class="inventory-main">
+      <!-- Avatar / Personagem -->
+      <div class="inventory-avatar-area">
+        <div class="avatar-placeholder">Avatar</div>
+        <div class="avatar-name">Nome do Personagem</div>
+      </div>
+      <!-- Status & Talentos -->
+      <div class="inventory-status-area">
+        <div class="status-block">
+          <div class="status-title">Status</div>
+          <div class="status-list">
+            <div><span class="status-label">Dano</span>: --</div>
+            <div><span class="status-label">Defesa</span>: --</div>
+            <div><span class="status-label">Saúde</span>: --</div>
+            <div><span class="status-label">Mana</span>: --</div>
+            <div><span class="status-label">Crítico</span>: --</div>
+            <div><span class="status-label">Velocidade</span>: --</div>
+          </div>
+        </div>
+        <div class="talent-block">
+          <div class="talent-title">Talento</div>
+          <div class="talent-desc">
+            Descrição do talento principal do personagem.<br>
+            • Bônus especiais ou passivas.<br>
+            • Informações do build.
+          </div>
+        </div>
+        <div class="skills-list">
+          <div class="skill-vazio"></div>
+          <div class="skill-vazio"></div>
+          <div class="skill-vazio"></div>
+          <div class="skill-vazio"></div>
+        </div>
+      </div>
+      <!-- Equipamento / Slots -->
+      <div class="inventory-equip-area">
+        <div class="slot-section">
+          <div class="slot-title">Slot Primário</div>
+          <div class="slots-list">
+            <div class="slot-vazio"></div>
+          </div>
+        </div>
+        <div class="slot-section">
+          <div class="slot-title">Slot Secundário</div>
+          <div class="slots-list">
+            <div class="slot-vazio"></div>
+          </div>
+        </div>
+        <div class="slot-section">
+          <div class="slot-title">Ferramentas</div>
+          <div class="slots-list">
+            <div class="slot-vazio"></div>
+            <div class="slot-vazio"></div>
+            <div class="slot-vazio"></div>
+          </div>
+        </div>
+        <div class="slot-section">
+          <div class="slot-title">Skills Especiais</div>
+          <div class="slots-list">
+            <div class="slot-vazio"></div>
+            <div class="slot-vazio"></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <script>
-    // Mock de itens (vai popular via backend depois)
-    const ITEMS = [
-      {id:1, name:"Espada Sombria", type:"Equipamento", qty:1, icon:"https://cdn-icons-png.flaticon.com/512/194/194401.png", desc:"Espada de aço negra. +30 ATK.", attr:"ATK: +30"},
-      {id:2, name:"Poção de Vida", type:"Consumível", qty:4, icon:"https://cdn-icons-png.flaticon.com/512/590/590685.png", desc:"Recupera 60 de HP.", attr:"HP: +60"},
-      {id:3, name:"Cristal Rúnico", type:"Materiais", qty:2, icon:"https://cdn-icons-png.flaticon.com/512/248/248549.png", desc:"Material mágico raro.", attr:"Uso: Craft"},
-      {id:4, name:"Chave Secreta", type:"Outros", qty:1, icon:"https://cdn-icons-png.flaticon.com/512/3024/3024608.png", desc:"Abre portais ocultos.", attr:"Raro"},
-      {id:5, name:"Elmo Rúnico", type:"Equipamento", qty:1, icon:"https://cdn-icons-png.flaticon.com/512/3318/3318703.png", desc:"Protege contra magia.", attr:"DEF: +15"},
-      {id:6, name:"Poção de Mana", type:"Consumível", qty:2, icon:"https://cdn-icons-png.flaticon.com/512/3135/3135715.png", desc:"Recupera 40 de MP.", attr:"MP: +40"},
-      // Adicione mais itens fictícios se quiser
-    ];
-    // Controle de abas
-    const tabs = document.querySelectorAll('.inventory-tab');
-    const grid = document.getElementById('inventoryGrid');
-    const modal = document.getElementById('itemDetailsModal');
-    // Função para renderizar os itens da aba ativa
-    function renderItems(tab) {
-      grid.innerHTML = '';
-      let tabType = '';
-      if(tab === 'equip') tabType = "Equipamento";
-      else if(tab === 'consum') tabType = "Consumível";
-      else if(tab === 'materiais') tabType = "Materiais";
-      else tabType = "Outros";
-      const filtered = ITEMS.filter(item => {
-        if(tabType === "Materiais") return item.type === "Materiais";
-        if(tabType === "Equipamento") return item.type === "Equipamento";
-        if(tabType === "Consumível") return item.type === "Consumível";
-        return item.type === "Outros";
-      });
-      filtered.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'item-card';
-        card.innerHTML = `
-          <img class="item-icon" src="${item.icon}" alt="${item.name}">
-          <div class="item-name">${item.name}</div>
-          <div class="item-qty">x${item.qty}</div>
-        `;
-        card.onclick = () => showDetails(item);
-        grid.appendChild(card);
-      });
-    }
-    // Troca de abas
-    tabs.forEach(tab => {
-      tab.onclick = () => {
-        tabs.forEach(t=>t.classList.remove('active'));
-        tab.classList.add('active');
-        renderItems(tab.dataset.tab);
-        closeModal();
-      };
-    });
-    // Detalhes do item
-    function showDetails(item) {
-      document.getElementById('detailsTitle').innerText = item.name;
-      document.getElementById('detailsAttr').innerText = item.attr;
-      document.getElementById('detailsDesc').innerText = item.desc;
-      modal.classList.add('open');
-      // TODO: Condição para botões Usar/Equipar
-    }
-    // Fechar modal ao clicar fora
-    grid.onclick = (e) => {
-      if (e.target.classList.contains('item-card')) return;
-      closeModal();
-    }
-    function closeModal() {
-      modal.classList.remove('open');
-    }
-    // Inicializa
-    renderItems('equip');
-  </script>
 </body>
 </html>
