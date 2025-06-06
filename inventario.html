@@ -3,323 +3,733 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NoHeroes | Inventário (RPG Skeleton)</title>
-  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700&display=swap" rel="stylesheet">
+  <title>NoHeroes | Inventário (RPG UI Skeleton)</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
   <style>
+    /*— Variáveis de cor —*/
     :root {
-      --roxo: #a855f7;
-      --roxo-dark: #6d28d9;
-      --cinza-escuro: #17151c;
-      --cinza-medio: #232136;
-      --cinza-claro: #2a213c;
-      --painel-glass: rgba(36, 20, 52, 0.83);
-      --painel-destaque: rgba(104, 53, 160, 0.16);
-      --borda: #a855f7cc;
-      --txt: #f4f4f4;
+      --dark-bg: #181022;
+      --panel-bg: rgba(36, 20, 52, 0.83);
+      --panel-border: #a855f7bb;
+      --accent-purple: #a855f7;
+      --accent-purple-dark: #6d28d9;
+      --text-light: #f4f4f4;
+      --text-gray: #c4b5fd;
+      --slot-bg: rgba(50, 30, 60, 0.35);
+      --slot-border: #a855f799;
+      --bar-bg: #2a213c;
+      --bar-fill: #a855f7cc;
     }
-    body {
-      background: linear-gradient(120deg, #181022 60%, #2a213c 100%);
-      color: var(--txt);
-      font-family: 'Unbounded', sans-serif;
-      min-height: 100vh;
+
+    /*— Reset básico e body —*/
+    * {
       margin: 0;
-      overflow-x: hidden;
+      padding: 0;
       box-sizing: border-box;
     }
-    .inventory-root {
+
+    html,
+    body {
+      height: 100%;
+      background: linear-gradient(120deg, var(--dark-bg) 60%, #2a213c 100%);
+      color: var(--text-light);
+      font-family: "Unbounded", sans-serif;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    /*— Container raiz —*/
+    .ui-root {
       max-width: 1240px;
-      margin: 56px auto;
-      background: var(--painel-glass);
-      border-radius: 18px;
-      box-shadow: 0 0 48px #a855f72c, 0 1px 12px #000;
-      border: 2px solid var(--borda);
-      padding: 0;
+      margin: 24px auto;
+      border-radius: 16px;
+      background: var(--panel-bg);
+      border: 2px solid var(--panel-border);
+      box-shadow: 0 0 48px rgba(168, 85, 247, 0.3), 0 2px 12px #000;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
     }
-    /* Abas */
-    .inventory-tabs {
+
+    /*— Abas do topo —*/
+    .tabs-container {
       display: flex;
-      gap: 2.2rem;
-      border-bottom: 2px solid #a855f755;
-      padding: 1.1rem 2.5rem 0.7rem 2.5rem;
-      align-items: center;
       background: none;
-      font-size: 1.15rem;
+      border-bottom: 2px solid rgba(168, 85, 247, 0.33);
+      padding: 12px 20px;
+      gap: 24px;
+      font-size: 1.1rem;
       font-weight: 700;
     }
-    .inventory-tab {
-      color: var(--txt);
+
+    .tab {
       background: none;
       border: none;
-      padding: 0.7rem 1.5rem 0.8rem 1.5rem;
-      border-radius: 2rem 2rem 0 0;
+      color: var(--text-light);
+      padding: 8px 16px;
+      border-radius: 16px 16px 0 0;
       cursor: pointer;
-      transition: all 0.18s;
-      outline: none;
+      transition: background 0.2s, box-shadow 0.2s;
       position: relative;
-      letter-spacing: 0.03em;
-      font-size: 1.08em;
     }
-    .inventory-tab.active {
-      background: linear-gradient(90deg, var(--roxo-dark) 70%, var(--roxo) 100%);
+
+    .tab.active {
+      background: linear-gradient(
+        90deg,
+        var(--accent-purple-dark) 60%,
+        var(--accent-purple) 100%
+      );
+      box-shadow: 0 2px 24px rgba(168, 85, 247, 0.5);
       color: #fff;
-      box-shadow: 0 2px 18px #a855f733;
-      border-bottom: 0;
       z-index: 2;
     }
-    /* Grid principal */
-    .inventory-main {
+
+    /*— Conteúdo principal (Left - Center - Right) —*/
+    .content-container {
       display: flex;
-      flex-direction: row;
-      gap: 0;
       width: 100%;
-      min-height: 620px;
-      padding: 0;
+      min-height: 580px;
     }
-    /* Personagem grande */
-    .inventory-avatar-area {
-      flex: 0 0 340px;
-      background: var(--cinza-escuro);
-      border-right: 2px solid #a855f733;
+
+    /*  – Left Panel (“Overview” ou título geral)  */
+    .left-panel {
+      flex: 0 0 260px;
+      background: var(--panel-bg);
+      border-right: 2px solid rgba(168, 85, 247, 0.33);
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      padding: 2.5rem 0 0 0;
-      min-height: 600px;
-      position: relative;
+      padding: 28px 20px 20px 20px;
+      gap: 24px;
     }
-    .avatar-placeholder {
-      width: 170px;
-      height: 230px;
-      border-radius: 1.2rem;
-      background: linear-gradient(120deg, #181022 65%, #39155c 100%);
-      border: 2.5px dashed #a855f799;
-      margin-bottom: 1.2rem;
+
+    .left-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent-purple);
+      text-shadow: 0 0 8px rgba(168, 85, 247, 0.7);
+      margin-bottom: 12px;
+    }
+
+    .left-text {
+      font-size: 1rem;
+      line-height: 1.4;
+      color: var(--text-light);
+      opacity: 0.95;
+    }
+
+    /*  – Center Panel (Arte do personagem / placeholder)  */
+    .center-panel {
+      flex: 1 1 auto;
+      background: var(--dark-bg);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #a855f7;
-      font-size: 2.1rem;
-      font-weight: 700;
-      text-shadow: 0 0 24px #a855f7aa;
+      position: relative;
     }
-    .avatar-name {
-      font-size: 1.22rem;
+
+    .avatar-placeholder {
+      width: 380px;
+      height: 520px;
+      border-radius: 12px;
+      background: linear-gradient(120deg, #1e121f 65%, #3d214d 100%);
+      border: 3px dashed var(--slot-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-purple);
+      font-size: 2.2rem;
       font-weight: 700;
-      color: var(--roxo);
-      margin-bottom: 1.5rem;
-      letter-spacing: 0.03em;
-      text-shadow: 0 0 10px #a855f7bb;
+      text-shadow: 0 0 24px rgba(168, 85, 247, 0.6);
     }
-    /* Status */
-    .inventory-status-area {
-      flex: 1 1 auto;
-      padding: 2.7rem 2.7rem 2.7rem 2.2rem;
+
+    /*  – Right Panel (slots / inventário etc)  */
+    .right-panel {
+      flex: 0 0 320px;
+      background: var(--panel-bg);
+      border-left: 2px solid rgba(168, 85, 247, 0.33);
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-      min-width: 280px;
-      max-width: 380px;
+      padding: 24px 16px 16px 16px;
+      gap: 20px;
+      position: relative;
     }
-    .status-block {
-      margin-bottom: 2.5rem;
+
+    /*========== Conteúdo de cada aba ==========*/
+
+    /*— Overview: “Quick Info” com labels + barras —*/
+    .pane-overview {
+      display: none;
+      flex-direction: column;
+      gap: 24px;
     }
-    .status-title {
-      color: var(--roxo);
-      font-size: 1.09rem;
+
+    .pane-overview.active {
+      display: flex;
+    }
+
+    .quick-info-title {
+      font-size: 1.3rem;
       font-weight: 700;
-      margin-bottom: 0.85rem;
-      letter-spacing: 0.02em;
+      color: var(--accent-purple);
+      margin-bottom: 8px;
     }
-    .status-list {
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-gray);
+      margin-bottom: 6px;
+    }
+
+    .info-label {
+      color: var(--text-light);
+    }
+
+    .bar-container {
+      width: 100%;
+      height: 10px;
+      background: var(--bar-bg);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: var(--bar-fill);
+      border-radius: 6px 0 0 6px;
+      width: 0%; /* preencher via JS depois */
+      transition: width 0.4s;
+    }
+
+    /*— Inventário: categorias + grid de slots vazios —*/
+    .pane-inventory {
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .pane-inventory.active {
+      display: flex;
+    }
+
+    .inv-categories {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+
+    .inv-cat-tab {
+      flex: 0 0 auto;
+      background: var(--panel-bg);
+      border: 2px solid var(--accent-purple);
+      color: var(--text-light);
+      padding: 6px 12px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+      white-space: nowrap;
+    }
+
+    .inv-cat-tab.active {
+      background: var(--accent-purple);
+      box-shadow: 0 0 12px rgba(168, 85, 247, 0.6);
+      color: #fff;
+    }
+
+    .inv-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 0.35rem 1.7rem;
-      font-size: 1.01rem;
-      color: #e5e5ff;
+      gap: 12px;
+      padding-right: 4px;
+      max-height: 360px;
+      overflow-y: auto;
     }
-    .status-label {
-      font-weight: 600;
-      color: #c084fc;
+
+    .inv-slot {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: var(--slot-bg);
+      border: 2px dashed var(--slot-border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-purple);
+      font-size: 1.1rem;
+      opacity: 0.4;
+      cursor: default;
     }
-    /* Talento e skills */
-    .talent-block {
-      margin-bottom: 2.1rem;
+
+    /* Label grande (sem item) */
+    .inv-empty-label {
+      font-size: 0.95rem;
+      color: var(--text-gray);
+      text-align: center;
+      margin-top: 12px;
+      opacity: 0.8;
     }
-    .talent-title {
-      color: var(--roxo);
-      font-size: 1rem;
-      font-weight: 700;
-      margin-bottom: 0.7rem;
+
+    /*— Equipamento: slots semelhantes ao “primary/secondary/tools/skills” —*/
+    .pane-equipment {
+      display: none;
+      flex-direction: column;
+      gap: 22px;
     }
-    .talent-desc {
-      font-size: 1rem;
-      color: #fff;
-      opacity: 0.92;
+
+    .pane-equipment.active {
+      display: flex;
     }
-    /* Área dos slots */
-    .inventory-equip-area {
-      flex: 0 0 360px;
-      background: var(--painel-destaque);
-      border-left: 2px solid #a855f722;
+
+    .equip-section {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      justify-content: flex-start;
-      padding: 2.8rem 1.5rem 2.8rem 1.5rem;
-      min-width: 320px;
-      min-height: 600px;
-      position: relative;
-      gap: 2rem;
+      gap: 8px;
     }
-    .slot-section {
-      margin-bottom: 1.8rem;
-    }
-    .slot-title {
-      color: var(--roxo);
-      font-size: 1.07rem;
+
+    .equip-title {
+      font-size: 1.1rem;
       font-weight: 700;
-      margin-bottom: 0.7rem;
+      color: var(--accent-purple);
     }
-    .slots-list {
+
+    .equip-slots {
       display: flex;
-      gap: 1.1rem;
+      gap: 12px;
       flex-wrap: wrap;
     }
-    .slot-vazio {
-      width: 62px;
-      height: 62px;
-      border-radius: 0.75rem;
-      background: linear-gradient(120deg, #2b203e 65%, #4a1988 100%);
-      border: 2.2px dashed #a855f799;
+
+    .equip-slot {
+      width: 64px;
+      height: 64px;
+      background: var(--slot-bg);
+      border: 2px dashed var(--slot-border);
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.55rem;
-      color: #fff;
-      opacity: 0.36;
+      color: var(--accent-purple);
+      font-size: 1.2rem;
+      opacity: 0.5;
+      cursor: default;
     }
-    /* Skills */
-    .skills-list {
-      display: flex;
-      gap: 1.2rem;
+
+    /*— Tree (árvore de habilidades / mock) —*/
+    .pane-tree {
+      display: none;
+      flex: 1 1 auto;
+      color: var(--text-light);
+      font-size: 1rem;
+      text-align: center;
+      padding: 12px;
     }
-    .skill-vazio {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: linear-gradient(120deg, #19122a 60%, #3a2755 100%);
-      border: 2px dashed #a855f799;
-      opacity: 0.43;
+
+    .pane-tree.active {
+      display: block;
+    }
+
+    /*— Loja (lista de ícones / mock) —*/
+    .pane-store {
+      display: none;
+      flex: 1 1 auto;
+      color: var(--text-light);
+      font-size: 1rem;
+      text-align: center;
+      padding: 12px;
+    }
+
+    .pane-store.active {
+      display: block;
+    }
+
+    /*— Footer (Detail, Filter, Back, Equip) —*/
+    .footer-bar {
+      background: var(--panel-bg);
+      border-top: 2px solid rgba(168, 85, 247, 0.33);
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      font-size: 1.25rem;
-      color: #fff;
+      padding: 12px 20px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-gray);
     }
-    @media (max-width: 1150px) {
-      .inventory-main {
+
+    .footer-bar span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /*— Scrollbar customizada (simples) —*/
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(50, 30, 60, 0.3);
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--accent-purple);
+      border-radius: 3px;
+    }
+
+    /*— Responsividade até 1024px —*/
+    @media (max-width: 1024px) {
+      .left-panel {
+        flex: 0 0 240px;
+        padding: 20px 16px 16px 16px;
+      }
+      .center-panel {
+        flex: 1 1 auto;
+      }
+      .avatar-placeholder {
+        width: 300px;
+        height: 420px;
+      }
+      .right-panel {
+        flex: 0 0 280px;
+        padding: 20px 12px 12px 12px;
+      }
+    }
+
+    /*— Responsividade até 720px —*/
+    @media (max-width: 720px) {
+      .tabs-container {
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .content-container {
         flex-direction: column;
       }
-      .inventory-avatar-area, .inventory-equip-area {
+      .left-panel,
+      .right-panel {
         flex: 0 0 auto;
-        min-width: 0;
-        min-height: 220px;
         border: none;
-        border-bottom: 2px solid #a855f722;
-        border-right: none;
+        border-bottom: 2px solid rgba(168, 85, 247, 0.33);
       }
-      .inventory-equip-area { border: none; }
-      .inventory-status-area { padding: 2rem 1rem 2rem 1rem; }
-    }
-    @media (max-width: 750px) {
-      .inventory-root { max-width: 100vw; }
-      .inventory-main { flex-direction: column; }
-      .inventory-avatar-area,
-      .inventory-status-area,
-      .inventory-equip-area { min-width: 0; padding: 1rem 0.2rem 1rem 0.2rem; }
+      .left-panel {
+        padding: 16px 12px 12px 12px;
+      }
+      .right-panel {
+        padding: 16px 12px 12px 12px;
+      }
+      .avatar-placeholder {
+        width: 240px;
+        height: 340px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="inventory-root">
-    <!-- Abas -->
-    <div class="inventory-tabs">
-      <button class="inventory-tab active">Overview</button>
-      <button class="inventory-tab">Atributos</button>
-      <button class="inventory-tab">Equipamento</button>
-      <button class="inventory-tab">Inventário</button>
-      <button class="inventory-tab">Skills</button>
-      <button class="inventory-tab">Loja</button>
+  <div class="ui-root">
+    <!-- Abas do topo -->
+    <div class="tabs-container">
+      <button class="tab active" data-tab="overview">Overview</button>
+      <button class="tab" data-tab="inventory">Inventário</button>
+      <button class="tab" data-tab="equipment">Equipamento</button>
+      <button class="tab" data-tab="tree">Tree</button>
+      <button class="tab" data-tab="store">Loja</button>
     </div>
-    <!-- Área principal -->
-    <div class="inventory-main">
-      <!-- Avatar / Personagem -->
-      <div class="inventory-avatar-area">
+
+    <!-- Área principal (Left-Center-Right) -->
+    <div class="content-container">
+      <!-- LEFT PANEL (Overview text ou resumo estático) -->
+      <div class="left-panel">
+        <!-- Conteúdo de “Overview” (show/hide via JS) -->
+        <div class="pane-overview active">
+          <div class="left-title">Overview</div>
+          <div class="left-text">
+            Aqui vai um **resumo geral** do usuário.  
+            Exemplo:
+            <ul style="margin-top: 8px; list-style: disc inside; color: var(--text-light); opacity: 0.9;">
+              <li>Nome do herói: <strong>Ghoul Pionkim</strong></li>
+              <li>Descrição resumida: “O guerreiro envolto em armadura…”</li>
+            </ul>
+          </div>
+
+          <div class="quick-info-title">Atributos</div>
+          <!-- Exemplo de status com barras -->
+          <div>
+            <div class="info-row">
+              <span class="info-label">Dano</span>
+              <span>4560</span>
+            </div>
+            <div class="bar-container">
+              <div class="bar-fill" style="width: 72%;"></div>
+            </div>
+          </div>
+          <div>
+            <div class="info-row">
+              <span class="info-label">Defesa</span>
+              <span>651</span>
+            </div>
+            <div class="bar-container"><div class="bar-fill" style="width: 48%;"></div></div>
+          </div>
+          <div>
+            <div class="info-row">
+              <span class="info-label">Saúde</span>
+              <span>2246</span>
+            </div>
+            <div class="bar-container"><div class="bar-fill" style="width: 64%;"></div></div>
+          </div>
+          <div>
+            <div class="info-row">
+              <span class="info-label">Mana</span>
+              <span>2560</span>
+            </div>
+            <div class="bar-container"><div class="bar-fill" style="width: 80%;"></div></div>
+          </div>
+          <div>
+            <div class="info-row">
+              <span class="info-label">Crítico</span>
+              <span>24%</span>
+            </div>
+            <div class="bar-container"><div class="bar-fill" style="width: 24%;"></div></div>
+          </div>
+        </div>
+
+        <!-- Conteúdo de “Inventário” (oculto por padrão) -->
+        <div class="pane-inventory">
+          <div class="left-title">Inventário</div>
+          <div class="left-text">
+            Aqui você vê tudo o que já comprou.  
+            Clique em cada categoria para ver os slots.  
+          </div>
+        </div>
+
+        <!-- Conteúdo de “Equipamento” (oculto por padrão) -->
+        <div class="pane-equipment">
+          <div class="left-title">Equipamento</div>
+          <div class="left-text">
+            Seus slots de equipamento aparecem aqui.  
+          </div>
+        </div>
+
+        <!-- Conteúdo de “Tree” (oculto por padrão) -->
+        <div class="pane-tree">
+          <div class="left-title">Tree</div>
+          <div class="left-text">Árvore de habilidades (mock).</div>
+        </div>
+
+        <!-- Conteúdo de “Loja” (oculto por padrão) -->
+        <div class="pane-store">
+          <div class="left-title">Loja</div>
+          <div class="left-text">Área da loja (mock).</div>
+        </div>
+      </div>
+
+      <!-- CENTER PANEL (Avatar / Arte do Personagem) -->
+      <div class="center-panel">
         <div class="avatar-placeholder">Avatar</div>
-        <div class="avatar-name">Nome do Personagem</div>
       </div>
-      <!-- Status & Talentos -->
-      <div class="inventory-status-area">
-        <div class="status-block">
-          <div class="status-title">Status</div>
-          <div class="status-list">
-            <div><span class="status-label">Dano</span>: --</div>
-            <div><span class="status-label">Defesa</span>: --</div>
-            <div><span class="status-label">Saúde</span>: --</div>
-            <div><span class="status-label">Mana</span>: --</div>
-            <div><span class="status-label">Crítico</span>: --</div>
-            <div><span class="status-label">Velocidade</span>: --</div>
+
+      <!-- RIGHT PANEL (slots específicos de cada aba) -->
+      <div class="right-panel">
+        <!-- OVERVIEW do lado direito (não usado, mas deixei escondido) -->
+        <div class="pane-overview-right"></div>
+
+        <!-- INVENTÁRIO do lado direito -->
+        <div class="pane-inventory-right" style="display: none; flex-direction: column; gap:12px;">
+          <!-- CAT 1: Animes -->
+          <div>
+            <div
+              class="equip-title"
+              style="font-size: 1.05rem; margin-bottom:8px;"
+            >
+              Animes
+            </div>
+            <div class="inv-grid">
+              <div class="inv-slot"></div>
+              <div class="inv-slot"></div>
+              <div class="inv-slot"></div>
+              <div class="inv-slot"></div>
+            </div>
+            <div class="inv-empty-label">Sem Animes comprados.</div>
+          </div>
+
+          <!-- CAT 2: Mangás -->
+          <div>
+            <div
+              class="equip-title"
+              style="font-size: 1.05rem; margin-bottom:8px;"
+            >
+              Mangás
+            </div>
+            <div class="inv-grid">
+              <div class="inv-slot"></div>
+              <div class="inv-slot"></div>
+              <div class="inv-slot"></div>
+              <div class="inv-slot"></div>
+            </div>
+            <div class="inv-empty-label">Sem Mangás comprados.</div>
+          </div>
+
+          <!-- CAT 3: eBooks -->
+          <div>
+            <div
+              class="equip-title"
+              style="font-size: 1.05rem; margin-bottom:8px;"
+            >
+              eBooks
+            </div>
+            <div class="inv-grid">
+              <div class="inv-slot"></div>
+              <div class="inv-slot"></div>
+              <div class="inv-slot"></div>
+              <div class="inv-slot"></div>
+            </div>
+            <div class="inv-empty-label">Sem eBooks comprados.</div>
+          </div>
+
+          <!-- CAT 4: Mentorias -->
+          <div>
+            <div
+              class="equip-title"
+              style="font-size: 1.05rem; margin-bottom:8px;"
+            >
+              Mentorias
+            </div>
+            <div class="inv-grid">
+              <div class="inv-slot"></div>
+              <div class="inv-slot"></div>
+              <div class="inv-slot"></div>
+              <div class="inv-slot"></div>
+            </div>
+            <div class="inv-empty-label">Sem Mentorias compradas.</div>
+          </div>
+
+          <!-- CAT 5: Extras -->
+          <div>
+            <div
+              class="equip-title"
+              style="font-size: 1.05rem; margin-bottom:8px;"
+            >
+              Extras
+            </div>
+            <div class="inv-grid">
+              <div class="inv-slot"></div>
+              <div class="inv-slot"></div>
+              <div class="inv-slot"></div>
+              <div class="inv-slot"></div>
+            </div>
+            <div class="inv-empty-label">Sem Extras disponíveis.</div>
           </div>
         </div>
-        <div class="talent-block">
-          <div class="talent-title">Talento</div>
-          <div class="talent-desc">
-            Descrição do talento principal do personagem.<br>
-            • Bônus especiais ou passivas.<br>
-            • Informações do build.
+
+        <!-- EQUIPAMENTO do lado direito -->
+        <div class="pane-equipment-right" style="display: none; flex-direction: column; gap:16px;">
+          <div class="equip-section">
+            <div class="equip-title">Primary Slot</div>
+            <div class="equip-slots">
+              <div class="equip-slot"></div>
+            </div>
+          </div>
+          <div class="equip-section">
+            <div class="equip-title">Secondary Slot</div>
+            <div class="equip-slots">
+              <div class="equip-slot"></div>
+            </div>
+          </div>
+          <div class="equip-section">
+            <div class="equip-title">Tools</div>
+            <div class="equip-slots">
+              <div class="equip-slot"></div>
+              <div class="equip-slot"></div>
+              <div class="equip-slot"></div>
+            </div>
+          </div>
+          <div class="equip-section">
+            <div class="equip-title">Skill</div>
+            <div class="equip-slots">
+              <div class="equip-slot"></div>
+              <div class="equip-slot"></div>
+              <div class="equip-slot"></div>
+            </div>
           </div>
         </div>
-        <div class="skills-list">
-          <div class="skill-vazio"></div>
-          <div class="skill-vazio"></div>
-          <div class="skill-vazio"></div>
-          <div class="skill-vazio"></div>
+
+        <!-- TREE do lado direito -->
+        <div class="pane-tree-right" style="display: none; flex:1 1 auto;">
+          <div class="equip-title">Tree</div>
+          <div style="margin-top:12px; color: var(--text-light); opacity:0.9; font-size:1rem;">
+            Estrutura de árvore de habilidades (placeholder).
+          </div>
+        </div>
+
+        <!-- LOJA do lado direito -->
+        <div class="pane-store-right" style="display: none; flex:1 1 auto;">
+          <div class="equip-title">Loja</div>
+          <div style="margin-top:12px; color: var(--text-light); opacity:0.9; font-size:1rem;">
+            Conteúdo da loja (placeholder).
+          </div>
         </div>
       </div>
-      <!-- Equipamento / Slots -->
-      <div class="inventory-equip-area">
-        <div class="slot-section">
-          <div class="slot-title">Slot Primário</div>
-          <div class="slots-list">
-            <div class="slot-vazio"></div>
-          </div>
-        </div>
-        <div class="slot-section">
-          <div class="slot-title">Slot Secundário</div>
-          <div class="slots-list">
-            <div class="slot-vazio"></div>
-          </div>
-        </div>
-        <div class="slot-section">
-          <div class="slot-title">Ferramentas</div>
-          <div class="slots-list">
-            <div class="slot-vazio"></div>
-            <div class="slot-vazio"></div>
-            <div class="slot-vazio"></div>
-          </div>
-        </div>
-        <div class="slot-section">
-          <div class="slot-title">Skills Especiais</div>
-          <div class="slots-list">
-            <div class="slot-vazio"></div>
-            <div class="slot-vazio"></div>
-          </div>
-        </div>
-      </div>
+    </div>
+
+    <!-- Footer: Detail, Filter Options, Back, Equip -->
+    <div class="footer-bar">
+      <span>LB: Detail</span>
+      <span>⬇ Filter Options ⬆</span>
+      <span>B: Back</span>
+      <span>RT: Equip</span>
     </div>
   </div>
+
+  <script>
+    // ===== Seleção de abas (Top Tabs) =====
+    const tabs = document.querySelectorAll(".tab");
+    const leftPanes = {
+      overview: document.querySelector(".pane-overview"),
+      inventory: document.querySelector(".pane-inventory"),
+      equipment: document.querySelector(".pane-equipment"),
+      tree: document.querySelector(".pane-tree"),
+      store: document.querySelector(".pane-store"),
+    };
+    const rightPanes = {
+      overview: document.querySelector(".pane-overview-right"),
+      inventory: document.querySelector(".pane-inventory-right"),
+      equipment: document.querySelector(".pane-equipment-right"),
+      tree: document.querySelector(".pane-tree-right"),
+      store: document.querySelector(".pane-store-right"),
+    };
+    const centerAvatar = document.querySelector(".avatar-placeholder");
+
+    tabs.forEach((t) => {
+      t.addEventListener("click", () => {
+        // 1) Desmarcar todas as abas
+        tabs.forEach((x) => x.classList.remove("active"));
+        // 2) Marcar aba clicada
+        t.classList.add("active");
+
+        // 3) Hide Left Panes
+        Object.values(leftPanes).forEach((pane) => (pane.style.display = "none"));
+        // 4) Show Left Pane correspondente
+        leftPanes[t.dataset.tab].style.display = "flex"; // ou block, dependendo do estilo
+
+        // 5) Hide Right Panes
+        Object.values(rightPanes).forEach((pane) => (pane.style.display = "none"));
+        // 6) Show Right Pane correspondente
+        rightPanes[t.dataset.tab].style.display = "flex"; // ou block
+
+        // 7) (Opcional) Você pode trocar a “imagem do avatar” aqui, se quiser
+        // Exemplo: centerAvatar.style.backgroundImage = 'url("avatar_'+t.dataset.tab+'.png")';
+      });
+    });
+
+    // Inicializa: mostra “Overview” por padrão
+    document.querySelector(".tab.active").click();
+  </script>
 </body>
 </html>
