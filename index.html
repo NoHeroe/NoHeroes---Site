@@ -239,17 +239,7 @@ Como funciona o sistema
   document.getElementById('mirror-btn').addEventListener('click', () => {  
     window.location.href = 'login.html'; // ou personagem.html  
   });  
-  const openDrawer = document.getElementById('open-drawer');  
-  const closeDrawer = document.getElementById('close-drawer');  
-  const drawer = document.getElementById('drawer-menu');  
-  
-  openDrawer.addEventListener('click', () => {  
-    drawer.classList.remove('translate-x-full');  
-  });  
-  
-  closeDrawer.addEventListener('click', () => {  
-    drawer.classList.add('translate-x-full');  
-  });  
+
   const hamburgerBtn = document.getElementById('hamburgerBtn');
   const drawer = document.getElementById('drawer');
   const overlay = document.getElementById('drawerOverlay');
@@ -262,9 +252,9 @@ Como funciona o sistema
     overlay.style.display = isDrawerOpen ? 'block' : 'none';
     hamburgerBtn.textContent = isDrawerOpen ? '✕' : '☰';
   }
-
-  hamburgerBtn.addEventListener('click', toggleDrawer);
+ hamburgerBtn.addEventListener('click', toggleDrawer);
   overlay.addEventListener('click', toggleDrawer);
+
 </script>
   </body>  
 </html>  
