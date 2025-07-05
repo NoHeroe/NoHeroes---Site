@@ -42,7 +42,7 @@
 </header>
 
 <!-- Drawer -->
-<div id="drawer" class="fixed top-0 right-0 w-72 h-full bg-black text-white translate-x-full transform transition-transform duration-300 z-40">
+<div id="drawer" class="fixed top-0 right-0 w-72 h-full bg-black text-white transform transition-transform duration-300 z-40" style="transform: translateX(100%)">
   <!-- Conteúdo do drawer -->
   <div class="p-6 flex flex-col gap-4">
     <h1 class="text-2xl font-bold text-yellow-500">NOHEROES</h1>
@@ -241,19 +241,23 @@ Como funciona o sistema
   });  
 
   const hamburgerBtn = document.getElementById('hamburgerBtn');
-  const drawer = document.getElementById('drawer');
-  const overlay = document.getElementById('drawerOverlay');
+const drawer = document.getElementById('drawer');
+const overlay = document.getElementById('drawerOverlay');
 
-  let isDrawerOpen = false;
+let isDrawerOpen = false;
 
-  function toggleDrawer() {
-    isDrawerOpen = !isDrawerOpen;
-    drawer.style.transform = isDrawerOpen ? 'translateX(0)' : 'translateX(-100%)';
-    overlay.style.display = isDrawerOpen ? 'block' : 'none';
-    hamburgerBtn.textContent = isDrawerOpen ? '✕' : '☰';
-  }
- hamburgerBtn.addEventListener('click', toggleDrawer);
-  overlay.addEventListener('click', toggleDrawer);
+function toggleDrawer() {
+  isDrawerOpen = !isDrawerOpen;
+
+  // Transições certas: abre e fecha para a direita
+  drawer.style.transform = isDrawerOpen ? 'translateX(0)' : 'translateX(100%)';
+
+  overlay.style.display = isDrawerOpen ? 'block' : 'none';
+  hamburgerBtn.textContent = isDrawerOpen ? '✕' : '☰';
+}
+
+hamburgerBtn.addEventListener('click', toggleDrawer);
+overlay.addEventListener('click', toggleDrawer);
 
 </script>
   </body>  
