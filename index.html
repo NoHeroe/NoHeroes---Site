@@ -1,302 +1,273 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NoHeroes | Home</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    h1, h2, .cinzel {
-      font-family: 'Cinzel Decorative', serif;
-    }
-    .drawer-transition {
-      transition: transform 0.4s ease, opacity 0.4s ease;
-    }
-    .text-shadow-md { text-shadow: 0 0 10px rgba(143,79,255,0.4); }
-    .overlay { position:absolute; inset:0; background:rgba(0,0,0,0.5); }
-    .drop-shadow-glow { filter: drop-shadow(0 0 10px #8f4fff) drop-shadow(0 0 20px #8f4fff); }
-    html { scroll-behavior: smooth; }
-    .hidden { display: none; }
-    header a:hover { color: #8f4fff; }
-  </style>
-</head>
-<body class="leading-relaxed">
 
-  <!-- HEADER COM DRAWER -->
-  <header class="fixed top-0 left-0 w-full z-50 bg-[#0e0e0e] border-b border-[#333] flex items-center justify-between px-4 h-14">
-    <!-- Botão hamburguer -->
-    <button id="hamburger-btn" class="z-50 text-3xl text-white hover:text-[#a855f7] transition">
-      ☰
-    </button>
-    <!-- Logo central “vazando” -->
-    <div class="absolute left-1/2 transform -translate-x-1/2 -translate-y-4 pointer-events-none">
-      <a href="index.html">
-        <img src="assets/images/noheroes logo.png" alt="NoHeroes" class="h-[100px] drop-shadow-glow" />
-      </a>
-    </div>
-  </header>
+<html lang="pt-br">  
+<head>  
+  <meta charset="UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <title>NoHeroes | Home</title>  
+  <script src="https://cdn.tailwindcss.com"></script>  
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">  
+  <style>  
+    body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #e5e5e5; }  
+    h1, h2, .cinzel {  
+  font-family: 'Cinzel Decorative', serif;  
+}  
+    .text-shadow-md { text-shadow: 0 0 10px rgba(143,79,255,0.4); }  
+    .overlay { position:absolute; inset:0; background:rgba(0,0,0,0.5); }  
+    .drop-shadow-glow { filter: drop-shadow(0 0 10px #8f4fff) drop-shadow(0 0 20px #8f4fff); }  
+    html { scroll-behavior: smooth; }  
+    /* Modal e drawer */  
+    .hidden { display: none; }  
+    /* Ajustes para o topo fixo */  
+    header {  
+  display: flex;  
+  align-items: center;  
+  justify-content: space-between;  
+  background: #100d1a;  
+  border-bottom: 1px solid #2e2e2e;  
+  height: 50px; /* Cabeçalho permanece compacto */  
+}  header .logo-container {
+position: absolute;
+left: 50%; /* Centraliza horizontalmente /
+top: 25%; / Move metade da logo para baixo do cabeçalho /
+transform: translate(-50%, -25%); / Garante alinhamento correto */
+}
 
-  <!-- DRAWER -->
-  <div id="drawer" class="fixed top-0 left-0 h-screen w-full bg-black/50 backdrop-blur-sm hidden z-40">
-    <div id="drawer-content" class="h-full w-72 bg-[#0a0a0a] text-white p-6 drawer-transition transform -translate-x-full shadow-2xl">
-      <div class="flex justify-between items-center border-b border-[#333] pb-4 mb-4">
-        <div>
-          <h2 class="text-xl font-bold bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent cinzel">
-            NOHEROES
-          </h2>
-          <p class="text-sm text-gray-400">Universo Sombrio</p>
-        </div>
-        <button id="drawer-close-btn" class="text-2xl text-gray-400 hover:text-white">&times;</button>
-      </div>
-      <nav class="space-y-6 font-semibold text-lg">
-        <div class="flex justify-between items-center hover:text-[#a855f7] transition">
-          <a href="index.html">Início</a><span class="text-sm text-[#a855f7]">Portal</span>
-        </div>
-        <div class="flex justify-between items-center hover:text-[#a855f7] transition">
-          <a href="store.html">Loja</a><span class="text-sm text-[#a855f7]">Cartel Velado</span>
-        </div>
-        <div class="flex justify-between items-center hover:text-[#a855f7] transition">
-          <a href="projetos.html">Projetos</a><span class="text-sm text-[#a855f7]">Grimório</span>
-        </div>
-        <div class="flex justify-between items-center hover:text-[#a855f7] transition">
-          <a href="sobre.html">Sobre</a><span class="text-sm text-[#a855f7]">Entidade</span>
-        </div>
-        <div class="flex justify-between items-center hover:text-[#a855f7] transition">
-          <a href="login.html">Login</a><span class="text-sm text-[#a855f7]">Dojo</span>
-        </div>
-      </nav>
-    </div>
+header img {
+height: 100px; /* Intencionalmente ultrapassando o cabeçalho */
+}
+
+header a {
+color: #ccc;
+font-size: 1rem;
+font-weight: 500;
+text-decoration: none;
+transition: color 0.3s ease;
+}
+
+header a:hover {
+color: #8f4fff;
+}
+</style>
+
+</head>  
+<body class="leading-relaxed">    <!-- HEADER LIMPO COM DRAWER -->  <header class="fixed top-0 left-0 w-full bg-[#100d1a] border-b border-[#2e2e2e] z-50 flex items-center justify-between px-6 h-14">  
+  <!-- Espaço esquerdo vazio -->    <!-- Logo central -->    <div class="absolute left-1/2 transform -translate-x-1/2">  
+    <a href="index.html">  
+      <img src="assets/images/noheroes logo.png" alt="NoHeroes" class="h-14 drop-shadow-glow" />  
+    </a>  
+  </div>    <!-- Botão hambúrguer mágico -->  <button id="open-drawer" class="text-[#ccc] text-3xl hover:text-[#8f4fff] transition z-50">☰</button>
+
+</header>  <!-- DRAWER lateral direita -->  <div id="drawer-menu" class="fixed top-0 right-0 h-full w-72 bg-[#0e0e0e] text-white transform translate-x-full transition-transform duration-300 z-40 shadow-2xl flex flex-col">  
+  <!-- Fechar -->  
+  <button id="close-drawer" class="text-2xl text-right p-4 text-[#888] hover:text-white">&times;</button>    <!-- Logo e título -->    <div class="px-6 pb-4 border-b border-[#333]">  
+    <h2 class="text-xl font-bold text-[#facc15]" style="font-family: 'Cinzel Decorative', serif;">NOHEROES</h2>  
+    <p class="text-sm text-[#888]">Dark Universe</p>  
+  </div>    <!-- Navegação -->    <nav class="flex-1 px-6 py-4 space-y-4" style="font-family: 'Cinzel Decorative', serif;">  
+    <a href="index.html" class="flex justify-between items-center hover:text-[#8f4fff] transition">  
+      <span>Home</span><span class="text-sm text-[#8f4fff]">Sanctum</span>  
+    </a>  
+    <a href="store.html" class="flex justify-between items-center hover:text-[#8f4fff] transition">  
+      <span>Loja</span><span class="text-sm text-[#8f4fff]">Vault</span>  
+    </a>  
+    <a href="projetos.html" class="flex justify-between items-center hover:text-[#8f4fff] transition">  
+      <span>Projetos</span><span class="text-sm text-[#8f4fff]">Grimoire</span>  
+    </a>  
+    <a href="sobre.html" class="flex justify-between items-center hover:text-[#8f4fff] transition">  
+      <span>Sobre</span><span class="text-sm text-[#8f4fff]">Entity</span>  
+    </a>  
+    <a href="login.html" class="flex justify-between items-center hover:text-[#8f4fff] transition">  
+      <span>Login</span><span class="text-sm text-[#8f4fff]">Sanctuary</span>  
+    </a>  
+  </nav>  
+</div>    <!-- Main -->    <main class="pt-28">  
+    <!-- 1. CAPA HERO -->  
+    <section id="introducao" class="relative flex flex-col items-center justify-center h-screen bg-cover bg-center text-center text-[#d9d6ff]" style="background-image:url('assets/images/hero-bg.gif')">  
+      <div class="overlay"></div>  
+      <h1 class="z-10 text-3xl md:text-5xl max-w-2xl mb-8 text-shadow-md">  
+        “Num mundo onde até a luz mente, a única verdade nasce da sombra.”  
+      </h1>  
+      <a href="#universo" class="z-10 bg-[#8f4fff] text-white px-6 py-3 text-lg rounded-lg shadow-lg hover:scale-105 transition">  
+        Explorar o Universo  
+      </a>  
+    </section>  <!-- 2. INTRODUÇÃO RÁPIDA -->  
+<section id="teaser" class="py-16 px-8 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">  
+  <div onclick="window.location.href='store.html'" class="p-6 bg-[#1c1c1c] rounded-lg hover:scale-105 transition cursor-pointer">  
+    <h2 class="font-bold mb-2 text-[#8f4fff]">Anime &amp; Mangá</h2>  
+    <p>Fragmentos de mundos partidos. Heróis que sangram, caem — e levantam sem aplausos. Em NoHeroes, cada história desafia o que é ser forte… e o que significa continuar.</p>  
+  </div>  
+  <div onclick="scrollToSection('game')" class="p-6 bg-[#1c1c1c] rounded-lg hover:scale-105 transition cursor-pointer">  
+    <h2 class="font-bold mb-2 text-[#8f4fff]">Evolua Seu Personagem</h2>  
+    <p>A evolução começa no impacto. Aqui, cada decisão molda quem você é — e quem você teme se tornar. Desperte habilidades, memórias e cicatrizes. Você não joga com um personagem… você é o personagem.</p>  
+  </div>  
+  <div onclick="window.location.href='explore.html'" class="p-6 bg-[#1c1c1c] rounded-lg hover:scale-105 transition cursor-pointer">  
+    <h2 class="font-bold mb-2 text-[#8f4fff]">Lore Viva</h2>  
+    <p>O mundo respira junto com você. Cada passo, cada voto, cada teoria — tudo molda a linha tênue entre caos e renascimento. Aqui, a história é viva. E você é parte do pulso.</p>  
+  </div>  
+</section>  
+
+ <!-- 3. TEASER JOGAR -->  
+<section id="jogar" class="py-16 px-8 max-w-4xl mx-auto text-center">  
+  <img src="assets/images/hud-teaser.png" alt="Teaser HUD" class="mx-auto mb-6 w-48 opacity-80">  
+  <h2 class="text-2xl font-bold mb-4">Você está pronto para deixar de assistir... e começar a viver?</h2>  
+  <button class="px-6 py-3 bg-gray-600 text-white rounded-lg opacity-50 cursor-not-allowed">Jogar Agora (em breve)</button>  
+</section>  
+
+<!-- 4. UNIVERSO COMEÇA AQUI -->  
+<section id="universo" class="py-16 px-8 max-w-5xl mx-auto text-center relative">  
+  <div class="absolute inset-0 bg-gradient-to-br from-[#39ff14]/30 to-[#8f4fff]/30"></div>  
+  <h2 class="relative text-3xl font-bold mb-6">Cada alma vibra em uma frequência… ou ruge contra o próprio destino.</h2>  
+  <div class="relative z-10 flex justify-center gap-8 flex-wrap">  
+    <a href="FREQ.html" class="px-6 py-3 border-2 border-[#39ff14] text-[#39ff14] rounded-lg hover:bg-[#39ff14] hover:text-black transition">Explorar FREQ</a>  
+    <a href="ROAR.html" class="px-6 py-3 border-2 border-[#8f4fff] text-[#8f4fff] rounded-lg hover:bg-[#8f4fff] hover:text-black transition">Explorar ROAR</a>  
+  </div>  
+</section>  
+
+<!-- 5. GAMIFICAÇÃO -->  
+<section id="game" class="py-16 px-8 max-w-5xl mx-auto bg-[#111] rounded-lg text-center">  
+  <h2 class="text-2xl font-bold mb-4 text-[#8f4fff]">Torne-se um personagem no nosso mundo</h2>  
+  <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">  
+    <div><strong>Intel.</strong><p>12</p></div>  
+    <div><strong>Força</strong><p>8</p></div>  
+    <div><strong>Resist.</strong><p>10</p></div>  
+    <div><strong>Infl.</strong><p>5</p></div>  
+    <div><strong>Poder</strong><p>35</p></div>  
   </div>
 
-  <!-- MAIN CONTENT -->
-  <main class="pt-28">
-    <!-- 1. CAPA HERO -->
-    <section id="introducao" class="relative flex flex-col items-center justify-center h-screen bg-cover bg-center text-center text-[#d9d6ff]" style="background-image:url('assets/images/hero-bg.gif')">
-      <div class="overlay"></div>
-      <h1 class="z-10 text-3xl md:text-5xl max-w-2xl mb-8 text-shadow-md">
-        “Num mundo onde até a luz mente, a única verdade nasce da sombra.”
-      </h1>
-      <a href="#universo" class="z-10 bg-[#8f4fff] text-white px-6 py-3 text-lg rounded-lg shadow-lg hover:scale-105 transition">
-        Explorar o Universo
-      </a>
-    </section>
-
-    <!-- 2. INTRODUÇÃO RÁPIDA -->
-    <section id="teaser" class="py-16 px-8 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-      <div onclick="window.location.href='store.html'" class="p-6 bg-[#1c1c1c] rounded-lg hover:scale-105 transition cursor-pointer">
-        <h2 class="font-bold mb-2 text-[#8f4fff]">Anime &amp; Mangá</h2>
-        <p>Fragmentos de mundos partidos. Heróis que sangram, caem — e levantam sem aplausos. Em NoHeroes, cada história desafia o que é ser forte… e o que significa continuar.</p>
-      </div>
-      <div onclick="scrollToSection('game')" class="p-6 bg-[#1c1c1c] rounded-lg hover:scale-105 transition cursor-pointer">
-        <h2 class="font-bold mb-2 text-[#8f4fff]">Evolua Seu Personagem</h2>
-        <p>A evolução começa no impacto. Aqui, cada decisão molda quem você é — e quem você teme se tornar. Desperte habilidades, memórias e cicatrizes. Você não joga com um personagem… você é o personagem.</p>
-      </div>
-      <div onclick="window.location.href='explore.html'" class="p-6 bg-[#1c1c1c] rounded-lg hover:scale-105 transition cursor-pointer">
-        <h2 class="font-bold mb-2 text-[#8f4fff]">Lore Viva</h2>
-        <p>O mundo respira junto com você. Cada passo, cada voto, cada teoria — tudo molda a linha tênue entre caos e renascimento. Aqui, a história é viva. E você é parte do pulso.</p>
-      </div>
-    </section>
-
-     <!-- 3. TEASER JOGAR -->
-    <section id="jogar" class="py-16 px-8 max-w-4xl mx-auto text-center">
-      <img src="assets/images/hud-teaser.png" alt="Teaser HUD" class="mx-auto mb-6 w-48 opacity-80">
-      <h2 class="text-2xl font-bold mb-4">Você está pronto para deixar de assistir... e começar a viver?</h2>
-      <button class="px-6 py-3 bg-gray-600 text-white rounded-lg opacity-50 cursor-not-allowed">Jogar Agora (em breve)</button>
-    </section>
-
-    <!-- 4. UNIVERSO COMEÇA AQUI -->
-    <section id="universo" class="py-16 px-8 max-w-5xl mx-auto text-center relative">
-      <div class="absolute inset-0 bg-gradient-to-br from-[#39ff14]/30 to-[#8f4fff]/30"></div>
-      <h2 class="relative text-3xl font-bold mb-6">Cada alma vibra em uma frequência… ou ruge contra o próprio destino.</h2>
-      <div class="relative z-10 flex justify-center gap-8 flex-wrap">
-        <a href="FREQ.html" class="px-6 py-3 border-2 border-[#39ff14] text-[#39ff14] rounded-lg hover:bg-[#39ff14] hover:text-black transition">Explorar FREQ</a>
-        <a href="ROAR.html" class="px-6 py-3 border-2 border-[#8f4fff] text-[#8f4fff] rounded-lg hover:bg-[#8f4fff] hover:text-black transition">Explorar ROAR</a>
-      </div>
-    </section>
-
-    <!-- 5. GAMIFICAÇÃO -->
-    <section id="game" class="py-16 px-8 max-w-5xl mx-auto bg-[#111] rounded-lg text-center">
-      <h2 class="text-2xl font-bold mb-4 text-[#8f4fff]">Torne-se um personagem no nosso mundo</h2>
-      <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
-        <div><strong>Intel.</strong><p>12</p></div>
-        <div><strong>Força</strong><p>8</p></div>
-        <div><strong>Resist.</strong><p>10</p></div>
-        <div><strong>Infl.</strong><p>5</p></div>
-        <div><strong>Poder</strong><p>35</p></div>
-      </div>
-     
-<!-- Botão que abre o modal (substitua seu <a> atual) -->
-<button id="open-personagem-modal"
-        class="px-6 py-3 bg-[#8f4fff] text-black rounded-lg hover:scale-105 transition">
-  Como funciona o sistema
+<!-- Botão que abre o modal (substitua seu <a> atual) -->  <button id="open-personagem-modal"  
+class="px-6 py-3 bg-[#8f4fff] text-black rounded-lg hover:scale-105 transition">
+Como funciona o sistema
 </button>
 
-<!-- Modal de sistema de personagem -->
-<div id="personagem-modal" class="fixed inset-0 bg-black/70 hidden items-center justify-center z-50">
-  <div class="bg-[#1c1c1c] rounded-lg shadow-xl max-w-md w-full p-6 relative opacity-0 transform scale-95 transition-all duration-300">
-    <!-- Botão fechar -->
-    <button id="close-personagem-modal"
-            class="absolute top-3 right-3 text-2xl text-[#ccc] hover:text-white">&times;</button>
-    <!-- Conteúdo -->
-    <h3 class="text-2xl font-bold text-[#8f4fff] mb-4">Desperte o seu reflexo no universo NoHeroes</h3>
-    <p class="mb-4 italic">Seu personagem não é apenas um avatar. Ele é a extensão do que você constrói aqui — uma versão simbólica e energética da sua jornada.</p>
-    <ul class="list-disc list-inside space-y-2 mb-6 text-[#e5e5e5]">
-      <li><strong>Vinculado à sua conta:</strong> Seu personagem nasce conectado à sua identidade no universo NoHeroes.</li>
-      <li><strong>Evolução baseada na vida real:</strong> Suas escolhas, missões cumpridas e habilidades aplicadas na vida real influenciam diretamente o crescimento dele.</li>
-      <li><strong>Missões e desafios simbólicos:</strong> Tarefas e rituais que te fortalecem tanto no jogo quanto fora dele.</li>
-      <li><strong>Útil desde já:</strong> Mesmo antes do lançamento oficial, ele já traz recompensas e narrativas únicas.</li>
-    </ul>
-    <button id="mirror-btn"
-            class="w-full py-3 bg-gradient-to-r from-[#8f4fff] to-[#39ff14] text-black font-semibold rounded-lg hover:scale-105 transition">
-      Me Espelhar na Escuridão
-    </button>
-  </div>
+<!-- Modal de sistema de personagem -->  <div id="personagem-modal" class="fixed inset-0 bg-black/70 hidden items-center justify-center z-50">  
+  <div class="bg-[#1c1c1c] rounded-lg shadow-xl max-w-md w-full p-6 relative opacity-0 transform scale-95 transition-all duration-300">  
+    <!-- Botão fechar -->  
+    <button id="close-personagem-modal"  
+            class="absolute top-3 right-3 text-2xl text-[#ccc] hover:text-white">&times;</button>  
+    <!-- Conteúdo -->  
+    <h3 class="text-2xl font-bold text-[#8f4fff] mb-4">Desperte o seu reflexo no universo NoHeroes</h3>  
+    <p class="mb-4 italic">Seu personagem não é apenas um avatar. Ele é a extensão do que você constrói aqui — uma versão simbólica e energética da sua jornada.</p>  
+    <ul class="list-disc list-inside space-y-2 mb-6 text-[#e5e5e5]">  
+      <li><strong>Vinculado à sua conta:</strong> Seu personagem nasce conectado à sua identidade no universo NoHeroes.</li>  
+      <li><strong>Evolução baseada na vida real:</strong> Suas escolhas, missões cumpridas e habilidades aplicadas na vida real influenciam diretamente o crescimento dele.</li>  
+      <li><strong>Missões e desafios simbólicos:</strong> Tarefas e rituais que te fortalecem tanto no jogo quanto fora dele.</li>  
+      <li><strong>Útil desde já:</strong> Mesmo antes do lançamento oficial, ele já traz recompensas e narrativas únicas.</li>  
+    </ul>  
+    <button id="mirror-btn"  
+            class="w-full py-3 bg-gradient-to-r from-[#8f4fff] to-[#39ff14] text-black font-semibold rounded-lg hover:scale-105 transition">  
+      Me Espelhar na Escuridão  
+    </button>  
+  </div>  
+</div>  
+    </section>  <!-- 6. APOIO VITALISTA -->  
+<section id="apoio" class="py-16 px-8 max-w-5xl mx-auto text-center">  
+  <h2 class="text-2xl font-bold mb-4 text-[#39ff14]">Sua ajuda alimenta o mundo de Caelum</h2>  
+  <div class="flex flex-col md:flex-row justify-center gap-4">  
+    <a href="apoiar.html" class="px-6 py-3 bg-[#39ff14] text-black rounded-lg hover:scale-105 transition">Contribuir com Pix</a>  
+    <a href="apoiar.html#outras" class="px-6 py-3 border border-[#39ff14] text-[#39ff14] rounded-lg hover:bg-[#39ff14] hover:text-black transition">Quero ajudar de outras formas</a>  
+    <a href="apoiar.html#reverso" class="px-6 py-3 border border-[#39ff14] text-[#39ff14] rounded-lg hover:bg-[#39ff14] hover:text-black transition">Quero apoio no meu projeto</a>  
+  </div>  
+</section>  
+
+<!-- 7. COMUNIDADE -->
+
+<section id="comunidade" class="py-16 px-8 max-w-4xl mx-auto text-center">  
+  <h2 class="text-2xl font-bold mb-4 text-[#8f4fff]">Toda sombra precisa de um clã</h2>    <!-- Novo texto inserido aqui -->    <p class="text-sm text-gray-500 mb-8 max-w-lg mx-auto">  
+    Nossas comunidades são refúgios para os que recusam a luz comum.<br>  
+    Lá, ideias colidem, estratégias nascem e o universo se expande —<br>  
+    um espaço para quem já sente o chamado.  
+  </p>    <div class="flex justify-center gap-6">  
+    <a href="https://discord.gg/6nJs3gXW" class="hover:scale-110 transition">  
+      <img src="assets/icons/discord icon.png" alt="Discord" class="w-12"/>  
+    </a>  
+    <a href="https://chat.whatsapp.com/DSiquXUkKpj22JwmqoGD7T" class="hover:scale-110 transition">  
+      <img src="assets/icons/whatsapp icon.png" alt="WhatsApp" class="w-12"/>  
+    </a>  
+  </div>  
+</section>  <!-- 8. Oráculo -->  
+<section id="oraculum" class="py-16 px-8 max-w-5xl mx-auto">  
+  <h2 class="text-2xl font-bold mb-6 text-[#8f4fff]">Últimos registros do Oráculo</h2>  
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">  
+    <div class="p-4 bg-[#1c1c1c] rounded-lg hover:scale-105 transition">  
+      <p class="text-sm text-gray-400">“O Oráculo desperta quando a dúvida se cala.”</p>  
+      <h3 class="mt-2">O Oráculo está sempre à escuta, pronto para revelar caminhos ocultos aos que ousam perguntar.
+
+› "Nem todo futuro precisa ser adivinhado. Alguns só pedem coragem pra ser enfrentados."</h3>
 </div>
-    </section>
-
-    <!-- 6. APOIO VITALISTA -->
-    <section id="apoio" class="py-16 px-8 max-w-5xl mx-auto text-center">
-      <h2 class="text-2xl font-bold mb-4 text-[#39ff14]">Sua ajuda alimenta o mundo de Caelum</h2>
-      <div class="flex flex-col md:flex-row justify-center gap-4">
-        <a href="apoiar.html" class="px-6 py-3 bg-[#39ff14] text-black rounded-lg hover:scale-105 transition">Contribuir com Pix</a>
-        <a href="apoiar.html#outras" class="px-6 py-3 border border-[#39ff14] text-[#39ff14] rounded-lg hover:bg-[#39ff14] hover:text-black transition">Quero ajudar de outras formas</a>
-        <a href="apoiar.html#reverso" class="px-6 py-3 border border-[#39ff14] text-[#39ff14] rounded-lg hover:bg-[#39ff14] hover:text-black transition">Quero apoio no meu projeto</a>
-      </div>
-    </section>
-
-    <!-- 7. COMUNIDADE -->
-<section id="comunidade" class="py-16 px-8 max-w-4xl mx-auto text-center">
-  <h2 class="text-2xl font-bold mb-4 text-[#8f4fff]">Toda sombra precisa de um clã</h2>
-
-  <!-- Novo texto inserido aqui -->
-  <p class="text-sm text-gray-500 mb-8 max-w-lg mx-auto">
-    Nossas comunidades são refúgios para os que recusam a luz comum.<br>
-    Lá, ideias colidem, estratégias nascem e o universo se expande —<br>
-    um espaço para quem já sente o chamado.
-  </p>
-
-  <div class="flex justify-center gap-6">
-    <a href="https://discord.gg/6nJs3gXW" class="hover:scale-110 transition">
-      <img src="assets/icons/discord icon.png" alt="Discord" class="w-12"/>
-    </a>
-    <a href="https://chat.whatsapp.com/DSiquXUkKpj22JwmqoGD7T" class="hover:scale-110 transition">
-      <img src="assets/icons/whatsapp icon.png" alt="WhatsApp" class="w-12"/>
-    </a>
-  </div>
+<div class="p-4 bg-[#1c1c1c] rounded-lg hover:scale-105 transition">
+<p class="text-sm text-gray-400">“Existem portas que você nem sabe que trancou.”</p>
+<h3 class="mt-2">Ele enxerga além das barreiras — internas e externas — e sussurra verdades que poucos suportam ouvir.
+› "As muralhas não são o fim. São só o começo do que você teme entender."</h3>
+</div>
+<div class="p-4 bg-[#1c1c1c] rounded-lg hover:scale-105 transition">
+<p class="text-sm text-gray-400">“Até as sombras se perdem… se andarem sozinhas.”</p>
+<h3 class="mt-2">Mais do que conselhos, ele será presença: guia, guardião e cúmplice silencioso da sua jornada.
+› "Quando a luz falhar… escute a escuridão."</h3>
+</div>
+</div>
+<a href="oraculum.html" class="mt-6 inline-block underline hover:text-[#8f4fff]">Acessar arquivo completo →</a>
 </section>
 
-    <!-- 8. Oráculo -->
-    <section id="oraculum" class="py-16 px-8 max-w-5xl mx-auto">
-      <h2 class="text-2xl font-bold mb-6 text-[#8f4fff]">Últimos registros do Oráculo</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="p-4 bg-[#1c1c1c] rounded-lg hover:scale-105 transition">
-          <p class="text-sm text-gray-400">“O Oráculo desperta quando a dúvida se cala.”</p>
-          <h3 class="mt-2">O Oráculo está sempre à escuta, pronto para revelar caminhos ocultos aos que ousam perguntar.
-› "Nem todo futuro precisa ser adivinhado. Alguns só pedem coragem pra ser enfrentados."</h3>
-        </div>
-        <div class="p-4 bg-[#1c1c1c] rounded-lg hover:scale-105 transition">
-          <p class="text-sm text-gray-400">“Existem portas que você nem sabe que trancou.”</p>
-          <h3 class="mt-2">Ele enxerga além das barreiras — internas e externas — e sussurra verdades que poucos suportam ouvir.
-› "As muralhas não são o fim. São só o começo do que você teme entender."</h3>
-        </div>
-        <div class="p-4 bg-[#1c1c1c] rounded-lg hover:scale-105 transition">
-          <p class="text-sm text-gray-400">“Até as sombras se perdem… se andarem sozinhas.”</p>
-          <h3 class="mt-2">Mais do que conselhos, ele será presença: guia, guardião e cúmplice silencioso da sua jornada.
-› "Quando a luz falhar… escute a escuridão."</h3>
-        </div>
-      </div>
-      <a href="oraculum.html" class="mt-6 inline-block underline hover:text-[#8f4fff]">Acessar arquivo completo →</a>
-    </section>
+<!-- 9. CITAÇÃO DO CRIADOR -->  
+<section class="py-16 px-8 max-w-5xl mx-auto text-center bg-[#111] rounded-lg">  
+  <p class="italic text-lg opacity-80 mb-4">"Após anos investindo arduamente em um projeto solitário... Após me desfazer do meu parceiro, lutei sozinho contra dragões e demônios para chegar até aqui. E ao passar de duas noites, transformei tudo em algo muito maior: um portal para o universo de NoHeroes. E isso... é só o começo."</p>  
+  <a href="sobre.html" class="underline hover:text-[#8f4fff]">→ Sobre o criador e o nascimento de NoHeroes</a>  
+</section>
 
-    <!-- 9. CITAÇÃO DO CRIADOR -->
-    <section class="py-16 px-8 max-w-5xl mx-auto text-center bg-[#111] rounded-lg">
-      <p class="italic text-lg opacity-80 mb-4">"Após anos investindo arduamente em um projeto solitário... Após me desfazer do meu parceiro, lutei sozinho contra dragões e demônios para chegar até aqui. E ao passar de duas noites, transformei tudo em algo muito maior: um portal para o universo de NoHeroes. E isso... é só o começo."</p>
-      <a href="sobre.html" class="underline hover:text-[#8f4fff]">→ Sobre o criador e o nascimento de NoHeroes</a>
-    </section>
-
-
-  <!-- 10. RODAPÉ -->
-  <footer class="py-8 text-center text-[#666] border-t border-[#333] mt-16">
-    <a href="linktree.html" class="inline-block mb-4"><img src="assets/images/linktree.png" alt="Linktree" class="h-10 mx-auto"></a>
-    <p>Explore. Escolha. Caia. Evolua.</p>
-    <p class="mt-2">Toda escolha tem um preço. Toda queda, uma razão.</p>
-    <p class="text-xs mt-4">© 2025 NoHeroes. Todos os direitos reservados.</p>
-  </footer>
-  </main>
-
-  <script>
-  // ========== SCROLL SUAVE ==========
-  const scrollToSection = sectionId => {
-    const sec = document.getElementById(sectionId);
-    if (sec) sec.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  // ========== MODAL DE PERSONAGEM ==========
-  const openBtn  = document.getElementById('open-personagem-modal');
-  const modal    = document.getElementById('personagem-modal');
-  const closeBtn = document.getElementById('close-personagem-modal');
-
-  const showModal = () => {
-    modal.classList.remove('hidden');
-    // animação de entrada
-    requestAnimationFrame(() => {
-      const content = modal.querySelector('div');
-      content.classList.remove('opacity-0', 'scale-95');
-      content.classList.add('opacity-100', 'scale-100');
-    });
-  };
-
-  const hideModal = () => {
-    const content = modal.querySelector('div');
-    content.classList.remove('opacity-100', 'scale-100');
-    content.classList.add('opacity-0', 'scale-95');
-    setTimeout(() => modal.classList.add('hidden'), 300);
-  };
-
-  if (openBtn)   openBtn.addEventListener('click', showModal);
-  if (closeBtn)  closeBtn.addEventListener('click', hideModal);
-  if (modal)     modal.addEventListener('click', e => {
-    if (e.target === modal) hideModal();
-  });
-
-  // botão espelhar
-  const mirrorBtn = document.getElementById('mirror-btn');
-  if (mirrorBtn) {
-    mirrorBtn.addEventListener('click', () => {
-      window.location.href = 'login.html'; // ou personagem.html se preferir
-    });
-  }
-
-  // ========== DRAWER LATERAL ==========
-  const drawerOverlay  = document.getElementById('drawer');
-  const drawerContent  = document.getElementById('drawer-content');
-  const hamburgerBtn   = document.getElementById('hamburger-btn');
-  const drawerCloseBtn = document.getElementById('drawer-close-btn');
-
-  function openDrawer() {
-    document.body.classList.add('overflow-hidden');
-    drawerOverlay.classList.remove('hidden');
-    requestAnimationFrame(() => {
-      drawerContent.classList.remove('-translate-x-full');
-    });
-  }
-
-  function closeDrawer() {
-    drawerContent.classList.add('-translate-x-full');
-    setTimeout(() => {
-      drawerOverlay.classList.add('hidden');
-      document.body.classList.remove('overflow-hidden');
-    }, 400);
-  }
-
-  if (hamburgerBtn) hamburgerBtn.addEventListener('click', () => {
-    drawerOverlay.classList.contains('hidden') ? openDrawer() : closeDrawer();
-  });
-  if (drawerCloseBtn) drawerCloseBtn.addEventListener('click', closeDrawer);
-  if (drawerOverlay) drawerOverlay.addEventListener('click', e => {
-    if (e.target === drawerOverlay) closeDrawer();
-  });
-</script>
-</body>
-</html>
+  <!-- 10. RODAPÉ -->    <footer class="py-8 text-center text-[#666] border-t border-[#333] mt-16">  
+    <a href="linktree.html" class="inline-block mb-4"><img src="assets/images/linktree.png" alt="Linktree" class="h-10 mx-auto"></a>  
+    <p>Explore. Escolha. Caia. Evolua.</p>  
+    <p class="mt-2">Toda escolha tem um preço. Toda queda, uma razão.</p>  
+    <p class="text-xs mt-4">© 2025 NoHeroes. Todos os direitos reservados.</p>  
+  </footer>  
+  </main>    <!-- Scripts -->   <script>  
+  // Scroll suave  
+  const scrollToSection = sectionId => {  
+    const sec = document.getElementById(sectionId);  
+    if (sec) sec.scrollIntoView({ behavior: 'smooth' });  
+  };  
+  
+  // Modal personagem  
+  const openBtn  = document.getElementById('open-personagem-modal');  
+  const modal    = document.getElementById('personagem-modal');  
+  const closeBtn = document.getElementById('close-personagem-modal');  
+  
+  const showModal = () => {  
+    modal.classList.remove('hidden');  
+    // trigger animation  
+    requestAnimationFrame(() => {  
+      modal.children[0].classList.replace('opacity-0','opacity-100');  
+      modal.children[0].classList.replace('scale-95','scale-100');  
+    });  
+  };  
+  const hideModal = () => {  
+    // animação de saída  
+    modal.children[0].classList.replace('opacity-100','opacity-0');  
+    modal.children[0].classList.replace('scale-100','scale-95');  
+    // depois de 300ms, esconde o overlay  
+    setTimeout(() => modal.classList.add('hidden'), 300);  
+  };  
+  
+  openBtn.addEventListener('click', showModal);  
+  closeBtn.addEventListener('click', hideModal);  
+  modal.addEventListener('click', e => {  
+    if (e.target === modal) hideModal();  
+  });  
+  
+  // Placeholder do botão “Me Espelhar na Escuridão”  
+  document.getElementById('mirror-btn').addEventListener('click', () => {  
+    window.location.href = 'login.html'; // ou personagem.html  
+  });  
+  const openDrawer = document.getElementById('open-drawer');  
+  const closeDrawer = document.getElementById('close-drawer');  
+  const drawer = document.getElementById('drawer-menu');  
+  
+  openDrawer.addEventListener('click', () => {  
+    drawer.classList.remove('translate-x-full');  
+  });  
+  
+  closeDrawer.addEventListener('click', () => {  
+    drawer.classList.add('translate-x-full');  
+  });  
+</script>  </body>  
+</html>  
