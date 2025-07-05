@@ -42,7 +42,7 @@ header a:hover {
   </div>
 </header>
 
-<<!-- Drawer lateral com fundo escuro e transições -->
+<!-- Drawer lateral com fundo escuro e transições -->
 <div id="drawer"
      class="fixed top-0 left-0 h-screen w-full bg-black/50 backdrop-blur-sm hidden z-40">
 
@@ -286,18 +286,6 @@ header a:hover {
   const hamburgerBtn = document.getElementById('hamburger-btn');
   const closeBtn = document.getElementById('close-drawer');
 
-  const openDrawer = () => {
-    drawerOverlay.classList.remove('hidden');
-    requestAnimationFrame(() => {
-      drawerContent.classList.remove('-translate-x-full');
-    });
-  };
-
-  const closeDrawer = () => {
-    drawerContent.classList.add('-translate-x-full');
-    setTimeout(() => drawerOverlay.classList.add('hidden'), 400);
-  };
-
   hamburgerBtn.addEventListener('click', () => {
     if (drawerOverlay.classList.contains('hidden')) {
       openDrawer();
@@ -311,6 +299,21 @@ header a:hover {
   drawerOverlay.addEventListener('click', (e) => {
     if (e.target === drawerOverlay) closeDrawer();
   });
+const openDrawer = () => {
+  document.body.classList.add('overflow-hidden'); // ❗ trava rolagem
+  drawerOverlay.classList.remove('hidden');
+  requestAnimationFrame(() => {
+    drawerContent.classList.remove('-translate-x-full');
+  });
+};
+
+const closeDrawer = () => {
+  drawerContent.classList.add('-translate-x-full');
+  setTimeout(() => {
+    drawerOverlay.classList.add('hidden');
+    document.body.classList.remove('overflow-hidden'); // ❗ libera rolagem
+  }, 400);
+};
 </script>
 </body>
 </html>
