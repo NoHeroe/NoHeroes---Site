@@ -27,11 +27,11 @@
 
  <!-- HEADER LIMPO COM DRAWER --> 
 <header class="relative z-50 w-full h-14 bg-gradient-to-b from-[#0a090f] to-transparent border-b border-[#2e2e2e]">
-  <!-- Botão hambúrguer mágico à esquerda, topo -->
-  <button id="open-drawer"
-    class="absolute top-3 left-4 text-3xl text-white hover:text-[#a855f7] transition z-[60]">
-    ☰
-  </button>
+  <!-- Botão hambúrguer mágico -->
+<button id="hamburgerBtn" 
+  class="absolute top-3 left-4 text-3xl text-white hover:text-[#a855f7] transition z-[60]">
+  ☰
+</button>
 
   <!-- Logo centralizada e VAZANDO para baixo -->
   <div class="absolute left-1/2 top-full transform -translate-x-1/2 -translate-y-1/2 z-40">
@@ -41,29 +41,27 @@
   </div>
 </header>
 
-<!-- DRAWER lateral direita -->  <div id="drawer-menu" class="fixed top-0 right-0 h-full w-72 bg-[#0e0e0e] text-white transform translate-x-full transition-transform duration-300 z-40 shadow-2xl flex flex-col">  
-  <!-- Fechar -->  
-  <button id="close-drawer" class="text-2xl text-right p-4 text-[#888] hover:text-white">&times;</button>    <!-- Logo e título -->    <div class="px-6 pb-4 border-b border-[#333]">  
-    <h2 class="text-xl font-bold text-[#facc15]" style="font-family: 'Cinzel Decorative', serif;">NOHEROES</h2>  
-    <p class="text-sm text-[#888]">Dark Universe</p>  
-  </div>    <!-- Navegação -->    <nav class="flex-1 px-6 py-4 space-y-4" style="font-family: 'Cinzel Decorative', serif;">  
-    <a href="index.html" class="flex justify-between items-center hover:text-[#8f4fff] transition">  
-      <span>Home</span><span class="text-sm text-[#8f4fff]">Sanctum</span>  
-    </a>  
-    <a href="store.html" class="flex justify-between items-center hover:text-[#8f4fff] transition">  
-      <span>Loja</span><span class="text-sm text-[#8f4fff]">Vault</span>  
-    </a>  
-    <a href="projetos.html" class="flex justify-between items-center hover:text-[#8f4fff] transition">  
-      <span>Projetos</span><span class="text-sm text-[#8f4fff]">Grimoire</span>  
-    </a>  
-    <a href="sobre.html" class="flex justify-between items-center hover:text-[#8f4fff] transition">  
-      <span>Sobre</span><span class="text-sm text-[#8f4fff]">Entity</span>  
-    </a>  
-    <a href="login.html" class="flex justify-between items-center hover:text-[#8f4fff] transition">  
-      <span>Login</span><span class="text-sm text-[#8f4fff]">Sanctuary</span>  
-    </a>  
-  </nav>  
-</div>    <!-- Main -->    <main class="pt-28">  
+<!-- Drawer -->
+<div id="drawer" class="fixed top-0 left-0 w-72 h-full bg-black text-white transform -translate-x-full transition-transform duration-300 z-40">
+  <!-- Conteúdo do drawer -->
+  <div class="p-6 flex flex-col gap-4">
+    <h1 class="text-2xl font-bold text-yellow-500">NOHEROES</h1>
+    <p class="text-gray-400 text-sm">Dark Universe</p>
+    <nav class="mt-4 flex flex-col gap-3">
+      <a href="index.html" class="text-white hover:text-purple-400">HOME</a>
+      <a href="shop.html" class="text-white hover:text-purple-400">LOJA</a>
+      <a href="projects.html" class="text-white hover:text-purple-400">PROJETOS</a>
+      <a href="sobre.html" class="text-white hover:text-purple-400">SOBRE</a>
+      <a href="login.html" class="text-white hover:text-purple-400">LOGIN</a>
+    </nav>
+  </div>
+</div>
+
+<!-- Overlay para clicar fora e fechar -->
+<div id="drawerOverlay" class="fixed inset-0 bg-black bg-opacity-60 hidden z-30"></div>
+
+    <!-- Main --> 
+   <main class="pt-28">  
     <!-- 1. CAPA HERO -->  
     <section id="introducao" class="relative flex flex-col items-center justify-center h-screen bg-cover bg-center text-center text-[#d9d6ff]" style="background-image:url('assets/images/hero-bg.gif')">  
       <div class="overlay"></div>  
@@ -252,5 +250,21 @@ Como funciona o sistema
   closeDrawer.addEventListener('click', () => {  
     drawer.classList.add('translate-x-full');  
   });  
-</script>  </body>  
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const drawer = document.getElementById('drawer');
+  const overlay = document.getElementById('drawerOverlay');
+
+  let isDrawerOpen = false;
+
+  function toggleDrawer() {
+    isDrawerOpen = !isDrawerOpen;
+    drawer.style.transform = isDrawerOpen ? 'translateX(0)' : 'translateX(-100%)';
+    overlay.style.display = isDrawerOpen ? 'block' : 'none';
+    hamburgerBtn.textContent = isDrawerOpen ? '✕' : '☰';
+  }
+
+  hamburgerBtn.addEventListener('click', toggleDrawer);
+  overlay.addEventListener('click', toggleDrawer);
+</script>
+  </body>  
 </html>  
