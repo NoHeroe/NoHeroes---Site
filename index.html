@@ -6,86 +6,70 @@
   <title>NoHeroes | Home</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  h1, h2, .cinzel {
-    font-family: 'Cinzel Decorative', serif;
-  }
-  .drawer-transition {
-    transition: transform 0.4s ease, opacity 0.4s ease;
-  }
+  <style>
+    h1, h2, .cinzel {
+      font-family: 'Cinzel Decorative', serif;
+    }
+    .drawer-transition {
+      transition: transform 0.4s ease, opacity 0.4s ease;
+    }
     .text-shadow-md { text-shadow: 0 0 10px rgba(143,79,255,0.4); }
     .overlay { position:absolute; inset:0; background:rgba(0,0,0,0.5); }
     .drop-shadow-glow { filter: drop-shadow(0 0 10px #8f4fff) drop-shadow(0 0 20px #8f4fff); }
     html { scroll-behavior: smooth; }
-    /* Modal e drawer */
     .hidden { display: none; }
-    /* Ajustes para o topo fixo */
-    
-header a:hover {
-  color: #8f4fff;
-}
+    header a:hover { color: #8f4fff; }
   </style>
 </head>
 <body class="leading-relaxed">
 
-<header class="fixed top-0 left-0 w-full z-50 bg-[#0e0e0e] border-b border-[#333] flex items-center justify-between px-4 h-14">
-  <!-- Ícone hamburguer estilizado -->
-  <button id="hamburger-btn" class="z-50 text-3xl text-white hover:text-[#a855f7] transition transform duration-300">
-    ☰
-  </button>
-
-  <!-- Logo centralizada e “vazando” pra fora -->
-  <div class="absolute left-1/2 transform -translate-x-1/2 -translate-y-4">
-    <a href="index.html">
-      <img src="assets/images/noheroes logo.png" alt="NoHeroes" class="h-[100px] drop-shadow-glow" />
-    </a>
-  </div>
-</header>
-
-<!-- Drawer lateral com fundo escuro e transições -->
-<div id="drawer"
-     class="fixed top-0 left-0 h-screen w-full bg-black/50 backdrop-blur-sm hidden z-40">
-
-  <div class="h-full w-72 bg-[#0a0a0a] text-white p-6 drawer-transition transform -translate-x-full shadow-2xl"
-       id="drawer-content">
-    <!-- Título e Fechar -->
-    <div class="flex justify-between items-center border-b border-[#333] pb-4 mb-4">
-      <div>
-        <h2 class="text-xl font-bold bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent cinzel">
-          NOHEROES
-        </h2>
-        <p class="text-sm text-gray-400">Universo Sombrio</p>
-      </div>
-      <button id="close-drawer" class="text-2xl text-gray-400 hover:text-white">&times;</button>
+  <!-- HEADER COM DRAWER -->
+  <header class="fixed top-0 left-0 w-full z-50 bg-[#0e0e0e] border-b border-[#333] flex items-center justify-between px-4 h-14">
+    <!-- Botão hamburguer -->
+    <button id="hamburger-btn" class="z-50 text-3xl text-white hover:text-[#a855f7] transition">
+      ☰
+    </button>
+    <!-- Logo central “vazando” -->
+    <div class="absolute left-1/2 transform -translate-x-1/2 -translate-y-4 pointer-events-none">
+      <a href="index.html">
+        <img src="assets/images/noheroes logo.png" alt="NoHeroes" class="h-[100px] drop-shadow-glow" />
+      </a>
     </div>
+  </header>
 
-    <!-- Navegação com títulos + legendas -->
-    <nav class="space-y-6 font-semibold text-lg">
-      <div class="flex justify-between items-center hover:text-[#a855f7] transition">
-        <a href="index.html">Início</a>
-        <span class="text-sm text-[#a855f7]">Portal</span>
+  <!-- DRAWER -->
+  <div id="drawer" class="fixed top-0 left-0 h-screen w-full bg-black/50 backdrop-blur-sm hidden z-40">
+    <div id="drawer-content" class="h-full w-72 bg-[#0a0a0a] text-white p-6 drawer-transition transform -translate-x-full shadow-2xl">
+      <div class="flex justify-between items-center border-b border-[#333] pb-4 mb-4">
+        <div>
+          <h2 class="text-xl font-bold bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent cinzel">
+            NOHEROES
+          </h2>
+          <p class="text-sm text-gray-400">Universo Sombrio</p>
+        </div>
+        <button id="drawer-close-btn" class="text-2xl text-gray-400 hover:text-white">&times;</button>
       </div>
-      <div class="flex justify-between items-center hover:text-[#a855f7] transition">
-        <a href="store.html">Loja</a>
-        <span class="text-sm text-[#a855f7]">Cartel Velado</span>
-      </div>
-      <div class="flex justify-between items-center hover:text-[#a855f7] transition">
-        <a href="projetos.html">Projetos</a>
-        <span class="text-sm text-[#a855f7]">Grimório</span>
-      </div>
-      <div class="flex justify-between items-center hover:text-[#a855f7] transition">
-        <a href="sobre.html">Sobre</a>
-        <span class="text-sm text-[#a855f7]">Entidade</span>
-      </div>
-      <div class="flex justify-between items-center hover:text-[#a855f7] transition">
-        <a href="login.html">Login</a>
-        <span class="text-sm text-[#a855f7]">Dojo</span>
-      </div>
-    </nav>
+      <nav class="space-y-6 font-semibold text-lg">
+        <div class="flex justify-between items-center hover:text-[#a855f7] transition">
+          <a href="index.html">Início</a><span class="text-sm text-[#a855f7]">Portal</span>
+        </div>
+        <div class="flex justify-between items-center hover:text-[#a855f7] transition">
+          <a href="store.html">Loja</a><span class="text-sm text-[#a855f7]">Cartel Velado</span>
+        </div>
+        <div class="flex justify-between items-center hover:text-[#a855f7] transition">
+          <a href="projetos.html">Projetos</a><span class="text-sm text-[#a855f7]">Grimório</span>
+        </div>
+        <div class="flex justify-between items-center hover:text-[#a855f7] transition">
+          <a href="sobre.html">Sobre</a><span class="text-sm text-[#a855f7]">Entidade</span>
+        </div>
+        <div class="flex justify-between items-center hover:text-[#a855f7] transition">
+          <a href="login.html">Login</a><span class="text-sm text-[#a855f7]">Dojo</span>
+        </div>
+      </nav>
+    </div>
   </div>
-</div>
 
-  <!-- Main -->
+  <!-- MAIN CONTENT -->
   <main class="pt-28">
     <!-- 1. CAPA HERO -->
     <section id="introducao" class="relative flex flex-col items-center justify-center h-screen bg-cover bg-center text-center text-[#d9d6ff]" style="background-image:url('assets/images/hero-bg.gif')">
@@ -241,79 +225,78 @@ header a:hover {
   </footer>
   </main>
 
-  <!-- Scripts -->
- <script>
-  // Scroll suave
+  <script>
+  // ========== SCROLL SUAVE ==========
   const scrollToSection = sectionId => {
     const sec = document.getElementById(sectionId);
     if (sec) sec.scrollIntoView({ behavior: 'smooth' });
   };
 
-  // Modal personagem
+  // ========== MODAL DE PERSONAGEM ==========
   const openBtn  = document.getElementById('open-personagem-modal');
   const modal    = document.getElementById('personagem-modal');
   const closeBtn = document.getElementById('close-personagem-modal');
 
   const showModal = () => {
     modal.classList.remove('hidden');
-    // trigger animation
+    // animação de entrada
     requestAnimationFrame(() => {
-      modal.children[0].classList.replace('opacity-0','opacity-100');
-      modal.children[0].classList.replace('scale-95','scale-100');
+      const content = modal.querySelector('div');
+      content.classList.remove('opacity-0', 'scale-95');
+      content.classList.add('opacity-100', 'scale-100');
     });
   };
+
   const hideModal = () => {
-    // animação de saída
-    modal.children[0].classList.replace('opacity-100','opacity-0');
-    modal.children[0].classList.replace('scale-100','scale-95');
-    // depois de 300ms, esconde o overlay
+    const content = modal.querySelector('div');
+    content.classList.remove('opacity-100', 'scale-100');
+    content.classList.add('opacity-0', 'scale-95');
     setTimeout(() => modal.classList.add('hidden'), 300);
   };
 
-  openBtn.addEventListener('click', showModal);
-  closeBtn.addEventListener('click', hideModal);
-  modal.addEventListener('click', e => {
+  if (openBtn)   openBtn.addEventListener('click', showModal);
+  if (closeBtn)  closeBtn.addEventListener('click', hideModal);
+  if (modal)     modal.addEventListener('click', e => {
     if (e.target === modal) hideModal();
   });
 
-  // Placeholder do botão “Me Espelhar na Escuridão”
-  document.getElementById('mirror-btn').addEventListener('click', () => {
-    window.location.href = 'login.html'; // ou personagem.html
+  // botão espelhar
+  const mirrorBtn = document.getElementById('mirror-btn');
+  if (mirrorBtn) {
+    mirrorBtn.addEventListener('click', () => {
+      window.location.href = 'login.html'; // ou personagem.html se preferir
+    });
+  }
+
+  // ========== DRAWER LATERAL ==========
+  const drawerOverlay  = document.getElementById('drawer');
+  const drawerContent  = document.getElementById('drawer-content');
+  const hamburgerBtn   = document.getElementById('hamburger-btn');
+  const drawerCloseBtn = document.getElementById('drawer-close-btn');
+
+  function openDrawer() {
+    document.body.classList.add('overflow-hidden');
+    drawerOverlay.classList.remove('hidden');
+    requestAnimationFrame(() => {
+      drawerContent.classList.remove('-translate-x-full');
+    });
+  }
+
+  function closeDrawer() {
+    drawerContent.classList.add('-translate-x-full');
+    setTimeout(() => {
+      drawerOverlay.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+    }, 400);
+  }
+
+  if (hamburgerBtn) hamburgerBtn.addEventListener('click', () => {
+    drawerOverlay.classList.contains('hidden') ? openDrawer() : closeDrawer();
   });
-  
-  const drawerOverlay = document.getElementById('drawer');
-  const drawerContent = document.getElementById('drawer-content');
-  const hamburgerBtn = document.getElementById('hamburger-btn');
-  const closeBtn = document.getElementById('close-drawer');
-
-  hamburgerBtn.addEventListener('click', () => {
-    if (drawerOverlay.classList.contains('hidden')) {
-      openDrawer();
-    } else {
-      closeDrawer();
-    }
-  });
-
-  closeBtn.addEventListener('click', closeDrawer);
-
-  drawerOverlay.addEventListener('click', (e) => {
+  if (drawerCloseBtn) drawerCloseBtn.addEventListener('click', closeDrawer);
+  if (drawerOverlay) drawerOverlay.addEventListener('click', e => {
     if (e.target === drawerOverlay) closeDrawer();
   });
-const openDrawer = () => {
-  document.body.classList.add('overflow-hidden'); // ❗ trava rolagem
-  drawerOverlay.classList.remove('hidden');
-  requestAnimationFrame(() => {
-    drawerContent.classList.remove('-translate-x-full');
-  });
-};
-
-const closeDrawer = () => {
-  drawerContent.classList.add('-translate-x-full');
-  setTimeout(() => {
-    drawerOverlay.classList.add('hidden');
-    document.body.classList.remove('overflow-hidden'); // ❗ libera rolagem
-  }, 400);
-};
 </script>
 </body>
 </html>
