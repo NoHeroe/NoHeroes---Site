@@ -26,17 +26,17 @@
 <body class="leading-relaxed">   
 
  <!-- HEADER LIMPO COM DRAWER --> 
- <header class="fixed inset-0 h-14 bg-[#100d1a] border-b border-[#2e2e2e] z-50">
- <!-- Botão hambúrguer mágico na esquerda DENTRO do header -->
-<button id="open-drawer"
-  class="absolute left-4 top-1/2 -translate-y-1/2 text-[#ccc] text-3xl hover:text-[#8f4fff] transition z-[60]">
-  ☰
-</button>
+<header class="relative z-50 w-full h-14 bg-gradient-to-b from-[#0a090f] to-transparent border-b border-[#2e2e2e]">
+  <!-- Botão hambúrguer mágico à esquerda, topo -->
+  <button id="open-drawer"
+    class="absolute top-3 left-4 text-3xl text-white hover:text-[#a855f7] transition z-[60]">
+    ☰
+  </button>
 
-  <!-- Logo centralizada e vazando -->
-  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+  <!-- Logo centralizada e VAZANDO para baixo -->
+  <div class="absolute left-1/2 top-full transform -translate-x-1/2 -translate-y-1/2 z-40">
     <a href="index.html">
-      <img src="assets/images/noheroes logo.png" alt="NoHeroes" class="h-20 drop-shadow-glow" />
+      <img src="assets/images/noheroes logo.png" alt="NoHeroes" class="h-24 drop-shadow-glow" />
     </a>
   </div>
 </header>
