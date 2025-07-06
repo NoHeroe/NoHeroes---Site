@@ -36,6 +36,15 @@
   box-shadow: inset 8px 0 18px rgba(143, 79, 255, 0.5);
   border-left: 1px solid rgba(143, 79, 255, 0.15);
 }
+#brasasCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+}
 </style>
 
 </head>  
@@ -286,7 +295,12 @@ Como funciona o sistema
     <p class="mt-2">Toda escolha tem um preço. Toda queda, uma razão.</p>  
     <p class="text-xs mt-4">© 2025 NoHeroes. Todos os direitos reservados.</p>  
   </footer>  
-  </main>    <!-- Scripts -->   <script>  
+  </main>
+
+<canvas id="brasasCanvas"></canvas>
+
+    <!-- Scripts -->  
+ <script>  
   // Scroll suave  
   const scrollToSection = sectionId => {  
     const sec = document.getElementById(sectionId);  
@@ -344,6 +358,66 @@ function toggleDrawer() {
 hamburgerBtn.addEventListener('click', toggleDrawer);
 overlay.addEventListener('click', toggleDrawer);
 
+  const canvas = document.getElementById("brasasCanvas");
+  const ctx = canvas.getContext("2d");
+  let particles = [];
+  let w, h;
+
+  function resizeCanvas() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+
+  window.addEventListener("resize", resizeCanvas);
+  resizeCanvas();
+
+  class Particle {
+    constructor() {
+      this.reset(true);
+    }
+
+    reset(initial = false) {
+      this.x = Math.random() * w;
+      this.y = initial ? Math.random() * h : h + Math.random() * 100;
+      this.size = 1 + Math.random() * 2.5;
+      this.speed = 0.2 + Math.random() * 0.5;
+      this.alpha = 0.4 + Math.random() * 0.3;
+      this.drift = (Math.random() - 0.5) * 0.5;
+    }
+
+    update() {
+      this.y -= this.speed;
+      this.x += this.drift;
+      if (this.y < -10 || this.x < -50 || this.x > w + 50) this.reset();
+    }
+
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`;
+      ctx.shadowColor = "#a855f7";
+      ctx.shadowBlur = 12;
+      ctx.fill();
+    }
+  }
+
+  function createParticles(count) {
+    for (let i = 0; i < count; i++) {
+      particles.push(new Particle());
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, w, h);
+    for (const p of particles) {
+      p.update();
+      p.draw();
+    }
+    requestAnimationFrame(animate);
+  }
+
+  createParticles(150);
+  animate();
 </script>
   </body>  
 </html>  
