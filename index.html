@@ -421,7 +421,8 @@ function animate() {
 
 window.addEventListener("load", () => {
   resizeCanvas();         // evita flicker inicial
-  createParticles(150);   // ou qualquer quantidade desejada
+  const ratio = window.devicePixelRatio || 1;
+createParticles(Math.floor(150 * ratio));   // ou qualquer quantidade desejada
   animate();              // inicia animação suave
 });
 
