@@ -45,6 +45,13 @@
   z-index: -1;
   pointer-events: none;
 }
+@keyframes pulse-glow {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 15px #8f4fff88; }
+  50% { transform: scale(1.05); box-shadow: 0 0 25px #facc15aa; }
+}
+.btn-pulsante {
+  animation: pulse-glow 2.5s infinite;
+}
 </style>
 
 </head>  
@@ -162,9 +169,12 @@
       <h1 class="z-10 text-3xl md:text-5xl max-w-2xl mb-8 text-shadow-md">  
         “Num mundo onde até a luz engana, a única verdade nasce das sombras.”  
       </h1>  
-      <a href="#universo" class="z-10 bg-[#8f4fff] text-white px-6 py-3 text-lg rounded-lg shadow-lg hover:scale-105 transition">  
-        Explorar o Universo  
-      </a>  
+      <a href="#universo"
+  class="btn-pulsante z-10 px-6 py-3 text-lg rounded-full font-semibold tracking-wide transition-all duration-300 
+         bg-gradient-to-br from-[#8f4fff] to-[#facc15] text-black shadow-xl shadow-[#8f4fff55]
+         hover:scale-110 hover:shadow-2xl hover:shadow-[#facc15aa]">
+  ✦ Mergulhar no Portal ✦
+</a>
     </section>  <!-- 2. INTRODUÇÃO RÁPIDA -->  
 <section id="teaser" class="py-16 px-8 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">  
   <div onclick="window.location.href='store.html'" class="p-6 bg-[#1c1c1c] rounded-lg hover:scale-105 transition cursor-pointer">  
