@@ -49,8 +49,35 @@
   0%, 100% { transform: scale(1); box-shadow: 0 0 15px #8f4fff88; }
   50% { transform: scale(1.05); box-shadow: 0 0 25px #facc15aa; }
 }
-.btn-pulsante {
+.btn-líquido {
   animation: pulse-glow 2.5s infinite;
+}
+@keyframes fluidGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.btn-líquido {
+  background: linear-gradient(270deg, #8f4fff, #a855f7, #facc15, #8f4fff);
+  background-size: 600% 600%;
+  animation: fluidGradient 8s ease infinite;
+  color: #000;
+  font-weight: 600;
+  border-radius: 9999px;
+  padding: 0.75rem 1.5rem;
+  box-shadow: 0 0 15px #8f4fff88;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.btn-líquido:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 25px #facc15aa;
 }
 </style>
 
@@ -169,10 +196,7 @@
       <h1 class="z-10 text-3xl md:text-5xl max-w-2xl mb-8 text-shadow-md">  
         “Num mundo onde até a luz engana, a única verdade nasce das sombras.”  
       </h1>  
-      <a href="#universo"
-  class="btn-pulsante z-10 px-6 py-3 text-lg rounded-full font-semibold tracking-wide transition-all duration-300 
-         bg-gradient-to-br from-[#8f4fff] to-[#facc15] text-black shadow-xl shadow-[#8f4fff55]
-         hover:scale-110 hover:shadow-2xl hover:shadow-[#facc15aa]">
+      <a href="#universo" class="btn-líquido z-10">
   ✦ Mergulhar no Portal ✦
 </a>
     </section>  <!-- 2. INTRODUÇÃO RÁPIDA -->  
