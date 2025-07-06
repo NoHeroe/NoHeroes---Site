@@ -20,6 +20,13 @@
     .hidden { display: none; }  
     /* Ajustes para o topo fixo */  
     
+.gradiente-noheroes {
+  background: linear-gradient(to bottom right, #8b5cf6, #facc15); /* roxo → dourado */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
 </style>
 
 </head>  
@@ -50,7 +57,7 @@
 </button>
   <!-- Conteúdo do drawer -->
   <div class="p-6 flex flex-col gap-4">
-    <h1 class="text-2xl font-bold text-yellow-500">NOHEROES</h1>
+    <h1 class="text-3xl font-bold gradiente-noheroes cinzel">NOHEROES</h1>
     <p class="text-gray-400 text-sm">Universo Sombrio</p>
     <nav class="mt-4 flex flex-col gap-3 text-sm">
 
