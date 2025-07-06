@@ -36,6 +36,10 @@
   box-shadow: inset -5px 0 15px rgba(143, 79, 255, 0.3);
   border-left: 1px solid rgba(143, 79, 255, 0.2);
 }
+.glow-interno-left {
+  box-shadow: inset 6px 0 18px rgba(143, 79, 255, 0.3);
+  border-left: 1px solid rgba(143, 79, 255, 0.15);
+}
 </style>
 
 </head>  
@@ -60,7 +64,7 @@
 <div class="barra-degrade w-full h-1"></div>
 
 <!-- Drawer -->
-<div id="drawer" class="fixed top-0 right-0 w-72 h-full bg-black text-white transform transition-transform duration-300 z-50 borda-interna-glow" style="transform: translateX(100%)">
+<div id="drawer" class="fixed top-0 right-0 w-72 h-full bg-black text-white transform transition-transform duration-300 z-50 glow-interno-left" style="transform: translateX(100%)">
 
 <!-- Dentro do drawer, no topo -->
 <button onclick="toggleDrawer()" class="absolute top-4 right-4 text-3xl text-[#a855f7] hover:text-purple-400 z-50">
