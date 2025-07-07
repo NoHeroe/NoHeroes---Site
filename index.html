@@ -157,18 +157,20 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #ccc;
-  font-size: 14px;
+  color: #e5e5e5;
+  font-size: 1rem;
+  font-weight: bold;
   font-family: monospace;
+  text-shadow: 0 0 5px rgba(255,255,255,0.1);
 }
 
-/* Posicionamento hexagonal */
-.atributo:nth-child(2) { top: 0; left: 50%; transform: translate(-50%, 0); }         /* Força */
-.atributo:nth-child(3) { top: 25%; right: 0; transform: translate(0, -50%); }          /* Destreza */
-.atributo:nth-child(4) { top: 60%; right: 15%; transform: translate(0, -50%); }        /* Constituição */
-.atributo:nth-child(5) { bottom: 25%; right: 15%; transform: translate(0, 50%); }      /* Inteligência */
-.atributo:nth-child(6) { bottom: 0; left: 50%; transform: translate(-50%, 0); }         /* Espírito */
-.atributo:nth-child(7) { bottom: 25%; left: 15%; transform: translate(0, 50%); }       /* Carisma */
+/* NOVA POSIÇÃO HEXAGONAL */
+.atributo:nth-child(2) { top: -10px; left: 50%; transform: translate(-50%, 0); }          /* FOR */
+.atributo:nth-child(3) { top: 35px; right: 0; transform: translate(0, 0); }               /* DES */
+.atributo:nth-child(4) { bottom: 35px; right: 0; transform: translate(0, 0); }            /* INT */
+.atributo:nth-child(5) { bottom: -10px; left: 50%; transform: translate(-50%, 0); }       /* ESP */
+.atributo:nth-child(6) { bottom: 35px; left: 0; transform: translate(0, 0); }             /* CAR */
+.atributo:nth-child(7) { top: 35px; left: 0; transform: translate(0, 0); }                /* CON */
 </style>
 
 </head>  
@@ -659,7 +661,7 @@ function startGlitch() {
   elementos.forEach(el => {
     const target = el.dataset.value;
     const label = document.createElement('div');
-    label.textContent = el.dataset.attr;
+    label.textContent = el.dataset.attr.slice(0,3).toUpperCase();
     const number = document.createElement('div');
     number.textContent = '0';
     el.append(label, number);
