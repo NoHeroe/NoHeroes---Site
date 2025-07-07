@@ -99,7 +99,8 @@
 .invisivel {
   opacity: 0;
   transform: translateY(-50px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  transition: opacity 1.2s ease, transform 1.2s ease;
+  will-change: opacity, transform;
 }
 
 .slide-top {
@@ -571,22 +572,24 @@ window.addEventListener("resize", resizeCanvas);
   function revelarDeCima(selector) {
   const elementos = document.querySelectorAll(selector);
 
-  const observer = new IntersectionObserver(entradas => {
-    entradas.forEach(entrada => {
+  const observer = new IntersectionObserver((entradas) => {
+    entradas.forEach((entrada) => {
       if (entrada.isIntersecting) {
         entrada.target.classList.add('entrou');
-        observer.unobserve(entrada.target);
+      } else {
+        entrada.target.classList.remove('entrou'); // ← anima de novo se voltar
       }
     });
-  }, { threshold: 0.1 });
+  }, {
+    threshold: 0.6 // só anima quando ~30% do bloco entra de fato
+  });
 
-  elementos.forEach(el => {
+  elementos.forEach((el) => {
     el.classList.add('invisivel', 'slide-top');
     observer.observe(el);
   });
 }
 
-// Ativar a animação para todos os elementos com .reveal-top
 revelarDeCima('.reveal-top');
 
 </script>
