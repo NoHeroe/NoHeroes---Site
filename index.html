@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="pt-br">  
 <head>  
   <meta charset="UTF-8">  
@@ -74,6 +73,47 @@
   transform: scale(1.1);
   box-shadow: 0 0 30px #facc15dd, 0 0 40px #8f4fffcc;
 }
+
+@keyframes fadeInLeft { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes fadeInTop { from { opacity: 0; transform: translateY(-40px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeInRight { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+
+.animate-fade-in-left { animation: fadeInLeft 1s ease forwards; }
+.animate-fade-in-top { animation: fadeInTop 1s ease forwards; }
+.animate-fade-in-right { animation: fadeInRight 1s ease forwards; }
+.animate-fade-in-up { animation: fadeInUp 1s ease forwards; }
+
+@keyframes levitate {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+}
+.float-levitate {
+  animation: levitate 4s ease-in-out infinite;
+}
+.gradiente-titulo {
+  background: linear-gradient(to right, #8f4fff, #facc15);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.invisivel {
+  opacity: 0;
+  transform: translateX(0);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.slide-left {
+  transform: translateX(-60px);
+}
+
+.slide-right {
+  transform: translateX(60px);
+}
+
+.entrou {
+  opacity: 1 !important;
+  transform: translateX(0) !important;
+}
 </style>
 
 </head>  
@@ -129,7 +169,7 @@
       </svg>
       <span class="text-white">Projetos</span>
     </div>
-    <span class="text-xs text-purple-400 cinzel">Arsenal</span>
+    <span class="text-xs text-purple-400 cinzel">Grimório</span>
   </a>
 
   <a href="sobre.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
@@ -194,21 +234,97 @@
       <a href="#universo" class="btn-líquido-pulsante z-10">
   ✦ Mergulhar no Portal ✦
 </a>
-    </section>  <!-- 2. INTRODUÇÃO RÁPIDA -->  
-<section id="teaser" class="py-16 px-8 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">  
-  <div onclick="window.location.href='store.html'" class="p-6 bg-[#1c1c1c] rounded-lg hover:scale-105 transition cursor-pointer">  
-    <h2 class="font-bold mb-2 text-[#8f4fff]">Anime &amp; Mangá</h2>  
-    <p>Fragmentos de mundos partidos. Heróis que sangram, caem — e levantam sem aplausos. Em NoHeroes, cada história desafia o que é ser forte… e o que significa continuar.</p>  
-  </div>  
-  <div onclick="scrollToSection('game')" class="p-6 bg-[#1c1c1c] rounded-lg hover:scale-105 transition cursor-pointer">  
-    <h2 class="font-bold mb-2 text-[#8f4fff]">Evolua Seu Personagem</h2>  
-    <p>A evolução começa no impacto. Aqui, cada decisão molda quem você é — e quem você teme se tornar. Desperte habilidades, memórias e cicatrizes. Você não joga com um personagem… você é o personagem.</p>  
-  </div>  
-  <div onclick="window.location.href='explore.html'" class="p-6 bg-[#1c1c1c] rounded-lg hover:scale-105 transition cursor-pointer">  
-    <h2 class="font-bold mb-2 text-[#8f4fff]">Lore Viva</h2>  
-    <p>O mundo respira junto com você. Cada passo, cada voto, cada teoria — tudo molda a linha tênue entre caos e renascimento. Aqui, a história é viva. E você é parte do pulso.</p>  
-  </div>  
-</section>  
+    </section> 
+
+
+<section id="oque-e-noheroes" class="py-20 px-6 max-w-7xl mx-auto text-center">
+  <h2 class="text-3xl md:text-4xl font-bold gradiente-noheroes cinzel mb-12">
+    O que é NoHeroes?
+  </h2>
+
+  <!-- Container de Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-16">
+
+  <!-- 1. Um Portal Multimídia -->
+ <div class="bg-[#1c1c1c] p-6 rounded-xl shadow-md reveal-left text-center">
+  <svg class="mx-auto mb-4" width="40" height="40" viewBox="0 0 24 24" fill="none">
+    <defs>
+      <linearGradient id="grad-vortex" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#8f4fff"/>
+        <stop offset="100%" stop-color="#facc15"/>
+      </linearGradient>
+    </defs>
+    <path d="M12 2a10 10 0 100 20M12 6a6 6 0 100 12" stroke="url(#grad-vortex)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <h3 class="text-lg font-bold gradiente-titulo mb-2 font-[Cinzel Decorative]">Um Portal Multimídia</h3>
+  <p class="text-sm text-gray-300 mb-4">Animes, mangás, livros, eBooks, apps. Um universo em expansão onde tudo é feito com propósito — e alma.</p>
+  <button onclick="document.querySelector('#universo').scrollIntoView({ behavior: 'smooth' })"
+    class="px-3 py-1 text-sm rounded-full bg-gradient-to-r from-[#8f4fff]/20 to-[#facc15]/20 border border-[#8f4fff] text-[#8f4fff] hover:brightness-125 transition">
+    Explorar o Universo
+  </button>
+</div>
+
+  <!-- 2. Seu Dojo Digital -->
+  <div class="bg-[#1c1c1c] p-6 rounded-xl shadow-md reveal-right text-center">
+  <svg class="mx-auto mb-4" width="40" height="40" viewBox="0 0 24 24" fill="none">
+    <defs>
+      <linearGradient id="grad-dojo" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#8f4fff"/>
+        <stop offset="100%" stop-color="#facc15"/>
+      </linearGradient>
+    </defs>
+    <path d="M12 2a10 10 0 100 20M12 12a4 4 0 010-8" stroke="url(#grad-dojo)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="12" cy="8" r="1.5" fill="url(#grad-dojo)"/>
+    <circle cx="12" cy="16" r="1.5" fill="url(#grad-dojo)"/>
+  </svg>
+  <h3 class="text-lg font-bold gradiente-titulo mb-2 font-[Cinzel Decorative]">Seu Dojo Digital</h3>
+  <p class="text-sm text-gray-300 mb-4">Cada missão, leitura ou clique aqui ecoa fora da tela. Você cresce no jogo — e na vida. Um reflexo puxa o outro.</p>
+  <button onclick="document.querySelector('#dojo').scrollIntoView({ behavior: 'smooth' })"
+    class="px-3 py-1 text-sm rounded-full bg-gradient-to-r from-[#8f4fff]/20 to-[#facc15]/20 border border-[#8f4fff] text-[#8f4fff] hover:brightness-125 transition">
+    Evoluir Agora
+  </button>
+</div>
+
+  <!-- 3. Uma Frequência Criativa -->
+  <div class="bg-[#1c1c1c] p-6 rounded-xl shadow-md reveal-left text-center">
+  <svg class="mx-auto mb-4" width="40" height="40" viewBox="0 0 24 24" fill="none">
+    <defs>
+      <linearGradient id="grad-freq" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#8f4fff"/>
+        <stop offset="100%" stop-color="#facc15"/>
+      </linearGradient>
+    </defs>
+    <path d="M3 12c2-4 4-4 6 0s4 4 6 0s4-4 6 0" stroke="url(#grad-freq)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <h3 class="text-lg font-bold gradiente-titulo mb-2 font-[Cinzel Decorative]">Uma Frequência Criativa</h3>
+  <p class="text-sm text-gray-300 mb-4">NoHeroes é um portal vivo onde ideias nascem, mutam e se chocam. Uma rede para quem nunca se encaixou — mas sempre quis criar.</p>
+  <button onclick="document.querySelector('#comunidade').scrollIntoView({ behavior: 'smooth' })"
+    class="px-3 py-1 text-sm rounded-full bg-gradient-to-r from-[#8f4fff]/20 to-[#facc15]/20 border border-[#8f4fff] text-[#8f4fff] hover:brightness-125 transition">
+    Ver Comunidade
+  </button>
+</div>
+
+  <!-- 4. A Forja dos Sonhos -->
+  <div class="bg-[#1c1c1c] p-6 rounded-xl shadow-md reveal-right text-center">
+  <svg class="mx-auto mb-4" width="40" height="40" viewBox="0 0 24 24" fill="none">
+    <defs>
+      <linearGradient id="grad-forja" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#8f4fff"/>
+        <stop offset="100%" stop-color="#facc15"/>
+      </linearGradient>
+    </defs>
+    <path d="M4 10h16v3H4zM6 13v3h2v-3M16 13v3h2v-3" stroke="url(#grad-forja)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M12 2v2m0 0l1-1m-1 1l-1-1" stroke="url(#grad-forja)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <h3 class="text-lg font-bold gradiente-titulo mb-2 font-[Cinzel Decorative]">A Forja dos Sonhos</h3>
+  <p class="text-sm text-gray-300 mb-4">Ajudamos você a tirar da mente o que vive preso há anos. Sites, projetos, marcas — aqui, a gente transforma sonhos em realidade palpável.</p>
+  <button onclick="document.querySelector('#servicos').scrollIntoView({ behavior: 'smooth' })"
+    class="px-3 py-1 text-sm rounded-full bg-gradient-to-r from-[#8f4fff]/20 to-[#facc15]/20 border border-[#8f4fff] text-[#8f4fff] hover:brightness-125 transition">
+    Criar com a Gente
+  </button>
+</div>
+</div>
+</section>
 
  <!-- 3. TEASER JOGAR -->  
 <section id="jogar" class="py-16 px-8 max-w-4xl mx-auto text-center">  
@@ -328,7 +444,6 @@ Como funciona o sistema
 
 <canvas id="brasasCanvas"></canvas>
 
-    <!-- Scripts -->  
  <script>  
   // Scroll suave  
   const scrollToSection = sectionId => {  
@@ -456,6 +571,23 @@ createParticles(Math.floor(150 * ratio));   // ou qualquer quantidade desejada
 });
 
 window.addEventListener("resize", resizeCanvas);
+  function revelarLateralmente(selector, direcao = 'left') {
+  const elementos = document.querySelectorAll(selector);
+
+  const observer = new IntersectionObserver(entradas => {
+    entradas.forEach(entrada => {
+      if (entrada.isIntersecting) {
+        entrada.target.classList.add('entrou');
+        observer.unobserve(entrada.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  elementos.forEach(el => {
+    el.classList.add('invisivel', `slide-${direcao}`);
+    observer.observe(el);
+  });
+}
 </script>
   </body>  
-</html>  
+</html> 

@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoHeroes - Onde os Heróis Falham, Nós Entregamos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- RESET E CONFIGURAÇÕES GLOBAIS --- */
+        :root {
+            --cor-fundo-principal: #0d0d0d;
+            --cor-fundo-secundaria: #1a1a1a;
+            --cor-fundo-terciaria: #242424;
+            --cor-texto-principal: #e0e0e0;
+            --cor-texto-secundario: #a0a0a0;
+            --cor-destaque-principal: #9a34ff; /* Roxo Arcano */
+            --cor-destaque-secundaria: #ff3463; /* Vermelho-carmesim */
+            --fonte-titulo: 'Cinzel', serif;
+            --fonte-corpo: 'Roboto', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--fonte-corpo);
+            background-color: var(--cor-fundo-principal);
+            color: var(--cor-texto-principal);
+            overflow-x: hidden;
+        }
+
+        #page-content {
+            display: none; /* Conteúdo fica oculto até o preloader sumir */
+        }
+        
+        section {
+            position: relative;
+            padding: 100px 5%;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--fonte-titulo);
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 3em;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        p {
+            font-size: 1.1em;
+            line-height: 1.7;
+            color: var(--cor-texto-secundario);
+            max-width: 800px;
+            margin: 0 auto 20px auto;
+        }
+
+        .cta-button {
+            font-family: var(--fonte-titulo);
+            background: linear-gradient(45deg, var(--cor-destaque-principal), var(--cor-destaque-secundaria));
+            color: #fff;
+            border: none;
+            padding: 15px 35px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 15px rgba(154, 52, 255, 0.5);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(255, 52, 99, 0.7);
+        }
+        
+        /* Efeito de Fade-in com Scroll */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- PRE-LOADER --- */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        #preloader.loaded {
+            opacity: 0;
+            visibility: hidden; /* Garante que não interfira com cliques */
+        }
+        .sigil-container {
+            width: 120px;
+            height: 120px;
+            position: relative;
+            animation: rotate-sigil 20s linear infinite;
+        }
+        .sigil-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--cor-destaque-principal);
+            border-radius: 50%;
+            opacity: 0.5;
+        }
+        .sigil-ring:nth-child(2) {
+            transform: scale(0.7);
+            border-color: var(--cor-destaque-secundaria);
+            animation: rotate-sigil 10s linear infinite reverse;
+        }
+        @keyframes rotate-sigil {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* --- SEÇÃO 1: HERO --- */
+        #hero {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 5%;
+            /* * IMAGEM DE FUNDO - SUBSTITUA ESTE LINK
+             * Encontre uma imagem em alta resolução (ex: 1920x1080) com tema dark fantasy/anime
+             * e cole o link aqui. Sites como Unsplash, Pexels ou ArtStation são boas fontes.
+             */
+            background: url('https://images.unsplash.com/photo-1596724334382-7132483d9178?q=80&w=2070&auto=format&fit=crop') no-repeat center center/cover;
+            position: relative;
+        }
+        #hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, rgba(13, 13, 13, 0.4) 0%, rgba(13, 13, 13, 0.9) 100%);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+        #hero h1 {
+            font-size: clamp(2.5em, 6vw, 5em);
+            color: #fff;
+            text-shadow: 0 0 20px rgba(0,0,0,0.8);
+        }
+        #hero p {
+            font-size: 1.4em;
+            color: #ddd;
+            text-shadow: 0 0 10px rgba(0,0,0,0.7);
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
+        
+        /* --- SEÇÃO 2: CREDO --- */
+        #credo {
+            background-color: var(--cor-fundo-principal);
+        }
+
+        /* --- SEÇÃO 3: DISCIPLINAS --- */
+        #disciplinas {
+            background-color: var(--cor-fundo-secundaria);
+        }
+        .disciplinas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 40px auto;
+        }
+        .disciplina {
+            background-color: var(--cor-fundo-principal);
+            padding: 40px;
+            border-radius: 10px;
+            border: 1px solid var(--cor-fundo-terciaria);
+            transition: all 0.4s ease;
+        }
+        .disciplina:hover {
+            transform: translateY(-10px);
+            border-color: var(--cor-destaque-principal);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .disciplina-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 25px auto;
+            color: var(--cor-destaque-principal);
+            transition: all 0.4s ease;
+        }
+        .disciplina:hover .disciplina-icon {
+            color: var(--cor-destaque-secundaria);
+            transform: rotateY(180deg);
+        }
+        .disciplina h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: var(--cor-texto-principal);
+        }
+        
+        /* --- SEÇÃO 4: PORTFÓLIO --- */
+        #portfolio {
+             background-color: var(--cor-fundo-principal);
+        }
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 40px auto;
+        }
+        .portfolio-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: var(--cor-fundo-terciaria);
+            height: 280px;
+            cursor: pointer;
+        }
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .portfolio-item:hover img {
+            transform: scale(1.1);
+        }
+        .portfolio-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            padding: 40px 20px 20px 20px;
+            transform: translateY(50%);
+            transition: transform 0.5s ease;
+        }
+        .portfolio-item:hover .portfolio-overlay {
+            transform: translateY(0);
+        }
+        .portfolio-overlay h3 {
+            font-size: 1.4em;
+            color: #fff;
+        }
+
+        /* --- SEÇÃO 5: EQUIPE --- */
+        #equipe {
+            background-color: var(--cor-fundo-secundaria);
+        }
+        .equipe-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+        .membro {
+            text-align: center;
+        }
+        .avatar-container {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 15px;
+            border: 3px solid var(--cor-fundo-terciaria);
+            transition: all 0.4s ease;
+        }
+        .membro:hover .avatar-container {
+            border-color: var(--cor-destaque-secundaria);
+            transform: scale(1.1);
+        }
+        .avatar-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .membro h3 {
+            font-size: 1.3em;
+            color: var(--cor-texto-principal);
+        }
+        .membro p {
+            font-size: 1em;
+            color: var(--cor-destaque-principal);
+            margin-bottom: 0;
+        }
+        
+        /* --- SEÇÃO 6: CONTATO --- */
+        #contato {
+            background-color: var(--cor-fundo-principal);
+        }
+        #contato-container {
+            position: relative;
+            z-index: 10;
+        }
+        #contact-form {
+            max-width: 700px;
+            margin: 40px auto 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        #contact-form input,
+        #contact-form textarea {
+            padding: 18px;
+            background-color: var(--cor-fundo-secundaria);
+            color: var(--cor-texto-principal);
+            border: 1px solid var(--cor-fundo-terciaria);
+            border-radius: 5px;
+            font-size: 1em;
+            font-family: var(--fonte-corpo);
+            transition: border-color 0.3s ease;
+        }
+        #contact-form input:focus,
+        #contact-form textarea:focus {
+            outline: none;
+            border-color: var(--cor-destaque-principal);
+        }
+        #contact-form textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+        /* Animação de Fundo do Portal de Contato */
+        #portal-background {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            transform: translate(-50%, -50%);
+            overflow: hidden;
+            z-index: 1;
+            opacity: 0.15;
+            background: radial-gradient(circle at center, var(--cor-destaque-principal) 0%, transparent 70%),
+                        radial-gradient(circle at center, var(--cor-destaque-secundaria) 0%, transparent 70%);
+            animation: portal-spin 30s linear infinite, portal-pulse 5s ease-in-out infinite;
+        }
+        @keyframes portal-spin {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        @keyframes portal-pulse {
+            0% { transform: translate(-50%, -50%) scale(0.8); }
+            50% { transform: translate(-50%, -50%) scale(1); }
+            100% { transform: translate(-50%, -50%) scale(0.8); }
+        }
+        #form-response {
+            margin-top: 10px;
+            font-size: 1.1em;
+            color: var(--cor-destaque-secundaria);
+            min-height: 25px;
+        }
+
+        /* --- RODAPÉ --- */
+        footer {
+            background-color: #000;
+            text-align: center;
+            padding: 40px 5%;
+        }
+        .logo-footer {
+            font-family: var(--fonte-titulo);
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+        .footer-links a {
+            color: var(--cor-texto-secundario);
+            margin: 0 15px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .footer-links a:hover {
+            color: #fff;
+        }
+        .copyright {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="preloader">
+        <div class="sigil-container">
+            <div class="sigil-ring"></div>
+            <div class="sigil-ring"></div>
+        </div>
+    </div>
+
+    <div id="page-content">
+        <section id="hero">
+            <div class="hero-content fade-in-section">
+                <h1>Heróis falham. Nós, não.</h1>
+                <p>Onde a esperança termina, nosso trabalho começa.</p>
+                <a href="#contato" class="cta-button">Invoque a NoHeroes</a>
+            </div>
+        </section>
+
+        <section id="credo" class="fade-in-section">
+            <h2>O Credo dos Sem-Heróis</h2>
+            <p>No mundo dos negócios, existem problemas e existem <strong>desafios</strong>. Problemas têm soluções convencionais. Desafios são abismos onde estratégias comuns falham e os heróis do mercado recuam.</p>
+            <p>Nós somos a guilda que prospera no abismo. Não buscamos glória, não usamos capas brilhantes. Nossa recompensa é a conquista do impossível, a solução forjada no fogo da complexidade, combinando a disciplina arcana do design, a feitiçaria do código e a estratégia sombria do mercado.</p>
+        </section>
+
+        <section id="disciplinas" class="fade-in-section">
+            <h2>Nossas Disciplinas</h2>
+            <div class="disciplinas-grid">
+                <div class="disciplina">
+                    <div class="disciplina-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M2,19.29L20.48,2.39L21.61,3.52L12,13.13V22H10V15.87L3.11,20.42L2,19.29M18.5,4L15,7.5L16.5,9L20,5.5L18.5,4M6.5,12.25L10,15.75L7.75,18H5.5L3,15.5L6.5,12.25Z" /></svg>
+                    </div>
+                    <h3>Forja de Lendas</h3>
+                    <p>Branding & Identidade Visual. Criamos marcas que não são apenas vistas, mas sentidas. Símbolos de poder que ressoam com seu público.</p>
+                </div>
+                <div class="disciplina">
+                    <div class="disciplina-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M13,3V9H11V3H13M13,15H11V21H13V15M21,11V13H3V11H21M17.83,5.17L19.24,6.58L14.66,11.17L13.24,9.76L17.83,5.17M9.76,13.24L5.17,17.83L6.58,19.24L11.17,14.66L9.76,13.24Z" /></svg>
+                    </div>
+                    <h3>Arquitetura do Abismo</h3>
+                    <p>Desenvolvimento Web & Mobile. Construímos portais digitais robustos e imersivos que desafiam a realidade e cativam a alma.</p>
+                </div>
+                <div class="disciplina">
+                    <div class="disciplina-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M19.5,6.5C19.5,5.67 18.83,5 18,5H17V3C17,2.45 16.55,2 16,2H11C10.45,2 10,2.45 10,3V4.67C7.67,5.56 6,7.83 6,10.5C6,13.83 9.06,16.42 12.5,16.42C15.94,16.42 19,13.83 19,10.5C19,8.59 18.04,6.97 16.5,6.13V5.5L19.5,6.5M3,20C4.11,20 5,19.1 5,18C5,16.89 4.11,16 3,16C1.89,16 1,16.89 1,18C1,19.1 1.89,20 3,20M21,20C22.11,20 23,19.1 23,18C23,16.89 22.11,16 21,16C19.89,16 19,16.89 19,18C19,19.1 19.89,20 21,20Z" /></svg>
+                    </div>
+                    <h3>Sussurros na Multidão</h3>
+                    <p>Marketing Digital & SEO. Nossas estratégias se infiltram no ruído do mercado, transformando sussurros em clamores.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="portfolio" class="fade-in-section">
+            <h2>Feitos Lendários</h2>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <img src="https://images.unsplash.com/photo-1558655146-364adaf1fcc9?q=80&w=1964&auto=format&fit=crop" alt="Projeto 1">
+                    <div class="portfolio-overlay"><h3>Projeto Alpha</h3></div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="https://images.unsplash.com/photo-1596205255829-7971b816198f?q=80&w=1964&auto=format&fit=crop" alt="Projeto 2">
+                    <div class="portfolio-overlay"><h3>Conquista Beta</h3></div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="https://images.unsplash.com/photo-1605379399642-870262d3d051?q=80&w=2106&auto=format&fit=crop" alt="Projeto 3">
+                    <div class="portfolio-overlay"><h3>Feito Gamma</h3></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="equipe" class="fade-in-section">
+            <h2>A Guilda</h2>
+            <div class="equipe-grid">
+                 <div class="membro">
+                    <div class="avatar-container"><img src="https://i.pravatar.cc/150?img=11" alt="Avatar Membro 1"></div>
+                    <h3>Kael, o Arquiteto</h3>
+                    <p>Mestre Desenvolvedor</p>
+                </div>
+                <div class="membro">
+                    <div class="avatar-container"><img src="https://i.pravatar.cc/150?img=32" alt="Avatar Membro 2"></div>
+                    <h3>Lyra, a Forjadora</h3>
+                    <p>Líder de Design</p>
+                </div>
+                <div class="membro">
+                    <div class="avatar-container"><img src="https://i.pravatar.cc/150?img=14" alt="Avatar Membro 3"></div>
+                    <h3>Roric, o Sussurrante</h3>
+                    <p>Estrategista de Marketing</p>
+                </div>
+                <div class="membro">
+                    <div class="avatar-container"><img src="https://i.pravatar.cc/150?img=35" alt="Avatar Membro 4"></div>
+                    <h3>Elara, a Oráculo</h3>
+                    <p>Gerente de Projetos</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contato" class="fade-in-section">
+            <div id="contato-container">
+                <h2>Pronto para Desafiar o Impossível?</h2>
+                <p>O véu entre o problema e a solução é fino. Traga-nos seu desafio mais sombrio. Invoque a Guilda.</p>
+                <form id="contact-form">
+                    <input type="text" name="name" placeholder="Seu Nome" required>
+                    <input type="email" name="email" placeholder="Seu Canal de Contato (Email)" required>
+                    <textarea name="message" placeholder="Descreva sua Missão Impossível" required></textarea>
+                    <button type="submit" class="cta-button">Lançar o Sinal</button>
+                    <div id="form-response"></div>
+                </form>
+            </div>
+            <div id="portal-background"></div>
+        </section>
+
+        <footer>
+            <div class="logo-footer">NoHeroes</div>
+            <div class="footer-links">
+                <a href="#hero">Início</a>
+                <a href="#disciplinas">Disciplinas</a>
+                <a href="#portfolio">Feitos</a>
+                <a href="#equipe">A Guilda</a>
+            </div>
+            <p class="copyright">&copy; 2025 NoHeroes. Todos os direitos reservados. Forjado no caos.</p>
+        </footer>
+    </div>
+
+
+    <script>
+        // --- CÓDIGO JAVASCRIPT CORRIGIDO ---
+
+        // O evento 'DOMContentLoaded' é disparado assim que o HTML da página é carregado,
+        // sem esperar por imagens. Isso torna o site muito mais rápido e confiável.
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const preloader = document.getElementById('preloader');
+            const pageContent = document.getElementById('page-content');
+
+            // 1. Esconde o preloader e mostra o conteúdo da página
+            // Adicionamos um pequeno delay para a animação do preloader ser visível.
+            setTimeout(() => {
+                preloader.classList.add('loaded');
+                pageContent.style.display = 'block';
+            }, 500);
+
+
+            // --- LÓGICA DE ANIMAÇÃO COM SCROLL (FADE-IN) ---
+            const sections = document.querySelectorAll('.fade-in-section');
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15 
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+
+            // --- LÓGICA DO FORMULÁRIO DE CONTATO ---
+            const contactForm = document.getElementById('contact-form');
+            const formResponse = document.getElementById('form-response');
+
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                formResponse.style.color = 'var(--cor-destaque-principal)';
+                formResponse.textContent = 'Enviando transmissão...';
+
+                // Simulação de envio
+                setTimeout(() => {
+                    formResponse.style.color = 'var(--cor-destaque-secundaria)';
+                    formResponse.textContent = 'O sinal foi recebido. Aguarde nosso corvo.';
+                    contactForm.reset();
+
+                    setTimeout(() => {
+                        formResponse.textContent = '';
+                    }, 5000); 
+                }, 2000);
+            });
+        });
+    </script>
+
+</body>
+</html>
