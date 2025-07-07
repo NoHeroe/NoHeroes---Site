@@ -98,26 +98,17 @@
 }
 .invisivel {
   opacity: 0;
-  transform: translateX(0);
-  transition: opacity 1s ease, transform 1s ease;
+  transform: translateY(-50px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
-.slide-left {
-  transform: translateX(-60px);
-}
-
-.slide-right {
-  transform: translateX(60px);
+.slide-top {
+  transform: translateY(-50px);
 }
 
 .entrou {
   opacity: 1 !important;
-  transform: translateX(0) !important;
-}
-header {
-  transform: translateZ(0);
-  will-change: transform;
-  backface-visibility: hidden;
+  transform: translateY(0) !important;
 }
 </style>
 
@@ -251,7 +242,7 @@ header {
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-16">
 
   <!-- 1. Um Portal Multimídia -->
- <div class="bg-[#1c1c1c] p-6 rounded-xl shadow-md reveal-left text-center">
+ <div class="bg-[#1c1c1c] p-6 rounded-xl shadow-md reveal-top text-center">
   <svg class="mx-auto mb-4" width="40" height="40" viewBox="0 0 24 24" fill="none">
     <defs>
       <linearGradient id="grad-vortex" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -270,7 +261,7 @@ header {
 </div>
 
   <!-- 2. Seu Dojo Digital -->
-  <div class="bg-[#1c1c1c] p-6 rounded-xl shadow-md reveal-right text-center">
+  <div class="bg-[#1c1c1c] p-6 rounded-xl shadow-md reveal-top text-center">
   <svg class="mx-auto mb-4" width="40" height="40" viewBox="0 0 24 24" fill="none">
     <defs>
       <linearGradient id="grad-dojo" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -291,7 +282,7 @@ header {
 </div>
 
   <!-- 3. Uma Frequência Criativa -->
-  <div class="bg-[#1c1c1c] p-6 rounded-xl shadow-md reveal-left text-center">
+  <div class="bg-[#1c1c1c] p-6 rounded-xl shadow-md reveal-top text-center">
   <svg class="mx-auto mb-4" width="40" height="40" viewBox="0 0 24 24" fill="none">
     <defs>
       <linearGradient id="grad-freq" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -310,7 +301,7 @@ header {
 </div>
 
   <!-- 4. A Forja dos Sonhos -->
-  <div class="bg-[#1c1c1c] p-6 rounded-xl shadow-md reveal-right text-center">
+  <div class="bg-[#1c1c1c] p-6 rounded-xl shadow-md reveal-top text-center">
   <svg class="mx-auto mb-4" width="40" height="40" viewBox="0 0 24 24" fill="none">
     <defs>
       <linearGradient id="grad-forja" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -576,7 +567,8 @@ createParticles(Math.floor(150 * ratio));   // ou qualquer quantidade desejada
 });
 
 window.addEventListener("resize", resizeCanvas);
-  function revelarLateralmente(selector, direcao = 'left') {
+
+  function revelarDeCima(selector) {
   const elementos = document.querySelectorAll(selector);
 
   const observer = new IntersectionObserver(entradas => {
@@ -589,13 +581,14 @@ window.addEventListener("resize", resizeCanvas);
   }, { threshold: 0.1 });
 
   elementos.forEach(el => {
-    el.classList.add('invisivel', `slide-${direcao}`);
+    el.classList.add('invisivel', 'slide-top');
     observer.observe(el);
   });
 }
-// Ativa a revelação lateral nos elementos
-revelarLateralmente('.reveal-left', 'left');
-revelarLateralmente('.reveal-right', 'right');
+
+// Ativar a animação para todos os elementos com .reveal-top
+revelarDeCima('.reveal-top');
+
 </script>
   </body>  
 </html> 
