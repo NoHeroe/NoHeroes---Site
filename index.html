@@ -139,6 +139,36 @@
   opacity: 1;
   transform: scale(1);
 }
+.atributos-hex {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
+}
+
+.hex-bg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.atributo {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #ccc;
+  font-size: 14px;
+  font-family: monospace;
+}
+
+/* Posicionamento hexagonal */
+.atributo:nth-child(2) { top: 0; left: 50%; transform: translate(-50%, 0); }         /* Força */
+.atributo:nth-child(3) { top: 25%; right: 0; transform: translate(0, -50%); }          /* Destreza */
+.atributo:nth-child(4) { top: 60%; right: 15%; transform: translate(0, -50%); }        /* Constituição */
+.atributo:nth-child(5) { bottom: 25%; right: 15%; transform: translate(0, 50%); }      /* Inteligência */
+.atributo:nth-child(6) { bottom: 0; left: 50%; transform: translate(-50%, 0); }         /* Espírito */
+.atributo:nth-child(7) { bottom: 25%; left: 15%; transform: translate(0, 50%); }       /* Carisma */
 </style>
 
 </head>  
@@ -363,14 +393,20 @@
 
 <!-- 5. GAMIFICAÇÃO -->  
 <section id="sistema" class="py-20 px-6 max-w-5xl mx-auto text-center">
-  <h2 class="text-3xl md:text-4xl font-bold gradiente-noheroes mb-6">
-    Um sistema. Dois universos.  
-    <br class="hidden sm:block">  
-    Um jogador. Duas decisões.
-  </h2>
+  <h2 class="text-3xl md:text-4xl font-black gradiente-noheroes leading-tight mb-6 tracking-wide uppercase">
+  Um sistema.<br>Dois universos.<br>Um jogador.<br>Duas decisões.
+</h2>
 
   <!-- Imagem simbólica -->
-  <img src="assets/images/sistema-reflexo.png" alt="Sistema Reflexo" class="mx-auto w-40 md:w-56 mb-8 opacity-90 hover:scale-105 transition" />
+  <div class="atributos-hex">
+  <img src="assets/images/hex-background.png" alt="hud hexagonal" class="hex-bg"/>
+  <div class="atributo" data-attr="FORÇA" data-value="1"></div>
+  <div class="atributo" data-attr="DESTREZA" data-value="1"></div>
+  <div class="atributo" data-attr="CONSTITUIÇÃO" data-value="1"></div>
+  <div class="atributo" data-attr="INTELIGÊNCIA" data-value="1"></div>
+  <div class="atributo" data-attr="ESPÍRITO" data-value="1"></div>
+  <div class="atributo" data-attr="CARISMA" data-value="1"></div>
+</div>
 
   <!-- Botão principal: abre o modal -->
   <button id="abrir-modal-sistema" class="px-6 py-3 bg-[#8f4fff]/20 border border-[#8f4fff] text-[#8f4fff] rounded-full hover:bg-[#8f4fff]/30 transition">
@@ -643,6 +679,36 @@ fecharModal.addEventListener('click', () => {
 modalSistema.addEventListener('click', e => {
   if (e.target === modalSistema) modalSistema.classList.remove('ativo');
 });
+
+function startGlitch() {
+  const elementos = document.querySelectorAll('.atributo');
+
+  elementos.forEach(el => {
+    const target = el.dataset.value;
+    const label = document.createElement('div');
+    label.textContent = el.dataset.attr;
+    const number = document.createElement('div');
+    number.textContent = '0';
+    el.append(label, number);
+
+    function glitch() {
+      const rand = Math.floor(Math.random() * 10);
+      number.textContent = rand;
+    }
+
+    function reveal() {
+      clearInterval(glitchInt);
+      number.textContent = target;
+      // opcional: anima visual de confirmação aqui
+    }
+
+    const glitchInt = setInterval(glitch, 50 + Math.random() * 100);
+    setTimeout(reveal, 500 + Math.random() * 500);
+  });
+}
+
+// Executa ao carregar a seção (ou logo após inserir os atributos no DOM)
+startGlitch();
 </script>
   </body>  
 </html> 
