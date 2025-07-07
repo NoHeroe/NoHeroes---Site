@@ -655,35 +655,47 @@ modalSistema.addEventListener('click', e => {
   if (e.target === modalSistema) modalSistema.classList.remove('ativo');
 });
 
-function startGlitch() {
+function startGlitchAtributos() {
   const elementos = document.querySelectorAll('.atributo');
 
   elementos.forEach(el => {
-    const target = el.dataset.value;
+    const valorFinal = el.dataset.value;
+    const abreviado = el.dataset.attr.slice(0, 3).toUpperCase();
+
     const label = document.createElement('div');
-    label.textContent = el.dataset.attr.slice(0,3).toUpperCase();
+    label.textContent = abreviado;
     const number = document.createElement('div');
-    number.textContent = '0';
+    number.textContent = '⟐';
     el.append(label, number);
 
-    function glitch() {
-      const rand = Math.floor(Math.random() * 10);
-      number.textContent = rand;
+    let count = 0;
+    const caracteres = ['0', '1', '⟐', '∿', 'Ξ', '░', '█'];
+
+    function glitchLoop() {
+      if (count < 12) {
+        number.textContent = caracteres[Math.floor(Math.random() * caracteres.length)];
+        count++;
+        setTimeout(glitchLoop, 50 + Math.random() * 50);
+      } else {
+        number.textContent = valorFinal;
+      }
     }
 
-    function reveal() {
-      clearInterval(glitchInt);
-      number.textContent = target;
-      // opcional: anima visual de confirmação aqui
-    }
-
-    const glitchInt = setInterval(glitch, 50 + Math.random() * 100);
-    setTimeout(reveal, 500 + Math.random() * 500);
+    glitchLoop();
   });
 }
 
-// Executa ao carregar a seção (ou logo após inserir os atributos no DOM)
-window.addEventListener("DOMContentLoaded", startGlitch);
+// Só roda o glitch quando a seção estiver visível
+const observerSistema = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      startGlitchAtributos();
+      observerSistema.disconnect(); // roda só uma vez
+    }
+  });
+}, { threshold: 0.4 });
+
+observerSistema.observe(document.querySelector('#sistema'));
 </script>
   </body>  
 </html> 
