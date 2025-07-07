@@ -102,7 +102,43 @@
   opacity: 1 !important;
   transform: translateY(0) !important;
 }
+#modal-sistema {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
 
+#modal-sistema.ativo {
+  visibility: visible;
+  opacity: 1;
+}
+
+.modal-bolha {
+  background: rgba(28, 28, 28, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  max-width: 500px;
+  width: 90%;
+  padding: 2rem;
+  opacity: 0;
+  transform: scale(0.3);
+  transition: all 0.6s cubic-bezier(0.25, 1.25, 0.5, 1.05);
+}
+
+#modal-sistema.ativo .modal-bolha {
+  opacity: 1;
+  transform: scale(1);
+}
 </style>
 
 </head>  
@@ -315,13 +351,6 @@
 </div>
 </section>
 
- <!-- 3. TEASER JOGAR -->  
-<section id="jogar" class="py-16 px-8 max-w-4xl mx-auto text-center">  
-  <img src="assets/images/hud-teaser.png" alt="Teaser HUD" class="mx-auto mb-6 w-48 opacity-80">  
-  <h2 class="text-2xl font-bold mb-4">Você está pronto para deixar de assistir... e começar a viver?</h2>  
-  <button class="px-6 py-3 bg-gray-600 text-white rounded-lg opacity-50 cursor-not-allowed">Jogar Agora (em breve)</button>  
-</section>  
-
 <!-- 4. UNIVERSO COMEÇA AQUI -->  
 <section id="universo" class="py-16 px-8 max-w-5xl mx-auto text-center relative">  
   <div class="absolute inset-0 bg-gradient-to-br from-[#39ff14]/30 to-[#8f4fff]/30"></div>  
@@ -333,42 +362,33 @@
 </section>  
 
 <!-- 5. GAMIFICAÇÃO -->  
-<section id="game" class="py-16 px-8 max-w-5xl mx-auto bg-[#111] rounded-lg text-center">  
-  <h2 class="text-2xl font-bold mb-4 text-[#8f4fff]">Torne-se um personagem no nosso mundo</h2>  
-  <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">  
-    <div><strong>Intel.</strong><p>12</p></div>  
-    <div><strong>Força</strong><p>8</p></div>  
-    <div><strong>Resist.</strong><p>10</p></div>  
-    <div><strong>Infl.</strong><p>5</p></div>  
-    <div><strong>Poder</strong><p>35</p></div>  
+<section id="sistema" class="py-20 px-6 max-w-5xl mx-auto text-center">
+  <h2 class="text-3xl md:text-4xl font-bold gradiente-noheroes mb-6">
+    Um sistema. Dois universos.  
+    <br class="hidden sm:block">  
+    Um jogador. Duas decisões.
+  </h2>
+
+  <!-- Imagem simbólica -->
+  <img src="assets/images/sistema-reflexo.png" alt="Sistema Reflexo" class="mx-auto w-40 md:w-56 mb-8 opacity-90 hover:scale-105 transition" />
+
+  <!-- Botão principal: abre o modal -->
+  <button id="abrir-modal-sistema" class="px-6 py-3 bg-[#8f4fff]/20 border border-[#8f4fff] text-[#8f4fff] rounded-full hover:bg-[#8f4fff]/30 transition">
+    Como funciona o sistema
+  </button>
+
+  <!-- Botões secundários -->
+  <div class="flex flex-col sm:flex-row justify-center gap-4 mt-6">
+    <button disabled class="px-6 py-3 bg-[#39ff14]/10 border border-[#39ff14] text-[#39ff14] rounded-lg opacity-50 cursor-not-allowed">
+      Baixar App (em breve)
+    </button>
+    <button disabled class="px-6 py-3 bg-[#facc15]/10 border border-[#facc15] text-[#facc15] rounded-lg opacity-50 cursor-not-allowed">
+      Jogar Agora (em breve)
+    </button>
   </div>
+</section>
 
-<!-- Botão que abre o modal (substitua seu <a> atual) -->  <button id="open-personagem-modal"  
-class="px-6 py-3 bg-[#8f4fff] text-black rounded-lg hover:scale-105 transition">
-Como funciona o sistema
-</button>
-
-<!-- Modal de sistema de personagem -->  <div id="personagem-modal" class="fixed inset-0 bg-black/70 hidden items-center justify-center z-50">  
-  <div class="bg-[#1c1c1c] rounded-lg shadow-xl max-w-md w-full p-6 relative opacity-0 transform scale-95 transition-all duration-300">  
-    <!-- Botão fechar -->  
-    <button id="close-personagem-modal"  
-            class="absolute top-3 right-3 text-2xl text-[#ccc] hover:text-white">&times;</button>  
-    <!-- Conteúdo -->  
-    <h3 class="text-2xl font-bold text-[#8f4fff] mb-4">Desperte o seu reflexo no universo NoHeroes</h3>  
-    <p class="mb-4 italic">Seu personagem não é apenas um avatar. Ele é a extensão do que você constrói aqui — uma versão simbólica e energética da sua jornada.</p>  
-    <ul class="list-disc list-inside space-y-2 mb-6 text-[#e5e5e5]">  
-      <li><strong>Vinculado à sua conta:</strong> Seu personagem nasce conectado à sua identidade no universo NoHeroes.</li>  
-      <li><strong>Evolução baseada na vida real:</strong> Suas escolhas, missões cumpridas e habilidades aplicadas na vida real influenciam diretamente o crescimento dele.</li>  
-      <li><strong>Missões e desafios simbólicos:</strong> Tarefas e rituais que te fortalecem tanto no jogo quanto fora dele.</li>  
-      <li><strong>Útil desde já:</strong> Mesmo antes do lançamento oficial, ele já traz recompensas e narrativas únicas.</li>  
-    </ul>  
-    <button id="mirror-btn"  
-            class="w-full py-3 bg-gradient-to-r from-[#8f4fff] to-[#39ff14] text-black font-semibold rounded-lg hover:scale-105 transition">  
-      Me Espelhar na Escuridão  
-    </button>  
-  </div>  
-</div>  
-    </section>  <!-- 6. APOIO VITALISTA -->  
+ <!-- 6. APOIO VITALISTA -->  
 <section id="apoio" class="py-16 px-8 max-w-5xl mx-auto text-center">  
   <h2 class="text-2xl font-bold mb-4 text-[#39ff14]">Sua ajuda alimenta o mundo de Caelum</h2>  
   <div class="flex flex-col md:flex-row justify-center gap-4">  
@@ -430,6 +450,30 @@ Como funciona o sistema
     <p class="text-xs mt-4">© 2025 NoHeroes. Todos os direitos reservados.</p>  
   </footer>  
   </main>
+
+<div id="modal-sistema">
+  <div class="modal-bolha text-white relative">
+    <button id="fechar-modal-sistema" class="absolute top-3 right-4 text-xl text-[#aaa] hover:text-white">
+      &times;
+    </button>
+    <h3 class="text-2xl font-bold text-[#8f4fff] mb-4">
+  Como funciona o sistema
+</h3>
+
+<ul class="list-disc list-inside space-y-3 text-[#e5e5e5] text-sm leading-relaxed">
+  <li>O sistema já está funcionando. Tudo o que você faz conta.</li>
+  <li>Missões reais. Recompensas reais. Uma jornada que atravessa mundos.</li>
+  <li>O app, o site e o jogo são parte do mesmo propósito — e tudo se conecta.</li>
+  <li>Você evolui. Cria. Ganha. E ainda joga.</li>
+  <li>Aqui, o personagem é você. A diferença é que agora ele tem um caminho.</li>
+</ul>
+
+<button id="mirror-btn"
+  class="w-full py-3 mt-6 bg-gradient-to-r from-[#8f4fff] to-[#39ff14] text-black font-semibold rounded-lg hover:scale-105 transition">
+  Me Espelhar na Escuridão
+</button>
+  </div>
+</div>
 
 <canvas id="brasasCanvas"></canvas>
 
@@ -584,6 +628,21 @@ window.addEventListener("resize", resizeCanvas);
 
 revelarDeCima('.reveal-top');
 
+const abrirModal = document.getElementById('abrir-modal-sistema');
+const fecharModal = document.getElementById('fechar-modal-sistema');
+const modalSistema = document.getElementById('modal-sistema');
+
+abrirModal.addEventListener('click', () => {
+  modalSistema.classList.add('ativo');
+});
+
+fecharModal.addEventListener('click', () => {
+  modalSistema.classList.remove('ativo');
+});
+
+modalSistema.addEventListener('click', e => {
+  if (e.target === modalSistema) modalSistema.classList.remove('ativo');
+});
 </script>
   </body>  
 </html> 
