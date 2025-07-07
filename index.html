@@ -74,23 +74,6 @@
   box-shadow: 0 0 30px #facc15dd, 0 0 40px #8f4fffcc;
 }
 
-@keyframes fadeInLeft { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: translateX(0); } }
-@keyframes fadeInTop { from { opacity: 0; transform: translateY(-40px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes fadeInRight { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
-@keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-
-.animate-fade-in-left { animation: fadeInLeft 1s ease forwards; }
-.animate-fade-in-top { animation: fadeInTop 1s ease forwards; }
-.animate-fade-in-right { animation: fadeInRight 1s ease forwards; }
-.animate-fade-in-up { animation: fadeInUp 1s ease forwards; }
-
-@keyframes levitate {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-5px); }
-}
-.float-levitate {
-  animation: levitate 4s ease-in-out infinite;
-}
 .gradiente-titulo {
   background: linear-gradient(to right, #8f4fff, #facc15);
   -webkit-background-clip: text;
@@ -110,6 +93,14 @@
 .entrou {
   opacity: 1 !important;
   transform: translateY(0) !important;
+}
+.glass {
+  background: rgba(28, 28, 28, 0.5); /* cinza escuro semi-transparente */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px); /* suporte Safari */
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  transition: backdrop-filter 0.5s ease, background 0.5s ease;
 }
 </style>
 
@@ -243,7 +234,7 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-16">
 
   <!-- 1. Um Portal Multimídia -->
- <div class="bg-[#1c1c1c] p-6 rounded-xl shadow-md reveal-top text-center">
+ <div class="glass p-6 rounded-xl shadow-md reveal-top text-center">
   <svg class="mx-auto mb-4" width="40" height="40" viewBox="0 0 24 24" fill="none">
     <defs>
       <linearGradient id="grad-vortex" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -262,7 +253,7 @@
 </div>
 
   <!-- 2. Seu Dojo Digital -->
-  <div class="bg-[#1c1c1c] p-6 rounded-xl shadow-md reveal-top text-center">
+  <div class="glass p-6 rounded-xl shadow-md reveal-top text-center">
   <svg class="mx-auto mb-4" width="40" height="40" viewBox="0 0 24 24" fill="none">
     <defs>
       <linearGradient id="grad-dojo" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -283,7 +274,7 @@
 </div>
 
   <!-- 3. Uma Frequência Criativa -->
-  <div class="bg-[#1c1c1c] p-6 rounded-xl shadow-md reveal-top text-center">
+  <div class="glass p-6 rounded-xl shadow-md reveal-top text-center">
   <svg class="mx-auto mb-4" width="40" height="40" viewBox="0 0 24 24" fill="none">
     <defs>
       <linearGradient id="grad-freq" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -302,7 +293,7 @@
 </div>
 
   <!-- 4. A Forja dos Sonhos -->
-  <div class="bg-[#1c1c1c] p-6 rounded-xl shadow-md reveal-top text-center">
+  <div class="glass p-6 rounded-xl shadow-md reveal-top text-center">
   <svg class="mx-auto mb-4" width="40" height="40" viewBox="0 0 24 24" fill="none">
     <defs>
       <linearGradient id="grad-forja" x1="0%" y1="0%" x2="100%" y2="100%">
