@@ -171,6 +171,29 @@
 .atributo:nth-child(5) { bottom: -10px; left: 50%; transform: translate(-50%, 0); }       /* ESP */
 .atributo:nth-child(6) { bottom: 35px; left: 0; transform: translate(0, 0); }             /* CAR */
 .atributo:nth-child(7) { top: 35px; left: 0; transform: translate(0, 0); }                /* CON */
+.glitch {
+  color: #ff3dff;
+  animation: glitchColor 0.3s alternate infinite, glitchShake 0.2s infinite;
+  text-shadow:
+    0 0 2px #ff3dff,
+    1px 1px 1px #ff0044,
+    -1px -1px 1px #8f4fff;
+  transform: rotate(-2deg) scale(1.1) skewX(2deg);
+}
+
+@keyframes glitchColor {
+  0% { color: #ff3dff; }
+  50% { color: #ff0044; }
+  100% { color: #8f4fff; }
+}
+
+@keyframes glitchShake {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-1px, 1px) rotate(-2deg); }
+  50% { transform: translate(1px, -1px) rotate(2deg); }
+  75% { transform: translate(-2px, 2px) rotate(-1deg); }
+  100% { transform: translate(0, 0); }
+}
 </style>
 
 </head>  
@@ -655,47 +678,57 @@ modalSistema.addEventListener('click', e => {
   if (e.target === modalSistema) modalSistema.classList.remove('ativo');
 });
 
-function startGlitchAtributos() {
-  const elementos = document.querySelectorAll('.atributo');
+function startGlitch() {
+  const atributos = document.querySelectorAll('.atributo');
+  const simbolos = ['⟟','⚠','Ж','∑','⍰','█','//','!!','??','>>','==','xx','ψ','ø','∆','¿'];
 
-  elementos.forEach(el => {
-    const valorFinal = el.dataset.value;
-    const abreviado = el.dataset.attr.slice(0, 3).toUpperCase();
-
-    const label = document.createElement('div');
-    label.textContent = abreviado;
+  atributos.forEach(attr => {
+    const nome = attr.dataset.attr;
     const number = document.createElement('div');
-    number.textContent = '⟐';
-    el.append(label, number);
+    number.className = 'valor';
+    number.textContent = Math.floor(Math.random() * 99) + 1;
+    
+    const label = document.createElement('div');
+    label.textContent = nome;
 
-    let count = 0;
-    const caracteres = ['0', '1', '⟐', '∿', 'Ξ', '░', '█'];
-
-    function glitchLoop() {
-      if (count < 12) {
-        number.textContent = caracteres[Math.floor(Math.random() * caracteres.length)];
-        count++;
-        setTimeout(glitchLoop, 50 + Math.random() * 50);
-      } else {
-        number.textContent = valorFinal;
-      }
-    }
-
-    glitchLoop();
+    attr.append(label, number);
   });
+
+  function glitchLoop() {
+    const all = document.querySelectorAll('.atributo .valor');
+    const alvos = [...all].sort(() => 0.5 - Math.random()).slice(0, 2);
+
+    alvos.forEach(el => {
+      const original = el.textContent;
+      el.classList.add('glitch');
+
+      // glitch visual com símbolos bugados
+      const interval = setInterval(() => {
+        el.textContent = simbolos[Math.floor(Math.random() * simbolos.length)];
+      }, 50);
+
+      // depois volta com número novo
+      setTimeout(() => {
+        clearInterval(interval);
+        el.classList.remove('glitch');
+
+        let novo;
+        do {
+          novo = Math.floor(Math.random() * 99) + 1;
+        } while (novo == original);
+
+        el.textContent = novo;
+      }, 1000);
+    });
+
+    // repete a cada 2.5 segundos
+    setTimeout(glitchLoop, 2500);
+  }
+
+  glitchLoop();
 }
 
-// Só roda o glitch quando a seção estiver visível
-const observerSistema = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      startGlitchAtributos();
-      observerSistema.disconnect(); // roda só uma vez
-    }
-  });
-}, { threshold: 0.4 });
-
-observerSistema.observe(document.querySelector('#sistema'));
+window.addEventListener('DOMContentLoaded', startGlitch);
 </script>
   </body>  
 </html> 
