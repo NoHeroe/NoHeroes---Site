@@ -260,10 +260,10 @@
 }
 
 .btn-líquido-pulsante-escuro.glitchando {
-  animation: btnShake 0.1s infinite, none; /* o 'none' é sobrescrito pela linha de cima */
+  animation: btnShake 0.1s infinite, none;
 }
 .modal-bolha.glitchando {
-  animation: modalGlitchIn 0.5s ease-out;
+  animation: modalGlitchIn 0.6s ease-out;
 }
 
 @keyframes modalGlitchIn {
@@ -767,12 +767,15 @@ abrirModal.addEventListener('click', () => {
     const modalConteudo = modalSistema.querySelector('.modal-bolha');
     modalConteudo.classList.add('glitchando');
 
-    // remove o efeito de glitch após 0.5s
     setTimeout(() => {
       modalConteudo.classList.remove('glitchando');
-    }, 500);
+    }, 600); // duração do glitch visual do modal
+  }, 600); // duração do glitch no botão
+});
 
-  }, 1000); // tempo total: 1s glitch botão + 0.5s modal animando
+// ⬅ ADICIONA ESTE TRECHO PARA FECHAR O MODAL
+fecharModal.addEventListener('click', () => {
+  modalSistema.classList.remove('ativo');
 });
 
 function startGlitch() {
