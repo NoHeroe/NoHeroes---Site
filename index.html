@@ -767,10 +767,10 @@ abrirModal.addEventListener('click', () => {
     const modalConteudo = modalSistema.querySelector('.modal-bolha');
     modalConteudo.classList.add('glitchando');
 
-    // remove o efeito de glitch após 0.4s
+    // remove o efeito de glitch após 0.5s
     setTimeout(() => {
       modalConteudo.classList.remove('glitchando');
-    }, 400);
+    }, 500);
 
   }, 1000); // tempo total: 1s glitch botão + 0.5s modal animando
 });
