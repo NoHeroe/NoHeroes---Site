@@ -284,34 +284,36 @@
 }
 .botao-desativado-duplo {
   display: flex;
-  justify-content: center;
-  gap: 1rem;
   flex-wrap: wrap;
-  margin-top: 1.5rem;
+  gap: 1rem;
+  justify-content: center;
 }
 
 .botao-desativado-duplo button {
-  background: linear-gradient(to right, #3f1f6e, #4a044e); /* roxo mais escuro */
+  background: linear-gradient(to right, #3f1f6e, #2a003f);
   color: #eee;
   font-family: inherit;
   font-weight: 600;
-  padding: 0.6rem 1.2rem;
+  padding: 0.5rem 1rem;
   border-radius: 9999px;
   border: none;
-  opacity: 0.5;
+  opacity: 0.4;
   cursor: not-allowed;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   text-shadow: none;
   box-shadow: none;
-  filter: grayscale(0.4) brightness(0.8);
+  filter: grayscale(0.6) brightness(0.8);
   transition: none;
+  white-space: nowrap;
+  width: auto;         /* ← ESSENCIAL */
+  max-width: 45%;      /* ← Lado a lado */
+  flex: 1 1 auto;      /* ← Responsivo */
 }
-
 .botao-desativado-duplo button span {
   color: #aaa;
   opacity: 0.5;
   font-size: 0.8rem;
-  margin-left: 0.4rem;
+  margin-left: 0.3rem;
 }
 </style>
 
