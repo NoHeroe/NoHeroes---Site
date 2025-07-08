@@ -251,6 +251,37 @@
   80%  { transform: translate(1px, -2px) skewX(-5deg) scale(1.15); opacity: 0.9; }
   100% { transform: translate(0, 0) skewX(0deg) scale(1); opacity: 1; }
 }
+@keyframes btnShake {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  20% { transform: translate(-3px, 2px) rotate(-2deg); }
+  40% { transform: translate(3px, -2px) rotate(2deg); }
+  60% { transform: translate(-2px, 2px) rotate(-1deg); }
+  80% { transform: translate(2px, -1px) rotate(1deg); }
+}
+
+.btn-líquido-pulsante-escuro.glitchando {
+  animation: btnShake 0.1s infinite, none; /* o 'none' é sobrescrito pela linha de cima */
+}
+.modal-bolha.glitchando {
+  animation: modalGlitchIn 0.4s ease-out;
+}
+
+@keyframes modalGlitchIn {
+  0% {
+    transform: scale(0.6) rotate(5deg) skewX(10deg);
+    opacity: 0;
+    filter: hue-rotate(90deg) brightness(1.5);
+  }
+  50% {
+    transform: scale(1.1) rotate(-3deg) skewX(-5deg);
+    filter: hue-rotate(-30deg) brightness(2);
+  }
+  100% {
+    transform: scale(1) rotate(0deg) skewX(0);
+    opacity: 1;
+    filter: none;
+  }
+}
 </style>
 
 </head>  
@@ -727,18 +758,21 @@ const fecharModal = document.getElementById('fechar-modal-sistema');
 
 abrirModal.addEventListener('click', () => {
   abrirModal.classList.add('glitchando');
-  glitchText.classList.add('glitch');
 
-  // Espera 1.2s pra abrir o modal
   setTimeout(() => {
     abrirModal.classList.remove('glitchando');
-    glitchText.classList.remove('glitch');
+    
     modalSistema.classList.add('ativo');
-  }, 1200);
-});
 
-fecharModal.addEventListener('click', () => {
-  modalSistema.classList.remove('ativo');
+    const modalConteudo = modalSistema.querySelector('.modal-bolha');
+    modalConteudo.classList.add('glitchando');
+
+    // remove o efeito de glitch após 0.4s
+    setTimeout(() => {
+      modalConteudo.classList.remove('glitchando');
+    }, 400);
+
+  }, 1000); // tempo total: 1s glitch botão + 0.5s modal animando
 });
 
 function startGlitch() {
