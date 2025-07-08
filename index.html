@@ -282,27 +282,36 @@
     filter: none;
   }
 }
-.btn-desativado-personalizado {
-  background: linear-gradient(to right, #8f4fff, #facc15);
-  color: white;
-  font-family: inherit; /* mantém a fonte atual */
+.botao-desativado-duplo {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+.botao-desativado-duplo button {
+  background: linear-gradient(to right, #3f1f6e, #4a044e); /* roxo mais escuro */
+  color: #eee;
+  font-family: inherit;
   font-weight: 600;
-  padding: 0.75rem 1.5rem;
+  padding: 0.6rem 1.2rem;
   border-radius: 9999px;
   border: none;
-  opacity: 1;
-  cursor: not-allowed;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  text-shadow: 0 0 5px #00000066;
-  box-shadow: 0 0 12px #8f4fff88;
-  transition: filter 0.3s ease;
-}
-.btn-desativado-personalizado span {
   opacity: 0.5;
-  font-size: 0.9rem;
-  color: #ccc;
+  cursor: not-allowed;
+  font-size: 0.95rem;
+  text-shadow: none;
+  box-shadow: none;
+  filter: grayscale(0.4) brightness(0.8);
+  transition: none;
+}
+
+.botao-desativado-duplo button span {
+  color: #aaa;
+  opacity: 0.5;
+  font-size: 0.8rem;
+  margin-left: 0.4rem;
 }
 </style>
 
@@ -549,13 +558,10 @@
 </button>
 
   <!-- Botões secundários -->
-  <div class="flex flex-col sm:flex-row justify-center gap-4 mt-6">
-    <button class="btn-desativado-personalizado">
-  Baixar App <span>(em breve)</span>
-</button>
-<button class="btn-desativado-personalizado">
-  Jogar Agora <span>(em breve)</span>
-</button>
+<div class="flex justify-center mt-6">
+  <div class="botao-desativado-duplo">
+    <button>Baixar App <span>(em breve)</span></button>
+    <button>Jogar Agora <span>(em breve)</span></button>
   </div>
 </div>
 </section>
