@@ -317,6 +317,35 @@
   font-size: 0.75rem;
   margin-left: 0.35rem;
 }
+.botao-modal-vinho {
+  background: linear-gradient(135deg, #4b002d, #000000, #4b002d);
+  background-size: 400% 400%;
+  animation: fluidPulseVinho 8s ease-in-out infinite;
+  color: #ffffff;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  border-radius: 9999px;
+  padding: 0.75rem 1.8rem;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 4px #000;
+  border: 1px solid #4b002d;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  letter-spacing: 1px;
+  font-size: 0.95rem;
+}
+
+.botao-modal-vinho:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #4b002dcc, 0 0 40px #000000aa;
+}
+
+@keyframes fluidPulseVinho {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 </style>
 
 </head>  
@@ -650,9 +679,10 @@
   <li>Aqui, o personagem é você. A diferença é que agora ele tem um caminho.</li>
 </ul>
 
-<button id="mirror-btn"
-  class="w-full py-3 mt-6 bg-gradient-to-r from-[#8f4fff] to-[#39ff14] text-black font-semibold rounded-lg hover:scale-105 transition">
+<button class="botao-modal-vinho">
+  <span class="text-xl">✦</span>
   Me Espelhar na Escuridão
+  <span class="text-xl">✦</span>
 </button>
   </div>
 </div>
