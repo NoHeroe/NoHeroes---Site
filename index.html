@@ -376,7 +376,28 @@
   font-size: 0.75rem;
   margin-left: 0.35rem;
 }
+@keyframes carousel {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
 
+.animate-carousel {
+  animation: carousel 20s linear infinite;
+  width: 200%;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  padding: 1rem;
+  border-radius: 1rem;
+  min-width: 160px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  color: #eaeaea;
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+}
 </style>
 
 </head>  
@@ -589,15 +610,71 @@
 </div>
 </section>
 
-<!-- 4. UNIVERSO COMEÇA AQUI -->  
-<section id="universo" class="py-16 px-8 max-w-5xl mx-auto text-center relative">  
-  <div class="absolute inset-0 bg-gradient-to-br from-[#39ff14]/30 to-[#8f4fff]/30"></div>  
-  <h2 class="relative text-3xl font-bold mb-6">Cada alma vibra em uma frequência… ou ruge contra o próprio destino.</h2>  
-  <div class="relative z-10 flex justify-center gap-8 flex-wrap">  
-    <a href="FREQ.html" class="px-6 py-3 border-2 border-[#39ff14] text-[#39ff14] rounded-lg hover:bg-[#39ff14] hover:text-black transition">Explorar FREQ</a>  
-    <a href="ROAR.html" class="px-6 py-3 border-2 border-[#8f4fff] text-[#8f4fff] rounded-lg hover:bg-[#8f4fff] hover:text-black transition">Explorar ROAR</a>  
-  </div>  
-</section>  
+<!-- 4. UNIVERSO (REFORMULADO) -->
+<section id="universo" class="py-20 px-6 max-w-7xl mx-auto relative text-center">
+  <h2 class="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-[#8f4fff] to-[#000] bg-clip-text text-transparent font-cinzel mb-4 uppercase tracking-wide">
+    A Forja da NoHeroes
+  </h2>
+  <p class="text-[#e0e0e0] max-w-2xl mx-auto mb-10 text-sm md:text-base">
+    Conheça os grimórios, relíquias e códigos do nosso universo. Eles não são Produtos. São nosso Arsenal.
+  </p>
+
+  <div class="relative h-64 overflow-hidden">
+    <div class="absolute inset-0 flex items-center justify-center animate-carousel gap-6">
+      <!-- Card 1 -->
+      <div class="glass-card scale-100 z-20 blur-0 opacity-100">
+        <img src="img/freq-thumb.png" alt="FREQ" class="w-32 h-32 object-contain mx-auto mb-2">
+        <p class="text-sm font-semibold">FREQ</p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="glass-card scale-90 z-10 blur-sm opacity-60">
+        <img src="img/roar-thumb.png" alt="ROAR" class="w-24 h-24 object-contain mx-auto mb-2">
+        <p class="text-sm font-semibold">ROAR</p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="glass-card scale-75 z-0 blur-md opacity-40">
+        <img src="img/manual-thumb.png" alt="Manual" class="w-20 h-20 object-contain mx-auto mb-2">
+        <p class="text-sm font-semibold">Manual das Sombras</p>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="glass-card scale-90 z-10 blur-sm opacity-60">
+        <img src="img/app-thumb.png" alt="App" class="w-24 h-24 object-contain mx-auto mb-2">
+        <p class="text-sm font-semibold">App</p>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="glass-card scale-75 z-0 blur-md opacity-40">
+        <img src="img/game-thumb.png" alt="Jogo" class="w-20 h-20 object-contain mx-auto mb-2">
+        <p class="text-sm font-semibold">Jogar</p>
+      </div>
+
+<!-- Card 6 -->
+<div class="glass-card scale-90 z-10 blur-sm opacity-60">
+  <img src="img/sistemavivo-thumb.png" alt="Sistema Vivo" class="w-24 h-24 object-contain mx-auto mb-2">
+  <p class="text-sm font-semibold">Sistema Vivo</p>
+</div>
+
+<!-- Card 7 -->
+<div class="glass-card scale-75 z-0 blur-md opacity-40">
+  <img src="img/tudoestaconectado-thumb.png" alt="Tudo Está Conectado" class="w-20 h-20 object-contain mx-auto mb-2">
+  <p class="text-sm font-semibold leading-tight">Tudo Está<br>Conectado</p>
+</div>
+
+<!-- Card 8 -->
+<div class="glass-card scale-90 z-10 blur-sm opacity-60">
+  <img src="img/circulointerno-thumb.png" alt="Círculo Interno" class="w-24 h-24 object-contain mx-auto mb-2">
+  <p class="text-sm font-semibold">Círculo Interno</p>
+</div>
+    </div>
+  </div>
+
+  <a href="produtos.html" class="mt-10 inline-block px-6 py-3 rounded-full border border-[#8f4fff] text-white font-medium hover:bg-[#8f4fff]/20 transition">
+    Ver todos os produtos
+  </a>
+</section>
 
 <!-- 5. GAMIFICAÇÃO -->  
 <section id="sistema" class="py-16 px-6 max-w-5xl mx-auto text-center">
