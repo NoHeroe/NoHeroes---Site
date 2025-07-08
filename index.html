@@ -282,6 +282,28 @@
     filter: none;
   }
 }
+.btn-desativado-personalizado {
+  background: linear-gradient(to right, #8f4fff, #facc15);
+  color: white;
+  font-family: inherit; /* mantém a fonte atual */
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  border: none;
+  opacity: 1;
+  cursor: not-allowed;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-shadow: 0 0 5px #00000066;
+  box-shadow: 0 0 12px #8f4fff88;
+  transition: filter 0.3s ease;
+}
+.btn-desativado-personalizado span {
+  opacity: 0.5;
+  font-size: 0.9rem;
+  color: #ccc;
+}
 </style>
 
 </head>  
@@ -528,12 +550,12 @@
 
   <!-- Botões secundários -->
   <div class="flex flex-col sm:flex-row justify-center gap-4 mt-6">
-    <button disabled class="px-6 py-3 bg-[#39ff14]/10 border border-[#39ff14] text-[#39ff14] rounded-lg opacity-50 cursor-not-allowed">
-      Baixar App (em breve)
-    </button>
-    <button disabled class="px-6 py-3 bg-[#facc15]/10 border border-[#facc15] text-[#facc15] rounded-lg opacity-50 cursor-not-allowed">
-      Jogar Agora (em breve)
-    </button>
+    <button class="btn-desativado-personalizado">
+  Baixar App <span>(em breve)</span>
+</button>
+<button class="btn-desativado-personalizado">
+  Jogar Agora <span>(em breve)</span>
+</button>
   </div>
 </div>
 </section>
