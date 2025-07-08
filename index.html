@@ -159,6 +159,45 @@
   opacity: 1;
   transform: scale(1);
 }
+.botao-modal-vinho {
+  background: linear-gradient(135deg, #4b002d, #000000, #4b002d);
+  background-size: 400% 400%;
+  animation: fluidPulseVinho 8s ease-in-out infinite;
+  color: #ffffff;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  border-radius: 9999px;
+  padding: 0.75rem 1.8rem;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 4px #000;
+  border: 1px solid #4b002d;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  letter-spacing: 1px;
+  font-size: 0.95rem;
+}
+
+.botao-modal-vinho:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #4b002dcc, 0 0 40px #000000aa;
+}
+
+@keyframes fluidPulseVinho {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.gradiente-vinho-preto {
+  background: linear-gradient(to right, #991b1b, #000000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  font-family: 'Cinzel Decorative', serif;
+  text-align: center;
+  text-shadow: 0 0 6px rgba(153, 27, 27, 0.4);
+}
 .atributos-hex {
   position: relative;
   width: 300px;
@@ -337,45 +376,7 @@
   font-size: 0.75rem;
   margin-left: 0.35rem;
 }
-.botao-modal-vinho {
-  background: linear-gradient(135deg, #4b002d, #000000, #4b002d);
-  background-size: 400% 400%;
-  animation: fluidPulseVinho 8s ease-in-out infinite;
-  color: #ffffff;
-  font-weight: 600;
-  font-family: 'Inter', sans-serif;
-  border-radius: 9999px;
-  padding: 0.75rem 1.8rem;
-  transition: all 0.3s ease;
-  text-shadow: 0 0 4px #000;
-  border: 1px solid #4b002d;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-  letter-spacing: 1px;
-  font-size: 0.95rem;
-}
 
-.botao-modal-vinho:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px #4b002dcc, 0 0 40px #000000aa;
-}
-
-@keyframes fluidPulseVinho {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-.gradiente-vinho-preto {
-  background: linear-gradient(to right, #991b1b, #000000);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
-  font-family: 'Cinzel Decorative', serif;
-  text-align: center;
-  text-shadow: 0 0 6px rgba(153, 27, 27, 0.4);
-}
 </style>
 
 </head>  
