@@ -122,17 +122,32 @@
 }
 
 .modal-bolha {
-  background: rgba(28, 28, 28, 0.85);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 20px;
-  max-width: 500px;
-  width: 90%;
+  background: #0a0000; /* preto absoluto */
+  border-radius: 1rem;
   padding: 2rem;
-  opacity: 0;
-  transform: scale(0.3);
-  transition: all 0.6s cubic-bezier(0.25, 1.25, 0.5, 1.05);
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 0 20px rgba(153, 27, 27, 0.3),
+    0 0 40px rgba(220, 38, 38, 0.2),
+    inset 0 0 15px rgba(255, 0, 76, 0.1);
+  animation: pulseGlow 6s ease-in-out infinite;
+  border: 1px solid rgba(255, 0, 76, 0.4);
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 20px rgba(153, 27, 27, 0.3),
+      0 0 40px rgba(220, 38, 38, 0.2),
+      inset 0 0 15px rgba(255, 0, 76, 0.1);
+  }
+  50% {
+    box-shadow:
+      0 0 35px rgba(220, 38, 38, 0.5),
+      0 0 60px rgba(255, 0, 76, 0.3),
+      inset 0 0 25px rgba(255, 0, 76, 0.2);
+  }
 }
 
 #modal-sistema.ativo .modal-bolha {
