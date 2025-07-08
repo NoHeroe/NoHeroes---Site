@@ -287,33 +287,41 @@
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
+  max-width: 90%;
 }
 
 .botao-desativado-duplo button {
-  background: linear-gradient(to right, #3f1f6e, #2a003f);
-  color: #eee;
+  background: linear-gradient(to right, #2d0c42, #1c0a33);
+  color: #ccc;
   font-family: inherit;
-  font-weight: 600;
-  padding: 0.5rem 1rem;
+  font-weight: 500;
+  padding: 0.5rem 1.2rem;
   border-radius: 9999px;
   border: none;
-  opacity: 0.4;
+  opacity: 0.7;
   cursor: not-allowed;
-  font-size: 0.9rem;
-  text-shadow: none;
-  box-shadow: none;
-  filter: grayscale(0.6) brightness(0.8);
+  font-size: 0.875rem;
+  box-shadow: inset 0 0 8px #000;
   transition: none;
   white-space: nowrap;
-  width: auto;         /* ← ESSENCIAL */
-  max-width: 45%;      /* ← Lado a lado */
-  flex: 1 1 auto;      /* ← Responsivo */
+  max-width: 45%;
+  flex: 1 1 auto;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.botao-desativado-duplo button span {
+
+.botao-desativado-duplo .ativo {
+  color: #fff;
+  font-weight: 600;
+}
+
+.botao-desativado-duplo .em-breve {
   color: #aaa;
   opacity: 0.5;
-  font-size: 0.8rem;
-  margin-left: 0.3rem;
+  margin-left: 0.35rem;
+  font-size: 0.75rem;
 }
 </style>
 
@@ -562,8 +570,8 @@
   <!-- Botões secundários -->
 <div class="flex justify-center mt-6">
   <div class="botao-desativado-duplo">
-    <button>Baixar App <span>(em breve)</span></button>
-    <button>Jogar Agora <span>(em breve)</span></button>
+    <button><span class="ativo">Baixar App</span> <span class="em-breve">(em breve)</span></button>
+    <button><span class="ativo">Jogar Agora</span> <span class="em-breve">(em breve)</span></button>
   </div>
 </div>
 </section>
