@@ -229,6 +229,27 @@
   transform: scale(1.1);
   box-shadow: 0 0 30px #8f4fffcc, 0 0 40px #000000cc;
 }
+.btn-líquido-pulsante-escuro.glitchando {
+  animation: none;
+  background: #1a1a1a;
+  color: #ff0044;
+  text-shadow: 0 0 5px #8f4fff, 0 0 15px #ff0044;
+  transform: scale(1.05) rotate(-1deg);
+  box-shadow: 0 0 15px #8f4fff99, 0 0 30px #ff004499;
+}
+
+.btn-líquido-pulsante-escuro.glitchando .glitch-text {
+  animation: glitchTextRapid 0.15s steps(1) infinite;
+  color: #ff0044;
+}
+
+@keyframes glitchTextRapid {
+  0% { content: "⚠⟟∑"; transform: translate(0px, 0px) skewX(0deg); }
+  25% { transform: translate(1px, -1px) skewX(-2deg); }
+  50% { transform: translate(-1px, 1px) skewX(2deg); }
+  75% { transform: translate(1px, 1px) skewX(-1deg); }
+  100% { transform: translate(0px, 0px) skewX(0deg); }
+}
 </style>
 
 </head>  
@@ -469,8 +490,8 @@
 </div>
 
   <!-- Botão principal: abre o modal -->
-  <div class="botoes-hex"><button id="abrir-modal-sistema" class="btn-líquido-pulsante-escuro mt-12">
-  Como funciona o sistema
+  <div class="botoes-hex"><button id="abrir-modal-sistema" class="btn-líquido-pulsante-escuro mt-12 overflow-hidden relative">
+  <span class="glitch-text">Como funciona o sistema</span>
 </button>
 
   <!-- Botões secundários -->
@@ -699,19 +720,17 @@ window.addEventListener("resize", resizeCanvas);
 revelarDeCima('.reveal-top');
 
 const abrirModal = document.getElementById('abrir-modal-sistema');
-const fecharModal = document.getElementById('fechar-modal-sistema');
 const modalSistema = document.getElementById('modal-sistema');
+const glitchText = abrirModal.querySelector('.glitch-text');
 
 abrirModal.addEventListener('click', () => {
-  modalSistema.classList.add('ativo');
-});
+  abrirModal.classList.add('glitchando');
 
-fecharModal.addEventListener('click', () => {
-  modalSistema.classList.remove('ativo');
-});
-
-modalSistema.addEventListener('click', e => {
-  if (e.target === modalSistema) modalSistema.classList.remove('ativo');
+  // Após 1.2 segundos, remove o glitch e mostra modal
+  setTimeout(() => {
+    abrirModal.classList.remove('glitchando');
+    modalSistema.classList.add('ativo');
+  }, 1200);
 });
 
 function startGlitch() {
