@@ -376,27 +376,35 @@
   font-size: 0.75rem;
   margin-left: 0.35rem;
 }
-@keyframes carousel {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+#carousel-container {
+  perspective: 1200px;
+  width: 100%;
+  height: 300px;
+  position: relative;
 }
 
-.animate-carousel {
-  animation: carousel 20s linear infinite;
-  width: 200%;
+#carousel-inner {
+  transform-style: preserve-3d;
+  animation: girar360 30s linear infinite;
+}
+
+@keyframes girar360 {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(360deg); }
 }
 
 .glass-card {
+  position: absolute;
+  width: 160px;
+  height: 220px;
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(8px);
-  padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 1rem;
-  min-width: 160px;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  color: #eaeaea;
-  font-family: 'Inter', sans-serif;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 0 20px #00000080;
   text-align: center;
+  padding: 1rem;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 </style>
 
@@ -621,53 +629,11 @@
 
   <div class="relative h-64 overflow-hidden">
     <div class="absolute inset-0 flex items-center justify-center animate-carousel gap-6">
-      <!-- Card 1 -->
-      <div class="glass-card scale-100 z-20 blur-0 opacity-100">
-        <img src="img/freq-thumb.png" alt="FREQ" class="w-32 h-32 object-contain mx-auto mb-2">
-        <p class="text-sm font-semibold">FREQ</p>
-      </div>
-
-      <!-- Card 2 -->
-      <div class="glass-card scale-90 z-10 blur-sm opacity-60">
-        <img src="img/roar-thumb.png" alt="ROAR" class="w-24 h-24 object-contain mx-auto mb-2">
-        <p class="text-sm font-semibold">ROAR</p>
-      </div>
-
-      <!-- Card 3 -->
-      <div class="glass-card scale-75 z-0 blur-md opacity-40">
-        <img src="img/manual-thumb.png" alt="Manual" class="w-20 h-20 object-contain mx-auto mb-2">
-        <p class="text-sm font-semibold">Manual das Sombras</p>
-      </div>
-
-      <!-- Card 4 -->
-      <div class="glass-card scale-90 z-10 blur-sm opacity-60">
-        <img src="img/app-thumb.png" alt="App" class="w-24 h-24 object-contain mx-auto mb-2">
-        <p class="text-sm font-semibold">App</p>
-      </div>
-
-      <!-- Card 5 -->
-      <div class="glass-card scale-75 z-0 blur-md opacity-40">
-        <img src="img/game-thumb.png" alt="Jogo" class="w-20 h-20 object-contain mx-auto mb-2">
-        <p class="text-sm font-semibold">Jogar</p>
-      </div>
-
-<!-- Card 6 -->
-<div class="glass-card scale-90 z-10 blur-sm opacity-60">
-  <img src="img/sistemavivo-thumb.png" alt="Sistema Vivo" class="w-24 h-24 object-contain mx-auto mb-2">
-  <p class="text-sm font-semibold">Sistema Vivo</p>
-</div>
-
-<!-- Card 7 -->
-<div class="glass-card scale-75 z-0 blur-md opacity-40">
-  <img src="img/tudoestaconectado-thumb.png" alt="Tudo Está Conectado" class="w-20 h-20 object-contain mx-auto mb-2">
-  <p class="text-sm font-semibold leading-tight">Tudo Está<br>Conectado</p>
-</div>
-
-<!-- Card 8 -->
-<div class="glass-card scale-90 z-10 blur-sm opacity-60">
-  <img src="img/circulointerno-thumb.png" alt="Círculo Interno" class="w-24 h-24 object-contain mx-auto mb-2">
-  <p class="text-sm font-semibold">Círculo Interno</p>
-</div>
+       <div id="carousel-container" class="relative h-[280px] perspective-[1200px] mx-auto">
+    <div id="carousel-inner" class="absolute w-full h-full flex items-center justify-center">
+      <!-- Os .glass-card serão inseridos aqui -->
+    </div>
+  </div>
     </div>
   </div>
 
@@ -999,6 +965,36 @@ function startGlitch() {
 }
 
 window.addEventListener('DOMContentLoaded', startGlitch);
+
+  const produtos = [
+    { nome: "FREQ", img: "img/freq-thumb.png" },
+    { nome: "ROAR", img: "img/roar-thumb.png" },
+    { nome: "Manual das Sombras", img: "img/manual-thumb.png" },
+    { nome: "App", img: "img/app-thumb.png" },
+    { nome: "Jogar", img: "img/game-thumb.png" },
+    { nome: "Sistema Vivo", img: "img/sistemavivo-thumb.png" },
+    { nome: "Tudo Está Conectado", img: "img/tudoestaconectado-thumb.png" },
+    { nome: "Círculo Interno", img: "img/circulointerno-thumb.png" }
+  ];
+
+  const inner = document.getElementById("carousel-inner");
+  const total = produtos.length;
+  const raio = 360 / total;
+
+  produtos.forEach((p, i) => {
+    const card = document.createElement("div");
+    card.className = "glass-card";
+    const rotacao = i * raio;
+    const distancia = 400;
+
+    card.style.transform = `rotateY(${rotacao}deg) translateZ(${distancia}px)`;
+    card.innerHTML = `
+      <img src="${p.img}" alt="${p.nome}" class="w-24 h-24 object-contain mx-auto mb-2">
+      <p class="text-sm font-semibold text-white">${p.nome}</p>
+    `;
+
+    inner.appendChild(card);
+  });
 </script>
   </body>  
 </html> 
