@@ -448,35 +448,42 @@ backface-visibility: hidden;
     box-shadow: 0 0 20px rgba(143, 79, 255, 0.8);
   }
 }
-.poça-liquida-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0; /* SEM espaço entre botões */
-  background: linear-gradient(135deg, #1f1f1f 0%, #000 100%);
-  padding: 1rem;
-  border-radius: 3rem;
+/* Caixa de vidro para a section */
+.apoio-glass {
+  background: rgba(28, 28, 28, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 1.5rem;
+  padding: 2rem;
   box-shadow: 0 0 20px rgba(143,79,255,0.3);
 }
 
-.poça-liquida {
-  background: radial-gradient(circle at 30% 30%, #8f4fff, #4a148c 80%);
+/* Gradiente roxo-dourado no texto */
+.gradiente-noheroes-calm {
+  background: linear-gradient(to right, #8f4fff, #facc15);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+/* Botões líquidos arredondados */
+.btn-apoio {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  background: linear-gradient(270deg, #8f4fff, #000000, #8f4fff);
+  background-size: 600% 600%;
   color: #fff;
   font-weight: 600;
   font-family: 'Inter', sans-serif;
-  padding: 1rem 1.5rem;
-  margin: -0.3rem;
-  border-radius: 9999px;
-  box-shadow: inset 0 0 10px rgba(255,255,255,0.1);
-  clip-path: ellipse(70% 60% at 50% 50%);
   transition: all 0.3s ease;
+  box-shadow: inset 0 0 10px rgba(255,255,255,0.05);
 }
 
-.poça-liquida:hover {
-  background: radial-gradient(circle at 30% 30%, #a855f7, #6a1b9a 80%);
-  box-shadow: 0 0 20px #facc15aa;
+.btn-apoio:hover {
   transform: scale(1.05);
+  box-shadow: 0 0 30px #8f4fff88, 0 0 40px #facc1588;
 }
 </style>
 
@@ -744,15 +751,15 @@ backface-visibility: hidden;
 </section>
 
  <!-- 6. APOIO VITALISTA -->  
-<section id="apoio" class="py-20 px-6 max-w-5xl mx-auto text-center">
+<section id="apoio" class="apoio-glass px-6 py-12 max-w-5xl mx-auto text-center rounded-3xl border border-[#8f4fff]/20">
   <h2 class="text-2xl md:text-3xl font-bold uppercase tracking-wide mb-8 gradiente-noheroes-calm cinzel">
     Sua ajuda alimenta o mundo de Caelum
   </h2>
 
-  <div class="poça-liquida-container">
-    <a href="apoiar.html" class="poça-liquida">Contribuir com Pix</a>
-    <a href="apoiar.html#outras" class="poça-liquida">Quero ajudar de outras formas</a>
-    <a href="apoiar.html#reverso" class="poça-liquida">Quero apoio no meu projeto</a>
+  <div class="flex flex-col md:flex-row justify-center gap-4">
+    <a href="apoiar.html" class="btn-apoio">Contribuir com Pix</a>
+    <a href="apoiar.html#outras" class="btn-apoio">Quero ajudar de outras formas</a>
+    <a href="apoiar.html#reverso" class="btn-apoio">Quero apoio no meu projeto</a>
   </div>
 </section>
 
