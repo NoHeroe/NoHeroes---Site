@@ -418,55 +418,35 @@ backface-visibility: hidden;
 .relative.h-64.overflow-hidden {
   min-height: 420px;
 }
-.btn-forja {
-  background: linear-gradient(270deg, #8f4fff, #0a0a0a);
-  background-size: 400% 400%;
-  color: #aaa; /* tom cinza-brasa */
-  font-family: 'Cinzel Decorative', serif;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  border: 1px solid #8f4fff80;
-  border-radius: 0.5rem;
+.btn-noheroes {
+  background: linear-gradient(90deg, #8f4fff, #000000);
+  background-size: 200% 200%;
+  animation: btnPulse 4s ease-in-out infinite;
+  color: #fff;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
   padding: 0.75rem 1.5rem;
-  box-shadow: 0 0 10px rgba(143,79,255,0.2);
-  text-shadow: 0 0 6px rgba(255, 100, 255, 0.2);
+  border-radius: 9999px;
+  border: 1px solid #8f4fff;
+  box-shadow: 0 0 10px rgba(143, 79, 255, 0.4);
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
-.btn-forja:hover {
-  background-position: 100% 0;
-  box-shadow: 0 0 20px rgba(143,79,255,0.4);
-  color: #e5e5e5;
-}
-@keyframes impactoMartelo {
-  0% { transform: scale(1); }
-  20% { transform: scale(0.8) rotate(-3deg); }
-  40% { transform: scale(1.2) rotate(3deg); }
-  60% { transform: scale(1.05) rotate(-2deg); }
-  80% { transform: scale(1); }
-  100% { transform: scale(1); }
+.btn-noheroes:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(143, 79, 255, 0.8);
 }
 
-.btn-forja.impacto {
-  box-shadow: 0 0 20px #ff4500, 0 0 40px #8f4fff;
-  background: linear-gradient(270deg, #ff4500, #8f4fff);
-  transition: all 0.3s ease;
-}
-
-.fa-spark {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: #ff0044;
-  border-radius: 50%;
-  pointer-events: none;
-  opacity: 0.9;
-  animation: sparkMove 0.4s forwards;
-}
-
-@keyframes sparkMove {
-  0% { transform: translate(0, 0); opacity: 1; }
-  100% { transform: translate(var(--dx), var(--dy)); opacity: 0; }
+@keyframes btnPulse {
+  0%, 100% {
+    background-position: 0% 50%;
+    box-shadow: 0 0 10px rgba(143, 79, 255, 0.4);
+  }
+  50% {
+    background-position: 100% 50%;
+    box-shadow: 0 0 20px rgba(143, 79, 255, 0.8);
+  }
 }
 </style>
 
@@ -699,9 +679,7 @@ backface-visibility: hidden;
     </div>
   </div>
 
-  <button id="btn-ver-produtos" class="btn-forja">
-  Ver Todos os Produtos
-</button>
+  <button class="btn-noheroes" onclick="window.location.href='produtos.html'">Ver todos os produtos</button>
 </section>
 
 <!-- 5. GAMIFICAÇÃO -->  
@@ -1057,47 +1035,6 @@ produtos.forEach((p, i) => {
   inner.appendChild(card);
 });
 
-function criarFaiscas(x, y) {
-  for (let i = 0; i < 12; i++) {
-    const fa = document.createElement('div');
-    fa.className = 'fa-spark';
-    fa.style.left = `${x}px`;
-    fa.style.top = `${y}px`;
-
-    const angle = Math.random() * 2 * Math.PI;
-    const distance = Math.random() * 80 + 30;
-
-    fa.style.setProperty('--dx', `${Math.cos(angle) * distance}px`);
-    fa.style.setProperty('--dy', `${Math.sin(angle) * distance}px`);
-
-    document.body.appendChild(fa);
-    setTimeout(() => fa.remove(), 800);  // Partículas somem após 0.8s
-  }
-}
-
-window.addEventListener('DOMContentLoaded', () => {
-  const btnVerProdutos = document.getElementById('btn-ver-produtos');
-
-  btnVerProdutos.addEventListener('click', () => {
-    btnVerProdutos.classList.add('impacto');
-
-    const rect = btnVerProdutos.getBoundingClientRect();
-    const x = rect.left + rect.width / 2;
-    const y = rect.top + rect.height / 2;
-    criarFaiscas(x, y);
-
-    const audio = new Audio('assets/sounds/hammer.mp3');
-    audio.play();
-
-    setTimeout(() => {
-      btnVerProdutos.classList.remove('impacto');  // 🔥 Glow dura apenas 0.4s
-    }, 400);
-
-    setTimeout(() => {
-      window.location.href = 'produtos.html';  // Redireciona após 0.8s total
-    }, 800);
-  });
-});
 </script>
   </body>  
 </html> 
