@@ -411,6 +411,7 @@
   height: 100%;
   object-fit: cover;
   border-radius: 1rem;
+backface-visibility: hidden;
 }
 </style>
 
@@ -991,7 +992,7 @@ produtos.forEach((p, i) => {
   const card = document.createElement("div");
   card.className = "glass-card";
   const rotacao = i * raio;
-  const distancia = 400;
+  const distancia = 300;
 
   card.style.transform = `rotateY(${rotacao}deg) translateZ(${distancia}px)`;
   card.innerHTML = `
