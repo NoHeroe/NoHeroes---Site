@@ -395,22 +395,22 @@
 
 .glass-card {
   position: absolute;
-  width: 160px;
-  height: 220px;
+  width: 180px;
+  height: 260px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 1rem;
   backdrop-filter: blur(6px);
   box-shadow: 0 0 20px #00000080;
-  text-align: center;
-  padding: 1rem;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  overflow: hidden;
+  padding: 0;
 }
+
 .glass-card img {
-  width: 90%;
-  height: auto;
-  object-fit: contain;
-  margin-bottom: 0.5rem;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 1rem;
 }
 </style>
 
@@ -984,23 +984,22 @@ window.addEventListener('DOMContentLoaded', startGlitch);
   ];
 
   const inner = document.getElementById("carousel-inner");
-  const total = produtos.length;
-  const raio = 360 / total;
+const total = produtos.length;
+const raio = 360 / total;
 
-  produtos.forEach((p, i) => {
-    const card = document.createElement("div");
-    card.className = "glass-card";
-    const rotacao = i * raio;
-    const distancia = 400;
+produtos.forEach((p, i) => {
+  const card = document.createElement("div");
+  card.className = "glass-card";
+  const rotacao = i * raio;
+  const distancia = 400;
 
-    card.style.transform = `rotateY(${rotacao}deg) translateZ(${distancia}px)`;
-    card.innerHTML = `
-      <img src="${p.img}" alt="${p.nome}" class="w-24 h-24 object-contain mx-auto mb-2">
-      <p class="text-sm font-semibold text-white">${p.nome}</p>
-    `;
+  card.style.transform = `rotateY(${rotacao}deg) translateZ(${distancia}px)`;
+  card.innerHTML = `
+    <img src="${p.img}" alt="${p.nome}">
+  `;
 
-    inner.appendChild(card);
-  });
+  inner.appendChild(card);
+});
 </script>
   </body>  
 </html> 
