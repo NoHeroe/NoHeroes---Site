@@ -448,17 +448,18 @@ backface-visibility: hidden;
     box-shadow: 0 0 20px rgba(143, 79, 255, 0.8);
   }
 }
-/* Caixa de vidro para a section */
+/* Caixa vidro translúcida real */
 .apoio-glass {
   background: rgba(28, 28, 28, 0.2);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-radius: 1.5rem;
-  padding: 2rem;
-  box-shadow: 0 0 20px rgba(143,79,255,0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 1.25rem;
+  border: 1px solid rgba(143, 79, 255, 0.3);
+  padding: 1.5rem; /* menor padding como pediu */
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
 }
 
-/* Gradiente roxo-dourado no texto */
+/* Título degradê roxo-dourado */
 .gradiente-noheroes-calm {
   background: linear-gradient(to right, #8f4fff, #facc15);
   -webkit-background-clip: text;
@@ -467,23 +468,47 @@ backface-visibility: hidden;
   text-fill-color: transparent;
 }
 
-/* Botões líquidos arredondados */
+/* Botões refinados */
 .btn-apoio {
   display: inline-block;
-  padding: 0.75rem 1.5rem;
+  padding: 0.6rem 1.2rem;
   border-radius: 9999px;
-  background: linear-gradient(270deg, #8f4fff, #000000, #8f4fff);
-  background-size: 600% 600%;
+  background: rgba(28, 28, 28, 0.4);
+  border: 1px solid #8f4fff;
   color: #fff;
   font-weight: 600;
   font-family: 'Inter', sans-serif;
+  position: relative;
+  overflow: hidden;
   transition: all 0.3s ease;
-  box-shadow: inset 0 0 10px rgba(255,255,255,0.05);
+}
+
+/* Degradê aplicado no texto interno */
+.btn-apoio::before {
+  content: attr(data-text);
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to right, #8f4fff, #facc15);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  pointer-events: none;
+}
+
+/* Remove texto original visível */
+.btn-apoio span {
+  opacity: 0;
 }
 
 .btn-apoio:hover {
+  backdrop-filter: blur(12px);
+  border-color: #facc15;
+  box-shadow: 0 0 20px #8f4fff99, 0 0 30px #facc1588;
   transform: scale(1.05);
-  box-shadow: 0 0 30px #8f4fff88, 0 0 40px #facc1588;
 }
 </style>
 
@@ -757,9 +782,9 @@ backface-visibility: hidden;
   </h2>
 
   <div class="flex flex-col md:flex-row justify-center gap-4">
-    <a href="apoiar.html" class="btn-apoio">Contribuir com Pix</a>
-    <a href="apoiar.html#outras" class="btn-apoio">Quero ajudar de outras formas</a>
-    <a href="apoiar.html#reverso" class="btn-apoio">Quero apoio no meu projeto</a>
+    <a href="apoiar.html" class="btn-apoio" data-text="Contribuir com Pix">Contribuir com Pix</a>
+    <a href="apoiar.html#outras" class="btn-apoio" data-text="Quero ajudar de outras formas">Quero ajudar de outras formas</a>
+    <a href="apoiar.html#reverso" class="btn-apoio" data-text="Quero apoio no meu projeto">Quero apoio no meu projeto</a>
   </div>
 </section>
 
