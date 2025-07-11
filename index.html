@@ -448,38 +448,35 @@ backface-visibility: hidden;
     box-shadow: 0 0 20px rgba(143, 79, 255, 0.8);
   }
 }
-.gradiente-noheroes-calm {
-  background: linear-gradient(to right, #6a1b9a, #4a148c);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.poça-liquida-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0; /* SEM espaço entre botões */
+  background: linear-gradient(135deg, #1f1f1f 0%, #000 100%);
+  padding: 1rem;
+  border-radius: 3rem;
+  box-shadow: 0 0 20px rgba(143,79,255,0.3);
 }
 
-.btn-liquido {
-  display: inline-block;
-  background: linear-gradient(270deg, #8f4fff, #000000);
-  background-size: 400% 400%;
-  animation: liquidPulse 5s ease-in-out infinite;
+.poça-liquida {
+  background: radial-gradient(circle at 30% 30%, #8f4fff, #4a148c 80%);
   color: #fff;
   font-weight: 600;
   font-family: 'Inter', sans-serif;
+  padding: 1rem 1.5rem;
+  margin: -0.3rem;
   border-radius: 9999px;
-  padding: 0.85rem 1.8rem;
-  border: 1px solid #facc15;
-  box-shadow: 0 0 10px rgba(143, 79, 255, 0.2);
+  box-shadow: inset 0 0 10px rgba(255,255,255,0.1);
+  clip-path: ellipse(70% 60% at 50% 50%);
   transition: all 0.3s ease;
 }
-.btn-liquido:hover {
-  transform: scale(1.05) rotate(0deg);
-  box-shadow: 0 0 20px #facc15aa;
-}
 
-@keyframes liquidPulse {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
+.poça-liquida:hover {
+  background: radial-gradient(circle at 30% 30%, #a855f7, #6a1b9a 80%);
+  box-shadow: 0 0 20px #facc15aa;
+  transform: scale(1.05);
 }
 </style>
 
@@ -752,19 +749,10 @@ backface-visibility: hidden;
     Sua ajuda alimenta o mundo de Caelum
   </h2>
 
-  <div class="flex flex-col md:flex-row justify-center items-center gap-4">
-    <a href="apoiar.html"
-      class="btn-liquido transform rotate-[-2deg] translate-x-[-4px]">
-      Contribuir com Pix
-    </a>
-    <a href="apoiar.html#outras"
-      class="btn-liquido transform rotate-[2deg] translate-x-[4px] translate-y-[2px]">
-      Quero ajudar de outras formas
-    </a>
-    <a href="apoiar.html#reverso"
-      class="btn-liquido transform rotate-[-1deg] translate-y-[-2px]">
-      Quero apoio no meu projeto
-    </a>
+  <div class="poça-liquida-container">
+    <a href="apoiar.html" class="poça-liquida">Contribuir com Pix</a>
+    <a href="apoiar.html#outras" class="poça-liquida">Quero ajudar de outras formas</a>
+    <a href="apoiar.html#reverso" class="poça-liquida">Quero apoio no meu projeto</a>
   </div>
 </section>
 
