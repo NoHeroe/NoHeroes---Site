@@ -448,10 +448,9 @@ backface-visibility: hidden;
 }
 
 .btn-forja.impacto {
-  animation: impactoMartelo 0.4s ease-out;
-  background: #ff0044 radial-gradient(circle, #ff0044 10%, transparent 70%);
-  box-shadow: 0 0 30px #ff0044, 0 0 60px #ff0044;
-  color: #fff;
+  box-shadow: 0 0 20px #ff4500, 0 0 40px #8f4fff;
+  background: linear-gradient(270deg, #ff4500, #8f4fff);
+  transition: all 0.3s ease;
 }
 
 .fa-spark {
@@ -1057,26 +1056,29 @@ produtos.forEach((p, i) => {
 
   inner.appendChild(card);
 });
+
 function criarFaiscas(x, y) {
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 12; i++) {
     const fa = document.createElement('div');
     fa.className = 'fa-spark';
     fa.style.left = `${x}px`;
     fa.style.top = `${y}px`;
 
     const angle = Math.random() * 2 * Math.PI;
-    const distance = Math.random() * 50 + 20;
+    const distance = Math.random() * 80 + 30;
 
     fa.style.setProperty('--dx', `${Math.cos(angle) * distance}px`);
     fa.style.setProperty('--dy', `${Math.sin(angle) * distance}px`);
 
     document.body.appendChild(fa);
-    setTimeout(() => fa.remove(), 400);
+    setTimeout(() => fa.remove(), 800);  // Partículas somem após 0.8s
   }
 }
+
 window.addEventListener('DOMContentLoaded', () => {
   const btnVerProdutos = document.getElementById('btn-ver-produtos');
-  btnVerProdutos.addEventListener('click', (e) => {
+
+  btnVerProdutos.addEventListener('click', () => {
     btnVerProdutos.classList.add('impacto');
 
     const rect = btnVerProdutos.getBoundingClientRect();
@@ -1088,8 +1090,11 @@ window.addEventListener('DOMContentLoaded', () => {
     audio.play();
 
     setTimeout(() => {
-      btnVerProdutos.classList.remove('impacto');
-      window.location.href = 'produtos.html';
+      btnVerProdutos.classList.remove('impacto');  // 🔥 Glow dura apenas 0.4s
+    }, 400);
+
+    setTimeout(() => {
+      window.location.href = 'produtos.html';  // Redireciona após 0.8s total
     }, 800);
   });
 });
