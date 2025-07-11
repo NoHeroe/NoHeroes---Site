@@ -438,19 +438,22 @@ backface-visibility: hidden;
   box-shadow: 0 0 20px rgba(143,79,255,0.4);
   color: #e5e5e5;
 }
+@keyframes impactoMartelo {
+  0% { transform: scale(1); }
+  20% { transform: scale(0.8) rotate(-3deg); }
+  40% { transform: scale(1.2) rotate(3deg); }
+  60% { transform: scale(1.05) rotate(-2deg); }
+  80% { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+
 .btn-forja.impacto {
-  animation: impactoAnim 0.4s ease-out;
+  animation: impactoMartelo 0.4s ease-out;
   background: #ff0044 radial-gradient(circle, #ff0044 10%, transparent 70%);
   box-shadow: 0 0 30px #ff0044, 0 0 60px #ff0044;
   color: #fff;
 }
 
-@keyframes impactoAnim {
-  0% { transform: scale(1); }
-  30% { transform: scale(0.9) rotate(-2deg); }
-  50% { transform: scale(1.1) rotate(2deg); }
-  100% { transform: scale(1) rotate(0); }
-}
 .fa-spark {
   position: absolute;
   width: 4px;
@@ -458,8 +461,13 @@ backface-visibility: hidden;
   background: #ff0044;
   border-radius: 50%;
   pointer-events: none;
-  opacity: 0.8;
-  transition: transform 0.4s ease, opacity 0.4s ease;
+  opacity: 0.9;
+  animation: sparkMove 0.4s forwards;
+}
+
+@keyframes sparkMove {
+  0% { transform: translate(0, 0); opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)); opacity: 0; }
 }
 </style>
 
@@ -1050,30 +1058,31 @@ produtos.forEach((p, i) => {
   inner.appendChild(card);
 });
 function criarFaiscas(x, y) {
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < 10; i++) {
     const fa = document.createElement('div');
     fa.className = 'fa-spark';
     fa.style.left = `${x}px`;
     fa.style.top = `${y}px`;
-    document.body.appendChild(fa);
 
     const angle = Math.random() * 2 * Math.PI;
-    const distance = Math.random() * 40 + 20;
+    const distance = Math.random() * 50 + 20;
 
-    fa.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`;
-    
+    fa.style.setProperty('--dx', `${Math.cos(angle) * distance}px`);
+    fa.style.setProperty('--dy', `${Math.sin(angle) * distance}px`);
+
+    document.body.appendChild(fa);
     setTimeout(() => fa.remove(), 400);
   }
 }
-const btnVerProdutos = document.getElementById('btn-ver-produtos');
-
-btnVerProdutos.addEventListener('click', (e) => {
+const btnVerProdutos.addEventListener('click', (e) => {
   btnVerProdutos.classList.add('impacto');
 
   const rect = btnVerProdutos.getBoundingClientRect();
-  criarFaiscas(rect.left + rect.width / 2, rect.top + rect.height / 2);
+  const x = rect.left + rect.width / 2;
+  const y = rect.top + rect.height / 2;
+  criarFaiscas(x, y);
 
-  const audio = new Audio('assets/sounds/hammer.mp3'); // Coloque o som na pasta certa
+  const audio = new Audio('assets/sounds/hammer.mp3');
   audio.play();
 
   setTimeout(() => {
