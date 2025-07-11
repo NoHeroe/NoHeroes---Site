@@ -1074,21 +1074,24 @@ function criarFaiscas(x, y) {
     setTimeout(() => fa.remove(), 400);
   }
 }
-btnVerProdutos.addEventListener('click', (e) => {
-  btnVerProdutos.classList.add('impacto');
+window.addEventListener('DOMContentLoaded', () => {
+  const btnVerProdutos = document.getElementById('btn-ver-produtos');
+  btnVerProdutos.addEventListener('click', (e) => {
+    btnVerProdutos.classList.add('impacto');
 
-  const rect = btnVerProdutos.getBoundingClientRect();
-  const x = rect.left + rect.width / 2;
-  const y = rect.top + rect.height / 2;
-  criarFaiscas(x, y);
+    const rect = btnVerProdutos.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+    criarFaiscas(x, y);
 
-  const audio = new Audio('assets/sounds/hammer.mp3');
-  audio.play();
+    const audio = new Audio('assets/sounds/hammer.mp3');
+    audio.play();
 
-  setTimeout(() => {
-    btnVerProdutos.classList.remove('impacto');
-    window.location.href = 'produtos.html';
-  }, 800);
+    setTimeout(() => {
+      btnVerProdutos.classList.remove('impacto');
+      window.location.href = 'produtos.html';
+    }, 800);
+  });
 });
 </script>
   </body>  
