@@ -448,6 +448,39 @@ backface-visibility: hidden;
     box-shadow: 0 0 20px rgba(143, 79, 255, 0.8);
   }
 }
+.gradiente-noheroes-calm {
+  background: linear-gradient(to right, #6a1b9a, #4a148c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.btn-liquido {
+  display: inline-block;
+  background: linear-gradient(270deg, #8f4fff, #000000);
+  background-size: 400% 400%;
+  animation: liquidPulse 5s ease-in-out infinite;
+  color: #fff;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  border-radius: 9999px;
+  padding: 0.85rem 1.8rem;
+  border: 1px solid #facc15;
+  box-shadow: 0 0 10px rgba(143, 79, 255, 0.2);
+  transition: all 0.3s ease;
+}
+.btn-liquido:hover {
+  transform: scale(1.05) rotate(0deg);
+  box-shadow: 0 0 20px #facc15aa;
+}
+
+@keyframes liquidPulse {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
 </style>
 
 </head>  
@@ -714,14 +747,26 @@ backface-visibility: hidden;
 </section>
 
  <!-- 6. APOIO VITALISTA -->  
-<section id="apoio" class="py-16 px-8 max-w-5xl mx-auto text-center">  
-  <h2 class="text-2xl font-bold mb-4 text-[#39ff14]">Sua ajuda alimenta o mundo de Caelum</h2>  
-  <div class="flex flex-col md:flex-row justify-center gap-4">  
-    <a href="apoiar.html" class="px-6 py-3 bg-[#39ff14] text-black rounded-lg hover:scale-105 transition">Contribuir com Pix</a>  
-    <a href="apoiar.html#outras" class="px-6 py-3 border border-[#39ff14] text-[#39ff14] rounded-lg hover:bg-[#39ff14] hover:text-black transition">Quero ajudar de outras formas</a>  
-    <a href="apoiar.html#reverso" class="px-6 py-3 border border-[#39ff14] text-[#39ff14] rounded-lg hover:bg-[#39ff14] hover:text-black transition">Quero apoio no meu projeto</a>  
-  </div>  
-</section>  
+<section id="apoio" class="py-20 px-6 max-w-5xl mx-auto text-center">
+  <h2 class="text-2xl md:text-3xl font-bold uppercase tracking-wide mb-8 gradiente-noheroes-calm cinzel">
+    Sua ajuda alimenta o mundo de Caelum
+  </h2>
+
+  <div class="flex flex-col md:flex-row justify-center items-center gap-4">
+    <a href="apoiar.html"
+      class="btn-liquido transform rotate-[-2deg] translate-x-[-4px]">
+      Contribuir com Pix
+    </a>
+    <a href="apoiar.html#outras"
+      class="btn-liquido transform rotate-[2deg] translate-x-[4px] translate-y-[2px]">
+      Quero ajudar de outras formas
+    </a>
+    <a href="apoiar.html#reverso"
+      class="btn-liquido transform rotate-[-1deg] translate-y-[-2px]">
+      Quero apoio no meu projeto
+    </a>
+  </div>
+</section>
 
 <!-- 7. COMUNIDADE -->
 
