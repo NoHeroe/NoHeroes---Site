@@ -418,6 +418,49 @@ backface-visibility: hidden;
 .relative.h-64.overflow-hidden {
   min-height: 420px;
 }
+.btn-forja {
+  background: linear-gradient(270deg, #8f4fff, #0a0a0a);
+  background-size: 400% 400%;
+  color: #aaa; /* tom cinza-brasa */
+  font-family: 'Cinzel Decorative', serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border: 1px solid #8f4fff80;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  box-shadow: 0 0 10px rgba(143,79,255,0.2);
+  text-shadow: 0 0 6px rgba(255, 100, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.btn-forja:hover {
+  background-position: 100% 0;
+  box-shadow: 0 0 20px rgba(143,79,255,0.4);
+  color: #e5e5e5;
+}
+.btn-forja.impacto {
+  animation: impactoAnim 0.4s ease-out;
+  background: #ff0044 radial-gradient(circle, #ff0044 10%, transparent 70%);
+  box-shadow: 0 0 30px #ff0044, 0 0 60px #ff0044;
+  color: #fff;
+}
+
+@keyframes impactoAnim {
+  0% { transform: scale(1); }
+  30% { transform: scale(0.9) rotate(-2deg); }
+  50% { transform: scale(1.1) rotate(2deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+.fa-spark {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #ff0044;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0.8;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
 </style>
 
 </head>  
@@ -649,9 +692,9 @@ backface-visibility: hidden;
     </div>
   </div>
 
-  <a href="produtos.html" class="mt-10 inline-block px-6 py-3 rounded-full border border-[#8f4fff] text-white font-medium hover:bg-[#8f4fff]/20 transition">
-    Ver todos os produtos
-  </a>
+  <button id="btn-ver-produtos" class="btn-forja">
+  Ver Todos os Produtos
+</button>
 </section>
 
 <!-- 5. GAMIFICAÇÃO -->  
@@ -1005,6 +1048,38 @@ produtos.forEach((p, i) => {
   `;
 
   inner.appendChild(card);
+});
+function criarFaiscas(x, y) {
+  for (let i = 0; i < 8; i++) {
+    const fa = document.createElement('div');
+    fa.className = 'fa-spark';
+    fa.style.left = `${x}px`;
+    fa.style.top = `${y}px`;
+    document.body.appendChild(fa);
+
+    const angle = Math.random() * 2 * Math.PI;
+    const distance = Math.random() * 40 + 20;
+
+    fa.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`;
+    
+    setTimeout(() => fa.remove(), 400);
+  }
+}
+const btnVerProdutos = document.getElementById('btn-ver-produtos');
+
+btnVerProdutos.addEventListener('click', (e) => {
+  btnVerProdutos.classList.add('impacto');
+
+  const rect = btnVerProdutos.getBoundingClientRect();
+  criarFaiscas(rect.left + rect.width / 2, rect.top + rect.height / 2);
+
+  const audio = new Audio('assets/sounds/hammer.mp3'); // Coloque o som na pasta certa
+  audio.play();
+
+  setTimeout(() => {
+    btnVerProdutos.classList.remove('impacto');
+    window.location.href = 'produtos.html';
+  }, 800);
 });
 </script>
   </body>  
