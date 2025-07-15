@@ -1,81 +1,64 @@
-<!DOCTYPE html><html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Demo NoHeroes Scroll</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <style>
-    body { margin: 0; background: #0a0a0a; color: #e5e5e5; font-family: sans-serif; }
-    section { padding: 80px 20px; text-align: center; }
-    h2 { font-size: 2rem; margin-bottom: 20px; }
-    .image-stack {
-      position: relative;
-      height: 80vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: visible;
-    }
-    .stack-img {
-      position: absolute;
-      width: 150px;
-      height: 150px;
-      object-fit: cover;
-      opacity: 0;
-      transform: scale(0.7);
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(143,79,255,0.4);
-    }
-  </style>
-</head>
-<body>
-  <section>
-    <h2>Conteúdo Antes</h2>
-    <p>Simulação de conteúdo fictício antes do carrossel.</p>
-  </section>  <section id="stack-section">
-    <h2>Obras NoHeroes</h2>
-    <div class="image-stack">
-      <img src="https://via.placeholder.com/150/8f4fff/ffffff?text=Central" class="stack-img" id="img0">
-      <img src="https://via.placeholder.com/150/facc15/000000?text=L1" class="stack-img" id="img1">
-      <img src="https://via.placeholder.com/150/facc15/000000?text=R1" class="stack-img" id="img2">
-      <img src="https://via.placeholder.com/150/39ff14/000000?text=L2" class="stack-img" id="img3">
-      <img src="https://via.placeholder.com/150/39ff14/000000?text=R2" class="stack-img" id="img4">
-      <img src="https://via.placeholder.com/150/ff0044/ffffff?text=Back" class="stack-img" id="img5">
+<!-- SANTUÁRIO DE OBRAS -->
+<section id="santuario-obras" class="relative h-[220vh] overflow-hidden bg-black">
+  <h2 class="text-2xl md:text-3xl font-bold uppercase tracking-wide mb-8 gradiente-noheroes-calm cinzel text-center reveal-top">
+    Nossas Obras
+  </h2>
+
+  <div class="sticky top-0 h-screen flex items-center justify-center">
+    <div class="relative w-48 h-48 rounded-full overflow-visible">
+      <img src="https://via.placeholder.com/300x300/8f4fff/ffffff?text=Principal" class="absolute w-full h-full object-cover rounded-full z-10">
+      <img src="https://via.placeholder.com/200x200/facc15/000000?text=Sec+1" class="obra-secundaria" style="--index:1;">
+      <img src="https://via.placeholder.com/180x180/8f4fff/000000?text=Sec+2" class="obra-secundaria" style="--index:2;">
+      <img src="https://via.placeholder.com/160x160/ff0044/ffffff?text=Sec+3" class="obra-secundaria" style="--index:3;">
+      <img src="https://via.placeholder.com/140x140/39ff14/000000?text=Sec+4" class="obra-secundaria" style="--index:4;">
+      <img src="https://via.placeholder.com/120x120/444/fff?text=Sec+5" class="obra-secundaria" style="--index:5;">
     </div>
-  </section>  <section>
-    <h2>Conteúdo Depois</h2>
-    <p>Simulação de conteúdo fictício depois do carrossel.</p>
-  </section>  <script>
-    gsap.registerPlugin(ScrollTrigger);
+  </div>
 
-    const imgs = [
-      "#img0", "#img1", "#img2", "#img3", "#img4", "#img5"
-    ];
+  <div class="mt-12 text-center text-sm text-gray-400">
+    <p class="max-w-md mx-auto">
+      Uma jornada através de nossas criações. Cada obra revela mais sobre o universo NoHeroes.
+    </p>
+  </div>
+</section>
 
-    imgs.forEach((sel, i) => {
-      const delay = i * 0.1;
-      gsap.to(sel, {
-        scrollTrigger: {
-          trigger: "#stack-section",
-          start: "top center",
-          end: "bottom center",
-          scrub: true,
-        },
-        opacity: 1,
-        scale: 1,
-        x: () => {
-          if (i === 1) return -100; // L1
-          if (i === 2) return 100;  // R1
-          if (i === 3) return -180; // L2
-          if (i === 4) return 180;  // R2
-          return 0;
-        },
-        y: () => (i === 5 ? 50 : 0),
-        zIndex: 6 - i,
-        ease: "power1.out",
-        delay: delay
-      });
+<style>
+  #santuario-obras {
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0.95) 40%, #0a0a0a);
+  }
+
+  .obra-secundaria {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    border-radius: 9999px;
+    opacity: 0;
+    filter: blur(8px);
+    transition: transform 0.4s ease, opacity 0.4s ease, filter 0.4s ease;
+  }
+
+  .obra-secundaria.revelada {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate(-50%, -50%) rotate(calc(var(--index) * 15deg)) scale(1);
+  }
+</style>
+
+<script>
+  window.addEventListener('scroll', () => {
+    const section = document.getElementById('santuario-obras');
+    const rect = section.getBoundingClientRect();
+
+    const center = window.innerHeight / 2;
+    const progress = Math.min(Math.max((center - rect.top) / rect.height, 0), 1);
+
+    const secundarias = section.querySelectorAll('.obra-secundaria');
+    secundarias.forEach((img, idx) => {
+      if (progress > idx * 0.15) {
+        img.classList.add('revelada');
+      } else {
+        img.classList.remove('revelada');
+      }
     });
-  </script></body>
-</html>
+  });
+</script>
