@@ -1,117 +1,325 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NoHeroes | Obras</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/scrollreveal"></script>
-  <style>
-    body {
-      background: #0a0a0a;
-      color: #e5e5e5;
-      font-family: 'Inter', sans-serif;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Nós - NoHeroes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+<style>
+/* Importações do Tailwind CSS */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Estilos Globais e Variáveis */
+body {
+    background-color: #111827; /* bg-gray-900 */
+    color: #f3f4f6; /* text-gray-100 */
+    font-family: 'Poppins', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== Efeito Glassmorphism ===== */
+@layer components {
+    .glass-panel {
+        @apply bg-gray-800 bg-opacity-50 backdrop-blur-lg rounded-xl border border-gray-700 shadow-lg;
     }
-    h2.gradiente-noheroes-calm {
-      background: linear-gradient(90deg, #8f4fff, #facc15);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+
+    .glass-panel-hover {
+        @apply bg-gray-800 bg-opacity-50 backdrop-blur-lg rounded-xl border border-gray-700 shadow-lg transition-all duration-300;
+        @apply hover:border-purple-500 hover:shadow-purple-500/20 hover:-translate-y-2;
     }
-    .obra-card {
-      position: relative;
-      overflow: hidden;
-      border-radius: 1rem;
-      border: 1px solid transparent;
-      background: linear-gradient(#0a0a0a, #0a0a0a) padding-box,
-                  linear-gradient(135deg, #8f4fff, #facc15) border-box;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ===== Estilos da Timeline ===== */
+.timeline-dot {
+    @apply w-6 h-6 rounded-full bg-gradient-to-br from-purple-500 to-amber-500 shadow-md transition-transform duration-500;
+    transform: scale(0);
+}
+
+.timeline-item.is-visible .timeline-dot {
+    transform: scale(1);
+}
+
+/* ===== Animações de Scroll ===== */
+.scroll-target {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.scroll-target.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Animação para os itens da grade com delay */
+.scroll-target:nth-child(2) { transition-delay: 100ms; }
+.scroll-target:nth-child(3) { transition-delay: 200ms; }
+.scroll-target:nth-child(4) { transition-delay: 300ms; }
+.scroll-target:nth-child(5) { transition-delay: 400ms; }
+.scroll-target:nth-child(6) { transition-delay: 500ms; }
+
+
+/* Animação inicial do Hero */
+@keyframes fade-in-down {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
     }
-    .obra-card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(143,79,255,0.4), 0 0 40px rgba(250,204,21,0.2);
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
-    .obra-img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-    p {
-      color: #e5e5e5;
-    }
-  </style>
+}
+
+.animate-fade-in-down {
+    animation: fade-in-down 1.5s ease-out forwards;
+}
+</style>
 </head>
-<body>
+<body class="bg-gray-900 text-white font-poppins overflow-x-hidden">
 
-  <!-- HEADER MOCK -->
-  <header class="py-4 text-center border-b border-[#8f4fff]/30">
-    <h1 class="text-2xl font-bold text-[#8f4fff]">NoHeroes</h1>
-  </header>
+    <div id="particles-js" class="fixed top-0 left-0 w-full h-full z-0"></div>
 
-  <!-- CONTEÚDO ANTES -->
-  <section class="py-12 px-6 text-center">
-    <p>Conteúdo fictício antes da seção "Obras"</p>
-  </section>
+    <main class="relative z-10">
 
-  <!-- SECTION OBRAS -->
-  <section id="obras" class="py-16 px-6 max-w-6xl mx-auto text-center relative overflow-hidden">
-    <h2 class="text-3xl md:text-4xl font-bold uppercase tracking-wide mb-12 gradiente-noheroes-calm reveal-top">
-      Nosso Arsenal de Obras
-    </h2>
+        <section id="hero" class="h-screen flex items-center justify-center text-center p-4">
+            <div class="animate-fade-in-down">
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold">
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-amber-400">
+                        NoHeroes é onde você entra por diversão e sai em mutação.
+                    </span>
+                </h1>
+            </div>
+        </section>
 
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
-      <!-- Card 1 -->
-      <div class="obra-card reveal-top">
-        <img src="https://via.placeholder.com/300x400/8f4fff/ffffff?text=Obra+1" alt="Obra 1" class="rounded-lg obra-img">
-        <p class="mt-2 text-sm">Obra 1</p>
-      </div>
-      <!-- Card 2 -->
-      <div class="obra-card reveal-top">
-        <img src="https://via.placeholder.com/300x400/facc15/000000?text=Obra+2" alt="Obra 2" class="rounded-lg obra-img">
-        <p class="mt-2 text-sm">Obra 2</p>
-      </div>
-      <!-- Card 3 -->
-      <div class="obra-card reveal-top">
-        <img src="https://via.placeholder.com/300x400/333333/ffffff?text=Obra+3" alt="Obra 3" class="rounded-lg obra-img">
-        <p class="mt-2 text-sm">Obra 3</p>
-      </div>
-      <!-- Card 4 -->
-      <div class="obra-card reveal-top">
-        <img src="https://via.placeholder.com/300x400/ff0080/ffffff?text=Obra+4" alt="Obra 4" class="rounded-lg obra-img">
-        <p class="mt-2 text-sm">Obra 4</p>
-      </div>
-      <!-- Card 5 -->
-      <div class="obra-card reveal-top">
-        <img src="https://via.placeholder.com/300x400/00ffff/000000?text=Obra+5" alt="Obra 5" class="rounded-lg obra-img">
-        <p class="mt-2 text-sm">Obra 5</p>
-      </div>
-      <!-- Card 6 -->
-      <div class="obra-card reveal-top">
-        <img src="https://via.placeholder.com/300x400/ff9900/000000?text=Obra+6" alt="Obra 6" class="rounded-lg obra-img">
-        <p class="mt-2 text-sm">Obra 6</p>
-      </div>
-    </div>
-  </section>
+        <section id="what-is" class="py-20 px-4 flex justify-center">
+            <div class="scroll-target glass-panel max-w-4xl text-center p-8 md:p-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">📘 O que é <span class="text-purple-400">NoHeroes</span>?</h2>
+                <p class="text-lg md:text-xl text-gray-300 mb-4">
+                    NoHeroes não é uma marca. É um portal. Uma plataforma multimídia de impacto — onde histórias, conhecimento e transformação se entrelaçam. Aqui, você não apenas assiste. <strong class="font-semibold text-amber-300">Você evolui.</strong>
+                </p>
+                <p class="text-lg md:text-xl text-gray-300">
+                    É um selo autoral que une animação, livros, aplicativos e um futuro em forma de jogo. Tudo o que criamos te impulsiona para fora da inércia.
+                </p>
+                <div class="mt-8 text-xl font-semibold">
+                    <span class="text-purple-300">Você lê.</span>
+                    <span class="text-amber-300 mx-2">></span>
+                    <span class="text-purple-300">Você aprende.</span>
+                    <span class="text-amber-300 mx-2">></span>
+                    <span class="text-purple-300">Você cresce.</span>
+                </div>
+            </div>
+        </section>
+        
+        <section id="offerings" class="py-20 px-4">
+            <div class="max-w-6xl mx-auto text-center">
+                <h2 class="scroll-target text-3xl md:text-4xl font-bold mb-12">✨ Muito Além de uma História</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <div class="scroll-target glass-panel-hover p-8 text-left">
+                        <h3 class="text-2xl font-bold mb-3 text-purple-400">Estúdio de Animação</h3>
+                        <p class="text-gray-300">Um estúdio independente que dá vida a mangás, animes e clipes com identidade visual única.</p>
+                    </div>
+                    
+                    <div class="scroll-target glass-panel-hover p-8 text-left">
+                        <h3 class="text-2xl font-bold mb-3 text-amber-400">Editora Alternativa</h3>
+                        <p class="text-gray-300">Publicamos livros e eBooks com narrativas fortes, que desafiam o convencional e inspiram.</p>
+                    </div>
 
-  <!-- CONTEÚDO DEPOIS -->
-  <section class="py-12 px-6 text-center">
-    <p>Conteúdo fictício depois da seção "Obras"</p>
-  </section>
+                    <div class="scroll-target glass-panel-hover p-8 text-left">
+                        <h3 class="text-2xl font-bold mb-3 text-purple-400">Aplicativo Gamificado</h3>
+                        <p class="text-gray-300">Uma ferramenta com XP, metas e rituais para aplicar as lições das histórias na sua vida real.</p>
+                    </div>
+                    
+                    <div class="scroll-target glass-panel-hover p-8 text-left">
+                        <h3 class="text-2xl font-bold mb-3 text-amber-400">Rede de Criadores</h3>
+                        <p class="text-gray-300">Uma comunidade de tutores e aprendizes que ensinam, aprendem e criam juntos, em constante evolução.</p>
+                    </div>
 
-  <!-- FOOTER MOCK -->
-  <footer class="py-4 text-center border-t border-[#8f4fff]/30 text-sm opacity-60">
-    © 2025 NoHeroes. Todos os direitos reservados.
-  </footer>
+                    <div class="scroll-target glass-panel-hover p-8 text-left">
+                        <h3 class="text-2xl font-bold mb-3 text-purple-400">Universo Narrativo</h3>
+                        <p class="text-gray-300">Múltiplas obras e franquias como ROAR, Chrysalis e Echoes, todas conectadas em um ecossistema.</p>
+                    </div>
+                    
+                    <div class="scroll-target glass-panel-hover p-8 text-left">
+                        <h3 class="text-2xl font-bold mb-3 text-amber-400">Portal de Evolução</h3>
+                        <p class="text-gray-300">Como um "SelfQuest", mas com alma. Um caminho para o desenvolvimento pessoal através da arte.</p>
+                    </div>
 
-  <!-- SCROLLREVEAL SCRIPT -->
-  <script>
-    ScrollReveal().reveal('.reveal-top', {
-      origin: 'top',
-      distance: '30px',
-      duration: 800,
-      easing: 'ease-out',
-      interval: 100
+                </div>
+            </div>
+        </section>
+
+        <section id="how-it-works" class="py-20 px-4">
+             <div class="max-w-3xl mx-auto">
+                <h2 class="scroll-target text-center text-3xl md:text-4xl font-bold mb-16">🧬 Como Funciona?</h2>
+                <div class="relative">
+                    <div class="absolute left-1/2 -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-purple-500 to-amber-500 opacity-30"></div>
+                    
+                    <div class="scroll-target timeline-item mb-16 flex items-center w-full">
+                        <div class="w-1/2 text-right pr-8">
+                            <h3 class="text-2xl font-bold text-purple-300">Descubra</h3>
+                            <p class="text-gray-400">O usuário entra para ver uma história e mergulha em um novo universo.</p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+
+                    <div class="scroll-target timeline-item mb-16 flex items-center w-full justify-end">
+                        <div class="timeline-dot"></div>
+                        <div class="w-1/2 text-left pl-8">
+                            <h3 class="text-2xl font-bold text-amber-300">Evolua</h3>
+                            <p class="text-gray-400">Lê mangás, ganha XP no app e realiza missões inspiradas em Solo Leveling.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="scroll-target timeline-item mb-16 flex items-center w-full">
+                        <div class="w-1/2 text-right pr-8">
+                             <h3 class="text-2xl font-bold text-purple-300">Aprenda</h3>
+                             <p class="text-gray-400">Recebe conteúdos educativos disfarçados de entretenimento.</p>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+
+                    <div class="scroll-target timeline-item flex items-center w-full justify-end">
+                        <div class="timeline-dot"></div>
+                        <div class="w-1/2 text-left pl-8">
+                            <h3 class="text-2xl font-bold text-amber-300">Crie</h3>
+                             <p class="text-gray-400">Desenvolve-se criativamente e pode, futuramente, hospedar seu conteúdo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="for-who" class="py-20 px-4">
+            <div class="scroll-target max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-8">🕸️ NoHeroes é para quem?</h2>
+                <div class="space-y-6 text-lg md:text-xl text-gray-300">
+                    <p>Para quem tem um <span class="text-purple-400">universo dentro de si</span>, mas nunca foi compreendido.</p>
+                    <p>Para quem quer <span class="text-amber-400">crescer</span>, mas odeia fórmulas prontas.</p>
+                    <p>Para quem quer <span class="text-purple-400">criar</span>, mas ainda não tem as ferramentas.</p>
+                    <p>Para quem quer se <span class="text-amber-400">libertar</span>, mas precisa de impulso e sentido.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center p-8 text-gray-500 relative z-10">
+        <p>&copy; 2025 NoHeroes. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="script.js"></script>
+<script>
+// ===== Animação de Scroll com Intersection Observer =====
+document.addEventListener('DOMContentLoaded', () => {
+    const targets = document.querySelectorAll('.scroll-target');
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                // Opcional: Desconectar o observer após a animação para otimizar
+                // observer.unobserve(entry.target); 
+            }
+        });
+    }, {
+        root: null, // viewport
+        threshold: 0.1 // 10% do elemento visível
     });
-  </script>
 
+    targets.forEach(target => {
+        observer.observe(target);
+    });
+});
+
+
+// ===== Configuração do Particles.js (Fundo Interativo) =====
+particlesJS('particles-js', {
+  "particles": {
+    "number": {
+      "value": 60,
+      "density": {
+        "enable": true,
+        "value_area": 800
+      }
+    },
+    "color": {
+      "value": "#ffffff"
+    },
+    "shape": {
+      "type": "circle",
+      "stroke": {
+        "width": 0,
+        "color": "#000000"
+      },
+    },
+    "opacity": {
+      "value": 0.5,
+      "random": true,
+      "anim": {
+        "enable": true,
+        "speed": 1,
+        "opacity_min": 0.1,
+        "sync": false
+      }
+    },
+    "size": {
+      "value": 3,
+      "random": true,
+      "anim": {
+        "enable": false,
+      }
+    },
+    "line_linked": {
+      "enable": true,
+      "distance": 150,
+      "color": "#8b5cf6", // Roxo do Tailwind
+      "opacity": 0.2,
+      "width": 1
+    },
+    "move": {
+      "enable": true,
+      "speed": 1,
+      "direction": "none",
+      "random": false,
+      "straight": false,
+      "out_mode": "out",
+      "bounce": false,
+    }
+  },
+  "interactivity": {
+    "detect_on": "canvas",
+    "events": {
+      "onhover": {
+        "enable": true,
+        "mode": "grab"
+      },
+      "onclick": {
+        "enable": true,
+        "mode": "push"
+      },
+      "resize": true
+    },
+    "modes": {
+      "grab": {
+        "distance": 140,
+        "line_linked": {
+          "opacity": 0.5
+        }
+      },
+      "push": {
+        "particles_nb": 4
+      },
+    }
+  },
+  "retina_detect": true
+});
+</script>
 </body>
 </html>
