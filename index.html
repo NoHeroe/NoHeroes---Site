@@ -510,33 +510,45 @@ backface-visibility: hidden;
   box-shadow: 0 0 20px #8f4fff99, 0 0 30px #facc1588;
   transform: scale(1.05);
 }
+@keyframes fluidPulseVozes {
+  0%, 100% {
+    background-position: 0% 50%;
+    transform: scale(1);
+    box-shadow: 0 0 10px #8f4fff80, 0 0 20px #000000aa;
+  }
+  50% {
+    background-position: 100% 50%;
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #a855f799, 0 0 30px #000000cc;
+  }
+}
+
 .btn-vozes {
-  display: inline-block;
-  padding: 0.5rem 1.2rem;
+  background: linear-gradient(270deg, #8f4fff, #000000, #8f4fff);
+  background-size: 600% 600%;
+  animation: fluidPulseVozes 6s ease-in-out infinite;
+  color: #fff; /* fallback se gradient-text falhar */
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
   border-radius: 9999px;
-  background: linear-gradient(270deg, #8f4fff, #6b21a8, #8f4fff);
-  background-size: 400% 400%;
-  animation: pulseGradient 5s ease infinite;
+  padding: 0.5rem 1.5rem;
+  font-size: 0.875rem;
   border: 1px solid #8f4fff;
-  transition: transform 0.2s ease;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-vozes:hover {
-  transform: scale(1.05);
+  transform: scale(1.1);
+  box-shadow: 0 0 30px #8f4fffcc, 0 0 40px #000000cc;
 }
 
 .btn-vozes span {
   background: linear-gradient(to right, #8f4fff, #facc15);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-weight: 600;
-  font-size: 0.875rem;
-}
-
-@keyframes pulseGradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
 }
 </style>
 
