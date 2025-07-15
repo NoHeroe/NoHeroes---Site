@@ -510,25 +510,33 @@ backface-visibility: hidden;
   box-shadow: 0 0 20px #8f4fff99, 0 0 30px #facc1588;
   transform: scale(1.05);
 }
-/* Oculta a scrollbar padrão */
-::-webkit-scrollbar {
-  width: 8px;
+.btn-vozes {
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  border-radius: 9999px;
+  background: linear-gradient(270deg, #8f4fff, #6b21a8, #8f4fff);
+  background-size: 400% 400%;
+  animation: pulseGradient 5s ease infinite;
+  border: 1px solid #8f4fff;
+  transition: transform 0.2s ease;
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
+.btn-vozes:hover {
+  transform: scale(1.05);
 }
 
-::-webkit-scrollbar-thumb {
-  background: radial-gradient(circle, #8f4fff 30%, #000 70%);
-  border-radius: 50px;
-  box-shadow: 0 0 10px #8f4fff80, 0 0 20px #facc1580;
+.btn-vozes span {
+  background: linear-gradient(to right, #8f4fff, #facc15);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 600;
+  font-size: 0.875rem;
 }
 
-/* Animação suave */
-::-webkit-scrollbar-thumb:hover {
-  background: radial-gradient(circle, #facc15 30%, #8f4fff 70%);
-  box-shadow: 0 0 15px #facc1580, 0 0 30px #8f4fff80;
+@keyframes pulseGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 </style>
 
@@ -862,9 +870,9 @@ backface-visibility: hidden;
       <p class="text-xs text-gray-400 mb-2 mt-4">O guardião virtual da NoHeroes:</p>
       <h3 class="text-sm mb-4">Aqui você tira todas as dúvidas sobre a plataforma e o universo NoHeroes com nossa IA oficial.</h3>
       <a href="oraculum.html#portal" 
-         class="btn-noheroes">
-        ✦ Consultar o Oráculo
-      </a>
+         class="btn-vozes">
+       <span>✦ Consultar o Oráculo
+     </span></a>
     </div>
 
     <!-- Oráculo 2 -->
@@ -875,9 +883,9 @@ backface-visibility: hidden;
       <p class="text-xs text-gray-400 mb-2 mt-4">A voz viva da experiência:</p>
       <h3 class="text-sm mb-4">Acesso a um mentor real que orienta sua jornada pessoal e ajuda a superar seus desafios.</h3>
       <a href="oraculum.html#mentor" 
-         class="btn-noheroes">
-        ✦ Falar com o Mentor
-      </a>
+         class="btn-vozes">
+       <span>✦ Falar com o Mentor
+      </span></a>
     </div>
 
     <!-- Altar do Arauto -->
@@ -888,9 +896,7 @@ backface-visibility: hidden;
       <p class="text-xs text-gray-400 mb-2 mt-4">Escrituras e atualizações:</p>
       <h3 class="text-sm mb-4">Descubra as últimas novidades, mudanças e registros importantes sobre NoHeroes.</h3>
       <a href="news.html" 
-         class="btn-noheroes">
-        ✦ Altar do Arauto
-         <span class="absolute top-0 right-0 w-3 h-3 bg-[#facc15] rounded-full animate-ping"></span>
+         class="btn-vozes"><span>✦ Altar do Arauto</span><span class="absolute top-0 right-0 w-3 h-3 bg-[#facc15] rounded-full animate-ping"></span>
       </a>
     </div>
 
@@ -909,12 +915,12 @@ backface-visibility: hidden;
 
   <div class="flex flex-col md:flex-row justify-center gap-4">
     <a href="sobre.html#criador" 
-       class="btn-noheroes">
-      ✦ Sobre o Criador ✦
+       class="btn-vozes"><span>
+      ✦ Sobre o Criador ✦</span>
     </a>
     <a href="sobre.html" 
-       class="btn-noheroes">
-       ✦ Sobre o Projeto ✦
+       class="btn-vozes">
+       <span>✦ Sobre o Projeto ✦</span>
     </a>
   </div>
 </section>
