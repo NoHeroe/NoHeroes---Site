@@ -1,85 +1,117 @@
-<!DOCTYPE html><html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NoHeroes | Sobre</title>
+  <title>NoHeroes | Obras</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/scrollreveal"></script>
   <style>
-    body { margin: 0; background: #0a0a0a; color: #e5e5e5; font-family: sans-serif; overflow-x: hidden; }
-    header, footer { padding: 20px; text-align: center; background: #111; color: #aaa; }
-    h1, h2 { font-weight: bold; }
-    section { padding: 60px 20px; text-align: center; }/* Constelação */
-.constelacao {
-  position: relative;
-  height: 500px;
-  background: radial-gradient(circle at center, rgba(143,79,255,0.1), transparent 70%);
-  overflow: hidden;
-}
-.nucleo {
-  position: absolute;
-  top: 50%; left: 50%;
-  width: 20px; height: 20px;
-  background: radial-gradient(circle, #8f4fff, #facc15);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  animation: pulse 2s infinite;
-}
-.estrela {
-  position: absolute;
-  width: 60px; height: 60px;
-  border-radius: 50%;
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.3s ease, filter 0.3s ease;
-}
-.estrela img {
-  width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
-}
-.estrela:hover {
-  transform: scale(1.4);
-  z-index: 10;
-  filter: brightness(1.4);
-}
-@keyframes pulse {
-  0%,100% { box-shadow: 0 0 10px #8f4fff, 0 0 20px #facc15; }
-  50% { box-shadow: 0 0 20px #facc15, 0 0 30px #8f4fff; }
-}
-
+    body {
+      background: #0a0a0a;
+      color: #e5e5e5;
+      font-family: 'Inter', sans-serif;
+    }
+    h2.gradiente-noheroes-calm {
+      background: linear-gradient(90deg, #8f4fff, #facc15);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .obra-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1rem;
+      border: 1px solid transparent;
+      background: linear-gradient(#0a0a0a, #0a0a0a) padding-box,
+                  linear-gradient(135deg, #8f4fff, #facc15) border-box;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .obra-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(143,79,255,0.4), 0 0 40px rgba(250,204,21,0.2);
+    }
+    .obra-img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    p {
+      color: #e5e5e5;
+    }
   </style>
 </head>
-<body><header>
-  <h1>NoHeroes | Sobre</h1>
-</header><section>
-  <h2>O universo NoHeroes</h2>
-  <p>Um projeto independente. Um portal narrativo e um sistema de evolução criativa que conecta histórias e pessoas.</p>
-</section><section class="constelacao">
-  <div class="nucleo"></div>
-  <div class="estrela" style="top: 20%; left: 30%; animation: orbit 12s linear infinite; animation-delay: -2s;">
-    <img src="https://via.placeholder.com/60x60.png?text=ROAR" alt="ROAR">
-  </div>
-  <div class="estrela" style="top: 70%; left: 40%; animation: orbit 15s linear infinite; animation-delay: -4s;">
-    <img src="https://via.placeholder.com/60x60.png?text=FREQ" alt="FREQ">
-  </div>
-  <div class="estrela" style="top: 30%; left: 70%; animation: orbit 18s linear infinite; animation-delay: -6s;">
-    <img src="https://via.placeholder.com/60x60.png?text=APP" alt="APP">
-  </div>
-  <div class="estrela" style="top: 60%; left: 60%; animation: orbit 20s linear infinite; animation-delay: -8s;">
-    <img src="https://via.placeholder.com/60x60.png?text=Manual" alt="Manual">
-  </div>
-  <div class="estrela" style="top: 40%; left: 20%; animation: orbit 22s linear infinite; animation-delay: -10s;">
-    <img src="https://via.placeholder.com/60x60.png?text=Conectado" alt="Conectado">
-  </div>
-  <div class="estrela" style="top: 50%; left: 80%; animation: orbit 25s linear infinite; animation-delay: -12s;">
-    <img src="https://via.placeholder.com/60x60.png?text=Círculo" alt="Círculo">
-  </div>
-</section><section>
-  <h2>Mais sobre NoHeroes</h2>
-  <p>Explore, leia, jogue e descubra. Nosso ecossistema vai além do entretenimento.</p>
-</section><footer>
-  <p>© 2025 NoHeroes. Todos os direitos reservados.</p>
-</footer><style>
-  @keyframes orbit {
-    from { transform: rotate(0deg) translateX(120px) rotate(0deg); }
-    to { transform: rotate(360deg) translateX(120px) rotate(-360deg); }
-  }
-</style></body>
+<body>
+
+  <!-- HEADER MOCK -->
+  <header class="py-4 text-center border-b border-[#8f4fff]/30">
+    <h1 class="text-2xl font-bold text-[#8f4fff]">NoHeroes</h1>
+  </header>
+
+  <!-- CONTEÚDO ANTES -->
+  <section class="py-12 px-6 text-center">
+    <p>Conteúdo fictício antes da seção "Obras"</p>
+  </section>
+
+  <!-- SECTION OBRAS -->
+  <section id="obras" class="py-16 px-6 max-w-6xl mx-auto text-center relative overflow-hidden">
+    <h2 class="text-3xl md:text-4xl font-bold uppercase tracking-wide mb-12 gradiente-noheroes-calm reveal-top">
+      Nosso Arsenal de Obras
+    </h2>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+      <!-- Card 1 -->
+      <div class="obra-card reveal-top">
+        <img src="https://via.placeholder.com/300x400/8f4fff/ffffff?text=Obra+1" alt="Obra 1" class="rounded-lg obra-img">
+        <p class="mt-2 text-sm">Obra 1</p>
+      </div>
+      <!-- Card 2 -->
+      <div class="obra-card reveal-top">
+        <img src="https://via.placeholder.com/300x400/facc15/000000?text=Obra+2" alt="Obra 2" class="rounded-lg obra-img">
+        <p class="mt-2 text-sm">Obra 2</p>
+      </div>
+      <!-- Card 3 -->
+      <div class="obra-card reveal-top">
+        <img src="https://via.placeholder.com/300x400/333333/ffffff?text=Obra+3" alt="Obra 3" class="rounded-lg obra-img">
+        <p class="mt-2 text-sm">Obra 3</p>
+      </div>
+      <!-- Card 4 -->
+      <div class="obra-card reveal-top">
+        <img src="https://via.placeholder.com/300x400/ff0080/ffffff?text=Obra+4" alt="Obra 4" class="rounded-lg obra-img">
+        <p class="mt-2 text-sm">Obra 4</p>
+      </div>
+      <!-- Card 5 -->
+      <div class="obra-card reveal-top">
+        <img src="https://via.placeholder.com/300x400/00ffff/000000?text=Obra+5" alt="Obra 5" class="rounded-lg obra-img">
+        <p class="mt-2 text-sm">Obra 5</p>
+      </div>
+      <!-- Card 6 -->
+      <div class="obra-card reveal-top">
+        <img src="https://via.placeholder.com/300x400/ff9900/000000?text=Obra+6" alt="Obra 6" class="rounded-lg obra-img">
+        <p class="mt-2 text-sm">Obra 6</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTEÚDO DEPOIS -->
+  <section class="py-12 px-6 text-center">
+    <p>Conteúdo fictício depois da seção "Obras"</p>
+  </section>
+
+  <!-- FOOTER MOCK -->
+  <footer class="py-4 text-center border-t border-[#8f4fff]/30 text-sm opacity-60">
+    © 2025 NoHeroes. Todos os direitos reservados.
+  </footer>
+
+  <!-- SCROLLREVEAL SCRIPT -->
+  <script>
+    ScrollReveal().reveal('.reveal-top', {
+      origin: 'top',
+      distance: '30px',
+      duration: 800,
+      easing: 'ease-out',
+      interval: 100
+    });
+  </script>
+
+</body>
 </html>
