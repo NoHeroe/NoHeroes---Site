@@ -550,6 +550,17 @@ backface-visibility: hidden;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+/* Scrollbar temática: fina, roxa, delicada */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: #8f4fff;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
 </style>
 
 </head>  
@@ -976,6 +987,8 @@ backface-visibility: hidden;
 
 <canvas id="brasasCanvas"></canvas>
 
+<canvas id="scrollSparkCanvas" style="position: fixed; top: 0; left: 0; pointer-events: none; z-index: 999;"></canvas>
+
  <script>  
   // Scroll suave  
   const scrollToSection = sectionId => {  
@@ -1208,6 +1221,50 @@ produtos.forEach((p, i) => {
   inner.appendChild(card);
 });
 
+// Scroll Spark Effect
+const canvas = document.getElementById("scrollSparkCanvas");
+const ctx = canvas.getContext("2d");
+let particles = [];
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+window.addEventListener("scroll", () => {
+  const y = window.scrollY / document.body.scrollHeight * window.innerHeight;
+  for (let i = 0; i < 3; i++) {
+    particles.push({
+      x: window.innerWidth - 10,
+      y: y,
+      vx: -1 + Math.random() * -1,
+      vy: -1 + Math.random() * 2,
+      alpha: 1,
+      radius: 2 + Math.random() * 2
+    });
+  }
+});
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach((p, i) => {
+    p.x += p.vx;
+    p.y += p.vy;
+    p.alpha -= 0.02;
+    if (p.alpha <= 0) {
+      particles.splice(i, 1);
+    } else {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(143, 79, 255, ${p.alpha})`;
+      ctx.fill();
+    }
+  });
+  requestAnimationFrame(animate);
+}
+animate();
 </script>
   </body>  
 </html> 
