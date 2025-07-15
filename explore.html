@@ -1,90 +1,81 @@
-<!DOCTYPE html><html lang="pt-br">
+<!DOCTYPE html><html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Demo Leque Scroll</title>
+  <title>Demo NoHeroes Scroll</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <style>
-    body {
-      margin: 0;
-      background: #0a0a0a;
-      color: #fff;
-      font-family: sans-serif;
-    }
-    .section {
-      height: 200vh;
+    body { margin: 0; background: #0a0a0a; color: #e5e5e5; font-family: sans-serif; }
+    section { padding: 80px 20px; text-align: center; }
+    h2 { font-size: 2rem; margin-bottom: 20px; }
+    .image-stack {
       position: relative;
-    }
-    .pin-area {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      overflow: hidden;
+      height: 80vh;
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: visible;
     }
-    .image-container {
-      position: relative;
-      width: 300px;
-      height: 400px;
-    }
-    .image-container img {
+    .stack-img {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      width: 150px;
+      height: 150px;
       object-fit: cover;
       opacity: 0;
-      transform: scale(1) translate(0, 0);
-      transition: all 1s ease;
-    }
-    .image-container img.show {
-      opacity: 1;
-    }
-    /* Simular leque */
-    .img1.show { z-index: 10; transform: translate(0, 0) scale(1); }
-    .img2.show { z-index: 9; transform: translate(-120px, 0) scale(0.9); }
-    .img3.show { z-index: 9; transform: translate(120px, 0) scale(0.9); }
-    .img4.show { z-index: 8; transform: translate(-240px, 0) scale(0.85); }
-    .img5.show { z-index: 8; transform: translate(240px, 0) scale(0.85); }
-    .img6.show { z-index: 7; transform: translate(0, 0) scale(1.2); }
-    .content {
-      padding: 2rem;
-      text-align: center;
+      transform: scale(0.7);
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(143,79,255,0.4);
     }
   </style>
 </head>
-<body><section class="section">
-  <div class="pin-area">
-    <div class="image-container">
-      <img src="https://via.placeholder.com/300x400/8f4fff/ffffff?text=1" class="img1">
-      <img src="https://via.placeholder.com/300x400/444/fff?text=2" class="img2">
-      <img src="https://via.placeholder.com/300x400/444/fff?text=3" class="img3">
-      <img src="https://via.placeholder.com/300x400/222/fff?text=4" class="img4">
-      <img src="https://via.placeholder.com/300x400/222/fff?text=5" class="img5">
-      <img src="https://via.placeholder.com/300x400/111/fff?text=6" class="img6">
+<body>
+  <section>
+    <h2>Conteúdo Antes</h2>
+    <p>Simulação de conteúdo fictício antes do carrossel.</p>
+  </section>  <section id="stack-section">
+    <h2>Obras NoHeroes</h2>
+    <div class="image-stack">
+      <img src="https://via.placeholder.com/150/8f4fff/ffffff?text=Central" class="stack-img" id="img0">
+      <img src="https://via.placeholder.com/150/facc15/000000?text=L1" class="stack-img" id="img1">
+      <img src="https://via.placeholder.com/150/facc15/000000?text=R1" class="stack-img" id="img2">
+      <img src="https://via.placeholder.com/150/39ff14/000000?text=L2" class="stack-img" id="img3">
+      <img src="https://via.placeholder.com/150/39ff14/000000?text=R2" class="stack-img" id="img4">
+      <img src="https://via.placeholder.com/150/ff0044/ffffff?text=Back" class="stack-img" id="img5">
     </div>
-  </div>
-</section><section class="content">
-  <h2>Final do efeito</h2>
-  <p>Conteúdo normal da página continua aqui.</p>
-</section><script>
-  const options = {
-    threshold: 0.5
-  };
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting) {
-        document.querySelector('.img1').classList.add('show');
-        setTimeout(() => document.querySelector('.img2').classList.add('show'), 400);
-        setTimeout(() => document.querySelector('.img3').classList.add('show'), 800);
-        setTimeout(() => document.querySelector('.img4').classList.add('show'), 1200);
-        setTimeout(() => document.querySelector('.img5').classList.add('show'), 1600);
-        setTimeout(() => document.querySelector('.img6').classList.add('show'), 2000);
-      }
+  </section>  <section>
+    <h2>Conteúdo Depois</h2>
+    <p>Simulação de conteúdo fictício depois do carrossel.</p>
+  </section>  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    const imgs = [
+      "#img0", "#img1", "#img2", "#img3", "#img4", "#img5"
+    ];
+
+    imgs.forEach((sel, i) => {
+      const delay = i * 0.1;
+      gsap.to(sel, {
+        scrollTrigger: {
+          trigger: "#stack-section",
+          start: "top center",
+          end: "bottom center",
+          scrub: true,
+        },
+        opacity: 1,
+        scale: 1,
+        x: () => {
+          if (i === 1) return -100; // L1
+          if (i === 2) return 100;  // R1
+          if (i === 3) return -180; // L2
+          if (i === 4) return 180;  // R2
+          return 0;
+        },
+        y: () => (i === 5 ? 50 : 0),
+        zIndex: 6 - i,
+        ease: "power1.out",
+        delay: delay
+      });
     });
-  }, options);
-  observer.observe(document.querySelector('.pin-area'));
-</script></body>
+  </script></body>
 </html>
