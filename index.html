@@ -510,6 +510,26 @@ backface-visibility: hidden;
   box-shadow: 0 0 20px #8f4fff99, 0 0 30px #facc1588;
   transform: scale(1.05);
 }
+/* Oculta a scrollbar padrão */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: radial-gradient(circle, #8f4fff 30%, #000 70%);
+  border-radius: 50px;
+  box-shadow: 0 0 10px #8f4fff80, 0 0 20px #facc1580;
+}
+
+/* Animação suave */
+::-webkit-scrollbar-thumb:hover {
+  background: radial-gradient(circle, #facc15 30%, #8f4fff 70%);
+  box-shadow: 0 0 15px #facc1580, 0 0 30px #8f4fff80;
+}
 </style>
 
 </head>  
