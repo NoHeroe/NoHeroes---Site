@@ -1,64 +1,122 @@
-<!-- SANTUÁRIO DE OBRAS -->
-<section id="santuario-obras" class="relative h-[220vh] overflow-hidden bg-black">
-  <h2 class="text-2xl md:text-3xl font-bold uppercase tracking-wide mb-8 gradiente-noheroes-calm cinzel text-center reveal-top">
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NoHeroes | Teste Santuario Obras</title>
+  <style>
+    body {
+      margin: 0;
+      background: #0a0a0a;
+      color: #e5e5e5;
+      font-family: 'Inter', sans-serif;
+    }
+    h2 {
+      background: linear-gradient(to right, #8f4fff, #facc15);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    #santuario-obras {
+      min-height: 200vh;
+      position: relative;
+      overflow: hidden;
+    }
+    .sticky-center {
+      position: sticky;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .obra-sec {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
+      filter: blur(8px);
+      transition: all 0.5s ease-out;
+      border-radius: 9999px;
+    }
+    .obra-sec.reveal {
+      opacity: 1;
+      filter: blur(0);
+      transform: translate(-50%, -50%) scale(1) translateX(var(--x, 0px)) translateY(var(--y, 0px));
+    }
+    .main-img {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      border: 2px solid #8f4fff;
+      z-index: 2;
+    }
+    .small-img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 2px solid #facc15;
+      z-index: 1;
+    }
+    .tiny-img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 2px solid #8f4fff;
+      z-index: 0;
+    }
+    .subtle-text {
+      max-width: 400px;
+      margin: 2rem auto;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #bbb;
+    }
+  </style>
+</head>
+<body>
+
+<header style="padding: 1rem; text-align: center; border-bottom: 1px solid #333;">
+  <h1>NoHeroes | Demonstração</h1>
+</header>
+
+<section id="santuario-obras" class="py-20 px-6 text-center">
+  <h2 class="text-2xl md:text-3xl font-bold uppercase tracking-wide mb-8 cinzel">
     Nossas Obras
   </h2>
 
-  <div class="sticky top-0 h-screen flex items-center justify-center">
-    <div class="relative w-48 h-48 rounded-full overflow-visible">
-      <img src="https://via.placeholder.com/300x300/8f4fff/ffffff?text=Principal" class="absolute w-full h-full object-cover rounded-full z-10">
-      <img src="https://via.placeholder.com/200x200/facc15/000000?text=Sec+1" class="obra-secundaria" style="--index:1;">
-      <img src="https://via.placeholder.com/180x180/8f4fff/000000?text=Sec+2" class="obra-secundaria" style="--index:2;">
-      <img src="https://via.placeholder.com/160x160/ff0044/ffffff?text=Sec+3" class="obra-secundaria" style="--index:3;">
-      <img src="https://via.placeholder.com/140x140/39ff14/000000?text=Sec+4" class="obra-secundaria" style="--index:4;">
-      <img src="https://via.placeholder.com/120x120/444/fff?text=Sec+5" class="obra-secundaria" style="--index:5;">
+  <div class="sticky-center">
+    <div style="position: relative; width: 200px; height: 200px; margin: auto;">
+      <img src="https://via.placeholder.com/160" alt="Obra Central" class="main-img">
+      <img src="https://via.placeholder.com/120" alt="Obra 2" class="obra-sec small-img" style="--x:-140px; --y:-40px;">
+      <img src="https://via.placeholder.com/120" alt="Obra 3" class="obra-sec small-img" style="--x:140px; --y:-40px;">
+      <img src="https://via.placeholder.com/100" alt="Obra 4" class="obra-sec tiny-img" style="--x:-180px; --y:80px;">
+      <img src="https://via.placeholder.com/100" alt="Obra 5" class="obra-sec tiny-img" style="--x:180px; --y:80px;">
+      <img src="https://via.placeholder.com/80" alt="Obra 6" class="obra-sec tiny-img" style="--x:0px; --y:160px;">
     </div>
   </div>
 
-  <div class="mt-12 text-center text-sm text-gray-400">
-    <p class="max-w-md mx-auto">
-      Uma jornada através de nossas criações. Cada obra revela mais sobre o universo NoHeroes.
-    </p>
+  <div class="subtle-text">
+    Uma jornada visual pelo universo NoHeroes.<br>
+    Cada obra, um fragmento do todo.
   </div>
 </section>
-
-<style>
-  #santuario-obras {
-    background: radial-gradient(ellipse at center, rgba(0,0,0,0.95) 40%, #0a0a0a);
-  }
-
-  .obra-secundaria {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    border-radius: 9999px;
-    opacity: 0;
-    filter: blur(8px);
-    transition: transform 0.4s ease, opacity 0.4s ease, filter 0.4s ease;
-  }
-
-  .obra-secundaria.revelada {
-    opacity: 1;
-    filter: blur(0);
-    transform: translate(-50%, -50%) rotate(calc(var(--index) * 15deg)) scale(1);
-  }
-</style>
 
 <script>
   window.addEventListener('scroll', () => {
     const section = document.getElementById('santuario-obras');
     const rect = section.getBoundingClientRect();
+    const threshold = rect.height * 0.3;
 
-    const center = window.innerHeight / 2;
-    const progress = Math.min(Math.max((center - rect.top) / rect.height, 0), 1);
+    const progress = Math.min(Math.max((window.innerHeight - rect.top - threshold) / threshold, 0), 1);
 
-    const secundarias = section.querySelectorAll('.obra-secundaria');
-    secundarias.forEach((img, idx) => {
-      if (progress > idx * 0.15) {
-        img.classList.add('revelada');
+    const images = section.querySelectorAll('.obra-sec');
+    images.forEach((img, idx) => {
+      if (progress > idx * 0.2) {
+        img.classList.add('reveal');
       } else {
-        img.classList.remove('revelada');
+        img.classList.remove('reveal');
       }
     });
   });
 </script>
+
+</body>
+</html>
