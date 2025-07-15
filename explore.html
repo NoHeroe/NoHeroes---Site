@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sobre Nós - NoHeroes [Versão Mutação]</title>
+    <title>Sobre Nós - NoHeroes [Versão GitHub Pages]</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -109,7 +109,7 @@
         }
 
         /* Initial state for GSAP animations */
-        #hero-title, .section-title, .section-p, .offering-card, .manifesto p {
+        .gsap-hidden {
             opacity: 0;
             visibility: hidden;
         }
@@ -121,10 +121,9 @@
     <div class="fixed top-0 left-0 w-full h-screen bg-gradient-to-t from-black via-transparent to-black z-0"></div>
 
     <main class="relative z-10">
-
         <section id="hero" class="h-screen flex items-center justify-center text-center p-4">
             <div>
-                <h1 id="hero-title" class="text-4xl md:text-6xl lg:text-7xl font-bold text-transparent">
+                <h1 id="hero-title" class="text-4xl md:text-6xl lg:text-7xl font-bold text-transparent gsap-hidden">
                     NoHeroes é onde você entra por diversão e sai em mutação.
                 </h1>
             </div>
@@ -132,14 +131,14 @@
 
         <section id="what-is" class="py-24 px-4 flex justify-center">
             <div class="glass-panel max-w-4xl text-center p-8 md:p-12">
-                <h2 class="section-title text-3xl md:text-4xl font-bold mb-6">📘 O que é <span class="text-purple-400">NoHeroes</span>?</h2>
-                <p class="section-p text-lg text-gray-300 mb-6">
+                <h2 class="section-title text-3xl md:text-4xl font-bold mb-6 gsap-hidden">📘 O que é <span class="text-purple-400">NoHeroes</span>?</h2>
+                <p class="section-p text-lg text-gray-300 mb-6 gsap-hidden">
                     NoHeroes não é uma marca. É um portal. Uma plataforma multimídia de impacto — onde histórias, conhecimento e transformação se entrelaçam. Aqui, você não apenas assiste. <strong class="font-semibold text-amber-300">Você evolui.</strong>
                 </p>
-                <p class="section-p text-lg text-gray-300">
+                <p class="section-p text-lg text-gray-300 gsap-hidden">
                     É um selo autoral que une animação, livros, aplicativos e um futuro em forma de jogo. Tudo o que criamos te impulsiona para fora da inércia.
                 </p>
-                <div class="section-p mt-8 text-xl font-semibold">
+                <div class="section-p mt-8 text-xl font-semibold gsap-hidden">
                     <span class="text-purple-300">Você lê.</span>
                     <span class="text-amber-300 mx-2">></span>
                     <span class="text-purple-300">Você aprende.</span>
@@ -151,29 +150,29 @@
         
         <section id="offerings" class="py-24 px-4">
             <div class="max-w-6xl mx-auto text-center">
-                <h2 class="section-title text-3xl md:text-4xl font-bold mb-16">✨ Muito Além de uma História</h2>
+                <h2 class="section-title text-3xl md:text-4xl font-bold mb-16 gsap-hidden">✨ Muito Além de uma História</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="offering-card glass-panel-hover p-8 text-left">
+                    <div class="offering-card glass-panel-hover p-8 text-left gsap-hidden">
                         <h3 class="text-2xl font-bold mb-3 text-purple-400">Estúdio de Animação</h3>
                         <p class="text-gray-300">Um estúdio independente que dá vida a mangás, animes e clipes com identidade visual única.</p>
                     </div>
-                    <div class="offering-card glass-panel-hover p-8 text-left">
+                    <div class="offering-card glass-panel-hover p-8 text-left gsap-hidden">
                         <h3 class="text-2xl font-bold mb-3 text-amber-400">Editora Alternativa</h3>
                         <p class="text-gray-300">Publicamos livros e eBooks com narrativas fortes, que desafiam o convencional e inspiram.</p>
                     </div>
-                    <div class="offering-card glass-panel-hover p-8 text-left">
+                    <div class="offering-card glass-panel-hover p-8 text-left gsap-hidden">
                         <h3 class="text-2xl font-bold mb-3 text-purple-400">Aplicativo Gamificado</h3>
                         <p class="text-gray-300">Uma ferramenta com XP, metas e rituais para aplicar as lições das histórias na sua vida real.</p>
                     </div>
-                    <div class="offering-card glass-panel-hover p-8 text-left">
+                    <div class="offering-card glass-panel-hover p-8 text-left gsap-hidden">
                         <h3 class="text-2xl font-bold mb-3 text-amber-400">Rede de Criadores</h3>
                         <p class="text-gray-300">Uma comunidade de tutores e aprendizes que ensinam, aprendem e criam juntos.</p>
                     </div>
-                    <div class="offering-card glass-panel-hover p-8 text-left">
+                    <div class="offering-card glass-panel-hover p-8 text-left gsap-hidden">
                         <h3 class="text-2xl font-bold mb-3 text-purple-400">Universo Narrativo</h3>
                         <p class="text-gray-300">Múltiplas obras e franquias como ROAR e Chrysalis, conectadas em um ecossistema.</p>
                     </div>
-                    <div class="offering-card glass-panel-hover p-8 text-left">
+                    <div class="offering-card glass-panel-hover p-8 text-left gsap-hidden">
                         <h3 class="text-2xl font-bold mb-3 text-amber-400">Portal de Evolução</h3>
                         <p class="text-gray-300">Como um "SelfQuest", mas com alma. Um caminho para o desenvolvimento pessoal através da arte.</p>
                     </div>
@@ -183,35 +182,37 @@
 
         <section id="for-who" class="py-24 px-4">
             <div class="max-w-4xl mx-auto text-center">
-                <h2 class="section-title text-3xl md:text-4xl font-bold mb-12">🕸️ NoHeroes é para quem?</h2>
+                <h2 class="section-title text-3xl md:text-4xl font-bold mb-12 gsap-hidden">🕸️ NoHeroes é para quem?</h2>
                 <div class="manifesto space-y-6 text-lg text-gray-300">
-                    <p>Para quem tem um <span class="text-purple-400">universo dentro de si</span>, mas nunca foi compreendido.</p>
-                    <p>Para quem quer <span class="text-amber-400">crescer</span>, mas odeia fórmulas prontas.</p>
-                    <p>Para quem quer <span class="text-purple-400">criar</span>, mas ainda não tem as ferramentas.</p>
-                    <p>Para quem quer se <span class="text-amber-400">libertar</span>, mas precisa de impulso e sentido.</p>
+                    <p class="gsap-hidden">Para quem tem um <span class="text-purple-400">universo dentro de si</span>, mas nunca foi compreendido.</p>
+                    <p class="gsap-hidden">Para quem quer <span class="text-amber-400">crescer</span>, mas odeia fórmulas prontas.</p>
+                    <p class="gsap-hidden">Para quem quer <span class="text-purple-400">criar</span>, mas ainda não tem as ferramentas.</p>
+                    <p class="gsap-hidden">Para quem quer se <span class="text-amber-400">libertar</span>, mas precisa de impulso e sentido.</p>
                 </div>
             </div>
         </section>
-
     </main>
 
     <footer class="text-center p-8 text-gray-500 relative z-10">
         <p>&copy; 2025 NoHeroes. Todos os direitos reservados.</p>
     </footer>
 
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/SplitText.min.js"></script>
     
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        // MUDANÇA CRÍTICA: USAR window.onload EM VEZ DE DOMContentLoaded
+        // Isso garante que fontes e todas as mídias foram carregadas antes de executar as animações.
+        window.onload = function() {
 
             gsap.registerPlugin(ScrollTrigger, SplitText);
 
+            // Torna os elementos visíveis para o GSAP poder trabalhar com eles
+            gsap.set(".gsap-hidden", {visibility: "visible"});
+            
             // --- 1. Animação da Hero Section ---
             const heroTitle = document.getElementById('hero-title');
-            heroTitle.style.visibility = 'visible';
             const split = new SplitText(heroTitle, { type: "words, chars" });
             const chars = split.chars;
 
@@ -233,22 +234,18 @@
 
             // --- 2. Animações de Scroll Genéricas ---
             const animateIn = (element, delay = 0) => {
-                gsap.fromTo(element, 
-                    { y: 50, opacity: 0, visibility: 'hidden' },
-                    { 
-                        y: 0, 
-                        opacity: 1, 
-                        visibility: 'visible',
-                        duration: 1, 
-                        ease: 'power3.out',
-                        delay: delay,
-                        scrollTrigger: {
-                            trigger: element,
-                            start: 'top 85%',
-                            toggleActions: 'play none none none'
-                        }
+                gsap.from(element, { 
+                    y: 50, 
+                    opacity: 0, 
+                    duration: 1, 
+                    ease: 'power3.out',
+                    delay: delay,
+                    scrollTrigger: {
+                        trigger: element,
+                        start: 'top 85%',
+                        toggleActions: 'play none none none'
                     }
-                );
+                });
             };
             
             document.querySelectorAll('.section-title').forEach(el => animateIn(el));
@@ -256,47 +253,38 @@
 
             // --- 3. Animação dos Cards de Ofertas ---
             document.querySelectorAll('.offering-card').forEach((card, index) => {
-                gsap.fromTo(card,
-                    { opacity: 0, y: 100, rotationY: -45, visibility: 'hidden' },
-                    {
-                        opacity: 1,
-                        y: 0,
-                        rotationY: 0,
-                        visibility: 'visible',
-                        duration: 0.8,
-                        ease: 'power2.out',
-                        scrollTrigger: {
-                            trigger: card,
-                            start: 'top 90%',
-                            toggleActions: 'play none none none'
-                        },
-                        delay: (index % 3) * 0.1
-                    }
-                );
+                gsap.from(card, {
+                    opacity: 0,
+                    y: 100,
+                    rotationY: -45,
+                    duration: 0.8,
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 90%',
+                        toggleActions: 'play none none none'
+                    },
+                    delay: (index % 3) * 0.1
+                });
             });
             
             // --- 4. Animação do Manifesto "Para Quem?" ---
             document.querySelectorAll('.manifesto p').forEach((line, index) => {
-                gsap.fromTo(line, 
-                    { opacity: 0, x: -50, visibility: 'hidden' },
-                    {
-                        opacity: 1,
-                        x: 0,
-                        visibility: 'visible',
-                        duration: 1,
-                        ease: 'power3.out',
-                        scrollTrigger: {
-                            trigger: line,
-                            start: 'top 90%',
-                            toggleActions: 'play none none none'
-                        },
-                        delay: index * 0.1
-                    }
-                );
+                gsap.from(line, { 
+                    opacity: 0, 
+                    x: -50,
+                    duration: 1,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: line,
+                        start: 'top 90%',
+                        toggleActions: 'play none none none'
+                    },
+                    delay: index * 0.15 // Aumentei um pouco o delay para ficar mais legível
+                });
             });
 
-        });
+        };
     </script>
-
 </body>
 </html>
