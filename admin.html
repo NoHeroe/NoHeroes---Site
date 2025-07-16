@@ -59,9 +59,16 @@
 
   <!-- Dashboard -->
   <section id="dashboard" class="hidden">
-    <h2 class="text-lg font-bold mb-2">Dashboard</h2>
-    <canvas id="grafico" class="bg-gray-800 rounded"></canvas>
-  </section>
+  <h2 class="text-lg font-bold mb-2">Dashboard</h2>
+  <div class="flex space-x-2 mb-4">
+    <button onclick="exibirGrafico('usuarios')" class="p-2 bg-purple-700 rounded">Usuários</button>
+    <button onclick="exibirGrafico('vendasQtd')" class="p-2 bg-purple-700 rounded">Vendas - Qtd</button>
+    <button onclick="exibirGrafico('vendasValor')" class="p-2 bg-purple-700 rounded">Vendas - Valor</button>
+  </div>
+  <div class="w-full h-64">
+    <canvas id="grafico"></canvas>
+  </div>
+</section>
 </main>
 
   </div>  <script>
@@ -86,27 +93,65 @@
       if (saved) document.getElementById('novidadesJson').value = saved;
     }
 
-    function inicializarGrafico() {
-      const ctx = document.getElementById('grafico').getContext('2d');
-      new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: ['Usuários', 'Vendas', 'Produtos'],
-          datasets: [{
-            label: 'Estatísticas',
-            backgroundColor: '#a855f7',
-            data: [10, 5, 8]
-          }]
-        },
-        options: { responsive: true, maintainAspectRatio: false }
-      });
+ ScrollReveal().reveal('section', { interval: 100, origin: 'bottom', distance: '20px' });
+    });
+
+let chartInstance = null;
+
+  const dadosMock = {
+    usuarios: [5, 8, 12, 20, 15, 18, 22, 30, 25, 28, 32, 35],
+    vendasQtd: [10, 15, 20, 30, 25, 35, 40, 45, 38, 42, 50, 55],
+    vendasValor: [1000, 1200, 1500, 2000, 1800, 2200, 2500, 2700, 2600, 3000, 3200, 3500]
+  };
+
+  const meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+
+  function exibirGrafico(tipo) {
+    const ctx = document.getElementById('grafico').getContext('2d');
+    if (chartInstance) chartInstance.destroy();
+
+    let titulo = "";
+    let dados = [];
+
+    switch(tipo) {
+      case 'usuarios':
+        titulo = "Novos Usuários por Mês";
+        dados = dadosMock.usuarios;
+        break;
+      case 'vendasQtd':
+        titulo = "Quantidade de Produtos Vendidos por Mês";
+        dados = dadosMock.vendasQtd;
+        break;
+      case 'vendasValor':
+        titulo = "Valor de Vendas (R$) por Mês";
+        dados = dadosMock.vendasValor;
+        break;
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      carregarNovidades();
-      inicializarGrafico();
-      showSection('dashboard');
-      ScrollReveal().reveal('section', { interval: 100, origin: 'bottom', distance: '20px' });
+    chartInstance = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: meses,
+        datasets: [{
+          label: titulo,
+          backgroundColor: '#a855f7',
+          data: dados
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
     });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    carregarNovidades();
+    exibirGrafico('usuarios'); // Começa mostrando usuários
+    ScrollReveal().reveal('section', { interval: 100, origin: 'bottom', distance: '20px' });
+  });
   </script></body>
 </html>
