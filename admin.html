@@ -88,6 +88,24 @@
     </div>
   </div>
 
+document.addEventListener('DOMContentLoaded', () => {
+  // MOSTRA apenas 'contas' inicialmente, sem mexer no dashboard.
+  showSection('contas');
+  // Inicia o gráfico sem obrigar a section#dashboard a aparecer
+  const ctx = document.getElementById('grafico').getContext('2d');
+  chartInstance = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: meses,
+      datasets: [{
+        label: 'Novos Usuários por Mês',
+        backgroundColor: '#a855f7',
+        data: dadosMock.usuarios
+      }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }
+  });
+
   <script>
     function showSection(id) {
       document.querySelectorAll('main section').forEach(sec => sec.classList.add('hidden'));
@@ -139,24 +157,6 @@
         options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }
       });
     }
-
-    document.addEventListener('DOMContentLoaded', () => {
-  // MOSTRA apenas 'contas' inicialmente, sem mexer no dashboard.
-  showSection('contas');
-  // Inicia o gráfico sem obrigar a section#dashboard a aparecer
-  const ctx = document.getElementById('grafico').getContext('2d');
-  chartInstance = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: meses,
-      datasets: [{
-        label: 'Novos Usuários por Mês',
-        backgroundColor: '#a855f7',
-        data: dadosMock.usuarios
-      }]
-    },
-    options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }
-  });
 
   </script>
 </body>
