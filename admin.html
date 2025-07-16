@@ -71,32 +71,30 @@
 </section>
 </main>
 
-  </div>  <script>
-    function showSection(id) {
-      document.querySelectorAll('main section').forEach(sec => sec.classList.add('hidden'));
-      document.getElementById(id).classList.remove('hidden');
+  </div> 
+ <script>
+  function showSection(id) {
+    document.querySelectorAll('main section').forEach(sec => sec.classList.add('hidden'));
+    document.getElementById(id).classList.remove('hidden');
+  }
+
+  function salvarNovidades() {
+    const data = document.getElementById('novidadesJson').value;
+    try {
+      JSON.parse(data);
+      localStorage.setItem('novidades', data);
+      alert('Novidades salvas localmente!');
+    } catch (e) {
+      alert('JSON inválido');
     }
+  }
 
-    function salvarNovidades() {
-      const data = document.getElementById('novidadesJson').value;
-      try {
-        JSON.parse(data);
-        localStorage.setItem('novidades', data);
-        alert('Novidades salvas localmente!');
-      } catch (e) {
-        alert('JSON inválido');
-      }
-    }
+  function carregarNovidades() {
+    const saved = localStorage.getItem('novidades');
+    if (saved) document.getElementById('novidadesJson').value = saved;
+  }
 
-    function carregarNovidades() {
-      const saved = localStorage.getItem('novidades');
-      if (saved) document.getElementById('novidadesJson').value = saved;
-    }
-
- ScrollReveal().reveal('section', { interval: 100, origin: 'bottom', distance: '20px' });
-    });
-
-let chartInstance = null;
+  let chartInstance = null;
 
   const dadosMock = {
     usuarios: [5, 8, 12, 20, 15, 18, 22, 30, 25, 28, 32, 35],
@@ -150,8 +148,10 @@ let chartInstance = null;
 
   document.addEventListener('DOMContentLoaded', () => {
     carregarNovidades();
-    exibirGrafico('usuarios'); // Começa mostrando usuários
+    showSection('dashboard'); // exibe Dashboard como default
+    exibirGrafico('usuarios'); // carrega gráfico default
     ScrollReveal().reveal('section', { interval: 100, origin: 'bottom', distance: '20px' });
   });
-  </script></body>
+</script>
+</body>
 </html>
