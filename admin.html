@@ -39,11 +39,36 @@
         <p>Conteúdo mockado da Loja aqui.</p>
       </section>
 
-      <!-- Novidades -->
-      <section id="novidades" class="hidden">
-        <h2 class="text-lg font-bold">Novidades</h2>
-        <textarea rows="4" class="w-full bg-gray-800 rounded p-2" placeholder="Escreva novidades..."></textarea>
-      </section>
+      <!-- Novidades / News CRUD -->
+<section id="novidades" class="hidden">
+  <h2 class="text-lg font-bold mb-2">Novidades</h2>
+
+  <!-- Lista de posts -->
+  <div id="postsList" class="space-y-4 max-h-96 overflow-y-auto"></div>
+
+  <!-- Botão para criar novo post -->
+  <button onclick="openPostForm()" class="mt-2 p-2 bg-purple-700 rounded w-full">
+    Adicionar Post
+  </button>
+
+  <!-- Formulário de criação/edição -->
+  <div id="postFormContainer" class="hidden mt-4 p-4 bg-gray-800 rounded space-y-2">
+    <input id="postId"        placeholder="ID (ex: 2025-07-16-nova-001)"        class="w-full p-2 bg-gray-700 rounded" />
+    <input id="postDate"      placeholder="Data (DD/MM/AAAA)"                 class="w-full p-2 bg-gray-700 rounded" />
+    <input id="postCategory"  placeholder="Categoria (ex: Comunidade)"         class="w-full p-2 bg-gray-700 rounded" />
+    <input id="postTitle"     placeholder="Título"                             class="w-full p-2 bg-gray-700 rounded" />
+    <textarea id="postContent" rows="4" placeholder="Conteúdo HTML"              class="w-full p-2 bg-gray-700 rounded"></textarea>
+    <div class="flex space-x-2">
+      <button onclick="savePost()"       class="flex-1 bg-green-600 p-2 rounded">Salvar</button>
+      <button onclick="cancelPostForm()" class="flex-1 bg-gray-700 p-2 rounded">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- Botão para baixar JSON atualizado -->
+  <button onclick="downloadPosts()" class="mt-2 p-2 bg-gray-600 rounded w-full">
+    Baixar JSON
+  </button>
+</section>
 
       <!-- Missões -->
       <section id="missoes" class="hidden">
@@ -173,6 +198,111 @@
       showSection('contas');    // abre Contas por padrão
       exibirGrafico('usuarios');// prepara gráfico
     });
+// --- Variáveis globais ---
+let posts = [];
+let editIndex = -1;
+
+// 1) Carrega posts.json (ou localStorage se falhar)
+async function initPosts() {
+  try {
+    const res = await fetch('/assets/data/posts.json');
+    const data = await res.json();
+    posts = data.posts;
+  } catch {
+    const saved = localStorage.getItem('posts');
+    posts = saved ? JSON.parse(saved).posts : [];
+  }
+  renderPosts();
+}
+
+// 2) Renderiza a lista de posts no admin
+function renderPosts() {
+  const container = document.getElementById('postsList');
+  container.innerHTML = '';
+  posts.forEach((post, i) => {
+    const div = document.createElement('div');
+    div.className = 'p-2 bg-gray-800 rounded';
+    div.innerHTML = `
+      <p class="text-sm">${post.date} — <strong>${post.category}</strong></p>
+      <h3 class="font-bold">${post.title}</h3>
+      <div class="flex space-x-2 mt-2">
+        <button onclick="editPost(${i})"   class="p-1 bg-blue-600 text-sm rounded">Editar</button>
+        <button onclick="deletePost(${i})" class="p-1 bg-red-600  text-sm rounded">Excluir</button>
+      </div>`;
+    container.appendChild(div);
+  });
+}
+
+// 3) Abre o formulário para novo post
+function openPostForm() {
+  editIndex = -1;
+  clearForm();
+  document.getElementById('postFormContainer').classList.remove('hidden');
+}
+
+// 4) Carrega dados no form para edição
+function editPost(i) {
+  editIndex = i;
+  const p = posts[i];
+  document.getElementById('postId').value       = p.id;
+  document.getElementById('postDate').value     = p.date;
+  document.getElementById('postCategory').value = p.category;
+  document.getElementById('postTitle').value    = p.title;
+  document.getElementById('postContent').value  = p.content;
+  document.getElementById('postFormContainer').classList.remove('hidden');
+}
+
+// 5) Remove post da lista
+function deletePost(i) {
+  if (!confirm('Excluir este post?')) return;
+  posts.splice(i, 1);
+  renderPosts();
+}
+
+// 6) Salva novo post ou edição
+function savePost() {
+  const id       = document.getElementById('postId').value.trim();
+  const date     = document.getElementById('postDate').value.trim();
+  const category = document.getElementById('postCategory').value.trim();
+  const title    = document.getElementById('postTitle').value.trim();
+  const content  = document.getElementById('postContent').value.trim();
+  if (!id||!date||!category||!title||!content) {
+    return alert('Preencha todos os campos antes de salvar.');
+  }
+  const newPost = { id, date, category, title, content };
+  if (editIndex >= 0) posts[editIndex] = newPost;
+  else             posts.push(newPost);
+  cancelPostForm();
+  renderPosts();
+}
+
+// 7) Cancela e esconde o form
+function cancelPostForm() {
+  document.getElementById('postFormContainer').classList.add('hidden');
+}
+
+// 8) Limpa inputs do form
+function clearForm() {
+  ['postId','postDate','postCategory','postTitle','postContent']
+    .forEach(id => document.getElementById(id).value = '');
+}
+
+// 9) Baixa o JSON formatado para colar em /assets/data/posts.json
+function downloadPosts() {
+  const data = JSON.stringify({ posts }, null, 2);
+  const blob = new Blob([data], { type: 'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = 'posts.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// 10) Inicializa ao carregar o admin
+document.addEventListener('DOMContentLoaded', () => {
+  initPosts();
+});
   </script>
 </body>
 </html>
