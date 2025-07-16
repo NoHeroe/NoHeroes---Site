@@ -6,7 +6,6 @@
   <title>NoHeroes | Admin</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://unpkg.com/scrollreveal"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body { font-family: 'Cinzel Decorative', serif; background-color: #1f1f1f; color: #facc15; }
@@ -142,10 +141,23 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-  showSection('contas'); // Agora a página abre direto na aba Contas
-  exibirGrafico('usuarios');
-  ScrollReveal().reveal('section', { interval: 100, origin: 'bottom', distance: '20px' });
-});
+  // MOSTRA apenas 'contas' inicialmente, sem mexer no dashboard.
+  showSection('contas');
+  // Inicia o gráfico sem obrigar a section#dashboard a aparecer
+  const ctx = document.getElementById('grafico').getContext('2d');
+  chartInstance = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: meses,
+      datasets: [{
+        label: 'Novos Usuários por Mês',
+        backgroundColor: '#a855f7',
+        data: dadosMock.usuarios
+      }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }
+  });
+
   </script>
 </body>
 </html>
