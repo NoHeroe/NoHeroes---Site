@@ -1,554 +1,116 @@
-<!DOCTYPE html><html lang="pt-BR">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NoHeroes - Sobre</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+  <title>NoHeroes | Sobre</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/alpinejs" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet" />
   <style>
+    body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #e5e5e5; }
+    h1, h2, .cinzel { font-family: 'Cinzel Decorative', serif; }
     html { scroll-behavior: smooth; }
-    .fade-in { animation: fadeIn 1.5s ease-in forwards; opacity: 0; }
-    @keyframes fadeIn { to { opacity: 1; } }
-body.modal-aberto {
-  overflow: hidden;
-  height: 100vh;
-}
-dialog::backdrop {
-  background: rgba(0, 0, 0, 0.7);
-}
-
-dialog {
-  border: none;
-  padding: 0;
-  background: transparent;
-}
+    .glass { background: rgba(28, 28, 28, 0.2); backdrop-filter: blur(8px); border-radius: 1rem; border: 1px solid rgba(255,255,255,0.05); }
+    .gradiente-noheroes { background: linear-gradient(to right, #8f4fff, #facc15); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: transparent; }
+    .barra-degrade { background: linear-gradient(to right, #8f4fff, #facc15); box-shadow: 0 0 6px #8f4fff88, 0 0 10px #facc1588; height: 4px; }
   </style>
 </head>
-<body class="bg-black text-white font-sans leading-relaxed">  
-
-<!-- 1. Hero / Introdução Narrativa -->  <section id="intro" class="relative bg-cover bg-center h-screen flex items-center justify-center text-center" style="background-image: url('background-texture.png');">
-    <div class="absolute inset-0 bg-black opacity-60"></div>
-    <div class="relative z-10 px-6 fade-in">
-      <h1 class="text-5xl md:text-6xl font-extrabold reveal-fade">Nem todo herói veste uma capa. Alguns vestem sombras."</h1>
-      <p class="mt-4 text-xl md:text-2xl">"NoHeroes é a cicatriz viva de uma era perdida. Uma fábula quebrada, narrada por quem nunca teve voz.</p>
-      <button onclick="document.getElementById('concept').scrollIntoView({ behavior: 'smooth' })" class="mt-8 px-6 py-3 border-2 border-white rounded-lg hover:bg-white hover:text-black transition">Descer</button>
-    </div>
-    <!-- Placeholder para animação leve / partículas -->
-    <canvas id="particles" class="absolute inset-0"></canvas>
-    <script>
-      // Init particles.js or similar lib (placeholder)
-    </script>
-  </section>
-
- <!-- 2. O Que é NoHeroes? -->
-<section id="concept" class="py-20 text-center px-4">
-  <h2 class="text-4xl font-bold reveal-bottom">O Que é NoHeroes?</h2>
-  <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-300 reveal-bottom">
-    NoHeroes não é apenas um universo — é uma ferida aberta no tempo, uma mitologia moderna forjada em dor, esperança e reinvenção.  
-    É um projeto-ponte entre mundos: da carne à essência, da ficção ao futuro real.  
-    Um selo que transforma histórias sombrias em trilhas de cura e expansão — narrativas que não pedem permissão, apenas despertam.
-  </p>
-
-  <div class="mt-12 flex flex-wrap justify-center gap-6 text-left">
-    <!-- Bloco 1 -->
-    <div class="w-72 p-6 bg-gray-800 rounded-2xl shadow-lg reveal-bottom">
-      <h3 class="font-semibold text-xl text-purple-400">A Entidade Criadora</h3>
-      <p class="mt-2 text-gray-300">
-        NoHeroes nasceu de uma urgência: transbordar.  
-        Criado por Raul “NoHeroe”, o projeto é a voz de uma geração sem voz — um estúdio autoral que transforma traumas em arte, e arte em resistência.
-      </p>
-    </div>
-
-    <!-- Bloco 2 -->
-    <div class="w-72 p-6 bg-gray-800 rounded-2xl shadow-lg reveal-bottom">
-      <h3 class="font-semibold text-xl text-emerald-400">Marca & Manifesto</h3>
-      <p class="mt-2 text-gray-300">
-        Aqui, mangá, animação e som não são gêneros — são armas.  
-        A marca NoHeroes rejeita fórmulas prontas e vende o que ninguém quer mostrar: a verdade por trás do medo, do caos e da beleza que nasce da queda.
-      </p>
-    </div>
-
-    <!-- Bloco 3 -->
-    <div class="w-72 p-6 bg-gray-800 rounded-2xl shadow-lg reveal-bottom">
-      <h3 class="font-semibold text-xl text-white">Atmosfera & Imersão</h3>
-      <p class="mt-2 text-gray-300">
-        Você não consome NoHeroes. Você entra nele.  
-        Com estética dark, trilha original e ambientação ritualística, o universo pulsa como um sussurro antigo — chamando quem sente demais, pensa demais e ainda não desistiu.
-      </p>
-    </div>
-  </div>
-</section>
-
-  <!-- 3. Universos -->  
-<section id="universos" class="py-20 bg-[#0a0a0a] px-4 text-center relative">
-  <h2 class="text-4xl font-bold mb-4 reveal-bottom">Os Universos</h2>
-
-  <!-- Imagem de Ryu e Azuos -->
-  <div class="flex justify-center">
-   <img src="assets/images/ryu-azuos.png" class="block w-[300px] mt-[1px] ml-[28px] reveal-bottom" alt="ROAR & FREQ" />
-  </div>
-
-  <!-- Título estilizado -->
-  <div class="mt-[-24px] text-3xl font-extrabold tracking-wide z-10 relative">
-    <span class="text-purple-500">ROAR</span>
-    <span class="text-white">&</span>
-    <span class="text-green-500">FREQ</span>
-  </div>
-
-  <!-- Botão alinhado com largura do título -->
-  <div class="mt-6 flex justify-center">
-    <button onclick="toggleUniversoTexto()" class="bg-black text-white px-16 py-3 rounded-lg text-base font-semibold border border-white hover:bg-white hover:text-black transition-all duration-300">
-      Ler mais...
-    </button>
-  </div>
-
-  <!-- Texto expansível -->
-  <div id="universoTexto" class="max-w-3xl mx-auto mt-8 text-lg text-gray-300 reveal-left hidden">
-   <p class="mt-4 max-w-2xl mx-auto text-base leading-relaxed text-white/90">
-  <strong><a href="/roar" class="text-purple-500 hover:underline">ROAR</a></strong> e <strong><a href="/freq" class="text-green-500 hover:underline">FREQ</a></strong> são partes de um mesmo universo: mundos distintos conectados por um enredo sombrio, denso e visceral.  
-  <br><br>
-  Ambos estão sendo desenvolvidos como mangás autorais — e ganharão vida em versões animadas com trilha sonora e sonoplastia de alto impacto, elevando a experiência narrativa a um novo patamar.
-  <br><br>
-  Em <strong>ROAR</strong>, acompanhamos a jornada de Azuos, um guerreiro que desafia a própria morte em busca de redenção, enfrentando traumas, perdas e revelações espirituais em um mundo devastado por orgulho, guerra e escuridão interior. A trama une fantasia, emoção e filosofia sem recorrer a clichês — construindo um protagonista complexo, cujas batalhas internas ecoam nos campos de guerra externos.
-  <br><br>
-  Em <strong>FREQ</strong>, mergulhamos em uma realidade paralela onde Ryu — filho de Azuos — desperta sem poderes em uma sociedade decadente, saturada de tecnologia, vícios e amnésia coletiva sobre a magia. À medida que Ryu encontra mentores e aliados que revelam seu potencial, o som se torna uma força vital: uma arma, uma cura, uma linguagem esquecida. O enredo costura temas de identidade, evolução e revolta social em uma estrutura rica e multifásica.
-  <br><br>
-  Essa fusão de histórias é o alicerce do nosso maior objetivo: transformar o projeto NoHeroes em uma das maiores potências audiovisuais do cenário nacional — e, futuramente, ultrapassar fronteiras com uma obra que é, ao mesmo tempo, arte, crítica, imersão e inovação.
-</p>
-  </div>
-</section>
-  
-<script>
-  function toggleUniversoTexto() {
-    const texto = document.getElementById('universoTexto');
-    texto.classList.toggle('hidden');
-  }
-</script>
-
-<!-- 4. A Experiência Sensorial -->  
-<section id="sensoria" class="py-20 px-4 text-center">
-  <h2 class="text-4xl font-bold">A Experiência Sensorial</h2>
-  <p class="mt-4 max-w-2xl mx-auto text-lg leading-relaxed text-gray-300">
-    Não criamos apenas mundos — esculpimos sensações. Cada nota, cada eco, cada silêncio é pensado para atravessar pele e alma.  
-    Composições originais, efeitos cinematográficos e ambientações imersivas elevam a narrativa a um patamar visceral.  
-    E não estaremos sozinhos: convidaremos artistas e músicos do cenário geek nacional para colaborar e provocar ondas sonoras que você não apenas ouve — você sente.
-  </p>
-
- <div class="mt-10 flex flex-wrap justify-center gap-12 overflow-visible reveal-fade">
-  <!-- Música Original -->
-  <div class="flex flex-col items-center w-[90px] overflow-visible">
-    <div class="relative">
-      <img src="musica1.png" alt="Música Original" class="w-full h-auto object-contain scale-[1.15] transition-transform duration-300 hover:scale-125 hover:drop-shadow-[0_0_12px_#a855f7] z-10" />
-    </div>
-    <p class="mt-2 text-center text-white font-semibold leading-tight h-10 flex items-end justify-center z-20">
-      Música Original
-    </p>
-  </div>
-
-  <!-- Efeitos Cinematográficos -->
-  <div class="flex flex-col items-center w-[90px] overflow-visible reveal-fade">
-    <div class="relative">
-      <img src="musica2.png" alt="Efeitos Cinematográficos" class="w-full h-auto object-contain scale-[1.15] transition-transform duration-300 hover:scale-125 hover:drop-shadow-[0_0_12px_#a855f7] z-10" />
-    </div>
-    <p class="mt-2 text-center text-white font-semibold leading-tight h-10 flex items-end justify-center z-20">
-      Efeitos Cinematográficos
-    </p>
-  </div>
-
-  <!-- Imersão Interativa -->
-  <div class="flex flex-col items-center w-[90px] overflow-visible reveal-fade">
-    <div class="relative">
-      <img src="musica3.png" alt="Imersão Interativa" class="w-full h-auto object-contain scale-[1.15] transition-transform duration-300 hover:scale-125 hover:drop-shadow-[0_0_12px_#a855f7] z-10" />
-    </div>
-    <p class="mt-2 text-center text-white font-semibold leading-tight h-10 flex items-end justify-center z-20">
-      Imersão Interativa
-    </p>
-  </div>
-</div>
- </section>
-
-  <!-- 5. Missão, Visão, Valores & Propósito -->
-<section id="missao" class="py-20 px-4 bg-[#0b0b0b] text-white">
-  <h2 class="text-4xl font-bold text-center mb-16 tracking-wide">Missão, Visão & Propósito</h2>
-
-  <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
-
-    <!-- Missão -->
-    <div class="bg-black/40 border border-gray-700 p-8 rounded-xl shadow-xl backdrop-blur-sm reveal-bottom">
-      <h3 class="text-2xl font-semibold text-emerald-400 mb-4">Missão</h3>
-      <p class="text-white/90 leading-relaxed">
-        A missão de <strong>NoHeroes</strong> é, de forma <strong>inovadora</strong>, trazer um universo de anime ao mundo — 
-        inicialmente através deste site e de mangás, e futuramente animes e um jogo imersivo que conecte o real ao digital.
-        Queremos criar um <strong>ecossistema vivo</strong>, onde inteligência artificial, vida real e gameplay se fundem;
-        cada passo seu do dia a dia vira progresso no jogo, e cada conquista no jogo retorna benefícios ao mundo real.
-      </p>
-    </div>
-
-    <!-- Visão -->
-    <div class="bg-black/40 border border-gray-700 p-8 rounded-xl shadow-xl backdrop-blur-sm reveal-bottom">
-      <h3 class="text-2xl font-semibold text-purple-500 mb-4">Visão</h3>
-      <p class="text-white/90 leading-relaxed">
-        Tornar-se um <strong>marco nacional</strong> na produção de mangás e animes autorais, rompendo a barreira entre obra e realidade. Investir em tecnologia, sensorialidade e IA para criar <strong>um universo simbiótico e imersivo</strong> — onde narrativa, estética e vivência convergem.
-        <br><br>
-        <em>NoHeroes não é apenas uma marca. É um chamado para uma nova forma de viver, criar e se transformar.</em>
-      </p>
-    </div>
-
-    <!-- Valores -->
-    <div class="bg-black/40 border border-gray-700 p-8 rounded-xl shadow-xl backdrop-blur-sm md:col-span-2 reveal-bottom">
-      <h3 class="text-2xl font-semibold text-white mb-4">Valores</h3>
-      <ul class="list-disc list-inside space-y-3 text-white/90 leading-relaxed">
-        <li><strong>Verdade & Honestidade</strong> — Falamos sempre com transparência.</li>
-        <li><strong>Originalidade & Inovação</strong> — Fugimos de modinhas; prezamos pelo inédito.</li>
-        <li><strong>Real & Companhia</strong> — Construímos comunidade, ajudamos quem ajuda.</li>
-        <li><strong>Equilíbrio</strong> — Saúde de mente, corpo e espírito; lazer que gera valor real.</li>
-      </ul>
-    </div>
-
-    <!-- Público-Alvo Refinado -->
-<div class="bg-black/40 border border-gray-700 p-8 rounded-xl shadow-xl backdrop-blur-sm md:col-span-2 text-center">
-  <h3 class="text-2xl font-semibold text-emerald-400 mb-4">Para quem é NoHeroes?</h3>
-  <ul class="mt-4 max-w-2xl mx-auto text-lg list-disc list-inside space-y-4 text-white/90 leading-relaxed">
-    <li>Para quem cresceu com animes, mas sente que o Japão parou de falar com a sua alma.</li>
-    <li>Para quem vive no mundo real, mas carrega um universo inteiro dentro da cabeça — e não encontrou nenhuma obra à altura dele.</li>
-    <li>Para quem cansou de ver sempre os mesmos enredos reciclados e quer algo com identidade, alma e coragem.</li>
-    <li>Para quem ama narrativas sombrias, intensas, estilo <strong>soulslike</strong>, e histórias que desafiam mais do que confortam.</li>
-    <li>Para quem sempre quis ver o Brasil criar algo que não apenas funcione — mas que domine a cena mundial com estilo e propósito.</li>
-    <li>Para quem sabe que arte de verdade não imita fórmula — ela quebra padrões e impõe respeito.</li>
-    <li>Para quem está pronto para entrar em um universo onde a estética pulsa, a trilha vibra, e cada página soa como um grito de liberdade.</li>
-  </ul>
-</div>
-  </div>
-</section>
-
- <!-- 6. Depoimentos / Parcerias -->  <section id="depoimentos" class="py-20 px-4 bg-gradient-to-br from-black via-gray-900 to-black text-center text-white">
-  <h2 class="text-4xl font-bold mb-4 reveal-fade">Vozes que Ecoam</h2>
-  <p class="text-gray-400 mb-8 max-w-2xl mx-auto italic reveal-fade">Algumas mensagens não precisam ser editadas — só sentidas.</p>
-
-  <!-- Primeiro Depoimento -->
-  <div class="flex justify-center">
-    <div class="bg-black/60 border border-purple-700 rounded-xl shadow-xl p-4 backdrop-blur-md max-w-md reveal-fade">
-      <img src="assets/images/depoimento-01.jpg" alt="Depoimento real" class="rounded-lg w-full h-auto" />
-    </div>
-  </div>
-
-  <!-- Container Oculto com Outros Depoimentos -->
-  <div id="depoimentosExtras" class="mt-6 space-y-6 hidden">
-    <div class="flex justify-center">
-      <div class="bg-black/60 border border-purple-700 rounded-xl shadow-xl p-4 backdrop-blur-md max-w-md">
-        <img src="assets/images/depoimento-02.jpg" alt="Depoimento adicional" class="rounded-lg w-full h-auto" />
-      </div>
-    </div>
-    <!-- Adicione mais depoimentos aqui no mesmo formato -->
-  </div>
-
-  <!-- Botão Ver Mais -->
-  <div class="mt-8">
-    <button onclick="document.getElementById('depoimentosExtras').classList.remove('hidden'); this.classList.add('hidden');"
-      class="px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition">
-      Ver mais depoimentos
-    </button>
-  </div>
-<div class="mt-8">
-  <p class="text-gray-400 mb-4">Fique atento às atualizações:</p>
-  <a href="/news.html" class="inline-block px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition">
-    Acesse o Blog / Novidades
-  </a>
-</div>
-    </section>
-
- <!-- 7. Histórico & Linha do Tempo & Futuro -->
-<section id="historico" class="py-20 px-4 bg-gray-900 text-white text-center">
-  <h2 class="text-4xl font-bold mb-12">Histórico & Futuro</h2>
-  <div class="max-w-5xl mx-auto">
-    <ul class="relative border-l border-gray-700 ml-4 space-y-12 text-left">
-
-      <!-- Origem -->
-      <li class="ml-6 reveal-left">
-        <span class="absolute -left-3 w-6 h-6 bg-purple-600 rounded-full"></span>
-        <h3 class="text-xl font-semibold">2015 — Fundação da Ideia</h3>
-        <p class="text-gray-300">
-          Aos 15 anos, Raul Souza Silva e seu amigo Vinícius wilmu figueira saeta criam o projeto “<strong>Dragon Spirit Heroes</strong>”, com dois protagonistas e planos para um MMORPG. A ideia evolui e ganha contornos mais profundos, abrindo caminho para o nascimento de <strong>ROAR</strong>.
-        </p>
-      </li>
-
-      <!-- Mudança -->
-      <li class="ml-6 reveal-left">
-        <span class="absolute -left-3 w-6 h-6 bg-purple-600 rounded-full"></span>
-        <h3 class="text-xl font-semibold">2024 — Ruptura e Renascimento</h3>
-        <p class="text-gray-300">
-          Após anos de pausa e amadurecimento, Raul reescreve toda a trama original de forma solo, dando origem à versão definitiva de <strong>ROAR</strong>. A parceria com Vinícius se encerra oficialmente. Roteiro finalizado até o Ato III.
-        </p>
-      </li>
-
-      <!-- Expansão -->
-      <li class="ml-6 reveal-left">
-        <span class="absolute -left-3 w-6 h-6 bg-green-500 rounded-full"></span>
-        <h3 class="text-xl font-semibold">Início de 2025 — O Nascimento de FREQ</h3>
-        <p class="text-gray-300">
-          Inspirado por transformações pessoais e pela comunidade da tribo, Raul começa a desenvolver <strong>FREQ</strong> como contraponto de ROAR — uma obra mais acessível, voltada ao despertar interior e com narrativa paralela.
-        </p>
-      </li>
-
-      <!-- Construção -->
-      <li class="ml-6 reveal-left">
-        <span class="absolute -left-3 w-6 h-6 bg-blue-500 rounded-full"></span>
-        <h3 class="text-xl font-semibold">Março — Abril 2025 — Primeiro Sprint Criativo</h3>
-        <p class="text-gray-300">
-          Raul anima o primeiro teaser de FREQ com menos de 30 dias disponíveis, conciliando trabalho CLT e vida pessoal. Em 30/04/2025, apresenta a ideia oficialmente para a comunidade da Tribo.
-        </p>
-      </li>
-
-      <!-- Site -->
-      <li class="ml-6 reveal-left">
-        <span class="absolute -left-3 w-6 h-6 bg-cyan-400 rounded-full"></span>
-        <h3 class="text-xl font-semibold">Maio 2025 — Site NoHeroes Ganha Forma</h3>
-        <p class="text-gray-300">
-          Após duas semanas de estudo com IA, o site <strong>NoHeroes</strong> nasce como portal para o universo. HTML, estrutura, design, identidade e lore são moldados dia após dia.
-        </p>
-      </li>
-
-      <!-- Futuro -->
-      <li class="ml-6 reveal-left">
-        <span class="absolute -left-3 w-6 h-6 bg-yellow-400 rounded-full animate-pulse"></span>
-        <h3 class="text-xl font-semibold">Próximos Passos (2025—2027)</h3>
-        <ul class="list-disc list-inside text-gray-300 mt-2 space-y-2">
-          <li><strong>Junho 2025:</strong> Finalização da primeira versão oficial do site e início da campanha de divulgação.</li>
-          <li><strong>Julho a Agosto:</strong> Finalização do roteiro de <strong>ROAR</strong> e publicação do <strong>livro digital</strong>.</li>
-          <li><strong>Setembro:</strong> Lançamento do <strong>mangá de ROAR</strong>.</li>
-          <li><strong>Outubro a Dezembro:</strong> Finalização do roteiro de <strong>FREQ</strong> e publicação do livro.</li>
-          <li><strong>Janeiro 2026:</strong> Lançamento do <strong>mangá de FREQ</strong>.</li>
-          <li><strong>2026 — Início:</strong> Pré-produção das <strong>animações</strong> de ambos os mundos.</li>
-          <li><strong>2026 — Metade:</strong> Integração da <strong>IA interativa no site</strong>.</li>
-          <li><strong>2026—2027:</strong> Início do desenvolvimento do <strong>jogo vitalista</strong> — onde ações reais impactam a evolução in-game.</li>
-        </ul>
-      </li>
-    </ul>
-  </div>
-</section>
-
-<!-- 8. Sobre o Criador & Equipe -->
-<section id="criador" class="py-24 px-4 bg-gray-900 text-center text-white font-inter">
-  <div class="max-w-4xl mx-auto">
-
-    <!-- Título -->
-    <h2 class="text-4xl font-bold mb-4 reveal-bottom">Por trás da sombra...</h2>
-    <p class="text-lg italic text-gray-300 max-w-3xl mx-auto">
-      “...há um criador. Raul. Um escritor, artista digital e pai — que transforma angústias em arte e silêncio em som.”
-    </p>
-
-    <!-- Avatar com trigger de modal -->
-    <img src="noheroe-avatar.png" alt="NoHeroes como entidade"
-      class="mx-auto mt-8 w-48 h-48 rounded-full border-4 border-gray-700 shadow-lg cursor-pointer hover:scale-105 transition reveal-fade"
-      onclick="abrirModal()" />
-
-    <!-- Redes -->
-    <div class="mt-6 flex justify-center space-x-6">
-      <a href="https://instagram.com/noheroe" aria-label="Instagram">
-        <img src="assets/icons/instagram icon.png" alt="Instagram" class="w-6 h-6" />
-      </a>
-      <a href="https://twitter.com/noheroe" aria-label="Twitter">
-        <img src="assets/icons/icon-twitter.png" alt="Twitter" class="w-6 h-6" />
-      </a>
-      <a href="mailto:eco.noheroes@gmail.com" aria-label="Email">
-        <img src="assets/icons/icon-email.png" alt="Email" class="w-6 h-6" />
-      </a>
-    </div>
-
-    <!-- Modal Sobre o Criador (corrigido) -->
-<dialog id="criadorModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 backdrop:bg-black/70">
-  <div class="bg-gradient-to-br from-purple-800 via-black to-red-900 p-6 sm:p-8 rounded-xl shadow-xl max-h-[90vh] w-full max-w-2xl overflow-y-auto relative font-playfair text-white">
-    <button onclick="fecharModal()" class="absolute top-4 right-4 text-white text-2xl font-bold">×</button>
-    <h2 class="text-3xl font-bold text-purple-300 mb-4">Sobre o Criador</h2>
-    <div class="text-base leading-relaxed text-gray-200 space-y-4">
-      <p>Eu nasci sem ter escolhido estar aqui. Cresci inserido num sistema que nunca pedi pra fazer parte — e que, mesmo prometendo segurança e justiça, só me cobra, explora e me prende.</p>
-      <p>Quando algo dá errado, ninguém aparece pra me proteger. Se eu erro, sou punido. Se sou roubado, azar o meu. A lógica é simples: o sistema exige tudo, mas entrega quase nada.</p>
-      <p>Por isso eu criei o <strong class="text-purple-400">NoHeroes</strong>. Não só como uma história. Mas como um grito. Um universo onde as leis são claras, o valor é real e quem constrói é quem decide.</p>
-      <p>Eu não quero depender de plataformas que me cobram taxas abusivas por algo que fiz sozinho. Não quero ser apenas mais um número alimentando engrenagens que nunca me deram nada.</p>
-      <p>Eu ajudo quem anda comigo. Divido com os que precisam. Mas não aceito ser sugado por abutres. A liberdade, pra mim, não é um luxo. É necessidade.</p>
-      <p>Este projeto é minha forma de resistir. De viver do que eu acredito, com quem acredita junto. E se você também sente que o mundo tá do avesso — talvez <strong class="text-purple-400">NoHeroes</strong> seja o seu lugar.</p>
-    </div>
-    <div class="mt-6 text-center">
-      <button onclick="fecharModal()" class="px-6 py-3 rounded-md bg-gradient-to-l from-red-900 to-purple-700 hover:from-purple-700 hover:to-red-900 font-semibold transition">
-        Fechar Manifesto
-      </button>
-    </div>
-  </div>
-</dialog>
-
-    <!-- Separador visual -->
-    <div class="mt-16 border-t border-gray-700"></div>
-
-    <!-- Equipe -->
-    <h3 class="text-3xl font-bold mt-12 mb-6">Equipe & Colaboradores</h3>
-    <p class="text-gray-400 mb-12 max-w-xl mx-auto">
-      O universo NoHeroes é construído com esforço conjunto. Seja com ideias, artes, código ou apoio — todos fazem parte da trama.
-    </p>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-      <!-- Raul -->
-      <div class="bg-gray-800 p-6 rounded-xl shadow-md">
-        <img src="assets/images/foto-raul.jpg" alt="Raul / NoHeroe" class="w-24 h-24 mx-auto rounded-full mb-4"/>
-        <h4 class="text-xl font-semibold">Raul S. Silva “NoHeroe”</h4>
-        <p class="text-gray-400 text-sm">Criador, roteirista, artista digital & desenvolvedor</p>
-      </div>
-
-      <!-- GPT -->
-      <div class="bg-gray-800 p-6 rounded-xl shadow-md">
-        <img src="icon-gpt.png" alt="ChatGPT" class="w-24 h-24 mx-auto rounded-full mb-4"/>
-        <h4 class="text-xl font-semibold">ChatGPT</h4>
-        <p class="text-gray-400 text-sm">Co-pesquisador & assistente de conteúdo</p>
-      </div>
-
-      <!-- Botão para indicar -->
-      <a href="/parceiros.html" class="flex items-center justify-center bg-emerald-500 hover:bg-emerald-600 text-black font-semibold text-center rounded-xl p-6 transition">
-        Tornar-se ou Recomendar Colaborador
-      </a>
-
-      <!-- Espaço disponível -->
-      <div class="bg-gray-800 p-6 rounded-xl shadow-inner flex items-center justify-center">
-        <p class="text-gray-500 italic text-center">Até 20 vagas disponíveis</p>
-      </div>
-    </div>
-  </div>
-</section>
-
- <!-- 9. Press Kit / Mídia -->  
-<section id="presskit" class="py-20 px-4 text-center">
-      <h2 class="text-4xl font-bold mb-4">Press Kit & Mídia</h2>
-      <p class="text-gray-400 mb-8">Logos, imagens em alta resolução e material de divulgação.</p>
-      <div class="flex justify-center gap-6">
-         <a href="press.html" class="px-6 py-3 border border-white rounded-lg hover:bg-white hover:text-black transition">
-          Baixar Kit Completo
-        </a>
-      </div>
-    </section>
-
-  <!-- 10. FAQ -->  
-<section id="faq" class="py-20 px-4 bg-white text-black rounded-lg max-w-3xl mx-auto">
-      <h2 class="text-4xl font-bold mb-6">Perguntas Frequentes</h2>
-      <div class="space-y-4">
-        <div x-data="{ open: false }" class="border-b pb-4">
-  <button @click="open = !open" class="w-full text-left font-semibold">
-    Como posso apoiar o projeto?
-  </button>
-  <div x-show="open" class="mt-2 text-gray-700">
-    Você pode contribuir via Pix ou participar como colaborador nas áreas de arte, som, animação ou divulgação. Acesse a aba “Apoio Vitalista”.
-  </div>
-</div>
-
-<div x-data="{ open: false }" class="border-b pb-4">
-  <button @click="open = !open" class="w-full text-left font-semibold">
-    Posso colaborar mesmo sem experiência profissional?
-  </button>
-  <div x-show="open" class="mt-2 text-gray-700">
-    Sim. Buscamos pessoas com vontade de aprender e criar junto. Se você tem paixão por arte, som, narrativa ou cultura geek, há espaço pra você.
-  </div>
-</div>
-
-<div x-data="{ open: false }" class="border-b pb-4">
-  <button @click="open = !open" class="w-full text-left font-semibold">
-    Como recebo atualizações do projeto?
-  </button>
-  <div x-show="open" class="mt-2 text-gray-700">
-    Publicamos novidades no blog, redes sociais e também por e-mail para quem faz parte do Círculo Interno.
-  </div>
-</div>
-
-<div x-data="{ open: false }" class="border-b pb-4">
-  <button @click="open = !open" class="w-full text-left font-semibold">
-    As animações já estão disponíveis?
-  </button>
-  <div x-show="open" class="mt-2 text-gray-700">
-    Ainda não. Estamos desenvolvendo as primeiras animações de forma independente. Em breve, soltaremos trechos e trailers nas redes.
-  </div>
-</div>
-
-<div x-data="{ open: false }" class="border-b pb-4">
-  <button @click="open = !open" class="w-full text-left font-semibold">
-    Vocês aceitam parcerias com marcas ou criadores?
-  </button>
-  <div x-show="open" class="mt-2 text-gray-700">
-    Sim. Se você tem um projeto, marca ou canal com afinidade ao universo NoHeroes, acesse a aba “Parcerias” e envie sua proposta.
-  </div>
-</div>
-        <!-- adicione mais Q&A conforme surgir -->
-      </div>
-    </section>
-
- <!-- 11. Comunidade -->  
-<section id="comunidade" class="py-20 px-4 text-center">
-      <h2 class="text-4xl font-bold mb-4">Comunidade & Futuro</h2>
-      <p class="text-lg mb-6">NoHeroes está vivo e em constante evolução. Junte-se a nós nas plataformas:</p>
-      <div class="flex flex-wrap justify-center gap-6 mb-8">
-        <a href="https://discord.gg/..." class="px-6 py-3 bg-purple-600 rounded-lg">Discord</a>
-        <a href="https://chat.whatsapp.com/..." class="px-6 py-3 bg-green-600 rounded-lg">WhatsApp</a>
-        <a href="https://patreon.com/noheroe" class="px-6 py-3 bg-emerald-500 rounded-lg">Patreon</a>
-      </div>
-      <button class="px-6 py-3 border-2 border-white rounded-lg hover:bg-white hover:text-black transition">
-        Assine o Círculo Interno
-      </button>
-    </section>
-
- <!-- 12. Contato -->  
-<section id="contato" class="py-20 px-4 bg-gray-900 text-center">
-      <h2 class="text-4xl font-bold mb-4">Fale Conosco</h2>
-      <p class="text-gray-400 mb-6">Sugestões, parcerias ou imprensa: mande um e-mail ou use o formulário abaixo.</p>
-      <a href="mailto:eco.noheroes@gmail.com" class="px-6 py-3 border-2 border-white rounded-lg hover:bg-white hover:text-black transition">
-        eco.noheroes@gmail.com
-      </a>
-    </section>
-
-<!-- Rodapé / Termos de Uso e Aviso Legal -->
-<footer class="py-10 bg-gray-800 text-center text-sm text-white space-y-4">
-
-  <!-- Navegação Superior -->
-  <nav class="space-x-6 text-base font-medium">
-    <a href="/" class="hover:text-emerald-400 transition">Início</a>
-    <a href="/news.html" class="hover:text-emerald-400 transition">Blog / News</a>
-    <a href="/portifólio.html" class="hover:text-emerald-400 transition">Portfólio</a>
-    <a href="/linktree.html" class="hover:text-emerald-400 transition">Linktree</a>
-  </nav>
-
-  <!-- Aviso legal -->
-  <div class="text-gray-400">
-    <p>© 2025 NoHeroes. Todos os direitos reservados.</p>
-    <p>Proibida a cópia e reprodução sem autorização.</p>
-    <p>
-      <a href="/termos.html" class="underline hover:text-emerald-400 transition">Termos de Uso</a> &nbsp;|&nbsp;
-      <a href="/privacidade.html" class="underline hover:text-emerald-400 transition">Política de Privacidade</a>
-    </p>
-  </div>
-</footer>
-<script>
-  function abrirModal() {
-    const modal = document.getElementById('criadorModal');
-    modal.classList.remove('hidden');
-    if (!modal.open) modal.showModal();
-    document.body.classList.add('modal-aberto');
-  }
-
-  function fecharModal() {
-    const modal = document.getElementById('criadorModal');
-    if (modal.open) modal.close();
-    modal.classList.add('hidden');
-    document.body.classList.remove('modal-aberto');
-  }
-</script>
-<script src="https://unpkg.com/scrollreveal"></script>
-<script>
-  const sr = ScrollReveal({
-    distance: '40px',
-    duration: 800,
-    easing: 'ease-out',
-    reset: false
-  });
-
-  sr.reveal('.reveal-fade', { opacity: 0, scale: 0.96 });
-  sr.reveal('.reveal-bottom', { origin: 'bottom' });
-  sr.reveal('.reveal-left', { origin: 'left' });
-  sr.reveal('.reveal-right', { origin: 'right' });
-</script>
 <body>
-<html>
+<header class="fixed top-0 left-0 w-full h-14 bg-[#0a0a0a] border-b border-[#2e2e2e] z-50">
+  <button id="hamburgerBtn" class="absolute top-3 right-4 text-3xl text-white hover:text-[#a855f7] transition z-[60]">☰</button>
+  <div class="absolute left-1/2 top-full transform -translate-x-1/2 -translate-y-1/2 z-30">
+    <a href="index.html"><img src="assets/images/noheroes logo.png" alt="NoHeroes" class="h-32 drop-shadow-md" /></a>
+  </div>
+</header>
+
+<div class="fixed top-14 left-0 w-full barra-degrade z-40"></div>
+
+<div id="drawer" class="fixed top-0 right-0 w-72 h-full bg-black text-white transform transition-transform duration-300 z-50" style="transform: translateX(100%)">
+  <button onclick="toggleDrawer()" class="absolute top-4 right-4 text-3xl text-[#a855f7] hover:text-purple-400 z-50">✕</button>
+  <div class="p-6 flex flex-col gap-4">
+    <h1 class="text-3xl font-bold gradiente-noheroes cinzel">NOHEROES</h1>
+    <nav class="mt-4 flex flex-col gap-3 text-sm">
+      <a href="index.html" class="hover:text-purple-400">Início</a>
+      <a href="projects.html" class="hover:text-purple-400">Projetos</a>
+      <a href="shop.html" class="hover:text-purple-400">Loja</a>
+      <a href="sobre.html" class="hover:text-purple-400">Sobre</a>
+    </nav>
+  </div>
+</div>
+
+<section class="pt-24 text-center">
+  <h1 class="text-4xl md:text-5xl font-bold gradiente-noheroes cinzel mb-4">O que é NoHeroes?</h1>
+  <p class="max-w-3xl mx-auto text-gray-300 leading-relaxed px-4">
+    NoHeroes não é apenas uma marca — é um portal. Um universo criativo em expansão que une animes, mangás, livros, apps e experiências interativas, com estética dark premium e filosofia profunda. Você entra por diversão e sai em mutação.
+  </p>
+</section>
+
+<section class="py-20 bg-[#0a0a0a]">
+  <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 px-4">
+    <div class="glass p-6 rounded-xl text-center">
+      <h2 class="text-xl font-bold gradiente-noheroes mb-2">Missão</h2>
+      <p class="text-gray-300 text-sm leading-relaxed">
+        Criar um ecossistema vivo onde anime, mangá, som e gameplay se fundem, conectando arte e vida real. Queremos levar identidade, alma e coragem a cada projeto.
+      </p>
+    </div>
+    <div class="glass p-6 rounded-xl text-center">
+      <h2 class="text-xl font-bold gradiente-noheroes mb-2">Visão</h2>
+      <p class="text-gray-300 text-sm leading-relaxed">
+        Ser referência nacional em produção original e autoral, rompendo barreiras e construindo um universo simbiótico onde narrativa, estética e experiência convergem.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer class="py-8 text-center text-[#888] border-t border-[#333] bg-[#0a0a0a]">
+  <p>© 2025 NoHeroes. Todos os direitos reservados.</p>
+</footer>
+
+<canvas id="brasasCanvas"></canvas>
+
+<script>
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const drawer = document.getElementById('drawer');
+  let isDrawerOpen = false;
+  function toggleDrawer() {
+    isDrawerOpen = !isDrawerOpen;
+    drawer.style.transform = isDrawerOpen ? 'translateX(0)' : 'translateX(100%)';
+  }
+  const canvas = document.getElementById(\"brasasCanvas\");
+  const ctx = canvas.getContext(\"2d\");
+  let w, h, particles = [];
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+  function createParticles() {
+    particles = [];
+    for (let i = 0; i < 100; i++) {
+      particles.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        s: Math.random() * 2 + 1,
+        a: Math.random() * Math.PI * 2,
+        v: Math.random() * 0.5 + 0.2
+      });
+    }
+  }
+  function animate() {
+    ctx.clearRect(0, 0, w, h);
+    for (let p of particles) {
+      p.y -= p.v;
+      p.x += Math.sin(p.a) * 0.5;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.s, 0, Math.PI * 2);
+      ctx.fillStyle = \"rgba(168,85,247,0.6)\";
+      ctx.fill();
+      if (p.y < -10) p.y = h + 10;
+    }
+    requestAnimationFrame(animate);
+  }
+  window.addEventListener(\"resize\", () => { resize(); createParticles(); });
+  resize(); createParticles(); animate();
+</script>
+</body>
+</html>
