@@ -1,0 +1,112 @@
+<!DOCTYPE html><html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NoHeroes | Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/scrollreveal"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Cinzel Decorative', serif; background-color: #1f1f1f; color: #facc15; }
+    .sidebar-icon { transition: transform 0.2s; }
+    .sidebar-icon:hover { transform: scale(1.1); }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen">  <!-- Header -->  <header class="flex items-center justify-between p-4 bg-black border-b border-gray-700">
+    <h1 class="text-xl font-bold">Admin NoHeroes</h1>
+  </header>  <!-- Content -->  <div class="flex flex-1 overflow-hidden">
+    <!-- Sidebar -->
+    <nav class="flex flex-col w-16 bg-gray-900 border-r border-gray-700">
+      <button class="p-3 sidebar-icon" onclick="showSection('loja')">🛍️</button>
+      <button class="p-3 sidebar-icon" onclick="showSection('novidades')">📰</button>
+      <button class="p-3 sidebar-icon" onclick="showSection('missoes')">🎯</button>
+      <button class="p-3 sidebar-icon" onclick="showSection('temas')">🎨</button>
+      <button class="p-3 sidebar-icon" onclick="showSection('contas')">👥</button>
+      <button class="p-3 sidebar-icon" onclick="showSection('dashboard')">📊</button>
+    </nav><!-- Main area -->
+<main class="flex-1 overflow-y-auto p-4 space-y-4">
+  <!-- Loja -->
+  <section id="loja" class="hidden">
+    <h2 class="text-lg font-bold mb-2">Gerenciar Produtos</h2>
+    <p>(placeholder para formulário e tabela)</p>
+  </section>
+
+  <!-- Novidades -->
+  <section id="novidades" class="hidden">
+    <h2 class="text-lg font-bold mb-2">Gerenciar Novidades</h2>
+    <textarea id="novidadesJson" rows="8" class="w-full p-2 bg-gray-800 text-white rounded"></textarea>
+    <button onclick="salvarNovidades()" class="mt-2 p-2 bg-purple-700 rounded w-full">Salvar Novidades</button>
+  </section>
+
+  <!-- Missões -->
+  <section id="missoes" class="hidden">
+    <h2 class="text-lg font-bold mb-2">Gerenciar Missões</h2>
+    <p>(placeholder para missões)</p>
+  </section>
+
+  <!-- Temas -->
+  <section id="temas" class="hidden">
+    <h2 class="text-lg font-bold mb-2">Alterar Tema</h2>
+    <p>(placeholder para seleção de tema)</p>
+  </section>
+
+  <!-- Contas -->
+  <section id="contas" class="hidden">
+    <h2 class="text-lg font-bold mb-2">Gerenciar Contas</h2>
+    <p>(placeholder para gestão de usuários)</p>
+  </section>
+
+  <!-- Dashboard -->
+  <section id="dashboard" class="hidden">
+    <h2 class="text-lg font-bold mb-2">Dashboard</h2>
+    <canvas id="grafico" class="bg-gray-800 rounded"></canvas>
+  </section>
+</main>
+
+  </div>  <script>
+    function showSection(id) {
+      document.querySelectorAll('main section').forEach(sec => sec.classList.add('hidden'));
+      document.getElementById(id).classList.remove('hidden');
+    }
+
+    function salvarNovidades() {
+      const data = document.getElementById('novidadesJson').value;
+      try {
+        JSON.parse(data);
+        localStorage.setItem('novidades', data);
+        alert('Novidades salvas localmente!');
+      } catch (e) {
+        alert('JSON inválido');
+      }
+    }
+
+    function carregarNovidades() {
+      const saved = localStorage.getItem('novidades');
+      if (saved) document.getElementById('novidadesJson').value = saved;
+    }
+
+    function inicializarGrafico() {
+      const ctx = document.getElementById('grafico').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Usuários', 'Vendas', 'Produtos'],
+          datasets: [{
+            label: 'Estatísticas',
+            backgroundColor: '#a855f7',
+            data: [10, 5, 8]
+          }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      carregarNovidades();
+      inicializarGrafico();
+      showSection('dashboard');
+      ScrollReveal().reveal('section', { interval: 100, origin: 'bottom', distance: '20px' });
+    });
+  </script></body>
+</html>
