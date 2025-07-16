@@ -53,9 +53,19 @@
 
   <!-- Contas -->
   <section id="contas" class="hidden">
-    <h2 class="text-lg font-bold mb-2">Gerenciar Contas</h2>
-    <p>(placeholder para gestão de usuários)</p>
-  </section>
+  <h2 class="text-lg font-bold mb-4">Gerenciar Contas</h2>
+  <div id="usuariosContainer" class="space-y-2">
+    <!-- Exemplo mockado -->
+    <div class="p-2 bg-gray-800 rounded flex justify-between items-center">
+      <span>João Silva</span>
+      <button onclick="abrirDetalhesUsuario('1', 'João Silva', 'joao@email.com')" class="underline text-purple-400 text-sm">joao@email.com</button>
+    </div>
+    <div class="p-2 bg-gray-800 rounded flex justify-between items-center">
+      <span>Maria Souza</span>
+      <button onclick="abrirDetalhesUsuario('2', 'Maria Souza', 'maria@email.com')" class="underline text-purple-400 text-sm">maria@email.com</button>
+    </div>
+  </div>
+</section>
 
   <!-- Dashboard -->
   <section id="dashboard" class="hidden">
@@ -69,6 +79,54 @@
     <canvas id="grafico"></canvas>
   </div>
 </section>
+
+<div id="modalUsuario" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center p-4 z-50">
+  <div class="bg-gray-900 rounded-xl p-4 w-full max-w-sm space-y-3">
+    <h2 class="font-bold text-lg mb-2">Editar Usuário</h2>
+    <div>
+      <label class="text-sm text-purple-400">Nome</label>
+      <input type="text" id="modalNome" class="w-full bg-gray-800 rounded p-2">
+    </div>
+    <div>
+      <label class="text-sm text-purple-400">Email</label>
+      <input type="email" id="modalEmail" class="w-full bg-gray-800 rounded p-2">
+    </div>
+    <div>
+      <label class="text-sm text-purple-400">Telefone</label>
+      <input type="text" id="modalTelefone" class="w-full bg-gray-800 rounded p-2">
+    </div>
+    <div>
+      <label class="text-sm text-purple-400">Endereço</label>
+      <input type="text" id="modalEndereco" class="w-full bg-gray-800 rounded p-2">
+    </div>
+    <div>
+      <label class="text-sm text-purple-400">Status</label>
+      <select id="modalStatus" class="w-full bg-gray-800 rounded p-2">
+        <option value="ativo">Ativo</option>
+        <option value="congelado">Congelado</option>
+        <option value="banido">Banido</option>
+      </select>
+    </div>
+    <div>
+      <label class="text-sm text-purple-400">Moeda interna</label>
+      <input type="number" id="modalMoeda" class="w-full bg-gray-800 rounded p-2">
+    </div>
+    <div>
+      <label class="text-sm text-purple-400">XP/Nível</label>
+      <input type="number" id="modalXP" class="w-full bg-gray-800 rounded p-2">
+    </div>
+    <div>
+      <label class="text-sm text-purple-400">Histórico de Compras</label>
+      <textarea id="modalCompras" rows="3" class="w-full bg-gray-800 rounded p-2" readonly>Compra 1 - Pago\nCompra 2 - Pendente</textarea>
+    </div>
+    <div class="flex justify-between space-x-2">
+      <button onclick="salvarUsuario()" class="flex-1 bg-green-600 rounded p-2">Salvar</button>
+      <button onclick="excluirUsuario()" class="flex-1 bg-red-600 rounded p-2">Excluir</button>
+      <button onclick="fecharModalUsuario()" class="flex-1 bg-gray-700 rounded p-2">Fechar</button>
+    </div>
+  </div>
+</div>
+
 </main>
 
   </div> 
@@ -152,6 +210,36 @@
     exibirGrafico('usuarios'); // carrega gráfico default
     ScrollReveal().reveal('section', { interval: 100, origin: 'bottom', distance: '20px' });
   });
+function abrirDetalhesUsuario(id, nome, email) {
+  document.getElementById('modalNome').value = nome;
+  document.getElementById('modalEmail').value = email;
+  document.getElementById('modalTelefone').value = '+55 11 91234-5678'; // mock
+  document.getElementById('modalEndereco').value = 'Rua Exemplo, 123'; // mock
+  document.getElementById('modalStatus').value = 'ativo'; // mock
+  document.getElementById('modalMoeda').value = 100; // mock
+  document.getElementById('modalXP').value = 10; // mock
+  document.getElementById('modalCompras').value = 'Compra 1 - Pago\\nCompra 2 - Pendente'; // mock
+
+  document.getElementById('modalUsuario').classList.remove('hidden');
+  document.getElementById('modalUsuario').classList.add('flex');
+}
+
+function fecharModalUsuario() {
+  document.getElementById('modalUsuario').classList.add('hidden');
+  document.getElementById('modalUsuario').classList.remove('flex');
+}
+
+function salvarUsuario() {
+  alert('Salvar usuário (mock - integrar backend)');
+  fecharModalUsuario();
+}
+
+function excluirUsuario() {
+  if (confirm('Tem certeza que deseja excluir?')) {
+    alert('Usuário excluído (mock)');
+    fecharModalUsuario();
+  }
+}
 </script>
 </body>
 </html>
