@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-br">  
+<head>  
+  <meta charset="UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <title>NoHeroes | Projetos</title>  
+  <script src="https://cdn.tailwindcss.com"></script>  
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">  
+  <style>  
+    body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #e5e5e5; }  
+    h1, h2, .cinzel {  
+  font-family: 'Cinzel Decorative', serif;  
+}  
+    .text-shadow-md { text-shadow: 0 0 10px rgba(143,79,255,0.4); }  
+    .overlay { position:absolute; inset:0; background:rgba(0,0,0,0.5); }  
+    .drop-shadow-glow { filter: drop-shadow(0 0 10px #8f4fff) drop-shadow(0 0 20px #8f4fff); }  
+    html { scroll-behavior: smooth; }  
+    /* Modal e drawer */  
+    .hidden { display: none; }  
+    /* Ajustes para o topo fixo */  
+    
+.gradiente-noheroes {
+  background: linear-gradient(to bottom right, #8f4fff 20%, #facc15 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 8px rgba(143, 79, 255, 0.4);
+}
+.barra-degrade {
+  background: linear-gradient(to right, #8f4fff, #facc15);
+  box-shadow: 0 0 6px #8f4fff88, 0 0 10px #facc1588;
+}
+.glow-interno-left {
+  box-shadow: inset 8px 0 18px rgba(143, 79, 255, 0.5);
+  border-left: 1px solid rgba(143, 79, 255, 0.15);
+}
+#brasasCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+}
+</style>
+
+</head>  
+<body class="leading-relaxed">   
+
+ <!-- HEADER LIMPO COM DRAWER --> 
+<header class="fixed top-0 left-0 w-full h-14 bg-[#0a0a0a] border-b border-[#2e2e2e] z-50">
+  <!-- Botão hambúrguer mágico -->
+<button id="hamburgerBtn" 
+  class="absolute top-3 right-4 text-3xl text-white hover:text-[#a855f7] transition z-[60]">
+  ☰
+</button>
+
+  <!-- Logo centralizada e VAZANDO para baixo -->
+  <div class="absolute left-1/2 top-full transform -translate-x-1/2 -translate-y-1/2 z-30">
+    <a href="index.html">
+      <img src="assets/images/noheroes logo.png" alt="NoHeroes" class="h-32 drop-shadow-glow" />
+    </a>
+  </div>
+</header>
+
+<div class="fixed top-14 left-0 w-full h-1 barra-degrade z-40"></div>
+
+<!-- Drawer -->
+<div id="drawer" class="fixed top-0 right-0 w-72 h-full bg-black text-white transform transition-transform duration-300 z-50 glow-interno-left" style="transform: translateX(100%)">
+
+<!-- Dentro do drawer, no topo -->
+<button onclick="toggleDrawer()" class="absolute top-4 right-4 text-3xl text-[#a855f7] hover:text-purple-400 z-50">
+  ✕
+</button>
+  <!-- Conteúdo do drawer -->
+  <div class="p-6 flex flex-col gap-4">
+    <h1 class="text-3xl font-bold gradiente-noheroes cinzel">NOHEROES</h1>
+    <p class="text-gray-400 text-sm">Universo Sombrio</p>
+    <nav class="mt-4 flex flex-col gap-3 text-sm">
+
+  <a href="index.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
+    <div class="flex items-center gap-2">
+      <!-- Ícone: Home -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l9-9 9 9M4 10v10h5v-6h6v6h5V10" />
+      </svg>
+      <span class="text-white">Início</span>
+    </div>
+    <span class="text-xs text-purple-400 cinzel">Portal</span>
+  </a>
+
+  <a href="projects.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
+    <div class="flex items-center gap-2">
+      <!-- Ícone: Book -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12m0-12a2 2 0 012-2h4a2 2 0 012 2v12a2 2 0 01-2 2h-4a2 2 0 01-2-2zm0 0a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2h4a2 2 0 002-2z"/>
+      </svg>
+      <span class="text-white">Projetos</span>
+    </div>
+    <span class="text-xs text-purple-400 cinzel">Grimório</span>
+  </a>
+
+  <a href="sobre.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
+    <div class="flex items-center gap-2">
+      <!-- Ícone: User -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A7 7 0 0112 15a7 7 0 016.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+      <span class="text-white">Sobre</span>
+    </div>
+    <span class="text-xs text-purple-400 cinzel">Entidade</span>
+  </a>
+
+  <a href="shop.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
+    <div class="flex items-center gap-2">
+      <!-- Ícone: Shopping Bag -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 11h14l1 9H4l1-9z" />
+      </svg>
+      <span class="text-white">Loja</span>
+    </div>
+    <span class="text-xs text-purple-400 cinzel">Cartel Velado</span>
+  </a>
+
+  <a href="login.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
+    <div class="flex items-center gap-2">
+      <!-- Ícone: Sparkle (Star-like) -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12l1.5 4.5L11 13l4.5 3.5L18 12l-2.5-4.5L13 11 7.5 7.5z" />
+      </svg>
+      <span class="text-white">Perfil</span>
+    </div>
+    <span class="text-xs text-purple-400 cinzel">Avatar</span>
+  </a>
+
+  <a href="oraculum.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
+    <div class="flex items-center gap-2">
+      <!-- Ícone: Question Circle -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M12 14a4 4 0 10-4-4 1 1 0 001 1h.01a1 1 0 001-1 2 2 0 112 2 2 2 0 01-2 2z" />
+      </svg>
+      <span class="text-white">Oráculo</span>
+    </div>
+    <span class="text-xs text-purple-400 cinzel">Sabedoria</span>
+  </a>
+
+</nav>
+  </div>
+</div>
+
+<!-- Overlay para clicar fora e fechar -->
+<div id="drawerOverlay" class="fixed inset-0 bg-black bg-opacity-60 hidden z-30"></div>
+
+<main>
+
+<div class="w-full h-1 barra-degrade"></div>
+
+<footer class="py-8 text-center text-[#666] bg-[#000] border-t border-[#333] mt-0">
+  <a href="linktree.html" class="inline-block mb-4">
+    <img src="assets/images/linktree.png" alt="Linktree" class="h-10 mx-auto">
+  </a>
+  <p>Explore. Escolha. Caia. Evolua.</p>
+  <p class="mt-2">Toda escolha tem um preço. Toda queda, uma razão.</p>
+  <p class="text-xs mt-4">© 2025 NoHeroes. Todos os direitos reservados.</p>
+</footer>
+  </main>
+
+<canvas id="brasasCanvas"></canvas>
+
+ <script>  
+  // Scroll suave  
+  const scrollToSection = sectionId => {  
+    const sec = document.getElementById(sectionId);  
+    if (sec) sec.scrollIntoView({ behavior: 'smooth' });  
+  };  
+
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+const drawer = document.getElementById('drawer');
+const overlay = document.getElementById('drawerOverlay');
+
+let isDrawerOpen = false;
+
+function toggleDrawer() {
+  isDrawerOpen = !isDrawerOpen;
+
+  // Transições certas: abre e fecha para a direita
+  drawer.style.transform = isDrawerOpen ? 'translateX(0)' : 'translateX(100%)';
+
+  overlay.style.display = isDrawerOpen ? 'block' : 'none';
+  hamburgerBtn.textContent = isDrawerOpen ? '✕' : '☰';
+}
+
+hamburgerBtn.addEventListener('click', toggleDrawer);
+overlay.addEventListener('click', toggleDrawer);
+
+  const canvas = document.getElementById("brasasCanvas");
+const ctx = canvas.getContext("2d");
+let particles = [];
+let w, h;
+
+function resizeCanvas() {
+  const ratio = window.devicePixelRatio || 1;
+  w = canvas.width = window.innerWidth * ratio;
+  h = canvas.height = window.innerHeight * ratio;
+  canvas.style.width = window.innerWidth + "px";
+  canvas.style.height = window.innerHeight + "px";
+  ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset transform
+  ctx.scale(ratio, ratio);
+}
+
+class Particle {
+  constructor() {
+    this.reset(true);
+  }
+
+  reset(initial = false) {
+    this.x = Math.random() * w;
+    this.y = initial ? Math.random() * h : h + Math.random() * 100;
+    this.size = 1 + Math.random() * 2.5;
+    this.speed = 0.2 + Math.random() * 0.5;
+    this.alpha = 0.4 + Math.random() * 0.3;
+    this.drift = (Math.random() - 0.5) * 0.5;
+  }
+
+  update() {
+    this.y -= this.speed;
+    this.x += this.drift;
+    if (this.y < -10 || this.x < -50 || this.x > w + 50) this.reset();
+  }
+
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`;
+    ctx.shadowColor = "#a855f7";
+    ctx.shadowBlur = 12;
+    ctx.fill();
+  }
+}
+
+function createParticles(count) {
+  particles = [];
+  for (let i = 0; i < count; i++) {
+    particles.push(new Particle());
+  }
+}
+
+function animate() {
+  ctx.clearRect(0, 0, w, h);
+  for (const p of particles) {
+    p.update();
+    p.draw();
+  }
+  requestAnimationFrame(animate);
+}
+
+window.addEventListener("load", () => {
+  resizeCanvas();         // evita flicker inicial
+  const ratio = window.devicePixelRatio || 1;
+createParticles(Math.floor(150 * ratio));   // ou qualquer quantidade desejada
+  animate();              // inicia animação suave
+});
+
+window.addEventListener("resize", resizeCanvas);
+
+  function revelarDeCima(selector) {
+  const elementos = document.querySelectorAll(selector);
+
+  const observer = new IntersectionObserver((entradas) => {
+    entradas.forEach((entrada) => {
+      if (entrada.isIntersecting) {
+        entrada.target.classList.add('entrou');
+      } else {
+        entrada.target.classList.remove('entrou'); // ← anima de novo se voltar
+      }
+    });
+  }, {
+    threshold: 0.6 // só anima quando ~30% do bloco entra de fato
+  });
+
+  elementos.forEach((el) => {
+    el.classList.add('invisivel', 'slide-top');
+    observer.observe(el);
+  });
+}
+
+revelarDeCima('.reveal-top');
+</script>
+</body>
+</html>
