@@ -366,13 +366,25 @@
   }
 
   window.addEventListener("load", () => {
-    resizeCanvas();
-    const ratio = window.devicePixelRatio || 1;
-    createParticles(Math.floor(150 * ratio));
-    animate();
+  resizeCanvas();
+  const ratio = window.devicePixelRatio || 1;
+  createParticles(Math.floor(150 * ratio));
+  animate();
 
-// Garantia: remove opacity 0 se observer falhar por qualquer motivo
-window.addEventListener('load', () => {
+  // Reveal animação de entrada (.reveal-fade)
+  const observerFade = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-fade-in-up');
+      }
+    });
+  }, { threshold: 0.2 });
+
+  document.querySelectorAll('.reveal-fade').forEach(el => {
+    observerFade.observe(el);
+  });
+
+  // Fallback para garantir visibilidade se observer falhar
   setTimeout(() => {
     document.querySelectorAll('.reveal-fade').forEach(el => {
       if (!el.classList.contains('animate-fade-in-up')) {
@@ -380,37 +392,24 @@ window.addEventListener('load', () => {
         el.style.transform = 'none';
       }
     });
-  }, 1500); // 1,5s após load completo como fallback seguro
-});
-    // Reveal animação de entrada (.reveal-fade)
-    const observerFade = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animate-fade-in-up');
-        }
-      });
-    }, { threshold: 0.2 });
+  }, 1500);
 
-    document.querySelectorAll('.reveal-fade').forEach(el => {
-      observerFade.observe(el);
+  // Reveal animação top (.reveal-top)
+  const observerTop = new IntersectionObserver((entradas) => {
+    entradas.forEach((entrada) => {
+      if (entrada.isIntersecting) {
+        entrada.target.classList.add('entrou');
+      } else {
+        entrada.target.classList.remove('entrou');
+      }
     });
+  }, { threshold: 0.6 });
 
-    // Reveal animação top (.reveal-top)
-    const observerTop = new IntersectionObserver((entradas) => {
-      entradas.forEach((entrada) => {
-        if (entrada.isIntersecting) {
-          entrada.target.classList.add('entrou');
-        } else {
-          entrada.target.classList.remove('entrou');
-        }
-      });
-    }, { threshold: 0.6 });
-
-    document.querySelectorAll('.reveal-top').forEach((el) => {
-      el.classList.add('invisivel', 'slide-top');
-      observerTop.observe(el);
-    });
+  document.querySelectorAll('.reveal-top').forEach((el) => {
+    el.classList.add('invisivel', 'slide-top');
+    observerTop.observe(el);
   });
+});
 
   window.addEventListener("resize", resizeCanvas);
 </script>
