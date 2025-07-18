@@ -289,138 +289,119 @@
 
 <canvas id="brasasCanvas"></canvas>
 
- <script>  
-  // Scroll suave  
-  const scrollToSection = sectionId => {  
-    const sec = document.getElementById(sectionId);  
-    if (sec) sec.scrollIntoView({ behavior: 'smooth' });  
-  };  
+ <script>
+  // Scroll suave
+  const scrollToSection = sectionId => {
+    const sec = document.getElementById(sectionId);
+    if (sec) sec.scrollIntoView({ behavior: 'smooth' });
+  };
 
+  // Drawer / menu lateral
   const hamburgerBtn = document.getElementById('hamburgerBtn');
-const drawer = document.getElementById('drawer');
-const overlay = document.getElementById('drawerOverlay');
+  const drawer = document.getElementById('drawer');
+  const overlay = document.getElementById('drawerOverlay');
 
-let isDrawerOpen = false;
+  let isDrawerOpen = false;
 
-function toggleDrawer() {
-  isDrawerOpen = !isDrawerOpen;
+  function toggleDrawer() {
+    isDrawerOpen = !isDrawerOpen;
+    drawer.style.transform = isDrawerOpen ? 'translateX(0)' : 'translateX(100%)';
+    overlay.style.display = isDrawerOpen ? 'block' : 'none';
+    hamburgerBtn.textContent = isDrawerOpen ? '✕' : '☰';
+  }
 
-  // Transições certas: abre e fecha para a direita
-  drawer.style.transform = isDrawerOpen ? 'translateX(0)' : 'translateX(100%)';
+  hamburgerBtn.addEventListener('click', toggleDrawer);
+  overlay.addEventListener('click', toggleDrawer);
 
-  overlay.style.display = isDrawerOpen ? 'block' : 'none';
-  hamburgerBtn.textContent = isDrawerOpen ? '✕' : '☰';
-}
-
-hamburgerBtn.addEventListener('click', toggleDrawer);
-overlay.addEventListener('click', toggleDrawer);
-
+  // Brasas canvas
   const canvas = document.getElementById("brasasCanvas");
-const ctx = canvas.getContext("2d");
-let particles = [];
-let w, h;
+  const ctx = canvas.getContext("2d");
+  let particles = [];
+  let w, h;
 
-function resizeCanvas() {
-  const ratio = window.devicePixelRatio || 1;
-  w = canvas.width = window.innerWidth * ratio;
-  h = canvas.height = window.innerHeight * ratio;
-  canvas.style.width = window.innerWidth + "px";
-  canvas.style.height = window.innerHeight + "px";
-  ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset transform
-  ctx.scale(ratio, ratio);
-}
-
-class Particle {
-  constructor() {
-    this.reset(true);
+  function resizeCanvas() {
+    const ratio = window.devicePixelRatio || 1;
+    w = canvas.width = window.innerWidth * ratio;
+    h = canvas.height = window.innerHeight * ratio;
+    canvas.style.width = window.innerWidth + "px";
+    canvas.style.height = window.innerHeight + "px";
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.scale(ratio, ratio);
   }
 
-  reset(initial = false) {
-    this.x = Math.random() * w;
-    this.y = initial ? Math.random() * h : h + Math.random() * 100;
-    this.size = 1 + Math.random() * 2.5;
-    this.speed = 0.2 + Math.random() * 0.5;
-    this.alpha = 0.4 + Math.random() * 0.3;
-    this.drift = (Math.random() - 0.5) * 0.5;
+  class Particle {
+    constructor() { this.reset(true); }
+    reset(initial = false) {
+      this.x = Math.random() * w;
+      this.y = initial ? Math.random() * h : h + Math.random() * 100;
+      this.size = 1 + Math.random() * 2.5;
+      this.speed = 0.2 + Math.random() * 0.5;
+      this.alpha = 0.4 + Math.random() * 0.3;
+      this.drift = (Math.random() - 0.5) * 0.5;
+    }
+    update() {
+      this.y -= this.speed;
+      this.x += this.drift;
+      if (this.y < -10 || this.x < -50 || this.x > w + 50) this.reset();
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`;
+      ctx.shadowColor = "#a855f7";
+      ctx.shadowBlur = 12;
+      ctx.fill();
+    }
   }
 
-  update() {
-    this.y -= this.speed;
-    this.x += this.drift;
-    if (this.y < -10 || this.x < -50 || this.x > w + 50) this.reset();
+  function createParticles(count) {
+    particles = [];
+    for (let i = 0; i < count; i++) particles.push(new Particle());
   }
 
-  draw() {
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`;
-    ctx.shadowColor = "#a855f7";
-    ctx.shadowBlur = 12;
-    ctx.fill();
+  function animate() {
+    ctx.clearRect(0, 0, w, h);
+    for (const p of particles) { p.update(); p.draw(); }
+    requestAnimationFrame(animate);
   }
-}
 
-function createParticles(count) {
-  particles = [];
-  for (let i = 0; i < count; i++) {
-    particles.push(new Particle());
-  }
-}
+  window.addEventListener("load", () => {
+    resizeCanvas();
+    const ratio = window.devicePixelRatio || 1;
+    createParticles(Math.floor(150 * ratio));
+    animate();
 
-function animate() {
-  ctx.clearRect(0, 0, w, h);
-  for (const p of particles) {
-    p.update();
-    p.draw();
-  }
-  requestAnimationFrame(animate);
-}
+    // Reveal animação de entrada (.reveal-fade)
+    const observerFade = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-fade-in-up');
+        }
+      });
+    }, { threshold: 0.2 });
 
-window.addEventListener("load", () => {
-  resizeCanvas();         // evita flicker inicial
-  const ratio = window.devicePixelRatio || 1;
-createParticles(Math.floor(150 * ratio));   // ou qualquer quantidade desejada
-  animate();              // inicia animação suave
-});
-
-window.addEventListener("resize", resizeCanvas);
-
-  function revelarDeCima(selector) {
-  const elementos = document.querySelectorAll(selector);
-
-  const observer = new IntersectionObserver((entradas) => {
-    entradas.forEach((entrada) => {
-      if (entrada.isIntersecting) {
-        entrada.target.classList.add('entrou');
-      } else {
-        entrada.target.classList.remove('entrou'); // ← anima de novo se voltar
-      }
+    document.querySelectorAll('.reveal-fade').forEach(el => {
+      observerFade.observe(el);
     });
-  }, {
-    threshold: 0.6 // só anima quando ~30% do bloco entra de fato
-  });
 
-  elementos.forEach((el) => {
-    el.classList.add('invisivel', 'slide-top');
-    observer.observe(el);
-  });
-}
+    // Reveal animação top (.reveal-top)
+    const observerTop = new IntersectionObserver((entradas) => {
+      entradas.forEach((entrada) => {
+        if (entrada.isIntersecting) {
+          entrada.target.classList.add('entrou');
+        } else {
+          entrada.target.classList.remove('entrou');
+        }
+      });
+    }, { threshold: 0.6 });
 
-revelarDeCima('.reveal-top');
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('animate-fade-in-up');
-      }
+    document.querySelectorAll('.reveal-top').forEach((el) => {
+      el.classList.add('invisivel', 'slide-top');
+      observerTop.observe(el);
     });
-  }, {
-    threshold: 0.2
   });
 
-  document.querySelectorAll('.reveal-fade').forEach(el => {
-    observer.observe(el);
-  });
+  window.addEventListener("resize", resizeCanvas);
 </script>
 </body>
 </html>
