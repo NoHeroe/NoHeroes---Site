@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  
   <title>NoHeroes | Sobre</title>  
   <script src="https://cdn.tailwindcss.com"></script>  
+<script src="https://unpkg.com/scrollreveal"></script>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">  
   <style>  
     body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #e5e5e5; }  
@@ -366,50 +367,28 @@
   }
 
   window.addEventListener("load", () => {
-  resizeCanvas();
-  const ratio = window.devicePixelRatio || 1;
-  createParticles(Math.floor(150 * ratio));
-  animate();
+    resizeCanvas();
+    const ratio = window.devicePixelRatio || 1;
+    createParticles(Math.floor(150 * ratio));
+    animate();
 
-  // Reveal animação de entrada (.reveal-fade)
-  const observerFade = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('animate-fade-in-up');
-      }
+    // ScrollReveal no lugar de IntersectionObserver:
+    ScrollReveal().reveal('.reveal-fade', {
+      duration: 1000,
+      distance: '20px',
+      easing: 'ease-out',
+      origin: 'bottom',
+      interval: 100
     });
-  }, { threshold: 0.2 });
 
-  document.querySelectorAll('.reveal-fade').forEach(el => {
-    observerFade.observe(el);
+    ScrollReveal().reveal('.reveal-top', {
+      duration: 1000,
+      distance: '30px',
+      easing: 'ease-out',
+      origin: 'top',
+      interval: 100
+    });
   });
-
-  // Fallback para garantir visibilidade se observer falhar
-  setTimeout(() => {
-    document.querySelectorAll('.reveal-fade').forEach(el => {
-      if (!el.classList.contains('animate-fade-in-up')) {
-        el.style.opacity = 1;
-        el.style.transform = 'none';
-      }
-    });
-  }, 1500);
-
-  // Reveal animação top (.reveal-top)
-  const observerTop = new IntersectionObserver((entradas) => {
-    entradas.forEach((entrada) => {
-      if (entrada.isIntersecting) {
-        entrada.target.classList.add('entrou');
-      } else {
-        entrada.target.classList.remove('entrou');
-      }
-    });
-  }, { threshold: 0.6 });
-
-  document.querySelectorAll('.reveal-top').forEach((el) => {
-    el.classList.add('invisivel', 'slide-top');
-    observerTop.observe(el);
-  });
-});
 
   window.addEventListener("resize", resizeCanvas);
 </script>
