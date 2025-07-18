@@ -153,3 +153,131 @@
 <!-- Overlay para clicar fora e fechar -->
 <div id="drawerOverlay" class="fixed inset-0 bg-black bg-opacity-60 hidden z-30"></div>
 
+<canvas id="brasasCanvas"></canvas>
+
+ <script>  
+  // Scroll suave  
+  const scrollToSection = sectionId => {  
+    const sec = document.getElementById(sectionId);  
+    if (sec) sec.scrollIntoView({ behavior: 'smooth' });  
+  };  
+  
+  // Placeholder do botão “Me Espelhar na Escuridão”  
+  document.getElementById('mirror-btn').addEventListener('click', () => {  
+    window.location.href = 'login.html'; // ou personagem.html  
+  });  
+
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+const drawer = document.getElementById('drawer');
+const overlay = document.getElementById('drawerOverlay');
+
+let isDrawerOpen = false;
+
+function toggleDrawer() {
+  isDrawerOpen = !isDrawerOpen;
+
+  // Transições certas: abre e fecha para a direita
+  drawer.style.transform = isDrawerOpen ? 'translateX(0)' : 'translateX(100%)';
+
+  overlay.style.display = isDrawerOpen ? 'block' : 'none';
+  hamburgerBtn.textContent = isDrawerOpen ? '✕' : '☰';
+}
+
+hamburgerBtn.addEventListener('click', toggleDrawer);
+overlay.addEventListener('click', toggleDrawer);
+
+  const canvas = document.getElementById("brasasCanvas");
+const ctx = canvas.getContext("2d");
+let particles = [];
+let w, h;
+
+function resizeCanvas() {
+  const ratio = window.devicePixelRatio || 1;
+  w = canvas.width = window.innerWidth * ratio;
+  h = canvas.height = window.innerHeight * ratio;
+  canvas.style.width = window.innerWidth + "px";
+  canvas.style.height = window.innerHeight + "px";
+  ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset transform
+  ctx.scale(ratio, ratio);
+}
+
+class Particle {
+  constructor() {
+    this.reset(true);
+  }
+
+  reset(initial = false) {
+    this.x = Math.random() * w;
+    this.y = initial ? Math.random() * h : h + Math.random() * 100;
+    this.size = 1 + Math.random() * 2.5;
+    this.speed = 0.2 + Math.random() * 0.5;
+    this.alpha = 0.4 + Math.random() * 0.3;
+    this.drift = (Math.random() - 0.5) * 0.5;
+  }
+
+  update() {
+    this.y -= this.speed;
+    this.x += this.drift;
+    if (this.y < -10 || this.x < -50 || this.x > w + 50) this.reset();
+  }
+
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`;
+    ctx.shadowColor = "#a855f7";
+    ctx.shadowBlur = 12;
+    ctx.fill();
+  }
+}
+
+function createParticles(count) {
+  particles = [];
+  for (let i = 0; i < count; i++) {
+    particles.push(new Particle());
+  }
+}
+
+function animate() {
+  ctx.clearRect(0, 0, w, h);
+  for (const p of particles) {
+    p.update();
+    p.draw();
+  }
+  requestAnimationFrame(animate);
+}
+
+window.addEventListener("load", () => {
+  resizeCanvas();         // evita flicker inicial
+  const ratio = window.devicePixelRatio || 1;
+createParticles(Math.floor(150 * ratio));   // ou qualquer quantidade desejada
+  animate();              // inicia animação suave
+});
+
+window.addEventListener("resize", resizeCanvas);
+
+  function revelarDeCima(selector) {
+  const elementos = document.querySelectorAll(selector);
+
+  const observer = new IntersectionObserver((entradas) => {
+    entradas.forEach((entrada) => {
+      if (entrada.isIntersecting) {
+        entrada.target.classList.add('entrou');
+      } else {
+        entrada.target.classList.remove('entrou'); // ← anima de novo se voltar
+      }
+    });
+  }, {
+    threshold: 0.6 // só anima quando ~30% do bloco entra de fato
+  });
+
+  elementos.forEach((el) => {
+    el.classList.add('invisivel', 'slide-top');
+    observer.observe(el);
+  });
+}
+
+revelarDeCima('.reveal-top');
+</script>
+</body>
+</html>
