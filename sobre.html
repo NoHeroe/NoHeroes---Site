@@ -1,116 +1,47 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NoHeroes | Sobre</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/alpinejs" defer></script>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet" />
-  <style>
-    body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #e5e5e5; }
-    h1, h2, .cinzel { font-family: 'Cinzel Decorative', serif; }
-    html { scroll-behavior: smooth; }
-    .glass { background: rgba(28, 28, 28, 0.2); backdrop-filter: blur(8px); border-radius: 1rem; border: 1px solid rgba(255,255,255,0.05); }
-    .gradiente-noheroes { background: linear-gradient(to right, #8f4fff, #facc15); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: transparent; }
-    .barra-degrade { background: linear-gradient(to right, #8f4fff, #facc15); box-shadow: 0 0 6px #8f4fff88, 0 0 10px #facc1588; height: 4px; }
-  </style>
-</head>
-<body>
-<header class="fixed top-0 left-0 w-full h-14 bg-[#0a0a0a] border-b border-[#2e2e2e] z-50">
-  <button id="hamburgerBtn" class="absolute top-3 right-4 text-3xl text-white hover:text-[#a855f7] transition z-[60]">☰</button>
-  <div class="absolute left-1/2 top-full transform -translate-x-1/2 -translate-y-1/2 z-30">
-    <a href="index.html"><img src="assets/images/noheroes logo.png" alt="NoHeroes" class="h-32 drop-shadow-md" /></a>
-  </div>
-</header>
-
-<div class="fixed top-14 left-0 w-full barra-degrade z-40"></div>
-
-<div id="drawer" class="fixed top-0 right-0 w-72 h-full bg-black text-white transform transition-transform duration-300 z-50" style="transform: translateX(100%)">
-  <button onclick="toggleDrawer()" class="absolute top-4 right-4 text-3xl text-[#a855f7] hover:text-purple-400 z-50">✕</button>
-  <div class="p-6 flex flex-col gap-4">
-    <h1 class="text-3xl font-bold gradiente-noheroes cinzel">NOHEROES</h1>
-    <nav class="mt-4 flex flex-col gap-3 text-sm">
-      <a href="index.html" class="hover:text-purple-400">Início</a>
-      <a href="projects.html" class="hover:text-purple-400">Projetos</a>
-      <a href="shop.html" class="hover:text-purple-400">Loja</a>
-      <a href="sobre.html" class="hover:text-purple-400">Sobre</a>
-    </nav>
-  </div>
-</div>
-
-<section class="pt-24 text-center">
-  <h1 class="text-4xl md:text-5xl font-bold gradiente-noheroes cinzel mb-4">O que é NoHeroes?</h1>
-  <p class="max-w-3xl mx-auto text-gray-300 leading-relaxed px-4">
-    NoHeroes não é apenas uma marca — é um portal. Um universo criativo em expansão que une animes, mangás, livros, apps e experiências interativas, com estética dark premium e filosofia profunda. Você entra por diversão e sai em mutação.
-  </p>
-</section>
-
-<section class="py-20 bg-[#0a0a0a]">
-  <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 px-4">
-    <div class="glass p-6 rounded-xl text-center">
-      <h2 class="text-xl font-bold gradiente-noheroes mb-2">Missão</h2>
-      <p class="text-gray-300 text-sm leading-relaxed">
-        Criar um ecossistema vivo onde anime, mangá, som e gameplay se fundem, conectando arte e vida real. Queremos levar identidade, alma e coragem a cada projeto.
-      </p>
-    </div>
-    <div class="glass p-6 rounded-xl text-center">
-      <h2 class="text-xl font-bold gradiente-noheroes mb-2">Visão</h2>
-      <p class="text-gray-300 text-sm leading-relaxed">
-        Ser referência nacional em produção original e autoral, rompendo barreiras e construindo um universo simbiótico onde narrativa, estética e experiência convergem.
-      </p>
-    </div>
-  </div>
-</section>
-
-<footer class="py-8 text-center text-[#888] border-t border-[#333] bg-[#0a0a0a]">
-  <p>© 2025 NoHeroes. Todos os direitos reservados.</p>
-</footer>
-
-<canvas id="brasasCanvas"></canvas>
-
-<script>
-  const hamburgerBtn = document.getElementById('hamburgerBtn');
-  const drawer = document.getElementById('drawer');
-  let isDrawerOpen = false;
-  function toggleDrawer() {
-    isDrawerOpen = !isDrawerOpen;
-    drawer.style.transform = isDrawerOpen ? 'translateX(0)' : 'translateX(100%)';
-  }
-  const canvas = document.getElementById(\"brasasCanvas\");
-  const ctx = canvas.getContext(\"2d\");
-  let w, h, particles = [];
-  function resize() {
-    w = canvas.width = window.innerWidth;
-    h = canvas.height = window.innerHeight;
-  }
-  function createParticles() {
-    particles = [];
-    for (let i = 0; i < 100; i++) {
-      particles.push({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        s: Math.random() * 2 + 1,
-        a: Math.random() * Math.PI * 2,
-        v: Math.random() * 0.5 + 0.2
-      });
-    }
-  }
-  function animate() {
-    ctx.clearRect(0, 0, w, h);
-    for (let p of particles) {
-      p.y -= p.v;
-      p.x += Math.sin(p.a) * 0.5;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.s, 0, Math.PI * 2);
-      ctx.fillStyle = \"rgba(168,85,247,0.6)\";
-      ctx.fill();
-      if (p.y < -10) p.y = h + 10;
-    }
-    requestAnimationFrame(animate);
-  }
-  window.addEventListener(\"resize\", () => { resize(); createParticles(); });
-  resize(); createParticles(); animate();
-</script>
-</body>
-</html>
+<html lang="pt-br">  
+<head>  
+  <meta charset="UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <title>NoHeroes | Sobre</title>  
+  <script src="https://cdn.tailwindcss.com"></script>  
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">  
+  <style>  
+    body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #e5e5e5; }  
+    h1, h2, .cinzel {  
+  font-family: 'Cinzel Decorative', serif;  
+}  
+    .text-shadow-md { text-shadow: 0 0 10px rgba(143,79,255,0.4); }  
+    .overlay { position:absolute; inset:0; background:rgba(0,0,0,0.5); }  
+    .drop-shadow-glow { filter: drop-shadow(0 0 10px #8f4fff) drop-shadow(0 0 20px #8f4fff); }  
+    html { scroll-behavior: smooth; }  
+    /* Modal e drawer */  
+    .hidden { display: none; }  
+    /* Ajustes para o topo fixo */  
+    
+.gradiente-noheroes {
+  background: linear-gradient(to bottom right, #8f4fff 20%, #facc15 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 8px rgba(143, 79, 255, 0.4);
+}
+.barra-degrade {
+  background: linear-gradient(to right, #8f4fff, #facc15);
+  box-shadow: 0 0 6px #8f4fff88, 0 0 10px #facc1588;
+}
+.glow-interno-left {
+  box-shadow: inset 8px 0 18px rgba(143, 79, 255, 0.5);
+  border-left: 1px solid rgba(143, 79, 255, 0.15);
+}
+#brasasCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+}
+</style>
