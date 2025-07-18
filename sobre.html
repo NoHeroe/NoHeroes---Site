@@ -371,6 +371,17 @@
     createParticles(Math.floor(150 * ratio));
     animate();
 
+// Garantia: remove opacity 0 se observer falhar por qualquer motivo
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.querySelectorAll('.reveal-fade').forEach(el => {
+      if (!el.classList.contains('animate-fade-in-up')) {
+        el.style.opacity = 1;
+        el.style.transform = 'none';
+      }
+    });
+  }, 1500); // 1,5s após load completo como fallback seguro
+});
     // Reveal animação de entrada (.reveal-fade)
     const observerFade = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
