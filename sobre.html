@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  
   <title>NoHeroes | Sobre</title>  
   <script src="https://cdn.tailwindcss.com"></script>  
-<script src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">  
   <style>  
     body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #e5e5e5; }  
@@ -291,106 +290,93 @@
 <canvas id="brasasCanvas"></canvas>
 
  <script>
-  // Scroll suave
-  const scrollToSection = sectionId => {
-    const sec = document.getElementById(sectionId);
-    if (sec) sec.scrollIntoView({ behavior: 'smooth' });
-  };
+  document.addEventListener("DOMContentLoaded", () => {
+    // Drawer
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const drawer = document.getElementById('drawer');
+    const overlay = document.getElementById('drawerOverlay');
+    let isDrawerOpen = false;
 
-  // Drawer / menu lateral
-  const hamburgerBtn = document.getElementById('hamburgerBtn');
-  const drawer = document.getElementById('drawer');
-  const overlay = document.getElementById('drawerOverlay');
-
-  let isDrawerOpen = false;
-
-  function toggleDrawer() {
-    isDrawerOpen = !isDrawerOpen;
-    drawer.style.transform = isDrawerOpen ? 'translateX(0)' : 'translateX(100%)';
-    overlay.style.display = isDrawerOpen ? 'block' : 'none';
-    hamburgerBtn.textContent = isDrawerOpen ? '✕' : '☰';
-  }
-
-  hamburgerBtn.addEventListener('click', toggleDrawer);
-  overlay.addEventListener('click', toggleDrawer);
-
-  // Brasas canvas
-  const canvas = document.getElementById("brasasCanvas");
-  const ctx = canvas.getContext("2d");
-  let particles = [];
-  let w, h;
-
-  function resizeCanvas() {
-    const ratio = window.devicePixelRatio || 1;
-    w = canvas.width = window.innerWidth * ratio;
-    h = canvas.height = window.innerHeight * ratio;
-    canvas.style.width = window.innerWidth + "px";
-    canvas.style.height = window.innerHeight + "px";
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.scale(ratio, ratio);
-  }
-
-  class Particle {
-    constructor() { this.reset(true); }
-    reset(initial = false) {
-      this.x = Math.random() * w;
-      this.y = initial ? Math.random() * h : h + Math.random() * 100;
-      this.size = 1 + Math.random() * 2.5;
-      this.speed = 0.2 + Math.random() * 0.5;
-      this.alpha = 0.4 + Math.random() * 0.3;
-      this.drift = (Math.random() - 0.5) * 0.5;
+    function toggleDrawer() {
+      isDrawerOpen = !isDrawerOpen;
+      drawer.style.transform = isDrawerOpen ? 'translateX(0)' : 'translateX(100%)';
+      overlay.style.display = isDrawerOpen ? 'block' : 'none';
+      hamburgerBtn.textContent = isDrawerOpen ? '✕' : '☰';
     }
-    update() {
-      this.y -= this.speed;
-      this.x += this.drift;
-      if (this.y < -10 || this.x < -50 || this.x > w + 50) this.reset();
+
+    hamburgerBtn.addEventListener('click', toggleDrawer);
+    overlay.addEventListener('click', toggleDrawer);
+
+    // Brasas Canvas
+    const canvas = document.getElementById("brasasCanvas");
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+    let w, h;
+
+    function resizeCanvas() {
+      const ratio = window.devicePixelRatio || 1;
+      w = canvas.width = window.innerWidth * ratio;
+      h = canvas.height = window.innerHeight * ratio;
+      canvas.style.width = window.innerWidth + "px";
+      canvas.style.height = window.innerHeight + "px";
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(ratio, ratio);
     }
-    draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`;
-      ctx.shadowColor = "#a855f7";
-      ctx.shadowBlur = 12;
-      ctx.fill();
+
+    class Particle {
+      constructor() { this.reset(true); }
+      reset(initial = false) {
+        this.x = Math.random() * w;
+        this.y = initial ? Math.random() * h : h + Math.random() * 100;
+        this.size = 1 + Math.random() * 2.5;
+        this.speed = 0.2 + Math.random() * 0.5;
+        this.alpha = 0.4 + Math.random() * 0.3;
+        this.drift = (Math.random() - 0.5) * 0.5;
+      }
+      update() {
+        this.y -= this.speed;
+        this.x += this.drift;
+        if (this.y < -10 || this.x < -50 || this.x > w + 50) this.reset();
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`;
+        ctx.shadowColor = "#a855f7";
+        ctx.shadowBlur = 12;
+        ctx.fill();
+      }
     }
-  }
 
-  function createParticles(count) {
-    particles = [];
-    for (let i = 0; i < count; i++) particles.push(new Particle());
-  }
+    function createParticles(count) {
+      particles = [];
+      for (let i = 0; i < count; i++) particles.push(new Particle());
+    }
 
-  function animate() {
-    ctx.clearRect(0, 0, w, h);
-    for (const p of particles) { p.update(); p.draw(); }
-    requestAnimationFrame(animate);
-  }
+    function animate() {
+      ctx.clearRect(0, 0, w, h);
+      for (const p of particles) { p.update(); p.draw(); }
+      requestAnimationFrame(animate);
+    }
 
-  window.addEventListener("load", () => {
     resizeCanvas();
-    const ratio = window.devicePixelRatio || 1;
-    createParticles(Math.floor(150 * ratio));
+    createParticles(Math.floor(150 * (window.devicePixelRatio || 1)));
     animate();
 
-    // ScrollReveal no lugar de IntersectionObserver:
-    ScrollReveal().reveal('.reveal-fade', {
-      duration: 1000,
-      distance: '20px',
-      easing: 'ease-out',
-      origin: 'bottom',
-      interval: 100
-    });
+    window.addEventListener("resize", resizeCanvas);
 
-    ScrollReveal().reveal('.reveal-top', {
-      duration: 1000,
-      distance: '30px',
-      easing: 'ease-out',
-      origin: 'top',
-      interval: 100
-    });
+    // IntersectionObserver clean e seguro:
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-fade-in-up');
+          observer.unobserve(entry.target); // anima 1x e pronto
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal-fade').forEach(el => observer.observe(el));
   });
-
-  window.addEventListener("resize", resizeCanvas);
 </script>
 </body>
 </html>
