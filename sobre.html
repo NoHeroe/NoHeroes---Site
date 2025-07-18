@@ -44,6 +44,16 @@
   z-index: -1;
   pointer-events: none;
 }
+  .animate-fade-in-up {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .reveal-fade {
+    opacity: 0;
+    transform: translateY(20px);
+  }
 </style>
 
 </head>  
@@ -200,7 +210,7 @@
       <div class="w-24 h-24 mx-auto mb-4 rounded-xl overflow-hidden border-2 border-gradient-to-br from-purple-700 to-[#800040]">
         <img src="assets/images/placeholder-animacao.jpg" alt="Estúdio de Animação" class="w-full h-full object-cover" />
       </div>
-      <h3 class="text-lg font-semibold text-purple-300 text-center">Estúdio de Animação</h3>
+      <h3 class="text-lg font-semibold gradiente-noheroes text-center">Estúdio de Animação</h3>
       <p class="mt-2 text-sm text-gray-400 text-left">
         Produção completa de animes e clipes com estética dark-fantasy, identidade autoral e conexão com o universo NoHeroes.
       </p>
@@ -212,7 +222,7 @@
       <div class="w-24 h-24 mx-auto mb-4 rounded-xl overflow-hidden border-2 border-gradient-to-br from-purple-700 to-[#800040]">
         <img src="assets/images/placeholder-editora.jpg" alt="Editora Alternativa" class="w-full h-full object-cover" />
       </div>
-      <h3 class="text-lg font-semibold text-purple-300 text-center">Editora Alternativa</h3>
+      <h3 class="text-lg font-semibold gradiente-noheroes text-center">Editora Alternativa</h3>
       <p class="mt-2 text-sm text-gray-400 text-left">
         Livros e eBooks com inovação narrativa real, onde lazer e educação se fundem com filosofia e introspecção.
       </p>
@@ -224,7 +234,7 @@
       <div class="w-24 h-24 mx-auto mb-4 rounded-xl overflow-hidden border-2 border-gradient-to-br from-purple-700 to-[#800040]">
         <img src="assets/images/placeholder-app.jpg" alt="App Gamificado" class="w-full h-full object-cover" />
       </div>
-      <h3 class="text-lg font-semibold text-purple-300 text-center">App Gamificado</h3>
+      <h3 class="text-lg font-semibold gradiente-noheroes text-center">App Gamificado</h3>
       <p class="mt-2 text-sm text-gray-400 text-left">
         XP, metas, modos e rituais - ajudando você a transformar sua vida real em uma jornada imersiva e significativa.- Todo Universo NoHeroes interage com o sistema.
       </p>
@@ -235,7 +245,7 @@
       <div class="w-24 h-24 mx-auto mb-4 rounded-xl overflow-hidden border-2 border-gradient-to-br from-purple-700 to-[#800040]">
         <img src="assets/images/placeholder-criadores.jpg" alt="Rede de Criadores" class="w-full h-full object-cover" />
       </div>
-      <h3 class="text-lg font-semibold text-purple-300 text-center">Rede de Criadores</h3>
+      <h3 class="text-lg font-semibold gradiente-noheroes text-center">Rede de Criadores</h3>
       <p class="mt-2 text-sm text-gray-400 text-left">
         Conexão entre tutores e aprendizes, permitindo ensinar, criar, crescer e construir novos mundos juntos.
       </p>
@@ -246,7 +256,7 @@
       <div class="w-24 h-24 mx-auto mb-4 rounded-xl overflow-hidden border-2 border-gradient-to-br from-purple-700 to-[#800040]">
         <img src="assets/images/placeholder-narrativa.jpg" alt="Narrativa Multiplataforma" class="w-full h-full object-cover" />
       </div>
-      <h3 class="text-lg font-semibold text-purple-300 text-center">Narrativa Multiplataforma</h3>
+      <h3 class="text-lg font-semibold gradiente-noheroes text-center">Narrativa Multiplataforma</h3>
       <p class="mt-2 text-sm text-gray-400 text-left">
         ROAR, Chrysalis, Echoes, FREQ — histórias que se entrelaçam e expandem o universo NoHeroes.
       </p>
@@ -257,7 +267,7 @@
       <div class="w-24 h-24 mx-auto mb-4 rounded-xl overflow-hidden border-2 border-gradient-to-br from-purple-700 to-[#800040]">
         <img src="assets/images/placeholder-rpg.jpg" alt="RPG Online" class="w-full h-full object-cover" />
       </div>
-      <h3 class="text-lg font-semibold text-purple-300 text-center">RPG Online Open World</h3>
+      <h3 class="text-lg font-semibold gradiente-noheroes text-center">RPG Online Open World</h3>
       <p class="mt-2 text-sm text-gray-400 text-left">
         Um mundo aberto medieval estilo anime inspirado em D&D e GTA, Com a narrativa do universo de NoHeroes — liberdade total, jogabilidade avançada e planos para imersão estilo Sword Art Online.
       </p>
@@ -397,6 +407,20 @@ window.addEventListener("resize", resizeCanvas);
 }
 
 revelarDeCima('.reveal-top');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-fade-in-up');
+      }
+    });
+  }, {
+    threshold: 0.2
+  });
+
+  document.querySelectorAll('.reveal-fade').forEach(el => {
+    observer.observe(el);
+  });
 </script>
 </body>
 </html>
