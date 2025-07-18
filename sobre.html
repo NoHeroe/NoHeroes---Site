@@ -295,6 +295,7 @@
     const hamburgerBtn = document.getElementById('hamburgerBtn');
     const drawer = document.getElementById('drawer');
     const overlay = document.getElementById('drawerOverlay');
+
     let isDrawerOpen = false;
 
     function toggleDrawer() {
@@ -365,17 +366,27 @@
 
     window.addEventListener("resize", resizeCanvas);
 
-    // IntersectionObserver clean e seguro:
-    const observer = new IntersectionObserver((entries) => {
+    // IntersectionObserver confiável: animação fade-in
+    const observer = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('animate-fade-in-up');
-          observer.unobserve(entry.target); // anima 1x e pronto
+          obs.unobserve(entry.target);
         }
       });
     }, { threshold: 0.1 });
 
     document.querySelectorAll('.reveal-fade').forEach(el => observer.observe(el));
+
+    // Garantir fallback: após 2s garante visibilidade para qualquer elemento que falhar
+    setTimeout(() => {
+      document.querySelectorAll('.reveal-fade').forEach(el => {
+        if (!el.classList.contains('animate-fade-in-up')) {
+          el.style.opacity = 1;
+          el.style.transform = 'none';
+        }
+      });
+    }, 2000);
   });
 </script>
 </body>
