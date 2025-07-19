@@ -105,59 +105,58 @@
   box-shadow: 0 0 12px rgba(250, 204, 21, 0.7);
 }
 
-/* Modal básico */
+/* Modal geral */
 #navModal {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.8);
+  background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(4px);
-  z-index: 50;
   display: none;
-  align-items: center;
-  justify-content: center;
-}
-
-#navModal.active {
-  display: flex;
+  z-index: 100;
 }
 
 #navModalContent {
-  background: #111;
-  padding: 2rem;
-  border-radius: 1rem;
-  max-width: 300px;
+  background: #0a0a0a;
+  max-height: 80vh; /* 🔥 Compactar modal */
+  overflow-y: auto;
   width: 90%;
-  text-align: center;
+  max-width: 320px;
+  margin: 4rem auto;
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 0 20px rgba(143, 79, 255, 0.3);
   position: relative;
 }
 
+/* Botões internos compactos e elegantes */
 #navModalContent button {
   display: block;
   width: 100%;
-  margin: 0.5rem 0;
-  padding: 0.75rem;
-  background: #333;
-  color: #facc15;
+  margin: 0.3rem 0;
+  padding: 0.6rem;
+  background: #1a1a1a;
   border-radius: 0.5rem;
-  font-size: 0.9rem;
   cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: bold;
+  text-align: center;
   transition: background 0.3s ease;
-}
-#navModalContent button:hover {
-  background: #444;
+  background-color: #1a1a1a;
+  border: 1px solid #333;
 }
 
-/* Botão X dentro do modal */
-#closeNavModal {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  font-size: 1.2rem;
-  color: #888;
-  cursor: pointer;
+/* Degradê estilo NoHeroes no texto dos botões */
+#navModalContent button span {
+  background: linear-gradient(135deg, #8f4fff, #facc15);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
 }
-#closeNavModal:hover {
-  color: #facc15;
+
+/* Hover discreto */
+#navModalContent button:hover {
+  background: #2e2e2e;
 }
 </style>
 
