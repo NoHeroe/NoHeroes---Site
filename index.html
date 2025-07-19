@@ -550,6 +550,15 @@ backface-visibility: hidden;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+@keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-100%); }
+  }
+  .animate-marquee {
+    display: inline-block;
+    min-width: 200%;
+    animation: marquee 70s linear infinite;
+  }
 </style>
 
 </head>  
