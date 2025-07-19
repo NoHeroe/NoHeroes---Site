@@ -72,13 +72,17 @@
   animation: flutuar 3s ease-in-out infinite alternate;
 }
 
+.balao-flutuante:nth-child(1) { animation-delay: 0s; }
+.balao-flutuante:nth-child(2) { animation-delay: 0.3s; }
+.balao-flutuante:nth-child(3) { animation-delay: 0.6s; }
+.balao-flutuante:nth-child(4) { animation-delay: 0.9s; }
+.balao-flutuante:nth-child(5) { animation-delay: 1.2s; }
+.balao-flutuante:nth-child(6) { animation-delay: 1.5s; }
+.balao-flutuante:nth-child(7) { animation-delay: 1.8s; }
+
 @keyframes flutuar {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(-6px);
-  }
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-6px); }
 }
 </style>
 
