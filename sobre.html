@@ -84,11 +84,101 @@
   0% { transform: translateY(0); }
   100% { transform: translateY(-6px); }
 }
+/* Botão de navegação flutuante */
+#navBtn {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 60;
+  background: #fff;
+  color: #000;
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.4);
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+#navBtn:hover {
+  background: #f3f3f3;
+}
+
+/* Modal básico */
+#navModal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  backdrop-filter: blur(4px);
+  z-index: 50;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+#navModal.active {
+  display: flex;
+}
+
+#navModalContent {
+  background: #111;
+  padding: 2rem;
+  border-radius: 1rem;
+  max-width: 300px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+}
+
+#navModalContent button {
+  display: block;
+  width: 100%;
+  margin: 0.5rem 0;
+  padding: 0.75rem;
+  background: #333;
+  color: #facc15;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+#navModalContent button:hover {
+  background: #444;
+}
+
+/* Botão X dentro do modal */
+#closeNavModal {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-size: 1.2rem;
+  color: #888;
+  cursor: pointer;
+}
+#closeNavModal:hover {
+  color: #facc15;
+}
 </style>
 
 </head>  
 <body class="leading-relaxed">   
 
+<!-- Botão flutuante de navegação -->
+<button id="navBtn">?</button>
+
+<!-- Modal de navegação -->
+<div id="navModal">
+  <div id="navModalContent">
+    <span id="closeNavModal">✕</span>
+    <h3 class="text-lg font-bold text-purple-400 mb-4">Navegar</h3>
+    <button onclick="goToSection('oque-e-noheroes')">O que é NoHeroes</button>
+    <button onclick="goToSection('muito-alem')">Muito além de uma história</button>
+    <button onclick="goToSection('como-funciona')">Como funciona</button>
+    <button onclick="goToSection('depoimentos')">Depoimentos</button>
+    <!-- Adicione mais conforme novas sections -->
+  </div>
+</div>
  <!-- HEADER LIMPO COM DRAWER --> 
 <header class="fixed top-0 left-0 w-full h-14 bg-[#0a0a0a] border-b border-[#2e2e2e] z-50">
   <!-- Botão hambúrguer mágico -->
@@ -588,6 +678,23 @@
     window.addEventListener('scroll', checkReveal);
     window.addEventListener('load', checkReveal); // força no load
   });
+const navBtn = document.getElementById('navBtn');
+const navModal = document.getElementById('navModal');
+const closeNavModal = document.getElementById('closeNavModal');
+
+navBtn.addEventListener('click', () => navModal.classList.add('active'));
+closeNavModal.addEventListener('click', () => navModal.classList.remove('active'));
+navModal.addEventListener('click', (e) => {
+  if (e.target === navModal) navModal.classList.remove('active');
+});
+
+function goToSection(id) {
+  const section = document.getElementById(id);
+  if (section) {
+    section.scrollIntoView({ behavior: 'smooth' });
+    navModal.classList.remove('active');
+  }
+}
 </script>
 </body>
 </html>
