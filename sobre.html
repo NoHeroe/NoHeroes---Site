@@ -84,25 +84,25 @@
   0% { transform: translateY(0); }
   100% { transform: translateY(-6px); }
 }
-/* Botão de navegação flutuante */
 #navBtn {
   position: fixed;
-  top: 1rem;
-  left: 1rem;
+  top: 0.75rem;
+  left: 0.75rem;
   z-index: 60;
-  background: #fff;
-  color: #000;
-  width: 40px;
-  height: 40px;
+  background: linear-gradient(135deg, #8f4fff, #facc15);
+  color: #000; /* letra preta */
+  width: 42px;
+  height: 42px;
   border-radius: 9999px;
   font-weight: bold;
   font-size: 1.2rem;
-  box-shadow: 0 0 10px rgba(0,0,0,0.4);
+  box-shadow: 0 0 10px rgba(143, 79, 255, 0.6);
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
 }
 #navBtn:hover {
-  background: #f3f3f3;
+  background: linear-gradient(135deg, #a855f7, #fbbf24);
+  box-shadow: 0 0 12px rgba(250, 204, 21, 0.7);
 }
 
 /* Modal básico */
@@ -172,13 +172,29 @@
   <div id="navModalContent">
     <span id="closeNavModal">✕</span>
     <h3 class="text-lg font-bold text-purple-400 mb-4">Navegar</h3>
+    
+    <!-- Existentes -->
     <button onclick="goToSection('oque-e-noheroes')">O que é NoHeroes</button>
     <button onclick="goToSection('muito-alem')">Muito além de uma história</button>
     <button onclick="goToSection('como-funciona')">Como funciona</button>
+    <button onclick="goToSection('mvv')">Missão, Visão e Valores</button>
     <button onclick="goToSection('depoimentos')">Depoimentos</button>
-    <!-- Adicione mais conforme novas sections -->
+    <button onclick="goToSection('para-quem')">Para quem?</button>
+    <button onclick="goToSection('versiculos')">Versículos</button>
+    <button onclick="goToSection('faq')">FAQ</button>
+    
+    <!-- Planejados / futuros -->
+    <button onclick="goToSection('historia')">História e linha do tempo</button>
+    <button onclick="goToSection('sobre-criador')">Sobre o Criador</button>
+    <button onclick="goToSection('press-kit')">Press Kit / Mídia</button>
+    <button onclick="goToSection('comunidade')">Comunidade e Contato</button>
+    <button onclick="goToSection('oraculo')">Oráculo</button>
+    <button onclick="goToSection('loja')">Loja</button>
+    <button onclick="goToSection('blog')">Blog / Novidades</button>
+
   </div>
 </div>
+
  <!-- HEADER LIMPO COM DRAWER --> 
 <header class="fixed top-0 left-0 w-full h-14 bg-[#0a0a0a] border-b border-[#2e2e2e] z-50">
   <!-- Botão hambúrguer mágico -->
