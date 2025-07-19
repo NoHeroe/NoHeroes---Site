@@ -68,6 +68,18 @@
   -webkit-backdrop-filter: blur(8px) saturate(180%);
   border-radius: 20px 20px 0 20px;
 }
+.balao-flutuante {
+  animation: flutuar 3s ease-in-out infinite alternate;
+}
+
+@keyframes flutuar {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-6px);
+  }
+}
 </style>
 
 </head>  
@@ -377,49 +389,49 @@
 
     <!-- Mensagem pergunta -->
     <div class="flex justify-end">
-  <div class="balao-pergunta p-4 text-black max-w-[80%] shadow-md">
+  <div class="balao-pergunta p-4 text-black max-w-[80%] shadow-md balao-flutuante">
     <p class="text-sm font-semibold">Para quem é a NoHeroes?</p>
       </div>
     </div>
 
     <!-- Resposta 1 -->
     <div class="flex justify-start">
-  <div class="balao-resposta p-4 text-gray-100 max-w-[80%] shadow-md">
+  <div class="balao-resposta p-4 text-gray-100 max-w-[80%] shadow-md balao-flutuante">
     <p class="text-sm">Para quem carrega mundos dentro de si, mas nunca foi compreendido.</p>
       </div>
     </div>
 
     <!-- Resposta 2 -->
    <div class="flex justify-start">
-  <div class="balao-resposta p-4 text-gray-100 max-w-[80%] shadow-md">
+  <div class="balao-resposta p-4 text-gray-100 max-w-[80%] shadow-md balao-flutuante">
     <p class="text-sm">Para quem rejeita as fórmulas prontas e busca caminhos novos.</p>
       </div>
     </div>
 
     <!-- Contrarresposta -->
     <div class="flex justify-end">
-  <div class="balao-pergunta p-4 text-black max-w-[80%] shadow-md">
+  <div class="balao-pergunta p-4 text-black max-w-[80%] shadow-md balao-flutuante">
     <p class="text-sm font-semibold">Só isso?</p>
       </div>
     </div>
 
     <!-- Resposta 3 -->
     <div class="flex justify-start">
-  <div class="balao-resposta p-4 text-gray-100 max-w-[80%] shadow-md">
+  <div class="balao-resposta p-4 text-gray-100 max-w-[80%] shadow-md balao-flutuante">
     <p class="text-sm">Não… É também para quem deseja criar mas ainda não encontrou as ferramentas certas.</p>
       </div>
     </div>
 
     <!-- Resposta 4 -->
     <div class="flex justify-start">
-  <div class="balao-resposta p-4 text-gray-100 max-w-[80%] shadow-md">
+  <div class="balao-resposta p-4 text-gray-100 max-w-[80%] shadow-md balao-flutuante">
     <p class="text-sm">Para quem quer se libertar, mas precisa de impulso e sentido.</p>
       </div>
     </div>
 
     <!-- Resposta final descontraída -->
    <div class="flex justify-start">
-  <div class="balao-resposta p-4 text-gray-100 max-w-[80%] shadow-md">
+  <div class="balao-resposta p-4 text-gray-100 max-w-[80%] shadow-md balao-flutuante">
     <p class="text-sm">Mas não é só isso… É para quem quer viver, não só existir.</p>
       </div>
     </div>
