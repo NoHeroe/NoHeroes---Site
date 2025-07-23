@@ -708,6 +708,15 @@
       document.getElementById("navModal").style.display = "none";
     }
   }
+// Scroll suave até a section
+  function goToSection(id) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+      document.getElementById("navModal").style.display = "none";
+    }
+  }
+});
 </script>
 </body>
 </html>
