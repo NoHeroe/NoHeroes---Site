@@ -210,10 +210,13 @@
   flex: 0 0 auto;
   min-width: 300px;
   max-width: 320px;
-  background: radial-gradient(circle at top left, #1b1125, #191919);
+  background: linear-gradient(to bottom right, #0f0f15, #1a1a24);
   border: 1px solid rgba(168, 85, 247, 0.2);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  scroll-snap-align: start;
   box-shadow: 0 0 12px rgba(168, 85, 247, 0.15);
-  color: #e5e5e5;
+  transition: transform 0.3s;
 }
 
 .timeline-box:hover {
