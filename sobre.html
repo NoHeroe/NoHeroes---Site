@@ -700,23 +700,16 @@
     }
   });
 
-  // Scroll suave até a section
-  function goToSection(id) {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-      document.getElementById("navModal").style.display = "none";
-    }
+}); // ← Aqui fecha o DOMContentLoaded!
+
+// Agora a função está fora e visível para o HTML inline:
+function goToSection(id) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.scrollIntoView({ behavior: "smooth" });
+    document.getElementById("navModal").style.display = "none";
   }
-// Scroll suave até a section
-  function goToSection(id) {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-      document.getElementById("navModal").style.display = "none";
-    }
-  }
-});
+}
 </script>
 </body>
 </html>
