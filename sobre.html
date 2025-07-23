@@ -178,6 +178,67 @@
   position: relative;
   z-index: 5;
 }
+ .timeline-section {
+    background: #0a0a0a;
+    padding: 4rem 1rem;
+    color: #e5e5e5;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .timeline-title {
+    font-size: 2rem;
+    font-family: 'Cinzel Decorative', serif;
+    background: linear-gradient(to right, #a855f7, #facc15);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .timeline-container {
+    display: flex;
+    overflow-x: auto;
+    padding: 1rem;
+    scroll-snap-type: x mandatory;
+    gap: 1.5rem;
+  }
+
+  .timeline-box {
+    flex: 0 0 auto;
+    min-width: 300px;
+    max-width: 320px;
+    background: #1a1a2e;
+    border: 1px solid #3f3f46;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    scroll-snap-align: start;
+    box-shadow: 0 0 20px rgba(250, 204, 21, 0.15);
+    transition: transform 0.3s;
+  }
+
+  .timeline-box:hover {
+    transform: scale(1.03);
+  }
+
+  .timeline-year {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #facc15;
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline-content {
+    font-size: 0.9rem;
+    color: #cbd5e1;
+    line-height: 1.4;
+  }
+
+  .timeline-divider {
+    height: 1px;
+    background: linear-gradient(to right, #a855f7, #facc15);
+    margin: 3rem auto 2rem;
+    width: 80%;
+  }
 </style>
 
 </head>  
@@ -595,6 +656,59 @@
 </section>
 
 <div class="w-full h-1 barra-degrade"></div>
+
+<!-- LINHA DO TEMPO NOHEROES -->
+<section class="timeline-section">
+  <h2 class="timeline-title">📜 Linha do Tempo — A Origem</h2>
+  <div class="timeline-container">
+    <div class="timeline-box">
+      <div class="timeline-year">2015</div>
+      <div class="timeline-content">Criação do projeto Dragon Spirit H, um mini RPG com dois protagonistas. Mais tarde virou roteiro de anime.</div>
+    </div>
+    <div class="timeline-box">
+      <div class="timeline-year">2016–2020</div>
+      <div class="timeline-content">Ideias amadurecem. Personagens e mundos evoluem no papel. Nasce o simbolismo da saga.</div>
+    </div>
+    <div class="timeline-box">
+      <div class="timeline-year">2021</div>
+      <div class="timeline-content">Traumas na Alemanha moldam a essência emocional do universo NoHeroes. A ideia ganha identidade.</div>
+    </div>
+    <div class="timeline-box">
+      <div class="timeline-year">2022–2023</div>
+      <div class="timeline-content">Retorno ao Brasil. Cura pessoal e nascimento dos primeiros rascunhos com vitalismo e o mundo de Caelum.</div>
+    </div>
+    <div class="timeline-box">
+      <div class="timeline-year">2024</div>
+      <div class="timeline-content">Separação dos projetos. Dragon Spirit H e NoHeroes seguem caminhos distintos. Quase abandono total. Gravidez reacende o sonho.</div>
+    </div>
+    <div class="timeline-box">
+      <div class="timeline-year">Início de 2025</div>
+      <div class="timeline-content">ROAR é escrito. Nasce a trilogia NoHeroes (ROAR, FREQ, Echoes). Surge o conceito de sistema vivo.</div>
+    </div>
+    <div class="timeline-box">
+      <div class="timeline-year">Meados de 2025</div>
+      <div class="timeline-content">Falha em projeto de animação reacende garra. Aprende a programar. Cria o site e os primeiros produtos digitais.</div>
+    </div>
+    <div class="timeline-box">
+      <div class="timeline-year">Final de 2025</div>
+      <div class="timeline-content">Site funcional. Livros, eBooks, loja e comunidade em formação. Manifesto lançado. Começa a busca por aliados.</div>
+    </div>
+  </div>
+
+  <div class="timeline-divider"></div>
+
+  <h2 class="timeline-title">🚀 Próximos Passos</h2>
+  <div class="timeline-container">
+    <div class="timeline-box">
+      <div class="timeline-year">Meta 2025</div>
+      <div class="timeline-content">Lançamento da loja, do livro ROAR, dos eBooks. Primeira versão do app. Comunidade ativa. Serviços criativos.</div>
+    </div>
+    <div class="timeline-box">
+      <div class="timeline-year">Meta 2026</div>
+      <div class="timeline-content">Obras novas (FREQ, Echoes, Chrysalis). Jogo em produção. Estúdio e editora próprios. Mangás, animes e expansão criativa.</div>
+    </div>
+  </div>
+</section>
 
 <footer class="py-8 text-center text-[#666] bg-[#000] border-t border-[#333] mt-0">
   <a href="linktree.html" class="inline-block mb-4">
