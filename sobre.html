@@ -187,35 +187,36 @@
 
 .timeline-title {
   font-family: 'Cinzel Decorative', serif;
-  font-size: 1.75rem;
-  letter-spacing: 1px;
+  font-size: 2.25rem;
   text-align: center;
-  margin-bottom: 2rem;
+  text-transform: uppercase;
   background: linear-gradient(to right, #a855f7, #facc15);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 0 8px rgba(168, 85, 247, 0.3);
-  text-transform: uppercase;
+  margin-bottom: 2.5rem;
+  letter-spacing: 1px;
 }
 
 .timeline-container {
   display: flex;
   overflow-x: auto;
-  padding: 1rem;
   scroll-snap-type: x mandatory;
   gap: 1.5rem;
+  padding: 0 1rem;
 }
 
 .timeline-box {
   flex: 0 0 auto;
   min-width: 300px;
   max-width: 320px;
-  background: linear-gradient(to bottom right, #0f0f15, #1a1a24);
-  border: 1px solid rgba(168, 85, 247, 0.2);
+  background: rgba(20, 20, 30, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(168, 85, 247, 0.3);
   border-radius: 1rem;
   padding: 1.5rem;
   scroll-snap-align: start;
-  box-shadow: 0 0 12px rgba(168, 85, 247, 0.15);
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.1);
   transition: transform 0.3s;
 }
 
@@ -224,17 +225,21 @@
 }
 
 .timeline-year {
-  font-size: 1.1rem;
+  font-size: 1.125rem;
   font-family: 'Cinzel Decorative', serif;
-  color: #a855f7;
-  margin-bottom: 0.5rem;
-  text-shadow: 0 0 4px rgba(168, 85, 247, 0.2);
+  text-transform: uppercase;
+  background: linear-gradient(to right, #a855f7, #facc15);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.75rem;
+  letter-spacing: 1px;
 }
 
 .timeline-content {
   font-size: 0.875rem;
-  color: #f3f4f6;
+  color: #e2e8f0;
   line-height: 1.6;
+  text-align: justify;
 }
 
 .timeline-divider {
@@ -242,6 +247,7 @@
   background: linear-gradient(to right, #a855f7, #facc15);
   margin: 3rem auto 2rem;
   width: 80%;
+  opacity: 0.6;
 }
 </style>
 
