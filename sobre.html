@@ -169,7 +169,7 @@
 <!-- Modal de navegação -->
 <div id="navModal">
   <div id="navModalContent">
-    <span id="closeNavModal">✕</span>
+    <span id="closeNavModal" class="absolute top-3 right-4 text-xl text-purple-400 hover:text-yellow-400 cursor-pointer">✕</span>
     <h3 class="text-lg font-bold text-purple-400 mb-4">Navegar</h3>
     
     <!-- Existentes -->
@@ -690,26 +690,7 @@
       });
     }
 
-    window.addEventListener('scroll', checkReveal);
-    window.addEventListener('load', checkReveal); // força no load
-  });
-const navBtn = document.getElementById('navBtn');
-const navModal = document.getElementById('navModal');
-const closeNavModal = document.getElementById('closeNavModal');
-
-navBtn.addEventListener('click', () => navModal.classList.add('active'));
-closeNavModal.addEventListener('click', () => navModal.classList.remove('active'));
-navModal.addEventListener('click', (e) => {
-  if (e.target === navModal) navModal.classList.remove('active');
-});
-
-function goToSection(id) {
-  const section = document.getElementById(id);
-  if (section) {
-    section.scrollIntoView({ behavior: 'smooth' });
-    navModal.classList.remove('active');
-  }
-}
+  // Abre o modal
   document.getElementById("navBtn").addEventListener("click", () => {
     document.getElementById("navModal").style.display = "block";
   });
