@@ -158,6 +158,27 @@
 #navModalContent button:hover {
   background: #2e2e2e;
 }
+@keyframes glowFlare {
+  0%, 100% {
+    opacity: 0.4;
+    filter: blur(1px);
+  }
+  50% {
+    opacity: 0.9;
+    filter: blur(3px);
+  }
+}
+
+.barra-gradiente-2 {
+  width: 100%;
+  height: 10px;
+  background: linear-gradient(to right, #a855f7, #facc15); /* Roxo para dourado */
+  opacity: 0.5;
+  border-radius: 9999px;
+  animation: glowFlare 4s infinite ease-in-out;
+  margin: 2.5rem 0;
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.6), 0 0 25px rgba(250, 204, 21, 0.3);
+}
 </style>
 
 </head>  
@@ -455,7 +476,8 @@
       </div>
     </div>
 
-<div class="fixed top-14 left-0 w-full h-1 barra-degrade z-40"></div>
+<div class="barra-degrade-2"</div>
+
     <!-- Bloco: Missão Visão Valores -->
     <div>
       <h2 class="text-4xl md:text-5xl font-bold cinzel gradiente-noheroes mb-4 text-center md:text-left">MVV</h2>
@@ -486,7 +508,7 @@
   </div>
 </section>
 
-<div class="fixed top-14 left-0 w-full h-1 barra-degrade z-40"></div>
+<div class="barra-degrade-2"</div>
 
 <section id="para-quem" class="py-20 px-4 text-gray-300">
   <div class="max-w-xl mx-auto space-y-4">
@@ -543,7 +565,7 @@
   </div>
 </section>
 
-<div class="fixed top-14 left-0 w-full h-1 barra-degrade z-40"></div>
+<div class="barra-degrade-2"</div>
 
 <section id="depoimentos" class="py-20 px-4 bg-gradient-to-br from-black via-gray-900 to-black text-center text-white">
   <h2 class="text-4xl font-bold mb-4 gradiente-noheroes reveal-bottom">Vozes que Ecoam</h2>
