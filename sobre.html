@@ -186,13 +186,16 @@
 }
 
 .timeline-title {
-  font-size: 2rem;
   font-family: 'Cinzel Decorative', serif;
+  font-size: 1.75rem;
+  letter-spacing: 1px;
+  text-align: center;
+  margin-bottom: 2rem;
   background: linear-gradient(to right, #a855f7, #facc15);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-align: center;
-  margin-bottom: 2rem;
+  text-shadow: 0 0 8px rgba(168, 85, 247, 0.3);
+  text-transform: uppercase;
 }
 
 .timeline-container {
@@ -207,14 +210,10 @@
   flex: 0 0 auto;
   min-width: 300px;
   max-width: 320px;
-  background: linear-gradient(to bottom right, #a855f7, #facc15);
-  border-radius: 1rem;
-  padding: 1.5rem;
-  scroll-snap-align: start;
-  box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
-  transition: transform 0.3s;
-  backdrop-filter: blur(12px);
-  color: #f8fafc;
+  background: radial-gradient(circle at top left, #1b1125, #191919);
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.15);
+  color: #e5e5e5;
 }
 
 .timeline-box:hover {
@@ -222,10 +221,11 @@
 }
 
 .timeline-year {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #ffffff;
+  font-size: 1.1rem;
+  font-family: 'Cinzel Decorative', serif;
+  color: #a855f7;
   margin-bottom: 0.5rem;
+  text-shadow: 0 0 4px rgba(168, 85, 247, 0.2);
 }
 
 .timeline-content {
