@@ -729,6 +729,91 @@
   </div>
 </section>
 
+<!-- 8. Sobre o Criador & Equipe -->
+<section id="criador" class="py-24 px-4 bg-gray-900 text-center text-white font-inter">
+  <div class="max-w-4xl mx-auto">
+
+    <!-- Título -->
+    <h2 class="text-4xl font-bold mb-4 reveal-bottom">Por trás da sombra...</h2>
+    <p class="text-lg italic text-gray-300 max-w-3xl mx-auto">
+      “...há um criador. Raul. Um escritor, artista digital e pai — que transforma angústias em arte e silêncio em som.”
+    </p>
+
+    <!-- Avatar com trigger de modal -->
+    <img src="noheroe-avatar.png" alt="NoHeroes como entidade"
+      class="mx-auto mt-8 w-48 h-48 rounded-full border-4 border-gray-700 shadow-lg cursor-pointer hover:scale-105 transition reveal-fade"
+      onclick="abrirModal()" />
+
+    <!-- Redes -->
+    <div class="mt-6 flex justify-center space-x-6">
+      <a href="https://instagram.com/noheroe" aria-label="Instagram">
+        <img src="assets/icons/instagram icon.png" alt="Instagram" class="w-6 h-6" />
+      </a>
+      <a href="https://twitter.com/noheroe" aria-label="Twitter">
+        <img src="assets/icons/icon-twitter.png" alt="Twitter" class="w-6 h-6" />
+      </a>
+      <a href="mailto:eco.noheroes@gmail.com" aria-label="Email">
+        <img src="assets/icons/icon-email.png" alt="Email" class="w-6 h-6" />
+      </a>
+    </div>
+
+    <!-- Modal Sobre o Criador -->
+    <dialog id="criadorModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 backdrop:bg-black/70">
+      <div class="bg-gradient-to-br from-purple-800 via-black to-red-900 p-6 sm:p-8 rounded-xl shadow-xl max-h-[90vh] w-full max-w-2xl overflow-y-auto relative font-playfair text-white">
+        <button onclick="fecharModal()" class="absolute top-4 right-4 text-white text-2xl font-bold">×</button>
+        <h2 class="text-3xl font-bold text-purple-300 mb-4">Sobre o Criador</h2>
+        <div class="text-base leading-relaxed text-gray-200 space-y-4">
+          <p>Eu nasci sem ter escolhido estar aqui. Cresci inserido num sistema que nunca pedi pra fazer parte — e que, mesmo prometendo segurança e justiça, só me cobra, explora e me prende.</p>
+          <p>Quando algo dá errado, ninguém aparece pra me proteger. Se eu erro, sou punido. Se sou roubado, azar o meu. A lógica é simples: o sistema exige tudo, mas entrega quase nada.</p>
+          <p>Por isso eu criei o <strong class="text-purple-400">NoHeroes</strong>. Não só como uma história. Mas como um grito. Um universo onde as leis são claras, o valor é real e quem constrói é quem decide.</p>
+          <p>Eu não quero depender de plataformas que me cobram taxas abusivas por algo que fiz sozinho. Não quero ser apenas mais um número alimentando engrenagens que nunca me deram nada.</p>
+          <p>Eu ajudo quem anda comigo. Divido com os que precisam. Mas não aceito ser sugado por abutres. A liberdade, pra mim, não é um luxo. É necessidade.</p>
+          <p>Este projeto é minha forma de resistir. De viver do que eu acredito, com quem acredita junto. E se você também sente que o mundo tá do avesso — talvez <strong class="text-purple-400">NoHeroes</strong> seja o seu lugar.</p>
+        </div>
+        <div class="mt-6 text-center">
+          <button onclick="fecharModal()" class="px-6 py-3 rounded-md bg-gradient-to-l from-red-900 to-purple-700 hover:from-purple-700 hover:to-red-900 font-semibold transition">
+            Fechar Manifesto
+          </button>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Separador visual -->
+    <div class="mt-16 border-t border-gray-700"></div>
+
+    <!-- Equipe -->
+    <h3 class="text-3xl font-bold mt-12 mb-6">Equipe & Colaboradores</h3>
+    <p class="text-gray-400 mb-12 max-w-xl mx-auto">
+      O universo NoHeroes é construído com esforço conjunto. Seja com ideias, artes, código ou apoio — todos fazem parte da trama.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <!-- Raul -->
+      <div class="bg-gray-800 p-6 rounded-xl shadow-md">
+        <img src="assets/images/foto-raul.jpg" alt="Raul / NoHeroe" class="w-24 h-24 mx-auto rounded-full mb-4"/>
+        <h4 class="text-xl font-semibold">Raul S. Silva “NoHeroe”</h4>
+        <p class="text-gray-400 text-sm">Criador, roteirista, artista digital & desenvolvedor</p>
+      </div>
+
+      <!-- GPT -->
+      <div class="bg-gray-800 p-6 rounded-xl shadow-md">
+        <img src="icon-gpt.png" alt="ChatGPT" class="w-24 h-24 mx-auto rounded-full mb-4"/>
+        <h4 class="text-xl font-semibold">ChatGPT</h4>
+        <p class="text-gray-400 text-sm">Co-pesquisador & assistente de conteúdo</p>
+      </div>
+
+      <!-- Botão para indicar -->
+      <a href="/parceiros.html" class="flex items-center justify-center bg-emerald-500 hover:bg-emerald-600 text-black font-semibold text-center rounded-xl p-6 transition">
+        Tornar-se ou Recomendar Colaborador
+      </a>
+
+      <!-- Espaço disponível -->
+      <div class="bg-gray-800 p-6 rounded-xl shadow-inner flex items-center justify-center">
+        <p class="text-gray-500 italic text-center">Até 20 vagas disponíveis</p>
+      </div>
+    </div>
+  </div>
+</section>
 <footer class="py-8 text-center text-[#666] bg-[#000] border-t border-[#333] mt-0">
   <a href="linktree.html" class="inline-block mb-4">
     <img src="assets/images/linktree.png" alt="Linktree" class="h-10 mx-auto">
@@ -875,6 +960,19 @@ function goToSection(id) {
     document.getElementById("navModal").style.display = "none";
   }
 }
+  function abrirModal() {
+    const modal = document.getElementById('criadorModal');
+    modal.classList.remove('hidden');
+    if (!modal.open) modal.showModal();
+    document.body.classList.add('modal-aberto');
+  }
+
+  function fecharModal() {
+    const modal = document.getElementById('criadorModal');
+    if (modal.open) modal.close();
+    modal.classList.add('hidden');
+    document.body.classList.remove('modal-aberto');
+  }
 </script>
 </body>
 </html>
