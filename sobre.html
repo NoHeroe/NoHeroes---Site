@@ -258,6 +258,20 @@ dialog {
   outline: none !important;
   background: transparent !important;
 }
+details summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #a78bfa; /* roxo suave */
+  padding: 4px 0;
+}
+details[open] summary {
+  color: #fff;
+}
+details p {
+  margin-top: 4px;
+  padding-left: 1rem;
+  color: #ccc;
+}
 </style>
 
 </head>  
@@ -880,6 +894,183 @@ dialog {
   </div>
 </section>
 
+<section class="faq-section py-20 px-4 md:px-12 bg-[#0a0a0a] text-white font-inter">
+  <h2 class="text-4xl md:text-5xl font-bold cinzel text-center gradiente-noheroes mb-12">❓ Perguntas Frequentes</h2>  <div class="grid gap-8"><!-- COMPRAS E PRODUTOS -->
+<div class="bg-[#121212] rounded-xl border border-purple-700/30">
+  <button class="w-full text-left p-5 font-bold text-lg gradiente-noheroes" onclick="toggleFaq(this)">
+    🛒 Compras e Produtos
+  </button>
+  <div class="faq-content hidden px-6 pb-6 space-y-4">
+    <details><summary>Onde vejo os produtos que comprei?</summary><p>É só acessar seu inventário! Estará tudo lá organizadamente.</p></details>
+    <details><summary>Como sei se a compra foi confirmada?</summary><p>Você receberá uma confirmação de pagamento via email, no site e poderá checar seu inventário em caso de dúvida.</p></details>
+    <details><summary>Fiz o pagamento mas não recebi nada. E agora?</summary><p>Entre em contato com o nosso suporte clicando "aqui".</p></details>
+    <details><summary>Qual o tempo de entrega dos produtos digitais?</summary><p>Assim que um pagamento é efetuado o produto é imediatamente liberado para uso.</p></details>
+    <details><summary>Posso comprar mais de um item ao mesmo tempo?</summary><p>Sim! O nosso carrinho foi feito exatamente com esse propósito!</p></details>
+    <details><summary>Como funciona o sistema de carrinho?</summary><p>Você pode adicionar e remover produtos. No final será somado o valor total e o valor da taxa. Os descontos serão feitos diretamente pelos cupons dentro do carrinho caso você tenha algum. E por fim você pode confirmar a compra escolhendo o método de pagamento onde você será redirecionado até o método escolhido.</p></details>
+    <details><summary>O que acontece se meu pagamento for recusado?</summary><p>No caso de recusa recomendamos testar outro meio de pagamento, ou checar com o seu banco ou conta. Caso o erro persista pode entrar em contato com a gente através do suporte ou enviando um ticket que está disponível no final da página da loja.</p></details>
+  </div>
+</div>
+
+<!-- MOEDA INTERNA E PAGAMENTOS -->
+<div class="bg-[#121212] rounded-xl border border-purple-700/30">
+  <button class="w-full text-left p-5 font-bold text-lg gradiente-noheroes" onclick="toggleFaq(this)">
+    💰 Moeda Interna e Pagamentos
+  </button>
+  <div class="faq-content hidden px-6 pb-6 space-y-4">
+    <details><summary>Como ganho Moeda Interna?</summary><p>Você pode comprar ela com dinheiro real ou adquirir através de missões especiais do app & jogo do universo NoHeroes.</p></details>
+    <details><summary>Posso converter Moeda Interna em dinheiro?</summary><p>A princípio ainda não. Mas estamos trabalhando nisso!</p></details>
+    <details><summary>Posso doar Moeda Interna para outra pessoa?</summary><p>Ainda não estamos disponibilizando essa possibilidade, mas estamos trabalhando nessa opção!</p></details>
+    <details><summary>A moeda interna tem validade?</summary><p>Não. Ela não expira.</p></details>
+    <details><summary>É possível reembolsar compras feitas com Moeda Interna?</summary><p>Sim, mas com limites (Ler mais sobre).</p></details>
+    <details><summary>Quais métodos de pagamento vocês aceitam?</summary><p>Atualmente trabalhamos com cartões de crédito, débito, Pix e boleto via Mercado Pago ou PayPal.</p></details>
+    <details><summary>Tem taxas nos pagamentos?</summary><p>Sim, exceto via Moeda Interna.</p></details>
+  </div>
+</div>
+<div class="faq-category">
+  <h3 onclick="toggleFaq(this)">👤 Conta e Acesso</h3>
+  <ul class="faq-answers">
+    <li><strong class="gradiente-noheroes">Como crio minha conta?</strong><br>Você pode clicar em "perfil" no menu do topo direito e seguir as instruções para criar uma conta.</li>
+    <li><strong class="gradiente-noheroes">Esqueci minha senha, e agora?</strong><br>Use a opção "Esqueci minha senha" na página de login ou entre em contato com o suporte.</li>
+    <li><strong class="gradiente-noheroes">Posso alterar meu nome ou e-mail depois?</strong><br>Sim, pelo dashboard do seu perfil, com algumas limitações de tempo.</li>
+    <li><strong class="gradiente-noheroes">Preciso estar logado para comprar?</strong><br>Sim. A loja só está disponível para contas logadas.</li>
+    <li><strong class="gradiente-noheroes">Como deletar minha conta?</strong><br>No seu dashboard, selecione "Excluir conta". Essa ação é permanente.</li>
+    <li><strong class="gradiente-noheroes">Me desloguei sem querer. Como volto?</strong><br>Basta acessar "perfil" no menu e fazer login novamente.</li>
+  </ul>
+</div>
+<div class="faq-category">
+  <h3 onclick="toggleFaq(this)">📚 Biblioteca e Itens Adquiridos</h3>
+  <ul class="faq-answers">
+    <li><strong class="gradiente-noheroes">Onde encontro meus e-books comprados?</strong><br>No seu inventário, na aba "ebooks".</li>
+    <li><strong class="gradiente-noheroes">Posso fazer download dos meus produtos?</strong><br>Sim, se o produto estiver marcado como "liberado para download".</li>
+    <li><strong class="gradiente-noheroes">Os produtos são meus para sempre?</strong><br>Sim, desde que sua conta esteja ativa.</li>
+    <li><strong class="gradiente-noheroes">Posso acessar em outro dispositivo?</strong><br>Sim, é só fazer login normalmente.</li>
+    <li><strong class="gradiente-noheroes">Perdi o acesso à minha conta. Perco os produtos?</strong><br>Sim, exceto se você recuperar a conta via suporte.</li>
+  </ul>
+</div>
+<div class="faq-category">
+  <h3 onclick="toggleFaq(this)">🌐 Navegação no Site</h3>
+  <ul class="faq-answers">
+    <li><strong class="gradiente-noheroes">Como funciona o menu de navegação?</strong><br>Use o menu “hambúrguer” no topo para navegar por todas as áreas principais.</li>
+    <li><strong class="gradiente-noheroes">Como volto para o início?</strong><br>Abra o menu e clique em “Home” ou “Início”.</li>
+    <li><strong class="gradiente-noheroes">Tem versão mobile?</strong><br>Sim! O site é 100% responsivo.</li>
+    <li><strong class="gradiente-noheroes">O site é muito grande, por onde começo?</strong><br>Comece pela aba “Sobre” ou assista ao vídeo introdutório.</li>
+    <li><strong class="gradiente-noheroes">Existe um resumo do universo?</strong><br>Sim, no vídeo introdutório e na aba “Sobre”.</li>
+  </ul>
+</div>
+<div class="faq-category">
+  <h3 onclick="toggleFaq(this)">🛍️ Loja e E-books</h3>
+  <ul class="faq-answers">
+    <li><strong class="gradiente-noheroes">Quais tipos de produtos vendem?</strong><br>E-books, livros, mentorias, mangás, animes e mais.</li>
+    <li><strong class="gradiente-noheroes">Os e-books têm DRM ou proteção?</strong><br>Sim. São vinculados ao usuário e rastreados.</li>
+    <li><strong class="gradiente-noheroes">Posso ler offline?</strong><br>Sim, se o produto for liberado para download.</li>
+    <li><strong class="gradiente-noheroes">Vocês vendem produtos físicos também?</strong><br>Não ainda, mas lançaremos versões físicas futuramente.</li>
+    <li><strong class="gradiente-noheroes">Posso presentear alguém?</strong><br>Ainda não, mas planejamos implementar essa função.</li>
+  </ul>
+</div>
+<div class="faq-category">
+  <h3 onclick="toggleFaq(this)">📱 App NoHeroes</h3>
+  <ul class="faq-answers">
+    <li><strong class="gradiente-noheroes">O que vai ter no app?</strong><br>Um sistema de RPG de vida real com tarefas, missões e gamificação pessoal.</li>
+    <li><strong class="gradiente-noheroes">Quando será lançado?</strong><br>A primeira versão está prevista para 2025.</li>
+    <li><strong class="gradiente-noheroes">Vai funcionar com o site?</strong><br>Sim. O site e app são interligados, mas com funções exclusivas no app.</li>
+    <li><strong class="gradiente-noheroes">Vai ter versão Android/iOS?</strong><br>Sim. Teremos versões para ambos os sistemas.</li>
+    <li><strong class="gradiente-noheroes">Posso conectar minha conta?</strong><br>Sim. A conta do app, site e jogo é unificada.</li>
+  </ul>
+</div>
+<div class="faq-category">
+  <h3 onclick="toggleFaq(this)">🕹️ Jogo NoHeroes</h3>
+  <ul class="faq-answers">
+    <li><strong class="gradiente-noheroes">Que tipo de jogo será?</strong><br>Um MMORPG de mundo aberto com conexão ao mundo real. Estilo SAO.</li>
+    <li><strong class="gradiente-noheroes">É gratuito ou pago?</strong><br>Gratuito, com possíveis requisitos técnicos mais altos.</li>
+    <li><strong class="gradiente-noheroes">Já está disponível?</strong><br>Ainda não. Mas novidades virão em breve.</li>
+    <li><strong class="gradiente-noheroes">Posso testar alguma demo?</strong><br>Somente testadores selecionados terão acesso às versões de teste.</li>
+    <li><strong class="gradiente-noheroes">Vai ter integração com o app?</strong><br>Sim! A interação entre jogo, app e site é um dos pilares do projeto.</li>
+  </ul>
+</div>
+<div class="faq-category">
+  <h3 onclick="toggleFaq(this)">📖 Mangás e Animes</h3>
+  <ul class="faq-answers">
+    <li><strong class="gradiente-noheroes">Já tem mangá disponível?</strong><br>Verifique a aba "News" ou "Blog" para atualizações sobre os mangás.</li>
+    <li><strong class="gradiente-noheroes">Onde leio o mangá comprado?</strong><br>No seu inventário, após o login.</li>
+    <li><strong class="gradiente-noheroes">O anime vai lançar quando?</strong><br>As datas serão divulgadas na aba "News" assim que forem definidas.</li>
+    <li><strong class="gradiente-noheroes">O anime será gratuito?</strong><br>Sim, com acesso via plataforma própria ou parceiros.</li>
+    <li><strong class="gradiente-noheroes">É dublado ou legendado?</strong><br>Inicialmente em português, com planos para mais idiomas no futuro.</li>
+  </ul>
+</div>
+<div class="faq-category">
+  <h3 onclick="toggleFaq(this)">🤝 Comunidade e Apoiadores</h3>
+  <ul class="faq-answers">
+    <li><strong class="gradiente-noheroes">Como entrar para a comunidade?</strong><br>Pelo menu "Comunidade" — via Discord, WhatsApp ou grupo fechado.</li>
+    <li><strong class="gradiente-noheroes">É paga?</strong><br>Somente o círculo interno. A comunidade principal é gratuita.</li>
+    <li><strong class="gradiente-noheroes">Onde vejo atualizações?</strong><br>Na aba “News”, blog e redes sociais oficiais.</li>
+    <li><strong class="gradiente-noheroes">Quero apoiar o projeto, como faço?</strong><br>Acesse a aba “Apoiar” ou entre em contato por e-mail.</li>
+    <li><strong class="gradiente-noheroes">Tem algum grupo exclusivo?</strong><br>Sim! O círculo interno é um grupo premium para apoiadores ativos.</li>
+  </ul>
+</div>
+<div class="faq-category">
+  <h3 onclick="toggleFaq(this)">🎨 Colaboração e Parcerias</h3>
+  <ul class="faq-answers">
+    <li><strong class="gradiente-noheroes">Como posso colaborar?</strong><br>Acesse a aba “Apoiar” ou entre em contato direto por e-mail.</li>
+    <li><strong class="gradiente-noheroes">Sou artista/roteirista/editor, posso ajudar?</strong><br>Sim. Basta preencher o formulário na aba "Apoiar".</li>
+    <li><strong class="gradiente-noheroes">Tem algum formulário de recrutamento?</strong><br>Sim. Você pode acessá-lo clicando <a href="/apoiar.html#formulario">aqui</a>.</li>
+    <li><strong class="gradiente-noheroes">Posso mandar portfólio?</strong><br>Inicialmente, preferimos o preenchimento do formulário antes do envio de portfólios.</li>
+    <li><strong class="gradiente-noheroes">Vocês fazem parcerias com marcas?</strong><br>Sim! Desde que estejam alinhadas com os valores do projeto.</li>
+  </ul>
+</div>
+<div class="faq-category">
+  <h3 onclick="toggleFaq(this)">🔐 Segurança e Privacidade</h3>
+  <ul class="faq-answers">
+    <li><strong class="gradiente-noheroes">Meus dados estão seguros?</strong><br>Sim. Seguimos boas práticas de segurança e armazenamento criptografado.</li>
+    <li><strong class="gradiente-noheroes">Quais informações vocês armazenam?</strong><br>Apenas os dados fornecidos por você. Veja mais nos <a href="/termos.html">termos de uso</a>.</li>
+    <li><strong class="gradiente-noheroes">Vocês vendem meus dados?</strong><br>Jamais. Seus dados são utilizados apenas para funções essenciais.</li>
+    <li><strong class="gradiente-noheroes">Tem como excluir meus dados?</strong><br>Sim. Isso é feito ao excluir sua conta. Entre em contato se precisar de suporte.</li>
+    <li><strong class="gradiente-noheroes">Como funcionam os cookies?</strong><br>Usamos cookies básicos para melhorar sua experiência. Mais detalhes nos <a href="/privacidade.html">termos</a>.</li>
+  </ul>
+</div>
+<div class="faq-category">
+  <h3 onclick="toggleFaq(this)">💸 Doações e Suporte</h3>
+  <ul class="faq-answers">
+    <li><strong class="gradiente-noheroes">Como posso doar para o projeto?</strong><br>Via página “Apoiar”, Pix, ou entrando em contato direto.</li>
+    <li><strong class="gradiente-noheroes">Vocês aceitam Pix?</strong><br>Sim. Informações completas na aba “Apoiar”.</li>
+    <li><strong class="gradiente-noheroes">Tem algum sistema de assinatura?</strong><br>Sim. O Círculo Interno oferece vantagens para apoiadores frequentes.</li>
+    <li><strong class="gradiente-noheroes">Para onde vai o dinheiro das doações?</strong><br>Todo valor é investido em melhorias no projeto, equipe e infraestrutura.</li>
+    <li><strong class="gradiente-noheroes">Como entro em contato com o suporte?</strong><br>Pelo botão “Ajuda” no site, via ticket ou e-mail.</li>
+  </ul>
+</div>
+<div class="faq-category">
+  <h3 onclick="toggleFaq(this)">🐞 Erros, Bugs e Relatos</h3>
+  <ul class="faq-answers">
+    <li><strong class="gradiente-noheroes">Achei um bug no site. Onde reporto?</strong><br>Use o botão “Relatar erro” no final da página ou envie por e-mail.</li>
+    <li><strong class="gradiente-noheroes">O botão não funcionou. E agora?</strong><br>Tente recarregar. Persistindo, relate ao suporte.</li>
+    <li><strong class="gradiente-noheroes">Estou tendo erro no pagamento.</strong><br>Envie print do erro via suporte para analisarmos o mais rápido possível.</li>
+    <li><strong class="gradiente-noheroes">A página não carrega no meu celular.</strong><br>Verifique sua internet ou teste outro navegador.</li>
+    <li><strong class="gradiente-noheroes">As imagens estão estranhas. O que faço?</strong><br>Relate com print via e-mail ou ticket para correção.</li>
+  </ul>
+</div>
+<div class="faq-category">
+  <h3 onclick="toggleFaq(this)">🌌 Sobre o Projeto e o Criador</h3>
+  <ul class="faq-answers">
+    <li><strong class="gradiente-noheroes">Quem criou o NoHeroes?</strong><br>Raul Takagi Sato Souza, criador e idealizador do universo.</li>
+    <li><strong class="gradiente-noheroes">O projeto é só de um autor?</strong><br>Sim. Toda base foi construída por ele, incluindo o site, roteiros e visão do projeto.</li>
+    <li><strong class="gradiente-noheroes">Qual a proposta principal?</strong><br>Liberar e iluminar o caminho de quem entrar nesse universo. Transformar vida em RPG real.</li>
+    <li><strong class="gradiente-noheroes">Tem outros projetos futuros?</strong><br>Sim. Além do livro ROAR, virão FREQ, Echoes, o app, o jogo, e a expansão para mangás e animes.</li>
+  </ul>
+</div>
+<div class="faq-category">
+  <h3 onclick="toggleFaq(this)">❓ Outras Dúvidas Frequentes</h3>
+  <ul class="faq-answers">
+    <li><strong class="gradiente-noheroes">O que é NoHeroes?</strong><br>É mais que um universo. É uma filosofia. Saiba mais <a href="/sobre.html">aqui</a>.</li>
+    <li><strong class="gradiente-noheroes">Qual a ordem dos livros?</strong><br>1. ROAR, 2. FREQ, 3. Echoes.</li>
+    <li><strong class="gradiente-noheroes">Preciso entender de anime para participar?</strong><br>Não! O universo é acessível e imersivo para todos os públicos.</li>
+    <li><strong class="gradiente-noheroes">Tem suporte para outros idiomas?</strong><br>Atualmente, Português e Inglês.</li>
+    <li><strong class="gradiente-noheroes">Como entro em contato direto?</strong><br>Via e-mail ou grupo da comunidade no WhatsApp.</li>
+  </ul>
+</div>
+</div>
+
+  </div>
+</section>
+
 <footer class="py-8 text-center text-[#666] bg-[#000] border-t border-[#333] mt-0">
   <a href="linktree.html" class="inline-block mb-4">
     <img src="assets/images/linktree.png" alt="Linktree" class="h-10 mx-auto">
@@ -1038,6 +1229,12 @@ function goToSection(id) {
     if (modal.open) modal.close();
     modal.classList.add('hidden');
     document.body.classList.remove('modal-aberto');
+  }
+function toggleFaq(button) {
+    const content = button.nextElementSibling;
+    const allFaqs = document.querySelectorAll('.faq-content');
+    allFaqs.forEach(faq => { if (faq !== content) faq.classList.add('hidden'); });
+    content.classList.toggle('hidden');
   }
 </script>
 </body>
