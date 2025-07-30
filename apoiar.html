@@ -1,15 +1,16 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<!DOCTYPE html><html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Apoio Vitalista | NoHeroes</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Inter', sans-serif;
       background-color: #0a0a0a;
       color: #e5e5e5;
+      margin: 0;
     }
     h1, h2 {
       font-family: 'Playfair Display', serif;
@@ -32,20 +33,33 @@
       0% { box-shadow: 0 0 20px #FFD700, 0 0 40px #FFD700, 0 0 60px #FFD700; }
       100% { box-shadow: 0 0 30px #FFA500, 0 0 50px #FFD700, 0 0 70px #FFD700; }
     }
+    .barra-degrade {
+      background: linear-gradient(to right, #8f4fff, #facc15);
+      height: 4px;
+      box-shadow: 0 0 6px #8f4fff88, 0 0 10px #facc1588;
+    }
+    #brasasCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+    }
     body {
-  background: linear-gradient(to bottom, rgba(10,10,10,0.6) 0%, rgba(10,10,10,0.4) 30%, rgba(10,10,10,0.1) 70%, rgba(10,10,10,0) 100%),
-            url('assets/images/fundo-caverna-ouro.png');
-  background-position: bottom center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: scroll;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.6) 0%, rgba(10,10,10,0.4) 30%, rgba(10,10,10,0.1) 70%, rgba(10,10,10,0) 100%),
+                  url('assets/images/fundo-caverna-ouro.png');
+      background-position: bottom center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: scroll;
     }
   </style>
 </head>
 <body class="text-center p-6">
-  <a href="index.html">
-    <img src="assets/images/noheroes logo.png" alt="Logo NoHeroes" class="mx-auto w-40 logo-glow" />
-  </a>
+  <canvas id="brasasCanvas"></canvas>
+  <div class="barra-degrade w-full"></div> 
+
   <h2 class="text-xl italic mt-6 opacity-70">“Até mesmo os mundos mais sombrios precisam de luz para existir.”</h2>
   <p class="mt-4 max-w-xl mx-auto text-base">Você está prestes a alimentar não um projeto, mas um universo inteiro. Criado do zero, com alma e suor, por um criador que quer mudar vidas com arte, anime e verdade. Aqui, cada contribuição fortalece uma ideia que já é maior do que eu. <strong>Ajude a manter Caelum vivo. Torne-se um Vitalista, ou uma das sombras de Caelum.</strong></p>
 
@@ -118,95 +132,49 @@
       <button onclick="closeModal('socialsModal')" class="mt-4 text-[#8f4fff] underline">Fechar</button>
     </div>
   </div>
-<footer class="pt-32 pb-10 px-4 text-center text-sm text-[#ddd] relative z-10">
-  <p class="mb-1">© 2025 NoHeroes. Todos os direitos reservados.</p>
-  <p class="italic">Explore. Escolha. Caia. Evolua.</p>
-</footer>
+ <footer class="pt-32 pb-10 px-4 text-center text-sm text-[#ddd] relative z-10">
+    <p class="mb-1">© 2025 NoHeroes. Todos os direitos reservados.</p>
+    <p class="italic">Explore. Escolha. Caia. Evolua.</p>
+  </footer>  <script>
+    const canvas = document.getElementById('brasasCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
 
-<script>
-  const pixKey = "azuosraul999@gmail.com";
-
-  function openPixModal() {
-    document.getElementById('pixModal').classList.remove('hidden');
-  }
-
-  function copyPixKey() {
-    navigator.clipboard.writeText(pixKey).then(() => alert("Chave Pix copiada!"));
-  }
-
-  function closeModal(id) {
-    document.getElementById(id).classList.add('hidden');
-  }
-
-  function openSocials() {
-    document.getElementById('socialsModal').classList.remove('hidden');
-  }
-
-  function openForm(tipo) {
-    const modal = document.getElementById('formModal');
-    const title = document.getElementById('formTitle');
-    const subject = document.getElementById('formSubject');
-    const fields = document.getElementById('formFields');
-    const form = document.getElementById('formContent');
-    form.setAttribute("action", "https://formsubmit.co/eco.noheroes@gmail.com");
-
-    modal.classList.remove('hidden');
-    fields.innerHTML = "";
-
-    if (tipo === 'outras') {
-      title.innerText = "Quero ajudar de outras formas";
-      subject.value = "Apoio — Quero ajudar de outras formas";
-      fields.innerHTML = `
-        <label>Como deseja ajudar?</label>
-        <select name="forma_de_ajuda" required class="w-full p-2 bg-[#333] text-white rounded">
-          <option value="" disabled selected>Selecione uma opção</option>
-          <option>Moderar a comunidade do Discord</option>
-          <option>Moderar grupo WhatsApp</option>
-          <option>Contribuir com artes</option>
-          <option>Colaborar nas animações</option>
-          <option>Divulgar o projeto</option>
-          <option>Outras habilidades</option>
-        </select>
-        <label>Detalhes</label>
-        <textarea name="detalhes" required class="w-full p-2 bg-[#333] text-white rounded" rows="5" placeholder="Fale sobre suas habilidades e como pode ajudar."></textarea>
-        <label>Seu contato</label>
-        <input type="text" name="contato" required class="w-full p-2 bg-[#333] text-white rounded" placeholder="E-mail, WhatsApp ou Discord">
-      `;
-    } else if (tipo === 'parceria') {
-      title.innerText = "Quero fazer uma parceria";
-      subject.value = "Contato — Parceria";
-      fields.innerHTML = `
-        <label>Nome da Marca ou Projeto</label>
-        <input type="text" name="marca" required class="w-full p-2 bg-[#333] text-white rounded">
-        <label>Ideia da Parceria</label>
-        <textarea name="detalhes" required class="w-full p-2 bg-[#333] text-white rounded" rows="4"></textarea>
-        <label>Seu contato</label>
-        <input type="text" name="contato" required class="w-full p-2 bg-[#333] text-white rounded">
-      `;
-    } else if (tipo === 'investir') {
-      title.innerText = "Quero investir no projeto";
-      subject.value = "Contato — Investimento";
-      fields.innerHTML = `
-        <label>Motivo do interesse</label>
-        <textarea name="detalhes" required class="w-full p-2 bg-[#333] text-white rounded" rows="4"></textarea>
-        <label>Seu contato</label>
-        <input type="text" name="contato" required class="w-full p-2 bg-[#333] text-white rounded">
-      `;
-    } else if (tipo === 'apoio') {
-      title.innerText = "Preciso de apoio no meu projeto";
-      subject.value = "Solicitação — Apoio em projeto";
-      fields.innerHTML = `
-        <label>Nome do seu projeto</label>
-        <input type="text" name="projeto" required class="w-full p-2 bg-[#333] text-white rounded">
-        <label>Em que precisa de ajuda?</label>
-        <textarea name="detalhes" required class="w-full p-2 bg-[#333] text-white rounded" rows="4"></textarea>
-        <label>Link de portfólio ou referência</label>
-        <input type="url" name="portfolio" required class="w-full p-2 bg-[#333] text-white rounded">
-        <label>Seu contato</label>
-        <input type="text" name="contato" required class="w-full p-2 bg-[#333] text-white rounded">
-      `;
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     }
-  }
-</script>
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function createParticles(count) {
+      particles = [];
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 1.5 + 1,
+          speedY: Math.random() * -0.5 - 0.2,
+          alpha: Math.random() * 0.5 + 0.5
+        });
+      }
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.y += p.speedY;
+        if (p.y < 0) p.y = canvas.height;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI);
+        ctx.fillStyle = `rgba(255, 100, 0, ${p.alpha})`;
+        ctx.fill();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+
+    createParticles(100);
+    animateParticles();
+  </script>
 </body>
 </html>
