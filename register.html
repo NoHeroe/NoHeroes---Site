@@ -1,219 +1,112 @@
-<!DOCTYPE html><html lang="pt-br"><head>  <meta charset="UTF-8" />  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  <title>Cadastro | NoHeroes</title>  <script src="https://cdn.tailwindcss.com"></script>  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Cinzel+Decorative&display=swap" rel="stylesheet">  <style>
-  
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro | NoHeroes</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Cinzel+Decorative&display=swap" rel="stylesheet">
+  <style>
     body {
-  
       background-color: #0a0a0a;
-  
       color: #e5e5e5;
-  
       font-family: 'Inter', sans-serif;
-  
     }
-  
     h1 {
-  
       font-family: 'Cinzel Decorative', serif;
-  
     }
-  
     input::placeholder {
-  
       color: #999;
-  
     }
-  
-  </style></head><body class="flex items-center justify-center min-h-screen px-4">  <div class="bg-[#111111] rounded-2xl shadow-2xl p-8 max-w-md w-full border border-purple-900 animate-fade-in"><h1 class="text-4xl font-bold text-center text-purple-400 mb-6">Crie Sua Conta</h1>
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen px-4">
+  <div class="bg-[#111111] rounded-2xl shadow-2xl p-8 max-w-md w-full border border-purple-900 animate-fade-in">
+    <h1 class="text-4xl font-bold text-center text-purple-400 mb-6">Crie Sua Conta</h1>
 
-<form id="registerForm" class="space-y-4">
+    <form id="registerForm" class="space-y-4">
+      <input id="nome_completo" type="text" placeholder="Nome completo" required
+        class="w-full px-4 py-2 rounded bg-black text-white border border-gray-700 focus:ring-2 focus:ring-purple-500" />
 
-  <input id="nome_completo" type="text" placeholder="Nome completo" required
+      <input id="username" type="text" placeholder="Nome de usuário" required
+        class="w-full px-4 py-2 rounded bg-black text-white border border-gray-700 focus:ring-2 focus:ring-purple-500" />
 
-    class="w-full px-4 py-2 rounded bg-black text-white border border-gray-700 focus:ring-2 focus:ring-purple-500" />
+      <input id="email" type="email" placeholder="Email" required
+        class="w-full px-4 py-2 rounded bg-black text-white border border-gray-700 focus:ring-2 focus:ring-purple-500" />
 
-  
+      <input id="password" type="password" placeholder="Senha" required autocomplete="new-password"
+        class="w-full px-4 py-2 rounded bg-black text-white border border-gray-700 focus:ring-2 focus:ring-purple-500" />
 
-  <input id="username" type="text" placeholder="Nome de usuário" required
+      <input id="confirmPassword" type="password" placeholder="Confirmar Senha" required autocomplete="new-password"
+        class="w-full px-4 py-2 rounded bg-black text-white border border-gray-700 focus:ring-2 focus:ring-purple-500" />
 
-    class="w-full px-4 py-2 rounded bg-black text-white border border-gray-700 focus:ring-2 focus:ring-purple-500" />
+      <!-- Campo opcional -->
+      <input id="phone" type="tel" placeholder="Telefone (opcional)"
+        class="w-full px-4 py-2 rounded bg-black text-white border border-gray-700 focus:ring-purple-500" />
 
-  
+      <button type="submit"
+        class="w-full py-2 rounded bg-purple-600 hover:bg-purple-700 transition font-semibold">
+        Cadastrar
+      </button>
+    </form>
 
-  <input id="email" type="email" placeholder="Email" required
+    <p class="text-sm text-gray-400 text-center mt-4">
+      Já tem uma conta?
+      <a href="login.html" class="text-purple-400 underline">Faça login</a>
+    </p>
+  </div>
 
-    class="w-full px-4 py-2 rounded bg-black text-white border border-gray-700 focus:ring-2 focus:ring-purple-500" />
-
-  
-
-  <input id="password" type="password" placeholder="Senha" required autocomplete="new-password"
-
-    class="w-full px-4 py-2 rounded bg-black text-white border border-gray-700 focus:ring-2 focus:ring-purple-500" />
-
-  
-
-  <input id="confirmPassword" type="password" placeholder="Confirmar Senha" required
-
-    class="w-full px-4 py-2 rounded bg-black text-white border border-gray-700 focus:ring-2 focus:ring-purple-500" />
-
-
-
-  <!-- Campos opcionais -->
-
-  <input id="phone" type="tel" placeholder="Telefone (opcional)"
-
-    class="w-full px-4 py-2 rounded bg-black text-white border border-gray-700 focus:ring-purple-500" />
-
-  
-
-  <input id="birthdate" type="date" placeholder="Nascimento (opcional)"
-
-    class="w-full px-4 py-2 rounded bg-black text-white border border-gray-700 focus:ring-purple-500" />
-
-  
-
-  <textarea id="bio" placeholder="Escreva algo sobre você (opcional)" rows="2"
-
-    class="w-full px-4 py-2 rounded bg-black text-white border border-gray-700 focus:ring-purple-500 resize-none"></textarea>
-
-
-
-  <button type="submit"
-
-    class="w-full py-2 rounded bg-purple-600 hover:bg-purple-700 transition font-semibold">
-
-    Cadastrar
-
-  </button>
-
-</form>
-
-
-
-<p class="text-sm text-gray-400 text-center mt-4">
-
-  Já tem uma conta?
-
-  <a href="login.html" class="text-purple-400 underline">Faça login</a>
-
-</p>
-
-  </div>  <script>
-  
+  <script>
     const form = document.getElementById("registerForm");
-  
 
-  
     form.addEventListener("submit", async (e) => {
-  
       e.preventDefault();
-  
 
-  
       const nome_completo = document.getElementById("nome_completo").value.trim();
-  
       const username = document.getElementById("username").value.trim();
-  
       const email = document.getElementById("email").value.trim();
-  
       const password = document.getElementById("password").value;
-  
       const confirmPassword = document.getElementById("confirmPassword").value;
-  
-      const phone = document.getElementById("phone").value.trim();
-  
-      const birthdate = document.getElementById("birthdate").value;
-  
-      const bio = document.getElementById("bio").value.trim();
-  
+      const telefone = document.getElementById("phone").value.trim();
 
-  
       if (password !== confirmPassword) {
-  
         alert("As senhas não coincidem.");
-  
         return;
-  
       }
-  
 
-  
       const payload = {
-  
         nome_completo,
-  
         username,
-  
         email,
-  
         password,
-  
-        phone,
-  
-        birthdate,
-  
-        bio
-  
+        telefone: telefone || null
       };
-  
 
-  
       const button = form.querySelector("button[type='submit']");
-  
       button.disabled = true;
-  
       button.textContent = "Processando...";
-  
 
-  
       try {
-  
         const res = await fetch("https://api.noheroes.com.br/register", {
-  
           method: "POST",
-  
           headers: { "Content-Type": "application/json" },
-  
           body: JSON.stringify(payload)
-  
         });
-  
 
-  
         const data = await res.json();
-  
 
-  
-        if (res.ok && data.user) {
-  
-          alert("🎉 Conta criada com sucesso! Bem-vindo ao universo NoHeroes.");
-  
-          window.location.href = "login.html";
-  
-        } else {
-  
-          alert(data.message || "Erro ao cadastrar. Tente novamente.");
-  
-          button.disabled = false;
-  
-          button.textContent = "Cadastrar";
-  
-        }
-  
+        if (!res.ok) throw new Error(data.message || "Erro ao cadastrar.");
 
-  
+        alert("🎉 Conta criada com sucesso! Bem-vindo ao universo NoHeroes.");
+        window.location.href = "login.html";
       } catch (err) {
-  
         console.error("Erro na requisição:", err);
-  
-        alert("Erro ao conectar com o servidor.");
-  
+        alert(err.message || "Erro ao conectar com o servidor.");
+      } finally {
         button.disabled = false;
-  
         button.textContent = "Cadastrar";
-  
       }
-  
     });
-  
   </script>
 </body>
 </html>
