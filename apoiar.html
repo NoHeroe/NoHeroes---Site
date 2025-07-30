@@ -94,7 +94,7 @@
 }
 .btn-vidro {
   background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
   border: 1px solid #8f4fff88;
   color: white;
   padding: 0.75rem 1.5rem;
@@ -108,7 +108,51 @@
   background: rgba(0, 0, 0, 0.6);
   box-shadow: 0 0 20px #a855f7aa;
   transform: scale(1.02);
-} 
+}
+/* Títulos internos */
+.form-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  background: linear-gradient(270deg, #8f4fff, #a855f7, #facc15, #8f4fff);
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Botão de Enviar com efeito pulsante quadrado */
+.btn-enviar {
+  background: linear-gradient(270deg, #8f4fff, #a855f7, #facc15, #8f4fff);
+  background-size: 600% 600%;
+  animation: fluidPulse 6s ease-in-out infinite;
+  color: #000;
+  font-weight: 600;
+  font-family: 'Cinzel Decorative', serif;
+  border-radius: 0px;  /* Borda quadrada */
+  padding: 0.75rem 1.5rem;
+  transition: all 0.3s ease;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  width: 100%; /* Botão ocupa a largura total */
+}
+
+@keyframes fluidPulse {
+  0%, 100% {
+    background-position: 0% 50%;
+    transform: scale(1);
+    box-shadow: 0 0 10px #8f4fff80, 0 0 20px #facc15aa;
+  }
+  50% {
+    background-position: 100% 50%;
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #a855f799, 0 0 30px #facc15cc;
+  }
+}
+
+.btn-enviar:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 30px #facc15dd, 0 0 40px #8f4fffcc;
+}
   </style>
 </head>
 <body class="relative">
@@ -231,13 +275,13 @@
   <!-- Modais -->
   <div id="formModal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
     <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-lg w-full text-left">
-      <h3 id="formTitle" class="text-2xl font-bold text-[#8f4fff] mb-4"></h3>
+      <h3 id="formTitle" class="form-title mb-4"></h3>
       <form id="formContent" method="POST" class="space-y-4">
         <input type="hidden" name="_captcha" value="false">
         <input type="hidden" name="_next" value="https://noheroes.com.br/agradecimento.html">
         <input type="hidden" name="_subject" id="formSubject" value="Contato">
         <div id="formFields"></div>
-        <button type="submit" class="bg-[#8f4fff] text-black px-4 py-2 mt-2 rounded hover:bg-[#39ff14]">Enviar</button>
+        <button type="submit" class="btn-enviar">Enviar</button>
       </form>
       <button onclick="closeModal('formModal')" class="mt-4 text-[#8f4fff] underline">Fechar</button>
     </div>
@@ -252,20 +296,6 @@
         <button onclick="copyPixKey()" class="bg-[#8f4fff] text-black px-4 py-2 rounded hover:bg-[#39ff14] block mx-auto mb-4">Copiar chave Pix</button>
         <button onclick="closeModal('pixModal')" class="mt-4 text-[#8f4fff] underline">Fechar</button>
       </div>
-    </div>
-  </div>
-
-  <div id="socialsModal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
-    <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-lg w-full text-center">
-      <h3 class="text-2xl font-bold text-[#8f4fff] mb-4">Siga as Sombras</h3>
-      <ul class="space-y-4">
-        <li><a href="https://instagram.com/_noheroe" target="_blank" class="text-[#8f4fff] hover:underline">Instagram</a></li>
-        <li><a href="https://tiktok.com/@_noheroe" target="_blank" class="text-[#8f4fff] hover:underline">TikTok</a></li>
-        <li><a href=\"#\" target=\"_blank\" class=\"text-[#8f4fff] hover:underline\">YouTube</a></li>
-        <li><a href=\"https://discord.gg/\" target=\"_blank\" class=\"text-[#8f4fff] hover:underline\">Discord</a></li>
-        <li><a href=\"https://chat.whatsapp.com/\" target=\"_blank\" class=\"text-[#8f4fff] hover:underline\">WhatsApp</a></li>
-      </ul>
-      <button onclick=\"closeModal('socialsModal')\" class=\"mt-4 text-[#8f4fff] underline\">Fechar</button>
     </div>
   </div>
 </main>
@@ -368,9 +398,12 @@ function openForm(tipo) {
   title.textContent = data.title;
   subject.value = data.subject;
 
-  fields.innerHTML = data.inputs.map(input =>
-    `<input type="text" name="${input}" placeholder="${input}" class="w-full p-2 bg-black border border-[#333] rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#8f4fff]">`
-  ).join('');
+  fields.innerHTML = data.inputs.map((input, index) => {
+  const isLong = input.toLowerCase().includes("mensagem") || input.toLowerCase().includes("como") || input.toLowerCase().includes("sobre");
+  return isLong
+    ? `<textarea name="${input}" placeholder="${input}" rows="4" class="w-full p-2 bg-black border border-[#333] rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#8f4fff]"></textarea>`
+    : `<input type="text" name="${input}" placeholder="${input}" class="w-full p-2 bg-black border border-[#333] rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#8f4fff]">`;
+}).join('');
 }
 function openSocials() {
   document.getElementById('socialsModal').classList.remove('hidden');
