@@ -67,7 +67,9 @@
       </nav>
     </div>
   </div>
-  <div id="drawerOverlay" class="fixed inset-0 bg-black bg-opacity-60 hidden z-30"></div>  <!-- CONTEÚDO ORIGINAL AQUI ABAIXO (preservado manualmente) -->  <!-- COLE AQUI TODO O CONTEÚDO ORIGINAL DO APOIAR.HTML -->  <!-- Ele será envolvido pela nova estrutura visual -->  
+  <div id="drawerOverlay" class="fixed inset-0 bg-black bg-opacity-60 hidden z-30"></div>
+
+<main class="max-w-2xl mx-auto px-4 pt-40 pb-20 text-center relative z-10">
   <h2 class="text-xl italic mt-6 opacity-70">“Até mesmo os mundos mais sombrios precisam de luz para existir.”</h2>
   <p class="mt-4 max-w-xl mx-auto text-base">Você está prestes a alimentar não um projeto, mas um universo inteiro. Criado do zero, com alma e suor, por um criador que quer mudar vidas com arte, anime e verdade. Aqui, cada contribuição fortalece uma ideia que já é maior do que eu. <strong>Ajude a manter Caelum vivo. Torne-se um Vitalista, ou uma das sombras de Caelum.</strong></p>
 
@@ -140,8 +142,9 @@
       <button onclick=\"closeModal('socialsModal')\" class=\"mt-4 text-[#8f4fff] underline\">Fechar</button>
     </div>
   </div>
+</main>
 
-  <!-- FOOTER UNIFICADO -->  <footer class="py-8 text-center text-[#666] bg-[#000] border-t border-[#333] mt-20">
+<footer class="py-8 text-center text-[#666] bg-[#000] border-t border-[#333] mt-20">
     <a href="linktree.html" class="inline-block mb-4">
       <img src="assets/images/linktree.png" alt="Linktree" class="h-10 mx-auto">
     </a>
@@ -201,6 +204,19 @@
     }
     createParticles(100);
     animateParticles();
+function openPixModal() {
+  document.getElementById('pixModal').classList.remove('hidden');
+}
+function openForm(tipo) {
+  document.getElementById('formModal').classList.remove('hidden');
+  // Aqui insere o conteúdo dinamicamente no form (você já tem esse trecho)
+}
+function openSocials() {
+  document.getElementById('socialsModal').classList.remove('hidden');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.add('hidden');
+}
   </script>
 </body>
 </html>
