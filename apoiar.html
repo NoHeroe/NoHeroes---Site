@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -56,41 +57,45 @@
     }
   </style>
 </head>
-<body class="text-center p-6">
+<body class="text-center p-6 relative">
   <canvas id="brasasCanvas"></canvas>
-  <div class="barra-degrade w-full"></div> 
+  <div class="barra-degrade w-full fixed top-0 z-50"></div>
+
+  <a href="index.html">
+    <img src="assets/images/noheroes logo.png" alt="Logo NoHeroes" class="mx-auto w-40 logo-glow mt-4 z-10 relative" />
+  </a>
 
   <h2 class="text-xl italic mt-6 opacity-70">“Até mesmo os mundos mais sombrios precisam de luz para existir.”</h2>
   <p class="mt-4 max-w-xl mx-auto text-base">Você está prestes a alimentar não um projeto, mas um universo inteiro. Criado do zero, com alma e suor, por um criador que quer mudar vidas com arte, anime e verdade. Aqui, cada contribuição fortalece uma ideia que já é maior do que eu. <strong>Ajude a manter Caelum vivo. Torne-se um Vitalista, ou uma das sombras de Caelum.</strong></p>
 
-<!-- Botão Pix com brilho e margem extra -->
-<div class="mt-10 mb-6">
-  <button onclick="openPixModal()" class="w-full bg-black text-white px-6 py-3 rounded-lg font-bold shadow-[0_0_15px_#8f4fff] hover:brightness-125 transition-all duration-200">
-    Contribuir com Pix
-  </button>
-</div>
+  <!-- Botão Pix com brilho e margem extra -->
+  <div class="mt-10 mb-6">
+    <button onclick="openPixModal()" class="w-full bg-black text-white px-6 py-3 rounded-lg font-bold shadow-[0_0_15px_#8f4fff] hover:brightness-125 transition-all duration-200">
+      Contribuir com Pix
+    </button>
+  </div>
 
-<div class="mt-6 space-y-4">
-  <button onclick="openForm('outras')" class="w-full bg-black text-white px-6 py-3 rounded-lg font-bold shadow-[0_0_15px_#8f4fff] hover:brightness-125 transition-all duration-200">
-    Quero ajudar de outras formas
-  </button>
+  <div class="mt-6 space-y-4">
+    <button onclick="openForm('outras')" class="w-full bg-black text-white px-6 py-3 rounded-lg font-bold shadow-[0_0_15px_#8f4fff] hover:brightness-125 transition-all duration-200">
+      Quero ajudar de outras formas
+    </button>
 
-  <button onclick="openForm('parceria')" class="w-full bg-black text-white px-6 py-3 rounded-lg font-bold shadow-[0_0_15px_#8f4fff] hover:brightness-125 transition-all duration-200">
-    Quero fazer uma parceria
-  </button>
+    <button onclick="openForm('parceria')" class="w-full bg-black text-white px-6 py-3 rounded-lg font-bold shadow-[0_0_15px_#8f4fff] hover:brightness-125 transition-all duration-200">
+      Quero fazer uma parceria
+    </button>
 
-  <button onclick="openForm('investir')" class="w-full bg-black text-white px-6 py-3 rounded-lg font-bold shadow-[0_0_15px_#8f4fff] hover:brightness-125 transition-all duration-200">
-    Quero investir no projeto
-  </button>
+    <button onclick="openForm('investir')" class="w-full bg-black text-white px-6 py-3 rounded-lg font-bold shadow-[0_0_15px_#8f4fff] hover:brightness-125 transition-all duration-200">
+      Quero investir no projeto
+    </button>
 
-  <button onclick="openForm('apoio')" class="w-full bg-black text-white px-6 py-3 rounded-lg font-bold shadow-[0_0_15px_#8f4fff] hover:brightness-125 transition-all duration-200">
-    Preciso de apoio no meu projeto
-  </button>
+    <button onclick="openForm('apoio')" class="w-full bg-black text-white px-6 py-3 rounded-lg font-bold shadow-[0_0_15px_#8f4fff] hover:brightness-125 transition-all duration-200">
+      Preciso de apoio no meu projeto
+    </button>
 
-  <button onclick="openSocials()" class="w-full bg-black text-white px-6 py-3 rounded-lg font-bold shadow-[0_0_15px_#8f4fff] hover:brightness-125 transition-all duration-200">
-    Siga as Sombras
-  </button>
-</div>
+    <button onclick="openSocials()" class="w-full bg-black text-white px-6 py-3 rounded-lg font-bold shadow-[0_0_15px_#8f4fff] hover:brightness-125 transition-all duration-200">
+      Siga as Sombras
+    </button>
+  </div>
 
   <!-- Modais -->
   <div id="formModal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
@@ -107,7 +112,7 @@
     </div>
   </div>
 
-  <div id="pixModal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center">
+  <div id="pixModal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
     <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-lg w-full text-left">
       <h3 class="text-2xl font-bold text-[#8f4fff] mb-4">Contribuir com Pix</h3>
       <div class="text-center">
@@ -119,23 +124,111 @@
     </div>
   </div>
 
-  <div id="socialsModal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center">
+  <div id="socialsModal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
     <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-lg w-full text-center">
       <h3 class="text-2xl font-bold text-[#8f4fff] mb-4">Siga as Sombras</h3>
       <ul class="space-y-4">
         <li><a href="https://instagram.com/_noheroe" target="_blank" class="text-[#8f4fff] hover:underline">Instagram</a></li>
         <li><a href="https://tiktok.com/@_noheroe" target="_blank" class="text-[#8f4fff] hover:underline">TikTok</a></li>
-        <li><a href="#" target="_blank" class="text-[#8f4fff] hover:underline">YouTube</a></li>
-        <li><a href="https://discord.gg/" target="_blank" class="text-[#8f4fff] hover:underline">Discord</a></li>
-        <li><a href="https://chat.whatsapp.com/" target="_blank" class="text-[#8f4fff] hover:underline">WhatsApp</a></li>
+        <li><a href=\"#\" target=\"_blank\" class=\"text-[#8f4fff] hover:underline\">YouTube</a></li>
+        <li><a href=\"https://discord.gg/\" target=\"_blank\" class=\"text-[#8f4fff] hover:underline\">Discord</a></li>
+        <li><a href=\"https://chat.whatsapp.com/\" target=\"_blank\" class=\"text-[#8f4fff] hover:underline\">WhatsApp</a></li>
       </ul>
-      <button onclick="closeModal('socialsModal')" class="mt-4 text-[#8f4fff] underline">Fechar</button>
+      <button onclick=\"closeModal('socialsModal')\" class=\"mt-4 text-[#8f4fff] underline\">Fechar</button>
     </div>
   </div>
- <footer class="pt-32 pb-10 px-4 text-center text-sm text-[#ddd] relative z-10">
+
+  <footer class="pt-32 pb-10 px-4 text-center text-sm text-[#ddd] relative z-10">
     <p class="mb-1">© 2025 NoHeroes. Todos os direitos reservados.</p>
     <p class="italic">Explore. Escolha. Caia. Evolua.</p>
-  </footer>  <script>
+  </footer>
+
+  <script>
+    const pixKey = "azuosraul999@gmail.com";
+
+    function openPixModal() {
+      document.getElementById('pixModal').classList.remove('hidden');
+    }
+
+    function copyPixKey() {
+      navigator.clipboard.writeText(pixKey).then(() => alert("Chave Pix copiada!"));
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+
+    function openSocials() {
+      document.getElementById('socialsModal').classList.remove('hidden');
+    }
+
+    function openForm(tipo) {
+      const modal = document.getElementById('formModal');
+      const title = document.getElementById('formTitle');
+      const subject = document.getElementById('formSubject');
+      const fields = document.getElementById('formFields');
+      const form = document.getElementById('formContent');
+      form.setAttribute("action", "https://formsubmit.co/eco.noheroes@gmail.com");
+
+      modal.classList.remove('hidden');
+      fields.innerHTML = "";
+
+      if (tipo === 'outras') {
+        title.innerText = "Quero ajudar de outras formas";
+        subject.value = "Apoio — Quero ajudar de outras formas";
+        fields.innerHTML = `
+          <label>Como deseja ajudar?</label>
+          <select name="forma_de_ajuda" required class="w-full p-2 bg-[#333] text-white rounded">
+            <option value="" disabled selected>Selecione uma opção</option>
+            <option>Moderar a comunidade do Discord</option>
+            <option>Moderar grupo WhatsApp</option>
+            <option>Contribuir com artes</option>
+            <option>Colaborar nas animações</option>
+            <option>Divulgar o projeto</option>
+            <option>Outras habilidades</option>
+          </select>
+          <label>Detalhes</label>
+          <textarea name="detalhes" required class="w-full p-2 bg-[#333] text-white rounded" rows="5" placeholder="Fale sobre suas habilidades e como pode ajudar."></textarea>
+          <label>Seu contato</label>
+          <input type="text" name="contato" required class="w-full p-2 bg-[#333] text-white rounded" placeholder="E-mail, WhatsApp ou Discord">
+        `;
+      } else if (tipo === 'parceria') {
+        title.innerText = "Quero fazer uma parceria";
+        subject.value = "Contato — Parceria";
+        fields.innerHTML = `
+          <label>Nome da Marca ou Projeto</label>
+          <input type="text" name="marca" required class="w-full p-2 bg-[#333] text-white rounded">
+          <label>Ideia da Parceria</label>
+          <textarea name="detalhes" required class="w-full p-2 bg-[#333] text-white rounded" rows="4"></textarea>
+          <label>Seu contato</label>
+          <input type="text" name="contato" required class="w-full p-2 bg-[#333] text-white rounded">
+        `;
+      } else if (tipo === 'investir') {
+        title.innerText = "Quero investir no projeto";
+        subject.value = "Contato — Investimento";
+        fields.innerHTML = `
+          <label>Motivo do interesse</label>
+          <textarea name="detalhes" required class="w-full p-2 bg-[#333] text-white rounded" rows="4"></textarea>
+          <label>Seu contato</label>
+          <input type="text" name="contato" required class="w-full p-2 bg-[#333] text-white rounded">
+        `;
+      } else if (tipo === 'apoio') {
+        title.innerText = "Preciso de apoio no meu projeto";
+        subject.value = "Solicitação — Apoio em projeto";
+        fields.innerHTML = `
+          <label>Nome do seu projeto</label>
+          <input type="text" name="projeto" required class="w-full p-2 bg-[#333] text-white rounded">
+          <label>Em que precisa de ajuda?</label>
+          <textarea name="detalhes" required class="w-full p-2 bg-[#333] text-white rounded" rows="4"></textarea>
+          <label>Link de portfólio ou referência</label>
+          <input type="url" name="portfolio" required class="w-full p-2 bg-[#333] text-white rounded">
+          <label>Seu contato</label>
+          <input type="text" name="contato" required class="w-full p-2 bg-[#333] text-white rounded">
+        `;
+      }
+    }
+
+    // BrasasCanvas
     const canvas = document.getElementById('brasasCanvas');
     const ctx = canvas.getContext('2d');
     let particles = [];
@@ -167,7 +260,7 @@
         if (p.y < 0) p.y = canvas.height;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI);
-        ctx.fillStyle = `rgba(255, 100, 0, ${p.alpha})`;
+        ctx.fillStyle = `rgba(255, 125, 20, ${p.alpha})`;
         ctx.fill();
       });
       requestAnimationFrame(animateParticles);
