@@ -74,25 +74,88 @@
       </a>
     </div>
   </header>
-  <div class="fixed top-14 left-0 w-full barra-degrade z-40"></div>  <!-- DRAWER -->  <div id="drawer" class="fixed top-0 right-0 w-72 h-full bg-black text-white transform transition-transform duration-300 z-50 glow-interno-left" style="transform: translateX(100%)">
-    <button onclick="toggleDrawer()" class="absolute top-4 right-4 text-3xl text-[#a855f7] hover:text-purple-400 z-50">✕</button>
-    <div class="p-6 flex flex-col gap-4">
-      <h1 class="text-3xl font-bold gradiente-noheroes cinzel">NOHEROES</h1>
-      <nav class="mt-4 flex flex-col gap-3 text-sm">
-        <a href="index.html" class="p-3 rounded-lg hover:bg-[#1c1c1c] transition">Início</a>
-        <a href="projects.html" class="p-3 rounded-lg hover:bg-[#1c1c1c] transition">Projetos</a>
-        <a href="sobre.html" class="p-3 rounded-lg hover:bg-[#1c1c1c] transition">Sobre</a>
-        <a href="shop.html" class="p-3 rounded-lg hover:bg-[#1c1c1c] transition">Loja</a>
-        <a href="login.html" class="p-3 rounded-lg hover:bg-[#1c1c1c] transition">Perfil</a>
-        <a href="oraculum.html" class="p-3 rounded-lg hover:bg-[#1c1c1c] transition">Oráculo</a>
-      </nav>
-    </div>
+  <div class="fixed top-14 left-0 w-full barra-degrade z-40"></div>  <!-- DRAWER COMPLETO -->
+<div id="drawer" class="fixed top-0 right-0 w-72 h-full bg-black text-white transform transition-transform duration-300 z-50 glow-interno-left" style="transform: translateX(100%)">
+  <button onclick="toggleDrawer()" class="absolute top-4 right-4 text-3xl text-[#a855f7] hover:text-purple-400 z-50">✕</button>
+  <div class="p-6 flex flex-col gap-4">
+    <h1 class="text-3xl font-bold gradiente-noheroes cinzel">NOHEROES</h1>
+    <p class="text-gray-400 text-sm">Universo Sombrio</p>
+    <nav class="mt-4 flex flex-col gap-3 text-sm">
+      
+      <a href="index.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
+        <div class="flex items-center gap-2">
+          <!-- Ícone: Home -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l9-9 9 9M4 10v10h5v-6h6v6h5V10" />
+          </svg>
+          <span class="text-white">Início</span>
+        </div>
+        <span class="text-xs text-purple-400 cinzel">Portal</span>
+      </a>
+
+      <a href="projects.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
+        <div class="flex items-center gap-2">
+          <!-- Ícone: Book -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12m0-12a2 2 0 012-2h4a2 2 0 012 2v12a2 2 0 01-2 2h-4a2 2 0 01-2-2zm0 0a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2h4a2 2 0 002-2z"/>
+          </svg>
+          <span class="text-white">Projetos</span>
+        </div>
+        <span class="text-xs text-purple-400 cinzel">Grimório</span>
+      </a>
+
+      <a href="sobre.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
+        <div class="flex items-center gap-2">
+          <!-- Ícone: User -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A7 7 0 0112 15a7 7 0 016.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          <span class="text-white">Sobre</span>
+        </div>
+        <span class="text-xs text-purple-400 cinzel">Entidade</span>
+      </a>
+
+      <a href="shop.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
+        <div class="flex items-center gap-2">
+          <!-- Ícone: Shopping Bag -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 11h14l1 9H4l1-9z" />
+          </svg>
+          <span class="text-white">Loja</span>
+        </div>
+        <span class="text-xs text-purple-400 cinzel">Cartel Velado</span>
+      </a>
+
+      <a href="login.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
+        <div class="flex items-center gap-2">
+          <!-- Ícone: Sparkle -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12l1.5 4.5L11 13l4.5 3.5L18 12l-2.5-4.5L13 11 7.5 7.5z" />
+          </svg>
+          <span class="text-white">Perfil</span>
+        </div>
+        <span class="text-xs text-purple-400 cinzel">Avatar</span>
+      </a>
+
+      <a href="oraculum.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
+        <div class="flex items-center gap-2">
+          <!-- Ícone: Question Circle -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M12 14a4 4 0 10-4-4 1 1 0 001 1h.01a1 1 0 001-1 2 2 0 112 2 2 2 0 01-2 2z" />
+          </svg>
+          <span class="text-white">Oráculo</span>
+        </div>
+        <span class="text-xs text-purple-400 cinzel">Sabedoria</span>
+      </a>
+
+    </nav>
   </div>
+</div>
   <div id="drawerOverlay" class="fixed inset-0 bg-black bg-opacity-60 hidden z-30"></div>
 
 <main class="max-w-2xl mx-auto px-4 pt-40 pb-20 text-center relative z-10">
-  <h2 class="text-xl italic mt-6 opacity-70">“Até mesmo os mundos mais sombrios precisam de luz para existir.”</h2>
-  <p class="mt-4 max-w-xl mx-auto text-base">Você está prestes a alimentar não um projeto, mas um universo inteiro. Criado do zero, com alma e suor, por um criador que quer mudar vidas com arte, anime e verdade. Aqui, cada contribuição fortalece uma ideia que já é maior do que eu. <strong>Ajude a manter Caelum vivo. Torne-se um Vitalista, ou uma das sombras de Caelum.</strong></p>
+  <h2 class="text-2xl gradiente-noheroes cinzel italic mt-6">“Até mesmo os mundos mais sombrios precisam de luz para existir.”</h2>
+  <p class="mt-4 max-w-xl mx-auto text-base text-white/60 leading-relaxed">Você está prestes a alimentar não um projeto, mas um universo inteiro. Criado do zero, com alma e suor, por um criador que quer mudar vidas com arte, anime e verdade. Aqui, cada contribuição fortalece uma ideia que já é maior do que eu. <strong>Ajude a manter Caelum vivo. Torne-se um Vitalista, ou uma das sombras de Caelum.</strong></p>
 
   <!-- Botão Pix com brilho e margem extra -->
   <div class="mt-10 mb-6">
