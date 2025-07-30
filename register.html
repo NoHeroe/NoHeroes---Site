@@ -37,12 +37,35 @@
       z-index: -1;
       pointer-events: none;
     }
-    @keyframes pulse-glow {
-      0%, 100% { transform: scale(1); box-shadow: 0 0 10px #a855f7; }
-      50% { transform: scale(1.03); box-shadow: 0 0 20px #a855f7; }
-    }
-    .botao-animado {
-      animation: pulse-glow 2s infinite;
+    @keyframes fluidPulse {
+  0%, 100% {
+    background-position: 0% 50%;
+    transform: scale(1);
+    box-shadow: 0 0 10px #8f4fff80, 0 0 20px #facc15aa;
+  }
+  50% {
+    background-position: 100% 50%;
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #a855f799, 0 0 30px #facc15cc;
+  }
+}
+
+.btn-líquido-pulsante {
+  background: linear-gradient(270deg, #8f4fff, #a855f7, #facc15, #8f4fff);
+  background-size: 600% 600%;
+  animation: fluidPulse 6s ease-in-out infinite;
+  color: #000;
+  font-weight: 600;
+  font-family: 'Cinzel Decorative', serif;
+  border-radius: 9999px;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.3s ease;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+.btn-líquido-pulsante:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 30px #facc15dd, 0 0 40px #8f4fffcc;
+}
     }
   </style>
 </head>
@@ -78,8 +101,8 @@
         class="w-full px-4 py-2 rounded bg-black text-white border border-gray-700 focus:ring-purple-500 transition-all duration-300" />
 
       <button type="submit"
-        class="w-full py-2 rounded bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 font-semibold shadow-lg text-white botao-animado">
-        ✨ Cadastrar
+        class="w-full py-2 rounded bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 font-semibold shadow-lg text-white btn-liquido-pulsante">
+        ✓ Cadastrar
       </button>
     </form>
 
