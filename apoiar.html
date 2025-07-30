@@ -18,6 +18,23 @@
     html {
       scroll-behavior: smooth;
     }
+.gradiente-noheroes {
+  background: linear-gradient(to right, #8f4fff, #facc15);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+#drawer nav a {
+  transition: all 0.2s ease-in-out;
+  border-left: 3px solid transparent;
+}
+#drawer nav a:hover {
+  background-color: #111;
+  border-left: 3px solid #8f4fff;
+  padding-left: 1.2rem;
+}
+#drawer {
+  box-shadow: -2px 0 10px rgba(143, 79, 255, 0.2);
+}
     .logo-glow {
       animation: glow 2s infinite ease-in-out;
     }
@@ -212,14 +229,56 @@ function openPixModal() {
   document.getElementById('pixModal').classList.remove('hidden');
 }
 function openForm(tipo) {
-  document.getElementById('formModal').classList.remove('hidden');
-  // Aqui insere o conteúdo dinamicamente no form (você já tem esse trecho)
+  const modal = document.getElementById('formModal');
+  const title = document.getElementById('formTitle');
+  const subject = document.getElementById('formSubject');
+  const fields = document.getElementById('formFields');
+
+  modal.classList.remove('hidden');
+
+  let config = {
+    outras: {
+      title: 'Quero ajudar de outras formas',
+      subject: 'Apoio alternativo',
+      inputs: ['Nome completo', 'Email', 'Como deseja ajudar?']
+    },
+    parceria: {
+      title: 'Quero fazer uma parceria',
+      subject: 'Parceria',
+      inputs: ['Nome da empresa', 'Email comercial', 'Proposta']
+    },
+    investir: {
+      title: 'Quero investir no projeto',
+      subject: 'Investimento',
+      inputs: ['Nome completo', 'Email', 'Valor estimado', 'Mensagem']
+    },
+    apoio: {
+      title: 'Preciso de apoio no meu projeto',
+      subject: 'Solicitação de apoio',
+      inputs: ['Seu nome', 'Email', 'Sobre seu projeto']
+    }
+  };
+
+  const data = config[tipo];
+  title.textContent = data.title;
+  subject.value = data.subject;
+
+  fields.innerHTML = data.inputs.map(input =>
+    `<input type="text" name="${input}" placeholder="${input}" class="w-full p-2 bg-black border border-[#333] rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#8f4fff]">`
+  ).join('');
 }
 function openSocials() {
   document.getElementById('socialsModal').classList.remove('hidden');
 }
 function closeModal(id) {
   document.getElementById(id).classList.add('hidden');
+}
+function toggleDrawer() {
+  const drawer = document.getElementById('drawer');
+  const overlay = document.getElementById('drawerOverlay');
+  const isOpen = drawer.style.transform === 'translateX(0%)';
+  drawer.style.transform = isOpen ? 'translateX(100%)' : 'translateX(0%)';
+  overlay.classList.toggle('hidden', isOpen);
 }
   </script>
 </body>
