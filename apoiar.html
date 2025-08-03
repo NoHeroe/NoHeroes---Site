@@ -153,6 +153,16 @@
   transform: scale(1.1);
   box-shadow: 0 0 30px #facc15dd, 0 0 40px #8f4fffcc;
 }
+</section><!-- CSS SEPARADO PARA DASHBOARD DE METAS --><style>
+@keyframes scrollNomes {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+.animate-scroll-nomes {
+  display: inline-block;
+  animation: scrollNomes 15s linear infinite;
+}
+
 .ranking-box {
   margin-top: 1.5rem;
   background-color: rgba(0, 0, 0, 0.3);
@@ -171,32 +181,19 @@
 }
 .ranking-conteudo {
   display: flex;
-  gap: 1rem;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
 }
 .podium div {
-  text-align: center;
   font-size: 0.75rem;
   font-weight: bold;
   color: #000;
   border-radius: 0.375rem 0.375rem 0 0;
-  padding: 0.5rem 0;
 }
 .ouro { background-color: #ffd700; }
 .prata { background-color: #c0c0c0; }
 .bronze { background-color: #cd7f32; }
-.lista-scroll {
-  flex: 1;
-  overflow: hidden;
-  max-height: 6rem;
-}
 .lista-scroll ul {
   animation: scrollNomes 15s linear infinite;
-}
-@keyframes scrollNomes {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-50%); }
 }
 </style>
 </head>
@@ -343,18 +340,18 @@
       </div>
     </div>
   </div>
-
 <!-- NOVA SECTION: DASHBOARD DE METAS NOHEROES --><section id="dashboard-doacoes" class="max-w-5xl mx-auto mt-24 px-4 space-y-24">
   <h2 class="text-4xl font-bold text-center mb-16 cinzel gradiente-noheroes">Como funcionam as metas e recompensas</h2>
   <p class="text-center text-white/60 max-w-3xl mx-auto text-base mb-12 leading-relaxed">
     Você pode apoiar diretamente projetos do universo NoHeroes. Cada contribuição gera <strong>fichas</strong> com seu nome, que aumentam suas chances de receber <strong>kits colecionáveis</strong> exclusivos a cada meta concluída. Quanto mais apoiar, mais fichas. As metas têm progresso público e, ao atingir o 100%, até <strong>3 apoiadores serão sorteados</strong> para receber recompensas únicas.
-  </p>  <!-- MODELO DE META - REPLICADO PARA TODAS AS METAS COM IDs DIFERENTES -->  <div class="space-y-24"><!-- META 1 - SERVIDOR -->
-<div class="flex flex-col md:flex-row-reverse items-center md:items-start gap-10">
-  <div class="md:w-1/3">
-    <img src="assets/images/server-meta.jpg" alt="Servidor" class="rounded-xl shadow-xl">
+  </p>  <!-- LISTA DE METAS COM MESMA ESTRUTURA -->  <div class="space-y-24"><!-- BLOCOS DE META COM IMAGEM À ESQUERDA E RANKING À DIREITA -->
+<!-- META 1 - SERVIDOR -->
+<div class="flex flex-col md:flex-row items-center gap-10">
+  <div class="w-full md:w-1/3">
+    <img src="assets/images/server-meta.jpg" alt="Servidor" class="rounded-xl shadow-xl w-full">
   </div>
   <div class="flex-1 space-y-4">
-    <h3 class="text-3xl font-bold cinzel gradiente-noheroes">Meta 1: Infraestrutura do Servidor</h3>
+    <h3 class="text-3xl font-bold cinzel gradiente-noheroes">Meta I: Infraestrutura do Servidor</h3>
     <div class="w-full bg-gray-800 rounded-full h-6 overflow-hidden">
       <div class="bg-gradient-to-r from-[#8f4fff] to-[#facc15] h-6 text-xs font-medium text-center text-black p-1 leading-none rounded-full" style="width: 0%" id="progress-servidor">0%</div>
     </div>
@@ -362,13 +359,13 @@
     <div class="ranking-box">
       <h4 class="ranking-title">Ranking dos apoiadores</h4>
       <div class="ranking-conteudo">
-        <div class="podium">
-          <div class="bronze">3º<br><span id="bronze-servidor">---</span></div>
-          <div class="ouro">1º<br><span id="ouro-servidor">---</span></div>
-          <div class="prata">2º<br><span id="prata-servidor">---</span></div>
+        <div class="podium flex justify-between gap-2 w-full">
+          <div class="bronze flex-1 text-center py-2 rounded-t">3º<br><span id="bronze-servidor">---</span></div>
+          <div class="ouro flex-1 text-center py-2 rounded-t">1º<br><span id="ouro-servidor">---</span></div>
+          <div class="prata flex-1 text-center py-2 rounded-t">2º<br><span id="prata-servidor">---</span></div>
         </div>
-        <div class="lista-scroll">
-          <ul id="ranking-servidor">
+        <div class="lista-scroll mt-4 max-h-24 overflow-hidden">
+          <ul id="ranking-servidor" class="text-sm text-white/80 animate-scroll-nomes space-y-1">
             <li>Sem doações registradas ainda.</li>
           </ul>
         </div>
@@ -378,12 +375,12 @@
 </div>
 
 <!-- META 2 - APP -->
-<div class="flex flex-col md:flex-row-reverse items-center md:items-start gap-10">
-  <div class="md:w-1/3">
-    <img src="assets/images/app-meta.jpg" alt="App" class="rounded-xl shadow-xl">
+<div class="flex flex-col md:flex-row items-center gap-10">
+  <div class="w-full md:w-1/3">
+    <img src="assets/images/app-meta.jpg" alt="App" class="rounded-xl shadow-xl w-full">
   </div>
   <div class="flex-1 space-y-4">
-    <h3 class="text-3xl font-bold cinzel gradiente-noheroes">Meta 2: Desenvolvimento do App</h3>
+    <h3 class="text-3xl font-bold cinzel gradiente-noheroes">Meta II: Desenvolvimento do App</h3>
     <div class="w-full bg-gray-800 rounded-full h-6 overflow-hidden">
       <div class="bg-gradient-to-r from-[#8f4fff] to-[#facc15] h-6 text-xs font-medium text-center text-black p-1 leading-none rounded-full" style="width: 0%" id="progress-app">0%</div>
     </div>
@@ -391,13 +388,13 @@
     <div class="ranking-box">
       <h4 class="ranking-title">Ranking dos apoiadores</h4>
       <div class="ranking-conteudo">
-        <div class="podium">
-          <div class="bronze">3º<br><span id="bronze-app">---</span></div>
-          <div class="ouro">1º<br><span id="ouro-app">---</span></div>
-          <div class="prata">2º<br><span id="prata-app">---</span></div>
+        <div class="podium flex justify-between gap-2 w-full">
+          <div class="bronze flex-1 text-center py-2 rounded-t">3º<br><span id="bronze-app">---</span></div>
+          <div class="ouro flex-1 text-center py-2 rounded-t">1º<br><span id="ouro-app">---</span></div>
+          <div class="prata flex-1 text-center py-2 rounded-t">2º<br><span id="prata-app">---</span></div>
         </div>
-        <div class="lista-scroll">
-          <ul id="ranking-app">
+        <div class="lista-scroll mt-4 max-h-24 overflow-hidden">
+          <ul id="ranking-app" class="text-sm text-white/80 animate-scroll-nomes space-y-1">
             <li>Sem doações registradas ainda.</li>
           </ul>
         </div>
@@ -408,13 +405,13 @@
 
 <!-- META 3 - CHRYSALIS & ROAR -->
 <div class="text-center">
-  <h3 class="text-3xl font-bold cinzel gradiente-noheroes">Meta 3: Animações - Chrysalis & Roar</h3>
+  <h3 class="text-3xl font-bold cinzel gradiente-noheroes">Meta III: Animações - Chrysalis & Roar</h3>
 </div>
 
 <!-- CHRYSALIS -->
-<div class="flex flex-col md:flex-row-reverse items-center md:items-start gap-10">
-  <div class="md:w-1/3">
-    <img src="assets/images/chrysalis-meta.jpg" alt="Chrysalis" class="rounded-xl shadow-xl">
+<div class="flex flex-col md:flex-row items-center gap-10">
+  <div class="w-full md:w-1/3">
+    <img src="assets/images/chrysalis-meta.jpg" alt="Chrysalis" class="rounded-xl shadow-xl w-full">
   </div>
   <div class="flex-1 space-y-4">
     <h4 class="text-xl font-bold cinzel gradiente-noheroes">Chrysalis</h4>
@@ -425,13 +422,13 @@
     <div class="ranking-box">
       <h4 class="ranking-title">Ranking dos apoiadores</h4>
       <div class="ranking-conteudo">
-        <div class="podium">
-          <div class="bronze">3º<br><span id="bronze-chrysalis">---</span></div>
-          <div class="ouro">1º<br><span id="ouro-chrysalis">---</span></div>
-          <div class="prata">2º<br><span id="prata-chrysalis">---</span></div>
+        <div class="podium flex justify-between gap-2 w-full">
+          <div class="bronze flex-1 text-center py-2 rounded-t">3º<br><span id="bronze-chrysalis">---</span></div>
+          <div class="ouro flex-1 text-center py-2 rounded-t">1º<br><span id="ouro-chrysalis">---</span></div>
+          <div class="prata flex-1 text-center py-2 rounded-t">2º<br><span id="prata-chrysalis">---</span></div>
         </div>
-        <div class="lista-scroll">
-          <ul id="ranking-chrysalis">
+        <div class="lista-scroll mt-4 max-h-24 overflow-hidden">
+          <ul id="ranking-chrysalis" class="text-sm text-white/80 animate-scroll-nomes space-y-1">
             <li>Sem doações registradas ainda.</li>
           </ul>
         </div>
@@ -441,9 +438,9 @@
 </div>
 
 <!-- ROAR -->
-<div class="flex flex-col md:flex-row-reverse items-center md:items-start gap-10">
-  <div class="md:w-1/3">
-    <img src="assets/images/roar-meta.jpg" alt="Roar" class="rounded-xl shadow-xl">
+<div class="flex flex-col md:flex-row items-center gap-10">
+  <div class="w-full md:w-1/3">
+    <img src="assets/images/roar-meta.jpg" alt="Roar" class="rounded-xl shadow-xl w-full">
   </div>
   <div class="flex-1 space-y-4">
     <h4 class="text-xl font-bold cinzel gradiente-noheroes">Roar</h4>
@@ -454,13 +451,13 @@
     <div class="ranking-box">
       <h4 class="ranking-title">Ranking dos apoiadores</h4>
       <div class="ranking-conteudo">
-        <div class="podium">
-          <div class="bronze">3º<br><span id="bronze-roar">---</span></div>
-          <div class="ouro">1º<br><span id="ouro-roar">---</span></div>
-          <div class="prata">2º<br><span id="prata-roar">---</span></div>
+        <div class="podium flex justify-between gap-2 w-full">
+          <div class="bronze flex-1 text-center py-2 rounded-t">3º<br><span id="bronze-roar">---</span></div>
+          <div class="ouro flex-1 text-center py-2 rounded-t">1º<br><span id="ouro-roar">---</span></div>
+          <div class="prata flex-1 text-center py-2 rounded-t">2º<br><span id="prata-roar">---</span></div>
         </div>
-        <div class="lista-scroll">
-          <ul id="ranking-roar">
+        <div class="lista-scroll mt-4 max-h-24 overflow-hidden">
+          <ul id="ranking-roar" class="text-sm text-white/80 animate-scroll-nomes space-y-1">
             <li>Sem doações registradas ainda.</li>
           </ul>
         </div>
@@ -469,13 +466,13 @@
   </div>
 </div>
 
-<!-- META 4 - UNIVERSO -->
-<div class="flex flex-col md:flex-row-reverse items-center md:items-start gap-10">
-  <div class="md:w-1/3">
-    <img src="assets/images/universo-meta.jpg" alt="Universo" class="rounded-xl shadow-xl">
+<!-- META 4 - UNIVERSO NOHEROES -->
+<div class="flex flex-col md:flex-row items-center gap-10">
+  <div class="w-full md:w-1/3">
+    <img src="assets/images/universo-meta.jpg" alt="Universo NoHeroes" class="rounded-xl shadow-xl w-full">
   </div>
   <div class="flex-1 space-y-4">
-    <h3 class="text-3xl font-bold cinzel gradiente-noheroes">Meta 4: Universo NoHeroes (Doação Geral)</h3>
+    <h3 class="text-3xl font-bold cinzel gradiente-noheroes">Meta IV: Universo NoHeroes (Doação Geral)</h3>
     <div class="w-full bg-gray-800 rounded-full h-6 overflow-hidden">
       <div class="bg-gradient-to-r from-[#8f4fff] to-[#facc15] h-6 text-xs font-medium text-center text-black p-1 leading-none rounded-full" style="width: 0%" id="progress-universo">0%</div>
     </div>
@@ -484,13 +481,13 @@
     <div class="ranking-box">
       <h4 class="ranking-title">Ranking dos apoiadores</h4>
       <div class="ranking-conteudo">
-        <div class="podium">
-          <div class="bronze">3º<br><span id="bronze-universo">---</span></div>
-          <div class="ouro">1º<br><span id="ouro-universo">---</span></div>
-          <div class="prata">2º<br><span id="prata-universo">---</span></div>
+        <div class="podium flex justify-between gap-2 w-full">
+          <div class="bronze flex-1 text-center py-2 rounded-t">3º<br><span id="bronze-universo">---</span></div>
+          <div class="ouro flex-1 text-center py-2 rounded-t">1º<br><span id="ouro-universo">---</span></div>
+          <div class="prata flex-1 text-center py-2 rounded-t">2º<br><span id="prata-universo">---</span></div>
         </div>
-        <div class="lista-scroll">
-          <ul id="ranking-universo">
+        <div class="lista-scroll mt-4 max-h-24 overflow-hidden">
+          <ul id="ranking-universo" class="text-sm text-white/80 animate-scroll-nomes space-y-1">
             <li>Sem doações registradas ainda.</li>
           </ul>
         </div>
@@ -498,10 +495,7 @@
     </div>
   </div>
 </div>
-
   </div>
-</section>
-<!-- FIM SECTION METAS --><!-- CSS PARA RANKING -->
 </main>
 
 <footer class="py-8 text-center text-[#666] bg-[#000] border-t border-[#333] mt-20">
