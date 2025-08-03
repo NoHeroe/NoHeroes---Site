@@ -496,6 +496,43 @@
   </div>
 </div>
   </div>
+<div id="modalDoacao" class="hidden fixed inset-0 z-50 bg-black bg-opacity-80 flex items-center justify-center">
+    <div class="bg-[#1c1c1c] p-6 rounded-xl max-w-lg w-full relative border border-[#333]">
+      <button onclick="fecharModalDoacao()" class="absolute top-2 right-4 text-white text-xl">✕</button>
+      <h3 class="text-2xl font-bold cinzel gradiente-noheroes text-center mb-4">Apoiar Projeto</h3>
+      <form id="formDoacao" class="space-y-4">
+        <input type="hidden" id="projetoSelecionado" name="projeto" value="">
+        <div>
+          <label class="block text-white text-sm mb-1">Nome do doador</label>
+          <input type="text" name="nome" required class="w-full p-2 rounded bg-black text-white border border-gray-700">
+        </div>
+        <div>
+          <label class="block text-white text-sm mb-1">Valor a doar (R$)</label>
+          <input type="number" name="valor" required min="1" step="0.01" class="w-full p-2 rounded bg-black text-white border border-gray-700">
+        </div>
+        <div>
+          <label class="block text-white text-sm mb-1">Contato (email ou telefone)</label>
+          <input type="text" name="contato" required class="w-full p-2 rounded bg-black text-white border border-gray-700">
+        </div>
+        <div>
+          <label class="block text-white text-sm mb-1">Projeto que deseja apoiar</label>
+          <select name="meta" class="w-full p-2 rounded bg-black text-white border border-gray-700" required>
+            <option value="servidor">Meta I: Infraestrutura do Servidor</option>
+            <option value="app">Meta II: Desenvolvimento do App</option>
+            <option value="chrysalis">Chrysalis</option>
+            <option value="roar">Roar</option>
+            <option value="universo">Meta IV: Universo NoHeroes</option>
+          </select>
+        </div>
+        <div class="flex items-center gap-2">
+          <input type="checkbox" id="termosCheckbox" class="accent-purple-600">
+          <label for="termosCheckbox" class="text-white text-sm">Li e aceito os <a href="termos.html" class="underline text-[#a855f7]">Termos de uso e serviço</a></label>
+        </div>
+        <button type="submit" id="btnProsseguirPagamento" disabled class="btn-vidro w-full mt-2">Prosseguir para pagamento</button>
+      </form>
+    </div>
+  </div>
+</section>
 </main>
 
 <footer class="py-8 text-center text-[#666] bg-[#000] border-t border-[#333] mt-20">
@@ -616,6 +653,18 @@ function toggleDrawer() {
   drawer.style.transform = isOpen ? 'translateX(100%)' : 'translateX(0%)';
   overlay.classList.toggle('hidden', isOpen);
 }
+
+function abrirModalDoacao(projeto) {
+  document.getElementById('modalDoacao').classList.remove('hidden');
+  document.getElementById('projetoSelecionado').value = projeto;
+  document.querySelector('select[name="meta"]').value = projeto;
+}
+function fecharModalDoacao() {
+  document.getElementById('modalDoacao').classList.add('hidden');
+}
+document.getElementById('termosCheckbox').addEventListener('change', function () {
+  document.getElementById('btnProsseguirPagamento').disabled = !this.checked;
+});
   </script>
 </body>
 </html>
