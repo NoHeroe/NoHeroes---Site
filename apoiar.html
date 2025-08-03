@@ -299,37 +299,103 @@
     </div>
   </div>
 
-<!-- NOVA SECTION: DASHBOARD DE METAS NOHEROES --><section id="dashboard-doacoes" class="max-w-4xl mx-auto mt-24 px-4">
-  <h2 class="text-3xl cinzel gradiente-noheroes text-center mb-10">Painel de Metas NoHeroes</h2>  <!-- Meta 1: Servidor -->  <div class="mb-12">
-    <h3 class="text-xl cinzel mb-2">Meta 1: Infraestrutura do Servidor</h3>
-    <div class="w-full bg-gray-800 rounded-full h-6 overflow-hidden">
-      <div class="bg-gradient-to-r from-[#8f4fff] to-[#facc15] h-6 text-xs font-medium text-center text-black p-1 leading-none rounded-full" style="width: 0%" id="progress-servidor">0%</div>
-    </div>
-  </div>  <!-- Meta 2: App NoHeroes -->  <div class="mb-12">
-    <h3 class="text-xl cinzel mb-2">Meta 2: Desenvolvimento do App</h3>
-    <div class="w-full bg-gray-800 rounded-full h-6 overflow-hidden">
-      <div class="bg-gradient-to-r from-[#8f4fff] to-[#facc15] h-6 text-xs font-medium text-center text-black p-1 leading-none rounded-full" style="width: 0%" id="progress-app">0%</div>
-    </div>
-  </div>  <!-- Meta 3: Anime - Chrysalis & Roar -->  <div class="mb-12">
-    <h3 class="text-xl cinzel mb-4">Meta 3: Animações Chrysalis & Roar</h3>
-    <div class="mb-6">
-      <h4 class="text-lg cinzel mb-1">Chrysalis</h4>
+<!-- NOVA SECTION: DASHBOARD DE METAS NOHEROES --><section id="dashboard-doacoes" class="max-w-5xl mx-auto mt-24 px-4 space-y-24">
+  <h2 class="text-4xl cinzel gradiente-noheroes font-bold text-center mb-16">Como funcionam as metas e recompensas</h2>
+  <p class="text-center text-white/60 max-w-3xl mx-auto text-base mb-12 leading-relaxed">
+    Você pode apoiar diretamente projetos do universo NoHeroes. Cada contribuição gera <strong>fichas</strong> com seu nome, que aumentam suas chances de receber <strong>kits colecionáveis</strong> exclusivos a cada meta concluída. Quanto mais apoiar, mais fichas. As metas têm progresso público e, ao atingir o 100%, até <strong>3 apoiadores serão sorteados</strong> para receber recompensas únicas.
+  </p>  <!-- Meta 1: Servidor -->  <div class="flex flex-col md:flex-row items-center md:items-start gap-10">
+    <div class="flex-1 space-y-4">
+      <h3 class="text-2xl cinzel gradiente-noheroes font-bold">Meta 1: Infraestrutura do Servidor</h3>
       <div class="w-full bg-gray-800 rounded-full h-6 overflow-hidden">
-        <div class="bg-gradient-to-r from-[#8f4fff] to-[#facc15] h-6 text-xs font-medium text-center text-black p-1 leading-none rounded-full" style="width: 0%" id="progress-chrysalis">0%</div>
+        <div class="bg-gradient-to-r from-[#8f4fff] to-[#facc15] h-6 text-xs font-medium text-center text-black p-1 leading-none rounded-full" style="width: 0%" id="progress-servidor">0%</div>
+      </div>
+      <button class="btn-vidro mt-4">Apoiar este projeto</button>
+      <div class="mt-6 bg-black/30 p-4 rounded border border-[#333]">
+        <h4 class="cinzel gradiente-noheroes font-bold mb-2">Ranking dos apoiadores</h4>
+        <ul class="text-sm text-white/80 space-y-1" id="ranking-servidor">
+          <li>Sem doações registradas ainda.</li>
+        </ul>
       </div>
     </div>
-    <div>
-      <h4 class="text-lg cinzel mb-1">Roar</h4>
+    <div class="md:w-1/3">
+      <img src="assets/images/server-meta.jpg" alt="Servidor" class="rounded-xl shadow-xl">
+    </div>
+  </div>  <!-- Meta 2: App NoHeroes -->  <div class="flex flex-col md:flex-row items-center md:items-start gap-10">
+    <div class="flex-1 space-y-4">
+      <h3 class="text-2xl cinzel gradiente-noheroes font-bold">Meta 2: Desenvolvimento do App</h3>
       <div class="w-full bg-gray-800 rounded-full h-6 overflow-hidden">
-        <div class="bg-gradient-to-r from-[#8f4fff] to-[#facc15] h-6 text-xs font-medium text-center text-black p-1 leading-none rounded-full" style="width: 0%" id="progress-roar">0%</div>
+        <div class="bg-gradient-to-r from-[#8f4fff] to-[#facc15] h-6 text-xs font-medium text-center text-black p-1 leading-none rounded-full" style="width: 0%" id="progress-app">0%</div>
+      </div>
+      <button class="btn-vidro mt-4">Apoiar este projeto</button>
+      <div class="mt-6 bg-black/30 p-4 rounded border border-[#333]">
+        <h4 class="cinzel gradiente-noheroes font-bold mb-2">Ranking dos apoiadores</h4>
+        <ul class="text-sm text-white/80 space-y-1" id="ranking-app">
+          <li>Sem doações registradas ainda.</li>
+        </ul>
       </div>
     </div>
-  </div>  <!-- Meta 4: Universo NoHeroes -->  <div class="mb-12">
-    <h3 class="text-xl cinzel mb-2">Meta 4: Universo NoHeroes (Doação Geral)</h3>
-    <div class="w-full bg-gray-800 rounded-full h-6 overflow-hidden">
-      <div class="bg-gradient-to-r from-[#8f4fff] to-[#facc15] h-6 text-xs font-medium text-center text-black p-1 leading-none rounded-full" style="width: 0%" id="progress-universo">0%</div>
+    <div class="md:w-1/3">
+      <img src="assets/images/app-meta.jpg" alt="App" class="rounded-xl shadow-xl">
     </div>
-    <p class="text-xs text-gray-400 mt-1">Meta: US$ 1.000.000 para expansão total do universo NoHeroes.</p>
+  </div>  <!-- Meta 3: Anime -->  <div class="space-y-16">
+    <h3 class="text-2xl cinzel gradiente-noheroes font-bold text-center">Meta 3: Animações - Chrysalis & Roar</h3><!-- Chrysalis -->
+<div class="flex flex-col md:flex-row items-center md:items-start gap-10">
+  <div class="flex-1 space-y-4">
+    <h4 class="text-lg cinzel gradiente-noheroes font-bold">Chrysalis</h4>
+    <div class="w-full bg-gray-800 rounded-full h-6 overflow-hidden">
+      <div class="bg-gradient-to-r from-[#8f4fff] to-[#facc15] h-6 text-xs font-medium text-center text-black p-1 leading-none rounded-full" style="width: 0%" id="progress-chrysalis">0%</div>
+    </div>
+    <button class="btn-vidro mt-4">Apoiar Chrysalis</button>
+    <div class="mt-6 bg-black/30 p-4 rounded border border-[#333]">
+      <h4 class="cinzel gradiente-noheroes font-bold mb-2">Ranking dos apoiadores</h4>
+      <ul class="text-sm text-white/80 space-y-1" id="ranking-chrysalis">
+        <li>Sem doações registradas ainda.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="md:w-1/3">
+    <img src="assets/images/chrysalis-meta.jpg" alt="Chrysalis" class="rounded-xl shadow-xl">
+  </div>
+</div>
+
+<!-- Roar -->
+<div class="flex flex-col md:flex-row items-center md:items-start gap-10">
+  <div class="flex-1 space-y-4">
+    <h4 class="text-lg cinzel gradiente-noheroes font-bold">Roar</h4>
+    <div class="w-full bg-gray-800 rounded-full h-6 overflow-hidden">
+      <div class="bg-gradient-to-r from-[#8f4fff] to-[#facc15] h-6 text-xs font-medium text-center text-black p-1 leading-none rounded-full" style="width: 0%" id="progress-roar">0%</div>
+    </div>
+    <button class="btn-vidro mt-4">Apoiar Roar</button>
+    <div class="mt-6 bg-black/30 p-4 rounded border border-[#333]">
+      <h4 class="cinzel gradiente-noheroes font-bold mb-2">Ranking dos apoiadores</h4>
+      <ul class="text-sm text-white/80 space-y-1" id="ranking-roar">
+        <li>Sem doações registradas ainda.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="md:w-1/3">
+    <img src="assets/images/roar-meta.jpg" alt="Roar" class="rounded-xl shadow-xl">
+  </div>
+</div>
+
+  </div>  <!-- Meta 4: Universo NoHeroes -->  <div class="flex flex-col md:flex-row items-center md:items-start gap-10">
+    <div class="flex-1 space-y-4">
+      <h3 class="text-2xl cinzel gradiente-noheroes font-bold">Meta 4: Universo NoHeroes (Doação Geral)</h3>
+      <div class="w-full bg-gray-800 rounded-full h-6 overflow-hidden">
+        <div class="bg-gradient-to-r from-[#8f4fff] to-[#facc15] h-6 text-xs font-medium text-center text-black p-1 leading-none rounded-full" style="width: 0%" id="progress-universo">0%</div>
+      </div>
+      <p class="text-xs text-gray-400 mt-1">Meta: US$ 1.000.000 para expansão total do universo NoHeroes.</p>
+      <button class="btn-vidro mt-4">Apoiar o Universo</button>
+      <div class="mt-6 bg-black/30 p-4 rounded border border-[#333]">
+        <h4 class="cinzel gradiente-noheroes font-bold mb-2">Ranking dos apoiadores</h4>
+        <ul class="text-sm text-white/80 space-y-1" id="ranking-universo">
+          <li>Sem doações registradas ainda.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="md:w-1/3">
+      <img src="assets/images/universo-meta.jpg" alt="Universo NoHeroes" class="rounded-xl shadow-xl">
+    </div>
   </div>
 </section>
 <!-- FIM SECTION METAS -->
