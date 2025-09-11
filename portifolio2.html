@@ -75,6 +75,46 @@
       .vitrines-title{ width:auto; }
       .vitrines-actions{ width:auto; }
     }
+/* ==== Fade-in cinematográfico ==== */
+:root{
+  --reveal-duration: 900ms;   /* 800–1200ms fica ótimo */
+  --reveal-delay: 0ms;        /* custom por elemento via inline style ou data-attr */
+}
+
+.reveal{
+  opacity: 0;
+  transform: translateY(18px) scale(.985);
+  filter: blur(6px);
+  will-change: opacity, transform, filter;
+}
+
+.reveal.in{
+  animation: cinematicReveal var(--reveal-duration) cubic-bezier(.22,.61,.36,1) var(--reveal-delay) both;
+}
+
+@keyframes cinematicReveal{
+  0%{
+    opacity: 0;
+    transform: translateY(18px) scale(.985);
+    filter: blur(6px);
+  }
+  60%{
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(.8px);     /* ainda um “respiro” de nitidez */
+  }
+  100%{
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Reduz movimento quando o usuário prefere */
+@media (prefers-reduced-motion: reduce){
+  .reveal{ opacity:1; transform:none; filter:none; }
+  .reveal.in{ animation: none !important; }
+}
   </style>
   <script type="application/ld+json">
   {
@@ -503,22 +543,34 @@
     });
     activateTab('web');
 
-    // Reveal on scroll (fadeUp), respeita reduced motion
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if(!prefersReduced){
-      const io = new IntersectionObserver((entries)=>{
-        entries.forEach(e=>{
-          if(e.isIntersecting){
-            e.target.classList.add('in');
-            e.target.style.animation = 'fadeUp .7s cubic-bezier(.2,.6,.2,1) both';
-            io.unobserve(e.target);
-          }
+    // ==== Reveal cinematográfico com stagger e respeito a reduced motion ====
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const sections = document.querySelectorAll('section, header, footer');
+
+  sections.forEach(section => {
+    const items = Array.from(section.querySelectorAll('.reveal'));
+    if (!items.length) return;
+
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+
+        // define delays progressivos (stagger) por ordem visual
+        items.forEach((el, i) => {
+          if (el._animated) return;
+          el.style.setProperty('--reveal-delay', `${i * 70}ms`); // 50–100ms é ideal
         });
-      }, { threshold: 0.12, rootMargin: '0px 0px -10% 0px' });
-      $$('.reveal').forEach(el=> io.observe(el));
-    } else {
-      $$('.reveal').forEach(el=> el.classList.add('in'));
-    }
+
+        items.forEach(el => { el.classList.add('in'); el._animated = true; });
+        obs.unobserve(e.target); // anima 1x por seção
+      });
+    }, { threshold: 0.14, rootMargin: '0px 0px -8% 0px' });
+
+    io.observe(section);
+  });
+} else {
+  document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+}
 
     // Hardening de layout: detecta elemento que estoura largura (debug opcional)
     // (deixe comentado; use no DevTools se precisar)
