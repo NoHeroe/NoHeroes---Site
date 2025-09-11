@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
+<!DOCTYPE html><html lang="pt-BR"><head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Cadastro — NoHeroes</title>
@@ -8,91 +6,35 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root{
-      --nh-bg:#0a0a0a;
+      --nh-bg:#0a0a0a; 
       --nh-card:#0f0f10;
       --nh-fg:#e5e5e5;
       --nh-muted:#a1a1aa;
-      --nh-accent:#7c3aed;  /* roxo */
-      --nh-accent-2:#d4af37;/* dourado */
-      --header-h: 64px;      /* 16 * 4px */
-      --topbar-h: 6px;       /* barra degradê fininha */
-      --offset-top: 70px;    /* 64 + 6 = 70 (um respiro) */
+      --nh-accent:#7c3aed;
+      --nh-accent-2:#d4af37;
     }
-
-    html, body { height: 100% }
-    body{
-      background:#0a0a0a; /* sólido — os glows entram nas camadas fixas abaixo */
-      color:var(--nh-fg);
-      font-family:Inter,system-ui,Arial,sans-serif;
-      overflow-x:hidden;
-    }
+    html,body{height:100%; margin:0; padding:0}
+    body{background:#0a0a0a; color:var(--nh-fg); font-family:Inter,system-ui,Arial,sans-serif;}
     .title-font{font-family:'Cinzel Decorative',serif}
-
-    /* Canvas e camadas de glow FIXAS (não seguem scroll) */
-    #brasasCanvas{ position:fixed; inset:0; z-index:-3; display:block; pointer-events:none; }
-    /* Glow principal roxo→dourado fixo */
-    body::before{
-      content:""; position:fixed; inset:0; z-index:-2; pointer-events:none;
-      background:
-        radial-gradient(1200px 800px at 80% -10%, rgba(124,58,237,.18), transparent 60%),
-        radial-gradient(1000px 600px at 0% 110%, rgba(212,175,55,.14), transparent 60%);
-    }
-    /* Vignette/film grain sutil fixo */
-    body::after{
-      content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
-      background:
-        radial-gradient(100% 120% at 50% 110%, rgba(0,0,0,.45), transparent 40%);
-      mix-blend-mode:screen;
-    }
-
-    /* Glass / border glow */
-    .glass{
-      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
-      backdrop-filter: blur(10px);
-    }
-    .ring-gradient{ position:relative }
-    .ring-gradient:before{
-      content:""; position:absolute; inset:-1px; border-radius:inherit; padding:1px;
-      background:linear-gradient(135deg, rgba(124,58,237,.8), rgba(212,175,55,.7));
-      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite:xor; mask-composite:exclude;
-    }
-
-    /* Floating labels */
-    .fl{ position:relative }
-    .fl input, .fl textarea, .fl select{
-      width:100%; padding:14px 14px 12px; background:#0b0b0c; color:#fff;
-      border:1px solid #2a2a2e; border-radius:12px; outline:none
-    }
-    .fl input:focus, .fl textarea:focus, .fl select:focus{
-      border-color:#5b21b6; box-shadow:0 0 0 3px rgba(124,58,237,.25)
-    }
-    .fl label{
-      position:absolute; left:12px; top:12px; padding:0 6px; color:#9ca3af;
-      pointer-events:none; transition:all .15s ease; background:transparent
-    }
+    .glass{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)); backdrop-filter: blur(10px);}
+    .ring-gradient{position:relative}
+    .ring-gradient:before{content:""; position:absolute; inset:-1px; border-radius:inherit; padding:1px; background:linear-gradient(135deg, rgba(124,58,237,.8), rgba(212,175,55,.7)); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude}
+    .fl{position:relative}
+    .fl input, .fl textarea, .fl select{width:100%; padding:14px 14px 12px; background:#0b0b0c; color:#fff; border:1px solid #2a2a2e; border-radius:12px; outline:none}
+    .fl input:focus, .fl textarea:focus, .fl select:focus{border-color:#5b21b6; box-shadow:0 0 0 3px rgba(124,58,237,.25)}
+    .fl label{position:absolute; left:12px; top:12px; padding:0 6px; color:#9ca3af; pointer-events:none; transition:all .15s ease; background:transparent}
     .fl input:focus+label, .fl input:not(:placeholder-shown)+label,
     .fl textarea:focus+label, .fl textarea:not(:placeholder-shown)+label,
-    .fl select:focus+label{
-      transform:translateY(-14px) scale(.92); color:#c4b5fd; background:#0b0b0c
-    }
-
-    /* Acessibilidade: reduz animação */
-    @media (prefers-reduced-motion: reduce){
-      #brasasCanvas{ display:none }
-      body::before, body::after{ opacity:.6 }
-    }
+    .fl select:focus+label{transform:translateY(-14px) scale(.92); color:#c4b5fd; background:#0b0b0c}
+    #brasasCanvas{position:fixed; inset:0; z-index:-1; display:block;}
+    @media (prefers-reduced-motion: reduce){#brasasCanvas{display:none}}
+    body:after{content:""; position:fixed; inset:0; z-index:-2; pointer-events:none; background: radial-gradient(1200px 700px at 20% -10%, rgba(124,58,237,.25), transparent 60%), radial-gradient(900px 600px at 100% 110%, rgba(212,175,55,.20), transparent 60%), radial-gradient(100% 120% at 50% 110%, rgba(0,0,0,.45), transparent 40%); mix-blend-mode:screen; background-attachment:fixed}
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
-
-  <!-- Background brasas (roxas, suaves, FIXO) -->
-  <canvas id="brasasCanvas" aria-hidden="true"></canvas>
-
-  <!-- HEADER -->
-<header class="sticky sm:fixed top-0 left-0 w-full z-50">
-  <div class="h-1.5 w-full bg-gradient-to-r from-purple-600 via-purple-400 to-amber-300"></div>
-  <div class="mx-auto max-w-6xl px-4 h-16 flex items-center justify-between bg-[#0a0a0a]/80 sm:bg-transparent">
+  <canvas id="brasasCanvas" aria-hidden="true"></canvas>  <!-- HEADER FIXO -->  <header class="fixed top-0 left-0 w-full z-50 bg-[#0a0a0a] border-b border-[#222]">
+    <div class="h-1.5 w-full bg-gradient-to-r from-purple-600 via-purple-400 to-amber-300"></div>
+    <div class="mx-auto max-w-6xl px-4 h-16 flex items-center justify-between">
       <a href="/" class="flex items-center gap-3 group">
         <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-600 to-amber-400 shadow"></div>
         <span class="title-font text-xl tracking-wide bg-clip-text text-transparent bg-gradient-to-r from-purple-300 to-amber-200">NoHeroes</span>
@@ -104,13 +46,7 @@
       </nav>
       <a href="login.html" class="text-sm font-semibold px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10">Entrar</a>
     </div>
-  </header>
-
-  <!-- OFFSET do conteúdo para não ficar por baixo do header -->
-  <div aria-hidden="true" class="h-[var(--offset-top)]"></div>
-
-  <!-- MAIN -->
-  <main class="flex-1 flex items-center justify-center px-4 pb-12">
+  </header>  <!-- OFFSET ESPAÇAMENTO -->  <div class="h-[76px]"></div>  <!-- MAIN -->  <main class="flex-1 flex items-center justify-center px-4 py-12">   
     <section class="w-full max-w-xl ring-gradient rounded-2xl">
       <div class="glass rounded-2xl p-6 sm:p-8 shadow-2xl">
         <h1 class="title-font text-3xl sm:text-4xl text-center mb-2 bg-clip-text text-transparent bg-gradient-to-r from-purple-300 to-amber-200">Crie sua conta</h1>
