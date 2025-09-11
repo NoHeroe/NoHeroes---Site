@@ -174,19 +174,19 @@
 .barra-degrade{ background:linear-gradient(to right,#8f4fff,#facc15); box-shadow:0 0 6px #8f4fff88, 0 0 10px #facc1588; }
 .drop-shadow-glow{ filter: drop-shadow(0 0 10px #8f4fff) drop-shadow(0 0 20px #8f4fff); }
 
-/* Brasas em canvas — mesmo da página Sobre */
-#brasasCanvas{
+#brasasCanvas {
   position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  z-index: -1;             /* fica atrás de tudo */
-  pointer-events: none;    /* não intercepta cliques */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
 }
   </style>
 </head>
 <body class="leading-relaxed">
 
-<!-- Fundo com brasas (canvas) -->
 <canvas id="brasasCanvas"></canvas>
 
 <!-- Botão flutuante de navegação ( "?" ) -->
@@ -945,105 +945,64 @@ Vitalista misterioso com poderes do sangue e da luz. Ator dos bastidores, guardi
     const el = document.getElementById(id);
     if(el){ el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
   }
+  document.addEventListener("DOMContentLoaded", () => {
+    const canvas = document.getElementById("brasasCanvas");
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+    let w, h;
 
-(() => {
-  const c = document.getElementById('brasasCanvas');
-  if (!c) return;
-  const ctx = c.getContext('2d', { alpha: true });
+    function resizeCanvas() {
+      const ratio = window.devicePixelRatio || 1;
+      w = canvas.width = window.innerWidth * ratio;
+      h = canvas.height = window.innerHeight * ratio;
+      canvas.style.width = window.innerWidth + "px";
+      canvas.style.height = window.innerHeight + "px";
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(ratio, ratio);
+    }
 
-  let w, h, DPR = Math.min(window.devicePixelRatio || 1, 2);
-  let particles = [];
-  let running = true;
-
-  function resize(){
-    w = c.width  = Math.floor(innerWidth  * DPR);
-    h = c.height = Math.floor(innerHeight * DPR);
-  }
-  resize();
-  addEventListener('resize', resize);
-
-  // Paleta roxo->dourado (combina com gradiente da Sobre)
-  const COLORS = [
-    {r:168,g:85 ,b:247}, // roxo
-    {r:143,g:79 ,b:255}, // roxo claro
-    {r:250,g:204,b:21 }, // dourado
-    {r:255,g:180,b:60 }  // dourado quente
-  ];
-
-  // Densidade adaptativa (menos no mobile)
-  const BASE_DENSITY = (Math.min(innerWidth, innerHeight) < 640) ? 80 : 140;
-
-  function spawnParticle(sideBias=0.5){
-    const x = (Math.random() * w);
-    const y = h + Math.random() * (h * 0.15);
-    const speed = 0.25 + Math.random() * 0.75;
-    const size  = 0.8 + Math.random() * 2.2;
-    const drift = (Math.random() - 0.5) * 0.3;  // deriva lateral
-    const c = COLORS[(Math.random() * COLORS.length) | 0];
-    const life = 2.5 + Math.random() * 3.0;     // seg
-    return {x, y, vx: drift, vy: -speed, s: size, color: c, t: 0, life};
-  }
-
-  function ensurePopulation(){
-    const target = BASE_DENSITY;
-    while (particles.length < target) particles.push(spawnParticle());
-  }
-
-  // Suave glow
-  function drawParticle(p){
-    const alpha = 1 - (p.t / p.life);
-    const flicker = 0.85 + Math.sin(p.t * 9 + p.x*0.002) * 0.15;
-    const a = Math.max(0, Math.min(1, alpha * flicker));
-
-    // gradiente radial pequeno pra dar brilho
-    const r = p.s * DPR * (1.5 + Math.random()*0.15);
-    const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, r);
-    const c = p.color;
-    g.addColorStop(0, `rgba(${c.r},${c.g},${c.b},${a})`);
-    g.addColorStop(1, `rgba(${c.r},${c.g},${c.b},0)`);
-    ctx.fillStyle = g;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, r, 0, Math.PI*2);
-    ctx.fill();
-  }
-
-  let last = performance.now();
-  function loop(now){
-    if (!running) { requestAnimationFrame(loop); return; }
-    const dt = Math.min(0.045, (now - last) / 1000); // cap delta
-    last = now;
-
-    // fundo sutil (fade) pra rastro
-    ctx.fillStyle = 'rgba(0,0,0,0.08)';
-    ctx.fillRect(0, 0, w, h);
-
-    ensurePopulation();
-
-    for (let i = particles.length - 1; i >= 0; i--){
-      const p = particles[i];
-      p.t += dt;
-      p.x += p.vx * DPR * (1 + p.s*0.15);
-      p.y += p.vy * DPR * (0.8 + p.s*0.1);
-      // leve turbulência
-      p.vx += (Math.sin((p.y + now*0.03)*0.002) * 0.02);
-
-      drawParticle(p);
-
-      // recicla
-      if (p.t > p.life || p.y < -20*DPR || p.x < -20*DPR || p.x > w+20*DPR){
-        particles[i] = spawnParticle();
+    class Particle {
+      constructor() { this.reset(true); }
+      reset(initial = false) {
+        this.x = Math.random() * w;
+        this.y = initial ? Math.random() * h : h + Math.random() * 100;
+        this.size = 1 + Math.random() * 2.5;
+        this.speed = 0.2 + Math.random() * 0.5;
+        this.alpha = 0.4 + Math.random() * 0.3;
+        this.drift = (Math.random() - 0.5) * 0.5;
+      }
+      update() {
+        this.y -= this.speed;
+        this.x += this.drift;
+        if (this.y < -10 || this.x < -50 || this.x > w + 50) this.reset();
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`;
+        ctx.shadowColor = "#a855f7";
+        ctx.shadowBlur = 12;
+        ctx.fill();
       }
     }
-    requestAnimationFrame(loop);
-  }
-  requestAnimationFrame(loop);
 
-  // Pausar quando aba não estiver visível
-  document.addEventListener('visibilitychange', () => {
-    running = document.visibilityState === 'visible';
-  }, { passive: true });
+    function createParticles(count) {
+      particles = [];
+      for (let i = 0; i < count; i++) particles.push(new Particle());
+    }
 
-})();
+    function animate() {
+      ctx.clearRect(0, 0, w, h);
+      for (const p of particles) { p.update(); p.draw(); }
+      requestAnimationFrame(animate);
+    }
+
+    resizeCanvas();
+    createParticles(Math.floor(150 * (window.devicePixelRatio || 1)));
+    animate();
+
+    window.addEventListener("resize", resizeCanvas);
+  });
 </script>
 </body>
 </html>
