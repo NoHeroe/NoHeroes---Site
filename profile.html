@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Perfil | NoHeroes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{
+      --nh-bg:#0a0a0a; --nh-fg:#e5e5e5;
+      --nh-card:#0f0f10; --nh-stroke:#2a2a2e;
+      --nh-purple:#7c3aed; --nh-gold:#d4af37;
+    }
+    html,body{height:100%}
+    body{background:#0a0a0a;color:var(--nh-fg);font-family:Inter,system-ui,Arial,sans-serif;overflow-x:hidden}
+
+    /* Fundo: brasas roxas + glows FIXOS */
+    #brasasCanvas{position:fixed;inset:0;z-index:-3;pointer-events:none}
+    body::before{
+      content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+      background:
+        radial-gradient(1200px 800px at 80% -10%, rgba(124,58,237,.18), transparent 60%),
+        radial-gradient(1000px 600px at 0% 110%, rgba(212,175,55,.14), transparent 60%);
+    }
+    body::after{
+      content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+      background:radial-gradient(100% 120% at 50% 110%, rgba(0,0,0,.45), transparent 40%);
+      mix-blend-mode:screen;
+    }
+
+    /* Cards em glass */
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.015));
+      border:1px solid #2a2a2e; border-radius:1rem; backdrop-filter:saturate(120%) blur(10px);
+      box-shadow:0 10px 30px rgba(0,0,0,.25);
+    }
+    .ring-gradient{position:relative}
+    .ring-gradient:before{
+      content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;
+      background:linear-gradient(135deg, rgba(124,58,237,.8), rgba(212,175,55,.7));
+      -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor;mask-composite:exclude;
+      border-radius:inherit;
+    }
+
+    /* Header */
+    .header{background:rgba(10,10,10,.8);backdrop-filter:blur(8px)}
+    .title-font{font-family:'Cinzel Decorative',serif}
+
+    /* Dialogs (glass + backdrop) */
+    dialog{border:none;padding:0}
+    dialog::backdrop{background:rgba(0,0,0,.6);backdrop-filter:blur(4px)}
+    .dialog-ctr{background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)); border:1px solid #3b3b40; border-radius:16px}
+
+    /* Abas no modal (mesmo posicionamento, só visual) */
+    .tab-btn{border-bottom:2px solid transparent}
+    .tab-btn[aria-selected="true"]{border-color:#a78bfa;color:#dcd4ff}
+
+    /* Botões */
+    .btn{display:inline-flex;align-items:center;gap:.5rem; border:1px solid rgba(255,255,255,.08); border-radius:.75rem; padding:.5rem .9rem}
+    .btn-primary{background:linear-gradient(90deg,#7c3aed,#6d28d9); color:#fff}
+    .btn-primary:hover{filter:brightness(1.1)}
+    .btn-ghost{background:rgba(255,255,255,.06)}
+    .btn-ghost:hover{background:rgba(255,255,255,.1)}
+
+    /* Logout timer */
+    .timer-bar{height:6px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden}
+    .timer-fill{height:100%;width:0;background:linear-gradient(90deg,#f43f5e,#fb7185)}
+
+    /* Inputs no modal */
+    .input{width:100%;padding:.65rem .8rem;border:1px solid #3a3a40;border-radius:.75rem;background:#0b0b0c;color:#fff}
+    .input:focus{outline:none;box-shadow:0 0 0 3px rgba(124,58,237,.25);border-color:#5b21b6}
+
+    @media (prefers-reduced-motion:reduce){#brasasCanvas{display:none}}
+  </style>
+
+  <script>
+    const token = localStorage.getItem("NoHeroes_token");
+    if (!token || token.split(".").length !== 3) { window.location.href = "login.html"; }
+    window.tokenJWT = token;
+  </script>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Fundo brasas -->
+  <canvas id="brasasCanvas" aria-hidden="true"></canvas>
+
+  <!-- HEADER (mesma grid/posições) -->
+  <header class="header grid grid-cols-3 items-center px-6 py-4 border-b border-purple-800">
+    <!-- Amigos -->
+    <div class="flex items-center gap-4">
+      <button title="Seus Amigos" onclick="document.getElementById('friendsModal').showModal()" class="btn btn-ghost">
+        <img src="assets/icons/friends.png" alt="Amigos" class="h-9 w-9 rounded-lg" />
+      </button>
+      <button title="Adicionar Amigo" onclick="document.getElementById('addFriendModal').showModal()" class="btn btn-ghost">
+        <img src="assets/icons/add-friend.png" alt="Adicionar" class="h-9 w-9 rounded-lg" />
+      </button>
+    </div>
+
+    <!-- Logo central -->
+    <div class="flex justify-center">
+      <a href="index.html" class="flex items-center gap-2">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-600 to-amber-400"></div>
+        <span class="title-font text-xl tracking-wide bg-clip-text text-transparent bg-gradient-to-r from-purple-300 to-amber-200">NoHeroes</span>
+      </a>
+    </div>
+
+    <!-- Logout + Config -->
+    <div class="flex items-center justify-end gap-3">
+      <button id="btnLogout" class="btn" style="color:#fda4af;border-color:#fda4af33">Sair</button>
+      <button title="Configurações" onclick="document.getElementById('configModal').showModal()" class="btn btn-ghost">
+        <img src="assets/icons/settings.png" alt="Configurações" class="h-9 w-9 rounded-lg" />
+      </button>
+    </div>
+  </header>
+
+  <!-- carrossel topo (mesmos elementos) -->
+  <section class="relative overflow-hidden py-10">
+    <div class="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar">
+      <!-- Card Personagem -->
+      <div class="w-screen flex-shrink-0 snap-start px-6">
+        <div class="card ring-gradient flex flex-col md:flex-row justify-between items-center gap-6 p-6 w-full h-full">
+          <div class="flex-1 text-left">
+            <h2 class="text-xl font-bold text-purple-300 mb-2">Nome do Personagem</h2>
+            <p class="text-sm text-gray-300/80 mb-4">Descrição breve do personagem, afiliação, nível ou título.</p>
+            <button class="btn btn-primary">Editar Perfil</button>
+          </div>
+          <div class="flex-shrink-0">
+            <img src="assets/images/personagem.png" alt="Personagem" class="w-32 h-32 object-cover rounded-full ring-4 ring-purple-600" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Card Skills -->
+      <div class="w-screen flex-shrink-0 snap-start px-6">
+        <div class="card ring-gradient p-6 text-center w-full h-full">
+          <h2 class="text-xl font-bold text-purple-300 mb-4">Skills</h2>
+          <img src="assets/images/skills.png" alt="Skills" class="mx-auto w-60 h-60 object-contain rounded-lg" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GRID PRINCIPAL (mesma estrutura/ordem/posições) -->
+  <main class="grid grid-cols-1 md:grid-cols-3 gap-8 px-6 pb-10">
+
+    <!-- Cartel Velado -->
+    <section class="md:col-span-1">
+      <h3 class="text-2xl font-bold text-purple-300 mb-1">Cartel Velado</h3>
+      <p class="text-sm text-gray-300/80 mb-4">Você pode comprar. Mas nem tudo está à mostra.</p>
+      <div class="flex flex-wrap md:flex-nowrap gap-4">
+        <a href="store.html" class="card ring-gradient w-[140px] rounded-xl overflow-hidden shadow-md hover:brightness-110 transition">
+          <img src="assets/images/lojanoheroes.png" alt="Loja" class="w-full h-auto object-cover" />
+        </a>
+        <button onclick="document.getElementById('lockedModal').showModal()" class="card w-[140px] rounded-xl overflow-hidden cursor-not-allowed opacity-60">
+          <img src="assets/images/mercadonegro.png" alt="Mercado Negro" class="w-full h-auto object-cover" />
+        </button>
+      </div>
+
+      <div class="mt-4">
+        <a href="inventario.html" class="btn btn-primary">Inventário</a>
+      </div>
+    </section>
+
+    <!-- Conquistas -->
+    <section class="md:col-span-1">
+      <h3 class="text-2xl font-bold text-purple-300 mb-4">Conquistas</h3>
+      <ul class="space-y-3">
+        <li class="card p-3 text-sm border border-purple-800/60">Primeiro Login</li>
+        <li class="card p-3 text-sm border border-purple-800/60">Explorador Inicial</li>
+      </ul>
+    </section>
+
+    <!-- Acessos Rápidos -->
+    <section class="md:col-span-1 space-y-4">
+      <!-- ROAR -> ACDA -->
+      <a href="ROAR.html" class="card p-4 flex items-center gap-4 hover:bg-white/5 transition">
+        <div class="w-8 h-8 bg-gradient-to-br from-purple-600 to-purple-400 rounded-full"></div>
+        <div>
+          <h4 class="text-lg font-bold text-purple-300">ACDA</h4>
+          <p class="text-sm text-gray-300/80">Acesse o mundo de ACDA</p>
+        </div>
+      </a>
+      <!-- FREQ -> Outros (cor ajustada ao tema) -->
+      <a href="FREQ.html" class="card p-4 flex items-center gap-4 hover:bg-white/5 transition">
+        <div class="w-8 h-8 bg-gradient-to-br from-amber-400 to-yellow-300 rounded-full"></div>
+        <div>
+          <h4 class="text-lg font-bold text-amber-300">Outros</h4>
+          <p class="text-sm text-gray-300/80">Explore outros projetos</p>
+        </div>
+      </a>
+      <!-- Final -> Em breve (bloqueado) -->
+      <button disabled class="card p-4 w-full flex items-center gap-4 opacity-60 cursor-not-allowed">
+        <div class="w-8 h-8 bg-gray-600 rounded-full"></div>
+        <div>
+          <h4 class="text-lg font-bold text-gray-300">Em breve</h4>
+          <p class="text-sm text-gray-400">Atualização futura</p>
+        </div>
+      </button>
+    </section>
+
+  </main>
+
+  <!-- ====== MODAL CONFIGURAÇÕES (dashboard dentro do modal) ====== -->
+  <dialog id="configModal">
+    <div class="dialog-ctr w-full max-w-lg overflow-hidden ring-gradient">
+      <!-- Header -->
+      <div class="flex items-center justify-between px-6 py-4 border-b border-purple-800/60">
+        <h2 class="text-xl font-bold text-purple-300">Configurações</h2>
+        <button onclick="document.getElementById('configModal').close()" class="text-red-400 hover:text-red-300 text-2xl leading-none">&times;</button>
+      </div>
+
+      <!-- Abas (mesmo posicionamento) -->
+      <div class="flex px-6 gap-2 bg-transparent">
+        <button data-tab="security" class="tab-btn flex-1 py-2 text-center font-semibold" aria-selected="true">Senha & Segurança</button>
+        <button data-tab="profile"  class="tab-btn flex-1 py-2 text-center font-semibold">Dados Pessoais</button>
+        <button data-tab="permissions" class="tab-btn flex-1 py-2 text-center font-semibold">Permissões</button>
+      </div>
+
+      <!-- Conteúdo -->
+      <div class="px-6 py-5 space-y-6">
+        <section id="tab-security" class="space-y-4">
+          <div>
+            <label class="block text-sm text-gray-300/80 mb-1">Senha Atual</label>
+            <input type="password" placeholder="••••••••" class="input" />
+          </div>
+          <div>
+            <label class="block text-sm text-gray-300/80 mb-1">Nova Senha</label>
+            <input type="password" placeholder="Digite nova senha" class="input" />
+          </div>
+        </section>
+
+        <section id="tab-profile" class="hidden space-y-4">
+          <div>
+            <label class="block text-sm text-gray-300/80 mb-1">Nome</label>
+            <input type="text" placeholder="Seu nome" class="input" />
+          </div>
+          <div>
+            <label class="block text-sm text-gray-300/80 mb-1">Email</label>
+            <input type="email" placeholder="seu@email.com" class="input" />
+          </div>
+          <div>
+            <label class="block text-sm text-gray-300/80 mb-1">Avatar (URL)</label>
+            <input type="url" placeholder="https://..." class="input" />
+          </div>
+          <div>
+            <label class="block text-sm text-gray-300/80 mb-1">Nome completo</label>
+            <input type="text" id="input-nome" placeholder="Nome completo" class="input" />
+          </div>
+          <div>
+            <label class="block text-sm text-gray-300/80 mb-1">Telefone</label>
+            <input type="text" id="input-telefone" placeholder="(xx) xxxxx-xxxx" class="input" />
+          </div>
+        </section>
+
+        <section id="tab-permissions" class="hidden space-y-4">
+          <label class="flex items-center gap-2">
+            <input type="checkbox" class="h-5 w-5 accent-purple-500 bg-black border-gray-600 rounded" />
+            <span class="text-sm text-gray-300/90">Permitir mensagens de desconhecidos</span>
+          </label>
+          <label class="flex items-center gap-2">
+            <input type="checkbox" class="h-5 w-5 accent-purple-500 bg-black border-gray-600 rounded" />
+            <span class="text-sm text-gray-300/90">Exibir perfil público</span>
+          </label>
+        </section>
+      </div>
+
+      <!-- Footer -->
+      <div class="flex justify-end gap-3 px-6 py-4 border-t border-purple-800/60">
+        <button onclick="document.getElementById('configModal').close()" class="btn btn-ghost">Fechar</button>
+        <button id="btnSalvar" class="btn btn-primary">Salvar</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- CONFIRMAÇÃO DE LOGOUT (modernizada + timer visível) -->
+  <dialog id="logoutModal">
+    <div class="dialog-ctr w-full max-w-md p-6 ring-gradient">
+      <h2 class="text-xl font-bold text-red-400 mb-2">Confirmar Logout?</h2>
+      <p class="mb-4">Você poderá sair em <span id="logoutTimer" class="font-mono text-red-300">5</span>s</p>
+      <div class="timer-bar mb-4"><div id="timerFill" class="timer-fill"></div></div>
+      <div class="flex justify-end gap-3">
+        <button id="cancelLogout" class="btn btn-ghost">Cancelar</button>
+        <button id="confirmLogout" class="btn" style="background:#7f1d1d;color:#fff" disabled>Logout</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- MODAIS DE AMIGOS (visuais apenas) -->
+  <dialog id="friendsModal">
+    <div class="dialog-ctr w-full max-w-md p-6 ring-gradient">
+      <h2 class="text-2xl font-bold text-purple-300 mb-4">Seus Amigos</h2>
+      <p class="text-gray-300/80">A lista de amigos vai aparecer aqui.</p>
+      <div class="text-right mt-6">
+        <button onclick="document.getElementById('friendsModal').close()" class="btn btn-primary">Fechar</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="addFriendModal">
+    <div class="dialog-ctr w-full max-w-md p-6 ring-gradient">
+      <h2 class="text-2xl font-bold text-purple-300 mb-4">Adicionar Amigo</h2>
+      <p class="text-gray-300/80">Formulário de adicionar amigo aqui.</p>
+      <div class="text-right mt-6">
+        <button onclick="document.getElementById('addFriendModal').close()" class="btn btn-primary">Fechar</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Modal Bloqueado (visual) -->
+  <dialog id="lockedModal">
+    <div class="dialog-ctr w-full max-w-sm p-6 text-center ring-gradient">
+      <h2 class="text-xl font-bold text-purple-300 mb-4">Acesso Negado</h2>
+      <p class="text-sm text-gray-300/85">Você precisa subir de nível para acessar o Mercado Negro.</p>
+      <div class="mt-6">
+        <button onclick="document.getElementById('lockedModal').close()" class="btn btn-primary">Fechar</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Scripts (mantidos, só melhorias visuais no timer) -->
+  <script>
+    // Abas do modal
+    document.querySelectorAll('[data-tab]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-tab]').forEach(b => b.setAttribute('aria-selected','false'));
+        document.querySelectorAll('section[id^="tab-"]').forEach(sec => sec.classList.add('hidden'));
+        btn.setAttribute('aria-selected','true');
+        document.getElementById('tab-' + btn.dataset.tab).classList.remove('hidden');
+      });
+    });
+
+    // Logout com timer visual
+    const btnLogout = document.getElementById('btnLogout');
+    const logoutModal = document.getElementById('logoutModal');
+    const logoutTimerEl = document.getElementById('logoutTimer');
+    const timerFill = document.getElementById('timerFill');
+    const btnConfirm = document.getElementById('confirmLogout');
+    const btnCancel = document.getElementById('cancelLogout');
+    let logoutInterval, elapsed;
+
+    btnLogout.addEventListener('click', () => {
+      logoutModal.showModal();
+      let time = 5; elapsed = 0;
+      logoutTimerEl.textContent = time;
+      btnConfirm.disabled = true;
+      timerFill.style.width = '0%';
+
+      clearInterval(logoutInterval);
+      logoutInterval = setInterval(() => {
+        elapsed++;
+        const remaining = 5 - elapsed;
+        logoutTimerEl.textContent = Math.max(0, remaining);
+        timerFill.style.width = `${(elapsed/5)*100}%`;
+        if (remaining <= 0) {
+          clearInterval(logoutInterval);
+          btnConfirm.disabled = false;
+          timerFill.style.width = '100%';
+        }
+      }, 1000);
+    });
+
+    btnCancel.addEventListener('click', () => {
+      clearInterval(logoutInterval);
+      logoutModal.close();
+    });
+
+    btnConfirm.addEventListener('click', () => {
+      // mantém tua lógica (só visual mudou)
+      localStorage.removeItem("NoHeroes");
+      window.location.href = 'login.html';
+    });
+
+    // Carregar dashboard (mantido)
+    async function carregarDadosUsuario() {
+      fetch("https://api.noheroes.com.br/dashboard", {
+        method: "GET",
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + window.tokenJWT }
+      })
+      .then(res => { if (!res.ok) throw new Error("Erro ao carregar dashboard: " + res.status); return res.json(); })
+      .then(data => { console.log("DADOS DO DASHBOARD:", data); })
+      .catch(err => { console.error("Erro ao buscar dashboard:", err.message); });
+
+      // Mantive teus IDs/placeholders
+      // const user = json.data.account; // <- quando tiver json real
+      // document.querySelector('#tab-profile input[placeholder="Seu nome"]').value = user?.nome_completo || '';
+      // document.querySelector('#tab-profile input[placeholder="seu@email.com"]').value = user?.email || '';
+      // document.querySelector('#tab-profile input[placeholder="https://..."]').value = user?.avatar || '';
+      // document.getElementById('input-telefone').value = user?.telefone || '';
+    }
+    carregarDadosUsuario();
+
+    document.getElementById('btnSalvar').addEventListener('click', async () => {
+      const nome = document.querySelector('#tab-profile input[placeholder="Seu nome"]').value;
+      const email = document.querySelector('#tab-profile input[placeholder="seu@email.com"]').value;
+      const avatar = document.querySelector('#tab-profile input[placeholder="https://..."]').value;
+      const telefone = document.getElementById('input-telefone').value;
+
+      const res = await fetch('https://api.noheroes.com.br/dashboard/update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${window.tokenJWT}` },
+        body: JSON.stringify({ nome_completo: nome, email, avatar, telefone })
+      });
+
+      const json = await res.json();
+      if (json.success) {
+        alert('Dados atualizados com sucesso.');
+        document.getElementById('configModal').close();
+      } else {
+        alert('Erro ao salvar dados.');
+      }
+    });
+
+    // Brasas roxas
+    (function(){
+      const c = document.getElementById('brasasCanvas'); if(!c) return;
+      const ctx = c.getContext('2d',{alpha:true});
+      let pts=[];
+      function resize(){ c.width=innerWidth; c.height=innerHeight; }
+      addEventListener('resize',resize,{passive:true}); resize();
+      function mk(n){ pts=[]; for(let i=0;i<n;i++){ pts.push({ x:Math.random()*c.width, y:Math.random()*c.height, r:Math.random()*1.4+.8, vy:-(Math.random()*0.28+.12), a:Math.random()*0.5+.4 }); } }
+      function loop(){ ctx.clearRect(0,0,c.width,c.height); pts.forEach(p=>{ p.y+=p.vy; if(p.y<-10){p.y=c.height+10;p.x=Math.random()*c.width;} ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle=`rgba(168,85,247,${p.a})`; ctx.shadowColor='#a855f7'; ctx.shadowBlur=12; ctx.fill(); }); requestAnimationFrame(loop); }
+      mk(120); loop();
+    })();
+  </script>
+</body>
+</html>
