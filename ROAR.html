@@ -143,34 +143,138 @@
   box-shadow: inset 8px 0 18px rgba(143,79,255,0.5);
   border-left: 1px solid rgba(143,79,255,0.15);
 }
+/* Botão "?" (esquerda do header) */
+#navBtn{
+  position: fixed; top: 0.70rem; left: 1rem; z-index: 60;
+  background: linear-gradient(135deg, #8f4fff, #facc15);
+  color:#000; width:40px; height:40px; border-radius:9999px;
+  font-weight:bold; font-size:1.3rem; box-shadow:0 0 10px rgba(143,79,255,0.6);
+  cursor:pointer; transition:all .3s ease;
+}
+#navBtn:hover{ background: linear-gradient(135deg, #a855f7, #fbbf24); box-shadow:0 0 12px rgba(250,204,21,.7); }
+
+/* Modal do "?" */
+#navModal{ position:fixed; inset:0; background:rgba(0,0,0,.7); backdrop-filter:blur(4px); display:none; z-index:100; }
+#navModalContent{
+  background:#0a0a0a; max-height:80vh; overflow-y:auto; width:90%; max-width:320px;
+  margin:4rem auto; border-radius:1rem; padding:1rem; box-shadow:0 0 20px rgba(143,79,255,.3); position:relative;
+}
+#navModalContent button{
+  display:block; width:100%; margin:.3rem 0; padding:.6rem; background:#1a1a1a; border-radius:.5rem;
+  cursor:pointer; font-size:.85rem; font-weight:bold; text-align:center; transition:background .3s ease; border:1px solid #333;
+}
+#navModalContent button span{
+  background:linear-gradient(135deg, #8f4fff, #facc15); -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text; color:transparent;
+}
+#navModalContent button:hover{ background:#2e2e2e; }
+
+/* Drawer da direita + barra */
+.glow-interno-left{ box-shadow: inset 8px 0 18px rgba(143,79,255,.5); border-left:1px solid rgba(143,79,255,.15); }
+.barra-degrade{ background:linear-gradient(to right,#8f4fff,#facc15); box-shadow:0 0 6px #8f4fff88, 0 0 10px #facc1588; }
+.drop-shadow-glow{ filter: drop-shadow(0 0 10px #8f4fff) drop-shadow(0 0 20px #8f4fff); }
   </style>
 </head>
 <body class="leading-relaxed">
 
-  <!-- NAVBAR (substitua seu header inteiro por este) -->
-  <header x-data="{ open: false }"
-          class="fixed top-0 left-0 w-full bg-[#100d1a] border-b border-[#2e2e2e] z-50 px-4 py-3 flex justify-between items-center">
-    <!-- Logo / Título -->
-    <div class="text-[#8f4fff] text-2xl font-bold uppercase">ACDA</div>
+<!-- Botão flutuante de navegação ( "?" ) -->
+<button id="navBtn">?</button>
 
-    <!-- Botão Mobile -->
-    <button @click="open = !open"
-            class="md:hidden text-2xl text-[#8f4fff] focus:outline-none">
-      <span x-show="!open">☰</span>
-      <span x-show="open">✕</span>
-    </button>
+<!-- Modal/Drawer leve acionado pelo "?" (vamos usar para os links da ROAR) -->
+<div id="navModal">
+  <div id="navModalContent">
+    <span id="closeNavModal" class="absolute top-3 right-4 text-xl text-purple-400 hover:text-yellow-400 cursor-pointer">✕</span>
+    <h3 class="text-lg font-bold text-purple-400 mb-4">Navegar nesta página</h3>
 
-    <!-- Menu (desktop + mobile) -->
-    <nav :class="open ? 'flex flex-col space-y-4 mt-3 bg-[#100d1a] p-4 rounded-lg shadow-lg absolute top-full left-0 w-full md:static md:flex md:flex-row md:space-y-0 md:space-x-6 md:bg-transparent md:p-0 md:shadow-none' 
-                      : 'hidden md:flex md:space-x-6'">
-      <a href="#lenda-roar" class="hover:text-[#8f4fff]">Sobre</a>
-      <a href="#personagens" class="hover:text-[#8f4fff]">Personagens</a>
-      <a href="#universo" class="hover:text-[#8f4fff]">Mundo</a>
-      <a href="#evento" class="hover:text-[#8f4fff]">Evento</a>
-      <a href="#bastidores" class="hover:text-[#8f4fff]">Bastidores</a>
-      <a href="#cta" class="hover:text-[#8f4fff]">Apoiar</a>
+    <!-- Links da ROAR movidos pra cá -->
+    <button onclick="goToSection('sinopse')"><span>Sinopse</span></button>
+    <button onclick="goToSection('personagens')"><span>Personagens</span></button>
+    <button onclick="goToSection('universo')"><span>Mundo</span></button>
+    <button onclick="goToSection('evento')"><span>Evento</span></button>
+    <button onclick="goToSection('bastidores')"><span>Bastidores</span></button>
+    <button onclick="goToSection('cta')"><span>Apoiar</span></button>
+  </div>
+</div>
+
+<!-- HEADER da página Sobre (idêntico, com hambúrguer) -->
+<header class="fixed top-0 left-0 w-full h-14 bg-[#0a0a0a] border-b border-[#2e2e2e] z-50">
+  <!-- Botão hambúrguer (abre o drawer da direita) -->
+  <button id="hamburgerBtn" class="absolute top-3 right-4 text-3xl text-white hover:text-[#a855f7] transition z-[60]">☰</button>
+
+  <!-- Logo central vazando (opcional trocar imagem) -->
+  <div class="absolute left-1/2 top-full transform -translate-x-1/2 -translate-y-1/2 z-30">
+    <a href="index.html">
+      <img src="assets/images/noheroes logo.png" alt="NoHeroes" class="h-32 drop-shadow-glow" />
+    </a>
+  </div>
+</header>
+
+<!-- Barra gradiente abaixo do header -->
+<div class="fixed top-14 left-0 w-full h-1 barra-degrade z-40"></div>
+
+<!-- Drawer lateral (abre pelo hambúrguer) -->
+<div id="drawer" class="fixed top-0 right-0 w-72 h-full bg-black text-white transform transition-transform duration-300 z-50 glow-interno-left" style="transform: translateX(100%)">
+  <button onclick="toggleDrawer()" class="absolute top-4 right-4 text-3xl text-[#a855f7] hover:text-purple-400 z-50">✕</button>
+
+  <div class="p-6 flex flex-col gap-4">
+    <h1 class="text-3xl font-bold gradiente-noheroes cinzel">NOHEROES</h1>
+    <p class="text-gray-400 text-sm">Universo Sombrio</p>
+
+    <!-- Mantém navegação global do site (igual à Sobre). Ajuste URLs se quiser. -->
+    <nav class="mt-4 flex flex-col gap-3 text-sm">
+      <a href="index.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
+        <div class="flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l9-9 9 9M4 10v10h5v-6h6v6h5V10"/></svg>
+          <span class="text-white">Início</span>
+        </div>
+        <span class="text-xs text-purple-400 cinzel">Portal</span>
+      </a>
+
+      <a href="projects.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
+        <div class="flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12m0-12a2 2 0 012-2h4a2 2 0 012 2v12a2 2 0 01-2 2h-4a2 2 0 01-2-2zm0 0a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2h4a2 2 0 002-2z"/></svg>
+          <span class="text-white">Projetos</span>
+        </div>
+        <span class="text-xs text-purple-400 cinzel">Grimório</span>
+      </a>
+
+      <a href="sobre.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
+        <div class="flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A7 7 0 0112 15a7 7 0 016.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          <span class="text-white">Sobre</span>
+        </div>
+        <span class="text-xs text-purple-400 cinzel">Entidade</span>
+      </a>
+
+      <a href="shop.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
+        <div class="flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 11h14l1 9H4l1-9z"/></svg>
+          <span class="text-white">Loja</span>
+        </div>
+        <span class="text-xs text-purple-400 cinzel">Cartel Velado</span>
+      </a>
+
+      <a href="login.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
+        <div class="flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12l1.5 4.5L11 13l4.5 3.5L18 12l-2.5-4.5L13 11 7.5 7.5z"/></svg>
+          <span class="text-white">Perfil</span>
+        </div>
+        <span class="text-xs text-purple-400 cinzel">Avatar</span>
+      </a>
+
+      <a href="oraculum.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
+        <div class="flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M12 14a4 4 0 10-4-4 1 1 0 001 1h.01a1 1 0 001-1 2 2 0 112 2 2 2 0 01-2 2z"/></svg>
+          <span class="text-white">Oráculo</span>
+        </div>
+        <span class="text-xs text-purple-400 cinzel">Sabedoria</span>
+      </a>
     </nav>
-  </header>
+  </div>
+</div>
+
+<!-- Overlay do drawer -->
+<div id="drawerOverlay" class="fixed inset-0 bg-black bg-opacity-60 hidden z-30"></div>
 
   <!-- Hero Section -->
   <section id="principal" class="relative h-screen bg-cover bg-center" style="background-image:url('assets/images/roar-hero.jpg')">
@@ -785,7 +889,6 @@ Vitalista misterioso com poderes do sangue e da luz. Ator dos bastidores, guardi
 
   <!-- Mobile Menu + ScrollReveal -->
   <script>
-    const btn = document.getElementById('mobile-menu-button'),
           nav = document.querySelector('header nav');
     btn.addEventListener('click', () => {
       nav.classList.toggle('hidden');
@@ -803,6 +906,38 @@ Vitalista misterioso com poderes do sangue e da luz. Ator dos bastidores, guardi
       easing: 'ease-in-out',
       reset: false
     });
+  // Drawer (hambúrguer)
+  const drawer        = document.getElementById('drawer');
+  const drawerOverlay = document.getElementById('drawerOverlay');
+  const hamburgerBtn  = document.getElementById('hamburgerBtn');
+
+  function toggleDrawer(force){
+    const isOpen = drawer.style.transform === 'translateX(0%)';
+    const open = (force === true) || (!isOpen && force !== false);
+    drawer.style.transform = open ? 'translateX(0%)' : 'translateX(100%)';
+    drawerOverlay.classList.toggle('hidden', !open);
+  }
+
+  hamburgerBtn.addEventListener('click', () => toggleDrawer(true));
+  drawerOverlay.addEventListener('click', () => toggleDrawer(false));
+
+  // Modal do "?"
+  const navBtn         = document.getElementById('navBtn');
+  const navModal       = document.getElementById('navModal');
+  const closeNavModal  = document.getElementById('closeNavModal');
+
+  navBtn.addEventListener('click', () => { navModal.style.display = 'block'; });
+  closeNavModal.addEventListener('click', () => { navModal.style.display = 'none'; });
+  navModal.addEventListener('click', (e) => {
+    if(e.target === navModal){ navModal.style.display = 'none'; }
+  });
+
+  // Scroll para seções da própria página
+  function goToSection(id){
+    navModal.style.display = 'none';
+    const el = document.getElementById(id);
+    if(el){ el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  }
 </script>
 </body>
 </html>
