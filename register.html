@@ -196,61 +196,49 @@
       }
     });
 
-    // ----------------- Brasas / Embers Background -----------------
+    // ----------------- Brasas — Padrão NoHeroes (roxas, suaves) -----------------
     (function(){
-      const c = document.getElementById('brasasCanvas');
-      if(!c) return; const ctx = c.getContext('2d');
-      let W, H, dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const EMBERS_COUNT = 120; // ajuste de performance / densidade
-      const particles = [];
+      const canvas = document.getElementById('brasasCanvas');
+      if(!canvas) return; const ctx = canvas.getContext('2d');
+      let particles = [];
 
       function resize(){
-        W = c.width = Math.floor(innerWidth * dpr);
-        H = c.height = Math.floor(innerHeight * dpr);
-        c.style.width = innerWidth + 'px';
-        c.style.height = innerHeight + 'px';
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
       }
-      window.addEventListener('resize', resize, {passive:true});
+      addEventListener('resize', resize, {passive:true});
       resize();
 
-      function rand(min,max){return Math.random()*(max-min)+min}
-      function spawn(p){
-        p.x = rand(0, W);
-        p.y = H + rand(0, H*0.2);
-        p.vx = rand(-0.05, 0.05) * dpr;
-        p.vy = -rand(0.2, 0.7) * dpr;
-        p.size = rand(1.2, 2.8) * dpr;
-        p.life = rand(1.5, 4);
-        p.age = 0;
-        p.hue = rand(10, 40); // laranja/amarelo
-      }
-      for(let i=0;i<EMBERS_COUNT;i++){
-        const p = {}; spawn(p); p.y = rand(0,H); particles.push(p);
-      }
-
-      function step(dt){
-        ctx.clearRect(0,0,W,H);
-        ctx.globalCompositeOperation = 'lighter';
-        for(const p of particles){
-          p.age += dt; if(p.age > p.life) spawn(p);
-          p.x += p.vx * (1 + Math.sin(p.age*3)*0.2);
-          p.y += p.vy;
-          const alpha = Math.max(0, 1 - p.age/p.life);
-          const grd = ctx.createRadialGradient(p.x,p.y,0, p.x,p.y, p.size*3);
-          grd.addColorStop(0, `hsla(${p.hue}, 90%, 60%, ${0.35*alpha})`);
-          grd.addColorStop(1, `hsla(${p.hue}, 90%, 60%, 0)`);
-          ctx.fillStyle = grd;
-          ctx.beginPath(); ctx.arc(p.x,p.y,p.size*3,0,Math.PI*2); ctx.fill();
+      function create(count){
+        particles = [];
+        for(let i=0;i<count;i++){
+          particles.push({
+            x: Math.random()*canvas.width,
+            y: Math.random()*canvas.height,
+            r: Math.random()*1.5 + 1,
+            vy: Math.random()*-0.5 - 0.2,
+            a: Math.random()*0.5 + 0.5
+          });
         }
-        ctx.globalCompositeOperation = 'source-over';
       }
 
-      let last = performance.now();
-      function loop(now){
-        const dt = Math.min(0.05, (now - last)/1000); last = now;
-        step(dt); requestAnimationFrame(loop);
+      function loop(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        particles.forEach(p=>{
+          p.y += p.vy;
+          if(p.y < 0) p.y = canvas.height;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+          ctx.fillStyle = `rgba(168, 85, 247, ${p.a})`; // roxo NoHeroes
+          ctx.shadowColor = '#a855f7';
+          ctx.shadowBlur = 12;
+          ctx.fill();
+        });
+        requestAnimationFrame(loop);
       }
-      requestAnimationFrame(loop);
+
+      create(110);
+      loop();
     })();
   </script></body>
 </html>
