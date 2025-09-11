@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Raul — Portfólio</title>
   <meta name="description" content="Portfólio de Raul: Web design & programação, arte digital e escrita/roteiro. Solicite orçamento." />
   <meta property="og:title" content="Raul — Portfólio" />
@@ -12,33 +12,27 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
-  <!-- Tailwind via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            base: { 900: '#0a0a0b', 800: '#0f0f12', 700: '#14141a', 600: '#1a1a22' },
-            accent: { 500: '#b88cff', 600: '#a779ff', 700: '#8f5bff' },
-            gold: { 400: '#f6d68e', 500: '#f1c663', 600: '#e6b74a' }
+            base: { 900:'#0a0a0b', 800:'#0f0f12', 700:'#14141a', 600:'#1a1a22' },
+            accent:{ 500:'#b88cff', 600:'#a779ff', 700:'#8f5bff' },
+            gold:{ 400:'#f6d68e', 500:'#f1c663', 600:'#e6b74a' }
           },
-          fontFamily: {
-            sans: ['Inter','system-ui','ui-sans-serif','Arial'],
-            display: ['Cinzel Decorative','serif']
+          fontFamily:{ sans:['Inter','system-ui','ui-sans-serif','Arial'], display:['Cinzel Decorative','serif'] },
+          boxShadow:{ glow:'0 0 40px rgba(184,140,255,0.25), inset 0 0 30px rgba(241,198,99,0.10)' },
+          animation:{
+            'fade-up':'fadeUp .8s cubic-bezier(.2,.6,.2,1) both',
+            'fade-in':'fadeIn .6s ease-out both',
+            'shimmer':'shimmer 2.2s linear infinite'
           },
-          boxShadow: {
-            glow: '0 0 40px rgba(184,140,255,0.25), inset 0 0 30px rgba(241,198,99,0.10)'
-          },
-          animation: {
-            'float-slow': 'float 8s ease-in-out infinite',
-            'pulse-soft': 'pulseSoft 3s ease-in-out infinite',
-            'shimmer': 'shimmer 2.2s linear infinite'
-          },
-          keyframes: {
-            float: { '0%,100%': {transform:'translateY(0)'}, '50%': {transform:'translateY(-10px)'} },
-            pulseSoft: { '0%,100%': {opacity:1}, '50%': {opacity:.7} },
-            shimmer: { '0%': {backgroundPosition:'-500px 0'}, '100%': {backgroundPosition:'500px 0'} }
+          keyframes:{
+            fadeUp:{ from:{ opacity:0, transform:'translateY(18px) scale(.98)' }, to:{ opacity:1, transform:'translateY(0) scale(1)' } },
+            fadeIn:{ from:{ opacity:0 }, to:{ opacity:1 } },
+            shimmer:{ '0%':{ backgroundPosition:'-500px 0' }, '100%':{ backgroundPosition:'500px 0' } }
           }
         }
       }
@@ -52,32 +46,44 @@
       --grad: linear-gradient(135deg, #8f5bff 0%, #b88cff 40%, #f1c663 100%);
       --grad-soft: radial-gradient(60% 60% at 70% 30%, rgba(184,140,255,0.3) 0%, rgba(0,0,0,0) 60%), radial-gradient(40% 40% at 20% 80%, rgba(241,198,99,0.25) 0%, rgba(0,0,0,0) 60%);
     }
-    .grad-text{ background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .card{ background: var(--glass); border: 1px solid var(--border); border-radius: var(--radius); backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,.35); }
-    .btn{ border-radius: 999px; border: 1px solid var(--border); padding: .75rem 1.1rem; background: rgba(255,255,255,0.05); display:inline-flex; align-items:center; gap:.6rem; }
-    .btn:hover{ background: rgba(255,255,255,0.08); transform: translateY(-1px); }
-    .reveal{ opacity: 0; transform: translateY(16px); transition: opacity .7s ease, transform .7s ease; }
-    .reveal.in{ opacity: 1; transform: translateY(0); }
-    .ph{ position: relative; overflow: hidden; background: #121218; border-radius: 14px; }
-    .ph::after{ content:''; position:absolute; inset:0; background-image:linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.08), rgba(255,255,255,0)); background-size:500px 100%; animation: shimmer 2.2s linear infinite; }
+    .grad-text{ background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .card{ background:var(--glass); border:1px solid var(--border); border-radius:var(--radius); backdrop-filter:blur(10px); box-shadow:0 10px 30px rgba(0,0,0,.35); }
+    .btn{ border-radius:999px; border:1px solid var(--border); padding:.7rem 1rem; background:rgba(255,255,255,0.05); display:inline-flex; align-items:center; gap:.6rem; white-space:nowrap; }
+    .btn[aria-pressed="true"]{ outline:2px solid rgba(184,140,255,.5); }
+    .btn:hover{ background:rgba(255,255,255,0.08); transform:translateY(-1px); }
+    .ph{ position:relative; overflow:hidden; background:#121218; border-radius:14px; }
+    .ph::after{ content:''; position:absolute; inset:0; background-image:linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.08), rgba(255,255,255,0)); background-size:500px 100%; animation:shimmer 2.2s linear infinite; }
+    .reveal{ opacity:0; transform:translateY(16px) scale(.98); }
+    .reveal.in{ opacity:1; transform:none; transition:opacity .6s ease, transform .6s cubic-bezier(.2,.6,.2,1); }
+    .badge{ display:inline-flex; align-items:center; gap:.4rem; font-size:.72rem; line-height:1; padding:.45rem .7rem; border-radius:999px; border:1px solid var(--border); background:rgba(255,255,255,.04); }
+    .list-compact li{ margin-top:.5rem; display:flex; gap:.6rem; }
+    .list-compact li::before{ content:"•"; color:#b88cff; margin-top:.1rem; }
     @media (prefers-reduced-motion: reduce){ *{ animation:none!important; transition:none!important } }
-.badge {
-  display:inline-flex; align-items:center; gap:.4rem;
-  font-size: .72rem; line-height: 1;
-  padding: .45rem .7rem; border-radius: 999px;
-  border: 1px solid var(--border); background: rgba(255,255,255,.04);
-}
-.list-compact li { margin-top:.5rem; display:flex; gap:.6rem; }
-.list-compact li::before { content:"•"; color:#b88cff; margin-top:.1rem; }
-</style>
+
+    /* --- Correção overflow e mobile robustness --- */
+    html, body{ width:100%; max-width:100%; overflow-x:hidden; }
+    header, main, footer{ max-width:100vw; overflow-x:clip; }
+    img, video, canvas, svg{ max-width:100%; height:auto; }
+    .card, .ph{ contain:layout paint; }
+
+    /* Melhorias de layout no mobile para o header do bloco Vitrines */
+    .vitrines-head{ flex-wrap:wrap; }
+    .vitrines-title{ width:100%; }
+    .vitrines-actions{ width:100%; }
+
+    @media (min-width: 768px){
+      .vitrines-title{ width:auto; }
+      .vitrines-actions{ width:auto; }
+    }
+  </style>
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Raul",
-    "jobTitle": "Designer/Programador, Artista Digital, Escritor/Roteirista",
-    "url": "https://noheroes.com.br",
-    "sameAs": []
+    "@context":"https://schema.org",
+    "@type":"Person",
+    "name":"Raul",
+    "jobTitle":"Designer/Programador, Artista Digital, Escritor/Roteirista",
+    "url":"https://noheroes.com.br",
+    "sameAs":[]
   }
   </script>
 </head>
@@ -85,13 +91,13 @@
   <!-- Background -->
   <div class="pointer-events-none fixed inset-0 -z-10" aria-hidden="true">
     <div class="absolute inset-0" style="background:var(--grad-soft)"></div>
-    <div class="absolute inset-0 opacity-[0.15]" style="background-image: radial-gradient(1px 1px at 20px 20px, rgba(255,255,255,0.08) 1px, transparent 0); background-size: 24px 24px;"></div>
+    <div class="absolute inset-0 opacity-[0.15]" style="background-image:radial-gradient(1px 1px at 20px 20px, rgba(255,255,255,0.08) 1px, transparent 0); background-size:24px 24px;"></div>
   </div>
 
   <!-- Header -->
   <header class="sticky top-0 z-50 backdrop-blur border-b border-white/5 bg-base-900/70">
-    <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <a href="#" class="flex items-center gap-2 font-display text-xl">
+    <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between" role="navigation" aria-label="Principal">
+      <a href="#intro" class="flex items-center gap-2 font-display text-xl">
         <span class="w-6 h-6 rounded-full" style="background:var(--grad)"></span>
         <span class="grad-text">RAUL</span>
       </a>
@@ -99,26 +105,27 @@
         <li><a class="hover:text-white/90" href="#intro">Início</a></li>
         <li><a class="hover:text-white/90" href="#bio">Biografia</a></li>
         <li><a class="hover:text-white/90" href="#vitrines">Vitrines</a></li>
+        <li><a class="hover:text-white/90" href="#proprios">Projetos</a></li>
         <li><a class="hover:text-white/90" href="#contato">Contato</a></li>
-<li><a class="hover:text-white/90" href="#proprios">Projetos</a></li>
       </ul>
       <div class="flex items-center gap-2">
         <a href="#contato" class="btn" aria-label="Solicitar orçamento">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" stroke-width="1.5"/><path d="M7 10l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Solicitar orçamento
         </a>
-        <button class="md:hidden btn" id="menuBtn" aria-label="Abrir menu">
+        <button class="md:hidden btn" id="menuBtn" aria-label="Abrir menu" aria-controls="mobileMenu" aria-expanded="false">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         </button>
       </div>
     </nav>
     <!-- Mobile menu -->
-    <div id="mobileMenu" class="hidden md:hidden border-t border-white/5">
+    <div id="mobileMenu" class="hidden md:hidden border-t border-white/5 bg-base-900" role="dialog" aria-modal="true">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3 grid gap-3">
-        <a class="btn" href="#intro">Início</a>
-        <a class="btn" href="#bio">Biografia</a>
-        <a class="btn" href="#vitrines">Vitrines</a>
-        <a class="btn" href="#contato">Contato</a>
+        <a class="btn" href="#intro" data-close-menu>Início</a>
+        <a class="btn" href="#bio" data-close-menu>Biografia</a>
+        <a class="btn" href="#vitrines" data-close-menu>Vitrines</a>
+        <a class="btn" href="#proprios" data-close-menu>Projetos</a>
+        <a class="btn" href="#contato" data-close-menu>Contato</a>
       </div>
     </div>
   </header>
@@ -133,7 +140,7 @@
             Construo <span class="grad-text">experiências digitais</span> que unem <span class="grad-text">design, código e narrativa</span>.
           </h1>
           <p class="mt-5 text-zinc-300/90 leading-relaxed max-w-2xl">
-            Sou Raul Takagi. Transformo ideias em produtos, marcas e histórias. Do front-end ao back-end, de artes visuais a roteiros — foco em impacto real, estética precisa e entrega profissional.
+            Sou Raul. Transformo ideias em produtos, marcas e histórias. Do front-end ao back-end, de artes visuais a roteiros — foco em impacto real, estética precisa e entrega profissional.
           </p>
           <div class="mt-7 flex flex-wrap gap-3">
             <a href="#vitrines" class="btn">Ver vitrines</a>
@@ -178,13 +185,13 @@
         <div class="lg:col-span-7 grid md:grid-cols-3 gap-4">
           <div class="card p-5 reveal">
             <p class="text-sm text-zinc-400">Experiência</p>
-            <p class="mt-2 text-2xl font-semibold">5+ anos</p>
-            <p class="mt-2 text-sm text-zinc-400">Criação, código e narrativa</p>
+            <p class="mt-2 text-2xl font-semibold">+1 ano</p>
+            <p class="mt-2 text-sm text-zinc-400">Prática real em projetos</p>
           </div>
           <div class="card p-5 reveal">
             <p class="text-sm text-zinc-400">Projetos</p>
-            <p class="mt-2 text-2xl font-semibold">25+</p>
-            <p class="mt-2 text-sm text-zinc-400">Sites, artes e roteiros</p>
+            <p class="mt-2 text-2xl font-semibold">3</p>
+            <p class="mt-2 text-sm text-zinc-400">Concluídos até aqui</p>
           </div>
           <div class="card p-5 reveal">
             <p class="text-sm text-zinc-400">Foco</p>
@@ -201,16 +208,16 @@
 
     <!-- Vitrines -->
     <section id="vitrines" class="pb-24">
-      <div class="flex items-end justify-between gap-4 mb-6 flex-wrap">
-  <h2 class="font-display text-3xl grad-text w-full md:w-auto">Vitrines</h2>
-  <div class="flex flex-wrap gap-2 text-xs w-full md:w-auto">
-    <button class="btn" data-tab="web">Web design & Programação</button>
-    <button class="btn" data-tab="arte">Arte digital</button>
-    <button class="btn" data-tab="escrita">Escrita & Roteiro</button>
-  </div>
-</div>
+      <div class="flex items-end justify-between gap-4 mb-6 vitrines-head">
+        <h2 class="font-display text-3xl grad-text vitrines-title">Vitrines</h2>
+        <div class="flex flex-wrap gap-2 text-xs vitrines-actions" role="tablist" aria-label="Categorias de vitrine">
+          <button class="btn" role="tab" aria-selected="true" aria-controls="tab-web" id="tab-web-btn" data-tab="web">Web design & Programação</button>
+          <button class="btn" role="tab" aria-selected="false" aria-controls="tab-arte" id="tab-arte-btn" data-tab="arte">Arte digital</button>
+          <button class="btn" role="tab" aria-selected="false" aria-controls="tab-escrita" id="tab-escrita-btn" data-tab="escrita">Escrita & Roteiro</button>
+        </div>
+      </div>
 
-      <div id="tab-web" class="tab">
+      <div id="tab-web" class="tab" role="tabpanel" tabindex="0" aria-labelledby="tab-web-btn">
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <article class="card overflow-hidden reveal">
             <div class="aspect-[4/3] ph"></div>
@@ -236,7 +243,7 @@
         </div>
       </div>
 
-      <div id="tab-arte" class="tab hidden">
+      <div id="tab-arte" class="tab hidden" role="tabpanel" tabindex="-1" aria-labelledby="tab-arte-btn">
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <article class="card overflow-hidden reveal">
             <div class="aspect-[3/4] ph"></div>
@@ -262,7 +269,7 @@
         </div>
       </div>
 
-      <div id="tab-escrita" class="tab hidden">
+      <div id="tab-escrita" class="tab hidden" role="tabpanel" tabindex="-1" aria-labelledby="tab-escrita-btn">
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <article class="card overflow-hidden reveal">
             <div class="aspect-[21/9] ph"></div>
@@ -289,6 +296,67 @@
       </div>
     </section>
 
+    <!-- Projetos Próprios -->
+    <section id="proprios" class="pb-28">
+      <div class="flex items-end justify-between gap-4 mb-6 flex-wrap">
+        <h2 class="font-display text-3xl grad-text w-full md:w-auto">Projetos Próprios</h2>
+        <div class="flex flex-wrap gap-2 text-xs w-full md:w-auto">
+          <span class="badge">Transmídia</span>
+          <span class="badge">App + Web</span>
+          <span class="badge">IP Original</span>
+        </div>
+      </div>
+
+      <div class="grid lg:grid-cols-12 gap-8 items-stretch">
+        <aside class="lg:col-span-5 card p-4 sm:p-6 md:p-8 relative overflow-hidden">
+          <div class="absolute -top-24 -right-24 w-64 h-64 rounded-full blur-3xl opacity-30" style="background:var(--grad)"></div>
+          <div class="aspect-[4/3] ph flex items-center justify-center text-zinc-500">
+            <span class="text-sm">Placeholder — Arte/Poster NoHeroes</span>
+          </div>
+          <div class="mt-4 grid grid-cols-3 gap-3">
+            <div class="h-16 ph"></div>
+            <div class="h-16 ph"></div>
+            <div class="h-16 ph"></div>
+          </div>
+          <p class="mt-4 text-xs text-zinc-400">Imagens reais entram aqui depois (logo, capa do livro, cenas do app).</p>
+        </aside>
+
+        <article class="lg:col-span-7 card p-6 sm:p-8">
+          <h3 class="text-2xl font-semibold">NoHeroes — Universo de Fantasia</h3>
+          <p class="mt-3 text-zinc-300/90">
+            IP autoral dark-fantasy em expansão: livro, app gamificado, loja digital e futuro game.
+            Responsável por identidade visual, produto, arquitetura web e narrativa.
+          </p>
+
+          <div class="mt-5 grid sm:grid-cols-2 gap-4">
+            <div>
+              <h4 class="text-sm text-zinc-400">Pilares</h4>
+              <ul class="mt-2 text-sm text-zinc-300/90 list-compact">
+                <li>Site oficial + loja (Node/Express, PostgreSQL, JWT, Mercado Pago)</li>
+                <li>App (MVP) com quests, inventário e moeda interna</li>
+                <li>Roteiro/lore originais (universo, clãs, criaturas, política)</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-sm text-zinc-400">Destaques</h4>
+              <ul class="mt-2 text-sm text-zinc-300/90 list-compact">
+                <li>Design dark moderno (gradiente roxo-dourado, “brasas”)</li>
+                <li>Arquitetura pronta para transmedia (web, app, game)</li>
+                <li>Sistema de doações e metas transparentes</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a class="btn" href="https://noheroes.com.br" target="_blank" rel="noopener">🌐 Site</a>
+            <a class="btn" href="https://noheroes.com.br/loja" target="_blank" rel="noopener">🛒 Loja</a>
+            <a class="btn" href="#" aria-disabled="true">📱 App (beta — em breve)</a>
+            <a class="btn" href="#" aria-disabled="true">📘 Livro (teaser — em breve)</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
     <!-- CTA / Contato -->
     <section id="contato" class="pb-28">
       <div class="card p-6 md:p-10 reveal">
@@ -296,7 +364,6 @@
           <div>
             <h2 class="font-display text-3xl grad-text">Vamos trabalhar juntos</h2>
             <p class="mt-3 text-zinc-300/90">Descreva rapidamente seu projeto e receba orçamento.</p>
-
             <div class="mt-6 grid sm:grid-cols-2 gap-3">
               <a class="btn" href="mailto:contato@noheroes.com.br">✉️ contato@noheroes.com.br</a>
               <a class="btn" href="https://wa.me/5599999999999" target="_blank" rel="noopener">💬 WhatsApp</a>
@@ -304,7 +371,7 @@
               <a class="btn" href="#" aria-disabled="true">ArtStation/Behance (em breve)</a>
             </div>
           </div>
-          <form class="space-y-4" onsubmit="event.preventDefault(); alert('Formulário de exemplo. Integrar com backend depois.');">
+          <form class="space-y-4" onsubmit="event.preventDefault(); alert('Formulário de exemplo. Integrar com backend depois.');" aria-label="Formulário de contato">
             <div class="grid sm:grid-cols-2 gap-4">
               <label class="grid gap-2">
                 <span class="text-sm text-zinc-400">Seu nome</span>
@@ -334,68 +401,6 @@
         </div>
       </div>
     </section>
-<!-- Projetos Próprios -->
-<section id="proprios" class="pb-28">
-  <div class="flex items-end justify-between gap-4 mb-6 flex-wrap">
-    <h2 class="font-display text-3xl grad-text w-full md:w-auto">Projetos Próprios</h2>
-    <div class="flex flex-wrap gap-2 text-xs w-full md:w-auto">
-      <span class="badge">Transmídia</span>
-      <span class="badge">App + Web</span>
-      <span class="badge">IP Original</span>
-    </div>
-  </div>
-
-  <div class="grid lg:grid-cols-12 gap-8 items-stretch">
-    <!-- Visual / Mockup -->
-    <aside class="lg:col-span-5 card p-4 sm:p-6 md:p-8 relative overflow-hidden">
-      <div class="absolute -top-24 -right-24 w-64 h-64 rounded-full blur-3xl opacity-30" style="background:var(--grad)"></div>
-      <div class="aspect-[4/3] ph flex items-center justify-center text-zinc-500">
-        <span class="text-sm">Placeholder — Arte/Poster NoHeroes</span>
-      </div>
-      <div class="mt-4 grid grid-cols-3 gap-3">
-        <div class="h-16 ph"></div>
-        <div class="h-16 ph"></div>
-        <div class="h-16 ph"></div>
-      </div>
-      <p class="mt-4 text-xs text-zinc-400">Imagens reais entram aqui depois (logo, capa do livro, cenas do app).</p>
-    </aside>
-
-    <!-- Conteúdo -->
-    <article class="lg:col-span-7 card p-6 sm:p-8">
-      <h3 class="text-2xl font-semibold">NoHeroes — Universo de Fantasia</h3>
-      <p class="mt-3 text-zinc-300/90">
-        IP autoral dark-fantasy em expansão: livro, app gamificado, loja digital e futuro game.
-        Responsável por identidade visual, produto, arquitetura web e narrativa.
-      </p>
-
-      <div class="mt-5 grid sm:grid-cols-2 gap-4">
-        <div>
-          <h4 class="text-sm text-zinc-400">Pilares</h4>
-          <ul class="mt-2 text-sm text-zinc-300/90 list-compact">
-            <li>Site oficial + loja (Node/Express, PostgreSQL, JWT, Mercado Pago)</li>
-            <li>App (MVP) com quests, inventário e moeda interna</li>
-            <li>Roteiro/lore originais (universo, clãs, criaturas, política)</li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="text-sm text-zinc-400">Destaques</h4>
-          <ul class="mt-2 text-sm text-zinc-300/90 list-compact">
-            <li>Design dark moderno (gradiente roxo-dourado, “brasas”)</li>
-            <li>Arquitetura pronta para transmedia (web, app, game)</li>
-            <li>Sistema de doações e metas transparentes</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="mt-6 flex flex-wrap gap-3">
-        <a class="btn" href="https://noheroes.com.br" target="_blank" rel="noopener">🌐 Site</a>
-        <a class="btn" href="https://noheroes.com.br/loja" target="_blank" rel="noopener">🛒 Loja</a>
-        <a class="btn" href="#" aria-disabled="true">📱 App (beta — em breve)</a>
-        <a class="btn" href="#" aria-disabled="true">📘 Livro (teaser — em breve)</a>
-      </div>
-    </article>
-  </div>
-</section>
   </main>
 
   <footer class="border-t border-white/5 py-10 text-center text-sm text-zinc-500">
@@ -405,42 +410,128 @@
   </footer>
 
   <script>
+    // Util: select
+    const $ = (sel, root=document) => root.querySelector(sel);
+    const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
     // Ano atual
-    document.getElementById('year').textContent = new Date().getFullYear();
+    $('#year').textContent = new Date().getFullYear();
 
-    // Menu mobile
-    const menuBtn = document.getElementById('menuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    if (menuBtn) menuBtn.addEventListener('click', ()=> mobileMenu.classList.toggle('hidden'));
-
-    // Tabs
-    const tabButtons = document.querySelectorAll('[data-tab]');
-    const tabs = {
-      web: document.getElementById('tab-web'),
-      arte: document.getElementById('tab-arte'),
-      escrita: document.getElementById('tab-escrita')
-    };
-    tabButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const key = btn.getAttribute('data-tab');
-        Object.values(tabs).forEach(el => el.classList.add('hidden'));
-        tabs[key].classList.remove('hidden');
-      })
-    });
-
-    // Reveal on scroll
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); })
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
-
-    // Smooth scroll
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    // Smooth scroll + fecha menu mobile ao navegar
+    $$('a[href^="#"]').forEach(a=>{
       a.addEventListener('click', e=>{
         const href = a.getAttribute('href');
-        if(href.length > 1){ e.preventDefault(); document.querySelector(href).scrollIntoView({behavior:'smooth'}); }
-      })
+        if(href && href.length > 1){
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if(target){ target.scrollIntoView({behavior:'smooth', block:'start'}); }
+          if(a.hasAttribute('data-close-menu')) closeMobileMenu();
+        }
+      });
     });
+
+    // Mobile menu: abrir/fechar + clicar fora
+    const menuBtn = $('#menuBtn');
+    const mobileMenu = $('#mobileMenu');
+    const openMobileMenu = () => {
+      mobileMenu.classList.remove('hidden');
+      menuBtn.setAttribute('aria-expanded','true');
+      document.addEventListener('click', outsideMenuHandler, { capture:true });
+      document.addEventListener('keydown', escMenuHandler);
+    };
+    const closeMobileMenu = () => {
+      mobileMenu.classList.add('hidden');
+      menuBtn.setAttribute('aria-expanded','false');
+      document.removeEventListener('click', outsideMenuHandler, { capture:true });
+      document.removeEventListener('keydown', escMenuHandler);
+    };
+    const outsideMenuHandler = (ev) => {
+      if(!mobileMenu.contains(ev.target) && ev.target !== menuBtn) closeMobileMenu();
+    };
+    const escMenuHandler = (ev) => { if(ev.key === 'Escape') closeMobileMenu(); };
+
+    if(menuBtn){
+      menuBtn.addEventListener('click', (e)=>{
+        const open = menuBtn.getAttribute('aria-expanded') === 'true';
+        open ? closeMobileMenu() : openMobileMenu();
+        e.stopPropagation();
+      });
+    }
+
+    // Tabs acessíveis (click, teclado, ARIA)
+    const tabButtons = $$('.vitrines-actions [data-tab]');
+    const tabPanels = {
+      web: $('#tab-web'),
+      arte: $('#tab-arte'),
+      escrita: $('#tab-escrita')
+    };
+
+    const activateTab = (key) => {
+      // botões
+      tabButtons.forEach(btn=>{
+        const isActive = btn.getAttribute('data-tab') === key;
+        btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+      // painéis
+      Object.entries(tabPanels).forEach(([k,el])=>{
+        if(k === key){
+          el.classList.remove('hidden');
+          el.setAttribute('tabindex','0');
+        } else {
+          el.classList.add('hidden');
+          el.setAttribute('tabindex','-1');
+        }
+      });
+    };
+
+    tabButtons.forEach(btn=>{
+      btn.addEventListener('click', ()=> activateTab(btn.getAttribute('data-tab')));
+      btn.addEventListener('keydown', (e)=>{
+        const idx = tabButtons.indexOf(btn);
+        if(['ArrowRight','ArrowLeft','Home','End'].includes(e.key)){
+          e.preventDefault();
+          let next = idx;
+          if(e.key === 'ArrowRight') next = (idx + 1) % tabButtons.length;
+          if(e.key === 'ArrowLeft')  next = (idx - 1 + tabButtons.length) % tabButtons.length;
+          if(e.key === 'Home')       next = 0;
+          if(e.key === 'End')        next = tabButtons.length - 1;
+          tabButtons[next].focus();
+          activateTab(tabButtons[next].getAttribute('data-tab'));
+        }
+      });
+    });
+    activateTab('web');
+
+    // Reveal on scroll (fadeUp), respeita reduced motion
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(!prefersReduced){
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting){
+            e.target.classList.add('in');
+            e.target.style.animation = 'fadeUp .7s cubic-bezier(.2,.6,.2,1) both';
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -10% 0px' });
+      $$('.reveal').forEach(el=> io.observe(el));
+    } else {
+      $$('.reveal').forEach(el=> el.classList.add('in'));
+    }
+
+    // Hardening de layout: detecta elemento que estoura largura (debug opcional)
+    // (deixe comentado; use no DevTools se precisar)
+    // (() => {
+    //   const vw = document.documentElement.clientWidth;
+    //   let offender = null, max = vw;
+    //   document.querySelectorAll('body *').forEach(el => {
+    //     const rect = el.getBoundingClientRect();
+    //     const w = rect.right - rect.left;
+    //     if (w > max) { max = w; offender = el; }
+    //   });
+    //   if(max > vw + 2) console.warn('Elemento maior que viewport:', offender, max, '>', vw);
+    // })();
   </script>
 </body>
 </html>
