@@ -61,7 +61,26 @@
     .ph{ position: relative; overflow: hidden; background: #121218; border-radius: 14px; }
     .ph::after{ content:''; position:absolute; inset:0; background-image:linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.08), rgba(255,255,255,0)); background-size:500px 100%; animation: shimmer 2.2s linear infinite; }
     @media (prefers-reduced-motion: reduce){ *{ animation:none!important; transition:none!important } }
-  </style>
+  html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;              /* trava o scroll horizontal */
+}
+
+main, header, footer {
+  max-width: 100vw;
+  overflow-x: clip;                /* evita vazamento de sombras/absolutos */
+}
+
+img, video, canvas, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.card, .ph {
+  contain: layout paint;           /* isola efeitos e sombras que empurram a largura */
+}
+</style>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
