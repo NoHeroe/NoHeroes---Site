@@ -347,7 +347,7 @@ document.getElementById('formDoacao').addEventListener('input', (e)=>{
   pendingDonation.destino = f.get('destino')||'geral';
 });
 
-/* ===== PIX (payload BR Code + QR) ===== */
+// ----- PIX: payload BR Code + QR -----
 function emv(k, v){ const len = String(v.length).padStart(2,'0'); return `${k}${len}${v}`; }
 function crc16(payload){
   let p = 0x1021, crc = 0xFFFF;
@@ -376,26 +376,36 @@ function buildPix({key, name, city, txid='NOHEROES', amount, desc=''}) {
   const crc = crc16(payload + '0000');
   return payload + crc;
 }
-document.getElementById('payPix').addEventListener('click', ()=>{
+
+const pixModal = document.getElementById('modalPix');
+const payPixBtn = document.getElementById('payPix');
+payPixBtn.setAttribute('type','button'); // garante que não faz submit
+payPixBtn.addEventListener('click', ()=>{
   if(!pendingDonation.valor){ alert('Informe um valor.'); return; }
   const payload = buildPix({
-    key: 'azuosraul999@gmail.com',       // TODO: sua CHAVE PIX
-    name:'NOHEROES R',                   // até 25 chars
-    city:'SAO PAULO',                    // sem acento
+    key: 'azuosraul999@gmail.com', // TODO: sua CHAVE PIX real
+    name:'NOHEROES R',             // máx 25 chars
+    city:'SAO PAULO',              // sem acento
     txid:(pendingDonation.destino==='servidor'?'SERVIDOR':'GERAL')+'-'+Date.now(),
     amount: pendingDonation.valor,
     desc: pendingDonation.destino==='servidor'?'Servidor':'NoHeroes'
   });
+  // Preenche e cria QR
   const codeEl = document.getElementById('pixCode');
   codeEl.value = payload;
   const container = document.getElementById('pixQr');
   container.innerHTML = '';
-  QRCode.toCanvas(payload,{errorCorrectionLevel:'M', width:220},(err,canvas)=>{
-    if(err){ console.error(err); alert('Falha ao gerar QR PIX'); return; }
-    container.appendChild(canvas);
-  });
-  document.getElementById('modalPix').classList.add('show');
+  if (window.QRCode) {
+    QRCode.toCanvas(payload,{errorCorrectionLevel:'M', width:220},(err,canvas)=>{
+      if(err){ console.error(err); alert('Falha ao gerar QR PIX'); return; }
+      container.appendChild(canvas);
+    });
+  } else {
+    container.innerHTML = '<div class="text-sm text-white/60">Falha ao carregar gerador de QR. Copie o código abaixo.</div>';
+  }
+  pixModal.classList.add('show');
 });
+
 document.getElementById('copyPix').addEventListener('click', ()=>{
   const el = document.getElementById('pixCode');
   el.select(); el.setSelectionRange(0,99999);
