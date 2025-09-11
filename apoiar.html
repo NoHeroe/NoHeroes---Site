@@ -6,6 +6,10 @@
 <title>Apoiar — NoHeroes</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
+<!-- PayPal SDK (trocar client-id) -->
+<script src="https://www.paypal.com/sdk/js?client-id=SEU_CLIENT_ID&currency=BRL" data-sdk-integration-source="button-factory"></script>
+<!-- QRCode lib para PIX -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 <style>
   :root{
     --nh-bg:#0a0a0a; --nh-fg:#e5e5e5; --nh-muted:#bdbdbd;
@@ -28,6 +32,7 @@
   .kpi .dot{width:.6rem; height:.6rem; border-radius:999px; background:linear-gradient(135deg,#8f4fff,#facc15)}
   .progress{height:.6rem; border-radius:999px; background:#1a1a1a; border:1px solid var(--border); overflow:hidden}
   .progress > span{display:block; height:100%; background:var(--grad)}
+
   /* Cinematic reveal */
   .reveal{opacity:0; transform: translateY(18px) scale(.985); filter:blur(6px); will-change:opacity,transform,filter}
   .reveal.in{animation:cinematic var(--reveal-duration) cubic-bezier(.22,.61,.36,1) var(--reveal-delay,0ms) both}
@@ -37,23 +42,33 @@
     100%{opacity:1; transform:translateY(0) scale(1); filter:blur(0)}
   }
   @media (prefers-reduced-motion: reduce){ .reveal{opacity:1; transform:none; filter:none} .reveal.in{animation:none} }
+
   /* Overlay/modal */
   .overlay{position:fixed; inset:0; background:rgba(0,0,0,.7); display:none; align-items:center; justify-content:center; z-index:60}
   .overlay.show{display:flex}
   .modal{background:#151515; border:1px solid var(--border); border-radius:18px; width:min(640px,92vw); padding:1.2rem}
   .field{display:grid; gap:.4rem}
   .input{background:#0e0e0e; border:1px solid var(--border); border-radius:10px; padding:.7rem .8rem; color:var(--nh-fg)}
-  /* Header bar from original (kept) */
-  .topbar{position:fixed; top:0; left:0; right:0; height:56px; background:#0a0a0a; border-bottom:1px solid #2e2e2e; z-index:50}
-  .logo-wrap{position:absolute; left:50%; top:100%; transform:translate(-50%,-50%); z-index:30}
-  .bar-grad{position:fixed; top:56px; left:0; right:0; height:4px; background:linear-gradient(90deg,#8f4fff,#facc15); box-shadow:0 0 6px #8f4fff88,0 0 10px #facc1588; z-index:40}
-  /* Drawer (kept minimal) */
+
+  /* Header refinado (visual original) */
+  .topbar{position:fixed; top:0; left:0; right:0; height:66px; background:rgba(10,10,10,.85); border-bottom:1px solid #262626; backdrop-filter: blur(10px); z-index:50}
+  .logo-wrap{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); z-index:30}
+  .logo-wrap img{height:52px; filter: drop-shadow(0 2px 8px rgba(250,204,21,.15))}
+  .bar-grad{position:fixed; top:66px; left:0; right:0; height:4px; background:linear-gradient(90deg,#8f4fff,#facc15); box-shadow:0 0 6px #8f4fff88,0 0 10px #facc1588; z-index:40}
+  .hamb{position:absolute; right:14px; top:50%; transform:translateY(-50%); width:40px; height:40px; border-radius:10px; display:grid; place-items:center; border:1px solid #2b2b2b; background:#0f0f0f}
+  .hamb span{display:block; width:20px; height:2px; background:#eaeaea; position:relative}
+  .hamb span::before,.hamb span::after{content:""; position:absolute; left:0; width:20px; height:2px; background:#eaeaea}
+  .hamb span::before{top:-6px} .hamb span::after{top:6px}
+
+  /* Drawer */
   #drawer{position:fixed; top:0; right:0; width:18rem; height:100%; background:#000; color:#fff; transform:translateX(100%); transition:transform .3s; z-index:55; border-left:1px solid #212121}
   #drawer.show{transform:translateX(0)}
   #drawerOverlay{position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; z-index:54}
   #drawerOverlay.show{display:block}
-  /* Canvas brasas (kept) */
+
+  /* Canvas brasas */
   #brasasCanvas{position:fixed; inset:0; width:100vw; height:100vh; z-index:-1; pointer-events:none}
+
   /* Mobile safe */
   html,body,main{max-width:100vw; overflow-x:hidden}
 </style>
@@ -62,19 +77,18 @@
   <!-- BACKGROUND (brasas) -->
   <canvas id="brasasCanvas" aria-hidden="true"></canvas>
 
-  <!-- HEADER (mantido) -->
+  <!-- HEADER -->
   <header class="topbar">
-    <button id="hamburgerBtn" class="absolute top-2.5 right-4 text-2xl text-white/90 hover:text-[#a855f7]">☰</button>
+    <button id="hamburgerBtn" class="hamb" aria-label="Abrir menu"><span></span></button>
     <div class="logo-wrap">
-      <!-- Substitua o src abaixo pelo seu logo -->
       <a href="index.html" aria-label="NoHeroes">
-        <img src="assets/images/noheroes logo.png" alt="NoHeroes" class="h-24" />
+        <img src="assets/images/noheroes logo.png" alt="NoHeroes" />
       </a>
     </div>
   </header>
   <div class="bar-grad" aria-hidden="true"></div>
 
-  <!-- DRAWER (mantido, simples) -->
+  <!-- DRAWER -->
   <aside id="drawer" role="dialog" aria-modal="true" aria-label="Menu">
     <button id="drawerClose" class="absolute top-3 right-4 text-2xl">✕</button>
     <nav class="p-6 grid gap-2 text-sm mt-10">
@@ -88,16 +102,14 @@
   <div id="drawerOverlay" aria-hidden="true"></div>
 
   <!-- CONTEÚDO -->
-  <main class="max-w-3xl mx-auto px-4 pt-40 pb-24 relative z-10">
-    <!-- Copy (pode ajustar texto se quiser) -->
+  <main class="max-w-3xl mx-auto px-4 pt-44 pb-24 relative z-10">
     <h1 class="cinzel text-3xl sm:text-4xl grad-text reveal">Apoie o Universo NoHeroes</h1>
     <p class="mt-3 text-white/70 leading-relaxed reveal" style="--reveal-delay:90ms">
       Cada contribuição mantém o coração do universo batendo e acelera novas criações. Simples, transparente e digno da sua confiança.
     </p>
 
-    <!-- KPIs/Metas compactas -->
+    <!-- Metas compactas -->
     <section class="mt-8 grid gap-4 sm:grid-cols-2">
-      <!-- Meta geral -->
       <article class="card p-4 reveal">
         <div class="kpi">
           <span class="dot" aria-hidden="true"></span>
@@ -113,13 +125,10 @@
             <div class="text-xl font-semibold" id="mGeralMeta">R$ 500.000,00</div>
           </div>
         </div>
-        <div class="mt-3 progress" aria-label="Progresso meta geral">
-          <span id="mGeralBar" style="width:0%"></span>
-        </div>
+        <div class="mt-3 progress"><span id="mGeralBar" style="width:0%"></span></div>
         <div class="mt-1 text-xs text-white/50"><span id="mGeralPerc">0%</span> concluído</div>
       </article>
 
-      <!-- Meta servidor -->
       <article class="card p-4 reveal" style="--reveal-delay:120ms">
         <div class="kpi">
           <span class="dot" aria-hidden="true"></span>
@@ -135,20 +144,18 @@
             <div class="text-xl font-semibold" id="mServMeta">R$ 12.000,00</div>
           </div>
         </div>
-        <div class="mt-3 progress" aria-label="Progresso meta servidor">
-          <span id="mServBar" style="width:0%"></span>
-        </div>
+        <div class="mt-3 progress"><span id="mServBar" style="width:0%"></span></div>
         <div class="mt-1 text-xs text-white/50"><span id="mServPerc">0%</span> concluído</div>
       </article>
     </section>
 
-    <!-- Ações principais -->
+    <!-- Ações -->
     <section class="mt-10 grid gap-3 sm:grid-cols-2 reveal" style="--reveal-delay:140ms">
       <button id="btnContribuir" class="btn btn-primary w-full">Contribuir / Doar</button>
       <button id="btnSolicitar" class="btn btn-ghost w-full">Pedir serviço / ajuda</button>
     </section>
 
-    <!-- Form captar e-mail (clean) -->
+    <!-- Leads -->
     <section class="mt-10 card p-4 reveal" style="--reveal-delay:160ms">
       <h3 class="cinzel text-lg">Receba novidades e metas</h3>
       <form id="formLead" class="mt-3 grid gap-3 sm:grid-cols-2" autocomplete="on">
@@ -156,7 +163,7 @@
         <input class="input" type="email" name="email" placeholder="Seu e-mail" required />
         <button class="btn btn-primary sm:col-span-2" type="submit">Assinar</button>
       </form>
-      <p class="mt-2 text-xs text-white/50">Armazenamento local habilitado. Integração com backend pronta no código (comentários).</p>
+      <p class="mt-2 text-xs text-white/50">Os valores exibidos são estáticos no front até conectar webhooks.</p>
     </section>
   </main>
 
@@ -179,9 +186,8 @@
         <div class="grid gap-2 sm:grid-cols-3">
           <button class="btn btn-primary" type="button" id="payPix">PIX</button>
           <button class="btn btn-ghost" type="button" id="payMP">Mercado Pago</button>
-          <button class="btn btn-ghost" type="button" id="payKofi">Ko-fi</button>
+          <button class="btn btn-ghost" type="button" id="payPayPal">PayPal</button>
         </div>
-        <div class="text-xs text-white/50">Ao finalizar, o valor é somado ao progresso local e pode ser conciliado depois via webhook.</div>
       </form>
       <div class="mt-3 flex justify-end gap-2">
         <button class="btn" data-close>Fechar</button>
@@ -189,56 +195,47 @@
     </div>
   </div>
 
-  <!-- MODAL: PIX -->
+  <!-- MODAL: PIX (QR + copia e cola) -->
   <div id="modalPix" class="overlay" role="dialog" aria-modal="true" aria-label="PIX">
     <div class="modal">
       <h3 class="cinzel text-xl grad-text">PIX</h3>
-      <p class="text-white/70 text-sm">Escaneie o QR ou copie a chave.</p>
+      <p class="text-white/70 text-sm">Escaneie o QR ou copie o código “copia e cola”.</p>
       <div class="mt-3 grid gap-3 place-items-center">
-        <!-- Substitua a imagem pelo seu QR -->
-        <img src="assets/images/qr-code.png" alt="QR Code PIX" class="w-48 h-48 object-contain rounded-lg border border-[--border]" />
+        <div id="pixQr"></div>
         <div class="w-full grid gap-2">
-          <input id="pixKey" class="input" readonly value="azuosraul999@gmail.com" />
-          <button class="btn btn-primary" id="copyPix">Copiar chave</button>
+          <textarea id="pixCode" class="input" rows="3" readonly></textarea>
+          <button class="btn btn-primary" id="copyPix">Copiar código PIX</button>
         </div>
       </div>
       <div class="mt-3 flex justify-end gap-2">
         <button class="btn" data-close>Fechar</button>
-        <button class="btn btn-primary" id="pixConfirm">Já contribuí</button>
       </div>
     </div>
   </div>
 
-  <!-- MODAL: Mercado Pago (link) -->
+  <!-- MODAL: Mercado Pago -->
   <div id="modalMP" class="overlay" role="dialog" aria-modal="true" aria-label="Mercado Pago">
     <div class="modal">
       <h3 class="cinzel text-xl grad-text">Mercado Pago</h3>
       <p class="text-white/70 text-sm">Abriremos o checkout em outra aba.</p>
       <div class="mt-3">
-        <!-- Troque o href pelo seu preference_id/URL -->
         <a id="mpLink" class="btn btn-primary w-full" target="_blank" rel="noopener"
            href="https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=SUA_PREFERENCE_ID">Ir para o checkout</a>
       </div>
       <div class="mt-3 flex justify-end gap-2">
         <button class="btn" data-close>Fechar</button>
-        <button class="btn btn-primary" id="mpConfirm">Já contribuí</button>
       </div>
     </div>
   </div>
 
-  <!-- MODAL: Ko-fi (link) -->
-  <div id="modalKofi" class="overlay" role="dialog" aria-modal="true" aria-label="Ko-fi">
+  <!-- MODAL: PayPal -->
+  <div id="modalPayPal" class="overlay" role="dialog" aria-modal="true" aria-label="PayPal">
     <div class="modal">
-      <h3 class="cinzel text-xl grad-text">Ko-fi</h3>
-      <p class="text-white/70 text-sm">Abriremos sua página Ko-fi em outra aba.</p>
-      <div class="mt-3">
-        <!-- Troque o username -->
-        <a id="kofiLink" class="btn btn-primary w-full" target="_blank" rel="noopener"
-           href="https://ko-fi.com/NoHeroes">Ir para Ko-fi</a>
-      </div>
+      <h3 class="cinzel text-xl grad-text">PayPal</h3>
+      <p class="text-white/70 text-sm">Pague com PayPal ou cartão (processado pelo PayPal).</p>
+      <div class="mt-3"><div id="paypalButtons"></div></div>
       <div class="mt-3 flex justify-end gap-2">
         <button class="btn" data-close>Fechar</button>
-        <button class="btn btn-primary" id="kofiConfirm">Já contribuí</button>
       </div>
     </div>
   </div>
@@ -258,13 +255,12 @@
     </div>
   </div>
 
-  <!-- FOOTER minimal -->
   <footer class="py-10 text-center text-white/50 text-sm">
     © <span id="year"></span> NoHeroes. Todos os direitos reservados.
   </footer>
 
 <script>
-/* ====== Drawer ====== */
+/* ===== Drawer ===== */
 const drawer = document.getElementById('drawer');
 const drawerOv = document.getElementById('drawerOverlay');
 const btnHam = document.getElementById('hamburgerBtn');
@@ -286,7 +282,7 @@ btnHam.addEventListener('click', ()=>toggleDrawer(true));
 btnClose.addEventListener('click', ()=>toggleDrawer(false));
 drawerOv.addEventListener('click', ()=>toggleDrawer(false));
 
-/* ====== Cinematic reveal ====== */
+/* ===== Reveal ===== */
 const sections = document.querySelectorAll('main, header, footer');
 sections.forEach(section=>{
   const items = Array.from(section.querySelectorAll('.reveal'));
@@ -301,7 +297,7 @@ sections.forEach(section=>{
   io.observe(section);
 });
 
-/* ====== Brasas canvas (mantido, leve) ====== */
+/* ===== Brasas canvas ===== */
 const canvas = document.getElementById('brasasCanvas'), ctx = canvas.getContext('2d');
 const fit=()=>{ canvas.width=innerWidth; canvas.height=innerHeight; }; addEventListener('resize',fit); fit();
 let parts=[];
@@ -314,113 +310,158 @@ const tick=()=>{ ctx.clearRect(0,0,canvas.width,canvas.height);
 };
 seed(); tick();
 
-/* ====== Estado metas / armazenamento local ====== */
+/* ===== Metas (estático no front até webhooks) ===== */
 const fmtBRL = (v)=> v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
-const state = JSON.parse(localStorage.getItem('nh_donations')||'{"geral":0,"servidor":0,"leads":[]}');
 const metas = {geral: 500000, servidor: 12000};
+const totals = {geral: 0, servidor: 0}; // TODO: substituir por GET /api/goals quando tiver backend
 function renderMetas(){
-  const geral = state.geral||0, serv= state.servidor||0;
-  // Geral
-  document.getElementById('mGeralValor').textContent = fmtBRL(geral);
-  document.getElementById('mGeralMeta').textContent = fmtBRL(metas.geral);
-  const p1 = Math.min(100, Math.round(geral/metas.geral*100))||0;
+  document.getElementById('mGeralValor').textContent = fmtBRL(totals.geral);
+  document.getElementById('mGeralMeta').textContent  = fmtBRL(metas.geral);
+  const p1 = Math.min(100, Math.round((totals.geral/metas.geral)*100))||0;
   document.getElementById('mGeralBar').style.width = p1+'%';
   document.getElementById('mGeralPerc').textContent = p1+'%';
-  // Servidor
-  document.getElementById('mServValor').textContent = fmtBRL(serv);
-  document.getElementById('mServMeta').textContent = fmtBRL(metas.servidor);
-  const p2 = Math.min(100, Math.round(serv/metas.servidor*100))||0;
+
+  document.getElementById('mServValor').textContent = fmtBRL(totals.servidor);
+  document.getElementById('mServMeta').textContent  = fmtBRL(metas.servidor);
+  const p2 = Math.min(100, Math.round((totals.servidor/metas.servidor)*100))||0;
   document.getElementById('mServBar').style.width = p2+'%';
   document.getElementById('mServPerc').textContent = p2+'%';
 }
 renderMetas();
 
-/* ====== Modais util ====== */
+/* ===== Modais ===== */
 const overlays = document.querySelectorAll('.overlay');
-function openModal(id){ document.getElementById(id).classList.add('show'); document.getElementById(id).classList.add('show'); document.getElementById(id).classList.add('show'); }
-function show(id){ document.getElementById(id).classList.add('show'); }
-function hide(id){ document.getElementById(id).classList.remove('show'); }
 document.querySelectorAll('.overlay [data-close]').forEach(b=> b.addEventListener('click', e=> e.currentTarget.closest('.overlay').classList.remove('show')));
-// Clique fora fecha
 overlays.forEach(ov=> ov.addEventListener('click', (e)=>{ if(e.target===ov) ov.classList.remove('show'); }));
-// Esc fecha
 addEventListener('keydown', (e)=>{ if(e.key==='Escape') overlays.forEach(ov=> ov.classList.remove('show')); });
 
-/* ====== Botões principais ====== */
-const btnContribuir = document.getElementById('btnContribuir');
-const btnSolicitar = document.getElementById('btnSolicitar');
-btnContribuir.addEventListener('click', ()=> document.getElementById('modalContribuir').classList.add('show'));
-btnSolicitar.addEventListener('click', ()=> document.getElementById('modalSolicitar').classList.add('show'));
+/* ===== Botões principais ===== */
+document.getElementById('btnContribuir').addEventListener('click', ()=> document.getElementById('modalContribuir').classList.add('show'));
+document.getElementById('btnSolicitar').addEventListener('click', ()=> document.getElementById('modalSolicitar').classList.add('show'));
 
-/* ====== Pagamentos ====== */
+/* ===== Doação: estado atual do formulário ===== */
 let pendingDonation = {valor:0, destino:'geral'};
 document.getElementById('formDoacao').addEventListener('input', (e)=>{
   const f = new FormData(e.currentTarget);
-  pendingDonation.valor = Number(f.get('valor')||0);
+  pendingDonation.valor   = Number(f.get('valor')||0);
   pendingDonation.destino = f.get('destino')||'geral';
 });
+
+/* ===== PIX (payload BR Code + QR) ===== */
+function emv(k, v){ const len = String(v.length).padStart(2,'0'); return `${k}${len}${v}`; }
+function crc16(payload){
+  let p = 0x1021, crc = 0xFFFF;
+  for (let i=0;i<payload.length;i++){
+    crc ^= (payload.charCodeAt(i) << 8);
+    for(let j=0;j<8;j++){ crc = (crc & 0x8000) ? (crc << 1) ^ p : (crc << 1); crc &= 0xFFFF; }
+  }
+  return crc.toString(16).toUpperCase().padStart(4,'0');
+}
+function buildPix({key, name, city, txid='NOHEROES', amount, desc=''}) {
+  const ID_PAYLOAD_FORMAT='00', ID_MERCHANT_ACCOUNT='26', ID_MERCHANT_CAT='52', ID_TRANSACTION_CURRENCY='53',
+        ID_TRANSACTION_AMOUNT='54', ID_COUNTRY_CODE='58', ID_MERCHANT_NAME='59', ID_MERCHANT_CITY='60',
+        ID_ADDITIONAL_DATA='62', ID_CRC='63';
+  const gui = emv('00','br.gov.bcb.pix');
+  const k = emv('01', key);
+  const d = desc ? emv('02', desc.substring(0,25)) : '';
+  const mai = emv(ID_MERCHANT_ACCOUNT, gui + k + d);
+  const add = emv(ID_ADDITIONAL_DATA, emv('05', txid.substring(0,25)));
+  let payload =
+    emv(ID_PAYLOAD_FORMAT,'01') + mai +
+    emv(ID_MERCHANT_CAT,'0000') + emv(ID_TRANSACTION_CURRENCY,'986') +
+    (amount ? emv(ID_TRANSACTION_AMOUNT, String(amount.toFixed(2))) : '') +
+    emv(ID_COUNTRY_CODE,'BR') + emv(ID_MERCHANT_NAME, name.substring(0,25)) +
+    emv(ID_MERCHANT_CITY, city.substring(0,15)) + add;
+  payload += ID_CRC + '04';
+  const crc = crc16(payload + '0000');
+  return payload + crc;
+}
 document.getElementById('payPix').addEventListener('click', ()=>{
   if(!pendingDonation.valor){ alert('Informe um valor.'); return; }
+  const payload = buildPix({
+    key: 'azuosraul999@gmail.com',       // TODO: sua CHAVE PIX
+    name:'NOHEROES R',                   // até 25 chars
+    city:'SAO PAULO',                    // sem acento
+    txid:(pendingDonation.destino==='servidor'?'SERVIDOR':'GERAL')+'-'+Date.now(),
+    amount: pendingDonation.valor,
+    desc: pendingDonation.destino==='servidor'?'Servidor':'NoHeroes'
+  });
+  const codeEl = document.getElementById('pixCode');
+  codeEl.value = payload;
+  const container = document.getElementById('pixQr');
+  container.innerHTML = '';
+  QRCode.toCanvas(payload,{errorCorrectionLevel:'M', width:220},(err,canvas)=>{
+    if(err){ console.error(err); alert('Falha ao gerar QR PIX'); return; }
+    container.appendChild(canvas);
+  });
   document.getElementById('modalPix').classList.add('show');
 });
-document.getElementById('payMP').addEventListener('click', ()=>{
-  if(!pendingDonation.valor){ alert('Informe um valor.'); return; }
-  document.getElementById('modalMP').classList.add('show');
-  // Dica: crie preference_id no backend e injete a URL aqui
-});
-document.getElementById('payKofi').addEventListener('click', ()=>{
-  if(!pendingDonation.valor){ alert('Informe um valor.'); return; }
-  document.getElementById('modalKofi').classList.add('show');
-});
-// PIX helpers
 document.getElementById('copyPix').addEventListener('click', ()=>{
-  const el = document.getElementById('pixKey');
+  const el = document.getElementById('pixCode');
   el.select(); el.setSelectionRange(0,99999);
   document.execCommand('copy');
-  alert('Chave PIX copiada.');
+  alert('Código PIX copiado.');
 });
-// Confirmadores (incrementam contagem local)
-function confirmDonation(){
-  if(!pendingDonation.valor) return;
-  state[pendingDonation.destino] = (state[pendingDonation.destino]||0) + pendingDonation.valor;
-  localStorage.setItem('nh_donations', JSON.stringify(state));
-  renderMetas();
-  overlays.forEach(ov=> ov.classList.remove('show'));
-  alert('Obrigado pelo apoio! (Contagem atualizada localmente)');
-}
-document.getElementById('pixConfirm').addEventListener('click', confirmDonation);
-document.getElementById('mpConfirm').addEventListener('click', confirmDonation);
-document.getElementById('kofiConfirm').addEventListener('click', confirmDonation);
 
-/* ====== Leads (nome+email) ====== */
+/* ===== Mercado Pago ===== */
+document.getElementById('payMP').addEventListener('click', ()=>{
+  if(!pendingDonation.valor){ alert('Informe um valor.'); return; }
+  // Dica: gere um preference_id por valor/destino no backend e injete o link aqui:
+  // document.getElementById('mpLink').href = 'URL_DA_SUA_PREFERENCE';
+  document.getElementById('modalMP').classList.add('show');
+});
+
+/* ===== PayPal (Smart Buttons) ===== */
+document.getElementById('payPayPal').addEventListener('click', ()=>{
+  if(!pendingDonation.valor){ alert('Informe um valor.'); return; }
+  document.getElementById('modalPayPal').classList.add('show');
+  const host = document.getElementById('paypalButtons');
+  host.innerHTML = '';
+  paypal.Buttons({
+    style: { layout:'vertical', shape:'pill', label:'paypal' },
+    createOrder: (data, actions) => actions.order.create({
+      purchase_units: [{
+        amount: { currency_code: 'BRL', value: pendingDonation.valor.toFixed(2) },
+        description: pendingDonation.destino==='servidor' ? 'Doação — Servidor do Universo' : 'Doação — Meta Geral NoHeroes'
+      }]
+    }),
+    onApprove: async (data, actions) => {
+      try{
+        await actions.order.capture();
+        alert('Pagamento aprovado pelo PayPal. Obrigado pelo apoio!');
+        document.getElementById('modalPayPal').classList.remove('show');
+        // TODO (produção): validar server-side via webhook e atualizar metas
+      }catch(e){ console.error(e); alert('Falha ao capturar pagamento.'); }
+    },
+    onError: (err) => { console.error(err); alert('Erro no PayPal. Tente novamente.'); }
+  }).render('#paypalButtons');
+});
+
+/* ===== Leads ===== */
+const state = JSON.parse(localStorage.getItem('nh_leads')||'{"leads":[]}');
 document.getElementById('formLead').addEventListener('submit', (e)=>{
   e.preventDefault();
   const f = new FormData(e.currentTarget);
   const lead = {nome: f.get('nome'), email: f.get('email'), ts: Date.now()};
   state.leads.push(lead);
-  localStorage.setItem('nh_donations', JSON.stringify(state));
+  localStorage.setItem('nh_leads', JSON.stringify(state));
   e.currentTarget.reset();
   alert('Cadastrado com sucesso!');
-  // BACKEND (opcional): POST /leads
-  // fetch('/leads',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(lead)});
+  // TODO (produção): POST /leads
 });
 
-/* ====== Form solicitar serviço/ajuda ====== */
+/* ===== Solicitar serviço/ajuda ===== */
 document.getElementById('formSolicitar').addEventListener('submit', (e)=>{
   e.preventDefault();
   const f = new FormData(e.currentTarget);
   const payload = {nome:f.get('nome'), email:f.get('email'), tipo:'solicitar', ts:Date.now()};
-  // Salva junto em leads
-  state.leads.push(payload);
-  localStorage.setItem('nh_donations', JSON.stringify(state));
+  // TODO (produção): POST /requests
   e.currentTarget.reset();
   document.getElementById('modalSolicitar').classList.remove('show');
   alert('Recebido! Em breve entraremos em contato.');
-  // BACKEND (opcional): POST /requests
-  // fetch('/requests',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
 });
 
-/* ====== Util ====== */
+/* ===== Util ===== */
 document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 </body>
