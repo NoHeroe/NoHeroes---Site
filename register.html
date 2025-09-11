@@ -41,6 +41,15 @@
     @media (prefers-reduced-motion: reduce){
       #brasasCanvas{display:none}
     }
+      /* Vignette + grain layer (NoHeroes roxo-dourado) */
+    body:after{
+      content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
+      background:
+        radial-gradient(1200px 700px at 20% -10%, rgba(124,58,237,.25), transparent 60%),
+        radial-gradient(900px 600px at 100% 110%, rgba(212,175,55,.20), transparent 60%),
+        radial-gradient(100% 120% at 50% 110%, rgba(0,0,0,.45), transparent 40%);
+      mix-blend-mode:screen;
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
