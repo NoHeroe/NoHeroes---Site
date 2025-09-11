@@ -61,7 +61,14 @@
     .ph{ position: relative; overflow: hidden; background: #121218; border-radius: 14px; }
     .ph::after{ content:''; position:absolute; inset:0; background-image:linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.08), rgba(255,255,255,0)); background-size:500px 100%; animation: shimmer 2.2s linear infinite; }
     @media (prefers-reduced-motion: reduce){ *{ animation:none!important; transition:none!important } }
-
+.badge {
+  display:inline-flex; align-items:center; gap:.4rem;
+  font-size: .72rem; line-height: 1;
+  padding: .45rem .7rem; border-radius: 999px;
+  border: 1px solid var(--border); background: rgba(255,255,255,.04);
+}
+.list-compact li { margin-top:.5rem; display:flex; gap:.6rem; }
+.list-compact li::before { content:"•"; color:#b88cff; margin-top:.1rem; }
 </style>
   <script type="application/ld+json">
   {
@@ -93,6 +100,7 @@
         <li><a class="hover:text-white/90" href="#bio">Biografia</a></li>
         <li><a class="hover:text-white/90" href="#vitrines">Vitrines</a></li>
         <li><a class="hover:text-white/90" href="#contato">Contato</a></li>
+<li><a class="hover:text-white/90" href="#proprios">Projetos</a></li>
       </ul>
       <div class="flex items-center gap-2">
         <a href="#contato" class="btn" aria-label="Solicitar orçamento">
@@ -326,6 +334,68 @@
         </div>
       </div>
     </section>
+<!-- Projetos Próprios -->
+<section id="proprios" class="pb-28">
+  <div class="flex items-end justify-between gap-4 mb-6 flex-wrap">
+    <h2 class="font-display text-3xl grad-text w-full md:w-auto">Projetos Próprios</h2>
+    <div class="flex flex-wrap gap-2 text-xs w-full md:w-auto">
+      <span class="badge">Transmídia</span>
+      <span class="badge">App + Web</span>
+      <span class="badge">IP Original</span>
+    </div>
+  </div>
+
+  <div class="grid lg:grid-cols-12 gap-8 items-stretch">
+    <!-- Visual / Mockup -->
+    <aside class="lg:col-span-5 card p-4 sm:p-6 md:p-8 relative overflow-hidden">
+      <div class="absolute -top-24 -right-24 w-64 h-64 rounded-full blur-3xl opacity-30" style="background:var(--grad)"></div>
+      <div class="aspect-[4/3] ph flex items-center justify-center text-zinc-500">
+        <span class="text-sm">Placeholder — Arte/Poster NoHeroes</span>
+      </div>
+      <div class="mt-4 grid grid-cols-3 gap-3">
+        <div class="h-16 ph"></div>
+        <div class="h-16 ph"></div>
+        <div class="h-16 ph"></div>
+      </div>
+      <p class="mt-4 text-xs text-zinc-400">Imagens reais entram aqui depois (logo, capa do livro, cenas do app).</p>
+    </aside>
+
+    <!-- Conteúdo -->
+    <article class="lg:col-span-7 card p-6 sm:p-8">
+      <h3 class="text-2xl font-semibold">NoHeroes — Universo de Fantasia</h3>
+      <p class="mt-3 text-zinc-300/90">
+        IP autoral dark-fantasy em expansão: livro, app gamificado, loja digital e futuro game.
+        Responsável por identidade visual, produto, arquitetura web e narrativa.
+      </p>
+
+      <div class="mt-5 grid sm:grid-cols-2 gap-4">
+        <div>
+          <h4 class="text-sm text-zinc-400">Pilares</h4>
+          <ul class="mt-2 text-sm text-zinc-300/90 list-compact">
+            <li>Site oficial + loja (Node/Express, PostgreSQL, JWT, Mercado Pago)</li>
+            <li>App (MVP) com quests, inventário e moeda interna</li>
+            <li>Roteiro/lore originais (universo, clãs, criaturas, política)</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-sm text-zinc-400">Destaques</h4>
+          <ul class="mt-2 text-sm text-zinc-300/90 list-compact">
+            <li>Design dark moderno (gradiente roxo-dourado, “brasas”)</li>
+            <li>Arquitetura pronta para transmedia (web, app, game)</li>
+            <li>Sistema de doações e metas transparentes</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a class="btn" href="https://noheroes.com.br" target="_blank" rel="noopener">🌐 Site</a>
+        <a class="btn" href="https://noheroes.com.br/loja" target="_blank" rel="noopener">🛒 Loja</a>
+        <a class="btn" href="#" aria-disabled="true">📱 App (beta — em breve)</a>
+        <a class="btn" href="#" aria-disabled="true">📘 Livro (teaser — em breve)</a>
+      </div>
+    </article>
+  </div>
+</section>
   </main>
 
   <footer class="border-t border-white/5 py-10 text-center text-sm text-zinc-500">
