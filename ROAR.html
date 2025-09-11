@@ -292,7 +292,9 @@
   <section id="principal" class="relative h-screen bg-cover bg-center" style="background-image:url('assets/images/roar-hero.jpg')">
     <div class="overlay"></div>
     <div class="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
-      <h1 class="text-4xl md:text-6xl text-[#8f4fff] font-bold mb-4">ROAR<br/><span As Cinzas do Amanhã</span></h1>
+      <h1 class="text-4xl md:text-6xl text-[#8f4fff] font-bold mb-4">
+  ACDA<br/><span>As Cinzas do Amanhã</span>
+</h1>
       <p class="text-lg md:text-2xl italic mb-8 text-[#d9d6ff]">Um épico sombrio sobre redenção, fé e poder perdido.</p>
       <a href="#sinopse" class="bg-[#8f4fff] text-black px-6 py-3 rounded-xl hover:scale-105 transition">Leia a Sinopse</a>
       <div class="mt-12 animate-bounce text-[#8f4fff]">↓</div>
@@ -303,36 +305,42 @@
 
     <!-- 2. Sinopse  -->
     <section id="sinopse" class="relative py-16 px-6 bg-[#111]">
-      <h2 class="text-3xl text-[#8f4fff] font-bold mb-6">Sinopse</h2>
-      <div class="relative overflow-hidden">
-        <div class="absolute inset-0 bg-fixed bg-center bg-cover opacity-30" style="background-image:url('assets/images/roar-sinopse-bg.jpg')"></div>
-        <div class="relative max-w-3xl mx-auto text-lg text-[#ccc] space-y-4">
-          <p class="italic text-lg text-gray-300 mb-4">“Quando o espírito é esmagado... o rugido é a única resposta.”</p>
-  <p class="text-base leading-relaxed text-[#ccc]">
-Em Sublicus, terra dilacerada por feras mágicas, guerras esquecidas e a tirania dos dragões, sobreviver é uma arte. As nações Aeon e Kaleidos estão prestes a colidir. Apenas quatro clãs mantêm o frágil equilíbrio... por enquanto.
-<p>
-<div x-data="{ aberto: false }">
-  <template x-if="aberto">
-    <div class="space-y-4 text-[#b58dff]">
-      <p>
-Ele correu pelas sombras, sem memória clara... apenas dor. O que o perseguia, talvez fosse mais antigo que os próprios deuses.  
-    <br><br>
-      Azuos foi encontrado desacordado na floresta, marcado por algo que não devia existir — uma marca negra que arde como um lembrete de que ele não é mais apenas humano.  
-    <br><br>
-    Agora, treinado por assassinos, vigiado por sombras e manipulado como arma, Azuos é moldado por um mundo que despreza fraquezas.  
-    <br><br>
-    Mas há ecos... memórias soterradas, cicatrizes que falam. E quando tudo que resta é silêncio  
-    <strong>…ele ruge.</strong>
-  </p>
-    </div>
-  </template>
+  <h2 class="text-3xl text-[#8f4fff] font-bold mb-6">Sinopse</h2>
 
-  <button @click="aberto = !aberto"
-          class="mt-4 text-[#b58dff] hover:underline font-semibold">
-    <span x-show="!aberto">Ler mais...</span>
-    <span x-show="aberto">Ocultar</span>
-  </button>
-</div>
+  <div class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-fixed bg-center bg-cover opacity-30"
+         style="background-image:url('assets/images/roar-sinopse-bg.jpg')"></div>
+
+    <div class="relative max-w-3xl mx-auto text-lg text-[#ccc] space-y-4">
+      <p class="italic text-lg text-gray-300 mb-4">“Quando o espírito é esmagado... o rugido é a única resposta.”</p>
+
+      <p class="text-base leading-relaxed text-[#ccc]">
+        Em Sublicus, terra dilacerada por feras mágicas, guerras esquecidas e a tirania dos dragões, sobreviver é uma arte.
+        As nações Aeon e Kaleidos estão prestes a colidir. Apenas quatro clãs mantêm o frágil equilíbrio... por enquanto.
+      </p>
+
+      <div x-data="{ aberto: false }">
+        <template x-if="aberto">
+          <div class="space-y-4 text-[#b58dff]">
+            <p>
+              Azuos correu pelas sombras, sem memória clara... apenas dor. O que o perseguia, talvez fosse mais antigo que os próprios deuses.
+              <br><br>
+              Ele foi encontrado desacordado na floresta, marcado por algo que não devia existir — uma marca negra que arde como um lembrete de que ele não é mais apenas humano.
+              <br><br>
+              Agora, treinado por assassinos, vigiado por sombras e manipulado como arma, Azuos é moldado por um mundo que despreza fraquezas.
+              <br><br>
+              Mas há ecos... memórias soterradas, cicatrizes que falam. E quando tudo que resta é silêncio <strong>…ele ruge.</strong>
+            </p>
+          </div>
+        </template>
+
+        <button @click="aberto = !aberto" class="mt-4 text-[#b58dff] hover:underline font-semibold">
+          <span x-show="!aberto">Ler mais...</span>
+          <span x-show="aberto">Ocultar</span>
+        </button>
+      </div>
+    </div>
+  </div>
 </section>
 
     <!-- 3. Trailer ou Prévia -->
