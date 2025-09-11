@@ -1,674 +1,427 @@
-<!DOCTYPE html><html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Apoio Vitalista | NoHeroes</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-  font-family: 'Inter', sans-serif;
-  background-color: #0a0a0a;
-  color: #e5e5e5;
-  margin: 0;
-}
-    h1, h2, .cinzel {
-      font-family: 'Cinzel Decorative', serif;
-    }
-    html {
-      scroll-behavior: smooth;
-    }
-.gradiente-noheroes {
-  background: linear-gradient(to right, #8f4fff, #facc15);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-#drawer nav a {
-  transition: all 0.2s ease-in-out;
-  border-left: 3px solid transparent;
-}
-#drawer nav a:hover {
-  background-color: #111;
-  border-left: 3px solid #8f4fff;
-  padding-left: 1.2rem;
-}
-#drawer {
-  box-shadow: -2px 0 10px rgba(143, 79, 255, 0.2);
-}
-    .logo-glow {
-      animation: glow 2s infinite ease-in-out;
-    }
-    @keyframes glow {
-      0%, 100% { filter: drop-shadow(0 0 8px #8f4fff); }
-      50% { filter: drop-shadow(0 0 16px #8f4fff); }
-    }
-    .barra-degrade {
-      background: linear-gradient(to right, #8f4fff, #facc15);
-      height: 4px;
-      box-shadow: 0 0 6px #8f4fff88, 0 0 10px #facc1588;
-    }
-    #brasasCanvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: -1;
-      pointer-events: none;
-    }
-    .drop-shadow-glow {
-      filter: drop-shadow(0 0 10px #8f4fff) drop-shadow(0 0 20px #8f4fff);
-    }
-    .glow-interno-left {
-      box-shadow: inset 8px 0 18px rgba(143, 79, 255, 0.5);
-      border-left: 1px solid rgba(143, 79, 255, 0.15);
-    }
-@keyframes fluidPulse {
-  0%, 100% {
-    background-position: 0% 50%;
-    transform: scale(1);
-    box-shadow: 0 0 10px #8f4fff80, 0 0 20px #facc15aa;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Apoiar — NoHeroes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root{
+    --nh-bg:#0a0a0a; --nh-fg:#e5e5e5; --nh-muted:#bdbdbd;
+    --grad: linear-gradient(135deg,#8f4fff 0%,#facc15 100%);
+    --border: rgba(255,255,255,.1);
+    --glass: rgba(255,255,255,.04);
+    --radius:16px;
+    --reveal-duration: 1000ms;
   }
-  50% {
-    background-position: 100% 50%;
-    transform: scale(1.05);
-    box-shadow: 0 0 20px #a855f799, 0 0 30px #facc15cc;
+  body{font-family:Inter,system-ui,Arial,sans-serif; background:var(--nh-bg); color:var(--nh-fg); overflow-x:hidden}
+  h1,h2,h3,.cinzel{font-family:"Cinzel Decorative",serif}
+  .grad-text{background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent}
+  .card{background:var(--glass); border:1px solid var(--border); border-radius:var(--radius); backdrop-filter: blur(10px)}
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:.6rem; padding:.9rem 1.2rem; border-radius:999px; border:1px solid var(--border); background:rgba(255,255,255,.05); transition:.25s; font-weight:600}
+  .btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.08)}
+  .btn-primary{background:var(--grad); color:#000; border:none}
+  .btn-primary:hover{filter:saturate(1.05); transform:translateY(-1px) scale(1.01)}
+  .btn-ghost{background:rgba(255,255,255,.04)}
+  .kpi{display:flex; gap:.75rem; align-items:center}
+  .kpi .dot{width:.6rem; height:.6rem; border-radius:999px; background:linear-gradient(135deg,#8f4fff,#facc15)}
+  .progress{height:.6rem; border-radius:999px; background:#1a1a1a; border:1px solid var(--border); overflow:hidden}
+  .progress > span{display:block; height:100%; background:var(--grad)}
+  /* Cinematic reveal */
+  .reveal{opacity:0; transform: translateY(18px) scale(.985); filter:blur(6px); will-change:opacity,transform,filter}
+  .reveal.in{animation:cinematic var(--reveal-duration) cubic-bezier(.22,.61,.36,1) var(--reveal-delay,0ms) both}
+  @keyframes cinematic{
+    0%{opacity:0; transform:translateY(18px) scale(.985); filter:blur(6px)}
+    60%{opacity:1; transform:translateY(0) scale(1); filter:blur(.8px)}
+    100%{opacity:1; transform:translateY(0) scale(1); filter:blur(0)}
   }
-}
-
-.btn-líquido-pulsante {
-  background: linear-gradient(270deg, #8f4fff, #a855f7, #facc15, #8f4fff);
-  background-size: 600% 600%;
-  animation: fluidPulse 6s ease-in-out infinite;
-  color: #000;
-  font-weight: 600;
-  font-family: 'Cinzel Decorative', serif;
-  border-radius: 9999px;
-  padding: 0.75rem 1.5rem;
-  transition: all 0.3s ease;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-}
-.btn-líquido-pulsante:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 30px #facc15dd, 0 0 40px #8f4fffcc;
-}
-.btn-vidro {
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(10px);
-  border: 1px solid #8f4fff88;
-  color: white;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: bold;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 10px #8f4fff44;
-}
-.btn-vidro:hover {
-  backdrop-filter: blur(12px);
-  background: rgba(0, 0, 0, 0.6);
-  box-shadow: 0 0 20px #a855f7aa;
-  transform: scale(1.02);
-}
-/* Títulos internos */
-.form-title {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 1.5rem;
-  font-weight: bold;
-  text-align: center;
-  background: linear-gradient(270deg, #8f4fff, #a855f7, #facc15, #8f4fff);
-  -webkit-background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Botão de Enviar com efeito pulsante quadrado */
-.btn-enviar {
-  background: linear-gradient(270deg, #8f4fff, #a855f7, #facc15, #8f4fff);
-  background-size: 600% 600%;
-  animation: fluidPulse 6s ease-in-out infinite;
-  color: #000;
-  font-weight: 600;
-  font-family: 'Cinzel Decorative', serif;
-  border-radius: 0.375rem; /* bordas suaves */
-  padding: 0.5rem 1rem;
-  transition: all 0.3s ease;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-  display: inline-block;
-}
-
-@keyframes fluidPulse {
-  0%, 100% {
-    background-position: 0% 50%;
-    transform: scale(1);
-    box-shadow: 0 0 10px #8f4fff80, 0 0 20px #facc15aa;
-  }
-  50% {
-    background-position: 100% 50%;
-    transform: scale(1.05);
-    box-shadow: 0 0 20px #a855f799, 0 0 30px #facc15cc;
-  }
-}
-
-.btn-enviar:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 30px #facc15dd, 0 0 40px #8f4fffcc;
-}
-</section><!-- CSS SEPARADO PARA DASHBOARD DE METAS --><style>
-@keyframes scrollNomes {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-50%); }
-}
-.animate-scroll-nomes {
-  display: inline-block;
-  animation: scrollNomes 15s linear infinite;
-}
-
-.ranking-box {
-  margin-top: 1.5rem;
-  background-color: rgba(0, 0, 0, 0.3);
-  padding: 1rem;
-  border-radius: 0.5rem;
-  border: 1px solid #333;
-}
-.ranking-title {
-  font-family: 'Cinzel Decorative', serif;
-  background: linear-gradient(to right, #8f4fff, #facc15);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-weight: bold;
-  font-size: 1.25rem;
-  margin-bottom: 0.5rem;
-}
-.ranking-conteudo {
-  display: flex;
-  flex-direction: column;
-}
-.podium div {
-  font-size: 0.75rem;
-  font-weight: bold;
-  color: #000;
-  border-radius: 0.375rem 0.375rem 0 0;
-}
-.ouro { background-color: #ffd700; }
-.prata { background-color: #c0c0c0; }
-.bronze { background-color: #cd7f32; }
-.lista-scroll ul {
-  animation: scrollNomes 15s linear infinite;
-}
+  @media (prefers-reduced-motion: reduce){ .reveal{opacity:1; transform:none; filter:none} .reveal.in{animation:none} }
+  /* Overlay/modal */
+  .overlay{position:fixed; inset:0; background:rgba(0,0,0,.7); display:none; align-items:center; justify-content:center; z-index:60}
+  .overlay.show{display:flex}
+  .modal{background:#151515; border:1px solid var(--border); border-radius:18px; width:min(640px,92vw); padding:1.2rem}
+  .field{display:grid; gap:.4rem}
+  .input{background:#0e0e0e; border:1px solid var(--border); border-radius:10px; padding:.7rem .8rem; color:var(--nh-fg)}
+  /* Header bar from original (kept) */
+  .topbar{position:fixed; top:0; left:0; right:0; height:56px; background:#0a0a0a; border-bottom:1px solid #2e2e2e; z-index:50}
+  .logo-wrap{position:absolute; left:50%; top:100%; transform:translate(-50%,-50%); z-index:30}
+  .bar-grad{position:fixed; top:56px; left:0; right:0; height:4px; background:linear-gradient(90deg,#8f4fff,#facc15); box-shadow:0 0 6px #8f4fff88,0 0 10px #facc1588; z-index:40}
+  /* Drawer (kept minimal) */
+  #drawer{position:fixed; top:0; right:0; width:18rem; height:100%; background:#000; color:#fff; transform:translateX(100%); transition:transform .3s; z-index:55; border-left:1px solid #212121}
+  #drawer.show{transform:translateX(0)}
+  #drawerOverlay{position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; z-index:54}
+  #drawerOverlay.show{display:block}
+  /* Canvas brasas (kept) */
+  #brasasCanvas{position:fixed; inset:0; width:100vw; height:100vh; z-index:-1; pointer-events:none}
+  /* Mobile safe */
+  html,body,main{max-width:100vw; overflow-x:hidden}
 </style>
 </head>
-<body class="relative">
-  <canvas id="brasasCanvas"></canvas>  <!-- HEADER COMPLETO -->  <header class="fixed top-0 left-0 w-full h-14 bg-[#0a0a0a] border-b border-[#2e2e2e] z-50">
-    <button id="hamburgerBtn" class="absolute top-3 right-4 text-3xl text-white hover:text-[#a855f7] transition z-[60]">☰</button>
-    <div class="absolute left-1/2 top-full transform -translate-x-1/2 -translate-y-1/2 z-30">
-      <a href="index.html">
-        <img src="assets/images/noheroes logo.png" alt="NoHeroes" class="h-32 drop-shadow-glow" />
+<body>
+  <!-- BACKGROUND (brasas) -->
+  <canvas id="brasasCanvas" aria-hidden="true"></canvas>
+
+  <!-- HEADER (mantido) -->
+  <header class="topbar">
+    <button id="hamburgerBtn" class="absolute top-2.5 right-4 text-2xl text-white/90 hover:text-[#a855f7]">☰</button>
+    <div class="logo-wrap">
+      <!-- Substitua o src abaixo pelo seu logo -->
+      <a href="index.html" aria-label="NoHeroes">
+        <img src="assets/images/noheroes logo.png" alt="NoHeroes" class="h-24" />
       </a>
     </div>
   </header>
-  <div class="fixed top-14 left-0 w-full barra-degrade z-40"></div>  <!-- DRAWER COMPLETO -->
-<div id="drawer" class="fixed top-0 right-0 w-72 h-full bg-black text-white transform transition-transform duration-300 z-50 glow-interno-left" style="transform: translateX(100%)">
-  <button onclick="toggleDrawer()" class="absolute top-4 right-4 text-3xl text-[#a855f7] hover:text-purple-400 z-50">✕</button>
-  <div class="p-6 flex flex-col gap-4">
-    <h1 class="text-3xl font-bold gradiente-noheroes cinzel">NOHEROES</h1>
-    <p class="text-gray-400 text-sm">Universo Sombrio</p>
-    <nav class="mt-4 flex flex-col gap-3 text-sm">
-      
-      <a href="index.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
-        <div class="flex items-center gap-2">
-          <!-- Ícone: Home -->
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l9-9 9 9M4 10v10h5v-6h6v6h5V10" />
-          </svg>
-          <span class="text-white">Início</span>
-        </div>
-        <span class="text-xs text-purple-400 cinzel">Portal</span>
-      </a>
+  <div class="bar-grad" aria-hidden="true"></div>
 
-      <a href="projects.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
-        <div class="flex items-center gap-2">
-          <!-- Ícone: Book -->
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12m0-12a2 2 0 012-2h4a2 2 0 012 2v12a2 2 0 01-2 2h-4a2 2 0 01-2-2zm0 0a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2h4a2 2 0 002-2z"/>
-          </svg>
-          <span class="text-white">Projetos</span>
-        </div>
-        <span class="text-xs text-purple-400 cinzel">Grimório</span>
-      </a>
-
-      <a href="sobre.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
-        <div class="flex items-center gap-2">
-          <!-- Ícone: User -->
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A7 7 0 0112 15a7 7 0 016.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
-          <span class="text-white">Sobre</span>
-        </div>
-        <span class="text-xs text-purple-400 cinzel">Entidade</span>
-      </a>
-
-      <a href="shop.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
-        <div class="flex items-center gap-2">
-          <!-- Ícone: Shopping Bag -->
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 11h14l1 9H4l1-9z" />
-          </svg>
-          <span class="text-white">Loja</span>
-        </div>
-        <span class="text-xs text-purple-400 cinzel">Cartel Velado</span>
-      </a>
-
-      <a href="login.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
-        <div class="flex items-center gap-2">
-          <!-- Ícone: Sparkle -->
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12l1.5 4.5L11 13l4.5 3.5L18 12l-2.5-4.5L13 11 7.5 7.5z" />
-          </svg>
-          <span class="text-white">Perfil</span>
-        </div>
-        <span class="text-xs text-purple-400 cinzel">Avatar</span>
-      </a>
-
-      <a href="oraculum.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
-        <div class="flex items-center gap-2">
-          <!-- Ícone: Question Circle -->
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M12 14a4 4 0 10-4-4 1 1 0 001 1h.01a1 1 0 001-1 2 2 0 112 2 2 2 0 01-2 2z" />
-          </svg>
-          <span class="text-white">Oráculo</span>
-        </div>
-        <span class="text-xs text-purple-400 cinzel">Sabedoria</span>
-      </a>
-
+  <!-- DRAWER (mantido, simples) -->
+  <aside id="drawer" role="dialog" aria-modal="true" aria-label="Menu">
+    <button id="drawerClose" class="absolute top-3 right-4 text-2xl">✕</button>
+    <nav class="p-6 grid gap-2 text-sm mt-10">
+      <a href="index.html" class="py-2 px-3 rounded hover:bg-[#151515]">Início</a>
+      <a href="projects.html" class="py-2 px-3 rounded hover:bg-[#151515]">Projetos</a>
+      <a href="sobre.html" class="py-2 px-3 rounded hover:bg-[#151515]">Sobre</a>
+      <a href="shop.html" class="py-2 px-3 rounded hover:bg-[#151515]">Loja</a>
+      <a href="oraculum.html" class="py-2 px-3 rounded hover:bg-[#151515]">Oráculo</a>
     </nav>
-  </div>
-</div>
-  <div id="drawerOverlay" class="fixed inset-0 bg-black bg-opacity-60 hidden z-30"></div>
+  </aside>
+  <div id="drawerOverlay" aria-hidden="true"></div>
 
-<main class="max-w-2xl mx-auto px-4 pt-40 pb-20 text-center relative z-10">
-  <h2 class="text-2xl gradiente-noheroes cinzel italic mt-6">“Até mesmo os mundos mais sombrios precisam de luz para existir.”</h2>
-  <p class="mt-4 max-w-xl mx-auto text-base text-white/60 leading-relaxed">Você está prestes a alimentar não um projeto, mas um universo inteiro. Criado do zero, com alma e suor, por um criador que quer mudar vidas com arte, anime e verdade. Aqui, cada contribuição fortalece uma ideia que já é maior do que eu. <strong>Ajude a manter Caelum vivo. Torne-se um Vitalista, ou uma das sombras de Caelum.</strong></p>
+  <!-- CONTEÚDO -->
+  <main class="max-w-3xl mx-auto px-4 pt-40 pb-24 relative z-10">
+    <!-- Copy (pode ajustar texto se quiser) -->
+    <h1 class="cinzel text-3xl sm:text-4xl grad-text reveal">Apoie o Universo NoHeroes</h1>
+    <p class="mt-3 text-white/70 leading-relaxed reveal" style="--reveal-delay:90ms">
+      Cada contribuição mantém o coração do universo batendo e acelera novas criações. Simples, transparente e digno da sua confiança.
+    </p>
 
-  <!-- Botão Pix com brilho e margem extra -->
-  <div class="mt-10 mb-6">
-    <button onclick="openPixModal()" class="w-full btn-líquido-pulsante">
-  Contribuir com Pix
-</button>
-  </div>
+    <!-- KPIs/Metas compactas -->
+    <section class="mt-8 grid gap-4 sm:grid-cols-2">
+      <!-- Meta geral -->
+      <article class="card p-4 reveal">
+        <div class="kpi">
+          <span class="dot" aria-hidden="true"></span>
+          <h2 class="cinzel text-lg">Meta Geral — NoHeroes</h2>
+        </div>
+        <div class="mt-3 flex items-end justify-between">
+          <div>
+            <div class="text-sm text-white/60">Arrecadado</div>
+            <div class="text-xl font-semibold"><span id="mGeralValor">R$ 0,00</span></div>
+          </div>
+          <div class="text-right">
+            <div class="text-sm text-white/60">Meta</div>
+            <div class="text-xl font-semibold" id="mGeralMeta">R$ 10.000,00</div>
+          </div>
+        </div>
+        <div class="mt-3 progress" aria-label="Progresso meta geral">
+          <span id="mGeralBar" style="width:0%"></span>
+        </div>
+        <div class="mt-1 text-xs text-white/50"><span id="mGeralPerc">0%</span> concluído</div>
+      </article>
 
-  <div class="mt-6 space-y-4">
-    <button onclick="openForm('outras')" class="w-full btn-vidro">
-      Quero ajudar de outras formas
-    </button>
+      <!-- Meta servidor -->
+      <article class="card p-4 reveal" style="--reveal-delay:120ms">
+        <div class="kpi">
+          <span class="dot" aria-hidden="true"></span>
+          <h2 class="cinzel text-lg">Meta — Servidor do Universo</h2>
+        </div>
+        <div class="mt-3 flex items-end justify-between">
+          <div>
+            <div class="text-sm text-white/60">Arrecadado</div>
+            <div class="text-xl font-semibold"><span id="mServValor">R$ 0,00</span></div>
+          </div>
+          <div class="text-right">
+            <div class="text-sm text-white/60">Meta</div>
+            <div class="text-xl font-semibold" id="mServMeta">R$ 2.000,00</div>
+          </div>
+        </div>
+        <div class="mt-3 progress" aria-label="Progresso meta servidor">
+          <span id="mServBar" style="width:0%"></span>
+        </div>
+        <div class="mt-1 text-xs text-white/50"><span id="mServPerc">0%</span> concluído</div>
+      </article>
+    </section>
 
-    <button onclick="openForm('parceria')" class="w-full btn-vidro">
-      Quero fazer uma parceria
-    </button>
+    <!-- Ações principais -->
+    <section class="mt-10 grid gap-3 sm:grid-cols-2 reveal" style="--reveal-delay:140ms">
+      <button id="btnContribuir" class="btn btn-primary w-full">Contribuir / Doar</button>
+      <button id="btnSolicitar" class="btn btn-ghost w-full">Pedir serviço / ajuda</button>
+    </section>
 
-    <button onclick="openForm('investir')" class="w-full btn-vidro">
-      Quero investir no projeto
-    </button>
-
-    <button onclick="openForm('apoio')" class="w-full btn-vidro">
-      Preciso de apoio no meu projeto
-    </button>
-  </div>
-
-  <!-- Modais -->
-  <div id="formModal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
-    <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-lg w-full text-left">
-      <h3 id="formTitle" class="form-title mb-4"></h3>
-      <form id="formContent" method="POST" class="space-y-4">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_next" value="https://noheroes.com.br/agradecimento.html">
-        <input type="hidden" name="_subject" id="formSubject" value="Contato">
-        <div id="formFields"></div>
-        <button type="submit" class="btn-enviar">Enviar</button>
+    <!-- Form captar e-mail (clean) -->
+    <section class="mt-10 card p-4 reveal" style="--reveal-delay:160ms">
+      <h3 class="cinzel text-lg">Receba novidades e metas</h3>
+      <form id="formLead" class="mt-3 grid gap-3 sm:grid-cols-2" autocomplete="on">
+        <input class="input" name="nome" placeholder="Seu nome" required />
+        <input class="input" type="email" name="email" placeholder="Seu e-mail" required />
+        <button class="btn btn-primary sm:col-span-2" type="submit">Assinar</button>
       </form>
-      <button onclick="closeModal('formModal')" class="mt-4 text-[#8f4fff] underline">Fechar</button>
-    </div>
-  </div>
+      <p class="mt-2 text-xs text-white/50">Armazenamento local habilitado. Integração com backend pronta no código (comentários).</p>
+    </section>
+  </main>
 
-  <div id="pixModal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
-    <div class="bg-[#1c1c1c] p-6 rounded-lg max-w-lg w-full text-left">
-      <h3 class="text-2xl font-bold text-[#8f4fff] mb-4">Contribuir com Pix</h3>
-      <div class="text-center">
-        <h4 class="text-lg text-[#8f4fff] mb-4">Escaneie o QR Code abaixo ou copie a chave Pix:</h4>
-        <img src="assets/images/qr-code.png" alt="QR Code Pix" class="mx-auto w-64 mb-4">
-        <button onclick="copyPixKey()" class="bg-[#8f4fff] text-black px-4 py-2 rounded hover:bg-[#39ff14] block mx-auto mb-4">Copiar chave Pix</button>
-        <button onclick="closeModal('pixModal')" class="mt-4 text-[#8f4fff] underline">Fechar</button>
-      </div>
-    </div>
-  </div>
-<!-- NOVA SECTION: DASHBOARD DE METAS NOHEROES --><section id="dashboard-doacoes" class="max-w-5xl mx-auto mt-24 px-4 space-y-24">
-  <h2 class="text-4xl font-bold text-center mb-16 cinzel gradiente-noheroes">Como funcionam as metas e recompensas</h2>
-  <p class="text-center text-white/60 max-w-3xl mx-auto text-base mb-12 leading-relaxed">
-    Você pode apoiar diretamente projetos do universo NoHeroes. Cada contribuição gera <strong>fichas</strong> com seu nome, que aumentam suas chances de receber <strong>kits colecionáveis</strong> exclusivos a cada meta concluída. Quanto mais apoiar, mais fichas. As metas têm progresso público e, ao atingir o 100%, até <strong>3 apoiadores serão sorteados</strong> para receber recompensas únicas.
-  </p>  <!-- LISTA DE METAS COM MESMA ESTRUTURA -->  <div class="space-y-24"><!-- BLOCOS DE META COM IMAGEM À ESQUERDA E RANKING À DIREITA -->
-<!-- META 1 - SERVIDOR -->
-<div class="flex flex-col md:flex-row items-center gap-10">
-  <div class="w-full md:w-1/3">
-    <img src="assets/images/server-meta.jpg" alt="Servidor" class="rounded-xl shadow-xl w-full">
-  </div>
-  <div class="flex-1 space-y-4">
-    <h3 class="text-3xl font-bold cinzel gradiente-noheroes">Meta I: Infraestrutura do Servidor</h3>
-    <div class="w-full bg-gray-800 rounded-full h-6 overflow-hidden">
-      <div class="bg-gradient-to-r from-[#8f4fff] to-[#facc15] h-6 text-xs font-medium text-center text-black p-1 leading-none rounded-full" style="width: 0%" id="progress-servidor">0%</div>
-<p class="text-sm text-white/60 mb-2">Meta: <strong class="text-white">R$ 10.000</strong></p>
-    </div>
-    <button class="btn-vidro mt-4" onclick="abrirModalDoacao('servidor')">Apoiar o Coração NoHeroes</button>
-    <div class="ranking-box">
-      <h4 class="ranking-title">Ranking dos apoiadores</h4>
-      <div class="ranking-conteudo">
-        <div class="podium flex justify-between gap-2 w-full">
-          <div class="bronze flex-1 text-center py-2 rounded-t">3º<br><span id="bronze-servidor">---</span></div>
-          <div class="ouro flex-1 text-center py-2 rounded-t">1º<br><span id="ouro-servidor">---</span></div>
-          <div class="prata flex-1 text-center py-2 rounded-t">2º<br><span id="prata-servidor">---</span></div>
+  <!-- MODAL: Contribuir -->
+  <div id="modalContribuir" class="overlay" role="dialog" aria-modal="true" aria-label="Contribuir">
+    <div class="modal">
+      <h3 class="cinzel text-xl grad-text">Contribuir</h3>
+      <form id="formDoacao" class="mt-3 grid gap-3">
+        <div class="field">
+          <label class="text-sm text-white/70">Valor (R$)</label>
+          <input class="input" type="number" min="1" step="0.01" name="valor" placeholder="Ex.: 25.00" required />
         </div>
-        <div class="lista-scroll mt-4 max-h-24 overflow-hidden">
-          <ul id="ranking-servidor" class="text-sm text-white/80 animate-scroll-nomes space-y-1">
-            <li>Sem doações registradas ainda.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- META 2 - APP -->
-<div class="flex flex-col md:flex-row items-center gap-10">
-  <div class="w-full md:w-1/3">
-    <img src="assets/images/app-meta.jpg" alt="App" class="rounded-xl shadow-xl w-full">
-  </div>
-  <div class="flex-1 space-y-4">
-    <h3 class="text-3xl font-bold cinzel gradiente-noheroes">Meta II: Desenvolvimento do App</h3>
-    <div class="w-full bg-gray-800 rounded-full h-6 overflow-hidden">
-      <div class="bg-gradient-to-r from-[#8f4fff] to-[#facc15] h-6 text-xs font-medium text-center text-black p-1 leading-none rounded-full" style="width: 0%" id="progress-app">0%</div>
-<p class="text-sm text-white/60 mb-2">Meta: <strong class="text-white">R$ 100.000</strong></p>
-    </div>
-    <button class="btn-vidro mt-4" onclick="abrirModalDoacao('app')">Apoiar Aplicativo</button>
-    <div class="ranking-box">
-      <h4 class="ranking-title">Ranking dos apoiadores</h4>
-      <div class="ranking-conteudo">
-        <div class="podium flex justify-between gap-2 w-full">
-          <div class="bronze flex-1 text-center py-2 rounded-t">3º<br><span id="bronze-app">---</span></div>
-          <div class="ouro flex-1 text-center py-2 rounded-t">1º<br><span id="ouro-app">---</span></div>
-          <div class="prata flex-1 text-center py-2 rounded-t">2º<br><span id="prata-app">---</span></div>
-        </div>
-        <div class="lista-scroll mt-4 max-h-24 overflow-hidden">
-          <ul id="ranking-app" class="text-sm text-white/80 animate-scroll-nomes space-y-1">
-            <li>Sem doações registradas ainda.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- META 3 - CHRYSALIS & ROAR -->
-<div class="text-center">
-  <h3 class="text-3xl font-bold cinzel gradiente-noheroes">Meta III: Animações - Chrysalis & Roar</h3>
-</div>
-
-<!-- CHRYSALIS -->
-<div class="flex flex-col md:flex-row items-center gap-10">
-  <div class="w-full md:w-1/3">
-    <img src="assets/images/chrysalis-meta.jpg" alt="Chrysalis" class="rounded-xl shadow-xl w-full">
-  </div>
-  <div class="flex-1 space-y-4">
-    <h4 class="text-xl font-bold cinzel gradiente-noheroes">Chrysalis</h4>
-    <div class="w-full bg-gray-800 rounded-full h-6 overflow-hidden">
-      <div class="bg-gradient-to-r from-[#8f4fff] to-[#facc15] h-6 text-xs font-medium text-center text-black p-1 leading-none rounded-full" style="width: 0%" id="progress-chrysalis">0%</div>
-<p class="text-sm text-white/60 mb-2">Meta: <strong class="text-white">R$ 500.000</strong></p>
-    </div>
-    <button class="btn-vidro mt-4" onclick="abrirModalDoacao('chrysalis')">Apoiar "Chrysalis"</button>
-    <div class="ranking-box">
-      <h4 class="ranking-title">Ranking dos apoiadores</h4>
-      <div class="ranking-conteudo">
-        <div class="podium flex justify-between gap-2 w-full">
-          <div class="bronze flex-1 text-center py-2 rounded-t">3º<br><span id="bronze-chrysalis">---</span></div>
-          <div class="ouro flex-1 text-center py-2 rounded-t">1º<br><span id="ouro-chrysalis">---</span></div>
-          <div class="prata flex-1 text-center py-2 rounded-t">2º<br><span id="prata-chrysalis">---</span></div>
-        </div>
-        <div class="lista-scroll mt-4 max-h-24 overflow-hidden">
-          <ul id="ranking-chrysalis" class="text-sm text-white/80 animate-scroll-nomes space-y-1">
-            <li>Sem doações registradas ainda.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ROAR -->
-<div class="flex flex-col md:flex-row items-center gap-10">
-  <div class="w-full md:w-1/3">
-    <img src="assets/images/roar-meta.jpg" alt="Roar" class="rounded-xl shadow-xl w-full">
-  </div>
-  <div class="flex-1 space-y-4">
-    <h4 class="text-xl font-bold cinzel gradiente-noheroes">Roar</h4>
-    <div class="w-full bg-gray-800 rounded-full h-6 overflow-hidden">
-      <div class="bg-gradient-to-r from-[#8f4fff] to-[#facc15] h-6 text-xs font-medium text-center text-black p-1 leading-none rounded-full" style="width: 0%" id="progress-roar">0%</div>
-<p class="text-sm text-white/60 mb-2">Meta: <strong class="text-white">R$ 500.000</strong></p>
-    </div>
-    <button class="btn-vidro mt-4" onclick="abrirModalDoacao('roar')">Apoiar "ROAR"</button>
-    <div class="ranking-box">
-      <h4 class="ranking-title">Ranking dos apoiadores</h4>
-      <div class="ranking-conteudo">
-        <div class="podium flex justify-between gap-2 w-full">
-          <div class="bronze flex-1 text-center py-2 rounded-t">3º<br><span id="bronze-roar">---</span></div>
-          <div class="ouro flex-1 text-center py-2 rounded-t">1º<br><span id="ouro-roar">---</span></div>
-          <div class="prata flex-1 text-center py-2 rounded-t">2º<br><span id="prata-roar">---</span></div>
-        </div>
-        <div class="lista-scroll mt-4 max-h-24 overflow-hidden">
-          <ul id="ranking-roar" class="text-sm text-white/80 animate-scroll-nomes space-y-1">
-            <li>Sem doações registradas ainda.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- META 4 - UNIVERSO NOHEROES -->
-<div class="flex flex-col md:flex-row items-center gap-10">
-  <div class="w-full md:w-1/3">
-    <img src="assets/images/universo-meta.jpg" alt="Universo NoHeroes" class="rounded-xl shadow-xl w-full">
-  </div>
-  <div class="flex-1 space-y-4">
-    <h3 class="text-3xl font-bold cinzel gradiente-noheroes">Meta IV: Universo NoHeroes (Doação Geral)</h3>
-    <div class="w-full bg-gray-800 rounded-full h-6 overflow-hidden">
-      <div class="bg-gradient-to-r from-[#8f4fff] to-[#facc15] h-6 text-xs font-medium text-center text-black p-1 leading-none rounded-full" style="width: 0%" id="progress-universo">0%</div>
-    </div>
-    <p class="text-xs text-gray-400 mt-1">Meta: US$ 1.000.000 para expansão total do universo NoHeroes.</p>
-    <button class="btn-vidro mt-4" onclick="abrirModalDoacao('universo')">Apoiar o Universo</button>
-    <div class="ranking-box">
-      <h4 class="ranking-title">Ranking dos apoiadores</h4>
-      <div class="ranking-conteudo">
-        <div class="podium flex justify-between gap-2 w-full">
-          <div class="bronze flex-1 text-center py-2 rounded-t">3º<br><span id="bronze-universo">---</span></div>
-          <div class="ouro flex-1 text-center py-2 rounded-t">1º<br><span id="ouro-universo">---</span></div>
-          <div class="prata flex-1 text-center py-2 rounded-t">2º<br><span id="prata-universo">---</span></div>
-        </div>
-        <div class="lista-scroll mt-4 max-h-24 overflow-hidden">
-          <ul id="ranking-universo" class="text-sm text-white/80 animate-scroll-nomes space-y-1">
-            <li>Sem doações registradas ainda.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-  </div>
-<div id="modalDoacao" class="hidden fixed inset-0 z-50 bg-black bg-opacity-80 flex items-center justify-center">
-    <div class="bg-[#1c1c1c] p-6 rounded-xl max-w-lg w-full relative border border-[#333]">
-      <button onclick="fecharModalDoacao()" class="absolute top-2 right-4 text-white text-xl">✕</button>
-      <h3 class="text-2xl font-bold cinzel gradiente-noheroes text-center mb-4">Apoiar Projeto</h3>
-      <form id="formDoacao" class="space-y-4">
-        <input type="hidden" id="projetoSelecionado" name="projeto" value="">
-        <div>
-          <label class="block text-white text-sm mb-1">Nome do doador</label>
-          <input type="text" name="nome" required class="w-full p-2 rounded bg-black text-white border border-gray-700">
-        </div>
-        <div>
-          <label class="block text-white text-sm mb-1">Valor a doar (R$)</label>
-          <input type="number" name="valor" required min="1" step="0.01" class="w-full p-2 rounded bg-black text-white border border-gray-700">
-        </div>
-        <div>
-          <label class="block text-white text-sm mb-1">Contato (email ou telefone)</label>
-          <input type="text" name="contato" required class="w-full p-2 rounded bg-black text-white border border-gray-700">
-        </div>
-        <div>
-          <label class="block text-white text-sm mb-1">Projeto que deseja apoiar</label>
-          <select name="meta" class="w-full p-2 rounded bg-black text-white border border-gray-700" required>
-            <option value="servidor">Meta I: Infraestrutura do Servidor</option>
-            <option value="app">Meta II: Desenvolvimento do App</option>
-            <option value="chrysalis">Chrysalis</option>
-            <option value="roar">Roar</option>
-            <option value="universo">Meta IV: Universo NoHeroes</option>
+        <div class="field">
+          <label class="text-sm text-white/70">Destino</label>
+          <select class="input" name="destino">
+            <option value="geral">Meta Geral — NoHeroes</option>
+            <option value="servidor">Servidor do Universo</option>
           </select>
         </div>
-        <div class="flex items-center gap-2">
-          <input type="checkbox" id="termosCheckbox" class="accent-purple-600">
-          <label for="termosCheckbox" class="text-white text-sm">Li e aceito os <a href="termos.html" class="underline text-[#a855f7]">Termos de uso e serviço</a></label>
+        <div class="grid gap-2 sm:grid-cols-3">
+          <button class="btn btn-primary" type="button" id="payPix">PIX</button>
+          <button class="btn btn-ghost" type="button" id="payMP">Mercado Pago</button>
+          <button class="btn btn-ghost" type="button" id="payKofi">Ko-fi</button>
         </div>
-        <button type="submit" id="btnProsseguirPagamento" disabled class="btn-vidro w-full mt-2">Prosseguir para pagamento</button>
+        <div class="text-xs text-white/50">Ao finalizar, o valor é somado ao progresso local e pode ser conciliado depois via webhook.</div>
       </form>
+      <div class="mt-3 flex justify-end gap-2">
+        <button class="btn" data-close>Fechar</button>
+      </div>
     </div>
   </div>
-</section>
-</main>
 
-<footer class="py-8 text-center text-[#666] bg-[#000] border-t border-[#333] mt-20">
-    <a href="linktree.html" class="inline-block mb-4">
-      <img src="assets/images/linktree.png" alt="Linktree" class="h-10 mx-auto">
-    </a>
-    <p>Explore. Escolha. Caia. Evolua.</p>
-    <p class="mt-2">Toda escolha tem um preço. Toda queda, uma razão.</p>
-    <p class="text-xs mt-4">© 2025 NoHeroes. Todos os direitos reservados.</p>
-  </footer>  <script>
-    // Drawer funcional
-    const hamburgerBtn = document.getElementById('hamburgerBtn');
-    const drawer = document.getElementById('drawer');
-    const overlay = document.getElementById('drawerOverlay');
-    hamburgerBtn.addEventListener('click', () => {
-      drawer.style.transform = drawer.style.transform === 'translateX(0%)' ? 'translateX(100%)' : 'translateX(0%)';
-      overlay.classList.toggle('hidden');
+  <!-- MODAL: PIX -->
+  <div id="modalPix" class="overlay" role="dialog" aria-modal="true" aria-label="PIX">
+    <div class="modal">
+      <h3 class="cinzel text-xl grad-text">PIX</h3>
+      <p class="text-white/70 text-sm">Escaneie o QR ou copie a chave.</p>
+      <div class="mt-3 grid gap-3 place-items-center">
+        <!-- Substitua a imagem pelo seu QR -->
+        <img src="assets/images/qr-code.png" alt="QR Code PIX" class="w-48 h-48 object-contain rounded-lg border border-[--border]" />
+        <div class="w-full grid gap-2">
+          <input id="pixKey" class="input" readonly value="SUA-CHAVE-PIX-AQUI@EMAIL.COM" />
+          <button class="btn btn-primary" id="copyPix">Copiar chave</button>
+        </div>
+      </div>
+      <div class="mt-3 flex justify-end gap-2">
+        <button class="btn" data-close>Fechar</button>
+        <button class="btn btn-primary" id="pixConfirm">Já contribuí</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Mercado Pago (link) -->
+  <div id="modalMP" class="overlay" role="dialog" aria-modal="true" aria-label="Mercado Pago">
+    <div class="modal">
+      <h3 class="cinzel text-xl grad-text">Mercado Pago</h3>
+      <p class="text-white/70 text-sm">Abriremos o checkout em outra aba.</p>
+      <div class="mt-3">
+        <!-- Troque o href pelo seu preference_id/URL -->
+        <a id="mpLink" class="btn btn-primary w-full" target="_blank" rel="noopener"
+           href="https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=SUA_PREFERENCE_ID">Ir para o checkout</a>
+      </div>
+      <div class="mt-3 flex justify-end gap-2">
+        <button class="btn" data-close>Fechar</button>
+        <button class="btn btn-primary" id="mpConfirm">Já contribuí</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Ko-fi (link) -->
+  <div id="modalKofi" class="overlay" role="dialog" aria-modal="true" aria-label="Ko-fi">
+    <div class="modal">
+      <h3 class="cinzel text-xl grad-text">Ko-fi</h3>
+      <p class="text-white/70 text-sm">Abriremos sua página Ko-fi em outra aba.</p>
+      <div class="mt-3">
+        <!-- Troque o username -->
+        <a id="kofiLink" class="btn btn-primary w-full" target="_blank" rel="noopener"
+           href="https://ko-fi.com/SEU_USERNAME">Ir para Ko-fi</a>
+      </div>
+      <div class="mt-3 flex justify-end gap-2">
+        <button class="btn" data-close>Fechar</button>
+        <button class="btn btn-primary" id="kofiConfirm">Já contribuí</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Solicitar serviço/ajuda -->
+  <div id="modalSolicitar" class="overlay" role="dialog" aria-modal="true" aria-label="Solicitar serviço/ajuda">
+    <div class="modal">
+      <h3 class="cinzel text-xl grad-text">Pedir serviço / ajuda</h3>
+      <form id="formSolicitar" class="mt-3 grid gap-3">
+        <input class="input" name="nome" placeholder="Seu nome" required />
+        <input class="input" type="email" name="email" placeholder="Seu e-mail" required />
+        <button class="btn btn-primary" type="submit">Enviar</button>
+      </form>
+      <div class="mt-3 flex justify-end">
+        <button class="btn" data-close>Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER minimal -->
+  <footer class="py-10 text-center text-white/50 text-sm">
+    © <span id="year"></span> NoHeroes. Todos os direitos reservados.
+  </footer>
+
+<script>
+/* ====== Drawer ====== */
+const drawer = document.getElementById('drawer');
+const drawerOv = document.getElementById('drawerOverlay');
+const btnHam = document.getElementById('hamburgerBtn');
+const btnClose = document.getElementById('drawerClose');
+const toggleDrawer = (open) => {
+  drawer.classList.toggle('show', open);
+  drawerOv.classList.toggle('show', open);
+  if(open){
+    document.addEventListener('keydown', escDrawer);
+    setTimeout(()=>document.addEventListener('click', outsideDrawer, {capture:true}),0);
+  }else{
+    document.removeEventListener('keydown', escDrawer);
+    document.removeEventListener('click', outsideDrawer, {capture:true});
+  }
+};
+const escDrawer = (e)=>{ if(e.key==='Escape') toggleDrawer(false); };
+const outsideDrawer = (e)=>{ if(!drawer.contains(e.target) && e.target!==btnHam) toggleDrawer(false); };
+btnHam.addEventListener('click', ()=>toggleDrawer(true));
+btnClose.addEventListener('click', ()=>toggleDrawer(false));
+drawerOv.addEventListener('click', ()=>toggleDrawer(false));
+
+/* ====== Cinematic reveal ====== */
+const sections = document.querySelectorAll('main, header, footer');
+sections.forEach(section=>{
+  const items = Array.from(section.querySelectorAll('.reveal'));
+  if(!items.length) return;
+  const io = new IntersectionObserver((entries,obs)=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      items.forEach((el,i)=>{ el.style.setProperty('--reveal-delay', `${i*70}ms`); el.classList.add('in'); });
+      obs.unobserve(e.target);
     });
-    overlay.addEventListener('click', () => {
-      drawer.style.transform = 'translateX(100%)';
-      overlay.classList.add('hidden');
-    });
-
-    // Canvas brasas roxas
-    const canvas = document.getElementById("brasasCanvas");
-    const ctx = canvas.getContext("2d");
-    let particles = [];
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    function createParticles(count) {
-      particles = [];
-      for (let i = 0; i < count; i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          radius: Math.random() * 1.5 + 1,
-          speedY: Math.random() * -0.5 - 0.2,
-          alpha: Math.random() * 0.5 + 0.5
-        });
-      }
-    }
-    function animateParticles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => {
-        p.y += p.speedY;
-        if (p.y < 0) p.y = canvas.height;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI);
-        ctx.fillStyle = `rgba(168, 85, 247, ${p.alpha})`;
-        ctx.shadowColor = "#a855f7";
-        ctx.shadowBlur = 12;
-        ctx.fill();
-      });
-      requestAnimationFrame(animateParticles);
-    }
-    createParticles(100);
-    animateParticles();
-function openPixModal() {
-  document.getElementById('pixModal').classList.remove('hidden');
-}
-function openForm(tipo) {
-  const modal = document.getElementById('formModal');
-  const title = document.getElementById('formTitle');
-  const subject = document.getElementById('formSubject');
-  const fields = document.getElementById('formFields');
-
-  modal.classList.remove('hidden');
-
-  let config = {
-    outras: {
-      title: 'Quero ajudar de outras formas',
-      subject: 'Apoio alternativo',
-      inputs: ['Nome completo', 'Email', 'Como deseja ajudar?']
-    },
-    parceria: {
-      title: 'Quero fazer uma parceria',
-      subject: 'Parceria',
-      inputs: ['Nome da empresa', 'Email comercial', 'Proposta']
-    },
-    investir: {
-      title: 'Quero investir no projeto',
-      subject: 'Investimento',
-      inputs: ['Nome completo', 'Email', 'Valor estimado', 'Mensagem']
-    },
-    apoio: {
-      title: 'Preciso de apoio no meu projeto',
-      subject: 'Solicitação de apoio',
-      inputs: ['Seu nome', 'Email', 'Sobre seu projeto']
-    }
-  };
-
-  const data = config[tipo];
-  title.textContent = data.title;
-  subject.value = data.subject;
-
-  fields.innerHTML = data.inputs.map((input, index) => {
-  const isLong = input.toLowerCase().includes("mensagem") || input.toLowerCase().includes("como") || input.toLowerCase().includes("sobre");
-  return isLong
-    ? `<textarea name="${input}" placeholder="${input}" rows="4" class="w-full p-2 bg-black border border-[#333] rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#8f4fff]"></textarea>`
-    : `<input type="text" name="${input}" placeholder="${input}" class="w-full p-2 bg-black border border-[#333] rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#8f4fff]">`;
-}).join('');
-}
-function openSocials() {
-  document.getElementById('socialsModal').classList.remove('hidden');
-}
-function closeModal(id) {
-  document.getElementById(id).classList.add('hidden');
-}
-function toggleDrawer() {
-  const drawer = document.getElementById('drawer');
-  const overlay = document.getElementById('drawerOverlay');
-  const isOpen = drawer.style.transform === 'translateX(0%)';
-  drawer.style.transform = isOpen ? 'translateX(100%)' : 'translateX(0%)';
-  overlay.classList.toggle('hidden', isOpen);
-}
-
-function abrirModalDoacao(projeto) {
-  document.getElementById('modalDoacao').classList.remove('hidden');
-  document.getElementById('projetoSelecionado').value = projeto;
-  document.querySelector('select[name="meta"]').value = projeto;
-}
-function fecharModalDoacao() {
-  document.getElementById('modalDoacao').classList.add('hidden');
-}
-document.getElementById('termosCheckbox').addEventListener('change', function () {
-  document.getElementById('btnProsseguirPagamento').disabled = !this.checked;
+  },{threshold:.14, rootMargin:'0px 0px -8% 0px'});
+  io.observe(section);
 });
-  </script>
+
+/* ====== Brasas canvas (mantido, leve) ====== */
+const canvas = document.getElementById('brasasCanvas'), ctx = canvas.getContext('2d');
+const fit=()=>{ canvas.width=innerWidth; canvas.height=innerHeight; }; addEventListener('resize',fit); fit();
+let parts=[];
+const seed=()=>{ parts=Array.from({length:90},()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:1+Math.random()*1.2,v:-.2-Math.random()*.5,a:.4+.4*Math.random()})); };
+const tick=()=>{ ctx.clearRect(0,0,canvas.width,canvas.height);
+  for(const p of parts){ p.y+=p.v; if(p.y<0) p.y=canvas.height;
+    ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,2*Math.PI);
+    ctx.fillStyle=`rgba(168,85,247,${p.a})`; ctx.shadowColor="#a855f7"; ctx.shadowBlur=10; ctx.fill(); }
+  requestAnimationFrame(tick);
+};
+seed(); tick();
+
+/* ====== Estado metas / armazenamento local ====== */
+const fmtBRL = (v)=> v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const state = JSON.parse(localStorage.getItem('nh_donations')||'{"geral":0,"servidor":0,"leads":[]}');
+const metas = {geral: 10000, servidor: 2000};
+function renderMetas(){
+  const geral = state.geral||0, serv= state.servidor||0;
+  // Geral
+  document.getElementById('mGeralValor').textContent = fmtBRL(geral);
+  document.getElementById('mGeralMeta').textContent = fmtBRL(metas.geral);
+  const p1 = Math.min(100, Math.round(geral/metas.geral*100))||0;
+  document.getElementById('mGeralBar').style.width = p1+'%';
+  document.getElementById('mGeralPerc').textContent = p1+'%';
+  // Servidor
+  document.getElementById('mServValor').textContent = fmtBRL(serv);
+  document.getElementById('mServMeta').textContent = fmtBRL(metas.servidor);
+  const p2 = Math.min(100, Math.round(serv/metas.servidor*100))||0;
+  document.getElementById('mServBar').style.width = p2+'%';
+  document.getElementById('mServPerc').textContent = p2+'%';
+}
+renderMetas();
+
+/* ====== Modais util ====== */
+const overlays = document.querySelectorAll('.overlay');
+function openModal(id){ document.getElementById(id).classList.add('show'); document.getElementById(id).classList.add('show'); document.getElementById(id).classList.add('show'); }
+function show(id){ document.getElementById(id).classList.add('show'); }
+function hide(id){ document.getElementById(id).classList.remove('show'); }
+document.querySelectorAll('.overlay [data-close]').forEach(b=> b.addEventListener('click', e=> e.currentTarget.closest('.overlay').classList.remove('show')));
+// Clique fora fecha
+overlays.forEach(ov=> ov.addEventListener('click', (e)=>{ if(e.target===ov) ov.classList.remove('show'); }));
+// Esc fecha
+addEventListener('keydown', (e)=>{ if(e.key==='Escape') overlays.forEach(ov=> ov.classList.remove('show')); });
+
+/* ====== Botões principais ====== */
+const btnContribuir = document.getElementById('btnContribuir');
+const btnSolicitar = document.getElementById('btnSolicitar');
+btnContribuir.addEventListener('click', ()=> document.getElementById('modalContribuir').classList.add('show'));
+btnSolicitar.addEventListener('click', ()=> document.getElementById('modalSolicitar').classList.add('show'));
+
+/* ====== Pagamentos ====== */
+let pendingDonation = {valor:0, destino:'geral'};
+document.getElementById('formDoacao').addEventListener('input', (e)=>{
+  const f = new FormData(e.currentTarget);
+  pendingDonation.valor = Number(f.get('valor')||0);
+  pendingDonation.destino = f.get('destino')||'geral';
+});
+document.getElementById('payPix').addEventListener('click', ()=>{
+  if(!pendingDonation.valor){ alert('Informe um valor.'); return; }
+  document.getElementById('modalPix').classList.add('show');
+});
+document.getElementById('payMP').addEventListener('click', ()=>{
+  if(!pendingDonation.valor){ alert('Informe um valor.'); return; }
+  document.getElementById('modalMP').classList.add('show');
+  // Dica: crie preference_id no backend e injete a URL aqui
+});
+document.getElementById('payKofi').addEventListener('click', ()=>{
+  if(!pendingDonation.valor){ alert('Informe um valor.'); return; }
+  document.getElementById('modalKofi').classList.add('show');
+});
+// PIX helpers
+document.getElementById('copyPix').addEventListener('click', ()=>{
+  const el = document.getElementById('pixKey');
+  el.select(); el.setSelectionRange(0,99999);
+  document.execCommand('copy');
+  alert('Chave PIX copiada.');
+});
+// Confirmadores (incrementam contagem local)
+function confirmDonation(){
+  if(!pendingDonation.valor) return;
+  state[pendingDonation.destino] = (state[pendingDonation.destino]||0) + pendingDonation.valor;
+  localStorage.setItem('nh_donations', JSON.stringify(state));
+  renderMetas();
+  overlays.forEach(ov=> ov.classList.remove('show'));
+  alert('Obrigado pelo apoio! (Contagem atualizada localmente)');
+}
+document.getElementById('pixConfirm').addEventListener('click', confirmDonation);
+document.getElementById('mpConfirm').addEventListener('click', confirmDonation);
+document.getElementById('kofiConfirm').addEventListener('click', confirmDonation);
+
+/* ====== Leads (nome+email) ====== */
+document.getElementById('formLead').addEventListener('submit', (e)=>{
+  e.preventDefault();
+  const f = new FormData(e.currentTarget);
+  const lead = {nome: f.get('nome'), email: f.get('email'), ts: Date.now()};
+  state.leads.push(lead);
+  localStorage.setItem('nh_donations', JSON.stringify(state));
+  e.currentTarget.reset();
+  alert('Cadastrado com sucesso!');
+  // BACKEND (opcional): POST /leads
+  // fetch('/leads',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(lead)});
+});
+
+/* ====== Form solicitar serviço/ajuda ====== */
+document.getElementById('formSolicitar').addEventListener('submit', (e)=>{
+  e.preventDefault();
+  const f = new FormData(e.currentTarget);
+  const payload = {nome:f.get('nome'), email:f.get('email'), tipo:'solicitar', ts:Date.now()};
+  // Salva junto em leads
+  state.leads.push(payload);
+  localStorage.setItem('nh_donations', JSON.stringify(state));
+  e.currentTarget.reset();
+  document.getElementById('modalSolicitar').classList.remove('show');
+  alert('Recebido! Em breve entraremos em contato.');
+  // BACKEND (opcional): POST /requests
+  // fetch('/requests',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+});
+
+/* ====== Util ====== */
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
