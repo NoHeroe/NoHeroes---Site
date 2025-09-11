@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="pt-BR">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -7,58 +8,93 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root{
-      --nh-bg:#0a0a0a; 
+      --nh-bg:#0a0a0a;
       --nh-card:#0f0f10;
       --nh-fg:#e5e5e5;
       --nh-muted:#a1a1aa;
-      --nh-accent:#7c3aed; /* roxo */
-      --nh-accent-2:#d4af37; /* dourado */
+      --nh-accent:#7c3aed;  /* roxo */
+      --nh-accent-2:#d4af37;/* dourado */
+      --header-h: 64px;      /* 16 * 4px */
+      --topbar-h: 6px;       /* barra degradê fininha */
+      --offset-top: 70px;    /* 64 + 6 = 70 (um respiro) */
     }
-    html,body{height:100%}
-    body{background: radial-gradient(1200px 800px at 80% -10%, rgba(124,58,237,.15), transparent 60%),
-                     radial-gradient(1000px 600px at 0% 110%, rgba(212,175,55,.12), transparent 60%),
-                     #0a0a0a;
-         color:var(--nh-fg); font-family:Inter,system-ui,Arial,sans-serif;}
+
+    html, body { height: 100% }
+    body{
+      background:#0a0a0a; /* sólido — os glows entram nas camadas fixas abaixo */
+      color:var(--nh-fg);
+      font-family:Inter,system-ui,Arial,sans-serif;
+      overflow-x:hidden;
+    }
     .title-font{font-family:'Cinzel Decorative',serif}
-    /* Glass / border glow */
-    .glass{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
-           backdrop-filter: blur(10px);}
-    .ring-gradient{position:relative}
-    .ring-gradient:before{content:""; position:absolute; inset:-1px; border-radius:inherit; padding:1px; 
-      background:linear-gradient(135deg, rgba(124,58,237,.8), rgba(212,175,55,.7)); -webkit-mask:
-      linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude}
-    /* Floating labels */
-    .fl{position:relative}
-    .fl input, .fl textarea, .fl select{width:100%; padding:14px 14px 12px; background:#0b0b0c; color:#fff; border:1px solid #2a2a2e; border-radius:12px; outline:none}
-    .fl input:focus, .fl textarea:focus, .fl select:focus{border-color:#5b21b6; box-shadow:0 0 0 3px rgba(124,58,237,.25)}
-    .fl label{position:absolute; left:12px; top:12px; padding:0 6px; color:#9ca3af; pointer-events:none; transition:all .15s ease; background:transparent}
-    .fl input:focus+label, .fl input:not(:placeholder-shown)+label,
-    .fl textarea:focus+label, .fl textarea:not(:placeholder-shown)+label,
-    .fl select:focus+label{transform:translateY(-14px) scale(.92); color:#c4b5fd; background:#0b0b0c}
-    /* Embers canvas sits behind */
-    #brasasCanvas{position:fixed; inset:0; z-index:-1; display:block;}
-    /* Reduce motion */
-    @media (prefers-reduced-motion: reduce){
-      #brasasCanvas{display:none}
+
+    /* Canvas e camadas de glow FIXAS (não seguem scroll) */
+    #brasasCanvas{ position:fixed; inset:0; z-index:-3; display:block; pointer-events:none; }
+    /* Glow principal roxo→dourado fixo */
+    body::before{
+      content:""; position:fixed; inset:0; z-index:-2; pointer-events:none;
+      background:
+        radial-gradient(1200px 800px at 80% -10%, rgba(124,58,237,.18), transparent 60%),
+        radial-gradient(1000px 600px at 0% 110%, rgba(212,175,55,.14), transparent 60%);
     }
-      /* Vignette + grain layer (NoHeroes roxo-dourado) */
-    body:after{
+    /* Vignette/film grain sutil fixo */
+    body::after{
       content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
       background:
-        radial-gradient(1200px 700px at 20% -10%, rgba(124,58,237,.25), transparent 60%),
-        radial-gradient(900px 600px at 100% 110%, rgba(212,175,55,.20), transparent 60%),
         radial-gradient(100% 120% at 50% 110%, rgba(0,0,0,.45), transparent 40%);
       mix-blend-mode:screen;
+    }
+
+    /* Glass / border glow */
+    .glass{
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      backdrop-filter: blur(10px);
+    }
+    .ring-gradient{ position:relative }
+    .ring-gradient:before{
+      content:""; position:absolute; inset:-1px; border-radius:inherit; padding:1px;
+      background:linear-gradient(135deg, rgba(124,58,237,.8), rgba(212,175,55,.7));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor; mask-composite:exclude;
+    }
+
+    /* Floating labels */
+    .fl{ position:relative }
+    .fl input, .fl textarea, .fl select{
+      width:100%; padding:14px 14px 12px; background:#0b0b0c; color:#fff;
+      border:1px solid #2a2a2e; border-radius:12px; outline:none
+    }
+    .fl input:focus, .fl textarea:focus, .fl select:focus{
+      border-color:#5b21b6; box-shadow:0 0 0 3px rgba(124,58,237,.25)
+    }
+    .fl label{
+      position:absolute; left:12px; top:12px; padding:0 6px; color:#9ca3af;
+      pointer-events:none; transition:all .15s ease; background:transparent
+    }
+    .fl input:focus+label, .fl input:not(:placeholder-shown)+label,
+    .fl textarea:focus+label, .fl textarea:not(:placeholder-shown)+label,
+    .fl select:focus+label{
+      transform:translateY(-14px) scale(.92); color:#c4b5fd; background:#0b0b0c
+    }
+
+    /* Acessibilidade: reduz animação */
+    @media (prefers-reduced-motion: reduce){
+      #brasasCanvas{ display:none }
+      body::before, body::after{ opacity:.6 }
     }
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
-  <!-- Background embers -->
-  <canvas id="brasasCanvas" aria-hidden="true"></canvas>  <!-- Top gradient bar / brand -->  <header class="fixed top-0 left-0 w-full z-50">
-    <div class="h-1.5 w-full bg-gradient-to-r from-purple-600 via-purple-400 to-amber-300"></div>
-    <div class="mx-auto max-w-6xl px-4 py-4 flex items-center justify-between">
+
+  <!-- Background brasas (roxas, suaves, FIXO) -->
+  <canvas id="brasasCanvas" aria-hidden="true"></canvas>
+
+  <!-- HEADER: fixo no topo -->
+  <header class="fixed top-0 left-0 w-full z-50">
+    <div class="h-[var(--topbar-h)] w-full bg-gradient-to-r from-purple-600 via-purple-400 to-amber-300"></div>
+    <div class="mx-auto max-w-6xl px-4 h-[var(--header-h)] flex items-center justify-between bg-transparent">
       <a href="/" class="flex items-center gap-3 group">
-        <div class="size-9 rounded-xl bg-gradient-to-br from-purple-600 to-amber-400 shadow"></div>
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-600 to-amber-400 shadow"></div>
         <span class="title-font text-xl tracking-wide bg-clip-text text-transparent bg-gradient-to-r from-purple-300 to-amber-200">NoHeroes</span>
       </a>
       <nav class="hidden sm:flex items-center gap-6 text-sm text-zinc-300">
@@ -68,73 +104,87 @@
       </nav>
       <a href="login.html" class="text-sm font-semibold px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10">Entrar</a>
     </div>
-  </header>  <!-- Main -->  <main class="flex-1 flex items-center justify-center px-4 py-12">
+  </header>
+
+  <!-- OFFSET do conteúdo para não ficar por baixo do header -->
+  <div aria-hidden="true" class="h-[var(--offset-top)]"></div>
+
+  <!-- MAIN -->
+  <main class="flex-1 flex items-center justify-center px-4 pb-12">
     <section class="w-full max-w-xl ring-gradient rounded-2xl">
       <div class="glass rounded-2xl p-6 sm:p-8 shadow-2xl">
         <h1 class="title-font text-3xl sm:text-4xl text-center mb-2 bg-clip-text text-transparent bg-gradient-to-r from-purple-300 to-amber-200">Crie sua conta</h1>
-        <p class="text-center text-zinc-400 mb-6">Bem-vindo ao universo NoHeroes. Registre-se para desbloquear conteúdos, itens e novidades.</p><form id="registerForm" class="grid grid-cols-1 gap-4">
-      <div class="fl">
-        <input id="nome_completo" name="nome_completo" type="text" placeholder=" " required autocomplete="name" inputmode="text"/>
-        <label for="nome_completo">Nome completo</label>
-      </div>
-      <div class="fl">
-        <input id="username" name="username" type="text" placeholder=" " required autocapitalize="off" autocomplete="username"/>
-        <label for="username">Nome de usuário</label>
-      </div>
-      <div class="fl">
-        <input id="email" name="email" type="email" placeholder=" " required autocomplete="email"/>
-        <label for="email">E-mail</label>
-      </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div class="fl">
-          <input id="password" name="password" type="password" placeholder=" " required autocomplete="new-password"/>
-          <label for="password">Senha</label>
-          <button type="button" id="togglePwd" class="absolute right-2 top-2.5 text-xs text-zinc-400 hover:text-zinc-200">mostrar</button>
-        </div>
-        <div class="fl">
-          <input id="confirmPassword" name="confirmPassword" type="password" placeholder=" " required autocomplete="new-password"/>
-          <label for="confirmPassword">Confirmar senha</label>
-        </div>
-      </div>
+        <p class="text-center text-zinc-400 mb-6">Bem-vindo ao universo NoHeroes. Registre-se para desbloquear conteúdos, itens e novidades.</p>
 
-      <!-- Opcionais -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div class="fl">
-          <input id="phone" name="phone" type="tel" placeholder=" " inputmode="tel"/>
-          <label for="phone">Telefone (opcional)</label>
-        </div>
-        <div class="fl">
-          <input id="birthdate" name="birthdate" type="date" placeholder=" "/>
-          <label for="birthdate">Nascimento (opcional)</label>
-        </div>
+        <form id="registerForm" class="grid grid-cols-1 gap-4">
+          <div class="fl">
+            <input id="nome_completo" name="nome_completo" type="text" placeholder=" " required autocomplete="name" inputmode="text"/>
+            <label for="nome_completo">Nome completo</label>
+          </div>
+          <div class="fl">
+            <input id="username" name="username" type="text" placeholder=" " required autocapitalize="off" autocomplete="username"/>
+            <label for="username">Nome de usuário</label>
+          </div>
+          <div class="fl">
+            <input id="email" name="email" type="email" placeholder=" " required autocomplete="email"/>
+            <label for="email">E-mail</label>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="fl">
+              <input id="password" name="password" type="password" placeholder=" " required autocomplete="new-password"/>
+              <label for="password">Senha</label>
+              <button type="button" id="togglePwd" class="absolute right-2 top-2.5 text-xs text-zinc-400 hover:text-zinc-200">mostrar</button>
+            </div>
+            <div class="fl">
+              <input id="confirmPassword" name="confirmPassword" type="password" placeholder=" " required autocomplete="new-password"/>
+              <label for="confirmPassword">Confirmar senha</label>
+            </div>
+          </div>
+
+          <!-- Opcionais -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="fl">
+              <input id="phone" name="phone" type="tel" placeholder=" " inputmode="tel"/>
+              <label for="phone">Telefone (opcional)</label>
+            </div>
+            <div class="fl">
+              <input id="birthdate" name="birthdate" type="date" placeholder=" "/>
+              <label for="birthdate">Nascimento (opcional)</label>
+            </div>
+          </div>
+          <div class="fl">
+            <textarea id="bio" name="bio" rows="3" placeholder=" "></textarea>
+            <label for="bio">Sobre você (opcional)</label>
+          </div>
+
+          <div class="flex items-start gap-3 text-sm text-zinc-300">
+            <input id="terms" type="checkbox" required class="mt-1 accent-purple-600"/>
+            <label for="terms">Concordo com os <a class="underline hover:no-underline" href="/termos" target="_blank" rel="noopener">Termos</a> e a <a class="underline hover:no-underline" href="/privacidade" target="_blank" rel="noopener">Privacidade</a>.</label>
+          </div>
+
+          <button type="submit" class="mt-2 inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-semibold bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-500 hover:to-purple-600 focus:outline-none focus:ring-4 focus:ring-purple-700/40 disabled:opacity-60 disabled:cursor-not-allowed">
+            <span id="btnText">Cadastrar</span>
+            <svg id="btnSpinner" class="hidden w-5 h-5 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+            </svg>
+          </button>
+
+          <p class="text-sm text-zinc-400 text-center">Já tem uma conta? <a class="text-purple-300 underline hover:no-underline" href="login.html">Entrar</a></p>
+        </form>
       </div>
-      <div class="fl">
-        <textarea id="bio" name="bio" rows="3" placeholder=" "></textarea>
-        <label for="bio">Sobre você (opcional)</label>
-      </div>
+    </section>
+  </main>
 
-      <div class="flex items-start gap-3 text-sm text-zinc-300">
-        <input id="terms" type="checkbox" required class="mt-1 accent-purple-600"/>
-        <label for="terms">Concordo com os <a class="underline hover:no-underline" href="/termos" target="_blank" rel="noopener">Termos</a> e a <a class="underline hover:no-underline" href="/privacidade" target="_blank" rel="noopener">Privacidade</a>.</label>
-      </div>
-
-      <button type="submit" class="mt-2 inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-semibold bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-500 hover:to-purple-600 focus:outline-none focus:ring-4 focus:ring-purple-700/40 disabled:opacity-60 disabled:cursor-not-allowed">
-        <span id="btnText">Cadastrar</span>
-        <svg id="btnSpinner" class="hidden size-5 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path></svg>
-      </button>
-
-      <p class="text-sm text-zinc-400 text-center">Já tem uma conta? <a class="text-purple-300 underline hover:no-underline" href="login.html">Entrar</a></p>
-    </form>
-  </div>
-</section>
-
-  </main>  <footer class="px-4 py-10 text-center text-xs text-zinc-500">
+  <footer class="px-4 py-10 text-center text-xs text-zinc-500">
     © <span id="year"></span> NoHeroes. Todos os direitos reservados.
-  </footer>  <script>
-    // Year
+  </footer>
+
+  <script>
+    // Ano
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Show/Hide password
+    // Toggle senha
     const pwd = document.getElementById('password');
     const togglePwd = document.getElementById('togglePwd');
     togglePwd.addEventListener('click', ()=>{
@@ -143,7 +193,7 @@
       togglePwd.textContent = isPwd ? 'ocultar' : 'mostrar';
     });
 
-    // Form Submit
+    // Submit
     const form = document.getElementById('registerForm');
     const btnText = document.getElementById('btnText');
     const btnSpinner = document.getElementById('btnSpinner');
@@ -196,15 +246,16 @@
       }
     });
 
-    // ----------------- Brasas — Padrão NoHeroes (roxas, suaves) -----------------
+    /* Brasas roxas — fixas, suaves (padrão NoHeroes) */
     (function(){
       const canvas = document.getElementById('brasasCanvas');
-      if(!canvas) return; const ctx = canvas.getContext('2d');
+      if(!canvas) return;
+      const ctx = canvas.getContext('2d', {alpha:true});
       let particles = [];
 
       function resize(){
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        canvas.width = innerWidth;
+        canvas.height = innerHeight;
       }
       addEventListener('resize', resize, {passive:true});
       resize();
@@ -215,9 +266,9 @@
           particles.push({
             x: Math.random()*canvas.width,
             y: Math.random()*canvas.height,
-            r: Math.random()*1.5 + 1,
-            vy: Math.random()*-0.5 - 0.2,
-            a: Math.random()*0.5 + 0.5
+            r: Math.random()*1.4 + 0.8,
+            vy: -(Math.random()*0.28 + 0.12),
+            a: Math.random()*0.5 + 0.4
           });
         }
       }
@@ -226,19 +277,19 @@
         ctx.clearRect(0,0,canvas.width,canvas.height);
         particles.forEach(p=>{
           p.y += p.vy;
-          if(p.y < 0) p.y = canvas.height;
+          if(p.y < -10) { p.y = canvas.height + 10; p.x = Math.random()*canvas.width; }
           ctx.beginPath();
           ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-          ctx.fillStyle = `rgba(168, 85, 247, ${p.a})`; // roxo NoHeroes
+          ctx.fillStyle = `rgba(168, 85, 247, ${p.a})`; // roxo
           ctx.shadowColor = '#a855f7';
           ctx.shadowBlur = 12;
           ctx.fill();
         });
         requestAnimationFrame(loop);
       }
-
       create(110);
       loop();
     })();
-  </script></body>
+  </script>
+</body>
 </html>
