@@ -734,26 +734,6 @@ Vitalista misterioso com poderes do sangue e da luz. Ator dos bastidores, guardi
   </div>
 </section>
 
-<!-- Script de controle dos Tabs (cole antes de fechar </body>) -->
-<script>
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      // esconde tudo
-      document.querySelectorAll('.tab-content').forEach(tc => tc.classList.add('hidden'));
-      // remove active de todos
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('bg-[#333]','text-white'));
-      // mostra o selecionado
-      const tab = document.getElementById(btn.dataset.tab);
-      tab.classList.remove('hidden');
-      // marca botão ativo
-      btn.classList.add('bg-[#333]','text-white');
-    });
-  });
-  // inicializa primeiro
-  document.querySelector('.tab-btn').click();
-</script>
-
-
     <!-- 6. Linha do Tempo -->
 <section id="timeline" class="py-16 px-6">
   <h2 class="text-3xl text-[#8f4fff] font-bold mb-6">Linha do Tempo</h2>
