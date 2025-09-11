@@ -317,7 +317,7 @@ seed(); tick();
 /* ====== Estado metas / armazenamento local ====== */
 const fmtBRL = (v)=> v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
 const state = JSON.parse(localStorage.getItem('nh_donations')||'{"geral":0,"servidor":0,"leads":[]}');
-const metas = {geral: 10000, servidor: 2000};
+const metas = {geral: 500000, servidor: 12000};
 function renderMetas(){
   const geral = state.geral||0, serv= state.servidor||0;
   // Geral
