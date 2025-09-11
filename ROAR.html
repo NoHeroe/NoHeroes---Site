@@ -999,19 +999,18 @@ Vitalista misterioso com poderes do sangue e da luz. Ator dos bastidores, guardi
   </footer>
 
   <script>
-  // ScrollReveal (com guard e seletor atualizado)
-  if (typeof ScrollReveal === 'function') {
-    ScrollReveal().reveal('section', {
-      delay: 200, duration: 1000, origin: 'bottom', distance: '50px', reset: true
-    });
-
-    if (document.getElementById('acda-sobre')) {
-      ScrollReveal().reveal('#acda-sobre', {
-        delay: 300, duration: 1200, origin: 'left', distance: '80px',
-        easing: 'ease-in-out', reset: false
+  // Protege o resto do script caso ScrollReveal não exista
+  try {
+    if (window.ScrollReveal) {
+      ScrollReveal().reveal('section', {
+        delay:200, duration:1000, origin:'bottom', distance:'50px', reset:true
+      });
+      ScrollReveal().reveal('#lenda-roar', {
+        delay:300, duration:1200, origin:'left', distance:'80px',
+        easing:'ease-in-out', reset:false
       });
     }
-  }
+  } catch (e) { /* no-op */ }
 
   // Drawer (hambúrguer)
   const drawer        = document.getElementById('drawer');
