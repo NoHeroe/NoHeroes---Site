@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Login — NoHeroes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root{
+    --nh-bg:#0a0a0a; --nh-fg:#e5e5e5; --nh-muted:#bdbdbd;
+    --grad: linear-gradient(135deg,#8f4fff 0%,#facc15 100%);
+    --border: rgba(255,255,255,.1); --glass: rgba(255,255,255,.04);
+    --radius:16px; --reveal-duration: 1000ms;
+  }
+  body{font-family:Inter,system-ui,Arial,sans-serif; background:var(--nh-bg); color:var(--nh-fg); overflow-x:hidden}
+  .cinzel{font-family:"Cinzel Decorative",serif}
+  .grad-text{background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent}
+  .card{background:var(--glass); border:1px solid var(--border); border-radius:var(--radius); backdrop-filter: blur(10px)}
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:.6rem; padding:.85rem 1.1rem; border-radius:999px; border:1px solid var(--border); background:rgba(255,255,255,.05); transition:.25s; font-weight:600}
+  .btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.08)}
+  .btn-primary{background:var(--grad); color:#000; border:none}
+  .btn-primary:hover{filter:saturate(1.05); transform:translateY(-1px) scale(1.01)}
+  .input{background:#0e0e0e; border:1px solid var(--border); border-radius:12px; padding:.8rem .9rem; color:var(--nh-fg); width:100%}
+  .hint{font-size:.82rem; color:#bdbdbd}
+  /* Reveal cinematográfico */
+  .reveal{opacity:0; transform: translateY(18px) scale(.985); filter:blur(6px); will-change:opacity,transform,filter}
+  .reveal.in{animation:cinematic var(--reveal-duration) cubic-bezier(.22,.61,.36,1) var(--reveal-delay,0ms) both}
+  @keyframes cinematic{0%{opacity:0;transform:translateY(18px) scale(.985);filter:blur(6px)}60%{opacity:1;transform:translateY(0) scale(1);filter:blur(.8px)}100%{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
+  @media (prefers-reduced-motion: reduce){ .reveal{opacity:1; transform:none; filter:none} .reveal.in{animation:none} }
+
+  /* Header (original) */
+  .topbar{position:fixed; top:0; left:0; right:0; height:66px; background:rgba(10,10,10,.85); border-bottom:1px solid #262626; backdrop-filter: blur(10px); z-index:50}
+  .logo-wrap{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); z-index:30}
+  .logo-wrap img{height:52px; filter:drop-shadow(0 2px 8px rgba(250,204,21,.15))}
+  .bar-grad{position:fixed; top:66px; left:0; right:0; height:4px; background:linear-gradient(90deg,#8f4fff,#facc15); box-shadow:0 0 6px #8f4fff88,0 0 10px #facc1588; z-index:40}
+  .hamb{position:absolute; right:14px; top:50%; transform:translateY(-50%); width:40px; height:40px; border-radius:10px; display:grid; place-items:center; border:1px solid #2b2b2b; background:#0f0f0f}
+  /* Drawer */
+  #drawer{position:fixed; top:0; right:0; width:18rem; height:100%; background:#000; color:#fff; transform:translateX(100%); transition:transform .3s; z-index:55; border-left:1px solid #212121}
+  #drawer.show{transform:translateX(0)}
+  #drawerOverlay{position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; z-index:54}
+  #drawerOverlay.show{display:block}
+  /* Canvas brasas */
+  #brasasCanvas{position:fixed; inset:0; width:100vw; height:100vh; z-index:-1; pointer-events:none}
+  /* Mobile safe */
+  html,body,main{max-width:100vw; overflow-x:hidden}
+</style>
+</head>
+<body>
+  <!-- BACKGROUND -->
+  <canvas id="brasasCanvas" aria-hidden="true"></canvas>
+
+  <!-- HEADER -->
+  <header class="topbar">
+    <button id="hamburgerBtn" class="hamb" aria-label="Abrir menu" type="button">
+      <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h16" stroke="#eaeaea" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <div class="logo-wrap">
+      <a href="index.html" aria-label="NoHeroes">
+        <img src="assets/images/noheroes logo.png" alt="NoHeroes"/>
+      </a>
+    </div>
+  </header>
+  <div class="bar-grad" aria-hidden="true"></div>
+
+  <!-- DRAWER -->
+  <aside id="drawer" role="dialog" aria-modal="true" aria-label="Menu">
+    <button id="drawerClose" class="absolute top-3 right-4 text-2xl">✕</button>
+    <nav class="p-6 grid gap-2 text-sm mt-10">
+      <a href="index.html" class="py-2 px-3 rounded hover:bg-[#151515]">Início</a>
+      <a href="projects.html" class="py-2 px-3 rounded hover:bg-[#151515]">Projetos</a>
+      <a href="sobre.html" class="py-2 px-3 rounded hover:bg-[#151515]">Sobre</a>
+      <a href="shop.html" class="py-2 px-3 rounded hover:bg-[#151515]">Loja</a>
+      <a href="oraculum.html" class="py-2 px-3 rounded hover:bg-[#151515]">Oráculo</a>
+    </nav>
+  </aside>
+  <div id="drawerOverlay" aria-hidden="true"></div>
+
+  <!-- CONTEÚDO -->
+  <main class="max-w-md mx-auto px-4 pt-44 pb-24 relative z-10">
+    <section class="reveal">
+      <h1 class="cinzel text-3xl grad-text text-center">Entrar</h1>
+      <p class="text-center mt-2 hint">Acesse sua conta para acompanhar pedidos, apoios e progresso.</p>
+
+      <form id="loginForm" class="mt-6 card p-5 grid gap-4">
+        <label class="grid gap-2">
+          <span class="hint">E-mail</span>
+          <input type="email" id="email" class="input" placeholder="voce@email.com" autocomplete="email" required />
+        </label>
+
+        <label class="grid gap-2">
+          <span class="hint">Senha</span>
+          <div class="relative">
+            <input type="password" id="password" class="input pr-12" placeholder="Sua senha" autocomplete="current-password" required minlength="6" />
+            <button type="button" id="togglePass" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-sm px-2 py-1 rounded border border-white/10 hover:bg-white/5">Mostrar</button>
+          </div>
+        </label>
+
+        <div class="flex items-center justify-between">
+          <label class="text-sm text-white/70 inline-flex items-center gap-2 select-none">
+            <input id="remember" type="checkbox" class="accent-purple-500">
+            Lembrar de mim
+          </label>
+          <a href="forgot.html" class="text-sm text-white/60 hover:text-white/90">Esqueci a senha</a>
+        </div>
+
+        <button id="submitBtn" type="submit" class="btn btn-primary w-full">
+          <span id="btnText">Entrar</span>
+          <svg id="btnSpin" class="animate-spin h-4 w-4 hidden" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v3a5 5 0 00-5 5H4z"></path></svg>
+        </button>
+
+        <p id="error" class="text-red-400 text-sm hidden"></p>
+      </form>
+
+      <p class="mt-6 text-center text-sm text-white/60">
+        Não tem conta? <a href="register.html" class="text-white hover:underline">Criar conta</a>
+      </p>
+    </section>
+  </main>
+
+  <footer class="py-10 text-center text-white/50 text-sm">
+    © <span id="year"></span> NoHeroes. Todos os direitos reservados.
+  </footer>
+
+  <!-- BG brasas -->
+  <canvas id="brasasCanvas" aria-hidden="true"></canvas>
+
+<script>
+/* ===== Drawer ===== */
+const drawer = document.getElementById('drawer');
+const drawerOv = document.getElementById('drawerOverlay');
+const btnHam = document.getElementById('hamburgerBtn');
+const btnClose = document.getElementById('drawerClose');
+const toggleDrawer = (open) => {
+  drawer.classList.toggle('show', open);
+  drawerOv.classList.toggle('show', open);
+  if(open){
+    document.addEventListener('keydown', escDrawer);
+    setTimeout(()=>document.addEventListener('click', outsideDrawer, {capture:true}),0);
+  }else{
+    document.removeEventListener('keydown', escDrawer);
+    document.removeEventListener('click', outsideDrawer, {capture:true});
+  }
+};
+const escDrawer = (e)=>{ if(e.key==='Escape') toggleDrawer(false); };
+const outsideDrawer = (e)=>{ if(!drawer.contains(e.target) && e.target!==btnHam) toggleDrawer(false); };
+btnHam.addEventListener('click', ()=>toggleDrawer(true));
+btnClose.addEventListener('click', ()=>toggleDrawer(false));
+drawerOv.addEventListener('click', ()=>toggleDrawer(false));
+
+/* ===== Reveal ===== */
+const io = new IntersectionObserver((es,o)=>{ es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); o.unobserve(e.target);} });},{threshold:.14, rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
+
+/* ===== Brasas canvas ===== */
+const canvas = document.getElementById('brasasCanvas'), ctx = canvas.getContext('2d');
+const fit=()=>{ canvas.width=innerWidth; canvas.height=innerHeight; }; addEventListener('resize',fit); fit();
+let parts=Array.from({length:90},()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:1+Math.random()*1.2,v:-.2-Math.random()*.5,a:.4+.4*Math.random()}));
+(function loop(){ ctx.clearRect(0,0,canvas.width,canvas.height);
+  for(const p of parts){ p.y+=p.v; if(p.y<0) p.y=canvas.height;
+    ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,2*Math.PI);
+    ctx.fillStyle=`rgba(168,85,247,${p.a})`; ctx.shadowColor="#a855f7"; ctx.shadowBlur=10; ctx.fill(); }
+  requestAnimationFrame(loop);
+})();
+
+/* ===== Login ===== */
+const form = document.getElementById('loginForm');
+const errorEl = document.getElementById('error');
+const submitBtn = document.getElementById('submitBtn');
+const btnText = document.getElementById('btnText');
+const btnSpin = document.getElementById('btnSpin');
+const togglePass = document.getElementById('togglePass');
+togglePass.addEventListener('click', ()=>{
+  const i = document.getElementById('password');
+  const is = i.getAttribute('type') === 'password';
+  i.setAttribute('type', is ? 'text' : 'password');
+  togglePass.textContent = is ? 'Ocultar' : 'Mostrar';
+});
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  errorEl.classList.add("hidden"); errorEl.textContent = "";
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  if(!email || !password){ errorEl.textContent = "Preencha e-mail e senha."; errorEl.classList.remove("hidden"); return; }
+
+  // Loading state
+  submitBtn.disabled = true; btnSpin.classList.remove('hidden'); btnText.textContent = 'Entrando...';
+
+  try {
+    const res = await fetch("https://api.noheroes.com.br/login", { // mesmo endpoint do arquivo original
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await res.json().catch(()=>({}));
+    if (res.ok && data && data.token) {
+      const bearer = `Bearer ${data.token}`;
+      localStorage.setItem("NoHeroes_token", bearer);
+      if (document.getElementById('remember').checked) {
+        localStorage.setItem("NoHeroes_email", email);
+      } else {
+        localStorage.removeItem("NoHeroes_email");
+      }
+      // Evita open-redirect: só navega para páginas internas conhecidas
+      window.location.href = "profile.html";
+    } else {
+      errorEl.textContent = (data && (data.message || data.error)) || "Credenciais inválidas. Tente novamente.";
+      errorEl.classList.remove("hidden");
+    }
+  } catch (err) {
+    console.error("Erro ao fazer login:", err);
+    errorEl.textContent = "Não foi possível conectar ao servidor.";
+    errorEl.classList.remove("hidden");
+  } finally {
+    submitBtn.disabled = false; btnSpin.classList.add('hidden'); btnText.textContent = 'Entrar';
+  }
+});
+
+// Pré-preenche e-mail se marcado antes
+const remembered = localStorage.getItem("NoHeroes_email");
+if (remembered) { document.getElementById('email').value = remembered; document.getElementById('remember').checked = true; }
+
+// Util
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
