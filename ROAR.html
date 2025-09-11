@@ -998,99 +998,108 @@ Vitalista misterioso com poderes do sangue e da luz. Ator dos bastidores, guardi
     <p class="mt-2">© 2025 NoHeroes. Todos os direitos reservados.</p>
   </footer>
 
-  <!-- Mobile Menu + ScrollReveal -->
   <script>
-    // ScrollReveal
+  // ScrollReveal (com guard e seletor atualizado)
+  if (typeof ScrollReveal === 'function') {
     ScrollReveal().reveal('section', {
-      delay:200, duration:1000, origin:'bottom', distance:'50px', reset:true
+      delay: 200, duration: 1000, origin: 'bottom', distance: '50px', reset: true
     });
-    ScrollReveal().reveal('#lenda-roar', {
-      delay: 300,
-      duration: 1200,
-      origin: 'left',
-      distance: '80px',
-      easing: 'ease-in-out',
-      reset: false
-    });
+
+    if (document.getElementById('acda-sobre')) {
+      ScrollReveal().reveal('#acda-sobre', {
+        delay: 300, duration: 1200, origin: 'left', distance: '80px',
+        easing: 'ease-in-out', reset: false
+      });
+    }
+  }
+
   // Drawer (hambúrguer)
   const drawer        = document.getElementById('drawer');
   const drawerOverlay = document.getElementById('drawerOverlay');
   const hamburgerBtn  = document.getElementById('hamburgerBtn');
 
   function toggleDrawer(force){
+    if (!drawer || !drawerOverlay) return;
     const isOpen = drawer.style.transform === 'translateX(0%)';
     const open = (force === true) || (!isOpen && force !== false);
     drawer.style.transform = open ? 'translateX(0%)' : 'translateX(100%)';
     drawerOverlay.classList.toggle('hidden', !open);
   }
 
-  hamburgerBtn.addEventListener('click', () => toggleDrawer(true));
-  drawerOverlay.addEventListener('click', () => toggleDrawer(false));
+  if (hamburgerBtn)  hamburgerBtn.addEventListener('click', () => toggleDrawer(true));
+  if (drawerOverlay) drawerOverlay.addEventListener('click', () => toggleDrawer(false));
 
   // Modal do "?"
-  const navBtn         = document.getElementById('navBtn');
-  const navModal       = document.getElementById('navModal');
-  const closeNavModal  = document.getElementById('closeNavModal');
+  const navBtn        = document.getElementById('navBtn');
+  const navModal      = document.getElementById('navModal');
+  const closeNavModal = document.getElementById('closeNavModal');
 
-  navBtn.addEventListener('click', () => { navModal.style.display = 'block'; });
-  closeNavModal.addEventListener('click', () => { navModal.style.display = 'none'; });
-  navModal.addEventListener('click', (e) => {
-    if(e.target === navModal){ navModal.style.display = 'none'; }
-  });
-
-  // Scroll para seções da própria página
-  function goToSection(id){
-    navModal.style.display = 'none';
-    const el = document.getElementById(id);
-    if(el){ el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  if (navBtn && navModal)       navBtn.addEventListener('click', () => { navModal.style.display = 'block'; });
+  if (closeNavModal && navModal) closeNavModal.addEventListener('click', () => { navModal.style.display = 'none'; });
+  if (navModal) {
+    navModal.addEventListener('click', (e) => {
+      if (e.target === navModal) navModal.style.display = 'none';
+    });
   }
-  document.addEventListener("DOMContentLoaded", () => {
-    const canvas = document.getElementById("brasasCanvas");
-    const ctx = canvas.getContext("2d");
+
+  // Scroll para seções (global p/ onclick dos botões)
+  window.goToSection = function(id){
+    if (navModal) navModal.style.display = 'none';
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  // Canvas de brasas (com guard)
+  document.addEventListener('DOMContentLoaded', () => {
+    const canvas = document.getElementById('brasasCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
     let particles = [];
     let w, h;
 
     function resizeCanvas() {
       const ratio = window.devicePixelRatio || 1;
-      w = canvas.width = window.innerWidth * ratio;
-      h = canvas.height = window.innerHeight * ratio;
-      canvas.style.width = window.innerWidth + "px";
-      canvas.style.height = window.innerHeight + "px";
+      w = canvas.width  = Math.floor(window.innerWidth  * ratio);
+      h = canvas.height = Math.floor(window.innerHeight * ratio);
+      canvas.style.width  = window.innerWidth  + 'px';
+      canvas.style.height = window.innerHeight + 'px';
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(ratio, ratio);
     }
 
     class Particle {
-      constructor() { this.reset(true); }
-      reset(initial = false) {
+      constructor(){ this.reset(true); }
+      reset(initial = false){
         this.x = Math.random() * w;
         this.y = initial ? Math.random() * h : h + Math.random() * 100;
-        this.size = 1 + Math.random() * 2.5;
+        this.size  = 1 + Math.random() * 2.5;
         this.speed = 0.2 + Math.random() * 0.5;
         this.alpha = 0.4 + Math.random() * 0.3;
         this.drift = (Math.random() - 0.5) * 0.5;
       }
-      update() {
+      update(){
         this.y -= this.speed;
         this.x += this.drift;
         if (this.y < -10 || this.x < -50 || this.x > w + 50) this.reset();
       }
-      draw() {
+      draw(){
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`;
-        ctx.shadowColor = "#a855f7";
+        ctx.shadowColor = '#a855f7';
         ctx.shadowBlur = 12;
         ctx.fill();
       }
     }
 
-    function createParticles(count) {
+    function createParticles(count){
       particles = [];
       for (let i = 0; i < count; i++) particles.push(new Particle());
     }
 
-    function animate() {
+    function animate(){
       ctx.clearRect(0, 0, w, h);
       for (const p of particles) { p.update(); p.draw(); }
       requestAnimationFrame(animate);
@@ -1100,7 +1109,7 @@ Vitalista misterioso com poderes do sangue e da luz. Ator dos bastidores, guardi
     createParticles(Math.floor(150 * (window.devicePixelRatio || 1)));
     animate();
 
-    window.addEventListener("resize", resizeCanvas);
+    window.addEventListener('resize', resizeCanvas);
   });
 </script>
 </body>
