@@ -207,6 +207,45 @@
   background: linear-gradient(135deg, #8f4fff, #facc15);
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
+/* CTA NoHeroes — gradiente + glow + pulse */
+.nh-cta{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: .875rem 1.5rem;
+  border-radius: 0.9rem;
+  font-weight: 700;
+  color: #0b0b0b;
+  background: linear-gradient(90deg,#8f4fff 0%,#facc15 100%);
+  box-shadow: 0 0 18px rgba(143,79,255,.45), 0 0 28px rgba(250,204,21,.25);
+  transition: transform .2s ease, filter .2s ease;
+  animation: nh-glow 2.6s ease-in-out infinite alternate;
+}
+.nh-cta:hover{ transform: translateY(-1px) scale(1.02); filter: brightness(1.03); }
+.nh-cta:active{ transform: translateY(0) scale(0.99); }
+
+/* anel pulsante suave */
+.nh-cta::after{
+  content:"";
+  position:absolute; inset:-6px;
+  border-radius: 1.1rem;
+  background: radial-gradient(ellipse at center, rgba(143,79,255,.16), rgba(250,204,21,.10) 45%, transparent 70%);
+  filter: blur(6px);
+  z-index:-1;
+  animation: nh-pulse 1.9s ease-out infinite;
+}
+
+/* animações */
+@keyframes nh-glow{
+  0%   { box-shadow: 0 0 14px rgba(143,79,255,.35), 0 0 24px rgba(250,204,21,.18); }
+  100% { box-shadow: 0 0 26px rgba(143,79,255,.55), 0 0 40px rgba(250,204,21,.32); }
+}
+@keyframes nh-pulse{
+  0%   { opacity:.65; transform: scale(.98); }
+  70%  { opacity:.25; transform: scale(1.08); }
+  100% { opacity:.10; transform: scale(1.12); }
+}
   </style>
 </head>
 <body class="leading-relaxed">
@@ -314,16 +353,23 @@
 
   <!-- Hero Section -->
   <section id="principal" class="relative h-screen bg-cover bg-center" style="background-image:url('assets/images/roar-hero.jpg')">
-    <div class="overlay"></div>
-    <div class="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
-      <h1 class="text-4xl md:text-6xl text-[#8f4fff] font-bold mb-4">
-  ACDA<br/><span>As Cinzas do Amanhã</span>
-</h1>
-      <p class="text-lg md:text-2xl italic mb-8 text-[#d9d6ff]">Um épico sombrio sobre redenção, fé e poder perdido.</p>
-      <a href="#sinopse" class="bg-[#8f4fff] text-black px-6 py-3 rounded-xl hover:scale-105 transition">Leia a Sinopse</a>
-      <div class="mt-12 animate-bounce text-[#8f4fff]">↓</div>
-    </div>
-  </section>
+  <div class="overlay"></div>
+
+  <div class="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
+    <h1 class="text-4xl md:text-6xl font-bold mb-4 leading-tight">
+      <span class="text-white">ACDA:</span><br/>
+      <span class="gradiente-noheroes font-extrabold">As Cinzas do Amanhã</span>
+    </h1>
+
+    <p class="text-lg md:text-2xl italic mb-8 text-[#d9d6ff]">
+      Um épico sombrio sobre redenção, fé e poder perdido.
+    </p>
+
+    <a href="#sinopse" class="nh-cta">Leia a Sinopse</a>
+
+    <div class="mt-12 animate-bounce text-[#8f4fff]">↓</div>
+  </div>
+</section>
 
   <main class="pt-32 space-y-24">
 
