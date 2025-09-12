@@ -37,95 +37,70 @@
       display: none; 
     }
 
-    /* PERSONAGENS PRINCIPAIS – CARROSSEL */
+    /* Título + acento */
+  .nh-accent-bar{ height:3px; width:96px; margin:0.75rem auto 0; border-radius:999px;
+    background:linear-gradient(90deg,#8f4fff, #facc15); }
 
-#personagens {
-  background: linear-gradient(to bottom, #0d0d0d, #1a1a1a);
-}
-
-.carousel-container {
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-}
-
-.carousel-track {
-  display: flex;
-  gap: 1.5rem;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  overflow-x: auto;
-  padding-bottom: 1rem;
-}
-
-.carousel-card {
-  flex: 0 0 auto;
-  width: 250px;
-  background-color: #1e1e1e;
-  border: 2px solid #8f4fff;
-  border-radius: 1rem;
-  scroll-snap-align: center;
-  text-align: center;
-  padding: 1rem;
-  transition: transform 0.3s ease;
-}
-
-.carousel-card:hover {
-  transform: scale(1.05);
-  background-color: #2a2a2a;
-  border-color: #a170ff;
-}
-
-.character-img {
-  width: 100%;
-  height: 280px;
-  object-fit: cover;
-  border-radius: 0.75rem;
-  margin-bottom: 0.75rem;
-}
-
-.character-title {
-  color: #8f4fff;
-  font-size: 1.25rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-
-.character-description {
-  color: #ccc;
-  font-size: 0.95rem;
-  line-height: 1.4;
-}
-
-/* Botões de navegação */
-#prev,
-#next {
-  background-color: #8f4fff;
-  color: black;
-  font-weight: bold;
-  padding: 0.75rem 1rem;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-#prev:hover,
-#next:hover {
-  background-color: #6c3cc9;
-}
-
-@media (max-width: 640px) {
-  .carousel-card {
-    width: 200px;
+  /* Card vidro NH */
+  .nh-card{
+    background:rgba(0,0,0,.6);
+    border:1px solid rgba(143,79,255,.35);
+    backdrop-filter:blur(10px);
+    transition:.2s ease;
+  }
+  .nh-card:hover{
+    border-color:rgba(250,204,21,.6);
+    transform:translateY(-2px);
   }
 
-  .character-img {
-    height: 220px;
+  /* Overlay de leitura */
+  .nh-overlay{
+    background:linear-gradient(to top, rgba(0,0,0,.78) 0%, rgba(0,0,0,.45) 60%, rgba(0,0,0,0) 100%);
   }
 
-  .character-description {
-    font-size: 0.85rem;
+  /* Título interno do card */
+  .nh-name{
+    font-family:'Cinzel Decorative', serif;
+    background:linear-gradient(135deg,#8f4fff,#facc15);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
   }
-}
+
+  /* Botão de zoom / modal trigger */
+  .nh-zoom{
+    background:rgba(0,0,0,.45);
+    border:1px solid rgba(143,79,255,.45);
+    backdrop-filter:blur(6px);
+    transition:.2s ease;
+  }
+  .nh-zoom:hover{
+    border-color:rgba(250,204,21,.6);
+    box-shadow:0 0 14px rgba(143,79,255,.4), 0 0 22px rgba(250,204,21,.25);
+  }
+
+  /* Setas de navegação */
+  .nh-nav{
+    background:rgba(0,0,0,.55);
+    border:1px solid rgba(143,79,255,.4);
+    color:#d9d6ff;
+    backdrop-filter:blur(8px);
+    transition:.2s ease;
+  }
+  .nh-nav:hover{
+    border-color:rgba(250,204,21,.6);
+    transform:translateY(-2px);
+  }
+
+  /* Viewport e slides */
+  .nh-viewport{ border-radius:1rem; }
+  .nh-slide{ scroll-snap-align:center; }
+
+  /* Mobile: scroll lateral com snap (mantém 1 card por vez) */
+  @media (max-width: 767px){
+    .nh-viewport{
+      overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
+    }
+    .nh-viewport::-webkit-scrollbar{ display:none; }
+  }
 /* === utilitários importados da página Sobre === */
 .gradiente-noheroes{
   background: linear-gradient(to bottom right, #8f4fff 20%, #facc15 100%);
@@ -479,179 +454,242 @@
   </div>
 </section>
 
-    <!-- 4. Personagens Principais -->
+    
+<!-- HTML -->
 <section id="personagens" class="py-16 px-6">
-  <h2 class="text-3xl text-[#8f4fff] font-bold mb-6 text-center">Personagens Principais</h2>
-  <div class="relative max-w-lg mx-auto">
-    <!-- Carrossel mostrando 1 card de cada vez -->
-    <div class="overflow-hidden rounded-2xl">
+  <h2 class="text-3xl md:text-4xl font-bold cinzel gradiente-noheroes text-center">Personagens Principais</h2>
+  <div class="nh-accent-bar"></div>
+
+  <div class="relative max-w-lg mx-auto mt-6">
+    <!-- Viewport: mantém 1 por vez, habilita scroll lateral no mobile -->
+    <div class="nh-viewport overflow-hidden md:overflow-hidden">
       <div id="carousel-track" class="flex transition-transform duration-500 ease-in-out" style="width:100%;">
-        <!-- Card Azuos -->
-        <div class="flex-shrink-0 w-full px-4 flex justify-center">
-          <div class="relative w-[300px] h-[450px] bg-[#1c1c1c] rounded-xl shadow-lg overflow-hidden">
-            <img src="assets/images/azuos.jpg" alt="Azuos" class="w-full h-full object-cover"/>
-            <button class="absolute top-2 right-2 bg-white bg-opacity-50 rounded-full p-1" onclick="openModal('assets/images/azuos.jpg','Azuos')">🔎</button>
-            <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-70 p-4">
-              <h3 class="text-xl font-bold text-[#8f4fff]">Azuos</h3>
-              <p class="text-sm text-gray-200">O portador da Marca Negra.
+
+        <!-- Azuos -->
+        <div class="flex-shrink-0 w-full px-4 flex justify-center nh-slide">
+          <figure class="relative w-[300px] h-[450px] nh-card rounded-xl shadow-lg overflow-hidden">
+            <img src="assets/images/azuos.jpg" alt="Azuos — portador da Marca Negra"
+                 class="w-full h-full object-cover" loading="lazy" decoding="async" draggable="false"/>
+            <button class="nh-zoom absolute top-2 right-2 rounded-full p-2"
+                    onclick="openModal('assets/images/azuos.jpg','Azuos')" aria-label="Ampliar Azuos" type="button">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 9L15 3M3 15l6 6" stroke="#cbb6ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <figcaption class="absolute inset-x-0 bottom-0 p-4 nh-overlay">
+              <h3 class="text-xl font-bold nh-name">Azuos</h3>
+              <p class="mt-1 text-sm text-gray-200">O portador da Marca Negra.
 Jovem vitalista atormentado por um segredo terrível. Carrega cicatrizes físicas e emocionais. Busca respostas sobre seu passado e sobre a entidade que habita sua alma.</p>
-            </div>
-          </div>
+            </figcaption>
+          </figure>
         </div>
-        <!-- Card ??? -->
-        <div class="flex-shrink-0 w-full px-4 flex justify-center">
-          <div class="relative w-[300px] h-[450px] bg-[#1c1c1c] rounded-xl shadow-lg overflow-hidden">
-            <img src="assets/images/tyrian.jpg" alt="Entidade desconhecida" class="w-full h-full object-cover"/>
-            <button class="absolute top-2 right-2 bg-white bg-opacity-50 rounded-full p-1" onclick="openModal('assets/images/tyrian.jpg','Entidade desconhecida')">🔎</button>
-            <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-70 p-4">
-              <h3 class="text-xl font-bold text-[#8f4fff]">???</h3>
-              <p class="text-sm text-gray-200">Nada se sabe sobre sua origem. Sua presença causa inquietação entre magos e vitalistas. Tudo o que se tem são rumores... e cicatrizes deixadas para trás.</p>
-            </div>
-          </div>
+
+        <!-- ??? -->
+        <div class="flex-shrink-0 w-full px-4 flex justify-center nh-slide">
+          <figure class="relative w-[300px] h-[450px] nh-card rounded-xl shadow-lg overflow-hidden">
+            <img src="assets/images/tyrian.jpg" alt="Entidade desconhecida"
+                 class="w-full h-full object-cover" loading="lazy" decoding="async" draggable="false"/>
+            <button class="nh-zoom absolute top-2 right-2 rounded-full p-2"
+                    onclick="openModal('assets/images/tyrian.jpg','Entidade desconhecida')" aria-label="Ampliar Entidade desconhecida" type="button">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 9L15 3M3 15l6 6" stroke="#cbb6ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <figcaption class="absolute inset-x-0 bottom-0 p-4 nh-overlay">
+              <h3 class="text-xl font-bold nh-name">???</h3>
+              <p class="mt-1 text-sm text-gray-200">Nada se sabe sobre sua origem. Sua presença causa inquietação entre magos e vitalistas. Tudo o que se tem são rumores... e cicatrizes deixadas para trás.</p>
+            </figcaption>
+          </figure>
         </div>
-        <!-- Card Cerverus -->
-        <div class="flex-shrink-0 w-full px-4 flex justify-center">
-          <div class="relative w-[300px] h-[450px] bg-[#1c1c1c] rounded-xl shadow-lg overflow-hidden">
-            <img src="assets/images/cerverus.jpg" alt="Cerverus" class="w-full h-full object-cover"/>
-            <button class="absolute top-2 right-2 bg-white bg-opacity-50 rounded-full p-1" onclick="openModal('assets/images/cerverus.jpg','Cerverus')">🔎</button>
-            <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-70 p-4">
-              <h3 class="text-xl font-bold text-[#8f4fff]">Cerverus</h3>
-              <p class="text-sm text-gray-200">O último dragão.
+
+        <!-- Cerverus -->
+        <div class="flex-shrink-0 w-full px-4 flex justify-center nh-slide">
+          <figure class="relative w-[300px] h-[450px] nh-card rounded-xl shadow-lg overflow-hidden">
+            <img src="assets/images/cerverus.jpg" alt="Cerverus — o último dragão"
+                 class="w-full h-full object-cover" loading="lazy" decoding="async" draggable="false"/>
+            <button class="nh-zoom absolute top-2 right-2 rounded-full p-2"
+                    onclick="openModal('assets/images/cerverus.jpg','Cerverus')" aria-label="Ampliar Cerverus" type="button">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 9L15 3M3 15l6 6" stroke="#cbb6ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <figcaption class="absolute inset-x-0 bottom-0 p-4 nh-overlay">
+              <h3 class="text-xl font-bold nh-name">Cerverus</h3>
+              <p class="mt-1 text-sm text-gray-200">O último dragão.
 Membro da realeza draconiana e um dos maiores guerreiros vivos. Mestre de Azuos, tornou-se uma figura paterna em sua jornada.</p>
-            </div>
-          </div>
+            </figcaption>
+          </figure>
         </div>
-        <!-- Card Sado -->
-        <div class="flex-shrink-0 w-full px-4 flex justify-center">
-          <div class="relative w-[300px] h-[450px] bg-[#1c1c1c] rounded-xl shadow-lg overflow-hidden">
-            <img src="assets/images/sado.jpg" alt="Sado" class="w-full h-full object-cover"/>
-            <button class="absolute top-2 right-2 bg-white bg-opacity-50 rounded-full p-1" onclick="openModal('assets/images/sado.jpg','Sado')">🔎</button>
-            <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-70 p-4">
-              <h3 class="text-xl font-bold text-[#8f4fff]">Sado</h3>
-              <p class="text-sm text-gray-200">O irmão de armas.
+
+        <!-- Sado -->
+        <div class="flex-shrink-0 w-full px-4 flex justify-center nh-slide">
+          <figure class="relative w-[300px] h-[450px] nh-card rounded-xl shadow-lg overflow-hidden">
+            <img src="assets/images/sado.jpg" alt="Sado — irmão de armas"
+                 class="w-full h-full object-cover" loading="lazy" decoding="async" draggable="false"/>
+            <button class="nh-zoom absolute top-2 right-2 rounded-full p-2"
+                    onclick="openModal('assets/images/sado.jpg','Sado')" aria-label="Ampliar Sado" type="button">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 9L15 3M3 15l6 6" stroke="#cbb6ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <figcaption class="absolute inset-x-0 bottom-0 p-4 nh-overlay">
+              <h3 class="text-xl font-bold nh-name">Sado</h3>
+              <p class="mt-1 text-sm text-gray-200">O irmão de armas.
 Vitalista do furto e parceiro fiel. Feroz em combate, leal no silêncio. Um espírito que encontrou em Azuos um propósito maior que a guerra.</p>
-            </div>
-          </div>
+            </figcaption>
+          </figure>
         </div>
-        <!-- Card Sakura -->
-        <div class="flex-shrink-0 w-full px-4 flex justify-center">
-          <div class="relative w-[300px] h-[450px] bg-[#1c1c1c] rounded-xl shadow-lg overflow-hidden">
-            <img src="assets/images/sakura.jpg" alt="Sakura" class="w-full h-full object-cover"/>
-            <button class="absolute top-2 right-2 bg-white bg-opacity-50 rounded-full p-1" onclick="openModal('assets/images/sakura.jpg','Sakura')">🔎</button>
-            <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-70 p-4">
-              <h3 class="text-xl font-bold text-[#8f4fff]">Sakura</h3>
-              <p class="text-sm text-gray-200">A flor letal.
+
+        <!-- Sakura -->
+        <div class="flex-shrink-0 w-full px-4 flex justify-center nh-slide">
+          <figure class="relative w-[300px] h-[450px] nh-card rounded-xl shadow-lg overflow-hidden">
+            <img src="assets/images/sakura.jpg" alt="Sakura — a flor letal"
+                 class="w-full h-full object-cover" loading="lazy" decoding="async" draggable="false"/>
+            <button class="nh-zoom absolute top-2 right-2 rounded-full p-2"
+                    onclick="openModal('assets/images/sakura.jpg','Sakura')" aria-label="Ampliar Sakura" type="button">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 9L15 3M3 15l6 6" stroke="#cbb6ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <figcaption class="absolute inset-x-0 bottom-0 p-4 nh-overlay">
+              <h3 class="text-xl font-bold nh-name">Sakura</h3>
+              <p class="mt-1 text-sm text-gray-200">A flor letal.
 Mestra prodígio do Clã da Lua, perita em técnicas de assassinato e furtividade. Move-se com precisão cirúrgica — beleza e morte num só gesto.</p>
-            </div>
-          </div>
+            </figcaption>
+          </figure>
         </div>
-        <!-- Card Slyther -->
-        <div class="flex-shrink-0 w-full px-4 flex justify-center">
-          <div class="relative w-[300px] h-[450px] bg-[#1c1c1c] rounded-xl shadow-lg overflow-hidden">
-            <img src="assets/images/slyther.jpg" alt="Slyther" class="w-full h-full object-cover"/>
-            <button class="absolute top-2 right-2 bg-white bg-opacity-50 rounded-full p-1" onclick="openModal('assets/images/slyther.jpg','Slyther')">🔎</button>
-            <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-70 p-4">
-              <h3 class="text-xl font-bold text-[#8f4fff]">Slyther</h3>
-              <p class="text-sm text-gray-200">A sombra que desafia.
+
+        <!-- Slyther -->
+        <div class="flex-shrink-0 w-full px-4 flex justify-center nh-slide">
+          <figure class="relative w-[300px] h-[450px] nh-card rounded-xl shadow-lg overflow-hidden">
+            <img src="assets/images/slyther.jpg" alt="Slyther — a sombra que desafia"
+                 class="w-full h-full object-cover" loading="lazy" decoding="async" draggable="false"/>
+            <button class="nh-zoom absolute top-2 right-2 rounded-full p-2"
+                    onclick="openModal('assets/images/slyther.jpg','Slyther')" aria-label="Ampliar Slyther" type="button">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 9L15 3M3 15l6 6" stroke="#cbb6ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <figcaption class="absolute inset-x-0 bottom-0 p-4 nh-overlay">
+              <h3 class="text-xl font-bold nh-name">Slyther</h3>
+              <p class="mt-1 text-sm text-gray-200">A sombra que desafia.
 Rival impulsivo de Azuos. Ágil, venenoso e arrogante. Seu orgulho o coloca sempre em rota de colisão com aqueles que brilham mais que ele.</p>
-            </div>
-          </div>
+            </figcaption>
+          </figure>
         </div>
-        <!-- Card Runan -->
-        <div class="flex-shrink-0 w-full px-4 flex justify-center">
-          <div class="relative w-[300px] h-[450px] bg-[#1c1c1c] rounded-xl shadow-lg overflow-hidden">
-            <img src="assets/images/runan.jpg" alt="Runan" class="w-full h-full object-cover"/>
-            <button class="absolute top-2 right-2 bg-white bg-opacity-50 rounded-full p-1" onclick="openModal('assets/images/runan.jpg','Runan')">🔎</button>
-            <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-70 p-4">
-              <h3 class="text-xl font-bold text-[#8f4fff]">Runan</h3>
-              <p class="text-sm text-gray-200">Guardião do Clã das Runas.
+
+        <!-- Runan -->
+        <div class="flex-shrink-0 w-full px-4 flex justify-center nh-slide">
+          <figure class="relative w-[300px] h-[450px] nh-card rounded-xl shadow-lg overflow-hidden">
+            <img src="assets/images/runan.jpg" alt="Runan — guardião do Clã das Runas"
+                 class="w-full h-full object-cover" loading="lazy" decoding="async" draggable="false"/>
+            <button class="nh-zoom absolute top-2 right-2 rounded-full p-2"
+                    onclick="openModal('assets/images/runan.jpg','Runan')" aria-label="Ampliar Runan" type="button">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 9L15 3M3 15l6 6" stroke="#cbb6ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <figcaption class="absolute inset-x-0 bottom-0 p-4 nh-overlay">
+              <h3 class="text-xl font-bold nh-name">Runan</h3>
+              <p class="mt-1 text-sm text-gray-200">Guardião do Clã das Runas.
 Vitalista prodígio com poderes misteriosos. Seus feitos desafiam a lógica e sua presença intimida até os mais experientes.</p>
-            </div>
-          </div>
+            </figcaption>
+          </figure>
         </div>
-        <!-- Card Yumi -->
-        <div class="flex-shrink-0 w-full px-4 flex justify-center">
-          <div class="relative w-[300px] h-[450px] bg-[#1c1c1c] rounded-xl shadow-lg overflow-hidden">
-            <img src="assets/images/yumi.jpg" alt="Yumi" class="w-full h-full object-cover"/>
-            <button class="absolute top-2 right-2 bg-white bg-opacity-50 rounded-full p-1" onclick="openModal('assets/images/yumi.jpg','Yumi')">🔎</button>
-            <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-70 p-4">
-              <h3 class="text-xl font-bold text-[#8f4fff]">Yumi</h3>
-              <p class="text-sm text-gray-200">A lâmina do silêncio.
+
+        <!-- Yumi -->
+        <div class="flex-shrink-0 w-full px-4 flex justify-center nh-slide">
+          <figure class="relative w-[300px] h-[450px] nh-card rounded-xl shadow-lg overflow-hidden">
+            <img src="assets/images/yumi.jpg" alt="Yumi — a lâmina do silêncio"
+                 class="w-full h-full object-cover" loading="lazy" decoding="async" draggable="false"/>
+            <button class="nh-zoom absolute top-2 right-2 rounded-full p-2"
+                    onclick="openModal('assets/images/yumi.jpg','Yumi')" aria-label="Ampliar Yumi" type="button">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 9L15 3M3 15l6 6" stroke="#cbb6ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <figcaption class="absolute inset-x-0 bottom-0 p-4 nh-overlay">
+              <h3 class="text-xl font-bold nh-name">Yumi</h3>
+              <p class="mt-1 text-sm text-gray-200">A lâmina do silêncio.
 Instrutora no Clã da Lua e guarda-costas de elite. Discreta, precisa e letal. Protege o que acredita com disciplina inabalável.</p>
-            </div>
-          </div>
+            </figcaption>
+          </figure>
         </div>
-        <!-- Card Kagemitsu -->
-        <div class="flex-shrink-0 w-full px-4 flex justify-center">
-          <div class="relative w-[300px] h-[450px] bg-[#1c1c1c] rounded-xl shadow-lg overflow-hidden">
-            <img src="assets/images/kagemitsu.jpg" alt="Kagemitsu" class="w-full h-full object-cover"/>
-            <button class="absolute top-2 right-2 bg-white bg-opacity-50 rounded-full p-1" onclick="openModal('assets/images/kagemitsu.jpg','Kagemitsu')">🔎</button>
-            <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-70 p-4">
-              <h3 class="text-xl font-bold text-[#8f4fff]">Kagemitsu</h3>
-              <p class="text-sm text-gray-200">O general da lua.
+
+        <!-- Kagemitsu -->
+        <div class="flex-shrink-0 w-full px-4 flex justify-center nh-slide">
+          <figure class="relative w-[300px] h-[450px] nh-card rounded-xl shadow-lg overflow-hidden">
+            <img src="assets/images/kagemitsu.jpg" alt="Kagemitsu — general da Lua"
+                 class="w-full h-full object-cover" loading="lazy" decoding="async" draggable="false"/>
+            <button class="nh-zoom absolute top-2 right-2 rounded-full p-2"
+                    onclick="openModal('assets/images/kagemitsu.jpg','Kagemitsu')" aria-label="Ampliar Kagemitsu" type="button">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 9L15 3M3 15l6 6" stroke="#cbb6ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <figcaption class="absolute inset-x-0 bottom-0 p-4 nh-overlay">
+              <h3 class="text-xl font-bold nh-name">Kagemitsu</h3>
+              <p class="mt-1 text-sm text-gray-200">O general da lua.
 Líder respeitado do Clã da Lua. Mentor de jovens guerreiros e símbolo de estratégia, equilíbrio e força entre os vitalistas.
 </p>
-            </div>
-          </div>
+            </figcaption>
+          </figure>
         </div>
-        <!-- Card Koda -->
-        <div class="flex-shrink-0 w-full px-4 flex justify-center">
-          <div class="relative w-[300px] h-[450px] bg-[#1c1c1c] rounded-xl shadow-lg overflow-hidden">
-            <img src="assets/images/koda.jpg" alt="Koda" class="w-full h-full object-cover"/>
-            <button class="absolute top-2 right-2 bg-white bg-opacity-50 rounded-full p-1" onclick="openModal('assets/images/koda.jpg','Koda')">🔎</button>
-            <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-70 p-4">
-              <h3 class="text-xl font-bold text-[#8f4fff]">Koda</h3>
-              <p class="text-sm text-gray-200">O sol que sangra.
+
+        <!-- Koda -->
+        <div class="flex-shrink-0 w-full px-4 flex justify-center nh-slide">
+          <figure class="relative w-[300px] h-[450px] nh-card rounded-xl shadow-lg overflow-hidden">
+            <img src="assets/images/koda.jpg" alt="Koda — o sol que sangra"
+                 class="w-full h-full object-cover" loading="lazy" decoding="async" draggable="false"/>
+            <button class="nh-zoom absolute top-2 right-2 rounded-full p-2"
+                    onclick="openModal('assets/images/koda.jpg','Koda')" aria-label="Ampliar Koda" type="button">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M9 21H3v-6M21 9L15 3M3 15l6 6" stroke="#cbb6ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <figcaption class="absolute inset-x-0 bottom-0 p-4 nh-overlay">
+              <h3 class="text-xl font-bold nh-name">Koda</h3>
+              <p class="mt-1 text-sm text-gray-200">O sol que sangra.
 Vitalista misterioso com poderes do sangue e da luz. Ator dos bastidores, guardião silencioso dos escolhidos e executor do destino.</p>
-            </div>
-          </div>
+            </figcaption>
+          </figure>
         </div>
+
       </div>
     </div>
 
-    <!-- Botões de Navegação -->
-    <button onclick="prevCard()" class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-[#8f4fff] text-black p-3 rounded-full hover:bg-[#6c3cc9]">←</button>
-    <button onclick="nextCard()" class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-[#8f4fff] text-black p-3 rounded-full hover:bg-[#6c3cc9]">→</button>
+    <!-- Botões de Navegação (mesmo lugar, visual NH) -->
+    <button onclick="prevCard()" class="nh-nav absolute top-1/2 left-0 -translate-y-1/2 p-3 rounded-full" aria-label="Anterior" type="button">←</button>
+    <button onclick="nextCard()" class="nh-nav absolute top-1/2 right-0 -translate-y-1/2 p-3 rounded-full" aria-label="Próximo" type="button">→</button>
   </div>
 </section>
 
-<!-- Modal de imagem -->
-<div id="modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 hidden">
-  <img id="modal-img" src="" class="max-w-[90%] max-h-[90%] rounded-xl">
-  <button onclick="closeModal()" class="absolute top-4 right-6 text-white text-3xl">✕</button>
-</div>
-
+<!-- JS do carrossel (desktop: transform; mobile: scroll lateral com snap) -->
 <script>
-  const track = document.getElementById('carousel-track');
-  let currentIndex = 0;
-  const totalCards = track.children.length;
+  (function(){
+    const viewport = document.querySelector('#personagens .nh-viewport');
+    const track    = document.getElementById('carousel-track');
+    if(!viewport || !track) return;
 
-  function updateCarousel() {
-    track.style.transform = `translateX(-${currentIndex * 100}%)`;
-  }
+    const slides = Array.from(track.children);
+    let idx = 0;
 
-  function nextCard() {
-    currentIndex = (currentIndex + 1) % totalCards;
-    updateCarousel();
-  }
+    function isMobile(){ return window.matchMedia('(max-width: 767px)').matches; }
+    function goTo(i){
+      idx = Math.max(0, Math.min(i, slides.length - 1));
+      if (isMobile()){
+        viewport.scrollTo({ left: viewport.clientWidth * idx, behavior: 'smooth' });
+      } else {
+        track.style.transform = `translateX(-${idx * 100}%)`;
+      }
+    }
+    window.prevCard = function(){ goTo(idx - 1); };
+    window.nextCard = function(){ goTo(idx + 1); };
 
-  function prevCard() {
-    currentIndex = (currentIndex - 1 + totalCards) % totalCards;
-    updateCarousel();
-  }
+    // Drag / swipe no mobile
+    let startX=null, startScroll=null, activeId=null;
+    viewport.addEventListener('pointerdown', e => {
+      if(!isMobile()) return;
+      activeId = e.pointerId;
+      startX = e.clientX; startScroll = viewport.scrollLeft;
+      viewport.setPointerCapture(activeId);
+    });
+    viewport.addEventListener('pointermove', e => {
+      if(!isMobile() || startX===null) return;
+      viewport.scrollLeft = startScroll - (e.clientX - startX);
+    });
+    viewport.addEventListener('pointerup', () => {
+      if(!isMobile()) return;
+      startX=null; activeId=null;
+      const snap = Math.round(viewport.scrollLeft / viewport.clientWidth);
+      goTo(snap);
+    });
 
-  function openModal(src, caption) {
-    document.getElementById('modal-img').src = src;
-    document.getElementById('modal').classList.remove('hidden');
-  }
-
-  function closeModal() {
-    document.getElementById('modal').classList.add('hidden');
-  }
-
-  // inicializa
-  updateCarousel();
+    // Sincroniza ao redimensionar (mantém 1 por vez)
+    window.addEventListener('resize', () => goTo(idx));
+  })();
 </script>
+<!-- ===== /Personagens ===== -->
 
     <!-- 5. UNIVERSO & AMBIENTAÇÃO -->
 <section id="universo" class="py-16 px-8 max-w-5xl mx-auto bg-gradient-to-b from-[#111] to-[#0a0a0a] rounded-lg shadow-md">
