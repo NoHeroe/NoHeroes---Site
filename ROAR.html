@@ -183,6 +183,30 @@
   z-index: -1;
   pointer-events: none;
 }
+/* === Linha do Tempo — NoHeroes === */
+.nh-timeline .rail {
+  background: linear-gradient(to bottom, #8f4fff 0%, #facc15 100%);
+  width: 3px;
+}
+.nh-timeline .dot {
+  background: radial-gradient(circle at 40% 40%, #facc15 0%, #8f4fff 55%, rgba(143,79,255,.2) 100%);
+  box-shadow: 0 0 10px rgba(143,79,255,.6), 0 0 20px rgba(250,204,21,.35);
+  border: 2px solid rgba(250,204,21,.6);
+}
+.nh-timeline .card {
+  background: rgba(0,0,0,.65);
+  border: 1px solid rgba(143,79,255,.35);
+  backdrop-filter: blur(10px);
+}
+.nh-timeline .card:hover {
+  border-color: rgba(250,204,21,.6);
+  transform: translateY(-2px);
+}
+.nh-timeline .act-title { 
+  font-family: 'Cinzel Decorative', serif;
+  background: linear-gradient(135deg, #8f4fff, #facc15);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
   </style>
 </head>
 <body class="leading-relaxed">
@@ -734,32 +758,91 @@ Vitalista misterioso com poderes do sangue e da luz. Ator dos bastidores, guardi
   </div>
 </section>
 
-    <!-- 6. Linha do Tempo -->
-<section id="timeline" class="py-16 px-6">
-  <h2 class="text-3xl text-[#8f4fff] font-bold mb-6">Linha do Tempo</h2>
-  <div class="overflow-x-auto">
-    <ul class="flex space-x-8">
-      <li class="min-w-[200px] text-center">
-        <div class="font-bold text-[#8f4fff] text-xl mb-2">Ato I</div>
-        <div class="text-[#ccc]">Equilíbrio Rompido</div>
-      </li>
-      <li class="min-w-[200px] text-center">
-        <div class="font-bold text-[#8f4fff] text-xl mb-2">Ato II</div>
-        <div class="text-[#ccc]">As Luzes Se Apagam</div>
-      </li>
-      <li class="min-w-[200px] text-center">
-        <div class="font-bold text-[#8f4fff] text-xl mb-2">Ato III</div>
-        <div class="text-[#ccc]">Renascimento e a Legião Negra</div>
-      </li>
-      <li class="min-w-[200px] text-center">
-        <div class="font-bold text-[#8f4fff] text-xl mb-2">Ato IV</div>
-        <div class="text-[#ccc]">A Verdadeira Guerra</div>
-      </li>
-      <li class="min-w-[200px] text-center">
-        <div class="font-bold text-[#8f4fff] text-xl mb-2">Ato V</div>
-        <div class="text-[#ccc]">A Queda das Sombras</div>
-      </li>
-    </ul>
+    <!-- LINHA DO TEMPO — NoHeroes -->
+<section id="linha-do-tempo" class="nh-timeline relative py-16 px-6">
+  <div class="max-w-5xl mx-auto">
+    <h2 class="text-3xl md:text-4xl font-bold cinzel gradiente-noheroes mb-10">Linha do Tempo</h2>
+
+    <div class="relative">
+      <!-- trilho -->
+      <div class="rail absolute left-4 md:left-1/2 top-0 bottom-0 -translate-x-1/2 md:translate-x-0"></div>
+
+      <div class="space-y-10">
+
+        <!-- ATO I -->
+        <div class="relative md:grid md:grid-cols-2 md:gap-10 items-start">
+          <div class="hidden md:block"></div>
+          <div class="relative md:pl-8">
+            <span class="dot absolute left-4 md:-left-5 top-2 w-5 h-5 rounded-full"></span>
+            <div class="card rounded-xl p-5 transition">
+              <h3 class="act-title text-xl font-bold">Ato I</h3>
+              <p class="mt-2 text-gray-300 text-sm leading-relaxed">
+                <!-- COLE AQUI o texto atual do Ato I (sem alterações) -->
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ATO II -->
+        <div class="relative md:grid md:grid-cols-2 md:gap-10 items-start">
+          <div class="relative md:pr-8">
+            <span class="dot absolute left-4 md:-right-5 top-2 w-5 h-5 rounded-full"></span>
+            <div class="card rounded-xl p-5 transition">
+              <h3 class="act-title text-xl font-bold">Ato II</h3>
+              <p class="mt-2 text-gray-300 text-sm leading-relaxed">
+                <!-- COLE AQUI o texto atual do Ato II (sem alterações) -->
+              </p>
+            </div>
+          </div>
+          <div class="hidden md:block"></div>
+        </div>
+
+        <!-- ATO III — somente 'A Legião Negra' -->
+        <div class="relative md:grid md:grid-cols-2 md:gap-10 items-start">
+          <div class="hidden md:block"></div>
+          <div class="relative md:pl-8">
+            <span class="dot absolute left-4 md:-left-5 top-2 w-5 h-5 rounded-full"></span>
+            <div class="card rounded-xl p-5 transition">
+              <h3 class="act-title text-xl font-bold">Ato III — A Legião Negra</h3>
+              <p class="mt-2 text-gray-300 text-sm leading-relaxed">
+                <!-- Coloque aqui o texto do Ato III, mantendo APENAS esta linha de trama:
+                     'A Legião Negra'. Remova as outras duas que existiam. -->
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ATO IV -->
+        <div class="relative md:grid md:grid-cols-2 md:gap-10 items-start">
+          <div class="relative md:pr-8">
+            <span class="dot absolute left-4 md:-right-5 top-2 w-5 h-5 rounded-full"></span>
+            <div class="card rounded-xl p-5 transition">
+              <h3 class="act-title text-xl font-bold">Ato IV</h3>
+              <p class="mt-2 text-gray-300 text-sm leading-relaxed">
+                <!-- COLE AQUI o texto atual do Ato IV (sem alterações) -->
+              </p>
+            </div>
+          </div>
+          <div class="hidden md:block"></div>
+        </div>
+
+        <!-- ATO V -->
+        <div class="relative md:grid md:grid-cols-2 md:gap-10 items-start">
+          <div class="hidden md:block"></div>
+          <div class="relative md:pl-8">
+            <span class="dot absolute left-4 md:-left-5 top-2 w-5 h-5 rounded-full"></span>
+            <div class="card rounded-xl p-5 transition">
+              <h3 class="act-title text-xl font-bold">Ato V</h3>
+              <p class="mt-2 text-gray-300 text-sm leading-relaxed">
+                <!-- COLE AQUI o texto atual do Ato V (sem alterações) -->
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 </section>
 
