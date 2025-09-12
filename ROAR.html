@@ -450,16 +450,34 @@
 </section>
 
     <!-- 3. Trailer ou Prévia -->
-    <section id="trailer" class="py-16 px-6 text-center">
-      <h2 class="text-3xl text-[#8f4fff] font-bold mb-6">Trailer & Prévia</h2>
-      <!-- substitua src pelo seu vídeo real -->
-      <div class="max-w-4xl mx-auto">
-        <video controls class="w-full rounded-lg shadow-lg">
+<section id="trailer" class="relative py-20 px-6 text-center">
+  <div class="max-w-5xl mx-auto">
+    <!-- Cabeçalho -->
+    <div class="mb-10">
+      <div class="mx-auto h-[3px] w-24 bg-gradient-to-r from-purple-600 to-yellow-400 rounded-full mb-4"></div>
+      <h2 class="text-3xl md:text-4xl font-bold cinzel gradiente-noheroes">Trailer & Prévia</h2>
+    </div>
+
+    <!-- Card vidro com vídeo -->
+    <div class="rounded-2xl bg-black/60 backdrop-blur-md border border-purple-700/40 shadow-2xl overflow-hidden">
+      <div class="aspect-video">
+        <video controls poster="assets/images/teaser-thumb.jpg"
+               class="w-full h-full object-cover hover:shadow-[0_0_25px_rgba(143,79,255,0.6),0_0_40px_rgba(250,204,21,0.4)] transition">
           <source src="assets/videos/roar-teaser.mp4" type="video/mp4">
           Seu navegador não suporta vídeo.
         </video>
       </div>
-    </section>
+    </div>
+
+    <!-- CTA opcional -->
+    <div class="mt-6">
+      <a href="https://youtube.com/seulink" target="_blank"
+         class="inline-flex items-center px-5 py-3 rounded-lg border border-purple-600 text-purple-300 hover:bg-purple-900/20 transition">
+        Ver no YouTube →
+      </a>
+    </div>
+  </div>
+</section>
 
     <!-- 4. Personagens Principais -->
 <section id="personagens" class="py-16 px-6">
