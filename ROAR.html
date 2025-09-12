@@ -1090,6 +1090,21 @@ Vitalista misterioso com poderes do sangue e da luz. Ator dos bastidores, guardi
 
     window.addEventListener('resize', resizeCanvas);
   });
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      // esconde tudo
+      document.querySelectorAll('.tab-content').forEach(tc => tc.classList.add('hidden'));
+      // remove active de todos
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('bg-[#333]','text-white'));
+      // mostra o selecionado
+      const tab = document.getElementById(btn.dataset.tab);
+      tab.classList.remove('hidden');
+      // marca botão ativo
+      btn.classList.add('bg-[#333]','text-white');
+    });
+  });
+  // inicializa primeiro
+  document.querySelector('.tab-btn').click();
 </script>
 </body>
 </html>
