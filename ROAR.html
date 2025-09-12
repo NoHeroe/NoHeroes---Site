@@ -373,41 +373,77 @@
 
   <main class="pt-32 space-y-24">
 
-    <!-- 2. Sinopse  -->
-    <section id="sinopse" class="relative py-16 px-6 bg-[#111]">
-  <h2 class="text-3xl text-[#8f4fff] font-bold mb-6">Sinopse</h2>
+   <!-- 2. Sinopse — NoHeroes (vidro + acento + responsivo) -->
+<section id="sinopse" x-data="{ aberto:false }" class="relative py-20 px-6">
+  <!-- BG com imagem + máscara -->
+  <div class="absolute inset-0 bg-center bg-cover"
+       style="background-image:url('assets/images/roar-sinopse-bg.jpg')"></div>
+  <div class="absolute inset-0 bg-black/70"></div>
 
-  <div class="relative overflow-hidden">
-    <div class="absolute inset-0 bg-fixed bg-center bg-cover opacity-30"
-         style="background-image:url('assets/images/roar-sinopse-bg.jpg')"></div>
+  <div class="relative max-w-6xl mx-auto">
+    <!-- Cabeçalho -->
+    <div class="text-center mb-10">
+      <div class="mx-auto h-[3px] w-24 bg-gradient-to-r from-purple-600 to-yellow-400 rounded-full mb-4"></div>
+      <h2 class="text-3xl md:text-4xl font-bold cinzel gradiente-noheroes">Sinopse</h2>
+    </div>
 
-    <div class="relative max-w-3xl mx-auto text-lg text-[#ccc] space-y-4">
-      <p class="italic text-lg text-gray-300 mb-4">“Quando o espírito é esmagado... o rugido é a única resposta.”</p>
+    <!-- Card vidro -->
+    <div class="rounded-2xl bg-black/60 backdrop-blur-xl border border-purple-700/30 p-6 md:p-10 shadow-2xl">
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-8 items-start">
+        <!-- Texto -->
+        <div class="md:col-span-3 text-[#ddd]">
+          <p class="italic text-lg md:text-xl text-gray-200">
+            “Quando o espírito é esmagado... o rugido é a única resposta.”
+          </p>
 
-      <p class="text-base leading-relaxed text-[#ccc]">
-        Em Sublicus, terra dilacerada por feras mágicas, guerras esquecidas e a tirania dos dragões, sobreviver é uma arte.
-        As nações Aeon e Kaleidos estão prestes a colidir. Apenas quatro clãs mantêm o frágil equilíbrio... por enquanto.
-      </p>
+          <p class="mt-4 text-base md:text-lg leading-relaxed text-[#ccc]">
+            Em Sublicus, terra dilacerada por feras mágicas, guerras esquecidas e a tirania dos dragões, sobreviver é uma arte.
+            As nações <span class="font-semibold">Aeon</span> e <span class="font-semibold">Kaleidos</span> estão prestes a colidir.
+            Apenas <span class="font-semibold">quatro clãs</span> mantêm o frágil equilíbrio... por enquanto.
+          </p>
 
-      <div x-data="{ aberto: false }">
-        <template x-if="aberto">
-          <div class="space-y-4 text-[#b58dff]">
-            <p>
-              Azuos correu pelas sombras, sem memória clara... apenas dor. O que o perseguia, talvez fosse mais antigo que os próprios deuses.
-              <br><br>
-              Ele foi encontrado desacordado na floresta, marcado por algo que não devia existir — uma marca negra que arde como um lembrete de que ele não é mais apenas humano.
-              <br><br>
-              Agora, treinado por assassinos, vigiado por sombras e manipulado como arma, Azuos é moldado por um mundo que despreza fraquezas.
-              <br><br>
-              Mas há ecos... memórias soterradas, cicatrizes que falam. E quando tudo que resta é silêncio <strong>…ele ruge.</strong>
-            </p>
+          <!-- Ler mais -->
+          <div class="mt-4 overflow-hidden">
+            <div x-show="aberto" x-transition
+                 class="space-y-4 text-[#cbb6ff] leading-relaxed">
+              <p>
+                Azuos correu pelas sombras, sem memória clara... apenas dor. O que o perseguia, talvez fosse mais antigo que os próprios deuses.
+                <br><br>
+                Ele foi encontrado desacordado na floresta, marcado por algo que não devia existir — uma marca negra que arde como um lembrete de que ele não é mais apenas humano.
+                <br><br>
+                Agora, treinado por assassinos, vigiado por sombras e manipulado como arma, Azuos é moldado por um mundo que despreza fraquezas.
+                <br><br>
+                Mas há ecos... memórias soterradas, cicatrizes que falam. E quando tudo que resta é silêncio <strong>…ele ruge.</strong>
+              </p>
+            </div>
+
+            <button @click="aberto = !aberto"
+                    class="group mt-4 inline-flex items-center gap-2 text-[#b58dff] font-semibold">
+              <span x-show="!aberto" x-transition>► Ler mais</span>
+              <span x-show="aberto"  x-transition>▾ Ocultar</span>
+              <span class="block h-[1px] w-10 bg-gradient-to-r from-purple-600 to-yellow-400 group-hover:w-16 transition-all"></span>
+            </button>
           </div>
-        </template>
 
-        <button @click="aberto = !aberto" class="mt-4 text-[#b58dff] hover:underline font-semibold">
-          <span x-show="!aberto">Ler mais...</span>
-          <span x-show="aberto">Ocultar</span>
-        </button>
+          <!-- CTA opcional -->
+          <div class="mt-6">
+            <a href="#acda-sobre"
+               class="inline-flex items-center px-5 py-3 rounded-lg border border-purple-600 text-purple-300 hover:bg-purple-900/20 transition">
+              Sobre o Universo ACDA
+            </a>
+          </div>
+        </div>
+
+        <!-- Arte lateral (md+) -->
+        <figure class="md:col-span-2 hidden md:block">
+          <div class="relative rounded-2xl overflow-hidden border border-purple-700/40 bg-black/40">
+            <img src="assets/images/concept1.jpg" alt="Arte de conceito ACDA" class="w-full h-80 object-cover">
+            <div class="absolute inset-0 ring-1 ring-inset ring-white/5"></div>
+          </div>
+          <figcaption class="mt-3 text-xs text-gray-400 text-center">
+            Ecos de Caelum — símbolos, clãs e cicatrizes do mundo.
+          </figcaption>
+        </figure>
       </div>
     </div>
   </div>
