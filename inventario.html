@@ -1,541 +1,325 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!DOCTYPE html><html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NoHeroes | Inventário</title>
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet"/>
-
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
   <style>
-/* =================== NoHeroes — Theme =================== */
-:root{
-  --dark-bg:#07060a;
-  --panel:#0e0c13cc;
-  --border:rgba(255,255,255,.12);
-  --glass:rgba(255,255,255,.08);
-  --txt:#e7e3f6;
-  --muted:#a9a3bf;
-  --accent:#8f4fff;
-  --accent-rgb:143,79,255;
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{height:100%}
-body{
-  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  background: var(--dark-bg);
-  color: var(--txt);
-  overflow-x:hidden; min-height:100vh;
-}
+    /* ====== NoHeroes Theme (fiel ao seu visual) ====== */
+    :root{
+      --dark-bg:#1a1a1a; --main-panel-bg:rgba(25,25,25,.85); --panel-border:#4a4a4a;
+      --accent-purple:#9b59b6; --accent-purple-rgb:155,89,182; --text:#e0e0e0; --muted:#a0a0a0;
+      --slot-bg:rgba(35,35,35,.6); --slot-border:#6b6b6b; --bar-bg:#2a2a2a;
+      --bar-hp:#dc143c; --bar-mp:#4169e1; --bar-xp:#9b59b6; --glow:rgba(155,89,182,.5); --shadow:rgba(0,0,0,.6);
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html,body{height:100%;background:var(--dark-bg);color:var(--text);font-family:"Share Tech Mono",monospace;overflow-x:hidden;min-height:100vh}/* BG partículas (brasas) */
+#particle-bg{position:fixed;inset:0;z-index:-1;opacity:.15}
 
-/* BG Brasas + Gradiente sutil */
-.bg-wrap{position:fixed; inset:0; pointer-events:none; z-index:-1}
-#brasas{width:100%;height:100%}
-.grad-nh{position:absolute; inset:0; background:linear-gradient(135deg, rgba(143,79,255,.14), rgba(217,181,90,.08)); mix-blend:screen;}
-
-/* Top HUD (mantido, só polido) */
-.top-hud{
-  position:fixed; top:0; left:0; right:0; z-index:1000;
-  display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between;
-  padding:10px 16px; background:rgba(0,0,0,.42); backdrop-filter: blur(10px);
-  border-bottom:1px solid var(--border);
-}
-.hud-group{display:flex; align-items:center; gap:12px}
-.hud-bar-container{width:140px; height:12px; background:#141019; border:1px solid var(--border); border-radius:8px; overflow:hidden}
-.hud-bar-fill{height:100%; background:linear-gradient(90deg,#8b0000,#daa520,#006400); position:relative}
-.hud-bar-fill[data-color="hp"]{background:#dc143c}
-.hud-bar-fill[data-color="mp"]{background:#4169e1}
-.hud-bar-fill[data-color="xp"]{background:#8f4fff}
-.hud-bar-fill::after{content:attr(data-value); position:absolute; right:6px; top:50%; transform:translateY(-50%); font-size:.7em; opacity:.85}
-.hud-level{font-family:"Cinzel Decorative",serif; font-weight:700; padding:4px 10px; border:1px solid var(--border); border-radius:8px; background:rgba(255,255,255,.04)}
-.hud-currency{color:#cfae56; font-weight:700; display:flex; align-items:center; gap:6px}
-.hud-action-buttons button{
-  background:rgba(255,255,255,.05); color:var(--txt);
-  border:1px solid var(--border); padding:8px 12px; border-radius:10px; cursor:pointer;
-}
-.hud-action-buttons button:hover{background:rgba(255,255,255,.09)}
+/* HUD topo (mantido) */
+.top-hud{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;background:rgba(15,15,15,.9);padding:10px 15px;border-bottom:2px solid var(--panel-border);box-shadow:0 4px 15px var(--shadow)}
+.hud-group{display:flex;align-items:center;gap:10px}
+.hud-bar{width:120px;height:12px;background:var(--bar-bg);border:1px solid var(--panel-border);border-radius:3px;overflow:hidden;position:relative}
+.hud-fill{height:100%;width:70%;box-shadow:0 0 5px rgba(255,255,255,.2)}
+.hud-fill::after{content:attr(data-value);position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:.7em;opacity:.85}
+.hp{background:var(--bar-hp)} .mp{background:var(--bar-mp)} .xp{background:var(--bar-xp)}
+.hud-level{font-family:"Cinzel Decorative",serif;font-weight:700;background:var(--slot-bg);border:1px solid var(--panel-border);padding:3px 8px;border-radius:5px}
+.hud-currency{color:#cfae56;font-weight:700;display:flex;align-items:center;gap:6px}
+.hud-action-buttons button{background:var(--slot-bg);border:1px solid var(--panel-border);color:var(--text);padding:8px 12px;border-radius:5px;cursor:pointer;font-family:"Cinzel Decorative",serif;text-transform:uppercase}
+.hud-action-buttons button:hover{background:var(--accent-purple);color:#111;border-color:var(--accent-purple);box-shadow:0 0 10px var(--glow)}
 
 /* Main */
-.main{max-width:1200px; margin:96px auto 24px; padding:0 16px}
-.ui-root{
-  background:var(--panel); border:1px solid var(--border); border-radius:16px;
-  box-shadow:0 30px 80px rgba(0,0,0,.4), inset 0 0 0 1px rgba(255,255,255,.02);
-  padding:24px; display:flex; flex-direction:column; gap:20px;
-}
+.main{padding-top:110px;max-width:1200px;margin:20px auto;padding-left:15px;padding-right:15px}
+.ui-root{background:var(--main-panel-bg);border:2px solid var(--panel-border);border-radius:10px;box-shadow:0 0 25px var(--shadow),inset 0 0 10px rgba(255,255,255,.05);padding:20px;display:flex;flex-direction:column;gap:20px}
+.panel-title{font-family:"Cinzel Decorative",serif;font-size:1.5em;font-weight:700;color:var(--accent-purple);text-shadow:0 0 8px var(--glow);border-bottom:2px solid var(--panel-border);padding-bottom:10px;margin-bottom:15px;text-align:center;text-transform:uppercase}
 
-/* Tabs (mantidas) */
-.tabs-container{display:flex; gap:8px; flex-wrap:wrap; justify-content:center; padding-bottom:10px; border-bottom:1px solid var(--border)}
-.tab{
-  background:rgba(255,255,255,.05); border:1px solid var(--border); color:var(--muted);
-  padding:8px 14px; border-radius:10px; text-transform:uppercase; font-weight:600; letter-spacing:.02em; cursor:pointer;
-}
-.tab.active{background:linear-gradient(135deg, rgba(143,79,255,.9), rgba(217,181,90,.9)); color:#111; border-color:transparent}
+/* Abas principais (iguais às do original) */
+.tabs{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-bottom:20px}
+.tab{background:var(--slot-bg);border:1px solid var(--panel-border);color:#bbb;padding:6px 14px;border-radius:6px;font-family:"Cinzel Decorative",serif;font-size:.85em;cursor:pointer;text-transform:uppercase}
+.tab.active{background:var(--accent-purple);color:#111;border-color:var(--accent-purple);box-shadow:0 0 12px var(--glow)}
 
-/* Panels layout (mantido) */
-.panel-content-wrapper{display:flex; flex-direction:column; gap:20px}
-.left-panel,.right-panel{
-  flex:1; background:rgba(255,255,255,.03); border:1px solid var(--border); border-radius:12px; padding:16px;
-}
-.center-panel{flex:1.2; display:flex; align-items:center; justify-content:center; padding:16px; min-height:280px}
+.layout{display:flex;flex-direction:column;gap:20px}
+.left,.right{flex:1;background:rgba(30,30,30,.7);border:1px solid var(--panel-border);border-radius:8px;padding:15px;box-shadow:inset 0 0 8px rgba(0,0,0,.5),0 0 10px var(--shadow)}
+.center{flex:1.2;display:flex;align-items:center;justify-content:center;padding:15px;min-height:300px}
 
-/* Titles */
-.panel-title{font-family:"Cinzel Decorative",serif; font-size:22px; color:#d8c9ff; border-bottom:1px solid var(--border); padding-bottom:8px; margin-bottom:12px; text-transform:uppercase}
+/* Avatar / slots (mantidos) */
+.avatar{display:flex;align-items:center;justify-content:center;gap:10px}
+.avatar-ph{width:280px;height:400px;background:linear-gradient(145deg,#2a2a2a,#1a1a1a);border:3px dashed var(--accent-purple);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--accent-purple);font-family:"Cinzel Decorative",serif;font-size:2em}
+.slot,.inv-slot{width:65px;height:65px;background:var(--slot-bg);border:2px solid var(--slot-border);border-radius:5px;display:flex;align-items:center;justify-content:center;color:#999;position:relative;cursor:pointer}
+.slot:hover,.inv-slot:hover{border-color:var(--accent-purple);box-shadow:0 0 12px var(--glow)}
+.item-count{position:absolute;bottom:3px;right:3px;background:rgba(0,0,0,.7);font-size:.7em;padding:1px 4px;border-radius:3px}
 
-/* Avatar e slots (mantidos) */
-.avatar-container{display:flex; align-items:center; justify-content:center; gap:10px}
-.avatar-placeholder{
-  width:280px; height:400px; border-radius:16px; display:flex; align-items:center; justify-content:center;
-  background:linear-gradient(145deg,#2a2238,#120f1a); color:#bca8ff; border:2px dashed var(--accent);
-  font-family:"Cinzel Decorative",serif; font-size:28px;
-}
-.equip-slot,.inv-slot{
-  width:64px; height:64px; background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:10px;
-  display:flex; align-items:center; justify-content:center; color:var(--muted); position:relative;
-}
-.item-count{position:absolute; bottom:4px; right:4px; background:rgba(0,0,0,.6); padding:2px 6px; font-size:10px; border-radius:6px}
+/* Inventário */
+.inventory-filter{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:10px 0;border-bottom:1px solid var(--panel-border);margin-bottom:12px}
+.filter-btn{background:var(--slot-bg);border:1px solid var(--panel-border);color:#bbb;padding:6px 12px;border-radius:6px;cursor:pointer;font-family:"Cinzel Decorative",serif;font-size:.8em;text-transform:uppercase}
+.filter-btn.active{background:var(--accent-purple);color:#111;border-color:var(--accent-purple);box-shadow:0 0 10px var(--glow)}
+.category{margin-bottom:20px}
+.category-title{font-family:"Cinzel Decorative",serif;font-size:1.1em;color:var(--accent-purple);margin-bottom:10px;border-bottom:1px dotted var(--panel-border);padding-bottom:5px;text-transform:uppercase}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(60px,1fr));gap:8px;max-height:300px;overflow:auto}
+.empty{font-size:.85em;color:#aaa;text-align:center;margin-top:10px;font-style:italic}
 
-/* Inventory (mantido com ajustes) */
-.inventory-filter{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; padding:10px 0; border-bottom:1px solid var(--border); margin-bottom:12px}
-.filter-btn{background:rgba(255,255,255,.05); border:1px solid var(--border); color:var(--muted); padding:6px 12px; border-radius:10px; cursor:pointer; text-transform:uppercase; font-weight:600}
-.filter-btn.active{background:rgba(143,79,255,.9); color:#111; border-color:transparent}
-.category-title{font-family:"Cinzel Decorative",serif; font-size:18px; color:#d8c9ff; margin:8px 0}
-.inv-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(64px,1fr)); gap:8px; max-height:300px; overflow:auto}
-.inv-empty-label{color:var(--muted); font-size:.9em; text-align:center; margin-top:10px; font-style:italic}
+/* Botões de conteúdo (fora dos filtros) */
+.content-shortcuts{display:flex;gap:8px;justify-content:center;margin:8px 0 4px}
+.content-shortcuts .btn{background:linear-gradient(135deg, rgba(155,89,182,.9), rgba(217,181,90,.9));color:#111;border:none;padding:8px 12px;border-radius:8px;font-weight:700;cursor:pointer}
 
-/* Item Card (para conteúdos e itens de uso) */
-.item-card{
-  display:flex; gap:10px; align-items:center; padding:10px; border:1px solid var(--border);
-  background:rgba(255,255,255,.04); border-radius:12px;
-}
-.item-thumb{width:48px; height:48px; border-radius:8px; background:#0f0c18; border:1px solid var(--border); overflow:hidden}
-.item-thumb img{width:100%; height:100%; object-fit:cover}
-.item-meta{min-width:0}
-.item-name{font-weight:700}
-.item-desc{color:var(--muted); font-size:.85em; margin-top:2px}
-.item-actions{margin-left:auto; display:flex; gap:6px}
-.btn{
-  padding:6px 10px; border-radius:10px; border:1px solid var(--border); background:rgba(255,255,255,.05); color:var(--txt); cursor:pointer
-}
-.btn.grad{background:linear-gradient(135deg, rgba(143,79,255,.9), rgba(217,181,90,.9)); color:#111; border-color:transparent; font-weight:700}
+@media(min-width:900px){.layout{flex-direction:row}}
+/* Scrollbar */
+::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:var(--panel-border);border-radius:5px}
 
-/* Responsive */
-@media(min-width: 900px){
-  .panel-content-wrapper{flex-direction:row}
-}
   </style>
 </head>
 <body>
-  <!-- BG -->
-  <div class="bg-wrap">
-    <canvas id="brasas"></canvas>
-    <div class="grad-nh"></div>
-  </div>
-
-  <!-- HUD (mantido) -->
-  <div class="top-hud">
+  <canvas id="particle-bg"></canvas>  <!-- HUD -->  <div class="top-hud">
     <div class="hud-group">
-      <span class="hud-level">Nível: <span id="hud-level-value">3</span></span>
-      <div class="hud-bar-container"><div class="hud-bar-fill" id="hud-xp" data-color="xp" data-value="67%"></div></div>
+      <span class="hud-level">Nível: <span id="hud-level">3</span></span>
+      <div class="hud-bar"><div id="xp" class="hud-fill xp" data-value="67%" style="width:67%"></div></div>
     </div>
     <div class="hud-group">
-      <div class="hud-bar-container"><div class="hud-bar-fill" id="hud-hp" data-color="hp" data-value="100/100"></div></div>
-      <div class="hud-bar-container"><div class="hud-bar-fill" id="hud-mp" data-color="mp" data-value="50/50"></div></div>
+      <div class="hud-bar"><div id="hp" class="hud-fill hp" data-value="100/100" style="width:100%"></div></div>
+      <div class="hud-bar"><div id="mp" class="hud-fill mp" data-value="50/50" style="width:100%"></div></div>
     </div>
-    <div class="hud-group">
-      <span class="hud-currency">⦿ <span id="hud-gold">1250</span></span>
-    </div>
-    <div class="hud-action-buttons">
-      <button onclick="location.href='store.html'">⛩ Loja</button>
-    </div>
-  </div>
-
-  <main class="main">
+    <div class="hud-group"><span class="hud-currency">⦿ <span id="gold">1250</span></span></div>
+    <div class="hud-action-buttons"><button onclick="location.href='store.html'">⛩ Loja</button></div>
+  </div>  <main class="main">
     <div class="ui-root">
-      <!-- Tabs (mantidas) -->
-      <div class="tabs-container">
+      <!-- Abas principais (fieis) -->
+      <div class="tabs">
         <button class="tab active" data-tab="overview">Visão Geral</button>
         <button class="tab" data-tab="inventory">Inventário</button>
         <button class="tab" data-tab="equipment">Equipamento</button>
+      </div><div class="layout">
+    <!-- Left -->
+    <section class="left">
+      <!-- OVERVIEW -->
+      <div class="pane pane-overview">
+        <h2 class="panel-title">Informações do Herói</h2>
+        <div class="info-row" style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px dashed rgba(255,255,255,.1);padding-bottom:6px;margin-bottom:8px">
+          <span style="color:#a0a0a0;text-transform:uppercase">Nome:</span>
+          <span id="nome">Ghoul Pionkim <button class="edit" style="padding:2px 8px" onclick="editarNome()">✎</button></span>
+        </div>
+
+        <h2 class="panel-title" style="margin-top:16px">Atributos</h2>
+        <div id="attrs"></div>
       </div>
 
-      <div class="panel-content-wrapper">
-        <!-- Left -->
-        <div class="left-panel">
-          <!-- Painel: Overview (mantido) -->
-          <div class="pane-overview active">
-            <h2 class="panel-title">Informações do Herói</h2>
-            <div class="info-row" style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px dashed rgba(255,255,255,.1);padding-bottom:6px;margin-bottom:8px">
-              <span class="info-label" style="color:var(--muted)">Nome:</span>
-              <span id="nome-personagem">Ghoul Pionkim <button class="btn" style="padding:2px 8px" onclick="editarNome()">✎</button></span>
-            </div>
+      <!-- INVENTORY -->
+      <div class="pane pane-inventory" style="display:none">
+        <h2 class="panel-title">Inventário</h2>
+        <p style="text-align:center;color:#a0a0a0;margin-bottom:8px">Tudo o que você coletou em suas jornadas.</p>
 
-            <h2 class="panel-title" style="margin-top:16px">Atributos</h2>
-            <div id="attr-list" style="display:grid;grid-template-columns:1fr;gap:8px"></div>
-          </div>
-
-          <!-- Painel: Inventory -->
-          <div class="pane-inventory" style="display:none">
-            <h2 class="panel-title">Inventário</h2>
-            <p class="info-label" style="text-align:center;color:var(--muted);margin-bottom:10px">Tudo o que você coletou em suas jornadas.</p>
-
-            <!-- Filtros (Mentorias removido) -->
-            <div class="inventory-filter">
-              <button class="filter-btn active" data-filter="all">Tudo</button>
-              <button class="filter-btn" data-filter="consumable">Consumíveis</button>
-              <button class="filter-btn" data-filter="cosmetic">Cosméticos</button>
-              <button class="filter-btn" data-filter="key">Chaves</button>
-              <button class="filter-btn" data-filter="pass">Passes</button>
-              <button class="filter-btn" data-filter="extra">Extras</button>
-              <!-- Conteúdos (agora como links) -->
-              <button class="filter-btn" data-filter="animes">Animes</button>
-              <button class="filter-btn" data-filter="mangas">Mangás</button>
-              <button class="filter-btn" data-filter="ebooks">eBooks</button>
-            </div>
-
-            <!-- Categorias (render dinâmico) -->
-            <div id="inv-sections" class="inv-sections" style="display:grid;gap:16px"></div>
-          </div>
-
-          <!-- Painel: Equipment (mantido; slots só visuais) -->
-          <div class="pane-equipment" style="display:none">
-            <h2 class="panel-title">Habilidades Ativas</h2>
-            <div class="equip-slots-container" style="display:flex;gap:8px;flex-wrap:wrap">
-              <div class="equip-slot" data-slot="S1">S1</div>
-              <div class="equip-slot" data-slot="S2">S2</div>
-              <div class="equip-slot" data-slot="S3">S3</div>
-              <div class="equip-slot" data-slot="S4">S4</div>
-            </div>
-
-            <h2 class="panel-title" style="margin-top:16px">Bônus Atuais</h2>
-            <p class="info-label" style="color:var(--muted)">
-              +10% Dano de Sombra<br/>+5 Regeneração de MP<br/>Armadura Arcana (50% Resist. Mágica)
-            </p>
-          </div>
+        <!-- Botões de Conteúdo (fora dos filtros) -->
+        <div class="content-shortcuts">
+          <button class="btn" id="open-anime">Animes</button>
+          <button class="btn" id="open-manga">Mangás</button>
+          <button class="btn" id="open-ebook">eBooks</button>
         </div>
 
-        <!-- Center -->
-        <div class="center-panel">
-          <div class="avatar-container">
-            <div class="avatar-placeholder">Avatar</div>
-          </div>
+        <!-- Filtros (APENAS os do original: sem skins/chaves/passes; mentorias removido) -->
+        <div class="inventory-filter">
+          <button class="filter-btn active" data-filter="all">Tudo</button>
+          <button class="filter-btn" data-filter="consumables">Consumíveis</button>
+          <button class="filter-btn" data-filter="materials">Materiais</button>
+          <button class="filter-btn" data-filter="quests">Missão</button>
+          <button class="filter-btn" data-filter="misc">Diversos</button>
         </div>
 
-        <!-- Right -->
-        <div class="right-panel">
-          <div class="pane-overview-right active">
-            <h2 class="panel-title">Jornada e Progresso</h2>
-            <div class="info-row" style="display:flex;justify-content:space-between;margin-bottom:8px">
-              <span class="info-label" style="color:var(--muted)">Despertar Vitalista:</span>
-              <span id="valor-despertar">128.000 / 1.000.000</span>
-            </div>
-            <div class="attribute-bar-container" style="height:12px;border:1px solid var(--border);background:#000;border-radius:8px;overflow:hidden">
-              <div class="attribute-bar-fill" id="barra-despertar" style="width:12.8%;height:100%;background:linear-gradient(90deg, #8b0000, #daa520, #006400)"></div>
-            </div>
+        <!-- Categorias (iguais às suas, preenchidas via backend) -->
+        <section class="category" data-category="consumables">
+          <h3 class="category-title">Consumíveis</h3>
+          <div class="grid" id="grid-consumables"></div>
+          <div class="empty" id="empty-consumables" style="display:none">Sem consumíveis.</div>
+        </section>
 
-            <h2 class="panel-title" style="margin-top:16px">Mochila</h2>
-            <div id="backpack" class="backpack-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:8px"></div>
-          </div>
+        <section class="category" data-category="materials" style="display:none">
+          <h3 class="category-title">Materiais</h3>
+          <div class="grid" id="grid-materials"></div>
+          <div class="empty" id="empty-materials">Sem materiais.</div>
+        </section>
 
-          <div class="pane-inventory-right" style="display:none">
-            <h2 class="panel-title">Itens Equipados</h2>
-            <div id="equippedList" style="display:grid;gap:8px"></div>
-          </div>
+        <section class="category" data-category="quests" style="display:none">
+          <h3 class="category-title">Itens de Missão</h3>
+          <div class="grid" id="grid-quests"></div>
+          <div class="empty" id="empty-quests">Nenhum item de missão.</div>
+        </section>
 
-          <div class="pane-equipment-right" style="display:none">
-            <h2 class="panel-title">Detalhes</h2>
-            <div class="info-label" style="color:var(--muted)">Selecione um item para ver detalhes</div>
-          </div>
-        </div>
+        <section class="category" data-category="misc" style="display:none">
+          <h3 class="category-title">Diversos</h3>
+          <div class="grid" id="grid-misc"></div>
+          <div class="empty" id="empty-misc">Nada por aqui…</div>
+        </section>
       </div>
-    </div>
-  </main>
 
-  <script>
-/* =================== Config/API helpers =================== */
-const API_BASE='https://api.noheroes.com.br';
-const $=q=>document.querySelector(q);
-const $$=q=>Array.from(document.querySelectorAll(q));
-const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
-function getJwt(){const raw=(localStorage.getItem('token')||'').trim()||(localStorage.getItem('NoHeroes_token')||'').trim(); return raw.replace(/^Bearer\\s+/i,'');}
-async function api(path,opts={}){
-  const headers={'Content-Type':'application/json'};
-  const jwt=getJwt(); if(jwt) headers.Authorization='Bearer '+jwt;
-  const res=await fetch(API_BASE+path,{...opts,headers});
-  if(!res.ok) throw new Error('HTTP '+res.status);
-  return res.json();
-}
+      <!-- EQUIPMENT -->
+      <div class="pane pane-equipment" style="display:none">
+        <h2 class="panel-title">Habilidades Ativas</h2>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <div class="slot">S1</div><div class="slot">S2</div><div class="slot">S3</div><div class="slot">S4</div>
+        </div>
 
-/* =================== State =================== */
-const state={
-  me:null,
-  items:[],        // itens do usuário
-  equipped:{},     // slot -> item
-  filter:'all',
-  placeholders:true
-};
+        <h2 class="panel-title" style="margin-top:16px">Bônus Atuais</h2>
+        <p style="color:#a0a0a0">+10% Dano de Sombra<br/>+5 Regeneração de MP<br/>Armadura Arcana (50% Resist. Mágica)</p>
+      </div>
+    </section>
 
-/* =================== BG Brasas =================== */
-(function brasas(){
-  const c=document.getElementById('brasas'), ctx=c.getContext('2d'); let W,H,ps=[];
-  const R=()=>{W=c.width=innerWidth; H=c.height=innerHeight};
-  addEventListener('resize',R); R();
-  for(let i=0;i<70;i++) ps.push({x:Math.random()*W,y:Math.random()*H,r:1+Math.random()*2,a:.25+Math.random()*.5,s:.2+Math.random()*.8});
-  (function loop(){ ctx.clearRect(0,0,W,H); ps.forEach(p=>{ p.y-=p.s; if(p.y<-10) p.y=H+10; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle=`rgba(${getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb')},${p.a})`; ctx.fill();}); requestAnimationFrame(loop); })();
-})();
+    <!-- Center -->
+    <section class="center">
+      <div class="avatar"><div class="avatar-ph">Avatar</div></div>
+    </section>
 
-/* =================== HUD/Overview mock =================== */
-const estado={nivel:3,xp:6700,xpMax:10000,hp:100,hpMax:100,mp:50,mpMax:50,gold:1250, pontos:4,
-  attrs:{forca:1,destreza:1,constituicao:1,inteligencia:1,espirito:1,carisma:1}};
-function updateHUD(){
-  $('#hud-level-value').textContent=estado.nivel;
-  const xp = Math.round(estado.xp/estado.xpMax*100);
-  $('#hud-xp').style.width=xp+'%'; $('#hud-xp').setAttribute('data-value',xp+'%');
-  $('#hud-hp').style.width='100%'; $('#hud-mp').style.width='100%';
-  $('#hud-hp').setAttribute('data-value','100/100'); $('#hud-mp').setAttribute('data-value','50/50');
-  $('#hud-gold').textContent=estado.gold;
-}
-function renderAttrs(){
-  const root=$('#attr-list'); root.innerHTML='';
-  for(const [k,v] of Object.entries(estado.attrs)){
-    const row=document.createElement('div'); row.style.display='flex'; row.style.justifyContent='space-between';
-    row.innerHTML=`<span style="color:var(--muted);text-transform:uppercase">${k}</span>
-      <span>${v} <button class="btn" style="padding:2px 8px" data-add="${k}">+</button></span>`;
-    root.appendChild(row);
-  }
-  $$('[data-add]').forEach(b=> b.onclick=()=>{ if(estado.pontos>0){ estado.attrs[b.dataset.add]++; estado.pontos--; renderAttrs(); }});
-}
-function editarNome(){ const span=$('#nome-personagem'); const cur=span.textContent.replace('✎','').trim(); const nv=prompt('Novo nome:',cur)||cur; span.innerHTML=`${nv} <button class="btn" style="padding:2px 8px" onclick="editarNome()">✎</button>`;}
+    <!-- Right -->
+    <section class="right">
+      <div class="pane pane-overview-right">
+        <h2 class="panel-title">Jornada e Progresso</h2>
+        <div class="info-row" style="display:flex;justify-content:space-between;margin-bottom:8px">
+          <span style="color:#a0a0a0;text-transform:uppercase">Despertar Vitalista:</span>
+          <span id="despertar">128.000 / 1.000.000</span>
+        </div>
+        <div style="height:12px;border:2px solid #333;background:#000;border-radius:4px;overflow:hidden">
+          <div id="barra-despertar" style="width:12.8%;height:100%;background:linear-gradient(90deg, #8b0000, #daa520, #006400)"></div>
+        </div>
 
-/* =================== Inventory rendering =================== */
-const CATEGORY_LABELS={
-  consumable:'Consumíveis',
-  cosmetic:'Cosméticos/Skins',
-  key:'Chaves',
-  pass:'Passes',
-  extra:'Códigos/Extras',
-  animes:'Animes',
-  mangas:'Mangás',
-  ebooks:'eBooks'
-};
-function mapItemToCategory(it){
-  // types vindos da API: skin|consumable|key|pass|code|ebook|manga|anime
-  if(it.type==='consumable') return 'consumable';
-  if(it.type==='skin') return 'cosmetic';
-  if(it.type==='key') return 'key';
-  if(it.type==='pass' || it.type==='season_pass') return 'pass';
-  if(it.type==='code' || it.type==='extra') return 'extra';
-  if(it.type==='anime') return 'animes';
-  if(it.type==='manga') return 'mangas';
-  if(it.type==='ebook') return 'ebooks';
-  return 'extra';
-}
-function contentRedirect(it){
-  const meta=it.meta||{};
-  if(it.type==='anime')  return meta.redirect || `watch.html${meta.workId?`?work=${meta.workId}`:''}`;
-  if(it.type==='manga')  return meta.redirect || `manga.html${meta.workId?`?work=${meta.workId}`:''}`;
-  if(it.type==='ebook')  return meta.redirect || `webnovel.html${meta.workId?`?work=${meta.workId}`:''}`;
-  return null;
-}
-function renderInventory(){
-  const root=$('#inv-sections'); root.innerHTML='';
-  // Agrupar por categoria
-  const grouped={};
-  state.items.forEach(it=>{
-    const cat=mapItemToCategory(it);
-    if(!grouped[cat]) grouped[cat]=[];
-    grouped[cat].push(it);
-  });
+        <h2 class="panel-title" style="margin-top:16px">Mochila</h2>
+        <div id="equippedList" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(60px,1fr));gap:8px"></div>
+      </div>
 
-  // Se filtro ativo não for conteúdo, ainda assim mostramos as seções de conteúdo quando clicadas
-  const cats = Object.keys(CATEGORY_LABELS).filter(c=> state.filter==='all' || c===state.filter);
+      <div class="pane pane-inventory-right" style="display:none">
+        <h2 class="panel-title">Itens Equipados</h2>
+        <div id="equippedCards" style="display:grid;gap:8px"></div>
+      </div>
 
-  if(!cats.length){ root.innerHTML=`<div class="inv-empty-label">Nada por aqui…</div>`; return; }
+      <div class="pane pane-equipment-right" style="display:none">
+        <h2 class="panel-title">Detalhes</h2>
+        <p style="color:#a0a0a0">Selecione um item para ver detalhes.</p>
+      </div>
+    </section>
+  </div>
+</div>
 
-  cats.forEach(cat=>{
-    const list = grouped[cat]||[];
-    const section=document.createElement('section');
-    section.className='category-container';
-    section.innerHTML=`<h3 class="category-title">${CATEGORY_LABELS[cat]}</h3>`;
-    // Conteúdos: render como cards com botão "Abrir"
-    if(cat==='animes' || cat==='mangas' || cat==='ebooks'){
-      const stack=document.createElement('div'); stack.style.display='grid'; stack.style.gap='8px';
-      if(!list.length) stack.innerHTML=`<div class="inv-empty-label">Nenhum conteúdo.</div>`;
-      list.forEach(it=>{
-        const card=document.createElement('div'); card.className='item-card';
-        card.innerHTML=`
-          <div class="item-thumb">${it.icon?`<img src="${it.icon}" alt="">`:''}</div>
-          <div class="item-meta">
-            <div class="item-name">${it.name||'Conteúdo'}</div>
-            <div class="item-desc">${it.desc||''}</div>
-          </div>
-          <div class="item-actions">
-            <button class="btn grad" data-open="${it.id}">Abrir</button>
-          </div>`;
-        stack.appendChild(card);
-      });
-      section.appendChild(stack);
-    } else {
-      // Itens "clássicos" (equipáveis/consumíveis…)
-      const grid=document.createElement('div'); grid.className='inv-grid';
-      if(!list.length) section.innerHTML+=`<div class="inv-empty-label">Nada por aqui…</div>`;
-      list.forEach(it=>{
-        const slot=document.createElement('div'); slot.className='inv-slot';
-        if(it.icon){ slot.innerHTML=`<img src="${it.icon}" alt="" style="width:70%;height:70%;object-fit:contain;opacity:.95">`; }
-        if(it.quantity>1){ const b=document.createElement('div'); b.className='item-count'; b.textContent=it.quantity; slot.appendChild(b); }
-        slot.title = it.name || it.type;
-        slot.addEventListener('click', ()=> openItemModal(it)); // modal leve
-        grid.appendChild(slot);
-      });
-      section.appendChild(grid);
+  </main>  <script>
+    // ===== Partículas =====
+    const canvas=document.getElementById('particle-bg'); const ctx=canvas.getContext('2d');
+    function size(){canvas.width=innerWidth; canvas.height=innerHeight} window.addEventListener('resize',size); size();
+    const P=[]; for(let i=0;i<100;i++) P.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,s:.2+Math.random()*.8,a:.1+Math.random()*.4,r:.5+Math.random()*1});
+    (function loop(){ctx.clearRect(0,0,canvas.width,canvas.height); P.forEach(p=>{p.y-=p.s; if(p.y<-10) p.y=canvas.height+10; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle=`rgba(200,200,200,${p.a})`; ctx.fill();}); requestAnimationFrame(loop);})();
+
+    // ===== Helpers/API =====
+    const API_BASE='https://api.noheroes.com.br';
+    const $=q=>document.querySelector(q); const $$=q=>Array.from(document.querySelectorAll(q));
+    function getJwt(){const raw=(localStorage.getItem('token')||'').trim()||(localStorage.getItem('NoHeroes_token')||'').trim(); return raw.replace(/^Bearer\s+/i,'');}
+    async function api(path,opts={}){const h={'Content-Type':'application/json'}; const t=getJwt(); if(t) h.Authorization='Bearer '+t; const r=await fetch(API_BASE+path,{...opts,headers:h}); if(!r.ok) throw new Error('HTTP '+r.status); return r.json();}
+
+    // ===== Estado =====
+    const state={items:[], filter:'all'};
+
+    // ===== Abas =====
+    const tabs=$$('.tab');
+    function showTab(key){
+      tabs.forEach(t=>t.classList.toggle('active', t.dataset.tab===key));
+      $('.pane-overview').style.display = key==='overview'? 'block':'none';
+      $('.pane-overview-right').style.display = key==='overview'? 'block':'none';
+      $('.pane-inventory').style.display = key==='inventory'? 'block':'none';
+      $('.pane-inventory-right').style.display = key==='inventory'? 'block':'none';
+      $('.pane-equipment').style.display = key==='equipment'? 'block':'none';
+      $('.pane-equipment-right').style.display = key==='equipment'? 'block':'none';
+      $('.center').style.display = key==='inventory'? 'none':'flex';
     }
-    root.appendChild(section);
-  });
+    tabs.forEach(t=> t.addEventListener('click',()=> showTab(t.dataset.tab)));
 
-  // Bind "Abrir" (conteúdos)
-  $$('[data-open]').forEach(btn=>{
-    btn.onclick=()=>{
-      const it = state.items.find(x=> String(x.id)===String(btn.dataset.open));
-      const href = contentRedirect(it); if(href) location.href = href;
-    };
-  });
-}
-
-/* =================== Item actions (equip/use) =================== */
-async function equipItem(it){
-  try{
-    const r=await api(`/me/inventory/${it.id}/equip`,{method:'POST'});
-    it.equipped = true;
-    // resolver conflitos por slot
-    if(it.slot){
-      for(const x of state.items){ if(x.id!==it.id && x.slot===it.slot){ x.equipped=false; } }
+    // ===== Filtros =====
+    const filterBtns=$$('.filter-btn');
+    const cats=['consumables','materials','quests','misc'];
+    function applyFilter(f){
+      state.filter=f; filterBtns.forEach(b=>b.classList.toggle('active', b.dataset.filter===f));
+      cats.forEach(c=>{ const el=document.querySelector(`[data-category="${c}"]`); if(!el) return; el.style.display = (f==='all' || f===c)? 'block':'none'; });
     }
-    renderEquipped();
-    renderInventory();
-  }catch(e){console.warn(e)}
-}
-async function unequipItem(it){
-  try{
-    await api(`/me/inventory/${it.id}/unequip`,{method:'POST'});
-    it.equipped=false;
-    renderEquipped();
-    renderInventory();
-  }catch(e){console.warn(e)}
-}
-async function useItem(it){
-  try{
-    const res=await api(`/me/inventory/${it.id}/use`,{method:'POST'});
-    // se a API devolver redirect, seguimos
-    if(res && res.redirect){ location.href=res.redirect; return; }
-    // consumo/quantidade
-    if(it.quantity && it.quantity>0){ it.quantity--; if(it.quantity===0){ state.items=state.items.filter(x=>x.id!==it.id); } }
-    renderInventory();
-  }catch(e){console.warn(e)}
-}
+    filterBtns.forEach(b=> b.addEventListener('click',()=> applyFilter(b.dataset.filter)));
 
-/* Modal leve (inline) */
-function openItemModal(it){
-  const modal=document.createElement('div');
-  Object.assign(modal.style,{position:'fixed',inset:0,background:'rgba(0,0,0,.6)',display:'grid',placeItems:'center',zIndex:2000});
-  modal.innerHTML=`<div style="width:min(520px,92vw);background:rgba(15,12,24,.96);border:1px solid var(--border);border-radius:16px;padding:16px">
-    <div style="display:flex;gap:12px;align-items:center">
-      <div class="item-thumb">${it.icon?`<img src="${it.icon}" alt="">`:''}</div>
-      <div class="item-meta" style="min-width:0">
-        <div class="item-name" style="font-size:18px">${it.name||'Item'}</div>
-        <div class="item-desc">${it.desc||''}</div>
-      </div>
-    </div>
-    <div class="item-actions" style="margin-top:12px; display:flex; gap:8px; justify-content:flex-end">
-      ${it.equipable? (!it.equipped? `<button class="btn grad" id="act-equip">Equipar</button>`:`<button class="btn" id="act-unequip">Desequipar</button>`):''}
-      ${it.usable? `<button class="btn grad" id="act-use">Usar</button>`:''}
-      ${(['anime','manga','ebook'].includes(it.type))? `<button class="btn grad" id="act-open">Abrir</button>`:''}
-      <button class="btn" id="act-close">Fechar</button>
-    </div>
-  </div>`;
-  document.body.appendChild(modal);
-  $('#act-close')?.addEventListener('click',()=>modal.remove());
-  $('#act-equip')?.addEventListener('click',()=>{ equipItem(it); modal.remove(); });
-  $('#act-unequip')?.addEventListener('click',()=>{ unequipItem(it); modal.remove(); });
-  $('#act-use')?.addEventListener('click',()=>{ useItem(it); modal.remove(); });
-  $('#act-open')?.addEventListener('click',()=>{ const href=contentRedirect(it); if(href) location.href=href; });
-}
+    // ===== Conteúdos (atalhos) =====
+    $('#open-anime').onclick = ()=> location.href = 'watch.html';
+    $('#open-manga').onclick = ()=> location.href = 'manga.html';
+    $('#open-ebook').onclick = ()=> location.href = 'webnovel.html';
 
-/* =================== Equipped list =================== */
-function renderEquipped(){
-  const box=$('#equippedList'); box.innerHTML='';
-  const eq = state.items.filter(it=>it.equipped);
-  if(!eq.length){ box.innerHTML='<div class="inv-empty-label">Nada equipado.</div>'; return; }
-  eq.forEach(it=>{
-    const card=document.createElement('div'); card.className='item-card';
-    card.innerHTML=`<div class="item-thumb">${it.icon?`<img src="${it.icon}" alt="">`:''}</div>
-      <div class="item-meta"><div class="item-name">${it.name||'Item'}</div><div class="item-desc">${it.desc||''}</div></div>
-      <div class="item-actions"><button class="btn" data-unequip="${it.id}">Desequipar</button></div>`;
-    box.appendChild(card);
-  });
-  $$('[data-unequip]').forEach(b=>{
-    b.onclick=()=>{ const it=state.items.find(x=>String(x.id)===String(b.dataset.unequip)); if(it) unequipItem(it); };
-  });
-}
+    // ===== Render slots =====
+    function slotEl(item){
+      const d=document.createElement('div'); d.className='inv-slot'; d.title=item.name||item.type;
+      if(item.icon){ const img=new Image(); img.src=item.icon; img.alt=''; img.style.width='70%'; img.style.height='70%'; img.style.objectFit='contain'; d.appendChild(img); }
+      if(item.quantity>1){ const q=document.createElement('div'); q.className='item-count'; q.textContent=item.quantity; d.appendChild(q); }
+      d.addEventListener('click',()=> openItemModal(item));
+      return d;
+    }
+    function renderCategory(list, gridId, emptyId){
+      const grid=$(gridId); const empty=$(emptyId); grid.innerHTML='';
+      if(!list.length){ empty.style.display='block'; return; } else empty.style.display='none';
+      list.forEach(it=> grid.appendChild(slotEl(it)));
+    }
 
-/* =================== Filters / Tabs =================== */
-function bindFilters(){
-  $$('.filter-btn').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      $$('.filter-btn').forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active'); state.filter = btn.dataset.filter || 'all';
-      renderInventory();
-    });
-  });
-}
-function bindTabs(){
-  const tabs=$$('.tab');
-  const L={overview:'.pane-overview',inventory:'.pane-inventory',equipment:'.pane-equipment'};
-  const R={overview:'.pane-overview-right',inventory:'.pane-inventory-right',equipment:'.pane-equipment-right'};
-  tabs.forEach(t=>{
-    t.onclick=()=>{
-      tabs.forEach(x=>x.classList.toggle('active',x===t));
-      const key=t.dataset.tab;
-      Object.entries(L).forEach(([k,sel])=>{ document.querySelector(sel).style.display = (k===key)?'block':'none'; });
-      Object.entries(R).forEach(([k,sel])=>{ document.querySelector(sel).style.display = (k===key)?'block':'none'; });
-      document.querySelector('.center-panel').style.display = (key==='inventory')?'none':'flex';
-    };
-  });
-}
+    function mapCat(it){
+      // mapeia types do backend para suas categorias originais
+      // consumable -> consumables, material -> materials, quest -> quests, default -> misc
+      if(it.type==='consumable') return 'consumables';
+      if(it.type==='material') return 'materials';
+      if(it.type==='quest') return 'quests';
+      return 'misc';
+    }
 
-/* =================== Bootstrap =================== */
-function mockItems(){
-  return [
-    {id:1,type:'consumable',name:'Poção Média',desc:'Recupera 50 HP',quantity:3,usable:true,icon:''},
-    {id:2,type:'skin',name:'Capa das Brasas',desc:'Cosmético lendário',equipable:true,equipped:false,slot:'cape',icon:''},
-    {id:3,type:'key',name:'Chave — Cofre Sombrio',desc:'Abre um cofre',usable:true,icon:''},
-    {id:4,type:'pass',name:'Passe ACDA S1',desc:'Libera temporada 1',usable:true,meta:{workId:1},icon:''},
-    {id:10,type:'anime',name:'As Cinzas do Amanhã — S1',desc:'Acessar episódios',meta:{workId:1},icon:''},
-    {id:11,type:'manga',name:'ACDA — Capítulos',desc:'Leitura vertical',meta:{workId:101},icon:''},
-    {id:12,type:'ebook',name:'ACDA — E-book',desc:'Versão digital',meta:{workId:501},icon:''}
-  ];
-}
-async function bootstrap(){
-  updateHUD(); renderAttrs(); bindFilters(); bindTabs();
+    function renderInventory(){
+      const by={consumables:[], materials:[], quests:[], misc:[]};
+      state.items.forEach(it=>{ const c=mapCat(it); if(by[c]) by[c].push(it); else by.misc.push(it); });
+      renderCategory(by.consumables,'#grid-consumables','#empty-consumables');
+      renderCategory(by.materials,'#grid-materials','#empty-materials');
+      renderCategory(by.quests,'#grid-quests','#empty-quests');
+      renderCategory(by.misc,'#grid-misc','#empty-misc');
+    }
 
-  try{
-    // Perfil opcional
-    try{ state.me = await api('/users/me'); }catch(_){}
-    // Carrega inventário
-    const items = await api('/me/inventory');
-    state.items = Array.isArray(items)? items : [];
-    state.placeholders=false;
-  }catch(e){
-    // fallback preview
-    state.items = mockItems();
-    state.placeholders=true;
-    console.warn('Inventory preview ON');
-  }
+    // ===== Modal (equipar/usar) =====
+    function openItemModal(it){
+      const wrap=document.createElement('div'); Object.assign(wrap.style,{position:'fixed',inset:0,background:'rgba(0,0,0,.6)',display:'grid',placeItems:'center',zIndex:2000});
+      wrap.innerHTML=`<div style="width:min(520px,92vw);background:rgba(15,12,24,.96);border:1px solid ${getComputedStyle(document.documentElement).getPropertyValue('--panel-border')};border-radius:16px;padding:16px">
+        <div style="display:flex;gap:12px;align-items:center">
+          <div style="width:48px;height:48px;border:1px solid var(--panel-border);border-radius:8px;background:#0f0c18;overflow:hidden">${it.icon?`<img src="${it.icon}" style="width:100%;height:100%;object-fit:cover">`:''}</div>
+          <div style="min-width:0"><div style="font-weight:700">${it.name||'Item'}</div><div style="color:#a0a0a0;font-size:.9em">${it.desc||''}</div></div>
+        </div>
+        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+          ${it.equipable? (!it.equipped? `<button class="btn" id="equip" style="padding:6px 10px;border-radius:8px;background:linear-gradient(135deg, rgba(155,89,182,.9), rgba(217,181,90,.9));color:#111;border:none;font-weight:700">Equipar</button>`:`<button class="btn" id="unequip" style="padding:6px 10px;border-radius:8px;background:#333;border:1px solid var(--panel-border);color:#eee">Desequipar</button>`):''}
+          ${it.usable? `<button class="btn" id="use" style="padding:6px 10px;border-radius:8px;background:linear-gradient(135deg, rgba(155,89,182,.9), rgba(217,181,90,.9));color:#111;border:none;font-weight:700">Usar</button>`:''}
+          <button class="btn" id="close" style="padding:6px 10px;border-radius:8px;background:#333;border:1px solid var(--panel-border);color:#eee">Fechar</button>
+        </div>
+      </div>`;
+      document.body.appendChild(wrap);
+      wrap.querySelector('#close')?.addEventListener('click',()=>wrap.remove());
+      wrap.querySelector('#equip')?.addEventListener('click',async()=>{ await equipItem(it); wrap.remove(); });
+      wrap.querySelector('#unequip')?.addEventListener('click',async()=>{ await unequipItem(it); wrap.remove(); });
+      wrap.querySelector('#use')?.addEventListener('click',async()=>{ await useItem(it); wrap.remove(); });
+    }
 
-  renderInventory();
-  renderEquipped();
-}
+    // ===== Backend actions =====
+    async function equipItem(it){ try{ await api(`/me/inventory/${it.id}/equip`,{method:'POST'}); it.equipped=true; renderInventory(); loadEquipped(); }catch(e){ console.warn(e); } }
+    async function unequipItem(it){ try{ await api(`/me/inventory/${it.id}/unequip`,{method:'POST'}); it.equipped=false; renderInventory(); loadEquipped(); }catch(e){ console.warn(e); } }
+    async function useItem(it){ try{ const r=await api(`/me/inventory/${it.id}/use`,{method:'POST'}); if(r&&r.redirect) location.href=r.redirect; if(it.quantity>0){ it.quantity--; if(it.quantity===0){ state.items=state.items.filter(x=>x.id!==it.id);} } renderInventory(); }catch(e){ console.warn(e); } }
 
-document.addEventListener('DOMContentLoaded', bootstrap);
-  </script>
-</body>
+    function loadEquipped(){
+      const box=$('#equippedList'); const cards=$('#equippedCards'); box.innerHTML=''; cards.innerHTML='';
+      const eq=state.items.filter(x=>x.equipped);
+      if(!eq.length){ box.innerHTML='<div class="empty">Nada equipado.</div>'; return; }
+      eq.forEach(it=>{ box.appendChild(slotEl(it)); const c=document.createElement('div'); c.textContent=it.name||'Item'; c.style.color='#a0a0a0'; cards.appendChild(c); });
+    }
+
+    // ===== Bootstrap =====
+    function mock(){ return [
+      {id:1,type:'consumable',name:'Poção Média',desc:'Recupera 50 HP',quantity:3,usable:true},
+      {id:2,type:'material',name:'Mineral Sombrio',quantity:12},
+      {id:3,type:'quest',name:'Selo Antigo'},
+      {id:4,type:'misc',name:'Moeda Brilhante',quantity:5}
+    ]; }
+    async function boot(){
+      // carrega inventário
+      try{ const rows=await api('/me/inventory'); state.items=Array.isArray(rows)? rows:[]; }
+      catch(e){ console.warn('preview inventory'); state.items=mock(); }
+      renderInventory(); loadEquipped();
+      // defaults
+      showTab('overview'); applyFilter('all');
+    }
+
+    document.addEventListener('DOMContentLoaded', boot);
+  </script></body>
 </html>
