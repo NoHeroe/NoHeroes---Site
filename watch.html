@@ -1,446 +1,288 @@
-<!DOCTYPE html><html lang="pt-BR">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>NoHeroes • Biblioteca & Player — ACDA</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            nh: { bg: '#07060a', card: 'rgba(255,255,255,0.06)', glass: 'rgba(255,255,255,0.08)', border: 'rgba(255,255,255,0.12)'}
-          },
-          boxShadow: { glow: '0 0 40px rgba(143,79,255,0.25)', soft: '0 10px 30px rgba(0,0,0,0.3)'},
-          fontFamily: { display: ['Cinzel Decorative','serif'], sans: ['Inter','system-ui','-apple-system','Segoe UI','Roboto','sans-serif']}
-        }
-      }
-    }
-  </script>
-  <style>
-    .grad-nh { background: linear-gradient(135deg,#8f4fff 0%,#d9b55a 100%); }
-    .text-grad { background: linear-gradient(135deg,#b891ff 0%, #f5e3a5 100%); -webkit-background-clip:text; background-clip:text; color: transparent; }
-    .ring-progress { position: relative; width: 28px; height: 28px; }
-    .ring-progress svg { transform: rotate(-90deg); }
-    .ring-progress circle.track { stroke: rgba(255,255,255,.15); }
-    .ring-progress circle.ind { stroke: #8f4fff; transition: stroke-dashoffset .3s ease; }
-    ::-webkit-scrollbar{height:10px;width:10px}::-webkit-scrollbar-thumb{background:#2b2440;border-radius:9999px}::-webkit-scrollbar-track{background:#0f0d16}
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>NoHeroes • Player de Animes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: { extend: {
+      colors: { nh: { bg:'#07060a', card:'rgba(255,255,255,0.06)', glass:'rgba(255,255,255,0.08)', border:'rgba(255,255,255,0.12)'} },
+      boxShadow:{ glow:'0 0 40px rgba(143,79,255,0.25)', soft:'0 10px 30px rgba(0,0,0,0.3)'},
+      fontFamily:{ display:['Cinzel Decorative','serif'], sans:['Inter','system-ui','-apple-system','Segoe UI','Roboto','sans-serif']}
+    } }
+  }
+</script>
+<style>
+  .grad-nh{background:linear-gradient(135deg,#8f4fff 0%,#d9b55a 100%);}
+  .text-grad{background:linear-gradient(135deg,#b891ff 0%, #f5e3a5 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .ring-progress{position:relative;width:28px;height:28px} .ring-progress svg{transform:rotate(-90deg)}
+  .ring-progress circle.track{stroke:rgba(255,255,255,.15)} .ring-progress circle.ind{stroke:#8f4fff;transition:stroke-dashoffset .3s ease}
+  ::-webkit-scrollbar{height:10px;width:10px}::-webkit-scrollbar-thumb{background:#2b2440;border-radius:9999px}::-webkit-scrollbar-track{background:#0f0d16}
+</style>
 </head>
-<body class="min-h-screen bg-nh bg-[#07060a] text-white font-sans">
-  <!-- BG brasas roxas -->
-  <div class="fixed inset-0 -z-10 pointer-events-none">
-    <canvas id="brasasCanvas" class="w-full h-full opacity-[0.15]"></canvas>
-    <div class="absolute inset-0 grad-nh opacity-[0.06] mix-blend-screen"></div>
-  </div>  <!-- Header fixo -->  <header class="fixed top-0 inset-x-0 z-30 border-b border-nh-border/30 bg-black/50 backdrop-blur-xl">
-    <div class="mx-auto max-w-7xl px-4 py-3 flex items-center gap-4">
+<body class="min-h-screen bg-[#07060a] text-white font-sans">
+  <header class="w-full border-b border-nh-border/30 bg-black/40 backdrop-blur-xl">
+    <div class="mx-auto max-w-7xl px-4 py-4 flex items-center gap-4">
       <div class="h-8 w-8 rounded-lg grad-nh"></div>
-      <span class="font-display text-xl tracking-wide text-grad">NoHeroes</span>
-      <div class="ml-4 flex-1 max-w-xl">
+      <h1 class="text-lg md:text-2xl font-display tracking-wide text-grad">NoHeroes • Player</h1>
+      <div class="ml-6 flex-1 max-w-xl">
         <div class="relative">
-          <input id="globalSearch" placeholder="Buscar obras, temporadas, episódios…" class="w-full rounded-xl bg-white/5 border border-nh-border/30 px-4 py-2 outline-none focus:border-white/50" />
+          <input id="globalSearch" placeholder="Buscar obras/temporadas…" class="w-full rounded-xl bg-white/5 border border-nh-border/30 px-4 py-2 outline-none focus:border-white/50"/>
           <span class="absolute right-3 top-1/2 -translate-y-1/2 text-white/60">⌕</span>
         </div>
       </div>
-      <div class="ml-auto flex items-center gap-2 text-sm">
-        <button id="filterBtn" class="px-3 py-2 rounded-lg bg-white/5 border border-nh-border/30 hover:bg-white/10">Filtros</button>
-        <span id="userStatus" class="px-3 py-2 rounded-lg bg-white/5 border border-nh-border/30">Visitante</span>
-        <button id="logoutBtn" class="hidden px-3 py-2 rounded-lg bg-white/5 border border-nh-border/30 hover:bg-white/10">Sair</button>
-      </div>
+      <span id="userStatus" class="ml-auto px-3 py-1 rounded-full bg-white/5 border border-nh-border/30">Visitante</span>
+      <button id="logoutBtn" class="hidden px-3 py-1 rounded-lg bg-white/5 border border-nh-border/30 hover:bg-white/10">Sair</button>
     </div>
-  </header>  <main class="mx-auto max-w-7xl px-4 pt-24 pb-24 grid gap-8">
-    <!-- SEÇÃO 1: BIBLIOTECA (Accordion) -->
-    <section id="librarySection" class="rounded-2xl bg-nh-card backdrop-blur-xl border border-nh-border/30 shadow-soft overflow-hidden">
+  </header>
+
+  <main class="mx-auto max-w-7xl px-4 pb-20 grid gap-6">
+    <!-- Biblioteca: UMA LINHA com tabs -->
+    <section class="mt-6 rounded-2xl bg-nh-card backdrop-blur-xl border border-nh-border/30 shadow-soft overflow-hidden">
       <header class="flex items-center justify-between px-4 py-3">
         <h2 class="font-display text-xl">Biblioteca</h2>
-        <button id="toggleLibrary" class="px-3 py-1.5 rounded-lg bg-white/5 border border-nh-border/30 hover:bg-white/10">Minimizar</button>
+        <div class="flex gap-2">
+          <button id="tabContinue" class="px-3 py-1.5 rounded-lg bg-white/5 border border-nh-border/30">Continuar</button>
+          <button id="tabPopular"  class="px-3 py-1.5 rounded-lg bg-white/5 border border-nh-border/30">Populares</button>
+          <button id="tabAll"      class="px-3 py-1.5 rounded-lg grad-nh text-black font-semibold">Todas</button>
+        </div>
       </header>
-      <div id="libraryBody" class="grid gap-6 p-4">
-        <!-- Carrossel: Continuar assistindo -->
-        <div>
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="text-white/80">Continuar assistindo</h3>
-          </div>
-          <div id="rowContinue" class="flex gap-4 overflow-x-auto pb-2"></div>
-        </div>
-        <!-- Carrossel: Populares (placeholder ordenado por viewCount) -->
-        <div>
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="text-white/80">Populares</h3>
-          </div>
-          <div id="rowPopular" class="flex gap-4 overflow-x-auto pb-2"></div>
-        </div>
-        <!-- Carrossel: Todas as obras -->
-        <div>
-          <div class="flex items-center justify-between mb-2">
-            <h3 class="text-white/80">Todas as obras</h3>
-          </div>
-          <div id="rowAll" class="flex gap-4 overflow-x-auto pb-2"></div>
-        </div>
+      <div class="p-4">
+        <div id="rowLib" class="flex gap-4 overflow-x-auto pb-2 cursor-grab select-none"></div>
       </div>
-    </section><!-- SEÇÃO 2: PLAYER -->
-<section id="playerSection" class="rounded-2xl bg-nh-card backdrop-blur-xl border border-nh-border/30 shadow-soft overflow-hidden">
-  <header class="flex items-center justify-between px-4 py-3 border-b border-white/5">
-    <div class="min-w-0">
-      <div id="workTitle" class="truncate font-display text-xl text-grad">Selecione uma obra</div>
-      <div id="episodeBreadcrumb" class="text-xs text-white/60 mt-0.5">—</div>
-    </div>
-    <div class="flex items-center gap-2">
-      <span id="gateBadge" class="hidden text-xs px-2 py-1 rounded-full border border-nh-border/30">Bloqueado</span>
-      <button id="buyEpisodeLink" class="hidden px-3 py-1.5 rounded-xl grad-nh text-black font-semibold">Comprar episódio</button>
-      <button id="buySeasonLink" class="hidden px-3 py-1.5 rounded-xl bg-white/10 border border-nh-border/30">Passe da temporada</button>
-    </div>
-  </header>
+    </section>
 
-  <!-- Player area -->
-  <div class="relative">
-    <div class="aspect-video bg-black" id="playerContainer">
-      <video id="video" class="w-full h-full" playsinline></video>
-    </div>
-    <!-- Skip intro/outro -->
-    <div id="skipIntro" class="hidden absolute bottom-24 right-4 px-3 py-2 rounded-xl bg-black/70 border border-white/10">Pular abertura</div>
-    <div id="skipOutro" class="hidden absolute bottom-24 right-4 mr-36 px-3 py-2 rounded-xl bg-black/70 border border-white/10">Pular encerramento</div>
-    <!-- Paywall overlay -->
-    <div id="paywall" class="hidden absolute inset-0 grid place-items-center bg-black/70 backdrop-blur-md">
-      <div class="p-6 rounded-2xl border border-nh-border/40 bg-nh-glass max-w-md text-center shadow-glow">
-        <h3 class="font-display text-2xl mb-2">Conteúdo bloqueado</h3>
-        <p class="text-white/80 text-sm">Adquira o episódio ou o passe da temporada para assistir.</p>
-        <div class="mt-5 flex flex-col sm:flex-row gap-3 justify-center">
-          <a id="paywallBuyEp" class="px-4 py-2 rounded-xl grad-nh text-black font-semibold" target="_blank">Comprar episódio</a>
-          <a id="paywallBuySeason" class="px-4 py-2 rounded-xl bg-white/10 border border-nh-border/30" target="_blank">Passe da temporada</a>
+    <!-- Player -->
+    <section class="grid gap-4 rounded-2xl bg-nh-card backdrop-blur-xl border border-nh-border/30 overflow-hidden">
+      <header class="flex items-center justify-between px-4 py-3 border-b border-white/5">
+        <div class="min-w-0">
+          <div id="workTitle" class="truncate font-display text-xl text-grad">Selecione uma obra</div>
+          <div id="episodeBreadcrumb" class="text-xs text-white/60 mt-0.5">—</div>
         </div>
-      </div>
-    </div>
-  </div>
+        <div class="flex items-center gap-2">
+          <span id="gateBadge" class="hidden text-xs px-2 py-1 rounded-full border border-nh-border/30">Bloqueado</span>
+          <button id="buyEpisodeLink" class="hidden px-3 py-1.5 rounded-xl grad-nh text-black font-semibold">Comprar episódio</button>
+          <button id="buySeasonLink"  class="hidden px-3 py-1.5 rounded-xl bg-white/10 border border-nh-border/30">Passe da temporada</button>
+        </div>
+      </header>
 
-  <!-- Control bar (baixo do player) -->
-  <div class="flex flex-wrap items-center gap-2 px-4 py-3 border-t border-white/5">
-    <div class="flex items-center gap-2">
-      <button id="btnPrev" class="px-3 py-1.5 rounded-lg bg-white/5 border border-nh-border/30 hover:bg-white/10">◀ Anterior</button>
-      <button id="btnEpisodes" class="px-3 py-1.5 rounded-lg grad-nh text-black font-semibold">Episódios</button>
-      <button id="btnNext" class="px-3 py-1.5 rounded-lg bg-white/5 border border-nh-border/30 hover:bg-white/10">Próximo ▶</button>
-    </div>
-    <div class="ml-auto flex items-center gap-2 text-sm">
-      <select id="qualitySel" class="px-2 py-1 rounded-lg bg-white/5 border border-nh-border/30"></select>
-      <select id="speedSel" class="px-2 py-1 rounded-lg bg-white/5 border border-nh-border/30">
-        <option>0.75x</option><option>1x</option><option>1.25x</option><option>1.5x</option><option>1.75x</option><option>2x</option>
-      </select>
-      <button id="ccBtn" class="px-3 py-1.5 rounded-lg bg-white/5 border border-nh-border/30">Legendas</button>
-      <button id="markWatchedBtn" class="px-3 py-1.5 rounded-lg bg-white/5 border border-nh-border/30">Marcar visto</button>
-      <button id="fsBtn" class="px-3 py-1.5 rounded-lg bg-white/5 border border-nh-border/30">Tela cheia</button>
-    </div>
-  </div>
-</section>
-
-<!-- SEÇÃO 3: EPISÓDIOS (Accordion) -->
-<section id="episodesSection" class="rounded-2xl bg-nh-card backdrop-blur-xl border border-nh-border/30 shadow-soft overflow-hidden">
-  <header class="flex items-center justify-between px-4 py-3">
-    <div class="flex items-center gap-2">
-      <h2 class="font-display text-xl">Episódios</h2>
-      <span id="seasonBadge" class="text-xs px-2 py-1 rounded-full bg-white/5 border border-nh-border/30">Temporada 1</span>
-    </div>
-    <div class="flex items-center gap-2 text-sm">
-      <label class="flex items-center gap-2"><input id="onlyUnlocked" type="checkbox" class="accent-[#8f4fff]"> Liberados</label>
-      <label class="flex items-center gap-2"><input id="onlyUnwatched" type="checkbox" class="accent-[#8f4fff]"> Não vistos</label>
-      <button id="toggleEpisodes" class="px-3 py-1.5 rounded-lg bg-white/5 border border-nh-border/30 hover:bg-white/10">Minimizar</button>
-    </div>
-  </header>
-  <div id="episodesBody" class="p-2">
-    <div id="episodeList" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
-  </div>
-</section>
-
-  </main>  <!-- Libs -->  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.7/dist/hls.min.js"></script>  <script>
-    // ===================== CONFIG =====================
-    const API_BASE = 'https://api.noheroes.com.br';
-
-    function getJwt(){
-      const raw = (localStorage.getItem('token')||'').trim() || (localStorage.getItem('NoHeroes_token')||'').trim();
-      return raw.replace(/^Bearer\s+/i,'');
-    }
-
-    // ===================== STATE =====================
-    const state = {
-      me: null,
-      library: [], // obras/temporadas
-      currentWork: null, // obra selecionada
-      episodes: [],
-      purchases: [],
-      watched: new Map(), // episodeId -> {progress, watchedAt, timeSec}
-      currentEpisode: null,
-      hls: null,
-      tracks: [],
-    };
-
-    // ===================== UTIL =====================
-    const $ = (q)=>document.querySelector(q);
-    const $$ = (q)=>Array.from(document.querySelectorAll(q));
-    const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
-    const fmt=(s)=> s==null? '—' : s;
-    function fmtDur(sec){ if(!sec) return '—'; const m=Math.floor(sec/60), s=(sec%60|0).toString().padStart(2,'0'); return `${m}:${s}`; }
-
-    function glassLocked(locked){return locked? 'opacity-60' : ''}
-
-    function episodeLinks(ep){
-      const buyEp = $('#buyEpisodeLink'); const buySe = $('#buySeasonLink');
-      const pBuyEp = $('#paywallBuyEp'); const pBuySe = $('#paywallBuySeason');
-      const urlEp = ep?.productId? `https://noheroes.com.br/loja?produto=${ep.productId}`: null;
-      const urlSe = ep?.seasonProductId? `https://noheroes.com.br/loja?produto=${ep.seasonProductId}`: null;
-      [buyEp,pBuyEp].forEach(a=>{ if(!a) return; if(urlEp){ a.href=urlEp; a.classList.remove('hidden'); } else { a.classList.add('hidden'); a.removeAttribute('href'); }});
-      [buySe,pBuySe].forEach(a=>{ if(!a) return; if(urlSe){ a.href=urlSe; a.classList.remove('hidden'); } else { a.classList.add('hidden'); a.removeAttribute('href'); }});
-    }
-
-    // ===================== API WRAPPER =====================
-    async function api(path, opts={}){
-      const token = getJwt();
-      const headers = { 'Content-Type':'application/json', ...(token? {Authorization:`Bearer ${token}`}:{}) };
-      const res = await fetch(`${API_BASE}${path}`, { ...opts, headers });
-      if(res.status===401) throw new Error('unauth');
-      if(!res.ok) throw new Error(`HTTP ${res.status}`);
-      return res.json();
-    }
-
-    // ===================== ACCESS =====================
-    function hasAccess(ep){
-      if(!ep) return false;
-      const owned = new Set(state.purchases.map(p=>p.shopItemId));
-      return owned.has(ep.seasonProductId) || (ep.productId && owned.has(ep.productId));
-    }
-
-    // ===================== LIBRARY RENDER =====================
-    function renderLibrary(){
-      const mkCard = (work)=>{
-        const card = document.createElement('button');
-        card.className = 'group min-w-[180px] w-[180px] shrink-0 rounded-2xl overflow-hidden border border-nh-border/30 bg-white/5 hover:bg-white/10 transition shadow-soft';
-        card.innerHTML = `
-          <div class='aspect-[2/3] bg-black/30 relative'>
-            <img loading='lazy' src='${work.thumb||''}' alt='' class='absolute inset-0 w-full h-full object-cover opacity-90 group-hover:opacity-100'>
-            <div class='absolute bottom-2 left-2 px-2 py-0.5 text-xs rounded-full bg-black/60 border border-white/10'>${work.seasonLabel||'S1'}</div>
-          </div>
-          <div class='p-2 text-left'>
-            <div class='truncate font-semibold'>${work.title}</div>
-            <div class='flex items-center gap-2 mt-1'>
-              <div class='ring-progress'>
-                <svg width='28' height='28'>
-                  <circle class='track' cx='14' cy='14' r='12' stroke-width='3' fill='none'></circle>
-                  <circle class='ind' cx='14' cy='14' r='12' stroke-width='3' fill='none' stroke-dasharray='${2*Math.PI*12}' stroke-dashoffset='${(1-(work.progress||0))*2*Math.PI*12}'></circle>
-                </svg>
-              </div>
-              <span class='text-xs text-white/60'>${Math.round((work.progress||0)*100)}%</span>
+      <div class="relative">
+        <div class="aspect-video bg-black" id="playerContainer">
+          <video id="video" class="w-full h-full" playsinline></video>
+        </div>
+        <div id="skipIntro" class="hidden absolute bottom-24 right-4 px-3 py-2 rounded-xl bg-black/70 border border-white/10">Pular abertura</div>
+        <div id="skipOutro" class="hidden absolute bottom-24 right-4 mr-36 px-3 py-2 rounded-xl bg-black/70 border border-white/10">Pular encerramento</div>
+        <div id="paywall" class="hidden absolute inset-0 grid place-items-center bg-black/70 backdrop-blur-md">
+          <div class="p-6 rounded-2xl border border-nh-border/40 bg-nh-glass max-w-md text-center shadow-glow">
+            <h3 class="font-display text-2xl mb-2">Conteúdo bloqueado</h3>
+            <p class="text-white/80 text-sm">Adquira o episódio ou o passe da temporada para assistir.</p>
+            <div class="mt-5 flex flex-col sm:flex-row gap-3 justify-center">
+              <a id="paywallBuyEp" class="px-4 py-2 rounded-xl grad-nh text-black font-semibold" target="_blank">Comprar episódio</a>
+              <a id="paywallBuySeason" class="px-4 py-2 rounded-xl bg-white/10 border border-nh-border/30" target="_blank">Passe da temporada</a>
             </div>
-          </div>`;
-        card.onclick=()=> selectWork(work.id);
-        return card;
-      }
-      const rowContinue=$('#rowContinue'); rowContinue.innerHTML='';
-      const cont = state.library.filter(w=> (w.progress||0) > 0);
-      cont.forEach(w=> rowContinue.appendChild(mkCard(w)));
+          </div>
+        </div>
+      </div>
 
-      const rowPopular=$('#rowPopular'); rowPopular.innerHTML='';
-      const popular=[...state.library].sort((a,b)=>(b.viewCount||0)-(a.viewCount||0)).slice(0,12);
-      popular.forEach(w=> rowPopular.appendChild(mkCard(w)));
+      <div class="flex flex-wrap items-center gap-2 px-4 py-3 border-t border-white/5">
+        <div class="flex items-center gap-2">
+          <button id="btnPrev" class="px-3 py-1.5 rounded-lg bg-white/5 border border-nh-border/30 hover:bg-white/10">◀ Anterior</button>
+          <button id="btnEpisodes" class="px-3 py-1.5 rounded-lg grad-nh text-black font-semibold">Episódios</button>
+          <button id="btnNext" class="px-3 py-1.5 rounded-lg bg-white/5 border border-nh-border/30 hover:bg-white/10">Próximo ▶</button>
+        </div>
+        <div class="ml-auto flex items-center gap-2 text-sm">
+          <select id="qualitySel" class="px-2 py-1 rounded-lg bg-white/5 border border-nh-border/30"></select>
+          <select id="speedSel" class="px-2 py-1 rounded-lg bg-white/5 border border-nh-border/30">
+            <option>0.75x</option><option>1x</option><option>1.25x</option><option>1.5x</option><option>1.75x</option><option>2x</option>
+          </select>
+          <button id="ccBtn" class="px-3 py-1.5 rounded-lg bg-white/5 border border-nh-border/30">Legendas</button>
+          <button id="markWatchedBtn" class="px-3 py-1.5 rounded-lg bg-white/5 border border-nh-border/30">Marcar visto</button>
+          <button id="fsBtn" class="px-3 py-1.5 rounded-lg bg-white/5 border border-nh-border/30">Tela cheia</button>
+        </div>
+      </div>
+    </section>
 
-      const rowAll=$('#rowAll'); rowAll.innerHTML='';
-      state.library.forEach(w=> rowAll.appendChild(mkCard(w)));
-    }
+    <!-- Episódios -->
+    <section class="rounded-2xl bg-nh-card backdrop-blur-xl border border-nh-border/30 shadow-soft overflow-hidden">
+      <header class="flex items-center justify-between px-4 py-3">
+        <div class="flex items-center gap-2">
+          <h2 class="font-display text-xl">Episódios</h2>
+          <span id="seasonBadge" class="text-xs px-2 py-1 rounded-full bg-white/5 border border-nh-border/30">Temporada 1</span>
+        </div>
+        <div class="flex items-center gap-2 text-sm">
+          <label class="flex items-center gap-2"><input id="onlyUnlocked" type="checkbox" class="accent-[#8f4fff]"> Liberados</label>
+          <label class="flex items-center gap-2"><input id="onlyUnwatched" type="checkbox" class="accent-[#8f4fff]"> Não vistos</label>
+        </div>
+      </header>
+      <div class="p-2">
+        <div id="episodeList" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+      </div>
+    </section>
+  </main>
 
-    // ===================== EPISODES RENDER =====================
-    function renderEpisodes(){
-      const onlyU = document.getElementById('onlyUnlocked').checked; const onlyUnw = document.getElementById('onlyUnwatched').checked;
-      const el = document.getElementById('episodeList'); el.innerHTML='';
-      state.episodes
-        .filter(ep=> !onlyU || hasAccess(ep))
-        .filter(ep=> !onlyUnw || !state.watched.get(ep.id)?.watchedAt)
-        .sort((a,b)=> a.number-b.number)
-        .forEach(ep=>{
-          const locked = !hasAccess(ep);
-          const w = state.watched.get(ep.id);
-          const watched = !!w?.watchedAt;
-          const progress = w? (w.progress||0) : 0;
-          const card = document.createElement('button');
-          card.className = `group rounded-xl p-3 text-left border border-nh-border/30 bg-white/5 hover:bg-white/10 ${glassLocked(locked)}`;
-          const titleClass = watched? 'text-white/50 line-through' : 'text-grad font-semibold';
-          card.innerHTML = `
-            <div class='flex items-center gap-3'>
-              <div class='h-10 w-10 grid place-items-center rounded-lg bg-black/40 border border-white/10'>E${String(ep.number).padStart(2,'0')}</div>
-              <div class='min-w-0 flex-1'>
-                <div class='truncate ${titleClass}'>${ep.title}</div>
-                <div class='text-xs text-white/60'>${fmtDur(ep.durationSec)}</div>
-              </div>
-              <div class='ring-progress'>
-                <svg width='28' height='28'>
-                  <circle class='track' cx='14' cy='14' r='12' stroke-width='3' fill='none'></circle>
-                  <circle class='ind' cx='14' cy='14' r='12' stroke-width='3' fill='none' stroke-dasharray='${2*Math.PI*12}' stroke-dashoffset='${(1-progress)*2*Math.PI*12}'></circle>
-                </svg>
-              </div>
-              <div title='${locked?"Bloqueado":"Liberado"}'>${locked? '🔒' : '▶️'}</div>
-            </div>`;
-          card.onclick=()=> loadEpisode(ep);
-          el.appendChild(card);
-        });
-    }
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.7/dist/hls.min.js"></script>
+<script>
+const API_BASE='https://api.noheroes.com.br';
+const $=(q)=>document.querySelector(q); const $$=(q)=>Array.from(document.querySelectorAll(q));
+const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
+function getJwt(){ const raw=(localStorage.getItem('token')||'').trim()||(localStorage.getItem('NoHeroes_token')||'').trim(); return raw.replace(/^Bearer\\s+/i,''); }
 
-    function updatePaywall(ep){
-      const gate=document.getElementById('paywall'); const badge=document.getElementById('gateBadge');
-      if(hasAccess(ep)){ gate.classList.add('hidden'); badge.classList.add('hidden'); }
-      else { gate.classList.remove('hidden'); badge.classList.remove('hidden'); }
-      episodeLinks(ep);
-    }
+const state={ me:null, library:[], libraryTab:'all', currentWork:null, episodes:[], purchases:[], watched:new Map(), currentEpisode:null, hls:null };
 
-    function updateBreadcrumb(){
-      const w = state.currentWork; const ep=state.currentEpisode;
-      document.getElementById('workTitle').textContent = w? w.title : 'Selecione uma obra';
-      document.getElementById('episodeBreadcrumb').textContent = (w&&ep)? `${w.title} • Episódio ${ep.number} — ${ep.title}` : '—';
-    }
+async function api(path,opts={}){ const token=getJwt(); const headers={'Content-Type':'application/json',...(token?{Authorization:`Bearer ${token}`}:{})}; const r=await fetch(`${API_BASE}${path}`,{...opts,headers}); if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); }
+function hasAccess(ep){ if(!ep) return false; const owned=new Set(state.purchases.map(p=>p.shopItemId)); return owned.has(ep.seasonProductId)||(ep.productId&&owned.has(ep.productId)); }
 
-    // ===================== PLAYER =====================
-    function loadVideo(url){
-      const v=document.getElementById('video');
-      if(state.hls){ state.hls.destroy(); state.hls=null; }
-      v.src='';
-      if(Hls.isSupported()){
-        const hls = state.hls = new Hls({ maxBufferLength:30 });
-        hls.loadSource(url);
-        hls.attachMedia(v);
-        hls.on(Hls.Events.MANIFEST_PARSED, function(_,data){
-          const sel=document.getElementById('qualitySel'); sel.innerHTML='';
-          const levels=data.levels||[];
-          const optAuto=document.createElement('option'); optAuto.value='auto'; optAuto.textContent='Auto'; sel.appendChild(optAuto);
-          levels.forEach(function(lv,i){ const o=document.createElement('option'); o.value=i; o.textContent = (lv.height? (lv.height+'p'):'Qualidade'); sel.appendChild(o); });
-          sel.onchange=function(){ if(sel.value==='auto'){ hls.currentLevel=-1; } else { hls.currentLevel=Number(sel.value); }}
-        });
-      } else {
-        v.src = url;
-      }
-    }
+function mkCard(work){
+  const el=document.createElement('button');
+  el.className='group min-w-[180px] w-[180px] shrink-0 rounded-2xl overflow-hidden border border-nh-border/30 bg-white/5 hover:bg-white/10 transition';
+  el.innerHTML=`<div class='aspect-[2/3] bg-black/30 relative'>
+      ${work.thumb?`<img src='${work.thumb}' class='absolute inset-0 w-full h-full object-cover opacity-90 group-hover:opacity-100'>`:`<div class='absolute inset-0 grid place-items-center text-white/40'>Sem capa</div>`}
+      <div class='absolute bottom-2 left-2 px-2 py-0.5 text-xs rounded-full bg-black/60 border border-white/10'>${work.seasonLabel||'S1'}</div>
+    </div>
+    <div class='p-2 text-left'>
+      <div class='truncate font-semibold'>${work.title}</div>
+      <div class='flex items-center gap-2 mt-1'>
+        <div class='ring-progress'>
+          <svg width='28' height='28'><circle class='track' cx='14' cy='14' r='12' stroke-width='3' fill='none'></circle>
+          <circle class='ind' cx='14' cy='14' r='12' stroke-width='3' fill='none' stroke-dasharray='${2*Math.PI*12}' stroke-dashoffset='${(1-(work.progress||0))*2*Math.PI*12}'></circle></svg>
+        </div>
+        <span class='text-xs text-white/60'>${Math.round((work.progress||0)*100)}%</span>
+      </div>
+    </div>`;
+  el.onclick=()=>selectWork(work.id); return el;
+}
 
-    function bindPlayerUX(){
-      const v=document.getElementById('video');
-      document.getElementById('speedSel').onchange = function(){ v.playbackRate = parseFloat(document.getElementById('speedSel').value.replace('x','')); };
-      document.getElementById('fsBtn').onclick = function(){ const c=document.getElementById('playerContainer'); if(c.requestFullscreen) c.requestFullscreen(); };
-      document.getElementById('ccBtn').onclick = function(){ const t=Array.from(v.textTracks)[0]; if(!t) return; t.mode = t.mode==='showing'? 'disabled':'showing'; };
-      document.addEventListener('keydown', function(e){
-        if(e.target && ['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName)) return;
-        if(e.code==='Space'){ e.preventDefault(); if(v.paused) v.play(); else v.pause(); }
-        if(e.code==='ArrowLeft') v.currentTime = Math.max(0, v.currentTime-10);
-        if(e.code==='ArrowRight') v.currentTime = Math.min(v.duration||Infinity, v.currentTime+10);
-        if(e.key==='n' || e.key==='N') playNext();
-        if(e.key==='p' || e.key==='P') playPrev();
-      });
-      v.addEventListener('timeupdate', function(){
-        if(!state.currentEpisode) return;
-        const t = v.currentTime, d=v.duration||0; const p = d? (t/d):0;
-        if(Math.floor(t)%15===0) saveProgress(state.currentEpisode.id, p, p>=0.9, Math.floor(t));
-        const ep = state.currentEpisode;
-        if(ep && ep.introStart!=null && ep.introEnd!=null){ const show = t>=ep.introStart && t<=ep.introEnd; document.getElementById('skipIntro').classList.toggle('hidden', !show); }
-        if(ep && ep.outroStart!=null && ep.outroEnd!=null){ const show = t>=ep.outroStart && t<=ep.outroEnd; document.getElementById('skipOutro').classList.toggle('hidden', !show); }
-      });
-      v.addEventListener('ended', function(){ if(state.currentEpisode) saveProgress(state.currentEpisode.id, 1, true, Math.floor(v.duration||0)); setTimeout(playNext, 1200); });
-      document.getElementById('skipIntro').onclick = function(){ const ep=state.currentEpisode; if(!ep) return; document.getElementById('video').currentTime = (ep.introEnd||0); };
-      document.getElementById('skipOutro').onclick = function(){ const ep=state.currentEpisode; if(!ep) return; document.getElementById('video').currentTime = (ep.outroEnd||document.getElementById('video').duration||0); };
-      document.getElementById('btnNext').onclick=playNext; document.getElementById('btnPrev').onclick=playPrev; document.getElementById('btnEpisodes').onclick=toggleEpisodes;
-      document.getElementById('markWatchedBtn').onclick=function(){ if(state.currentEpisode) saveProgress(state.currentEpisode.id, 1, true, Math.floor(document.getElementById('video').currentTime||0)); };
-    }
+function renderLibrary(){
+  const row=$('#rowLib'); row.innerHTML='';
+  let list=state.library;
+  if(state.libraryTab==='continue') list=state.library.filter(w=>(w.progress||0)>0);
+  if(state.libraryTab==='popular') list=[...state.library].sort((a,b)=>(b.viewCount||0)-(a.viewCount||0));
+  if(!list.length){ for(let i=0;i<8;i++){ const ph=document.createElement('div'); ph.className='min-w-[180px] w-[180px] h-[270px] rounded-2xl border border-white/10 bg-white/[0.05]'; row.appendChild(ph);} return; }
+  list.forEach(w=>row.appendChild(mkCard(w)));
+}
 
-    async function loadEpisode(ep){
-      state.currentEpisode = ep;
-      updatePaywall(ep); updateBreadcrumb();
-      if(!hasAccess(ep)) return;
-      const resp = await api(`/stream/${ep.id}`); // {url, tracks:[{kind,srclang,label,src}]}
-      episodeLinks(ep);
-      const v=document.getElementById('video');
-      while(v.firstChild) v.removeChild(v.firstChild);
-      (resp.tracks||[]).forEach(function(tr){ const t=document.createElement('track'); t.kind=tr.kind||'subtitles'; t.srclang=tr.srclang||'pt-BR'; t.label=tr.label||'PT-BR'; t.src=tr.src; v.appendChild(t); });
-      loadVideo(resp.url);
-      const w = state.watched.get(ep.id); if(w && w.timeSec){ v.addEventListener('loadedmetadata', function onmd(){ v.removeEventListener('loadedmetadata', onmd); if(v.duration && w.timeSec < v.duration-2) v.currentTime = w.timeSec; }); }
-      renderEpisodes();
-    }
+function renderEpisodes(){
+  const el=$('#episodeList'); el.innerHTML='';
+  const onlyU=$('#onlyUnlocked').checked, onlyUnw=$('#onlyUnwatched').checked;
+  state.episodes.filter(ep=>!onlyU||hasAccess(ep)).filter(ep=>!onlyUnw||!state.watched.get(ep.id)?.watchedAt).sort((a,b)=>a.number-b.number).forEach(ep=>{
+    const locked=!hasAccess(ep); const w=state.watched.get(ep.id); const watched=!!w?.watchedAt; const progress=w?(w.progress||0):0;
+    const card=document.createElement('button');
+    card.className=`group rounded-xl p-3 text-left border border-nh-border/30 bg-white/5 hover:bg-white/10 ${locked?'opacity-60':''}`;
+    card.innerHTML=`<div class='flex items-center gap-3'>
+        <div class='h-10 w-10 grid place-items-center rounded-lg bg-black/40 border border-white/10'>E${String(ep.number).padStart(2,'0')}</div>
+        <div class='min-w-0 flex-1'>
+          <div class='truncate ${watched?'text-white/50 line-through':'text-grad font-semibold'}'>${ep.title}</div>
+          <div class='text-xs text-white/60'>${ep.durationSec?Math.floor(ep.durationSec/60)+' min':'—'}</div>
+        </div>
+        <div class='ring-progress'><svg width='28' height='28'><circle class='track' cx='14' cy='14' r='12' stroke-width='3' fill='none'></circle><circle class='ind' cx='14' cy='14' r='12' stroke-width='3' fill='none' stroke-dasharray='${2*Math.PI*12}' stroke-dashoffset='${(1-progress)*2*Math.PI*12}'></circle></svg></div>
+        <div>${locked?'🔒':'▶️'}</div></div>`;
+    card.onclick=()=>loadEpisode(ep); el.appendChild(card);
+  });
+}
 
-    function playNext(){
-      if(!state.currentEpisode) return; const i = state.episodes.findIndex(e=>e.id===state.currentEpisode.id);
-      const nxt = state.episodes[i+1]; if(nxt) loadEpisode(nxt);
-    }
-    function playPrev(){
-      if(!state.currentEpisode) return; const i = state.episodes.findIndex(e=>e.id===state.currentEpisode.id);
-      const prv = state.episodes[i-1]; if(prv) loadEpisode(prv);
-    }
+function episodeLinks(ep){
+  const buyEp=$('#buyEpisodeLink'), buySe=$('#buySeasonLink'); const pBuyEp=$('#paywallBuyEp'), pBuySe=$('#paywallBuySeason');
+  const urlEp=ep?.productId?`https://noheroes.com.br/loja?produto=${ep.productId}`:null;
+  const urlSe=ep?.seasonProductId?`https://noheroes.com.br/loja?produto=${ep.seasonProductId}`:null;
+  [buyEp,pBuyEp].forEach(a=>{ if(!a)return; if(urlEp){a.href=urlEp;a.classList.remove('hidden');}else{a.classList.add('hidden');a.removeAttribute('href');}});
+  [buySe,pBuySe].forEach(a=>{ if(!a)return; if(urlSe){a.href=urlSe;a.classList.remove('hidden');}else{a.classList.add('hidden');a.removeAttribute('href');}});
+}
 
-    // ===================== PROGRESS =====================
-    async function saveProgress(episodeId, progress01, markWatched, timeSec){
-      try{
-        await api(`/me/episodes/${episodeId}/progress`, { method:'POST', body: JSON.stringify({ progress: clamp(progress01,0,1), watched: !!markWatched, timeSec: timeSec|0 }) });
-        const cur = state.watched.get(episodeId)||{};
-        state.watched.set(episodeId, { progress: clamp(progress01,0,1), watchedAt: markWatched? new Date().toISOString(): cur.watchedAt||null, timeSec: timeSec|0 });
-      } catch(e){ console.error(e); }
-      renderEpisodes();
-    }
+function updatePaywall(ep){ const gate=$('#paywall'), badge=$('#gateBadge'); if(hasAccess(ep)){gate.classList.add('hidden');badge.classList.add('hidden');} else {gate.classList.remove('hidden');badge.classList.remove('hidden');} episodeLinks(ep); }
+function updateBreadcrumb(){ const w=state.currentWork, ep=state.currentEpisode; $('#workTitle').textContent=w?w.title:'Selecione uma obra'; $('#episodeBreadcrumb').textContent=(w&&ep)?`${w.title} • Episódio ${ep.number} — ${ep.title}`:'—'; }
 
-    // ===================== WORK SELECT =====================
-    async function selectWork(workId){
-      state.currentWork = state.library.find(function(w){return w.id===workId})||null;
-      if(!state.currentWork) return;
-      document.getElementById('seasonBadge').textContent = state.currentWork.seasonLabel || 'Temporada 1';
-      state.episodes = await api(`/animes/${workId}/episodes`);
-      renderEpisodes();
-      const withProg = state.episodes.find(function(e){ return (state.watched.get(e.id)?.progress||0) > 0; });
-      const firstOpen = withProg || state.episodes.find(function(e){return hasAccess(e)}) || state.episodes[0];
-      if(firstOpen) loadEpisode(firstOpen);
-      toggleLibrary(true);
-      updateBreadcrumb();
-    }
+function loadVideo(url){
+  const v=$('#video'); if(state.hls){state.hls.destroy(); state.hls=null;} v.src='';
+  if(Hls.isSupported()){ const hls=state.hls=new Hls({maxBufferLength:30}); hls.loadSource(url); hls.attachMedia(v);
+    hls.on(Hls.Events.MANIFEST_PARSED,(_,data)=>{ const sel=$('#qualitySel'); sel.innerHTML=''; const auto=document.createElement('option'); auto.value='auto'; auto.textContent='Auto'; sel.appendChild(auto);
+      (data.levels||[]).forEach((lv,i)=>{ const o=document.createElement('option'); o.value=i; o.textContent=lv.height?`${lv.height}p`:'Qualidade'; sel.appendChild(o); });
+      sel.onchange=()=>{ if(sel.value==='auto') hls.currentLevel=-1; else hls.currentLevel=Number(sel.value); };});
+  }else{ v.src=url; }
+}
 
-    // ===================== ACCORDIONS =====================
-    function toggleLibrary(forceClosed){
-      const body=document.getElementById('libraryBody');
-      const btn=document.getElementById('toggleLibrary');
-      if(forceClosed===true){ body.classList.add('hidden'); btn.textContent='Expandir'; return; }
-      body.classList.toggle('hidden');
-      btn.textContent = body.classList.contains('hidden')? 'Expandir' : 'Minimizar';
-    }
-    function toggleEpisodes(){
-      const body=document.getElementById('episodesBody'); const btn=document.getElementById('toggleEpisodes');
-      body.classList.toggle('hidden');
-      btn.textContent = body.classList.contains('hidden')? 'Expandir' : 'Minimizar';
-    }
+async function loadEpisode(ep){
+  state.currentEpisode=ep; updatePaywall(ep); updateBreadcrumb();
+  if(!hasAccess(ep)) return;
+  const resp = ep.hlsUrl? {url:ep.hlsUrl, tracks:[]} : await api(`/stream/${ep.id}`); // aceita mock
+  const v=$('#video'); while(v.firstChild) v.removeChild(v.firstChild);
+  (resp.tracks||[]).forEach(tr=>{ const t=document.createElement('track'); t.kind=tr.kind||'subtitles'; t.srclang=tr.srclang||'pt-BR'; t.label=tr.label||'PT-BR'; t.src=tr.src; v.appendChild(t); });
+  loadVideo(resp.url);
+  renderEpisodes();
+}
 
-    // ===================== AUTH & BOOTSTRAP =====================
-    function updateUserBadge(){
-      const badge=document.getElementById('userStatus'); if(state.me){ badge.textContent = state.me.username||state.me.email||'Logado'; document.getElementById('logoutBtn').classList.remove('hidden'); } else { badge.textContent='Visitante'; document.getElementById('logoutBtn').classList.add('hidden'); }
-    }
+function playNext(){ if(!state.currentEpisode) return; const i=state.episodes.findIndex(e=>e.id===state.currentEpisode.id); const nx=state.episodes[i+1]; if(nx) loadEpisode(nx); }
+function playPrev(){ if(!state.currentEpisode) return; const i=state.episodes.findIndex(e=>e.id===state.currentEpisode.id); const pv=state.episodes[i-1]; if(pv) loadEpisode(pv); }
 
-    async function bootstrap(){
-      try{
-        state.me = await api('/users/me');
-        state.purchases = await api('/me/purchases');
-        const watched = await api('/me/episodes');
-        state.watched = new Map(watched.map(function(w){return [w.episodeId, w]}));
-      }catch(e){ state.me=null; state.purchases=[]; state.watched=new Map(); }
-      updateUserBadge();
+async function saveProgress(id, p, watched, timeSec){
+  try{ await api(`/me/episodes/${id}/progress`, {method:'POST', body:JSON.stringify({progress:clamp(p,0,1), watched:!!watched, timeSec:timeSec|0})});
+        const cur=state.watched.get(id)||{}; state.watched.set(id,{progress:clamp(p,0,1), watchedAt:watched?new Date().toISOString():cur.watchedAt||null, timeSec:timeSec|0});}
+  catch(e){console.warn(e)}
+  renderEpisodes();
+}
 
-      // biblioteca
-      state.library = await api('/library'); // [{id,title,thumb,seasonLabel,progress,viewCount}]
-      renderLibrary();
+async function selectWork(workId){
+  state.currentWork=state.library.find(w=>w.id===workId)||null; if(!state.currentWork) return;
+  $('#seasonBadge').textContent=state.currentWork.seasonLabel||'Temporada 1';
+  try{ state.episodes=await api(`/animes/${workId}/episodes`); }catch(e){ state.episodes=previewEpisodes(workId); }
+  renderEpisodes();
+  const withProg=state.episodes.find(e=>(state.watched.get(e.id)?.progress||0)>0);
+  const firstOpen=withProg||state.episodes.find(e=>hasAccess(e))||state.episodes[0];
+  if(firstOpen) loadEpisode(firstOpen);
+}
 
-      // continuar assistindo automático
-      const cont = state.library.find(function(w){ return (w.progress||0) > 0; });
-      if(cont) selectWork(cont.id);
-    }
+function dragScrollSetup(){
+  const sc=document.getElementById('rowLib'); if(!sc) return; let down=false, startX=0, startL=0;
+  sc.addEventListener('pointerdown',e=>{down=true; sc.setPointerCapture(e.pointerId); startX=e.clientX; startL=sc.scrollLeft; sc.style.cursor='grabbing';});
+  sc.addEventListener('pointermove',e=>{ if(!down) return; sc.scrollLeft=startL-(e.clientX-startX);});
+  sc.addEventListener('pointerup',()=>{down=false; sc.style.cursor='grab';});
+  sc.addEventListener('wheel',e=>{ if(Math.abs(e.deltaX)<Math.abs(e.deltaY)) sc.scrollLeft+=e.deltaY; },{passive:true});
+}
 
-    // ===================== BRASAS CANVAS =====================
-    function startBrasas(){
-      const c=document.getElementById('brasasCanvas'); const ctx=c.getContext('2d'); let w,h,parts=[]; function resize(){ w=c.width=innerWidth; h=c.height=innerHeight; } window.addEventListener('resize',resize); resize(); for(let i=0;i<70;i++) parts.push({x:Math.random()*w,y:Math.random()*h,r:1+Math.random()*2,a:0.25+Math.random()*0.5,s:0.2+Math.random()*0.8}); (function loop(){ ctx.clearRect(0,0,w,h); parts.forEach(function(p){ p.y-=p.s; if(p.y<-10) p.y=h+10; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle='rgba(143,79,255,'+p.a+')'; ctx.fill(); }); requestAnimationFrame(loop); })();
-    }
+function updateUserBadge(){ const b=$('#userStatus'); if(state.me){ b.textContent=state.me.username||state.me.email||'Logado'; $('#logoutBtn').classList.remove('hidden'); } else { b.textContent='Visitante'; $('#logoutBtn').classList.add('hidden'); } }
 
-    // ===================== INIT =====================
-    document.addEventListener('DOMContentLoaded', function(){
-      startBrasas(); bindPlayerUX();
-      document.getElementById('onlyUnlocked').onchange=renderEpisodes; document.getElementById('onlyUnwatched').onchange=renderEpisodes;
-      document.getElementById('logoutBtn').onclick=function(){ localStorage.removeItem('token'); localStorage.removeItem('NoHeroes_token'); location.reload(); };
-      document.getElementById('toggleLibrary').onclick=function(){toggleLibrary()};
-      document.getElementById('toggleEpisodes').onclick=function(){toggleEpisodes()};
-      document.getElementById('globalSearch').addEventListener('input', function(e){ var q=e.target.value.toLowerCase().trim(); var filtered = state.library.filter(function(w){ return (w.title||'').toLowerCase().includes(q); }); if(q) { var bak=state.library; state.library=filtered; renderLibrary(); state.library=bak; } else renderLibrary(); });
-      bootstrap();
-    });
-  </script></body>
+async function bootstrap(){
+  try{ state.me=await api('/users/me'); state.purchases=await api('/me/purchases'); const watched=await api('/me/episodes'); state.watched=new Map(watched.map(w=>[w.episodeId,w])); }catch(e){ state.me=null; state.purchases=[]; state.watched=new Map(); }
+  updateUserBadge();
+  try{ state.library=await api('/library'); }catch(e){ state.library=previewLibrary(); }
+  renderLibrary();
+  const cont=state.library.find(w=>(w.progress||0)>0); if(cont) selectWork(cont.id);
+}
+
+function previewLibrary(){ return [
+  {id:1,title:'As Cinzas do Amanhã',thumb:'',seasonLabel:'S1',progress:0.35,viewCount:12000},
+  {id:2,title:'A Cidade e o Vazio',thumb:'',seasonLabel:'S1',progress:0,viewCount:8600},
+  {id:3,title:'Lótus Carmesim',thumb:'',seasonLabel:'S1',progress:0.8,viewCount:5400},
+  {id:4,title:'Noctilum',thumb:'',seasonLabel:'S1',progress:0.1,viewCount:2300},
+  {id:5,title:'Nebula',thumb:'',seasonLabel:'S1',progress:0,viewCount:1200}
+];}
+function previewEpisodes(workId){ return [
+  {id:workId*100+1, number:1, title:'Prólogo', durationSec:900, productId:201, seasonProductId:101, hlsUrl:'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8'},
+  {id:workId*100+2, number:2, title:'Lótus',   durationSec:1020, productId:202, seasonProductId:101, hlsUrl:'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8'},
+  {id:workId*100+3, number:3, title:'Eco',     durationSec:960,  productId:null, seasonProductId:101,  hlsUrl:'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8'}
+];}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  // tabs
+  const tabs={tabAll:'all',tabPopular:'popular',tabContinue:'continue'};
+  Object.keys(tabs).forEach(id=>{ const el=document.getElementById(id); if(el) el.onclick=()=>{ state.libraryTab=tabs[id]; renderLibrary(); }; });
+  // drag-scroll
+  dragScrollSetup();
+  // player UX
+  const v=$('#video'); $('#speedSel').onchange=()=>{ v.playbackRate=parseFloat($('#speedSel').value.replace('x','')); };
+  $('#fsBtn').onclick=()=>{ const c=$('#playerContainer'); if(c.requestFullscreen) c.requestFullscreen(); };
+  $('#ccBtn').onclick=()=>{ const t=Array.from(v.textTracks)[0]; if(!t) return; t.mode=t.mode==='showing'?'disabled':'showing'; };
+  v.addEventListener('timeupdate', ()=>{ if(!state.currentEpisode) return; const d=v.duration||0, p=d?(v.currentTime/d):0; if(Math.floor(v.currentTime)%15===0) saveProgress(state.currentEpisode.id,p,p>=0.9,Math.floor(v.currentTime)); });
+  v.addEventListener('ended', ()=>{ if(state.currentEpisode) saveProgress(state.currentEpisode.id,1,true,Math.floor(v.duration||0)); setTimeout(playNext,800); });
+  $('#btnNext').onclick=playNext; $('#btnPrev').onclick=playPrev; $('#btnEpisodes').onclick=()=>document.querySelector('section:last-of-type').scrollIntoView({behavior:'smooth'});
+  $('#markWatchedBtn').onclick=()=>{ if(state.currentEpisode) saveProgress(state.currentEpisode.id,1,true,Math.floor(v.currentTime||0)); };
+  // search
+  $('#globalSearch').addEventListener('input',e=>{ const q=e.target.value.toLowerCase().trim(); const filtered=state.library.filter(w=>(w.title||'').toLowerCase().includes(q)); const bak=state.library; state.library=q?filtered:bak; renderLibrary(); if(q) state.library=bak; });
+  $('#logoutBtn').onclick=()=>{ localStorage.removeItem('token'); localStorage.removeItem('NoHeroes_token'); location.reload(); };
+  bootstrap();
+});
+</script>
+</body>
 </html>
