@@ -1,0 +1,455 @@
+<!DOCTYPE html><html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>NoHeroes • Assistir — As Cinzas do Amanhã</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nh: {
+              bg: '#07060a',
+              card: 'rgba(255,255,255,0.06)',
+              glass: 'rgba(255,255,255,0.08)',
+              border: 'rgba(255,255,255,0.12)'
+            }
+          },
+          boxShadow: {
+            glow: '0 0 40px rgba(143,79,255,0.25)'
+          },
+          fontFamily: {
+            display: ['Cinzel Decorative','serif'],
+            sans: ['Inter','system-ui','-apple-system','Segoe UI','Roboto','sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .grad-nh { background: linear-gradient(135deg,#8f4fff 0%,#d9b55a 100%); }
+    .text-grad { background: linear-gradient(135deg,#b891ff 0%, #f5e3a5 100%); -webkit-background-clip:text; background-clip:text; color: transparent; }
+    /* Scrollbar minimal */
+    ::-webkit-scrollbar{height:10px;width:10px}::-webkit-scrollbar-thumb{background:#2b2440;border-radius:9999px}::-webkit-scrollbar-track{background:#0f0d16}
+  </style>
+</head>
+<body class="min-h-screen bg-nh bg-[#07060a] text-white font-sans">
+  <!-- BG brasas roxas sutil -->
+  <div class="fixed inset-0 -z-10 pointer-events-none">
+    <canvas id="brasasCanvas" class="w-full h-full opacity-[0.15]"></canvas>
+    <div class="absolute inset-0 grad-nh opacity-[0.08] mix-blend-screen"></div>
+  </div>  <!-- Header fixo (não sticky-scroll) -->  <header class="w-full border-b border-nh-border/30 bg-black/40 backdrop-blur-xl">
+    <div class="mx-auto max-w-7xl px-4 py-4 flex items-center gap-4">
+      <div class="h-8 w-8 rounded-lg grad-nh"></div>
+      <h1 class="text-lg md:text-2xl font-display tracking-wide text-grad">NoHeroes • Player</h1>
+      <div class="ml-auto flex items-center gap-3 text-sm">
+        <span id="userStatus" class="px-3 py-1 rounded-full bg-white/5 border border-nh-border/30">Visitante</span>
+        <button id="logoutBtn" class="hidden px-3 py-1 rounded-lg bg-white/5 border border-nh-border/30 hover:bg-white/10">Sair</button>
+      </div>
+    </div>
+  </header>  <main class="mx-auto max-w-7xl px-4 pb-20">
+    <!-- Top controls -->
+    <section class="mt-6 grid grid-cols-1 lg:grid-cols-[320px,1fr] gap-6">
+      <!-- Animes / Temporadas -->
+      <aside class="rounded-2xl bg-nh-card backdrop-blur-xl border border-nh-border/30 p-4">
+        <div class="flex items-center justify-between">
+          <h2 class="font-display text-xl">Séries</h2>
+          <span class="text-xs px-2 py-1 rounded-full bg-white/5 border border-nh-border/30">beta</span>
+        </div>
+        <div id="animeList" class="mt-3 grid gap-2">
+          <!-- Preenche via JS -->
+        </div>
+      </aside><!-- Player + Info -->
+  <section class="grid gap-4">
+    <div class="relative rounded-2xl overflow-hidden border border-nh-border/30 bg-black/50">
+      <div class="aspect-video bg-black" id="playerContainer">
+        <video id="video" class="w-full h-full" controls playsinline></video>
+      </div>
+      <!-- Gate de acesso -->
+      <div id="paywall" class="hidden absolute inset-0 grid place-items-center bg-black/70 backdrop-blur-md">
+        <div class="p-6 rounded-2xl border border-nh-border/40 bg-nh-glass max-w-md text-center shadow-glow">
+          <h3 class="font-display text-2xl mb-2">Conteúdo bloqueado</h3>
+          <p class="text-white/80 text-sm">Você precisa adquirir este episódio ou o passe da temporada para assistir.</p>
+          <div class="mt-5 flex flex-col sm:flex-row gap-3 justify-center">
+            <a id="buyEpisodeLink" class="px-4 py-2 rounded-xl grad-nh text-black font-semibold">Comprar episódio</a>
+            <a id="buySeasonLink" class="px-4 py-2 rounded-xl bg-white/10 border border-nh-border/30" target="_blank">Passe da temporada</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rounded-2xl bg-nh-card backdrop-blur-xl border border-nh-border/30 p-4">
+      <h3 id="epTitle" class="font-display text-xl">Selecione um episódio</h3>
+      <p id="epDesc" class="text-white/70 text-sm mt-1">Use a lista ao lado para escolher o capítulo.</p>
+    </div>
+  </section>
+</section>
+
+<!-- Lista de episódios / Tabela -->
+<section class="mt-6 grid grid-cols-1 lg:grid-cols-[320px,1fr] gap-6">
+  <!-- Filtros / Status -->
+  <aside class="rounded-2xl bg-nh-card backdrop-blur-xl border border-nh-border/30 p-4">
+    <div class="flex items-center justify-between">
+      <h2 class="font-display text-xl">Episódios</h2>
+      <div class="text-xs text-white/70" id="seasonBadge">Temporada 1</div>
+    </div>
+    <div class="mt-3 flex items-center gap-2">
+      <label class="flex items-center gap-2 text-sm">
+        <input id="showOnlyUnlocked" type="checkbox" class="accent-[#8f4fff]"> Mostrar apenas liberados
+      </label>
+    </div>
+  </aside>
+
+  <section class="rounded-2xl bg-nh-card backdrop-blur-xl border border-nh-border/30 overflow-hidden">
+    <div class="overflow-auto">
+      <table class="min-w-full text-sm">
+        <thead class="bg-white/5 text-white/70">
+          <tr>
+            <th class="text-left px-4 py-3">#</th>
+            <th class="text-left px-4 py-3">Título</th>
+            <th class="text-left px-4 py-3">Duração</th>
+            <th class="text-left px-4 py-3">Status</th>
+            <th class="text-left px-4 py-3">Assistido</th>
+            <th class="text-right px-4 py-3">Ação</th>
+          </tr>
+        </thead>
+        <tbody id="episodeTable" class="divide-y divide-white/5"></tbody>
+      </table>
+    </div>
+  </section>
+</section>
+
+  </main>  <!-- Scripts -->  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.7/dist/hls.min.js"></script>  <script>
+    // ===================== CONFIG =====================
+    const API_BASE = 'https://api.noheroes.com.br'; // ajuste se necessário
+
+    // Pega JWT de onde você já usa no projeto
+    function getJwt(){
+      const raw = (localStorage.getItem('token')||'').trim() || (localStorage.getItem('NoHeroes_token')||'').trim();
+      return raw.replace(/^Bearer\s+/i, '');
+    }
+
+    const state = {
+      me: null,
+      animes: [],
+      currentAnime: null,
+      episodes: [],
+      purchases: [], // UserItem (shopItemId)
+      watched: new Map(), // episodeId -> {progress, watchedAt}
+      currentEpisode: null,
+      hls: null
+    };
+
+    // ===================== UI HELPERS =====================
+    const $ = (q)=>document.querySelector(q);
+    const $$ = (q)=>Array.from(document.querySelectorAll(q));
+
+    function fmtDuration(sec){
+      if(!sec) return '—';
+      const m = Math.floor(sec/60), s = Math.floor(sec%60).toString().padStart(2,'0');
+      return `${m}:${s}`;
+    }
+
+    function glassRowLocked(locked){
+      return locked ? 'opacity-60' : '';
+    }
+
+    function episodeProductLinks(ep){
+      const buyEpisodeLink = $('#buyEpisodeLink');
+      const buySeasonLink = $('#buySeasonLink');
+      if (ep?.productId) buyEpisodeLink.href = `https://noheroes.com.br/loja?produto=${ep.productId}`;
+      else buyEpisodeLink.removeAttribute('href');
+      if (ep?.seasonProductId) buySeasonLink.href = `https://noheroes.com.br/loja?produto=${ep.seasonProductId}`;
+    }
+
+    // ===================== API =====================
+    async function api(path, opts={}){
+      const token = getJwt();
+      const headers = { 'Content-Type': 'application/json', ...(token? {Authorization:`Bearer ${token}`} : {}) };
+      const res = await fetch(`${API_BASE}${path}`, { ...opts, headers });
+      if(res.status===401) throw new Error('unauth');
+      if(!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.json();
+    }
+
+    // ===== Endpoints esperados no backend =====
+    // GET /animes -> [{id, title, slug, seasonProductId}]
+    // GET /animes/:id/episodes -> [{id, number, title, durationSec, hlsUrl, description, productId, seasonProductId}]
+    // GET /me/purchases -> [{shopItemId}]
+    // GET /me/episodes -> [{episodeId, progress, watchedAt}]
+    // POST /me/episodes/:id/progress {progress (0..1), watched:boolean}
+
+    // ===================== ACCESS / GATE =====================
+    function hasAccess(ep){
+      if(!ep) return false;
+      const owned = new Set(state.purchases.map(p=>p.shopItemId));
+      return owned.has(ep.seasonProductId) || (ep.productId && owned.has(ep.productId));
+    }
+
+    // ===================== RENDER =====================
+    function renderAnimes(){
+      const box = $('#animeList');
+      box.innerHTML = '';
+      state.animes.forEach(an=>{
+        const btn = document.createElement('button');
+        btn.className = `w-full text-left px-3 py-2 rounded-xl border border-nh-border/30 hover:bg-white/5 ${state.currentAnime?.id===an.id?'bg-white/10':''}`;
+        btn.innerHTML = `<div class='font-semibold'>${an.title}</div><div class='text-xs text-white/60'>${an.slug}</div>`;
+        btn.onclick = ()=>selectAnime(an.id);
+        box.appendChild(btn);
+      })
+    }
+
+    function renderEpisodes(){
+      const onlyUnlocked = $('#showOnlyUnlocked').checked;
+      const tbody = $('#episodeTable');
+      tbody.innerHTML='';
+      state.episodes
+        .filter(ep=>!onlyUnlocked || hasAccess(ep))
+        .sort((a,b)=>a.number-b.number)
+        .forEach(ep=>{
+          const locked = !hasAccess(ep);
+          const watched = !!state.watched.get(ep.id)?.watchedAt;
+          const tr = document.createElement('tr');
+          tr.className = `hover:bg-white/5 ${glassRowLocked(locked)}`;
+          tr.innerHTML = `
+            <td class="px-4 py-3">${ep.number}</td>
+            <td class="px-4 py-3">
+              <div class="font-medium flex items-center gap-2">
+                ${locked?'<span title="Bloqueado" class="text-white/50">🔒</span>':'<span title="Liberado">▶️</span>'}
+                ${ep.title}
+              </div>
+              <div class="text-xs text-white/60">${ep.description||''}</div>
+            </td>
+            <td class="px-4 py-3">${fmtDuration(ep.durationSec)}</td>
+            <td class="px-4 py-3">${locked?'<span class="text-white/60">Bloqueado</span>':'Liberado'}</td>
+            <td class="px-4 py-3">
+              <label class="inline-flex items-center gap-2">
+                <input type="checkbox" ${watched?'checked':''} ${locked?'disabled':''} data-ep="${ep.id}" class="accent-[#8f4fff]"> <span class="text-xs">${watched?'Concluído':'—'}</span>
+              </label>
+            </td>
+            <td class="px-4 py-3 text-right">
+              <button class="px-3 py-1 rounded-lg border border-nh-border/40 hover:bg-white/10 ${locked?'opacity-60 cursor-not-allowed':''}" data-play="${ep.id}">Assistir</button>
+            </td>`;
+          tbody.appendChild(tr);
+        });
+
+      // Bind play/check handlers
+      $$('button[data-play]').forEach(b=> b.onclick = ()=>{
+        const epId = Number(b.getAttribute('data-play'));
+        const ep = state.episodes.find(e=>e.id===epId);
+        if(ep) loadEpisode(ep);
+      });
+      $$('input[type=checkbox][data-ep]').forEach(ch=> ch.onchange = async ()=>{
+        const epId = Number(ch.getAttribute('data-ep'));
+        await saveProgress(epId, ch.checked?1:0, ch.checked);
+      });
+    }
+
+    function updatePaywall(ep){
+      const gate = $('#paywall');
+      if(hasAccess(ep)) gate.classList.add('hidden'); else gate.classList.remove('hidden');
+      episodeProductLinks(ep);
+    }
+
+    function loadVideo(url){
+      const video = $('#video');
+      if(state.hls){ state.hls.destroy(); state.hls=null; }
+      if(Hls.isSupported()){
+        state.hls = new Hls();
+        state.hls.loadSource(url);
+        state.hls.attachMedia(video);
+      } else {
+        video.src = url; // fallback MP4
+      }
+    }
+
+    async function loadEpisode(ep){
+      state.currentEpisode = ep;
+      $('#epTitle').textContent = `${ep.number}. ${ep.title}`;
+      $('#epDesc').textContent = ep.description || '';
+      updatePaywall(ep);
+      if(!hasAccess(ep)) return; // não carrega o vídeo
+      loadVideo(ep.hlsUrl || ep.videoUrl);
+    }
+
+    // ===================== PROGRESS =====================
+    async function saveProgress(episodeId, progress01, markWatched){
+      try{
+        await api(`/me/episodes/${episodeId}/progress`, {method:'POST', body: JSON.stringify({progress: progress01, watched: !!markWatched})});
+        state.watched.set(episodeId, {progress: progress01, watchedAt: markWatched? new Date().toISOString(): null});
+        renderEpisodes();
+      }catch(e){ console.error(e); }
+    }
+
+    function attachAutoProgress(){
+      const v = $('#video');
+      let ticking=false;
+      v.addEventListener('timeupdate', ()=>{
+        if(!state.currentEpisode || ticking) return; ticking=true;
+        const p = v.duration? (v.currentTime / v.duration) : 0;
+        const id = state.currentEpisode.id;
+        // salva cada ~15s e marca visto aos 90%
+        if(Math.floor(v.currentTime)%15===0){ saveProgress(id, p, p>=0.9); }
+        ticking=false;
+      });
+      v.addEventListener('ended', ()=>{
+        if(state.currentEpisode) saveProgress(state.currentEpisode.id, 1, true);
+      });
+    }
+
+    // ===================== AUTH =====================
+    function updateUserBadge(){
+      const badge = $('#userStatus');
+      if(state.me){ badge.textContent = state.me.username || state.me.email || 'Logado'; $('#logoutBtn').classList.remove('hidden'); }
+      else { badge.textContent = 'Visitante'; $('#logoutBtn').classList.add('hidden'); }
+    }
+
+    async function bootstrap(){
+      // tenta pegar perfil/pedidos/assistidos
+      try{
+        state.me = await api('/users/me');
+        state.purchases = await api('/me/purchases');
+        const watched = await api('/me/episodes');
+        state.watched = new Map(watched.map(w=>[w.episodeId, w]));
+      }catch(e){ state.me=null; state.purchases=[]; state.watched=new Map(); }
+      updateUserBadge();
+
+      // carrega lista de animes (no MVP temos 1: ACDA)
+      state.animes = await api('/animes');
+      renderAnimes();
+      if(state.animes.length){ await selectAnime(state.animes[0].id); }
+    }
+
+    async function selectAnime(animeId){
+      state.currentAnime = state.animes.find(a=>a.id===animeId);
+      const eps = await api(`/animes/${animeId}/episodes`);
+      state.episodes = eps;
+      renderEpisodes();
+      // carrega primeiro liberado
+      const firstOpen = state.episodes.find(e=>hasAccess(e)) || state.episodes[0];
+      if(firstOpen) loadEpisode(firstOpen);
+    }
+
+    // ===================== BRASAS CANVAS (leve) =====================
+    function startBrasas(){
+      const c = document.getElementById('brasasCanvas');
+      const ctx = c.getContext('2d');
+      let w,h,parts=[]; function resize(){ w=c.width=innerWidth; h=c.height=innerHeight; }
+      addEventListener('resize', resize); resize();
+      for(let i=0;i<60;i++) parts.push({x:Math.random()*w,y:Math.random()*h, r:1+Math.random()*2, a:0.3+Math.random()*0.5, s:0.2+Math.random()*0.8});
+      (function loop(){ ctx.clearRect(0,0,w,h); parts.forEach(p=>{ p.y-=p.s; if(p.y< -10) p.y=h+10; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle=`rgba(143,79,255,${p.a})`; ctx.fill(); }); requestAnimationFrame(loop); })();
+    }
+
+    // ===================== INIT =====================
+    document.addEventListener('DOMContentLoaded', ()=>{
+      attachAutoProgress();
+      startBrasas();
+      $('#showOnlyUnlocked').onchange = renderEpisodes;
+      $('#logoutBtn').onclick = ()=>{ localStorage.removeItem('token'); localStorage.removeItem('NoHeroes_token'); location.reload(); };
+      bootstrap();
+    });
+  </script></body>
+</html><!-- ========================= BACKEND (Express/Sequelize) — cole nos seus arquivos =========================
+
+// MODELS sugeridos (ou adapte aos seus existentes ShopItem/UserItem)
+// Episode mapeia produto individual e produto de temporada (ShopItem)
+
+// models/Anime.js
+module.exports = (sequelize, DataTypes)=>{
+  const Anime = sequelize.define('Anime', {
+    title: DataTypes.STRING,
+    slug:  DataTypes.STRING,
+    seasonProductId: { type: DataTypes.INTEGER, allowNull: true }, // ShopItem.id do passe
+  });
+  Anime.associate = (models)=>{ Anime.hasMany(models.Episode, { foreignKey:'animeId' }); };
+  return Anime;
+}
+
+// models/Episode.js
+module.exports = (sequelize, DataTypes)=>{
+  const Episode = sequelize.define('Episode', {
+    animeId: DataTypes.INTEGER,
+    number:  DataTypes.INTEGER,
+    title:   DataTypes.STRING,
+    description: DataTypes.TEXT,
+    durationSec: DataTypes.INTEGER,
+    hlsUrl:  DataTypes.STRING, // ou videoUrl MP4
+    productId: { type: DataTypes.INTEGER, allowNull:true },      // ShopItem.id do episódio
+    seasonProductId: { type: DataTypes.INTEGER, allowNull:true } // redundância p/ facilitar
+  });
+  Episode.associate = (models)=>{ Episode.belongsTo(models.Anime,{foreignKey:'animeId'}); };
+  return Episode;
+}
+
+// models/UserEpisode.js
+module.exports = (sequelize, DataTypes)=>{
+  const UserEpisode = sequelize.define('UserEpisode', {
+    userId: DataTypes.INTEGER,
+    episodeId: DataTypes.INTEGER,
+    progress: { type: DataTypes.FLOAT, defaultValue: 0 }, // 0..1
+    watchedAt: { type: DataTypes.DATE, allowNull: true }
+  });
+  UserEpisode.associate = (models)=>{
+    UserEpisode.belongsTo(models.User,{foreignKey:'userId'});
+    UserEpisode.belongsTo(models.Episode,{foreignKey:'episodeId'});
+  };
+  return UserEpisode;
+}
+
+// Rotas (routes/watch.js)
+const express = require('express');
+const router = express.Router();
+const { Anime, Episode, UserItem, UserEpisode } = require('../models');
+const auth = require('../middlewares/auth');
+
+// GET /animes
+router.get('/animes', async (req,res)=>{
+  const rows = await Anime.findAll({ attributes:['id','title','slug','seasonProductId'] });
+  res.json(rows);
+});
+
+// GET /animes/:id/episodes
+router.get('/animes/:id/episodes', async (req,res)=>{
+  const rows = await Episode.findAll({ where:{ animeId: req.params.id }, order:[[ 'number','ASC' ]] });
+  res.json(rows);
+});
+
+// GET /me/purchases (reutiliza seu sistema atual de UserItem)
+router.get('/me/purchases', auth, async (req,res)=>{
+  const rows = await UserItem.findAll({ where:{ userId: req.user.id } , attributes:['shopItemId']});
+  res.json(rows);
+});
+
+// GET /me/episodes (assistidos)
+router.get('/me/episodes', auth, async (req,res)=>{
+  const rows = await UserEpisode.findAll({ where:{ userId: req.user.id }, attributes:['episodeId','progress','watchedAt'] });
+  res.json(rows);
+});
+
+// POST /me/episodes/:id/progress
+router.post('/me/episodes/:id/progress', auth, async (req,res)=>{
+  const { progress, watched } = req.body;
+  const [row] = await UserEpisode.findOrCreate({ where:{ userId: req.user.id, episodeId: req.params.id }, defaults:{ progress:0 } });
+  row.progress = Math.max(0, Math.min(1, Number(progress)||0));
+  if (watched) row.watchedAt = new Date();
+  await row.save();
+  res.json({ok:true});
+});
+
+module.exports = router;
+
+// Gate no streaming (opcional):
+// Se você servir playlists .m3u8 de um CDN privado, coloque um proxy /stream/:episodeId que valida compra (UserItem)
+// e então responde com a URL temporária assinada do HLS.
+
+// SQL seed rápido (ajuste nomes reais das tabelas conforme seus models):
+-- Anime ACDA
+INSERT INTO "Animes" (id,title,slug,seasonProductId,createdAt,updatedAt)
+VALUES (1,'As Cinzas do Amanhã','acda', 101, NOW(), NOW()); -- 101 = ShopItem id do Passe
+
+-- Episódios (exemplo)
+INSERT INTO "Episodes" (animeId,number,title,description,durationSec,hlsUrl,productId,seasonProductId,createdAt,updatedAt) VALUES
+(1,1,'Prólogo','O começo do fim.',900,'https://cdn.noheroes.com/hls/acda/ep1.m3u8',201,101,NOW(),NOW()),
+(1,2,'Lótus','A flor e o vazio.'
