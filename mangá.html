@@ -1,0 +1,405 @@
+<!DOCTYPE html><html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>NoHeroes • Leitor — Webnovel/Mangá</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: {
+        colors: { nh: { bg:'#07060a', card:'rgba(255,255,255,0.06)', glass:'rgba(255,255,255,0.08)', border:'rgba(255,255,255,0.12)'} },
+        boxShadow: { glow:'0 0 40px rgba(143,79,255,0.25)', soft:'0 10px 30px rgba(0,0,0,0.3)'},
+        fontFamily: { display:['Cinzel Decorative','serif'], sans:['Inter','system-ui','-apple-system','Segoe UI','Roboto','sans-serif']}
+      } }
+    }
+  </script>
+  <style>
+    .grad-nh{background:linear-gradient(135deg,#8f4fff 0%,#d9b55a 100%);} .text-grad{background:linear-gradient(135deg,#b891ff 0%,#f5e3a5 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .ring-progress{position:relative;width:28px;height:28px} .ring-progress svg{transform:rotate(-90deg)} .ring-progress circle.track{stroke:rgba(255,255,255,.15)} .ring-progress circle.ind{stroke:#8f4fff;transition:stroke-dashoffset .3s ease}
+    ::-webkit-scrollbar{height:10px;width:10px}::-webkit-scrollbar-thumb{background:#2b2440;border-radius:9999px}::-webkit-scrollbar-track{background:#0f0d16}
+    .page-ph{height:900px; border:1px solid rgba(255,255,255,.08); background: radial-gradient(1200px 500px at 50% 20%, rgba(143,79,255,.15), transparent 60%), linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));}
+  </style>
+</head>
+<body class="min-h-screen bg-[#07060a] text-white font-sans">
+  <!-- BG -->
+  <div class="fixed inset-0 -z-10 pointer-events-none">
+    <canvas id="brasasCanvas" class="w-full h-full opacity-[0.15]"></canvas>
+    <div class="absolute inset-0 grad-nh opacity-[0.06] mix-blend-screen"></div>
+  </div>  <!-- Header -->  <header class="fixed top-0 inset-x-0 z-30 border-b border-nh-border/30 bg-black/50 backdrop-blur-xl">
+    <div class="mx-auto max-w-7xl px-4 py-3 flex items-center gap-4">
+      <div class="h-8 w-8 rounded-lg grad-nh"></div>
+      <span class="font-display text-xl tracking-wide text-grad">NoHeroes</span>
+      <div class="ml-4 flex-1 max-w-xl">
+        <div class="relative">
+          <input id="globalSearch" placeholder="Buscar obras, temporadas, capítulos…" class="w-full rounded-xl bg-white/5 border border-nh-border/30 px-4 py-2 outline-none focus:border-white/50" />
+          <span class="absolute right-3 top-1/2 -translate-y-1/2 text-white/60">⌕</span>
+        </div>
+      </div>
+      <div class="ml-auto flex items-center gap-2 text-sm">
+        <button id="filterBtn" class="px-3 py-2 rounded-lg bg-white/5 border border-nh-border/30 hover:bg-white/10">Filtros</button>
+        <span id="userStatus" class="px-3 py-2 rounded-lg bg-white/5 border border-nh-border/30">Visitante</span>
+        <button id="logoutBtn" class="hidden px-3 py-2 rounded-lg bg-white/5 border border-nh-border/30 hover:bg-white/10">Sair</button>
+      </div>
+    </div>
+  </header>  <main class="mx-auto max-w-7xl px-4 pt-24 pb-24 grid gap-8">
+    <!-- SEÇÃO 1: BIBLIOTECA (Acordeão) -->
+    <section id="librarySection" class="rounded-2xl bg-nh-card backdrop-blur-xl border border-nh-border/30 shadow-soft overflow-hidden">
+      <header class="flex items-center justify-between px-4 py-3">
+        <h2 class="font-display text-xl">Biblioteca</h2>
+        <button id="toggleLibrary" class="px-3 py-1.5 rounded-lg bg-white/5 border border-nh-border/30 hover:bg-white/10">Minimizar</button>
+      </header>
+      <div id="libraryBody" class="grid gap-6 p-4">
+        <div>
+          <div class="flex items-center justify-between mb-2"><h3 class="text-white/80">Continuar lendo</h3></div>
+          <div id="rowContinue" class="flex gap-4 overflow-x-auto pb-2"></div>
+        </div>
+        <div>
+          <div class="flex items-center justify-between mb-2"><h3 class="text-white/80">Populares</h3></div>
+          <div id="rowPopular" class="flex gap-4 overflow-x-auto pb-2"></div>
+        </div>
+        <div>
+          <div class="flex items-center justify-between mb-2"><h3 class="text-white/80">Todas as obras</h3></div>
+          <div id="rowAll" class="flex gap-4 overflow-x-auto pb-2"></div>
+        </div>
+      </div>
+    </section><!-- SEÇÃO 2: LEITOR (Player) -->
+<section id="readerSection" class="rounded-2xl bg-nh-card backdrop-blur-xl border border-nh-border/30 shadow-soft overflow-hidden">
+  <header class="flex items-center justify-between px-4 py-3 border-b border-white/5">
+    <div class="min-w-0">
+      <div id="workTitle" class="truncate font-display text-xl text-grad">Selecione uma obra</div>
+      <div id="chapterBreadcrumb" class="text-xs text-white/60 mt-0.5">—</div>
+    </div>
+    <div class="flex items-center gap-2">
+      <span id="gateBadge" class="hidden text-xs px-2 py-1 rounded-full border border-nh-border/30">Bloqueado</span>
+      <button id="buyChapterLink" class="hidden px-3 py-1.5 rounded-xl grad-nh text-black font-semibold">Comprar capítulo</button>
+      <button id="buySeasonLink" class="hidden px-3 py-1.5 rounded-xl bg-white/10 border border-nh-border/30">Passe da temporada</button>
+    </div>
+  </header>
+
+  <!-- Área do leitor (scroll vertical tipo manhwa) -->
+  <div class="relative">
+    <div id="readerContainer" class="bg-black/60">
+      <div id="pages" class="mx-auto max-w-[920px] px-3 sm:px-6 py-6 grid gap-2"></div>
+    </div>
+    <!-- Paywall overlay -->
+    <div id="paywall" class="hidden absolute inset-0 grid place-items-center bg-black/70 backdrop-blur-md">
+      <div class="p-6 rounded-2xl border border-nh-border/40 bg-nh-glass max-w-md text-center shadow-glow">
+        <h3 class="font-display text-2xl mb-2">Conteúdo bloqueado</h3>
+        <p class="text-white/80 text-sm">Adquira o capítulo ou o passe da temporada para ler.</p>
+        <div class="mt-5 flex flex-col sm:flex-row gap-3 justify-center">
+          <a id="paywallBuyCh" class="px-4 py-2 rounded-xl grad-nh text-black font-semibold" target="_blank">Comprar capítulo</a>
+          <a id="paywallBuySeason" class="px-4 py-2 rounded-xl bg-white/10 border border-nh-border/30" target="_blank">Passe da temporada</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Barra de controle (abaixo do reader) -->
+  <div class="flex flex-wrap items-center gap-2 px-4 py-3 border-t border-white/5">
+    <div class="flex items-center gap-2">
+      <button id="btnPrev" class="px-3 py-1.5 rounded-lg bg-white/5 border border-nh-border/30 hover:bg-white/10">◀ Anterior</button>
+      <button id="btnChapters" class="px-3 py-1.5 rounded-lg grad-nh text-black font-semibold">Capítulos</button>
+      <button id="btnNext" class="px-3 py-1.5 rounded-lg bg-white/5 border border-nh-border/30 hover:bg-white/10">Próximo ▶</button>
+    </div>
+    <div class="ml-auto flex items-center gap-2 text-sm">
+      <select id="pageFitSel" class="px-2 py-1 rounded-lg bg-white/5 border border-nh-border/30">
+        <option value="fit-width">Ajuste à largura</option>
+        <option value="fit-height">Ajuste à altura</option>
+        <option value="original">Original</option>
+      </select>
+      <button id="markReadBtn" class="px-3 py-1.5 rounded-lg bg-white/5 border border-nh-border/30">Marcar lido</button>
+      <button id="backTopBtn" class="px-3 py-1.5 rounded-lg bg-white/5 border border-nh-border/30">Topo</button>
+    </div>
+  </div>
+</section>
+
+<!-- SEÇÃO 3: CAPÍTULOS (Acordeão) -->
+<section id="chaptersSection" class="rounded-2xl bg-nh-card backdrop-blur-xl border border-nh-border/30 shadow-soft overflow-hidden">
+  <header class="flex items-center justify-between px-4 py-3">
+    <div class="flex items-center gap-2">
+      <h2 class="font-display text-xl">Capítulos</h2>
+      <span id="seasonBadge" class="text-xs px-2 py-1 rounded-full bg-white/5 border border-nh-border/30">Temporada 1</span>
+    </div>
+    <div class="flex items-center gap-2 text-sm">
+      <label class="flex items-center gap-2"><input id="onlyUnlocked" type="checkbox" class="accent-[#8f4fff]"> Liberados</label>
+      <label class="flex items-center gap-2"><input id="onlyUnread" type="checkbox" class="accent-[#8f4fff]"> Não lidos</label>
+      <button id="toggleChapters" class="px-3 py-1.5 rounded-lg bg-white/5 border border-nh-border/30 hover:bg-white/10">Minimizar</button>
+    </div>
+  </header>
+  <div id="chaptersBody" class="p-2">
+    <div id="chapterList" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+  </div>
+</section>
+
+  </main>  <script>
+    // ===================== CONFIG =====================
+    const API_BASE = 'https://api.noheroes.com.br';
+
+    function getJwt(){
+      const raw = (localStorage.getItem('token')||'').trim() || (localStorage.getItem('NoHeroes_token')||'').trim();
+      return raw.replace(/^Bearer\s+/i,'');
+    }
+
+    // ===================== STATE =====================
+    const state = {
+      me:null,
+      library:[], // obras
+      currentWork:null,
+      chapters:[],
+      purchases:[],
+      read:new Map(), // chapterId -> {progress, readAt, scrollY}
+      currentChapter:null,
+      preview:false,
+    }
+
+    // ===================== UTIL =====================
+    const $ = (q)=>document.querySelector(q);
+    const $$ = (q)=>Array.from(document.querySelectorAll(q));
+    const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
+    const fmtDur=(n)=> n? `${Math.round(n/60)} min` : '—';
+    function ring(off){ const R=12; return `${(off)*2*Math.PI*R}`; }
+
+    function glassLocked(locked){return locked? 'opacity-60' : ''}
+
+    function workCard(work){
+      const card=document.createElement('button');
+      card.className='group min-w-[180px] w-[180px] shrink-0 rounded-2xl overflow-hidden border border-nh-border/30 bg-white/5 hover:bg-white/10 transition shadow-soft';
+      card.innerHTML=`
+        <div class='aspect-[2/3] bg-black/30 relative'>
+          ${work.thumb?`<img loading='lazy' src='${work.thumb}' class='absolute inset-0 w-full h-full object-cover opacity-90 group-hover:opacity-100'>`:`<div class='absolute inset-0 grid place-items-center text-white/40'>Sem capa</div>`}
+          <div class='absolute bottom-2 left-2 px-2 py-0.5 text-xs rounded-full bg-black/60 border border-white/10'>${work.seasonLabel||'S1'}</div>
+        </div>
+        <div class='p-2 text-left'>
+          <div class='truncate font-semibold'>${work.title}</div>
+          <div class='flex items-center gap-2 mt-1'>
+            <div class='ring-progress'>
+              <svg width='28' height='28'>
+                <circle class='track' cx='14' cy='14' r='12' stroke-width='3' fill='none'></circle>
+                <circle class='ind' cx='14' cy='14' r='12' stroke-width='3' fill='none' stroke-dasharray='${2*Math.PI*12}' stroke-dashoffset='${ring(1-(work.progress||0))}'></circle>
+              </svg>
+            </div>
+            <span class='text-xs text-white/60'>${Math.round((work.progress||0)*100)}%</span>
+          </div>
+        </div>`;
+      card.onclick=()=> selectWork(work.id);
+      return card;
+    }
+
+    function chapterLinks(ch){
+      const buyCh=$('#buyChapterLink'); const buySe=$('#buySeasonLink');
+      const pBuyCh=$('#paywallBuyCh'); const pBuySe=$('#paywallBuySeason');
+      const urlCh = ch?.productId? `https://noheroes.com.br/loja?produto=${ch.productId}`: null;
+      const urlSe = ch?.seasonProductId? `https://noheroes.com.br/loja?produto=${ch.seasonProductId}`: null;
+      [buyCh,pBuyCh].forEach(a=>{ if(!a) return; if(urlCh){ a.href=urlCh; a.classList.remove('hidden'); } else { a.classList.add('hidden'); a.removeAttribute('href'); }});
+      [buySe,pBuySe].forEach(a=>{ if(!a) return; if(urlSe){ a.href=urlSe; a.classList.remove('hidden'); } else { a.classList.add('hidden'); a.removeAttribute('href'); }});
+    }
+
+    // ===================== API =====================
+    async function api(path, opts={}){
+      const token = getJwt();
+      const headers = { 'Content-Type':'application/json', ...(token? {Authorization:`Bearer ${token}`}:{}) };
+      const res = await fetch(`${API_BASE}${path}`, { ...opts, headers });
+      if(!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.json();
+    }
+
+    function hasAccess(ch){
+      if(!ch) return false;
+      const owned = new Set(state.purchases.map(p=>p.shopItemId));
+      return owned.has(ch.seasonProductId) || (ch.productId && owned.has(ch.productId));
+    }
+
+    // ===================== RENDER LIBRARY =====================
+    function renderLibrary(){
+      const cont=$('#rowContinue'); const pop=$('#rowPopular'); const all=$('#rowAll');
+      cont.innerHTML=pop.innerHTML=all.innerHTML='';
+      const continued = state.library.filter(w=> (w.progress||0)>0);
+      continued.forEach(w=> cont.appendChild(workCard(w)));
+      const popular = [...state.library].sort((a,b)=>(b.viewCount||0)-(a.viewCount||0)).slice(0,12);
+      popular.forEach(w=> pop.appendChild(workCard(w)));
+      state.library.forEach(w=> all.appendChild(workCard(w)));
+    }
+
+    // ===================== RENDER CHAPTERS =====================
+    function renderChapters(){
+      const onlyU=$('#onlyUnlocked').checked; const onlyUr=$('#onlyUnread').checked;
+      const el=$('#chapterList'); el.innerHTML='';
+      state.chapters
+        .filter(c=> !onlyU || hasAccess(c))
+        .filter(c=> !onlyUr || !state.read.get(c.id)?.readAt)
+        .sort((a,b)=> a.number-b.number)
+        .forEach(ch=>{
+          const locked=!hasAccess(ch);
+          const r=state.read.get(ch.id); const read=!!r?.readAt; const progress=r? (r.progress||0):0;
+          const card=document.createElement('button');
+          card.className=`group rounded-xl p-3 text-left border border-nh-border/30 bg-white/5 hover:bg-white/10 ${glassLocked(locked)}`;
+          const titleClass = read? 'text-white/50 line-through':'text-grad font-semibold';
+          card.innerHTML=`
+            <div class='flex items-center gap-3'>
+              <div class='h-10 w-10 grid place-items-center rounded-lg bg-black/40 border border-white/10'>C${String(ch.number).padStart(2,'0')}</div>
+              <div class='min-w-0 flex-1'>
+                <div class='truncate ${titleClass}'>${ch.title}</div>
+                <div class='text-xs text-white/60'>${fmtDur(ch.readTimeSec)}</div>
+              </div>
+              <div class='ring-progress'>
+                <svg width='28' height='28'>
+                  <circle class='track' cx='14' cy='14' r='12' stroke-width='3' fill='none'></circle>
+                  <circle class='ind' cx='14' cy='14' r='12' stroke-width='3' fill='none' stroke-dasharray='${2*Math.PI*12}' stroke-dashoffset='${ring(1-progress)}'></circle>
+                </svg>
+              </div>
+              <div title='${locked?"Bloqueado":"Liberado"}'>${locked?'🔒':'📖'}</div>
+            </div>`;
+          card.onclick=()=> loadChapter(ch);
+          el.appendChild(card);
+        });
+    }
+
+    function updatePaywall(ch){
+      const gate=$('#paywall'); const badge=$('#gateBadge');
+      if(hasAccess(ch)){ gate.classList.add('hidden'); badge.classList.add('hidden'); } else { gate.classList.remove('hidden'); badge.classList.remove('hidden'); }
+      chapterLinks(ch);
+    }
+
+    function updateBreadcrumb(){
+      const w=state.currentWork; const ch=state.currentChapter;
+      $('#workTitle').textContent = w? w.title : 'Selecione uma obra';
+      $('#chapterBreadcrumb').textContent = (w&&ch)? `${w.title} • Capítulo ${ch.number} — ${ch.title}` : '—';
+    }
+
+    // ===================== READER =====================
+    function clearPages(){ $('#pages').innerHTML=''; }
+
+    function renderPages(ch){
+      const pagesEl=$('#pages'); clearPages();
+      const pages = ch.pages||[];
+      if(pages.length===0){ // Placeholder de páginas
+        for(let i=1;i<=6;i++){
+          const ph=document.createElement('div'); ph.className='page-ph rounded-xl grid place-items-center text-white/50'; ph.textContent=`Página ${i}`; pagesEl.appendChild(ph);
+        }
+        return;
+      }
+      pages.forEach((src,idx)=>{
+        const fig=document.createElement('figure'); fig.className='rounded-xl overflow-hidden bg-black/60 border border-white/10';
+        const img=document.createElement('img'); img.loading='lazy'; img.alt=`Página ${idx+1}`; img.className='w-full h-auto block'; img.src=src; fig.appendChild(img); pagesEl.appendChild(fig);
+      });
+    }
+
+    function restoreScroll(ch){
+      const r=state.read.get(ch.id); if(!r?.scrollY) return; setTimeout(()=>{ window.scrollTo({top:r.scrollY, behavior:'instant'}); }, 50);
+    }
+
+    function bindReadingProgress(){
+      let ticking=false, lastReport=0;
+      window.addEventListener('scroll', ()=>{
+        if(!state.currentChapter || ticking) return; ticking=true;
+        const doc = document.documentElement; const max = doc.scrollHeight - window.innerHeight; const y = window.scrollY; const p = max>0? (y/max) : 0;
+        const now = Date.now();
+        if(now-lastReport>1500){ saveProgress(state.currentChapter.id, p, p>=0.9, y|0); lastReport=now; }
+        ticking=false;
+      }, {passive:true});
+    }
+
+    async function loadChapter(ch){
+      state.currentChapter = ch; updatePaywall(ch); updateBreadcrumb();
+      if(!hasAccess(ch) && !state.preview){ clearPages(); return; }
+      // Para backend real, troque por: const data = await api(`/novels/chapters/${ch.id}`) → { pages:[...], tracks:[] }
+      renderPages(ch);
+      restoreScroll(ch);
+      renderChapters();
+    }
+
+    function nextChapter(){ if(!state.currentChapter) return; const i=state.chapters.findIndex(c=>c.id===state.currentChapter.id); const nx=state.chapters[i+1]; if(nx) loadChapter(nx); }
+    function prevChapter(){ if(!state.currentChapter) return; const i=state.chapters.findIndex(c=>c.id===state.currentChapter.id); const pv=state.chapters[i-1]; if(pv) loadChapter(pv); }
+
+    // ===================== PROGRESS =====================
+    async function saveProgress(chapterId, progress01, markRead, scrollY){
+      try{
+        if(!state.preview){
+          await api(`/me/chapters/${chapterId}/progress`, { method:'POST', body: JSON.stringify({ progress: clamp(progress01,0,1), read: !!markRead, scrollY: scrollY|0 }) });
+        }
+        const cur=state.read.get(chapterId)||{};
+        state.read.set(chapterId, { progress: clamp(progress01,0,1), readAt: markRead? new Date().toISOString(): cur.readAt||null, scrollY: scrollY|0 });
+      }catch(e){ console.warn('progress skip (preview or error)', e); }
+      renderChapters();
+    }
+
+    // ===================== WORK SELECT =====================
+    async function selectWork(workId){
+      state.currentWork = state.library.find(w=>w.id===workId)||null;
+      if(!state.currentWork) return;
+      $('#seasonBadge').textContent = state.currentWork.seasonLabel || 'Temporada 1';
+      try{
+        state.chapters = await api(`/novels/${workId}/chapters`);
+      }catch(e){ console.warn('chapters api failed, use preview', e); state.chapters = previewChapters(workId); state.preview=true; }
+      renderChapters();
+      const withProg = state.chapters.find(c=> (state.read.get(c.id)?.progress||0) > 0);
+      const firstOpen = withProg || state.chapters.find(c=>hasAccess(c)) || state.chapters[0];
+      if(firstOpen) loadChapter(firstOpen);
+      toggleLibrary(true); updateBreadcrumb();
+    }
+
+    // ===================== ACCORDIONS =====================
+    function toggleLibrary(forceClosed){ const body=$('#libraryBody'); const btn=$('#toggleLibrary'); if(forceClosed===true){ body.classList.add('hidden'); btn.textContent='Expandir'; return;} body.classList.toggle('hidden'); btn.textContent= body.classList.contains('hidden')? 'Expandir':'Minimizar'; }
+    function toggleChapters(){ const body=$('#chaptersBody'); const btn=$('#toggleChapters'); body.classList.toggle('hidden'); btn.textContent= body.classList.contains('hidden')? 'Expandir':'Minimizar'; }
+
+    // ===================== AUTH & BOOTSTRAP =====================
+    function updateUserBadge(){ const b=$('#userStatus'); if(state.me){ b.textContent= state.me.username||state.me.email||'Logado'; $('#logoutBtn').classList.remove('hidden'); } else { b.textContent='Visitante'; $('#logoutBtn').classList.add('hidden'); } }
+
+    async function bootstrap(){
+      try{
+        state.me = await api('/users/me');
+        state.purchases = await api('/me/purchases');
+        const read = await api('/me/chapters');
+        state.read = new Map(read.map(r=>[r.chapterId, r]));
+      }catch(e){ state.me=null; state.purchases=[]; state.read=new Map(); }
+      updateUserBadge();
+
+      try{
+        state.library = await api('/novels'); // [{id,title,thumb,seasonLabel,progress,viewCount}]
+      }catch(e){ console.warn('library api failed, use preview', e); state.library = previewLibrary(); state.preview=true; }
+      renderLibrary();
+
+      const cont = state.library.find(w=> (w.progress||0) > 0);
+      if(cont) selectWork(cont.id);
+    }
+
+    // ===================== PREVIEW MODE (placeholders) =====================
+    function previewLibrary(){
+      return [
+        {id:101, title:'As Cinzas do Amanhã — Mangá', thumb:'', seasonLabel:'S1', progress:0.35, viewCount:12000},
+        {id:102, title:'A Cidade e o Vazio', thumb:'', seasonLabel:'S1', progress:0, viewCount:8600},
+        {id:103, title:'Lótus Carmesim', thumb:'', seasonLabel:'S1', progress:0.8, viewCount:5400},
+        {id:104, title:'Noctilum', thumb:'', seasonLabel:'S1', progress:0.1, viewCount:2300},
+      ];
+    }
+    function previewChapters(workId){
+      const base=[
+        {id:workId*100+1, number:1, title:'Prólogo', readTimeSec:600, productId:201, seasonProductId:901, pages:[]},
+        {id:workId*100+2, number:2, title:'Lótus', readTimeSec:620, productId:202, seasonProductId:901, pages:[]},
+        {id:workId*100+3, number:3, title:'Eco de Aço', readTimeSec:700, productId:null, seasonProductId:901, pages:[]},
+        {id:workId*100+4, number:4, title:'Cruz e Brasa', readTimeSec:680, productId:null, seasonProductId:901, pages:[]},
+      ];
+      // Para demo, páginas vazias geram placeholders; se quiser ver imagens, preencha 'pages' com URLs.
+      return base;
+    }
+
+    // ===================== BRASAS =====================
+    function startBrasas(){
+      const c=document.getElementById('brasasCanvas'); const ctx=c.getContext('2d'); let w,h,parts=[]; function resize(){ w=c.width=innerWidth; h=c.height=innerHeight; } window.addEventListener('resize',resize); resize(); for(let i=0;i<70;i++) parts.push({x:Math.random()*w,y:Math.random()*h,r:1+Math.random()*2,a:0.25+Math.random()*0.5,s:0.2+Math.random()*0.8}); (function loop(){ ctx.clearRect(0,0,w,h); parts.forEach(function(p){ p.y-=p.s; if(p.y<-10) p.y=h+10; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle='rgba(143,79,255,'+p.a+')'; ctx.fill(); }); requestAnimationFrame(loop); })();
+    }
+
+    // ===================== INIT =====================
+    document.addEventListener('DOMContentLoaded', ()=>{
+      startBrasas(); bindReadingProgress();
+      $('#onlyUnlocked').onchange=renderChapters; $('#onlyUnread').onchange=renderChapters;
+      $('#logoutBtn').onclick=()=>{ localStorage.removeItem('token'); localStorage.removeItem('NoHeroes_token'); location.reload(); };
+      $('#toggleLibrary').onclick=()=>toggleLibrary(); $('#toggleChapters').onclick=()=>toggleChapters();
+      $('#btnNext').onclick=nextChapter; $('#btnPrev').onclick=prevChapter; $('#btnChapters').onclick=()=>toggleChapters();
+      $('#markReadBtn').onclick=()=>{ if(state.currentChapter) saveProgress(state.currentChapter.id,1,true, window.scrollY|0); };
+      $('#backTopBtn').onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
+      $('#globalSearch').addEventListener('input',(e)=>{ const q=e.target.value.toLowerCase().trim(); const filtered = state.library.filter(w=> (w.title||'').toLowerCase().includes(q)); if(q){ const bak=state.library; state.library=filtered; renderLibrary(); state.library=bak; } else renderLibrary(); });
+      bootstrap();
+    });
+  </script></body>
+</html>
