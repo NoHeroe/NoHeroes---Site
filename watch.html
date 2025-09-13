@@ -2,7 +2,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>NoHeroes • Assistir — As Cinzas do Amanhã</title>
+  <title>NoHeroes • Biblioteca & Player — ACDA</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -10,20 +10,10 @@
       theme: {
         extend: {
           colors: {
-            nh: {
-              bg: '#07060a',
-              card: 'rgba(255,255,255,0.06)',
-              glass: 'rgba(255,255,255,0.08)',
-              border: 'rgba(255,255,255,0.12)'
-            }
+            nh: { bg: '#07060a', card: 'rgba(255,255,255,0.06)', glass: 'rgba(255,255,255,0.08)', border: 'rgba(255,255,255,0.12)'}
           },
-          boxShadow: {
-            glow: '0 0 40px rgba(143,79,255,0.25)'
-          },
-          fontFamily: {
-            display: ['Cinzel Decorative','serif'],
-            sans: ['Inter','system-ui','-apple-system','Segoe UI','Roboto','sans-serif']
-          }
+          boxShadow: { glow: '0 0 40px rgba(143,79,255,0.25)', soft: '0 10px 30px rgba(0,0,0,0.3)'},
+          fontFamily: { display: ['Cinzel Decorative','serif'], sans: ['Inter','system-ui','-apple-system','Segoe UI','Roboto','sans-serif']}
         }
       }
     }
@@ -31,364 +21,470 @@
   <style>
     .grad-nh { background: linear-gradient(135deg,#8f4fff 0%,#d9b55a 100%); }
     .text-grad { background: linear-gradient(135deg,#b891ff 0%, #f5e3a5 100%); -webkit-background-clip:text; background-clip:text; color: transparent; }
-    /* Scrollbar minimal */
+    .ring-progress { position: relative; width: 28px; height: 28px; }
+    .ring-progress svg { transform: rotate(-90deg); }
+    .ring-progress circle.track { stroke: rgba(255,255,255,.15); }
+    .ring-progress circle.ind { stroke: #8f4fff; transition: stroke-dashoffset .3s ease; }
     ::-webkit-scrollbar{height:10px;width:10px}::-webkit-scrollbar-thumb{background:#2b2440;border-radius:9999px}::-webkit-scrollbar-track{background:#0f0d16}
   </style>
 </head>
 <body class="min-h-screen bg-nh bg-[#07060a] text-white font-sans">
-  <!-- BG brasas roxas sutil -->
+  <!-- BG brasas roxas -->
   <div class="fixed inset-0 -z-10 pointer-events-none">
     <canvas id="brasasCanvas" class="w-full h-full opacity-[0.15]"></canvas>
-    <div class="absolute inset-0 grad-nh opacity-[0.08] mix-blend-screen"></div>
-  </div>  <!-- Header fixo (não sticky-scroll) -->  <header class="w-full border-b border-nh-border/30 bg-black/40 backdrop-blur-xl">
-    <div class="mx-auto max-w-7xl px-4 py-4 flex items-center gap-4">
+    <div class="absolute inset-0 grad-nh opacity-[0.06] mix-blend-screen"></div>
+  </div>  <!-- Header fixo -->  <header class="fixed top-0 inset-x-0 z-30 border-b border-nh-border/30 bg-black/50 backdrop-blur-xl">
+    <div class="mx-auto max-w-7xl px-4 py-3 flex items-center gap-4">
       <div class="h-8 w-8 rounded-lg grad-nh"></div>
-      <h1 class="text-lg md:text-2xl font-display tracking-wide text-grad">NoHeroes • Player</h1>
-      <div class="ml-auto flex items-center gap-3 text-sm">
-        <span id="userStatus" class="px-3 py-1 rounded-full bg-white/5 border border-nh-border/30">Visitante</span>
-        <button id="logoutBtn" class="hidden px-3 py-1 rounded-lg bg-white/5 border border-nh-border/30 hover:bg-white/10">Sair</button>
+      <span class="font-display text-xl tracking-wide text-grad">NoHeroes</span>
+      <div class="ml-4 flex-1 max-w-xl">
+        <div class="relative">
+          <input id="globalSearch" placeholder="Buscar obras, temporadas, episódios…" class="w-full rounded-xl bg-white/5 border border-nh-border/30 px-4 py-2 outline-none focus:border-white/50" />
+          <span class="absolute right-3 top-1/2 -translate-y-1/2 text-white/60">⌕</span>
+        </div>
+      </div>
+      <div class="ml-auto flex items-center gap-2 text-sm">
+        <button id="filterBtn" class="px-3 py-2 rounded-lg bg-white/5 border border-nh-border/30 hover:bg-white/10">Filtros</button>
+        <span id="userStatus" class="px-3 py-2 rounded-lg bg-white/5 border border-nh-border/30">Visitante</span>
+        <button id="logoutBtn" class="hidden px-3 py-2 rounded-lg bg-white/5 border border-nh-border/30 hover:bg-white/10">Sair</button>
       </div>
     </div>
-  </header>  <main class="mx-auto max-w-7xl px-4 pb-20">
-    <!-- Top controls -->
-    <section class="mt-6 grid grid-cols-1 lg:grid-cols-[320px,1fr] gap-6">
-      <!-- Animes / Temporadas -->
-      <aside class="rounded-2xl bg-nh-card backdrop-blur-xl border border-nh-border/30 p-4">
-        <div class="flex items-center justify-between">
-          <h2 class="font-display text-xl">Séries</h2>
-          <span class="text-xs px-2 py-1 rounded-full bg-white/5 border border-nh-border/30">beta</span>
-        </div>
-        <div id="animeList" class="mt-3 grid gap-2">
-          <!-- Preenche via JS -->
-        </div>
-      </aside><!-- Player + Info -->
-  <section class="grid gap-4">
-    <div class="relative rounded-2xl overflow-hidden border border-nh-border/30 bg-black/50">
-      <div class="aspect-video bg-black" id="playerContainer">
-        <video id="video" class="w-full h-full" controls playsinline></video>
-      </div>
-      <!-- Gate de acesso -->
-      <div id="paywall" class="hidden absolute inset-0 grid place-items-center bg-black/70 backdrop-blur-md">
-        <div class="p-6 rounded-2xl border border-nh-border/40 bg-nh-glass max-w-md text-center shadow-glow">
-          <h3 class="font-display text-2xl mb-2">Conteúdo bloqueado</h3>
-          <p class="text-white/80 text-sm">Você precisa adquirir este episódio ou o passe da temporada para assistir.</p>
-          <div class="mt-5 flex flex-col sm:flex-row gap-3 justify-center">
-            <a id="buyEpisodeLink" class="px-4 py-2 rounded-xl grad-nh text-black font-semibold">Comprar episódio</a>
-            <a id="buySeasonLink" class="px-4 py-2 rounded-xl bg-white/10 border border-nh-border/30" target="_blank">Passe da temporada</a>
+  </header>  <main class="mx-auto max-w-7xl px-4 pt-24 pb-24 grid gap-8">
+    <!-- SEÇÃO 1: BIBLIOTECA (Accordion) -->
+    <section id="librarySection" class="rounded-2xl bg-nh-card backdrop-blur-xl border border-nh-border/30 shadow-soft overflow-hidden">
+      <header class="flex items-center justify-between px-4 py-3">
+        <h2 class="font-display text-xl">Biblioteca</h2>
+        <button id="toggleLibrary" class="px-3 py-1.5 rounded-lg bg-white/5 border border-nh-border/30 hover:bg-white/10">Minimizar</button>
+      </header>
+      <div id="libraryBody" class="grid gap-6 p-4">
+        <!-- Carrossel: Continuar assistindo -->
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-white/80">Continuar assistindo</h3>
           </div>
+          <div id="rowContinue" class="flex gap-4 overflow-x-auto pb-2"></div>
+        </div>
+        <!-- Carrossel: Populares (placeholder ordenado por viewCount) -->
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-white/80">Populares</h3>
+          </div>
+          <div id="rowPopular" class="flex gap-4 overflow-x-auto pb-2"></div>
+        </div>
+        <!-- Carrossel: Todas as obras -->
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-white/80">Todas as obras</h3>
+          </div>
+          <div id="rowAll" class="flex gap-4 overflow-x-auto pb-2"></div>
+        </div>
+      </div>
+    </section><!-- SEÇÃO 2: PLAYER -->
+<section id="playerSection" class="rounded-2xl bg-nh-card backdrop-blur-xl border border-nh-border/30 shadow-soft overflow-hidden">
+  <header class="flex items-center justify-between px-4 py-3 border-b border-white/5">
+    <div class="min-w-0">
+      <div id="workTitle" class="truncate font-display text-xl text-grad">Selecione uma obra</div>
+      <div id="episodeBreadcrumb" class="text-xs text-white/60 mt-0.5">—</div>
+    </div>
+    <div class="flex items-center gap-2">
+      <span id="gateBadge" class="hidden text-xs px-2 py-1 rounded-full border border-nh-border/30">Bloqueado</span>
+      <button id="buyEpisodeLink" class="hidden px-3 py-1.5 rounded-xl grad-nh text-black font-semibold">Comprar episódio</button>
+      <button id="buySeasonLink" class="hidden px-3 py-1.5 rounded-xl bg-white/10 border border-nh-border/30">Passe da temporada</button>
+    </div>
+  </header>
+
+  <!-- Player area -->
+  <div class="relative">
+    <div class="aspect-video bg-black" id="playerContainer">
+      <video id="video" class="w-full h-full" playsinline></video>
+    </div>
+    <!-- Skip intro/outro -->
+    <div id="skipIntro" class="hidden absolute bottom-24 right-4 px-3 py-2 rounded-xl bg-black/70 border border-white/10">Pular abertura</div>
+    <div id="skipOutro" class="hidden absolute bottom-24 right-4 mr-36 px-3 py-2 rounded-xl bg-black/70 border border-white/10">Pular encerramento</div>
+    <!-- Paywall overlay -->
+    <div id="paywall" class="hidden absolute inset-0 grid place-items-center bg-black/70 backdrop-blur-md">
+      <div class="p-6 rounded-2xl border border-nh-border/40 bg-nh-glass max-w-md text-center shadow-glow">
+        <h3 class="font-display text-2xl mb-2">Conteúdo bloqueado</h3>
+        <p class="text-white/80 text-sm">Adquira o episódio ou o passe da temporada para assistir.</p>
+        <div class="mt-5 flex flex-col sm:flex-row gap-3 justify-center">
+          <a id="paywallBuyEp" class="px-4 py-2 rounded-xl grad-nh text-black font-semibold" target="_blank">Comprar episódio</a>
+          <a id="paywallBuySeason" class="px-4 py-2 rounded-xl bg-white/10 border border-nh-border/30" target="_blank">Passe da temporada</a>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="rounded-2xl bg-nh-card backdrop-blur-xl border border-nh-border/30 p-4">
-      <h3 id="epTitle" class="font-display text-xl">Selecione um episódio</h3>
-      <p id="epDesc" class="text-white/70 text-sm mt-1">Use a lista ao lado para escolher o capítulo.</p>
+  <!-- Control bar (baixo do player) -->
+  <div class="flex flex-wrap items-center gap-2 px-4 py-3 border-t border-white/5">
+    <div class="flex items-center gap-2">
+      <button id="btnPrev" class="px-3 py-1.5 rounded-lg bg-white/5 border border-nh-border/30 hover:bg-white/10">◀ Anterior</button>
+      <button id="btnEpisodes" class="px-3 py-1.5 rounded-lg grad-nh text-black font-semibold">Episódios</button>
+      <button id="btnNext" class="px-3 py-1.5 rounded-lg bg-white/5 border border-nh-border/30 hover:bg-white/10">Próximo ▶</button>
     </div>
-  </section>
+    <div class="ml-auto flex items-center gap-2 text-sm">
+      <select id="qualitySel" class="px-2 py-1 rounded-lg bg-white/5 border border-nh-border/30"></select>
+      <select id="speedSel" class="px-2 py-1 rounded-lg bg-white/5 border border-nh-border/30">
+        <option>0.75x</option><option>1x</option><option>1.25x</option><option>1.5x</option><option>1.75x</option><option>2x</option>
+      </select>
+      <button id="ccBtn" class="px-3 py-1.5 rounded-lg bg-white/5 border border-nh-border/30">Legendas</button>
+      <button id="markWatchedBtn" class="px-3 py-1.5 rounded-lg bg-white/5 border border-nh-border/30">Marcar visto</button>
+      <button id="fsBtn" class="px-3 py-1.5 rounded-lg bg-white/5 border border-nh-border/30">Tela cheia</button>
+    </div>
+  </div>
 </section>
 
-<!-- Lista de episódios / Tabela -->
-<section class="mt-6 grid grid-cols-1 lg:grid-cols-[320px,1fr] gap-6">
-  <!-- Filtros / Status -->
-  <aside class="rounded-2xl bg-nh-card backdrop-blur-xl border border-nh-border/30 p-4">
-    <div class="flex items-center justify-between">
+<!-- SEÇÃO 3: EPISÓDIOS (Accordion) -->
+<section id="episodesSection" class="rounded-2xl bg-nh-card backdrop-blur-xl border border-nh-border/30 shadow-soft overflow-hidden">
+  <header class="flex items-center justify-between px-4 py-3">
+    <div class="flex items-center gap-2">
       <h2 class="font-display text-xl">Episódios</h2>
-      <div class="text-xs text-white/70" id="seasonBadge">Temporada 1</div>
+      <span id="seasonBadge" class="text-xs px-2 py-1 rounded-full bg-white/5 border border-nh-border/30">Temporada 1</span>
     </div>
-    <div class="mt-3 flex items-center gap-2">
-      <label class="flex items-center gap-2 text-sm">
-        <input id="showOnlyUnlocked" type="checkbox" class="accent-[#8f4fff]"> Mostrar apenas liberados
-      </label>
+    <div class="flex items-center gap-2 text-sm">
+      <label class="flex items-center gap-2"><input id="onlyUnlocked" type="checkbox" class="accent-[#8f4fff]"> Liberados</label>
+      <label class="flex items-center gap-2"><input id="onlyUnwatched" type="checkbox" class="accent-[#8f4fff]"> Não vistos</label>
+      <button id="toggleEpisodes" class="px-3 py-1.5 rounded-lg bg-white/5 border border-nh-border/30 hover:bg-white/10">Minimizar</button>
     </div>
-  </aside>
-
-  <section class="rounded-2xl bg-nh-card backdrop-blur-xl border border-nh-border/30 overflow-hidden">
-    <div class="overflow-auto">
-      <table class="min-w-full text-sm">
-        <thead class="bg-white/5 text-white/70">
-          <tr>
-            <th class="text-left px-4 py-3">#</th>
-            <th class="text-left px-4 py-3">Título</th>
-            <th class="text-left px-4 py-3">Duração</th>
-            <th class="text-left px-4 py-3">Status</th>
-            <th class="text-left px-4 py-3">Assistido</th>
-            <th class="text-right px-4 py-3">Ação</th>
-          </tr>
-        </thead>
-        <tbody id="episodeTable" class="divide-y divide-white/5"></tbody>
-      </table>
-    </div>
-  </section>
+  </header>
+  <div id="episodesBody" class="p-2">
+    <div id="episodeList" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+  </div>
 </section>
 
-  </main>  <!-- Scripts -->  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.7/dist/hls.min.js"></script>  <script>
+  </main>  <!-- Libs -->  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.7/dist/hls.min.js"></script>  <script>
     // ===================== CONFIG =====================
-    const API_BASE = 'https://api.noheroes.com.br'; // ajuste se necessário
+    const API_BASE = 'https://api.noheroes.com.br';
 
-    // Pega JWT de onde você já usa no projeto
     function getJwt(){
       const raw = (localStorage.getItem('token')||'').trim() || (localStorage.getItem('NoHeroes_token')||'').trim();
-      return raw.replace(/^Bearer\s+/i, '');
+      return raw.replace(/^Bearer\s+/i,'');
     }
 
+    // ===================== STATE =====================
     const state = {
       me: null,
-      animes: [],
-      currentAnime: null,
+      library: [], // obras/temporadas
+      currentWork: null, // obra selecionada
       episodes: [],
-      purchases: [], // UserItem (shopItemId)
-      watched: new Map(), // episodeId -> {progress, watchedAt}
+      purchases: [],
+      watched: new Map(), // episodeId -> {progress, watchedAt, timeSec}
       currentEpisode: null,
-      hls: null
+      hls: null,
+      tracks: [],
     };
 
-    // ===================== UI HELPERS =====================
+    // ===================== UTIL =====================
     const $ = (q)=>document.querySelector(q);
     const $$ = (q)=>Array.from(document.querySelectorAll(q));
+    const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
+    const fmt=(s)=> s==null? '—' : s;
+    function fmtDur(sec){ if(!sec) return '—'; const m=Math.floor(sec/60), s=(sec%60|0).toString().padStart(2,'0'); return `${m}:${s}`; }
 
-    function fmtDuration(sec){
-      if(!sec) return '—';
-      const m = Math.floor(sec/60), s = Math.floor(sec%60).toString().padStart(2,'0');
-      return `${m}:${s}`;
+    function glassLocked(locked){return locked? 'opacity-60' : ''}
+
+    function episodeLinks(ep){
+      const buyEp = $('#buyEpisodeLink'); const buySe = $('#buySeasonLink');
+      const pBuyEp = $('#paywallBuyEp'); const pBuySe = $('#paywallBuySeason');
+      const urlEp = ep?.productId? `https://noheroes.com.br/loja?produto=${ep.productId}`: null;
+      const urlSe = ep?.seasonProductId? `https://noheroes.com.br/loja?produto=${ep.seasonProductId}`: null;
+      [buyEp,pBuyEp].forEach(a=>{ if(!a) return; if(urlEp){ a.href=urlEp; a.classList.remove('hidden'); } else { a.classList.add('hidden'); a.removeAttribute('href'); }});
+      [buySe,pBuySe].forEach(a=>{ if(!a) return; if(urlSe){ a.href=urlSe; a.classList.remove('hidden'); } else { a.classList.add('hidden'); a.removeAttribute('href'); }});
     }
 
-    function glassRowLocked(locked){
-      return locked ? 'opacity-60' : '';
-    }
-
-    function episodeProductLinks(ep){
-      const buyEpisodeLink = $('#buyEpisodeLink');
-      const buySeasonLink = $('#buySeasonLink');
-      if (ep?.productId) buyEpisodeLink.href = `https://noheroes.com.br/loja?produto=${ep.productId}`;
-      else buyEpisodeLink.removeAttribute('href');
-      if (ep?.seasonProductId) buySeasonLink.href = `https://noheroes.com.br/loja?produto=${ep.seasonProductId}`;
-    }
-
-    // ===================== API =====================
+    // ===================== API WRAPPER =====================
     async function api(path, opts={}){
       const token = getJwt();
-      const headers = { 'Content-Type': 'application/json', ...(token? {Authorization:`Bearer ${token}`} : {}) };
+      const headers = { 'Content-Type':'application/json', ...(token? {Authorization:`Bearer ${token}`}:{}) };
       const res = await fetch(`${API_BASE}${path}`, { ...opts, headers });
       if(res.status===401) throw new Error('unauth');
       if(!res.ok) throw new Error(`HTTP ${res.status}`);
       return res.json();
     }
 
-    // ===== Endpoints esperados no backend =====
-    // GET /animes -> [{id, title, slug, seasonProductId}]
-    // GET /animes/:id/episodes -> [{id, number, title, durationSec, hlsUrl, description, productId, seasonProductId}]
-    // GET /me/purchases -> [{shopItemId}]
-    // GET /me/episodes -> [{episodeId, progress, watchedAt}]
-    // POST /me/episodes/:id/progress {progress (0..1), watched:boolean}
-
-    // ===================== ACCESS / GATE =====================
+    // ===================== ACCESS =====================
     function hasAccess(ep){
       if(!ep) return false;
       const owned = new Set(state.purchases.map(p=>p.shopItemId));
       return owned.has(ep.seasonProductId) || (ep.productId && owned.has(ep.productId));
     }
 
-    // ===================== RENDER =====================
-    function renderAnimes(){
-      const box = $('#animeList');
-      box.innerHTML = '';
-      state.animes.forEach(an=>{
-        const btn = document.createElement('button');
-        btn.className = `w-full text-left px-3 py-2 rounded-xl border border-nh-border/30 hover:bg-white/5 ${state.currentAnime?.id===an.id?'bg-white/10':''}`;
-        btn.innerHTML = `<div class='font-semibold'>${an.title}</div><div class='text-xs text-white/60'>${an.slug}</div>`;
-        btn.onclick = ()=>selectAnime(an.id);
-        box.appendChild(btn);
-      })
+    // ===================== LIBRARY RENDER =====================
+    function renderLibrary(){
+      const mkCard = (work)=>{
+        const card = document.createElement('button');
+        card.className = 'group min-w-[180px] w-[180px] shrink-0 rounded-2xl overflow-hidden border border-nh-border/30 bg-white/5 hover:bg-white/10 transition shadow-soft';
+        card.innerHTML = `
+          <div class='aspect-[2/3] bg-black/30 relative'>
+            <img loading='lazy' src='${work.thumb||''}' alt='' class='absolute inset-0 w-full h-full object-cover opacity-90 group-hover:opacity-100'>
+            <div class='absolute bottom-2 left-2 px-2 py-0.5 text-xs rounded-full bg-black/60 border border-white/10'>${work.seasonLabel||'S1'}</div>
+          </div>
+          <div class='p-2 text-left'>
+            <div class='truncate font-semibold'>${work.title}</div>
+            <div class='flex items-center gap-2 mt-1'>
+              <div class='ring-progress'>
+                <svg width='28' height='28'>
+                  <circle class='track' cx='14' cy='14' r='12' stroke-width='3' fill='none'></circle>
+                  <circle class='ind' cx='14' cy='14' r='12' stroke-width='3' fill='none' stroke-dasharray='${2*Math.PI*12}' stroke-dashoffset='${(1-(work.progress||0))*2*Math.PI*12}'></circle>
+                </svg>
+              </div>
+              <span class='text-xs text-white/60'>${Math.round((work.progress||0)*100)}%</span>
+            </div>
+          </div>`;
+        card.onclick=()=> selectWork(work.id);
+        return card;
+      }
+      const rowContinue=$('#rowContinue'); rowContinue.innerHTML='';
+      const cont = state.library.filter(w=> (w.progress||0) > 0);
+      cont.forEach(w=> rowContinue.appendChild(mkCard(w)));
+
+      const rowPopular=$('#rowPopular'); rowPopular.innerHTML='';
+      const popular=[...state.library].sort((a,b)=>(b.viewCount||0)-(a.viewCount||0)).slice(0,12);
+      popular.forEach(w=> rowPopular.appendChild(mkCard(w)));
+
+      const rowAll=$('#rowAll'); rowAll.innerHTML='';
+      state.library.forEach(w=> rowAll.appendChild(mkCard(w)));
     }
 
+    // ===================== EPISODES RENDER =====================
     function renderEpisodes(){
-      const onlyUnlocked = $('#showOnlyUnlocked').checked;
-      const tbody = $('#episodeTable');
-      tbody.innerHTML='';
+      const onlyU = document.getElementById('onlyUnlocked').checked; const onlyUnw = document.getElementById('onlyUnwatched').checked;
+      const el = document.getElementById('episodeList'); el.innerHTML='';
       state.episodes
-        .filter(ep=>!onlyUnlocked || hasAccess(ep))
-        .sort((a,b)=>a.number-b.number)
+        .filter(ep=> !onlyU || hasAccess(ep))
+        .filter(ep=> !onlyUnw || !state.watched.get(ep.id)?.watchedAt)
+        .sort((a,b)=> a.number-b.number)
         .forEach(ep=>{
           const locked = !hasAccess(ep);
-          const watched = !!state.watched.get(ep.id)?.watchedAt;
-          const tr = document.createElement('tr');
-          tr.className = `hover:bg-white/5 ${glassRowLocked(locked)}`;
-          tr.innerHTML = `
-            <td class="px-4 py-3">${ep.number}</td>
-            <td class="px-4 py-3">
-              <div class="font-medium flex items-center gap-2">
-                ${locked?'<span title="Bloqueado" class="text-white/50">🔒</span>':'<span title="Liberado">▶️</span>'}
-                ${ep.title}
+          const w = state.watched.get(ep.id);
+          const watched = !!w?.watchedAt;
+          const progress = w? (w.progress||0) : 0;
+          const card = document.createElement('button');
+          card.className = `group rounded-xl p-3 text-left border border-nh-border/30 bg-white/5 hover:bg-white/10 ${glassLocked(locked)}`;
+          const titleClass = watched? 'text-white/50 line-through' : 'text-grad font-semibold';
+          card.innerHTML = `
+            <div class='flex items-center gap-3'>
+              <div class='h-10 w-10 grid place-items-center rounded-lg bg-black/40 border border-white/10'>E${String(ep.number).padStart(2,'0')}</div>
+              <div class='min-w-0 flex-1'>
+                <div class='truncate ${titleClass}'>${ep.title}</div>
+                <div class='text-xs text-white/60'>${fmtDur(ep.durationSec)}</div>
               </div>
-              <div class="text-xs text-white/60">${ep.description||''}</div>
-            </td>
-            <td class="px-4 py-3">${fmtDuration(ep.durationSec)}</td>
-            <td class="px-4 py-3">${locked?'<span class="text-white/60">Bloqueado</span>':'Liberado'}</td>
-            <td class="px-4 py-3">
-              <label class="inline-flex items-center gap-2">
-                <input type="checkbox" ${watched?'checked':''} ${locked?'disabled':''} data-ep="${ep.id}" class="accent-[#8f4fff]"> <span class="text-xs">${watched?'Concluído':'—'}</span>
-              </label>
-            </td>
-            <td class="px-4 py-3 text-right">
-              <button class="px-3 py-1 rounded-lg border border-nh-border/40 hover:bg-white/10 ${locked?'opacity-60 cursor-not-allowed':''}" data-play="${ep.id}">Assistir</button>
-            </td>`;
-          tbody.appendChild(tr);
+              <div class='ring-progress'>
+                <svg width='28' height='28'>
+                  <circle class='track' cx='14' cy='14' r='12' stroke-width='3' fill='none'></circle>
+                  <circle class='ind' cx='14' cy='14' r='12' stroke-width='3' fill='none' stroke-dasharray='${2*Math.PI*12}' stroke-dashoffset='${(1-progress)*2*Math.PI*12}'></circle>
+                </svg>
+              </div>
+              <div title='${locked?"Bloqueado":"Liberado"}'>${locked? '🔒' : '▶️'}</div>
+            </div>`;
+          card.onclick=()=> loadEpisode(ep);
+          el.appendChild(card);
         });
-
-      // Bind play/check handlers
-      $$('button[data-play]').forEach(b=> b.onclick = ()=>{
-        const epId = Number(b.getAttribute('data-play'));
-        const ep = state.episodes.find(e=>e.id===epId);
-        if(ep) loadEpisode(ep);
-      });
-      $$('input[type=checkbox][data-ep]').forEach(ch=> ch.onchange = async ()=>{
-        const epId = Number(ch.getAttribute('data-ep'));
-        await saveProgress(epId, ch.checked?1:0, ch.checked);
-      });
     }
 
     function updatePaywall(ep){
-      const gate = $('#paywall');
-      if(hasAccess(ep)) gate.classList.add('hidden'); else gate.classList.remove('hidden');
-      episodeProductLinks(ep);
+      const gate=document.getElementById('paywall'); const badge=document.getElementById('gateBadge');
+      if(hasAccess(ep)){ gate.classList.add('hidden'); badge.classList.add('hidden'); }
+      else { gate.classList.remove('hidden'); badge.classList.remove('hidden'); }
+      episodeLinks(ep);
     }
 
+    function updateBreadcrumb(){
+      const w = state.currentWork; const ep=state.currentEpisode;
+      document.getElementById('workTitle').textContent = w? w.title : 'Selecione uma obra';
+      document.getElementById('episodeBreadcrumb').textContent = (w&&ep)? `${w.title} • Episódio ${ep.number} — ${ep.title}` : '—';
+    }
+
+    // ===================== PLAYER =====================
     function loadVideo(url){
-      const video = $('#video');
+      const v=document.getElementById('video');
       if(state.hls){ state.hls.destroy(); state.hls=null; }
+      v.src='';
       if(Hls.isSupported()){
-        state.hls = new Hls();
-        state.hls.loadSource(url);
-        state.hls.attachMedia(video);
+        const hls = state.hls = new Hls({ maxBufferLength:30 });
+        hls.loadSource(url);
+        hls.attachMedia(v);
+        hls.on(Hls.Events.MANIFEST_PARSED, function(_,data){
+          const sel=document.getElementById('qualitySel'); sel.innerHTML='';
+          const levels=data.levels||[];
+          const optAuto=document.createElement('option'); optAuto.value='auto'; optAuto.textContent='Auto'; sel.appendChild(optAuto);
+          levels.forEach(function(lv,i){ const o=document.createElement('option'); o.value=i; o.textContent = (lv.height? (lv.height+'p'):'Qualidade'); sel.appendChild(o); });
+          sel.onchange=function(){ if(sel.value==='auto'){ hls.currentLevel=-1; } else { hls.currentLevel=Number(sel.value); }}
+        });
       } else {
-        video.src = url; // fallback MP4
+        v.src = url;
       }
+    }
+
+    function bindPlayerUX(){
+      const v=document.getElementById('video');
+      document.getElementById('speedSel').onchange = function(){ v.playbackRate = parseFloat(document.getElementById('speedSel').value.replace('x','')); };
+      document.getElementById('fsBtn').onclick = function(){ const c=document.getElementById('playerContainer'); if(c.requestFullscreen) c.requestFullscreen(); };
+      document.getElementById('ccBtn').onclick = function(){ const t=Array.from(v.textTracks)[0]; if(!t) return; t.mode = t.mode==='showing'? 'disabled':'showing'; };
+      document.addEventListener('keydown', function(e){
+        if(e.target && ['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName)) return;
+        if(e.code==='Space'){ e.preventDefault(); if(v.paused) v.play(); else v.pause(); }
+        if(e.code==='ArrowLeft') v.currentTime = Math.max(0, v.currentTime-10);
+        if(e.code==='ArrowRight') v.currentTime = Math.min(v.duration||Infinity, v.currentTime+10);
+        if(e.key==='n' || e.key==='N') playNext();
+        if(e.key==='p' || e.key==='P') playPrev();
+      });
+      v.addEventListener('timeupdate', function(){
+        if(!state.currentEpisode) return;
+        const t = v.currentTime, d=v.duration||0; const p = d? (t/d):0;
+        if(Math.floor(t)%15===0) saveProgress(state.currentEpisode.id, p, p>=0.9, Math.floor(t));
+        const ep = state.currentEpisode;
+        if(ep && ep.introStart!=null && ep.introEnd!=null){ const show = t>=ep.introStart && t<=ep.introEnd; document.getElementById('skipIntro').classList.toggle('hidden', !show); }
+        if(ep && ep.outroStart!=null && ep.outroEnd!=null){ const show = t>=ep.outroStart && t<=ep.outroEnd; document.getElementById('skipOutro').classList.toggle('hidden', !show); }
+      });
+      v.addEventListener('ended', function(){ if(state.currentEpisode) saveProgress(state.currentEpisode.id, 1, true, Math.floor(v.duration||0)); setTimeout(playNext, 1200); });
+      document.getElementById('skipIntro').onclick = function(){ const ep=state.currentEpisode; if(!ep) return; document.getElementById('video').currentTime = (ep.introEnd||0); };
+      document.getElementById('skipOutro').onclick = function(){ const ep=state.currentEpisode; if(!ep) return; document.getElementById('video').currentTime = (ep.outroEnd||document.getElementById('video').duration||0); };
+      document.getElementById('btnNext').onclick=playNext; document.getElementById('btnPrev').onclick=playPrev; document.getElementById('btnEpisodes').onclick=toggleEpisodes;
+      document.getElementById('markWatchedBtn').onclick=function(){ if(state.currentEpisode) saveProgress(state.currentEpisode.id, 1, true, Math.floor(document.getElementById('video').currentTime||0)); };
     }
 
     async function loadEpisode(ep){
       state.currentEpisode = ep;
-      $('#epTitle').textContent = `${ep.number}. ${ep.title}`;
-      $('#epDesc').textContent = ep.description || '';
-      updatePaywall(ep);
-      if(!hasAccess(ep)) return; // não carrega o vídeo
-      loadVideo(ep.hlsUrl || ep.videoUrl);
+      updatePaywall(ep); updateBreadcrumb();
+      if(!hasAccess(ep)) return;
+      const resp = await api(`/stream/${ep.id}`); // {url, tracks:[{kind,srclang,label,src}]}
+      episodeLinks(ep);
+      const v=document.getElementById('video');
+      while(v.firstChild) v.removeChild(v.firstChild);
+      (resp.tracks||[]).forEach(function(tr){ const t=document.createElement('track'); t.kind=tr.kind||'subtitles'; t.srclang=tr.srclang||'pt-BR'; t.label=tr.label||'PT-BR'; t.src=tr.src; v.appendChild(t); });
+      loadVideo(resp.url);
+      const w = state.watched.get(ep.id); if(w && w.timeSec){ v.addEventListener('loadedmetadata', function onmd(){ v.removeEventListener('loadedmetadata', onmd); if(v.duration && w.timeSec < v.duration-2) v.currentTime = w.timeSec; }); }
+      renderEpisodes();
+    }
+
+    function playNext(){
+      if(!state.currentEpisode) return; const i = state.episodes.findIndex(e=>e.id===state.currentEpisode.id);
+      const nxt = state.episodes[i+1]; if(nxt) loadEpisode(nxt);
+    }
+    function playPrev(){
+      if(!state.currentEpisode) return; const i = state.episodes.findIndex(e=>e.id===state.currentEpisode.id);
+      const prv = state.episodes[i-1]; if(prv) loadEpisode(prv);
     }
 
     // ===================== PROGRESS =====================
-    async function saveProgress(episodeId, progress01, markWatched){
+    async function saveProgress(episodeId, progress01, markWatched, timeSec){
       try{
-        await api(`/me/episodes/${episodeId}/progress`, {method:'POST', body: JSON.stringify({progress: progress01, watched: !!markWatched})});
-        state.watched.set(episodeId, {progress: progress01, watchedAt: markWatched? new Date().toISOString(): null});
-        renderEpisodes();
-      }catch(e){ console.error(e); }
+        await api(`/me/episodes/${episodeId}/progress`, { method:'POST', body: JSON.stringify({ progress: clamp(progress01,0,1), watched: !!markWatched, timeSec: timeSec|0 }) });
+        const cur = state.watched.get(episodeId)||{};
+        state.watched.set(episodeId, { progress: clamp(progress01,0,1), watchedAt: markWatched? new Date().toISOString(): cur.watchedAt||null, timeSec: timeSec|0 });
+      } catch(e){ console.error(e); }
+      renderEpisodes();
     }
 
-    function attachAutoProgress(){
-      const v = $('#video');
-      let ticking=false;
-      v.addEventListener('timeupdate', ()=>{
-        if(!state.currentEpisode || ticking) return; ticking=true;
-        const p = v.duration? (v.currentTime / v.duration) : 0;
-        const id = state.currentEpisode.id;
-        // salva cada ~15s e marca visto aos 90%
-        if(Math.floor(v.currentTime)%15===0){ saveProgress(id, p, p>=0.9); }
-        ticking=false;
-      });
-      v.addEventListener('ended', ()=>{
-        if(state.currentEpisode) saveProgress(state.currentEpisode.id, 1, true);
-      });
+    // ===================== WORK SELECT =====================
+    async function selectWork(workId){
+      state.currentWork = state.library.find(function(w){return w.id===workId})||null;
+      if(!state.currentWork) return;
+      document.getElementById('seasonBadge').textContent = state.currentWork.seasonLabel || 'Temporada 1';
+      state.episodes = await api(`/animes/${workId}/episodes`);
+      renderEpisodes();
+      const withProg = state.episodes.find(function(e){ return (state.watched.get(e.id)?.progress||0) > 0; });
+      const firstOpen = withProg || state.episodes.find(function(e){return hasAccess(e)}) || state.episodes[0];
+      if(firstOpen) loadEpisode(firstOpen);
+      toggleLibrary(true);
+      updateBreadcrumb();
     }
 
-    // ===================== AUTH =====================
+    // ===================== ACCORDIONS =====================
+    function toggleLibrary(forceClosed){
+      const body=document.getElementById('libraryBody');
+      const btn=document.getElementById('toggleLibrary');
+      if(forceClosed===true){ body.classList.add('hidden'); btn.textContent='Expandir'; return; }
+      body.classList.toggle('hidden');
+      btn.textContent = body.classList.contains('hidden')? 'Expandir' : 'Minimizar';
+    }
+    function toggleEpisodes(){
+      const body=document.getElementById('episodesBody'); const btn=document.getElementById('toggleEpisodes');
+      body.classList.toggle('hidden');
+      btn.textContent = body.classList.contains('hidden')? 'Expandir' : 'Minimizar';
+    }
+
+    // ===================== AUTH & BOOTSTRAP =====================
     function updateUserBadge(){
-      const badge = $('#userStatus');
-      if(state.me){ badge.textContent = state.me.username || state.me.email || 'Logado'; $('#logoutBtn').classList.remove('hidden'); }
-      else { badge.textContent = 'Visitante'; $('#logoutBtn').classList.add('hidden'); }
+      const badge=document.getElementById('userStatus'); if(state.me){ badge.textContent = state.me.username||state.me.email||'Logado'; document.getElementById('logoutBtn').classList.remove('hidden'); } else { badge.textContent='Visitante'; document.getElementById('logoutBtn').classList.add('hidden'); }
     }
 
     async function bootstrap(){
-      // tenta pegar perfil/pedidos/assistidos
       try{
         state.me = await api('/users/me');
         state.purchases = await api('/me/purchases');
         const watched = await api('/me/episodes');
-        state.watched = new Map(watched.map(w=>[w.episodeId, w]));
+        state.watched = new Map(watched.map(function(w){return [w.episodeId, w]}));
       }catch(e){ state.me=null; state.purchases=[]; state.watched=new Map(); }
       updateUserBadge();
 
-      // carrega lista de animes (no MVP temos 1: ACDA)
-      state.animes = await api('/animes');
-      renderAnimes();
-      if(state.animes.length){ await selectAnime(state.animes[0].id); }
+      // biblioteca
+      state.library = await api('/library'); // [{id,title,thumb,seasonLabel,progress,viewCount}]
+      renderLibrary();
+
+      // continuar assistindo automático
+      const cont = state.library.find(function(w){ return (w.progress||0) > 0; });
+      if(cont) selectWork(cont.id);
     }
 
-    async function selectAnime(animeId){
-      state.currentAnime = state.animes.find(a=>a.id===animeId);
-      const eps = await api(`/animes/${animeId}/episodes`);
-      state.episodes = eps;
-      renderEpisodes();
-      // carrega primeiro liberado
-      const firstOpen = state.episodes.find(e=>hasAccess(e)) || state.episodes[0];
-      if(firstOpen) loadEpisode(firstOpen);
-    }
-
-    // ===================== BRASAS CANVAS (leve) =====================
+    // ===================== BRASAS CANVAS =====================
     function startBrasas(){
-      const c = document.getElementById('brasasCanvas');
-      const ctx = c.getContext('2d');
-      let w,h,parts=[]; function resize(){ w=c.width=innerWidth; h=c.height=innerHeight; }
-      addEventListener('resize', resize); resize();
-      for(let i=0;i<60;i++) parts.push({x:Math.random()*w,y:Math.random()*h, r:1+Math.random()*2, a:0.3+Math.random()*0.5, s:0.2+Math.random()*0.8});
-      (function loop(){ ctx.clearRect(0,0,w,h); parts.forEach(p=>{ p.y-=p.s; if(p.y< -10) p.y=h+10; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle=`rgba(143,79,255,${p.a})`; ctx.fill(); }); requestAnimationFrame(loop); })();
+      const c=document.getElementById('brasasCanvas'); const ctx=c.getContext('2d'); let w,h,parts=[]; function resize(){ w=c.width=innerWidth; h=c.height=innerHeight; } window.addEventListener('resize',resize); resize(); for(let i=0;i<70;i++) parts.push({x:Math.random()*w,y:Math.random()*h,r:1+Math.random()*2,a:0.25+Math.random()*0.5,s:0.2+Math.random()*0.8}); (function loop(){ ctx.clearRect(0,0,w,h); parts.forEach(function(p){ p.y-=p.s; if(p.y<-10) p.y=h+10; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle='rgba(143,79,255,'+p.a+')'; ctx.fill(); }); requestAnimationFrame(loop); })();
     }
 
     // ===================== INIT =====================
-    document.addEventListener('DOMContentLoaded', ()=>{
-      attachAutoProgress();
-      startBrasas();
-      $('#showOnlyUnlocked').onchange = renderEpisodes;
-      $('#logoutBtn').onclick = ()=>{ localStorage.removeItem('token'); localStorage.removeItem('NoHeroes_token'); location.reload(); };
+    document.addEventListener('DOMContentLoaded', function(){
+      startBrasas(); bindPlayerUX();
+      document.getElementById('onlyUnlocked').onchange=renderEpisodes; document.getElementById('onlyUnwatched').onchange=renderEpisodes;
+      document.getElementById('logoutBtn').onclick=function(){ localStorage.removeItem('token'); localStorage.removeItem('NoHeroes_token'); location.reload(); };
+      document.getElementById('toggleLibrary').onclick=function(){toggleLibrary()};
+      document.getElementById('toggleEpisodes').onclick=function(){toggleEpisodes()};
+      document.getElementById('globalSearch').addEventListener('input', function(e){ var q=e.target.value.toLowerCase().trim(); var filtered = state.library.filter(function(w){ return (w.title||'').toLowerCase().includes(q); }); if(q) { var bak=state.library; state.library=filtered; renderLibrary(); state.library=bak; } else renderLibrary(); });
       bootstrap();
     });
   </script></body>
-</html><!-- ========================= BACKEND (Express/Sequelize) — cole nos seus arquivos =========================
+</html><!-- ========================= BACKEND — Contrato de Endpoints (Express/Sequelize) =========================
 
-// MODELS sugeridos (ou adapte aos seus existentes ShopItem/UserItem)
-// Episode mapeia produto individual e produto de temporada (ShopItem)
-
-// models/Anime.js
+// MODELS adicionais (separados dos já existentes ShopItem/UserItem)
+// Obra/Temporada
+// models/Work.js
 module.exports = (sequelize, DataTypes)=>{
-  const Anime = sequelize.define('Anime', {
+  const Work = sequelize.define('Work', {
     title: DataTypes.STRING,
-    slug:  DataTypes.STRING,
-    seasonProductId: { type: DataTypes.INTEGER, allowNull: true }, // ShopItem.id do passe
+    thumb: DataTypes.STRING,
+    seasonLabel: DataTypes.STRING, // S1, S2...
+    viewCount: { type: DataTypes.INTEGER, defaultValue: 0 }
   });
-  Anime.associate = (models)=>{ Anime.hasMany(models.Episode, { foreignKey:'animeId' }); };
-  return Anime;
+  Work.associate = (models)=>{ Work.hasMany(models.Episode, { foreignKey:'workId' }); };
+  return Work;
 }
 
-// models/Episode.js
+// models/Episode.js (extensão)
 module.exports = (sequelize, DataTypes)=>{
   const Episode = sequelize.define('Episode', {
-    animeId: DataTypes.INTEGER,
-    number:  DataTypes.INTEGER,
-    title:   DataTypes.STRING,
+    workId: DataTypes.INTEGER,
+    number: DataTypes.INTEGER,
+    title: DataTypes.STRING,
     description: DataTypes.TEXT,
     durationSec: DataTypes.INTEGER,
-    hlsUrl:  DataTypes.STRING, // ou videoUrl MP4
-    productId: { type: DataTypes.INTEGER, allowNull:true },      // ShopItem.id do episódio
-    seasonProductId: { type: DataTypes.INTEGER, allowNull:true } // redundância p/ facilitar
+    introStart: DataTypes.INTEGER,
+    introEnd: DataTypes.INTEGER,
+    outroStart: DataTypes.INTEGER,
+    outroEnd: DataTypes.INTEGER,
+    productId: { type: DataTypes.INTEGER, allowNull:true },
+    seasonProductId: { type: DataTypes.INTEGER, allowNull:true }
   });
-  Episode.associate = (models)=>{ Episode.belongsTo(models.Anime,{foreignKey:'animeId'}); };
+  Episode.associate = (models)=>{ Episode.belongsTo(models.Work,{foreignKey:'workId'}); };
   return Episode;
 }
 
-// models/UserEpisode.js
+// models/UserEpisode.js (com timeSec)
 module.exports = (sequelize, DataTypes)=>{
   const UserEpisode = sequelize.define('UserEpisode', {
     userId: DataTypes.INTEGER,
     episodeId: DataTypes.INTEGER,
-    progress: { type: DataTypes.FLOAT, defaultValue: 0 }, // 0..1
+    progress: { type: DataTypes.FLOAT, defaultValue: 0 },
+    timeSec: { type: DataTypes.INTEGER, defaultValue: 0 },
     watchedAt: { type: DataTypes.DATE, allowNull: true }
   });
   UserEpisode.associate = (models)=>{
@@ -398,58 +494,21 @@ module.exports = (sequelize, DataTypes)=>{
   return UserEpisode;
 }
 
-// Rotas (routes/watch.js)
-const express = require('express');
-const router = express.Router();
-const { Anime, Episode, UserItem, UserEpisode } = require('../models');
-const auth = require('../middlewares/auth');
+// routes/media.js (resumo do contrato)
+// GET /library → obras com progresso agregado
+// GET /animes/:workId/episodes → lista de episódios
+// GET /me/purchases → itens comprados (ShopItem.id)
+// GET /me/episodes → progresso {episodeId, progress, watchedAt, timeSec}
+// POST /me/episodes/:id/progress → salva progresso
+// GET /stream/:episodeId → valida compra e retorna {url HLS assinada, tracks[]}
 
-// GET /animes
-router.get('/animes', async (req,res)=>{
-  const rows = await Anime.findAll({ attributes:['id','title','slug','seasonProductId'] });
-  res.json(rows);
-});
+-- Seeds de exemplo
+-- Works
+INSERT INTO "Works" (id,title,thumb,seasonLabel,viewCount,createdAt,updatedAt)
+VALUES (1,'As Cinzas do Amanhã','https://cdn.noheroes.com/thumbs/acda_s1.jpg','S1',12000,NOW(),NOW());
+-- Episodes
+INSERT INTO "Episodes" (workId,number,title,description,durationSec,introStart,introEnd,outroStart,outroEnd,productId,seasonProductId,createdAt,updatedAt) VALUES
+(1,1,'Prólogo','O começo do fim',900,0,85,840,900,201,101,NOW(),NOW()),
+(1,2,'Lótus','A flor e o vazio',1020,0,88,960,1020,202,101,NOW(),NOW());
 
-// GET /animes/:id/episodes
-router.get('/animes/:id/episodes', async (req,res)=>{
-  const rows = await Episode.findAll({ where:{ animeId: req.params.id }, order:[[ 'number','ASC' ]] });
-  res.json(rows);
-});
-
-// GET /me/purchases (reutiliza seu sistema atual de UserItem)
-router.get('/me/purchases', auth, async (req,res)=>{
-  const rows = await UserItem.findAll({ where:{ userId: req.user.id } , attributes:['shopItemId']});
-  res.json(rows);
-});
-
-// GET /me/episodes (assistidos)
-router.get('/me/episodes', auth, async (req,res)=>{
-  const rows = await UserEpisode.findAll({ where:{ userId: req.user.id }, attributes:['episodeId','progress','watchedAt'] });
-  res.json(rows);
-});
-
-// POST /me/episodes/:id/progress
-router.post('/me/episodes/:id/progress', auth, async (req,res)=>{
-  const { progress, watched } = req.body;
-  const [row] = await UserEpisode.findOrCreate({ where:{ userId: req.user.id, episodeId: req.params.id }, defaults:{ progress:0 } });
-  row.progress = Math.max(0, Math.min(1, Number(progress)||0));
-  if (watched) row.watchedAt = new Date();
-  await row.save();
-  res.json({ok:true});
-});
-
-module.exports = router;
-
-// Gate no streaming (opcional):
-// Se você servir playlists .m3u8 de um CDN privado, coloque um proxy /stream/:episodeId que valida compra (UserItem)
-// e então responde com a URL temporária assinada do HLS.
-
-// SQL seed rápido (ajuste nomes reais das tabelas conforme seus models):
--- Anime ACDA
-INSERT INTO "Animes" (id,title,slug,seasonProductId,createdAt,updatedAt)
-VALUES (1,'As Cinzas do Amanhã','acda', 101, NOW(), NOW()); -- 101 = ShopItem id do Passe
-
--- Episódios (exemplo)
-INSERT INTO "Episodes" (animeId,number,title,description,durationSec,hlsUrl,productId,seasonProductId,createdAt,updatedAt) VALUES
-(1,1,'Prólogo','O começo do fim.',900,'https://cdn.noheroes.com/hls/acda/ep1.m3u8',201,101,NOW(),NOW()),
-(1,2,'Lótus','A flor e o vazio.'
+--> FIM BACKEND -->
