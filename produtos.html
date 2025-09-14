@@ -265,28 +265,55 @@ header.nh{ position:fixed; top:0; left:0; right:0; height:56px; background:#0a0a
     let filtro = 'todos'; let termo = ''; let ordem = 'default';
 
     function makeCard(item){
-      const node = tpl.content.cloneNode(true);
-      const card = node.querySelector('article');
-      const poster = node.querySelector('.poster');
-      const img  = node.querySelector('img');
-      const h3   = node.querySelector('h3');
-      const p    = node.querySelector('p');
-      const [btnDetalhes, btnComprar] = node.querySelectorAll('.btn');
-      const badgeNovo   = node.querySelector('.badge-novo');
-      const badgeHot    = node.querySelector('.badge-hot');
+  const node   = tpl.content.cloneNode(true);
+  const card   = node.querySelector('article');
+  const poster = node.querySelector('.poster');
+  const img    = node.querySelector('img');
+  const h3     = node.querySelector('h3');
+  const p      = node.querySelector('p');
 
-      if(item.capa){
-        img.src = item.capa; img.alt = `Capa: ${item.titulo}`; img.onload = ()=>{ poster.classList.remove('skeleton'); img.classList.remove('hidden'); };
-        img.onerror = ()=>{ poster.classList.remove('skeleton'); img.remove(); const fb=document.createElement('div'); fb.className='w-full h-full flex items-center justify-center text-black/80 font-bold'; fb.innerHTML='<span class="gradiente-noheroes cinzel">SEM CAPA</span>'; poster.appendChild(fb); };
-      }
+  // pega os botões de DESKTOP (overlay) e MOBILE (btn-row)
+  const [btnDetalhesDesk, btnComprarDesk] = node.querySelectorAll('.actions .btn');
+  const [btnDetalhesMob,  btnComprarMob ] = node.querySelectorAll('.btn-row .btn');
 
-      h3.textContent = item.titulo; p.textContent = item.subtitulo || '';
-      btnDetalhes.href = item.detalhesUrl || '#'; btnComprar.href = item.comprarUrl || '#';
-      if(item.selo === 'novo') badgeNovo.classList.remove('hidden');
-      if(item.selo === 'hot')  badgeHot.classList.remove('hidden');
+  const badgeNovo = node.querySelector('.badge-novo');
+  const badgeHot  = node.querySelector('.badge-hot');
 
-      return node;
+  if (item.capa){
+    img.src = item.capa;
+    img.alt = `Capa: ${item.titulo}`;
+    img.onload  = () => { poster.classList.remove('skeleton'); img.classList.remove('hidden'); };
+    img.onerror = () => {
+      poster.classList.remove('skeleton');
+      img.remove();
+      const fb = document.createElement('div');
+      fb.className = 'w-full h-full flex items-center justify-center text-black/80 font-bold';
+      fb.innerHTML = '<span class="gradiente-noheroes cinzel">SEM CAPA</span>';
+      poster.appendChild(fb);
+    };
+  }
+
+  h3.textContent = item.titulo;
+  p.textContent  = item.subtitulo || '';
+
+  // seta links em TODOS os botões
+  const det = item.detalhesUrl || '#';
+  const buy = item.comprarUrl  || '#';
+  [btnDetalhesDesk, btnDetalhesMob].forEach(a => a.href = det);
+  [btnComprarDesk,  btnComprarMob ].forEach(a => a.href = buy);
+
+  // opcional: no mobile, tocar no card abre "Detalhes"
+  card.addEventListener('click', (e) => {
+    if (window.innerWidth <= 640 && !e.target.closest('a')) {
+      window.location.href = det;
     }
+  });
+
+  if (item.selo === 'novo') badgeNovo.classList.remove('hidden');
+  if (item.selo === 'hot')  badgeHot.classList.remove('hidden');
+
+  return node;
+}
 
     function aplicarFiltros(lista){
       let res = [...lista];
