@@ -2,175 +2,129 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Manual das Sombras — Detalhes do eBook | NoHeroes</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+  <title>Manual das Sombras — eBook | NoHeroes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    :root{
-      --nh-bg:#0a0a0a; --nh-panel:#0d0d12; --nh-ink:#e8e7f5; --nh-ink-dim:#b9b8d6;
-      --nh-accent1:#8f4fff; --nh-accent2:#facc15; --nh-border:rgba(255,255,255,.09);
-      --nh-glass:rgba(255,255,255,.05);
-    }
-    html,body{height:100%;background:var(--nh-bg);color:var(--nh-ink);font-family:Inter,system-ui,Segoe UI,Roboto,Ubuntu,Arial,sans-serif}
-    .grad-noheroes{background:linear-gradient(135deg,var(--nh-accent1),var(--nh-accent2));}
-    .ink-gradient{background:linear-gradient(135deg,#d8ccff,#ffe58a);-webkit-background-clip:text;background-clip:text;color:transparent}
-    .panel{background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.03));border:1px solid var(--nh-border);backdrop-filter:blur(10px);border-radius:18px}
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.9rem 1.1rem;border-radius:14px;border:1px solid var(--nh-border);background:var(--nh-glass);transition:transform .15s ease, background .2s ease, box-shadow .2s ease}
-    .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,0.09);box-shadow:0 6px 22px rgba(0,0,0,.35)}
-    .btn-primary{background:linear-gradient(180deg,rgba(143,79,255,.24),rgba(143,79,255,.12));border-color:rgba(143,79,255,.4);font-weight:600}
-    .btn-primary:hover{background:linear-gradient(180deg,rgba(143,79,255,.3),rgba(143,79,255,.18))}
-    .btn-ghost{background:transparent}
-    .chip{padding:.35rem .6rem;border-radius:999px;border:1px solid var(--nh-border);background:rgba(255,255,255,.04);font-size:.8rem}
-    .divider{height:1px;background:linear-gradient(90deg,transparent,var(--nh-border),transparent)}
-    .shadow-gold{box-shadow:0 0 0 1px rgba(250,204,21,.22),0 10px 30px rgba(250,204,21,.08)}
+    :root{ --nh-bg:#0a0a0a; --nh-ink:#e5e5e5; --nh-ink-dim:#bfbfe0; --nh-accent1:#8f4fff; --nh-accent2:#facc15; --nh-border:rgba(255,255,255,.09); }
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;background:#0a0a0a;color:#e5e5e5;margin:0}
+    h1,h2,.cinzel{font-family:'Cinzel Decorative',serif}
+    .gradiente-noheroes{background:linear-gradient(270deg,#8f4fff,#a855f7,#facc15,#8f4fff);background-size:600% 600%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:fluidPulse 8s ease-in-out infinite}
+    .barra-degrade{background:linear-gradient(to right,#8f4fff,#facc15);height:4px;box-shadow:0 0 6px #8f4fff88,0 0 10px #facc1588}
+    .btn-x{background:linear-gradient(270deg,#8f4fff,#a855f7,#facc15,#8f4fff);background-size:600% 600%;animation:fluidPulse 6s ease-in-out infinite;color:#000;font-weight:700;border-radius:.6rem;padding:.9rem 1.1rem;transition:transform .2s ease,filter .2s ease;box-shadow:0 8px 26px rgba(143,79,255,.18);display:inline-block;text-align:center}
+    .btn-x:hover{transform:translateY(-2px);filter:brightness(1.05)}
+    .btn-ghost{background:rgba(255,255,255,.04);border:1px solid var(--nh-border);border-radius:.6rem;padding:.8rem 1rem;display:inline-block;text-align:center}
+    @keyframes fluidPulse{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+    #brasasCanvas{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-1;pointer-events:none}
+    .panel{background:rgba(255,255,255,.06);backdrop-filter:blur(8px);border:1px solid var(--nh-border);border-radius:1rem}
+    .chip{padding:.35rem .6rem;border-radius:999px;border:1px solid var(--nh-border);background:rgba(255,255,255,.05);font-size:.78rem}
+    .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent)}
   </style>
 </head>
 <body>
-  <!-- BG brasas roxas -->
-  <div aria-hidden="true" class="pointer-events-none fixed inset-0 overflow-hidden">
-    <div class="absolute -top-24 -left-24 h-[46rem] w-[46rem] grad-noheroes opacity-20 blur-3xl rounded-full"></div>
-    <div class="absolute bottom-[-6rem] right-[-8rem] h-[34rem] w-[40rem] grad-noheroes opacity-10 blur-2xl rounded-full"></div>
-    <canvas id="brasasCanvas" class="absolute inset-0 opacity-[0.08]"></canvas>
-  </div>  <!-- Barra de progresso -->  <div id="progressbar" class="fixed top-0 left-0 h-[5px] w-0 grad-noheroes z-50"></div>  <!-- Header (não-fixo) -->  <header class="relative z-10">
-    <div class="mx-auto max-w-7xl px-4 py-4">
-      <div class="panel px-4 py-3 flex items-center justify-between">
-        <a href="/" class="flex items-center gap-2">
-          <div class="w-8 h-8 rounded-md grad-noheroes"></div>
-          <span class="font-['Cinzel Decorative'] text-lg tracking-wide ink-gradient">NoHeroes</span>
-        </a>
-        <nav class="hidden md:flex items-center gap-2">
-          <a class="btn btn-ghost" href="#conteudo">Conteúdo</a>
-          <a class="btn btn-ghost" href="#sumario">Sumário</a>
-          <a class="btn btn-ghost" href="#faq">FAQ</a>
-        </nav>
-        <div class="flex items-center gap-2">
-          <a class="btn btn-primary" href="#comprar">Obter eBook</a>
-          <button id="openMenu" class="md:hidden btn" aria-label="Abrir menu">☰</button>
-        </div>
-      </div>
-    </div>
-  </header>  <!-- Drawer Mobile -->  <div id="drawer" class="fixed inset-0 z-40 hidden">
-    <div class="absolute inset-0 bg-black/60" data-close></div>
-    <aside class="absolute right-0 top-0 h-full w-80 panel p-4">
-      <div class="flex items-center justify-between">
-        <span class="font-['Cinzel Decorative'] text-xl">Menu</span>
-        <button class="btn" data-close>✕</button>
-      </div>
-      <div class="divider my-4"></div>
-      <nav class="flex flex-col gap-2">
-        <a class="btn" href="#conteudo">Conteúdo</a>
-        <a class="btn" href="#sumario">Sumário</a>
-        <a class="btn" href="#faq">FAQ</a>
-        <a class="btn btn-primary mt-2" href="#comprar">Obter eBook</a>
+  <canvas id="brasasCanvas"></canvas>
+  <div class="fixed top-0 left-0 w-full barra-degrade z-40"></div>  <!-- HEADER -->  <header class="max-w-7xl mx-auto px-4 pt-6 pb-3">
+    <div class="panel px-4 py-3 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-md" style="background:linear-gradient(135deg,#8f4fff,#facc15)"></div>
+        <span class="cinzel text-lg gradiente-noheroes">NOHEROES</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-2">
+        <a class="btn-ghost" href="#conteudo">Conteúdo</a>
+        <a class="btn-ghost" href="#sumario">Sumário</a>
+        <a class="btn-ghost" href="#comprar">Comprar</a>
       </nav>
-    </aside>
-  </div>  
-<!-- HERO -->
-  <section class="relative z-10 mx-auto max-w-7xl px-4 pt-10 pb-8" id="topo">
-    <div class="panel p-6 md:p-10 overflow-hidden">
-      <div class="flex flex-col md:flex-row items-start gap-8">
-        <!-- Capa -->
+      <button class="md:hidden btn-ghost" id="openMenu" aria-label="Abrir menu">☰</button>
+    </div>
+  </header>  <!-- DRAWER -->  <div id="drawer" class="fixed top-0 right-0 w-72 h-full bg-black/90 z-50" style="transform: translateX(100%); transition: transform .25s ease; border-left:1px solid rgba(143,79,255,.25); box-shadow: inset 8px 0 18px rgba(143,79,255,.35)">
+    <button class="absolute top-4 right-4 text-3xl text-[#a855f7] hover:text-purple-400" onclick="toggleDrawer()">✕</button>
+    <div class="p-6 flex flex-col gap-3">
+      <h1 class="text-2xl cinzel gradiente-noheroes">NOHEROES</h1>
+      <nav class="mt-2 flex flex-col gap-2 text-sm">
+        <a href="#conteudo" class="p-3 rounded-lg hover:bg-[#1c1c1c]" onclick="toggleDrawer()">Conteúdo</a>
+        <a href="#sumario" class="p-3 rounded-lg hover:bg-[#1c1c1c]" onclick="toggleDrawer()">Sumário</a>
+        <a href="#comprar" class="p-3 rounded-lg hover:bg-[#1c1c1c]" onclick="toggleDrawer()">Comprar</a>
+      </nav>
+    </div>
+  </div>  <!-- HERO -->  <section class="max-w-7xl mx-auto px-4 pt-6 pb-4" id="topo">
+    <div class="panel p-6 md:p-8">
+      <div class="flex flex-col md:flex-row gap-8 items-start">
+        <!-- CAPA -->
         <div class="w-full md:w-80">
-          <div class="aspect-[3/4] rounded-2xl grad-noheroes shadow-gold relative overflow-hidden">
-            <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,.18),transparent_40%),radial-gradient(circle_at_70%_80%,rgba(0,0,0,.35),transparent_50%)]"></div>
-            <div class="absolute inset-0 flex items-end">
-              <div class="w-full p-4 bg-black/35 backdrop-blur-sm">
-                <span class="font-['Cinzel Decorative'] text-xl">Manual das Sombras</span>
-                <p class="text-xs text-[var(--nh-ink-dim)]">Complemento avançado para dominar o Sistema Vivo</p>
-              </div>
-            </div>
-          </div>
-          <div class="mt-3 flex items-center gap-2">
-            <span class="chip">PDF • 60 págs</span>
-            <span class="chip">Avançado</span>
-            <span class="chip">Leitura ~2h</span>
-          </div>
+          <img id="capaEbook" src="/imgs/capas/manual-das-sombras.jpg" alt="Capa do eBook Manual das Sombras" class="w-full aspect-[3/4] object-cover rounded-xl"/>
+          <div class="mt-3 flex flex-wrap gap-2"><span class="chip">PDF • 60 págs</span><span class="chip">Avançado</span><span class="chip">Leitura ~2h</span></div>
         </div>
-
-        <!-- Copy + CTAs -->
+        <!-- COPY + CTAs -->
         <div class="flex-1">
-          <p class="chip">eBook • NoHeroes Advanced</p>
-          <h1 class="mt-3 font-['Cinzel Decorative'] text-4xl md:text-5xl leading-tight ink-gradient">Manual das Sombras</h1>
-          <p class="mt-4 text-[var(--nh-ink-dim)] max-w-2xl">
-            O volume mais denso da trilogia. Macetes para físico, mente e espírito: testosterona/libido, massa muscular, foco, paz mental e técnicas
-            para dissolver pensamentos intrusivos. É a ponte para o Sistema Vivo pleno.
-          </p>
-
-          <div class="mt-6 grid sm:grid-cols-3 gap-3">
-            <button class="btn btn-primary w-full" id="btnComprarTopo">Obter agora</button>
-            <a class="btn w-full" href="/static/preview/manual-sombras-amostra.pdf" target="_blank">Ler amostra</a>
-            <button class="btn w-full" id="btnScrollConteudo">Ver o que tem dentro</button>
+          <h1 class="cinzel text-4xl md:text-5xl gradiente-noheroes">Manual das Sombras</h1>
+          <p class="mt-3 text-[var(--nh-ink-dim)] max-w-2xl">Complemento denso para <strong>Tudo Está Conectado</strong> e <strong>Sistema Vivo</strong>. Macetes práticos para vitalidade hormonal (testosterona/libido), ganho de massa, foco, paz de espírito e técnicas para dissolver pensamentos intrusivos. Alinha corpo, mente e espírito para o seu Sistema Vivo individual.</p>
+          <div class="mt-5 grid sm:grid-cols-3 gap-3">
+            <a class="btn-x" id="ctaComprarTopo">Comprar — R$ 25,00</a>
+            <a class="btn-ghost" href="/static/preview/manual-sombras-amostra.pdf" target="_blank">Ver amostra</a>
+            <a class="btn-ghost" href="#conteudo">O que tem dentro</a>
           </div>
-
-          <div class="mt-6 p-4 panel">
-            <p class="text-sm text-[var(--nh-ink-dim)]">
-              Trio recomendado: <strong>Tudo Está Conectado</strong> (base), <strong>Sistema Vivo</strong> (execução) e o
-              <strong>Manual das Sombras</strong> (profundidade e performance).
-            </p>
+          <div class="mt-5 panel p-4 text-sm text-[var(--nh-ink-dim)]">
+            Trilogy flow: <span class="text-[#facc15] font-semibold">Tudo Está Conectado</span> (base) → <span class="text-[#facc15] font-semibold">Sistema Vivo</span> (execução) → <span class="text-[#facc15] font-semibold">Manual das Sombras</span> (profundidade e performance).
           </div>
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- CONTEÚDO -->
-  <section id="conteudo" class="relative z-10 mx-auto max-w-7xl px-4 py-10">
+  </section>  <!-- CONTEÚDO / BLOCOS -->  <section id="conteudo" class="max-w-7xl mx-auto px-4 py-8">
     <div class="grid lg:grid-cols-2 gap-6 items-stretch">
       <div class="panel p-6">
-        <h2 class="font-['Cinzel Decorative'] text-2xl md:text-3xl mb-3 text-[var(--nh-accent1)]">Macetes e Técnicas</h2>
+        <h2 class="cinzel text-2xl gradiente-noheroes">Macetes e Técnicas</h2>
         <ul class="grid sm:grid-cols-2 gap-3 text-sm text-[var(--nh-ink-dim)]">
-          <li class="panel p-3">Aumento natural de testosterona e libido</li>
-          <li class="panel p-3">Protocolos para ganho de massa muscular</li>
-          <li class="panel p-3">Pacificação da mente e espírito</li>
-          <li class="panel p-3">Eliminação de pensamentos intrusivos</li>
-          <li class="panel p-3">Integração profunda corpo/espírito</li>
-          <li class="panel p-3">Dicas extras de performance</li>
+          <li class="panel p-3">Aumento natural de testosterona e libido.</li>
+          <li class="panel p-3">Protocolos para ganho de massa muscular.</li>
+          <li class="panel p-3">Técnicas de paz mental e foco.</li>
+          <li class="panel p-3">Ferramentas contra pensamentos intrusivos.</li>
+          <li class="panel p-3">Integração corpo ↔ mente ↔ espírito.</li>
+          <li class="panel p-3">Dicas extras de performance diária.</li>
         </ul>
+        <div class="mt-4 flex flex-wrap items-center gap-2">
+          <span class="chip">Atualizações grátis</span>
+          <span class="chip">Download imediato</span>
+          <span class="chip">Acesso no inventário</span>
+        </div>
       </div>
       <div class="panel p-6">
-        <h2 class="font-['Cinzel Decorative'] text-2xl md:text-3xl mb-3 text-[var(--nh-accent1)]">Você vai evoluir</h2>
+        <h2 class="cinzel text-2xl gradiente-noheroes">Resultados que buscamos</h2>
         <div class="grid sm:grid-cols-2 gap-3 text-sm text-[var(--nh-ink-dim)]">
-          <div class="panel p-3">Paz de espírito em meio ao caos</div>
-          <div class="panel p-3">Evolução física com vitalidade</div>
-          <div class="panel p-3">Equilíbrio hormonal e energia vital</div>
-          <div class="panel p-3">Conexão ampliada entre áreas da vida</div>
+          <div class="panel p-3">Mais energia e vitalidade.</div>
+          <div class="panel p-3">Músculo e desempenho.</div>
+          <div class="panel p-3">Calma e clareza.</div>
+          <div class="panel p-3">Coerência entre áreas da vida.</div>
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- TABS -->
-  <section id="sumario" class="relative z-10 mx-auto max-w-7xl px-4 py-10">
+  </section>  <!-- TABS -->  <section id="sumario" class="max-w-7xl mx-auto px-4 py-8">
     <div class="panel p-6 md:p-8">
       <div class="flex flex-wrap gap-2">
-        <button class="btn btn-primary" data-tab="tab-sumario">Sumário</button>
-        <button class="btn" data-tab="tab-paraquem">Para quem é</button>
-        <button class="btn" data-tab="tab-formatos">Formatos & Entrega</button>
+        <button class="btn-x" data-tab="tab-sumario">Sumário</button>
+        <button class="btn-ghost" data-tab="tab-paraquem">Para quem é</button>
+        <button class="btn-ghost" data-tab="tab-formatos">Formatos & Entrega</button>
       </div>
       <div class="divider my-6"></div>
-
       <div id="tab-sumario" class="tab">
         <ol class="grid md:grid-cols-2 gap-3 text-sm text-[var(--nh-ink-dim)] list-decimal list-inside">
-          <li>Conexão com volumes anteriores</li>
+          <li>Conexões com os volumes anteriores</li>
           <li>Hormônios e vitalidade</li>
-          <li>Macetes físicos</li>
-          <li>Técnicas mentais</li>
-          <li>Sombras internas</li>
+          <li>Macetes físicos (treino/energia)</li>
+          <li>Técnicas mentais (paz/foco)</li>
+          <li>Sombras internas e dissolução</li>
           <li>Protocolos de performance</li>
-          <li>Integração com Sistema Vivo</li>
+          <li>Integração com o Sistema Vivo</li>
           <li>Aplicações no cotidiano</li>
         </ol>
       </div>
-
       <div id="tab-paraquem" class="tab hidden">
         <ul class="grid md:grid-cols-2 gap-3 text-sm text-[var(--nh-ink-dim)]">
-          <li class="panel p-3">Leitores dos volumes anteriores</li>
-          <li class="panel p-3">Quem busca evolução intensa</li>
-          <li class="panel p-3">Quem sofre com pensamentos indesejados</li>
-          <li class="panel p-3">Quem deseja performance máxima</li>
+          <li class="panel p-3">Quem já leu os volumes anteriores.</li>
+          <li class="panel p-3">Quem busca evolução física e mental intensa.</li>
+          <li class="panel p-3">Quem sofre com pensamentos indesejados.</li>
+          <li class="panel p-3">Quem deseja alto desempenho com paz.</li>
         </ul>
       </div>
-
       <div id="tab-formatos" class="tab hidden">
         <div class="grid sm:grid-cols-3 gap-3 text-sm text-[var(--nh-ink-dim)]">
           <div class="panel p-3"><strong>PDF</strong><br/>Qualquer dispositivo</div>
@@ -179,97 +133,75 @@
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- COMPRAR + COMBO -->
-  <section id="comprar" class="relative z-10 mx-auto max-w-5xl px-4 py-10">
+  </section>  <!-- COMPRAR + COMBO -->  <section id="comprar" class="max-w-5xl mx-auto px-4 py-8">
     <div class="grid md:grid-cols-2 gap-6 items-start">
       <div class="panel p-6 md:p-8">
-        <h2 class="font-['Cinzel Decorative'] text-2xl md:text-3xl mb-3 ink-gradient">Obter o eBook</h2>
-        <div class="mt-4 flex items-end gap-3">
+        <h2 class="cinzel text-2xl gradiente-noheroes">Comprar agora</h2>
+        <div class="mt-3 flex items-end gap-3">
           <div>
-            <div class="text-xs text-[var(--nh-ink-dim)] line-through">De R$ 59,90</div>
-            <div class="text-3xl font-semibold text-emerald-400">R$ 25,00</div>
+            <div class="text-xs text-[var(--nh-ink-dim)] line-through">R$ 59,90</div>
+            <div class="text-4xl font-bold text-emerald-400">R$ 25,00</div>
             <div class="text-xs text-[var(--nh-ink-dim)]">lançamento</div>
           </div>
           <div class="flex-1"></div>
-          <button id="btnComprar" class="btn btn-primary px-6">Comprar agora</button>
+          <a id="btnComprar" class="btn-x">Finalizar compra</a>
         </div>
         <p class="mt-3 text-sm text-[var(--nh-ink-dim)]">Pagamento seguro. Acesso imediato no inventário. Requer login.</p>
       </div>
-
       <div class="panel p-6 md:p-8">
-        <h3 class="font-['Cinzel Decorative'] text-xl mb-2 text-[var(--nh-accent2)]">Combo especial</h3>
-        <p class="text-sm text-[var(--nh-ink-dim)]">
-          Leve os 3 eBooks (Tudo Está Conectado, Sistema Vivo e Manual das Sombras) + audiobooks + bônus XP/drops (3 dias) por
-          <span class="text-emerald-400 font-semibold">R$ 55,00</span>.
-        </p>
-        <label class="mt-3 flex items-center gap-2 text-sm">
-          <input type="checkbox" id="addCombo" class="accent-[#8f4fff]" />
-          Quero o combo especial
-        </label>
+        <h3 class="cinzel text-xl text-[#facc15]">Combo especial</h3>
+        <p class="text-sm text-[var(--nh-ink-dim)]">Leve os 3 eBooks (<strong>Tudo Está Conectado</strong>, <strong>Sistema Vivo</strong> e <strong>Manual das Sombras</strong>) + audiobooks + bônus de XP e drops por 3 dias no app — por <span class="text-emerald-400 font-semibold">R$ 55,00</span>.</p>
+        <label class="mt-3 flex items-center gap-2 text-sm"><input type="checkbox" id="addCombo" class="accent-[#8f4fff]"/> Quero o combo especial</label>
       </div>
     </div>
-  </section>
-
-  <!-- FAQ (mantém a sua) -->
-  <!-- ... sua seção FAQ aqui ... -->
-
-  <!-- FOOTER (apenas UMA vez) -->
-  <footer class="relative z-10 mt-10">
-    <div class="mx-auto max-w-7xl px-4 py-10">
-      <div class="panel p-6">
-        <div class="grid md:grid-cols-3 gap-6">
-          <div>
-            <div class="font-['Cinzel Decorative'] text-xl mb-2 ink-gradient">NoHeroes</div>
-            <p class="text-sm text-[var(--nh-ink-dim)]">Universo dark-fantasy. Loja, app e conteúdos.</p>
-          </div>
-          <nav class="grid gap-2 text-sm">
-            <a class="hover:underline" href="#">Termos</a>
-            <a class="hover:underline" href="#">Privacidade</a>
-            <a class="hover:underline" href="#">Contato</a>
-          </nav>
-          <div class="flex items-center gap-2">
-            <a class="btn" href="#">Instagram</a>
-            <a class="btn" href="#">YouTube</a>
-            <a class="btn" href="#">Discord</a>
-          </div>
+  </section>  <!-- FAQ -->  <section id="faq" class="max-w-5xl mx-auto px-4 py-8">
+    <div class="panel p-6 md:p-8">
+      <h2 class="cinzel text-2xl gradiente-noheroes">Perguntas frequentes</h2>
+      <div class="divide-y divide-white/10">
+        <details class="group py-3"><summary class="flex items-center justify-between cursor-pointer list-none"><span>Preciso ter lido os anteriores?</span><span class="transition group-open:rotate-180">⌄</span></summary><p class="mt-2 text-sm text-[var(--nh-ink-dim)]">Ajuda muito: base (Tudo Está Conectado) + execução (Sistema Vivo). Este volume aprofunda e densifica.</p></details>
+        <details class="group py-3"><summary class="flex items-center justify-between cursor-pointer list-none"><span>Como recebo?</span><span class="transition group-open:rotate-180">⌄</span></summary><p class="mt-2 text-sm text-[var(--nh-ink-dim)]">Confirmou pagamento, libera download e entra no seu inventário NoHeroes.</p></details>
+        <details class="group py-3"><summary class="flex items-center justify-between cursor-pointer list-none"><span>O combo inclui audiobook?</span><span class="transition group-open:rotate-180">⌄</span></summary><p class="mt-2 text-sm text-[var(--nh-ink-dim)]">Sim, 3 eBooks + 3 audiobooks + bônus de XP/drops (3 dias).</p></details>
+      </div>
+    </div>
+  </section>  <!-- FOOTER -->  <footer class="max-w-7xl mx-auto px-4 py-10">
+    <div class="panel p-6">
+      <div class="grid md:grid-cols-3 gap-6">
+        <div><div class="cinzel text-xl gradiente-noheroes">NoHeroes</div><p class="text-sm text-[var(--nh-ink-dim)]">Universo dark‑fantasy. Loja, app, conteúdos.</p></div>
+        <nav class="grid gap-2 text-sm">
+          <a class="hover:underline" href="#">Termos</a>
+          <a class="hover:underline" href="#">Privacidade</a>
+          <a class="hover:underline" href="#">Contato</a>
+        </nav>
+        <div class="flex items-center gap-2">
+          <a class="btn-ghost" href="#">Instagram</a>
+          <a class="btn-ghost" href="#">YouTube</a>
+          <a class="btn-ghost" href="#">Discord</a>
         </div>
-        <div class="divider my-6"></div>
-        <p class="text-xs text-[var(--nh-ink-dim)]">© 2025 NoHeroes. Todos os direitos reservados.</p>
       </div>
+      <div class="divider my-6"></div>
+      <p class="text-xs text-[var(--nh-ink-dim)]">© 2025 NoHeroes. Todos os direitos reservados.</p>
     </div>
-  </footer>
-
-  <!-- SCRIPTS: ficam ANTES de fechar o body -->
-  <script>
+  </footer>  <script>
     // Drawer
     const drawer=document.getElementById('drawer');
-    document.getElementById('openMenu')?.addEventListener('click',()=>drawer.classList.remove('hidden'));
-    drawer?.addEventListener('click',e=>{ if(e.target.hasAttribute('data-close')) drawer.classList.add('hidden'); });
-
-    // Progressbar
-    addEventListener('scroll',()=>{
-      const docHeight=document.documentElement.scrollHeight-innerHeight;
-      const scrolled=(scrollY/docHeight)*100; document.getElementById('progressbar').style.width=scrolled+'%';
-    },{passive:true});
+    document.getElementById('openMenu')?.addEventListener('click',toggleDrawer);
+    function toggleDrawer(){drawer.style.transform = drawer.style.transform.includes('100%')? 'translateX(0%)':'translateX(100%)'}
 
     // Tabs
-    const tabsBtns=[...document.querySelectorAll('[data-tab]')];
-    tabsBtns.forEach(btn=>btn.addEventListener('click',()=>{
-      tabsBtns.forEach(b=>b.classList.remove('btn-primary'));
-      document.querySelectorAll('.tab').forEach(t=>t.classList.add('hidden'));
-      btn.classList.add('btn-primary');
-      document.getElementById(btn.dataset.tab).classList.remove('hidden');
-    }));
+    const tabBtns=[...document.querySelectorAll('[data-tab]')];
+    tabBtns.forEach(btn=>btn.addEventListener('click',()=>{tabBtns.forEach(b=>b.classList.replace('btn-x','btn-ghost'));document.querySelectorAll('.tab').forEach(t=>t.classList.add('hidden'));btn.classList.replace('btn-ghost','btn-x');document.getElementById(btn.dataset.tab).classList.remove('hidden');}));
 
     // Scroll helpers
-    document.getElementById('btnScrollConteudo')?.addEventListener('click',()=>document.getElementById('conteudo').scrollIntoView({behavior:'smooth'}));
-    document.getElementById('btnComprarTopo')?.addEventListener('click',()=>document.getElementById('comprar').scrollIntoView({behavior:'smooth'}));
+    document.getElementById('ctaComprarTopo')?.addEventListener('click',()=>document.getElementById('comprar').scrollIntoView({behavior:'smooth'}));
 
-    // Checkout (Mercado Pago)
-    function getJwt(){const raw=(localStorage.getItem('token')||'').trim()||(localStorage.getItem('NoHeroes_token')||'').trim();return raw.replace(/^Bearer\\s+/i,'')}
+    // Brasas
+    const c=document.getElementById('brasasCanvas');
+    (function brasas(){if(!c)return;const ctx=c.getContext('2d');let w,h,ps=[];const N=70;function rs(){w=c.width=innerWidth;h=c.height=innerHeight}addEventListener('resize',rs,{passive:true});rs();for(let i=0;i<N;i++)ps.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+0.6,s:Math.random()*0.6+0.25});(function lp(){ctx.clearRect(0,0,w,h);for(const p of ps){p.y-=p.s;if(p.y<-10){p.y=h+10;p.x=Math.random()*w}const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*12);g.addColorStop(0,'rgba(143,79,255,.22)');g.addColorStop(1,'rgba(143,79,255,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,p.r*12,0,Math.PI*2);ctx.fill()}requestAnimationFrame(lp)})()})();
+
+    // --- CHECKOUT (Mercado Pago) ---
+    function getJwt(){const raw=(localStorage.getItem('token')||'').trim()||(localStorage.getItem('NoHeroes_token')||'').trim();return raw.replace(/^Bearer\s+/i,'')}
     function assertAuth(){const t=getJwt(); if(!t){alert('Você precisa estar logado para comprar.'); window.location.href='/login.html?next='+encodeURIComponent(location.pathname+location.search+location.hash); return false;} return true}
+
     async function criarPreferencia(){
       const token=getJwt();
       const combo = document.getElementById('addCombo')?.checked;
@@ -296,30 +228,17 @@
       if(!res.ok){const t=await res.text(); throw new Error(t||'Erro ao criar preferência');}
       return res.json();
     }
+
     async function comprar(){
       if(!assertAuth()) return;
       try{ const {init_point}=await criarPreferencia(); window.location.href=init_point; }
       catch(err){ console.error(err); alert('Não foi possível iniciar o checkout.'); }
     }
+
     document.getElementById('btnComprar')?.addEventListener('click',comprar);
+    document.getElementById('ctaComprarTopo')?.addEventListener('click',()=>comprar(false));
 
     // Remoção defensiva de depoimentos
     document.querySelectorAll('[aria-label="testemunhos"], [aria-label="depoimentos"], #testemunhos, #depoimentos, section[data-kind="testimonials"]').forEach(el=>el.remove());
-
-    // Brasas animadas
-    const c=document.getElementById('brasasCanvas');
-    if(c){
-      const ctx=c.getContext('2d'); let w,h,particles=[]; const N=70;
-      const resize=()=>{w=c.width=innerWidth;h=c.height=innerHeight}; addEventListener('resize',resize,{passive:true}); resize();
-      for(let i=0;i<N;i++) particles.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+0.5,s:Math.random()*0.6+0.25});
-      (function loop(){
-        ctx.clearRect(0,0,w,h);
-        for(const p of particles){ p.y-=p.s; if(p.y< -10){p.y=h+10; p.x=Math.random()*w}
-          const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*12);
-          g.addColorStop(0,'rgba(143,79,255,.22)'); g.addColorStop(1,'rgba(143,79,255,0)');
-          ctx.fillStyle=g; ctx.beginPath(); ctx.arc(p.x,p.y,p.r*12,0,Math.PI*2); ctx.fill(); }
-        requestAnimationFrame(loop); })();
-    }
-  </script>
-</body>
+  </script></body>
 </html>
