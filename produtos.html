@@ -7,180 +7,182 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root{
-      --nh-bg:#0a0a0a; --nh-card:#0f0f14; --nh-ink:#e9e9f2;
-      --nh-accent1:#8f4fff; --nh-accent2:#f2c86a; /* roxo & dourado */
+      --nh-bg:#0a0a0a; --nh-panel:#0d0d12; --nh-ink:#ececf3;
+      --nh-accent1:#8f4fff; --nh-accent2:#f2c86a; --nh-ink-dim:#cfcfe6;
     }
     html,body{ height:100%; background:var(--nh-bg); color:var(--nh-ink); }
     .gradiente-noheroes{ background: linear-gradient(135deg,var(--nh-accent1),var(--nh-accent2)); }
-    .titulo-noheroes{ font-family:"Cinzel Decorative", serif; letter-spacing:.5px; }
-    .ink-muted{ color:#cfcfe6; }/* Fundo “brasas” leve (canvas) */
-#brasasCanvas{ position:fixed; inset:0; z-index:-1; filter: blur(0.3px) saturate(120%); opacity:.45; }
+    .titulo-noheroes{ font-family:"Cinzel Decorative", serif; letter-spacing:.4px; }
+    .ink-muted{ color:var(--nh-ink-dim); }/* HEADER PADRÃO NOHEROES (não-sticky por padrão) */
+.nh-header{ position:relative; z-index:40; border-bottom:1px solid rgba(255,255,255,.06); }
+.nh-header .bar{ height:3px; background:linear-gradient(90deg, var(--nh-accent1), var(--nh-accent2)); }
 
-/* Cartaz 2:3 ratio */
-.poster { position:relative; aspect-ratio:2/3; overflow:hidden; border-radius:1rem; }
-.poster img{ width:100%; height:100%; object-fit:cover; transition: transform .6s ease; }
+/* Fundo brasas padrão */
+#brasasCanvas{ position:fixed; inset:0; z-index:-1; filter: saturate(120%); opacity:.45; }
 
-/* Card */
+/* FILTRO */
+.chip{ border:1px solid rgba(255,255,255,0.16); border-radius:999px; padding:.45rem .95rem; cursor:pointer; user-select:none;
+  transition: background .2s ease, border-color .2s ease, color .2s ease, transform .1s; white-space:nowrap; }
+.chip:hover{ border-color: rgba(255,255,255,0.32); transform: translateY(-1px); }
+.chip.active{ background:linear-gradient(135deg, rgba(143,79,255,.25), rgba(242,200,106,.22)); border-color:transparent; color:#fff; }
+
+/* GRID (auto-fill p/ mobile não ficar gigante) */
+#grid{ grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+@media (min-width:480px){ #grid{ grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); } }
+@media (min-width:768px){ #grid{ grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); } }
+@media (min-width:1280px){ #grid{ grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); } }
+
+/* CARD */
 .nh-card{ position:relative; background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
-  backdrop-filter: blur(10px); border-radius:1.25rem; border:1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 10px 30px rgba(0,0,0,.35);
-  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
-.nh-card:hover{ transform: translateY(-4px) scale(1.01); box-shadow:0 20px 50px rgba(0,0,0,.5); border-color:rgba(255,255,255,0.17); }
-.nh-card:hover .poster img{ transform: scale(1.06); }
+  backdrop-filter: blur(10px); border-radius:1rem; border:1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 8px 24px rgba(0,0,0,.35); transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease; overflow:hidden; }
+.nh-card:hover{ transform: translateY(-4px); box-shadow:0 18px 48px rgba(0,0,0,.5); border-color:rgba(255,255,255,0.16); }
 
-/* Glow suave na borda quando hover */
-.glow::before{ content:""; position:absolute; inset:-1px; border-radius:inherit;
-  background: conic-gradient(from 180deg at 50% 50%, rgba(143,79,255,.55), rgba(242,200,106,.55), rgba(143,79,255,.55));
-  opacity:0; transition:opacity .25s ease; filter: blur(12px); z-index:0; }
-.nh-card:hover.glow::before{ opacity:.4; }
+/* Poster (tamanho controlado) */
+.poster{ position:relative; aspect-ratio:2/3; overflow:hidden; border-radius:.8rem; }
+.poster img{ width:100%; height:100%; object-fit:cover; transition: transform .6s ease; display:block; }
+.nh-card:hover .poster img{ transform: scale(1.05); }
+
+/* Overlays & ações */
+.card-overlay{ position:absolute; inset:0; background: linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(0,0,0,.55) 100%); opacity:0; transition: opacity .25s ease; }
+.nh-card:hover .card-overlay{ opacity:1; }
+.actions{ position:absolute; left:.6rem; right:.6rem; bottom:.6rem; display:flex; gap:.4rem; }
+@media (max-width: 640px){ .actions{ position:static; padding:.5rem .5rem 0; } .card-overlay{ display:none; } }
 
 /* Botões */
-.btn-base{ display:inline-flex; align-items:center; justify-content:center; gap:.5rem; border-radius:999px;
-  padding:.65rem 1rem; font-weight:600; transition: transform .15s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease; }
+.btn{ display:inline-flex; align-items:center; justify-content:center; gap:.5rem; border-radius:999px;
+  padding:.55rem .9rem; font-weight:700; font-size:.85rem; letter-spacing:.2px; white-space:nowrap;
+  transition: transform .12s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease; }
 .btn-solid{ background:linear-gradient(135deg, var(--nh-accent1), var(--nh-accent2)); color:#0b0911; }
 .btn-solid:hover{ transform: translateY(-1px); box-shadow:0 10px 24px rgba(143,79,255,.35), 0 6px 16px rgba(242,200,106,.25); }
 .btn-ghost{ color:var(--nh-ink); border:1px solid rgba(255,255,255,0.18); background:rgba(255,255,255,0.04); }
 .btn-ghost:hover{ border-color:rgba(255,255,255,0.35); background:rgba(255,255,255,0.07); transform: translateY(-1px); }
 
-/* Chips de filtro */
-.chip{ border:1px solid rgba(255,255,255,0.16); border-radius:999px; padding:.4rem .9rem; cursor:pointer; user-select:none;
-  transition: background .2s ease, border-color .2s ease, color .2s ease, transform .1s; }
-.chip:hover{ border-color: rgba(255,255,255,0.32); transform: translateY(-1px); }
-.chip.active{ background:linear-gradient(135deg, rgba(143,79,255,.25), rgba(242,200,106,.22)); border-color:transparent; color:#fff; }
-
-/* Animações de entrada */
-.reveal{ opacity:0; transform: translateY(10px) scale(.98); }
-.reveal.show{ opacity:1; transform: translateY(0) scale(1); transition: opacity .5s ease, transform .5s ease; }
-
-/* Etiquetas */
-.badge{ position:absolute; top:.6rem; left:.6rem; font-size:.75rem; font-weight:700; letter-spacing:.35px; padding:.28rem .6rem; border-radius:.6rem; }
+/* Badges */
+.badge{ position:absolute; top:.55rem; left:.55rem; font-size:.72rem; font-weight:800; letter-spacing:.35px; padding:.24rem .55rem; border-radius:.55rem; }
 .badge-novo{ background: rgba(143,79,255,.95); color:#0e071a; }
-.badge-hot{ background: rgba(242,200,106,.95); color:#160f04; }
+.badge-hot{ background: rgba(242,200,106,.95); color:#160f04; left:auto; right:.55rem; }
 
-/* Scrollbar discreta */
+/* Skeleton */
+.skeleton{ background: linear-gradient(90deg, rgba(255,255,255,.06), rgba(255,255,255,.12), rgba(255,255,255,.06)); background-size:200% 100%; animation: shimmer 1.2s infinite; }
+@keyframes shimmer{ 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+/* Scrollbar */
 ::-webkit-scrollbar{ height:8px; width:8px; }
 ::-webkit-scrollbar-thumb{ background: linear-gradient(180deg, #3a2a5e, #5e4a1d); border-radius:8px; }
 
   </style>
 </head>
 <body class="antialiased selection:bg-fuchsia-500/20 selection:text-white">
-  <canvas id="brasasCanvas" aria-hidden="true"></canvas>  <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+  <!-- Fundo brasas padrão -->
+  <canvas id="brasasCanvas" aria-hidden="true"></canvas>  <!-- HEADER PADRÃO -->  <header class="nh-header">
+    <div class="bar"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 group">
+        <div class="w-8 h-8 rounded-full gradiente-noheroes"></div>
+        <span class="titulo-noheroes text-xl bg-clip-text text-transparent gradiente-noheroes">NoHeroes</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a href="/" class="text-white/80 hover:text-white">Início</a>
+        <a href="/universo" class="text-white/80 hover:text-white">Universo</a>
+        <a href="/produtos" class="text-white font-semibold">Produtos</a>
+        <a href="/loja" class="text-white/80 hover:text-white">Loja</a>
+        <a href="/suporte" class="text-white/80 hover:text-white">Suporte</a>
+      </nav>
+      <button class="md:hidden inline-flex items-center justify-center w-9 h-9 rounded-lg border border-white/15 hover:border-white/35" aria-label="Menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </header>  <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <!-- Título -->
-    <header class="mb-8 sm:mb-10">
-      <h1 class="titulo-noheroes text-3xl sm:text-4xl md:text-5xl font-bold">
-        <span class="gradiente-noheroes bg-clip-text text-transparent">Vitrine</span>
-        <span class="ml-2 ink-muted">NoHeroes</span>
-      </h1>
-      <p class="mt-2 text-sm sm:text-base text-white/70 max-w-2xl">Catálogo moderno de tudo que a NoHeroes oferece. Filtre por categoria, veja detalhes ou vá direto comprar.</p>
-    </header><!-- Filtros -->
-<section class="mb-8">
-  <div class="flex flex-wrap items-center gap-2 sm:gap-3">
-    <button class="chip active" data-filter="todos">Todos</button>
-    <button class="chip" data-filter="livro">Livros</button>
-    <button class="chip" data-filter="ebook">eBooks/PDF</button>
-    <button class="chip" data-filter="manga">Mangás</button>
-    <button class="chip" data-filter="anime">Anime</button>
-    <button class="chip" data-filter="video">Vídeos</button>
-    <button class="chip" data-filter="trilha">Trilhas Sonoras</button>
-    <button class="chip" data-filter="diversos">Diversos</button>
+    <div class="mb-6 sm:mb-8">
+      <h1 class="titulo-noheroes text-3xl sm:text-4xl font-bold"><span class="bg-clip-text text-transparent gradiente-noheroes">Vitrine</span> <span class="ink-muted">NoHeroes</span></h1>
+      <p class="mt-1 text-sm sm:text-base text-white/70 max-w-2xl">Biblioteca de tudo que a NoHeroes oferece. Filtre, veja detalhes ou vá direto comprar.</p>
+    </div><!-- Barra de filtros -->
+<section class="mb-6 sm:mb-8 bg-white/5 border border-white/10 rounded-2xl p-3 sm:p-4 backdrop-blur">
+  <div class="flex flex-col gap-3">
+    <div class="flex items-center gap-3">
+      <div class="relative flex-1">
+        <input id="busca" type="search" placeholder="Buscar por título…" class="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 pr-9 outline-none focus:border-white/30" />
+        <span class="absolute right-3 top-1/2 -translate-y-1/2 text-white/50">⌕</span>
+      </div>
+      <select id="ordenar" class="bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-sm">
+        <option value="default">Ordenar</option>
+        <option value="az">A → Z</option>
+        <option value="za">Z → A</option>
+        <option value="novo">Mais novos</option>
+      </select>
+    </div>
+    <div id="chipsWrap" class="flex items-center gap-2 overflow-x-auto no-scrollbar pt-1">
+      <button class="chip active" data-filter="todos">Todos</button>
+      <button class="chip" data-filter="livro">Livros</button>
+      <button class="chip" data-filter="ebook">eBooks/PDF</button>
+      <button class="chip" data-filter="manga">Mangás</button>
+      <button class="chip" data-filter="anime">Anime</button>
+      <button class="chip" data-filter="video">Vídeos</button>
+      <button class="chip" data-filter="trilha">Trilhas</button>
+      <button class="chip" data-filter="diversos">Diversos</button>
+    </div>
   </div>
 </section>
 
-<!-- Grid de Cards -->
-<section id="grid" class="grid gap-6 sm:gap-8 grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4"></section>
+<!-- Grid -->
+<section id="grid" class="grid gap-4 sm:gap-6"></section>
 
-  </main>  <template id="cardTpl">
-    <article class="nh-card glow reveal flex flex-col overflow-hidden">
-      <div class="p-3">
-        <div class="poster">
-          <img alt="Capa do produto" loading="lazy">
+  </main>  <!-- Card Template -->  <template id="cardTpl">
+    <article class="nh-card">
+      <div class="p-3 pb-2">
+        <div class="poster skeleton">
+          <img alt="Capa" loading="lazy" class="hidden">
           <span class="badge badge-novo hidden">NOVO</span>
-          <span class="badge badge-hot hidden" style="left:auto; right:.6rem">EM ALTA</span>
+          <span class="badge badge-hot hidden">EM ALTA</span>
+          <div class="card-overlay">
+            <div class="actions">
+              <a class="btn btn-ghost w-1/2 sm:w-auto" target="_self">Detalhes</a>
+              <a class="btn btn-solid w-1/2 sm:w-auto" target="_self">Comprar</a>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="px-4 pb-4 -mt-1">
-        <h3 class="titulo-noheroes text-lg sm:text-xl font-bold leading-tight"></h3>
-        <p class="mt-1 text-xs text-white/60"></p>
-        <div class="mt-4 flex gap-2">
-          <a class="btn-base btn-ghost text-sm" target="_self">Detalhes</a>
-          <a class="btn-base btn-solid text-sm" target="_self">Comprar</a>
+      <div class="px-3 pb-3">
+        <h3 class="titulo-noheroes text-base sm:text-lg font-bold leading-tight line-clamp-2"></h3>
+        <p class="mt-1 text-xs text-white/60 line-clamp-1"></p>
+        <div class="mt-3 sm:hidden flex gap-2">
+          <a class="btn btn-ghost flex-1" target="_self">Detalhes</a>
+          <a class="btn btn-solid flex-1" target="_self">Comprar</a>
         </div>
       </div>
     </article>
   </template>  <script>
     // ======================
-    // Dados de exemplo (substitua pelos reais ou injete do backend)
+    // Dados (troque por fetch do backend)
     // ======================
     const produtos = [
-      {
-        titulo: "NoHeroes — As Cinzas do Amanhã",
-        subtitulo: "Livro físico (Vol. 1)",
-        categoria: "livro",
-        capa: "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop",
-        detalhesUrl: "/produtos/as-cinzas-do-amanha",
-        comprarUrl: "/loja/as-cinzas-do-amanha",
-        selo: "novo"
-      },
-      {
-        titulo: "Sistema Vivo",
-        subtitulo: "eBook (PDF)",
-        categoria: "ebook",
-        capa: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0ea?q=80&w=1200&auto=format&fit=crop",
-        detalhesUrl: "/produtos/sistema-vivo",
-        comprarUrl: "/loja/sistema-vivo",
-        selo: "hot"
-      },
-      {
-        titulo: "ROAR — Ato I (Edição Digital)",
-        subtitulo: "eBook (ePub/PDF)",
-        categoria: "ebook",
-        capa: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?q=80&w=1200&auto=format&fit=crop",
-        detalhesUrl: "/produtos/roar-ato-1",
-        comprarUrl: "/loja/roar-ato-1"
-      },
-      {
-        titulo: "NoHeroes — Manga Preview",
-        subtitulo: "One-shot (preview)",
-        categoria: "manga",
-        capa: "https://images.unsplash.com/photo-1509228627152-72ae9ae6848d?q=80&w=1200&auto=format&fit=crop",
-        detalhesUrl: "/produtos/manga-preview",
-        comprarUrl: "/loja/manga-preview",
-        selo: "novo"
-      },
-      {
-        titulo: "Trilha Oficial — Vol. 1",
-        subtitulo: "Álbum digital",
-        categoria: "trilha",
-        capa: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=1200&auto=format&fit=crop",
-        detalhesUrl: "/produtos/trilha-vol-1",
-        comprarUrl: "/loja/trilha-vol-1"
-      },
-      {
-        titulo: "Documentário — Bastidores NoHeroes",
-        subtitulo: "Vídeo HD",
-        categoria: "video",
-        capa: "https://images.unsplash.com/photo-1460881680858-30d872d5b530?q=80&w=1200&auto=format&fit=crop",
-        detalhesUrl: "/produtos/bastidores",
-        comprarUrl: "/loja/bastidores",
-        selo: "hot"
-      },
-      {
-        titulo: "Poster Arte Conceitual",
-        subtitulo: "Impressão A3",
-        categoria: "diversos",
-        capa: "https://images.unsplash.com/photo-1526312426976-593c128eea49?q=80&w=1200&auto=format&fit=crop",
-        detalhesUrl: "/produtos/poster-arte",
-        comprarUrl: "/loja/poster-arte"
-      }
+      { id:1, titulo:"NoHeroes — As Cinzas do Amanhã", subtitulo:"Livro físico (Vol. 1)", categoria:"livro", capa:"https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop", detalhesUrl:"/produtos/as-cinzas-do-amanha", comprarUrl:"/loja/as-cinzas-do-amanha", selo:"novo", createdAt:"2025-08-20" },
+      { id:2, titulo:"Sistema Vivo", subtitulo:"eBook (PDF)", categoria:"ebook", capa:"https://images.unsplash.com/photo-1513475382585-d06e58bcb0ea?q=80&w=1200&auto=format&fit=crop", detalhesUrl:"/produtos/sistema-vivo", comprarUrl:"/loja/sistema-vivo", selo:"hot", createdAt:"2025-08-01" },
+      { id:3, titulo:"ROAR — Ato I (Digital)", subtitulo:"ePub/PDF", categoria:"ebook", capa:"https://images.unsplash.com/photo-1516979187457-637abb4f9353?q=80&w=1200&auto=format&fit=crop", detalhesUrl:"/produtos/roar-ato-1", comprarUrl:"/loja/roar-ato-1", createdAt:"2025-07-10" },
+      { id:4, titulo:"NoHeroes — Manga Preview", subtitulo:"One-shot", categoria:"manga", capa:"https://images.unsplash.com/photo-1509228627152-72ae9ae6848d?q=80&w=1200&auto=format&fit=crop", detalhesUrl:"/produtos/manga-preview", comprarUrl:"/loja/manga-preview", selo:"novo", createdAt:"2025-09-01" },
+      { id:5, titulo:"Trilha Oficial — Vol. 1", subtitulo:"Álbum digital", categoria:"trilha", capa:"https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=1200&auto=format&fit=crop", detalhesUrl:"/produtos/trilha-vol-1", comprarUrl:"/loja/trilha-vol-1", createdAt:"2025-06-01" },
+      { id:6, titulo:"Bastidores NoHeroes", subtitulo:"Documentário (HD)", categoria:"video", capa:"https://images.unsplash.com/photo-1460881680858-30d872d5b530?q=80&w=1200&auto=format&fit=crop", detalhesUrl:"/produtos/bastidores", comprarUrl:"/loja/bastidores", selo:"hot", createdAt:"2025-08-28" },
+      { id:7, titulo:"Poster Arte Conceitual", subtitulo:"Impressão A3", categoria:"diversos", capa:"https://images.unsplash.com/photo-1526312426976-593c128eea49?q=80&w=1200&auto=format&fit=crop", detalhesUrl:"/produtos/poster-arte", comprarUrl:"/loja/poster-arte", createdAt:"2025-05-10" }
     ];
 
-    // Renderização
+    // Estado
     const grid = document.getElementById('grid');
     const tpl  = document.getElementById('cardTpl');
+    const chips = document.querySelectorAll('.chip');
+    const busca = document.getElementById('busca');
+    const ordenar = document.getElementById('ordenar');
 
+    let filtro = 'todos';
+    let termo = '';
+    let ordem = 'default';
+
+    // Render
     function makeCard(item){
       const node = tpl.content.cloneNode(true);
       const card = node.querySelector('article');
+      const poster = node.querySelector('.poster');
       const img  = node.querySelector('img');
       const h3   = node.querySelector('h3');
       const p    = node.querySelector('p');
@@ -191,97 +193,66 @@
 
       card.dataset.categoria = item.categoria;
 
-      img.src = item.capa || '';
-      img.alt = `Capa: ${item.titulo}`;
-      img.onerror = () => {
-        img.remove();
-        const fallback = document.createElement('div');
-        fallback.className = 'w-full h-full gradiente-noheroes flex items-center justify-center text-black/80 font-bold';
-        fallback.textContent = 'SEM CAPA';
-        card.querySelector('.poster').appendChild(fallback);
-      };
+      if(item.capa){
+        img.src = item.capa; img.alt = `Capa: ${item.titulo}`; img.onload = ()=>{ poster.classList.remove('skeleton'); img.classList.remove('hidden'); };
+        img.onerror = ()=>{ poster.classList.remove('skeleton'); img.remove(); const fb=document.createElement('div'); fb.className='w-full h-full gradiente-noheroes flex items-center justify-center text-black/80 font-bold'; fb.textContent='SEM CAPA'; poster.appendChild(fb); };
+      }
 
-      h3.textContent = item.titulo;
-      p.textContent  = item.subtitulo || '';
-
-      btnDetalhes.href = item.detalhesUrl || '#';
-      btnComprar.href  = item.comprarUrl || '#';
-
-      if(item.selo === 'novo')  badgeNovo.classList.remove('hidden');
-      if(item.selo === 'hot')   badgeHot.classList.remove('hidden');
-
-      // pequena sombra ao focar via teclado
-      [btnDetalhes, btnComprar].forEach(b=>{
-        b.addEventListener('focus', ()=> card.style.boxShadow = '0 20px 50px rgba(143,79,255,.25)');
-        b.addEventListener('blur',  ()=> card.style.boxShadow = '0 20px 50px rgba(0,0,0,.5)');
-      });
+      h3.textContent = item.titulo; p.textContent = item.subtitulo || '';
+      btnDetalhes.href = item.detalhesUrl || '#'; btnComprar.href = item.comprarUrl || '#';
+      if(item.selo === 'novo') badgeNovo.classList.remove('hidden');
+      if(item.selo === 'hot')  badgeHot.classList.remove('hidden');
 
       return node;
     }
 
-    function render(lista){
-      grid.innerHTML = '';
-      lista.forEach(item => grid.appendChild(makeCard(item)));
-      revealOnScroll();
+    function aplicarFiltros(lista){
+      let res = [...lista];
+      if(filtro !== 'todos') res = res.filter(x => x.categoria === filtro);
+      if(termo) res = res.filter(x => (x.titulo+" "+(x.subtitulo||'')).toLowerCase().includes(termo));
+      switch(ordem){
+        case 'az': res.sort((a,b)=> a.titulo.localeCompare(b.titulo)); break;
+        case 'za': res.sort((a,b)=> b.titulo.localeCompare(a.titulo)); break;
+        case 'novo': res.sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt)); break;
+      }
+      return res;
     }
 
-    // Filtro
-    const chips = document.querySelectorAll('.chip');
-    let filtroAtual = 'todos';
+    function render(){
+      grid.innerHTML = '';
+      const lista = aplicarFiltros(produtos);
+      lista.forEach(item => grid.appendChild(makeCard(item)));
+    }
 
     chips.forEach(ch => ch.addEventListener('click', () => {
-      chips.forEach(c => c.classList.remove('active'));
-      ch.classList.add('active');
-      filtroAtual = ch.dataset.filter;
-      if(filtroAtual === 'todos') render(produtos);
-      else render(produtos.filter(p => p.categoria === filtroAtual));
+      chips.forEach(c => c.classList.remove('active')); ch.classList.add('active');
+      filtro = ch.dataset.filter; render();
     }));
 
-    // Animação de revelação
-    function revealOnScroll(){
-      const obs = new IntersectionObserver((entries)=>{
-        entries.forEach(en=>{ if(en.isIntersecting) en.target.classList.add('show'); });
-      },{ threshold:.12 });
-      document.querySelectorAll('.reveal').forEach(el=> obs.observe(el));
-    }
+    busca.addEventListener('input', (e)=>{ termo = e.target.value.trim().toLowerCase(); render(); });
+    ordenar.addEventListener('change', (e)=>{ ordem = e.target.value; render(); });
 
-    // Inicializa
-    render(produtos);
+    render();
 
     // ======================
-    // Canvas brasas (leve)
+    // Canvas brasas padrão leve
     // ======================
     const cvs = document.getElementById('brasasCanvas');
     const ctx = cvs.getContext('2d');
     let W, H, sparks = [];
-
     function resize(){ W = cvs.width = window.innerWidth; H = cvs.height = window.innerHeight; }
     window.addEventListener('resize', resize); resize();
-
     function spawn(){
-      const n = 24; // leve
-      sparks = Array.from({length:n}, () => ({
-        x: Math.random()*W,
-        y: H + Math.random()*100,
-        r: 0.6 + Math.random()*1.8,
-        vy: 0.3 + Math.random()*0.9,
-        vx: (Math.random()-.5)*0.3,
-        a: 0.15 + Math.random()*0.15,
-        hue: 265 + Math.random()*40 // roxo -> dourado mix
-      }));
+      const n = 36; // um pouco mais denso, ainda leve
+      sparks = Array.from({length:n}, () => ({ x: Math.random()*W, y: H + Math.random()*120, r: .6 + Math.random()*1.6, vy: .35 + Math.random()*1.1, vx: (Math.random()-.5)*.35, a: .14 + Math.random()*0.16, hue: 255 + Math.random()*60 }));
     }
     spawn();
-
     function loop(){
       ctx.clearRect(0,0,W,H);
-      for(const s of sparks){
-        s.y -= s.vy; s.x += s.vx;
-        s.a -= 0.0008; if(s.a<0) { s.y = H+20; s.x = Math.random()*W; s.a = 0.22; }
-        const grad = ctx.createRadialGradient(s.x,s.y,0,s.x,s.y,s.r*6);
-        grad.addColorStop(0, `hsla(${s.hue}, 85%, 65%, ${s.a})`);
-        grad.addColorStop(1, 'hsla(0,0%,0%,0)');
-        ctx.fillStyle = grad;
-        ctx.beginPath(); ctx.arc(s.x, s.y, s.r*6, 0, Math.PI*2); ctx.fill();
+      for(const s of sparks){ s.y -= s.vy; s.x += s.vx; s.a -= 0.00075; if(s.a<0){ s.y = H+10; s.x = Math.random()*W; s.a = .22; }
+        const grad = ctx.createRadialGradient(s.x,s.y,0,s.x,s.y,s.r*7);
+        grad.addColorStop(0, `hsla(${s.hue}, 85%, 65%, ${s.a})`); grad.addColorStop(1, 'hsla(0,0%,0%,0)');
+        ctx.fillStyle = grad; ctx.beginPath(); ctx.arc(s.x, s.y, s.r*7, 0, Math.PI*2); ctx.fill();
       }
       requestAnimationFrame(loop);
     }
