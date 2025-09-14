@@ -1,401 +1,240 @@
 <!DOCTYPE html><html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Tudo Está Conectado — Detalhes do eBook | NoHeroes</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+  <title>Tudo Está Conectado — eBook (30 págs) | NoHeroes</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --nh-bg:#0a0a0a; --nh-panel:#0d0d12; --nh-ink:#e8e7f5; --nh-ink-dim:#b9b8d6;
-      --nh-accent1:#8f4fff; --nh-accent2:#facc15; --nh-border:rgba(255,255,255,.09);
-      --nh-glass:rgba(255,255,255,.05);
-    }
-    html,body{height:100%;background:var(--nh-bg);color:var(--nh-ink);font-family:Inter,system-ui,Segoe UI,Roboto,Ubuntu,Arial,sans-serif}
-    .grad-noheroes{background:linear-gradient(135deg,var(--nh-accent1),var(--nh-accent2));}
-    .ink-gradient{background:linear-gradient(135deg,#d8ccff,#ffe58a);-webkit-background-clip:text;background-clip:text;color:transparent}
-    .panel{background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.03));border:1px solid var(--nh-border);backdrop-filter:blur(10px);border-radius:18px}
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.9rem 1.1rem;border-radius:14px;border:1px solid var(--nh-border);background:var(--nh-glass);transition:transform .15s ease, background .2s ease, box-shadow .2s ease}
-    .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,0.09);box-shadow:0 6px 22px rgba(0,0,0,.35)}
-    .btn-primary{background:linear-gradient(180deg,rgba(143,79,255,.24),rgba(143,79,255,.12));border-color:rgba(143,79,255,.4);font-weight:600}
-    .btn-primary:hover{background:linear-gradient(180deg,rgba(143,79,255,.3),rgba(143,79,255,.18))}
-    .btn-ghost{background:transparent}
-    .chip{padding:.35rem .6rem;border-radius:999px;border:1px solid var(--nh-border);background:rgba(255,255,255,.04);font-size:.8rem}
-    .divider{height:1px;background:linear-gradient(90deg,transparent,var(--nh-border),transparent)}
-    .shadow-gold{box-shadow:0 0 0 1px rgba(250,204,21,.22),0 10px 30px rgba(250,204,21,.08)}
+    :root{ --nh-bg:#0a0a0a; --nh-ink:#e5e5e5; --nh-ink-dim:#bfbfe0; --nh-accent1:#8f4fff; --nh-accent2:#facc15; }
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;background:#0a0a0a;color:#e5e5e5;margin:0}
+    h1,h2,.cinzel{font-family:'Cinzel Decorative',serif}
+    .gradiente-noheroes{background:linear-gradient(270deg,#8f4fff,#a855f7,#facc15,#8f4fff);background-size:600% 600%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:fluidPulse 8s ease-in-out infinite}
+    .barra-degrade{background:linear-gradient(to right,#8f4fff,#facc15);height:4px;box-shadow:0 0 6px #8f4fff88,0 0 10px #facc1588}
+    .btn-x{background:linear-gradient(270deg,#8f4fff,#a855f7,#facc15,#8f4fff);background-size:600% 600%;animation:fluidPulse 6s ease-in-out infinite;color:#000;font-weight:700;border-radius:.6rem;padding:.9rem 1.1rem;transition:transform .2s ease,filter .2s ease;box-shadow:0 8px 26px rgba(143,79,255,.18);display:inline-block;text-align:center}
+    .btn-x:hover{transform:translateY(-2px);filter:brightness(1.05)}
+    .btn-ghost{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:.6rem;padding:.8rem 1rem;display:inline-block;text-align:center}
+    @keyframes fluidPulse{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+    #brasasCanvas{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-1;pointer-events:none}
+    .panel{background:rgba(255,255,255,.06);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.12);border-radius:1rem}
+    .chip{padding:.35rem .6rem;border-radius:999px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);font-size:.78rem}
+    .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent)}
   </style>
 </head>
 <body>
-  <!-- BG brasas roxas -->
-  <div aria-hidden="true" class="pointer-events-none fixed inset-0 overflow-hidden">
-    <div class="absolute -top-24 -left-24 h-[46rem] w-[46rem] grad-noheroes opacity-20 blur-3xl rounded-full"></div>
-    <div class="absolute bottom-[-6rem] right-[-8rem] h-[34rem] w-[40rem] grad-noheroes opacity-10 blur-2xl rounded-full"></div>
-    <canvas id="brasasCanvas" class="absolute inset-0 opacity-[0.08]"></canvas>
-  </div>  <!-- Barra de progresso -->  <div id="progressbar" class="fixed top-0 left-0 h-[5px] w-0 grad-noheroes z-50"></div>  <!-- Header (não-fixo) -->  <header class="relative z-10">
-    <div class="mx-auto max-w-7xl px-4 py-4">
-      <div class="panel px-4 py-3 flex items-center justify-between">
-        <a href="/" class="flex items-center gap-2">
-          <div class="w-8 h-8 rounded-md grad-noheroes"></div>
-          <span class="font-['Cinzel Decorative'] text-lg tracking-wide ink-gradient">NoHeroes</span>
-        </a>
-        <nav class="hidden md:flex items-center gap-2">
-          <a class="btn btn-ghost" href="#conteudo">Conteúdo</a>
-          <a class="btn btn-ghost" href="#sumario">Sumário</a>
-          <a class="btn btn-ghost" href="#faq">FAQ</a>
-        </nav>
-        <div class="flex items-center gap-2">
-          <a class="btn btn-primary" href="#comprar">Obter eBook</a>
-          <button id="openMenu" class="md:hidden btn" aria-label="Abrir menu">☰</button>
-        </div>
-      </div>
-    </div>
-  </header>  <!-- Drawer Mobile -->  <div id="drawer" class="fixed inset-0 z-40 hidden">
-    <div class="absolute inset-0 bg-black/60" data-close></div>
-    <aside class="absolute right-0 top-0 h-full w-80 panel p-4">
-      <div class="flex items-center justify-between">
-        <span class="font-['Cinzel Decorative'] text-xl">Menu</span>
-        <button class="btn" data-close>✕</button>
-      </div>
-      <div class="divider my-4"></div>
-      <nav class="flex flex-col gap-2">
-        <a class="btn" href="#conteudo">Conteúdo</a>
-        <a class="btn" href="#sumario">Sumário</a>
-        <a class="btn" href="#faq">FAQ</a>
-        <a class="btn btn-primary mt-2" href="#comprar">Obter eBook</a>
+  <canvas id="brasasCanvas"></canvas>
+  <div class="fixed top-0 left-0 w-full barra-degrade z-40"></div>  <!-- HEADER não-fixo no padrão apoiar.html -->  <header class="max-w-7xl mx-auto px-4 pt-6 pb-3">
+    <div class="panel px-4 py-3 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-md" style="background:linear-gradient(135deg,#8f4fff,#facc15)"></div>
+        <span class="cinzel text-lg gradiente-noheroes">NOHEROES</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-2">
+        <a class="btn-ghost" href="#conteudo">Conteúdo</a>
+        <a class="btn-ghost" href="#sumario">Sumário</a>
+        <a class="btn-ghost" href="#comprar">Comprar</a>
       </nav>
-    </aside>
-  </div>  <!-- HERO do produto -->  <section class="relative z-10 mx-auto max-w-7xl px-4 pt-10 pb-8" id="topo">
-    <div class="panel p-6 md:p-10 overflow-hidden">
-      <div class="flex flex-col md:flex-row items-start gap-8">
-        <!-- Mock de capa / preview -->
+      <button class="md:hidden btn-ghost" id="openMenu" aria-label="Abrir menu">☰</button>
+    </div>
+  </header>  <!-- DRAWER -->  <div id="drawer" class="fixed top-0 right-0 w-72 h-full bg-black/90 z-50" style="transform: translateX(100%); transition: transform .25s ease; border-left:1px solid rgba(143,79,255,.25); box-shadow: inset 8px 0 18px rgba(143,79,255,.35)">
+    <button class="absolute top-4 right-4 text-3xl text-[#a855f7] hover:text-purple-400" onclick="toggleDrawer()">✕</button>
+    <div class="p-6 flex flex-col gap-3">
+      <h1 class="text-2xl cinzel gradiente-noheroes">NOHEROES</h1>
+      <nav class="mt-2 flex flex-col gap-2 text-sm">
+        <a href="#conteudo" class="p-3 rounded-lg hover:bg-[#1c1c1c]" onclick="toggleDrawer()">Conteúdo</a>
+        <a href="#sumario" class="p-3 rounded-lg hover:bg-[#1c1c1c]" onclick="toggleDrawer()">Sumário</a>
+        <a href="#comprar" class="p-3 rounded-lg hover:bg-[#1c1c1c]" onclick="toggleDrawer()">Comprar</a>
+      </nav>
+    </div>
+  </div>  <!-- HERO de Produto -->  <section class="max-w-7xl mx-auto px-4 pt-6 pb-4">
+    <div class="panel p-6 md:p-8">
+      <div class="flex flex-col md:flex-row gap-8 items-start">
+        <!-- CAPA (usa imagem real que você já tem) -->
         <div class="w-full md:w-80">
-          <div class="aspect-[3/4] rounded-2xl grad-noheroes shadow-gold relative overflow-hidden">
-            <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,.18),transparent_40%),radial-gradient(circle_at_70%_80%,rgba(0,0,0,.35),transparent_50%)]"></div>
-            <div class="absolute inset-0 flex items-end">
-              <div class="w-full p-4 bg-black/35 backdrop-blur-sm">
-                <span class="font-['Cinzel Decorative'] text-xl">Tudo Está Conectado</span>
-                <p class="text-xs text-[var(--nh-ink-dim)]">Fundamentos para reconectar corpo, mente e espírito</p>
-              </div>
-            </div>
+          <img id="capaEbook" src="/imgs/capas/tudo-esta-conectado.jpg" alt="Capa do eBook" class="w-full aspect-[3/4] object-cover rounded-xl"/>
+          <div class="mt-3 flex flex-wrap gap-2"><span class="chip">PDF • 30 págs</span><span class="chip">Leitura ~60–90 min</span><span class="chip">Introdutório</span></div>
+        </div>
+        <!-- COPY + CTAs -->
+        <div class="flex-1">
+          <h1 class="cinzel text-4xl md:text-5xl gradiente-noheroes">Tudo Está Conectado</h1>
+          <p class="mt-3 text-[var(--nh-ink-dim)] max-w-2xl">Fundamentos para reconectar <em>corpo, mente e espírito</em>. Este volume introdutório mostra que trabalho, vida pessoal, saúde, criatividade e relações formam <strong>um único sistema</strong>. Ele prepara o terreno para o <strong>Sistema Vivo</strong> (eBook II).</p>
+          <div class="mt-5 grid sm:grid-cols-3 gap-3">
+            <a class="btn-x" id="ctaComprarTopo">Comprar — R$ 12,97</a>
+            <a class="btn-ghost" href="/static/preview/tudo-esta-conectado-amostra.pdf" target="_blank">Ver amostra</a>
+            <a class="btn-ghost" href="#conteudo">O que tem dentro</a>
           </div>
-          <div class="mt-3 flex items-center gap-2">
-            <span class="chip">PDF • 140+ págs</span>
-            <span class="chip">Fundacional</span>
-            <span class="chip">Leitura 2–3h</span>
+          <div class="mt-5 panel p-4 text-sm text-[var(--nh-ink-dim)]">
+            Próximo passo recomendado: <span class="text-[#facc15] font-semibold">Sistema Vivo</span> — protocolos práticos e painéis semanais.
           </div>
         </div>
-        <!-- Texto / CTAs -->
-        <div class="flex-1">
-          <p class="chip">eBook • NoHeroes Essentials</p>
-          <h1 class="mt-3 font-['Cinzel Decorative'] text-4xl md:text-5xl leading-tight ink-gradient">Tudo Está Conectado</h1>
-          <p class="mt-4 text-[var(--nh-ink-dim)] max-w-2xl">O guia base do Sistema NoHeroes. Você vai entender por que <em>trabalho, vida pessoal, saúde, criatividade e relações</em> não são peças soltas—são um único sistema. Este volume apresenta os princípios, o mapa e os rituais mínimos para estabilizar o todo. O próximo passo é o <strong>Sistema Vivo</strong>, que aprofunda e operacionaliza.</p><div class="mt-6 grid sm:grid-cols-3 gap-3">
-        <button class="btn btn-primary w-full" id="btnComprarTopo">Obter agora</button>
-        <a class="btn w-full" href="ebook.pdf" target="_blank">Ler amostra</a>
-        <button class="btn w-full" id="btnScrollConteudo">Ver o que tem dentro</button>
-      </div>
-
-      <div class="mt-6 p-4 panel">
-        <p class="text-sm text-[var(--nh-ink-dim)]">Próximo da jornada: <span class="text-[var(--nh-accent2)] font-semibold">Sistema Vivo</span> (eBook II) — práticas, painéis e desafios semanais para aplicar o mapa no dia a dia.</p>
       </div>
     </div>
-  </div>
-</div>
-
-  </section>  <!-- MAPA INTERATIVO (conceito do sistema) -->  <section id="conteudo" class="relative z-10 mx-auto max-w-7xl px-4 py-10">
+  </section>  <!-- CONTEÚDO (Mapa conceitual + bullets) -->  <section id="conteudo" class="max-w-7xl mx-auto px-4 py-8">
     <div class="grid lg:grid-cols-2 gap-6 items-stretch">
       <div class="panel p-6">
-        <h2 class="font-['Cinzel Decorative'] text-2xl md:text-3xl mb-3 text-[var(--nh-accent1)]">Mapa do Sistema</h2>
-        <p class="text-sm text-[var(--nh-ink-dim)] mb-4">Passe o mouse/toque nos núcleos para ver como as áreas se conectam. O eBook mostra como estabilizar cada ligação e evitar tratar sintomas como se fossem ilhas.</p>
+        <h2 class="cinzel text-2xl gradiente-noheroes">Mapa do Sistema</h2>
+        <p class="text-sm text-[var(--nh-ink-dim)] mb-4">Toque nos núcleos para ver conexões. O eBook ensina a estabilizar o sistema como um todo.</p>
         <div class="relative h-[360px]">
           <svg viewBox="0 0 600 360" class="absolute inset-0 w-full h-full">
-            <!-- conexões -->
-            <g stroke="url(#gradLine)" stroke-width="2" opacity="0.6">
-              <line x1="120" y1="90" x2="300" y2="180"/>
-              <line x1="480" y1="90" x2="300" y2="180"/>
-              <line x1="120" y1="270" x2="300" y2="180"/>
-              <line x1="480" y1="270" x2="300" y2="180"/>
-              <line x1="120" y1="90" x2="480" y2="270"/>
-              <line x1="480" y1="90" x2="120" y2="270"/>
+            <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#8f4fff"/><stop offset="100%" stop-color="#facc15"/></linearGradient></defs>
+            <g stroke="url(#g)" stroke-width="2" opacity="0.6">
+              <line x1="120" y1="90" x2="300" y2="180"/><line x1="480" y1="90" x2="300" y2="180"/>
+              <line x1="120" y1="270" x2="300" y2="180"/><line x1="480" y1="270" x2="300" y2="180"/>
+              <line x1="120" y1="90" x2="480" y2="270"/><line x1="480" y1="90" x2="120" y2="270"/>
             </g>
-            <defs>
-              <linearGradient id="gradLine" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#8f4fff"/>
-                <stop offset="100%" stop-color="#facc15"/>
-              </linearGradient>
-            </defs>
-            <!-- nós -->
-            <g class="nh-node" data-title="Mente" data-desc="Ritmos, foco, ansiedade, sono.">
-              <circle cx="120" cy="90" r="22" fill="rgba(143,79,255,.35)" stroke="#facc15" stroke-width="2"/>
-              <text x="120" y="90" dominant-baseline="middle" text-anchor="middle" font-size="11">Mente</text>
-            </g>
-            <g class="nh-node" data-title="Corpo" data-desc="Gastro, pele, energia, imunidade.">
-              <circle cx="480" cy="90" r="22" fill="rgba(143,79,255,.35)" stroke="#facc15" stroke-width="2"/>
-              <text x="480" y="90" dominant-baseline="middle" text-anchor="middle" font-size="11">Corpo</text>
-            </g>
-            <g class="nh-node" data-title="Relações" data-desc="Limites, acordos, fricções.">
-              <circle cx="120" cy="270" r="22" fill="rgba(143,79,255,.35)" stroke="#facc15" stroke-width="2"/>
-              <text x="120" y="270" dominant-baseline="middle" text-anchor="middle" font-size="11">Relações</text>
-            </g>
-            <g class="nh-node" data-title="Trabalho" data-desc="Entrega, propósito, ritmo.">
-              <circle cx="480" cy="270" r="22" fill="rgba(143,79,255,.35)" stroke="#facc15" stroke-width="2"/>
-              <text x="480" y="270" dominant-baseline="middle" text-anchor="middle" font-size="11">Trabalho</text>
-            </g>
-            <g class="nh-node" data-title="Núcleo" data-desc="O centro que integra tudo.">
-              <circle cx="300" cy="180" r="30" fill="rgba(250,204,21,.2)" stroke="#8f4fff" stroke-width="2"/>
-              <text x="300" y="180" dominant-baseline="middle" text-anchor="middle" font-size="12">Núcleo</text>
-            </g>
+            <g class="nh-node" data-title="Mente" data-desc="Ritmos, foco, ansiedade, sono."><circle cx="120" cy="90" r="22" fill="rgba(143,79,255,.35)" stroke="#facc15" stroke-width="2"/><text x="120" y="90" dominant-baseline="middle" text-anchor="middle" font-size="11">Mente</text></g>
+            <g class="nh-node" data-title="Corpo" data-desc="Gastro, pele, energia, imunidade."><circle cx="480" cy="90" r="22" fill="rgba(143,79,255,.35)" stroke="#facc15" stroke-width="2"/><text x="480" y="90" dominant-baseline="middle" text-anchor="middle" font-size="11">Corpo</text></g>
+            <g class="nh-node" data-title="Relações" data-desc="Limites, acordos, fricções."><circle cx="120" cy="270" r="22" fill="rgba(143,79,255,.35)" stroke="#facc15" stroke-width="2"/><text x="120" y="270" dominant-baseline="middle" text-anchor="middle" font-size="11">Relações</text></g>
+            <g class="nh-node" data-title="Trabalho" data-desc="Entrega, propósito, ritmo."><circle cx="480" cy="270" r="22" fill="rgba(143,79,255,.35)" stroke="#facc15" stroke-width="2"/><text x="480" y="270" dominant-baseline="middle" text-anchor="middle" font-size="11">Trabalho</text></g>
+            <g class="nh-node" data-title="Núcleo" data-desc="O centro que integra tudo."><circle cx="300" cy="180" r="30" fill="rgba(250,204,21,.2)" stroke="#8f4fff" stroke-width="2"/><text x="300" y="180" dominant-baseline="middle" text-anchor="middle" font-size="12">Núcleo</text></g>
           </svg>
           <div id="tooltip" class="hidden absolute -translate-x-1/2 -translate-y-full panel p-3 w-[220px] text-xs"></div>
         </div>
       </div>
       <div class="panel p-6">
-        <h2 class="font-['Cinzel Decorative'] text-2xl md:text-3xl mb-3 text-[var(--nh-accent1)]">Você vai aprender</h2>
+        <h2 class="cinzel text-2xl gradiente-noheroes">Você vai aprender</h2>
         <ul class="grid sm:grid-cols-2 gap-3 text-sm text-[var(--nh-ink-dim)]">
-          <li class="panel p-3">Como parar de tratar áreas da vida como caixas separadas.</li>
-          <li class="panel p-3">Rituais mínimos para estabilizar o sistema em 14 dias.</li>
-          <li class="panel p-3">Mapa de sintomas → causas sistêmicas (ex.: pele ↔ intestino ↔ sono).</li>
-          <li class="panel p-3">Protocolos de foco e criatividade sem queimar o corpo.</li>
-          <li class="panel p-3">Checklist de alinhamento diário (5 minutos).</li>
-          <li class="panel p-3">Como preparar a base para o <strong>Sistema Vivo</strong>.</li>
+          <li class="panel p-3">Parar de fragmentar as áreas da vida.</li>
+          <li class="panel p-3">Rituais mínimos para 14 dias.</li>
+          <li class="panel p-3">Mapa: sintomas ↔ causas sistêmicas.</li>
+          <li class="panel p-3">Foco/produção sem queimar o corpo.</li>
+          <li class="panel p-3">Checklist diário em 5 minutos.</li>
+          <li class="panel p-3">Base para o <strong>Sistema Vivo</strong>.</li>
         </ul>
-        <div class="mt-4 flex flex-wrap items-center gap-2">
-          <span class="chip">Atualizações grátis</span>
-          <span class="chip">Download imediato</span>
-          <span class="chip">Acesso no inventário</span>
-        </div>
       </div>
     </div>
-  </section>  <!-- SUMÁRIO / TABS -->  <section id="sumario" class="relative z-10 mx-auto max-w-7xl px-4 py-10">
+  </section>  <!-- SUMÁRIO / TABS -->  <section id="sumario" class="max-w-7xl mx-auto px-4 py-8">
     <div class="panel p-6 md:p-8">
       <div class="flex flex-wrap gap-2">
-        <button class="btn btn-primary" data-tab="tab-sumario">Sumário</button>
-        <button class="btn" data-tab="tab-paraquem">Para quem é</button>
-        <button class="btn" data-tab="tab-formatos">Formatos & Entrega</button>
+        <button class="btn-x" data-tab="tab-sumario">Sumário</button>
+        <button class="btn-ghost" data-tab="tab-paraquem">Para quem é</button>
+        <button class="btn-ghost" data-tab="tab-formatos">Formatos & Entrega</button>
       </div>
       <div class="divider my-6"></div>
-      <div id="tab-sumario" class="tab active">
+      <div id="tab-sumario" class="tab">
         <ol class="grid md:grid-cols-2 gap-3 text-sm text-[var(--nh-ink-dim)] list-decimal list-inside">
-          <li>O Problema de Fragmentar a Vida</li>
-          <li>O Mapa do Sistema (visão geral)</li>
-          <li>Ritmos: sono, luz, alimento, movimento</li>
-          <li>Comunicação entre áreas (mente ↔ corpo ↔ relações ↔ trabalho)</li>
-          <li>Diagnóstico rápido: onde está vazando?</li>
-          <li>Rituais mínimos de 14 dias</li>
-          <li>Erros comuns e como evitar</li>
-          <li>Próximo passo: introdução ao Sistema Vivo</li>
+          <li>Fragmentação: o erro raiz</li><li>Mapa do Sistema</li><li>Ritmos (sono, luz, alimento, movimento)</li><li>Comunicação entre áreas</li><li>Diagnóstico rápido</li><li>Rituais de 14 dias</li><li>Erros comuns</li><li>Próximo passo: Sistema Vivo</li>
         </ol>
       </div>
       <div id="tab-paraquem" class="tab hidden">
         <ul class="grid md:grid-cols-2 gap-3 text-sm text-[var(--nh-ink-dim)]">
-          <li class="panel p-3">Quem está ansioso(a) e dorme mal.</li>
-          <li class="panel p-3">Quem vive cansado(a) e improdutivo(a).</li>
-          <li class="panel p-3">Criativos com bloqueio recorrente.</li>
-          <li class="panel p-3">Quem tenta melhorar a saúde mas regride.</li>
-          <li class="panel p-3">Quem quer uma base clara antes de protocolos avançados.</li>
+          <li class="panel p-3">Ansiedade e sono ruim</li><li class="panel p-3">Cansaço e improdutividade</li><li class="panel p-3">Bloqueio criativo</li><li class="panel p-3">Quem regride na saúde</li><li class="panel p-3">Quem quer base clara antes do avançado</li>
         </ul>
       </div>
       <div id="tab-formatos" class="tab hidden">
         <div class="grid sm:grid-cols-3 gap-3 text-sm text-[var(--nh-ink-dim)]">
-          <div class="panel p-3"><strong>PDF</strong><br/>Leitura em qualquer dispositivo.</div>
-          <div class="panel p-3"><strong>Inventário NoHeroes</strong><br/>Licença atrelada à sua conta.</div>
-          <div class="panel p-3"><strong>Atualizações</strong><br/>Versões futuras inclusas.</div>
+          <div class="panel p-3"><strong>PDF</strong><br/>Qualquer dispositivo</div>
+          <div class="panel p-3"><strong>Inventário</strong><br/>Licença na conta</div>
+          <div class="panel p-3"><strong>Atualizações</strong><br/>Inclusas</div>
         </div>
       </div>
     </div>
-  </section>  <!-- AUTODIAGNÓSTICO (melhor que quiz simples) -->  <section id="diagnostico" class="relative z-10 mx-auto max-w-3xl px-4 py-10">
-    <div class="panel p-6 md:p-8">
-      <h2 class="font-['Cinzel Decorative'] text-2xl md:text-3xl mb-3 text-[var(--nh-accent1)]">Autodiagnóstico rápido</h2>
-      <p class="text-sm text-[var(--nh-ink-dim)]">5 perguntas, 60 segundos. No fim, mostramos seu <em>ponto de ancoragem</em> inicial.</p>
-      <div class="mt-4">
-        <div class="w-full h-2 rounded bg-white/10 overflow-hidden"><div id="diagProgress" class="h-2 grad-noheroes w-0"></div></div>
-        <div id="diagStep" class="mt-4"></div>
-        <div class="mt-4 flex justify-between">
-          <button id="diagPrev" class="btn" disabled>Voltar</button>
-          <button id="diagNext" class="btn btn-primary">Próximo</button>
-        </div>
-      </div>
-      <div id="diagResult" class="hidden mt-6 panel p-4"></div>
-    </div>
-  </section>  <!-- COMPRAR -->  <section id="comprar" class="relative z-10 mx-auto max-w-5xl px-4 py-10">
+  </section>  <!-- COMPRAR + UPSELL BUNDLE -->  <section id="comprar" class="max-w-5xl mx-auto px-4 py-8">
     <div class="grid md:grid-cols-2 gap-6 items-start">
       <div class="panel p-6 md:p-8">
-        <h2 class="font-['Cinzel Decorative'] text-2xl md:text-3xl mb-3 ink-gradient">Obter o eBook</h2>
-        <p class="text-sm text-[var(--nh-ink-dim)]">Compra segura, acesso imediato no seu inventário. Sem depoimentos falsos, só conteúdo real.</p>
-        <div class="mt-4 flex items-end gap-3">
+        <h2 class="cinzel text-2xl gradiente-noheroes">Comprar agora</h2>
+        <div class="mt-3 flex items-end gap-3">
           <div>
-            <div class="text-xs text-[var(--nh-ink-dim)] line-through">De R$ 59,90</div>
-            <div class="text-3xl font-semibold text-emerald-400">R$ 24,90</div>
+            <div class="text-xs text-[var(--nh-ink-dim)] line-through">R$ 19,90</div>
+            <div class="text-4xl font-bold text-emerald-400">R$ 12,97</div>
             <div class="text-xs text-[var(--nh-ink-dim)]">lançamento</div>
           </div>
           <div class="flex-1"></div>
-          <button id="btnComprar" class="btn btn-primary px-6">Comprar agora</button>
+          <a id="btnComprar" class="btn-x">Finalizar compra</a>
         </div>
-        <div class="mt-4 grid sm:grid-cols-3 gap-3 text-xs text-[var(--nh-ink-dim)]">
-          <div class="panel p-3">Pagamento via Mercado Pago / PayPal</div>
-          <div class="panel p-3">Download + Biblioteca NoHeroes</div>
-          <div class="panel p-3">Suporte rápido</div>
-        </div>
+        <p class="mt-3 text-sm text-[var(--nh-ink-dim)]">Pagamento seguro. Acesso imediato no inventário. Requer login.</p>
       </div>
       <div class="panel p-6 md:p-8">
-        <h3 class="font-['Cinzel Decorative'] text-xl mb-2 text-[var(--nh-accent2)]">Próximo passo recomendado</h3>
-        <p class="text-sm text-[var(--nh-ink-dim)]">Depois da base, vá para o <strong>Sistema Vivo</strong> para aplicar com rotinas, painéis e desafios. Compare:</p>
+        <h3 class="cinzel text-xl text-[#facc15]">Oferta combinada (opcional)</h3>
+        <p class="text-sm text-[var(--nh-ink-dim)]">Leve <strong>Tudo Está Conectado</strong> + <strong>Sistema Vivo</strong> por <span class="text-emerald-400 font-semibold">R$ 31,97</span> (desconto aplicado). Ideal para já sair da teoria para a prática.</p>
+        <label class="mt-3 flex items-center gap-2 text-sm"><input type="checkbox" id="addSistemaVivo" class="accent-[#8f4fff]"/> Quero adicionar o Sistema Vivo com desconto</label>
         <div class="mt-4 grid grid-cols-2 gap-3 text-xs">
-          <div class="panel p-3"><strong>Este eBook</strong><br/>Fundamentos • Mapa • Rituais mínimos</div>
-          <div class="panel p-3"><strong>Sistema Vivo</strong><br/>Protocolos práticos • Painéis • Semanas guiadas</div>
+          <div class="panel p-3"><strong>Tudo Está Conectado</strong><br/>Fundamentos • 30 págs</div>
+          <div class="panel p-3"><strong>Sistema Vivo</strong><br/>Protocolos práticos • ~120 págs</div>
         </div>
-        <button class="btn mt-4" onclick="location.href='landingsv.html'">Conhecer Sistema Vivo</button>
       </div>
     </div>
-  </section>  <!-- FAQ -->  <section id="faq" class="relative z-10 mx-auto max-w-5xl px-4 py-10">
+  </section>  <!-- FAQ -->  <section id="faq" class="max-w-5xl mx-auto px-4 py-8">
     <div class="panel p-6 md:p-8">
-      <h2 class="font-['Cinzel Decorative'] text-2xl md:text-3xl mb-3 text-[var(--nh-accent1)]">Perguntas frequentes</h2>
-      <div class="divide-y divide-[var(--nh-border)]">
-        <details class="group py-3">
-          <summary class="flex items-center justify-between cursor-pointer list-none">
-            <span>Qual a diferença para o Sistema Vivo?</span>
-            <span class="transition group-open:rotate-180">⌄</span>
-          </summary>
-          <p class="mt-2 text-sm text-[var(--nh-ink-dim)]">Este volume cria a base sistêmica e mostra o mapa. O Sistema Vivo é a execução: protocolos semanais, painéis e desafios.</p>
-        </details>
-        <details class="group py-3">
-          <summary class="flex items-center justify-between cursor-pointer list-none">
-            <span>Como recebo o eBook?</span>
-            <span class="transition group-open:rotate-180">⌄</span>
-          </summary>
-          <p class="mt-2 text-sm text-[var(--nh-ink-dim)]">Assim que o pagamento confirmar, o PDF entra no seu inventário e também libera download imediato.</p>
-        </details>
-        <details class="group py-3">
-          <summary class="flex items-center justify-between cursor-pointer list-none">
-            <span>Tem garantia?</span>
-            <span class="transition group-open:rotate-180">⌄</span>
-          </summary>
-          <p class="mt-2 text-sm text-[var(--nh-ink-dim)]">Se não fizer sentido nos primeiros 7 dias, devolvemos. Sem perguntas.</p>
-        </details>
+      <h2 class="cinzel text-2xl gradiente-noheroes">Perguntas frequentes</h2>
+      <div class="divide-y divide-white/10">
+        <details class="group py-3"><summary class="flex items-center justify-between cursor-pointer list-none"><span>Preciso ter conta?</span><span class="transition group-open:rotate-180">⌄</span></summary><p class="mt-2 text-sm text-[var(--nh-ink-dim)]">Sim. As compras e o inventário ficam atrelados à sua conta.</p></details>
+        <details class="group py-3"><summary class="flex items-center justify-between cursor-pointer list-none"><span>Como recebo?</span><span class="transition group-open:rotate-180">⌄</span></summary><p class="mt-2 text-sm text-[var(--nh-ink-dim)]">Após o pagamento, o PDF libera download e entra no seu inventário.</p></details>
+        <details class="group py-3"><summary class="flex items-center justify-between cursor-pointer list-none"><span>Qual a diferença para o Sistema Vivo?</span><span class="transition group-open:rotate-180">⌄</span></summary><p class="mt-2 text-sm text-[var(--nh-ink-dim)]"><em>Tudo Está Conectado</em> é base. <em>Sistema Vivo</em> é execução com protocolos semanais e painéis.</p></details>
       </div>
     </div>
-  </section>  <!-- FOOTER -->  <footer class="relative z-10 mt-10">
-    <div class="mx-auto max-w-7xl px-4 py-10">
-      <div class="panel p-6">
-        <div class="grid md:grid-cols-3 gap-6">
-          <div>
-            <div class="font-['Cinzel Decorative'] text-xl mb-2 ink-gradient">NoHeroes</div>
-            <p class="text-sm text-[var(--nh-ink-dim)]">Universo dark‑fantasy. Loja, app e conteúdos.</p>
-          </div>
-          <nav class="grid gap-2 text-sm">
-            <a class="hover:underline" href="#">Termos</a>
-            <a class="hover:underline" href="#">Privacidade</a>
-            <a class="hover:underline" href="#">Contato</a>
-          </nav>
-          <div class="flex items-center gap-2">
-            <a class="btn" href="#">Instagram</a>
-            <a class="btn" href="#">YouTube</a>
-            <a class="btn" href="#">Discord</a>
-          </div>
+  </section>  <!-- FOOTER -->  <footer class="max-w-7xl mx-auto px-4 py-10">
+    <div class="panel p-6">
+      <div class="grid md:grid-cols-3 gap-6">
+        <div><div class="cinzel text-xl gradiente-noheroes">NoHeroes</div><p class="text-sm text-[var(--nh-ink-dim)]">Universo dark‑fantasy. Loja, app, conteúdos.</p></div>
+        <nav class="grid gap-2 text-sm">
+          <a class="hover:underline" href="#">Termos</a>
+          <a class="hover:underline" href="#">Privacidade</a>
+          <a class="hover:underline" href="#">Contato</a>
+        </nav>
+        <div class="flex items-center gap-2">
+          <a class="btn-ghost" href="#">Instagram</a>
+          <a class="btn-ghost" href="#">YouTube</a>
+          <a class="btn-ghost" href="#">Discord</a>
         </div>
-        <div class="divider my-6"></div>
-        <p class="text-xs text-[var(--nh-ink-dim)]">© 2025 NoHeroes. Todos os direitos reservados.</p>
       </div>
+      <div class="divider my-6"></div>
+      <p class="text-xs text-[var(--nh-ink-dim)]">© 2025 NoHeroes. Todos os direitos reservados.</p>
     </div>
   </footer>  <script>
     // Drawer
     const drawer=document.getElementById('drawer');
-    document.getElementById('openMenu')?.addEventListener('click',()=>drawer.classList.remove('hidden'));
-    drawer?.addEventListener('click',e=>{ if(e.target.hasAttribute('data-close')) drawer.classList.add('hidden'); });
-
-    // Progressbar
-    addEventListener('scroll',()=>{
-      const docHeight=document.documentElement.scrollHeight-innerHeight;
-      const scrolled=(scrollY/docHeight)*100; document.getElementById('progressbar').style.width=scrolled+'%';
-    },{passive:true});
+    document.getElementById('openMenu')?.addEventListener('click',toggleDrawer);
+    function toggleDrawer(){drawer.style.transform = drawer.style.transform.includes('100%')? 'translateX(0%)':'translateX(100%)'}
 
     // Tabs
-    const tabsBtns=[...document.querySelectorAll('[data-tab]')];
-    tabsBtns.forEach(btn=>btn.addEventListener('click',()=>{
-      tabsBtns.forEach(b=>b.classList.remove('btn-primary'));
-      document.querySelectorAll('.tab').forEach(t=>t.classList.add('hidden'));
-      btn.classList.add('btn-primary');
-      document.getElementById(btn.dataset.tab).classList.remove('hidden');
-    }));
+    const tabBtns=[...document.querySelectorAll('[data-tab]')];
+    tabBtns.forEach(btn=>btn.addEventListener('click',()=>{tabBtns.forEach(b=>b.classList.replace('btn-x','btn-ghost'));document.querySelectorAll('.tab').forEach(t=>t.classList.add('hidden'));btn.classList.replace('btn-ghost','btn-x');document.getElementById(btn.dataset.tab).classList.remove('hidden');}));
 
-    // Scroll helpers
-    document.getElementById('btnScrollConteudo')?.addEventListener('click',()=>document.getElementById('conteudo').scrollIntoView({behavior:'smooth'}));
-    document.getElementById('btnComprarTopo')?.addEventListener('click',()=>document.getElementById('comprar').scrollIntoView({behavior:'smooth'}));
-
-    // Mapa interativo (tooltip)
+    // Tooltip do mapa
     const tooltip=document.getElementById('tooltip');
-    document.querySelectorAll('.nh-node').forEach(n=>{
-      n.addEventListener('mousemove',e=>{
-        const t=e.currentTarget; tooltip.innerHTML=`<strong>${t.dataset.title}</strong><br><span class="text-[var(--nh-ink-dim)]">${t.dataset.desc}</span>`;
-        tooltip.style.left=e.offsetX+'px'; tooltip.style.top=e.offsetY+'px'; tooltip.classList.remove('hidden');
-      });
-      n.addEventListener('mouseleave',()=>tooltip.classList.add('hidden'));
-      n.addEventListener('click',()=>{
-        document.querySelector('[data-tab="tab-sumario"]').click();
-      });
-    });
+    document.querySelectorAll('.nh-node').forEach(n=>{n.addEventListener('mousemove',e=>{const t=e.currentTarget;tooltip.innerHTML=`<strong>${t.dataset.title}</strong><br><span style="opacity:.8">${t.dataset.desc}</span>`;tooltip.style.left=e.offsetX+'px';tooltip.style.top=e.offsetY+'px';tooltip.classList.remove('hidden');});n.addEventListener('mouseleave',()=>tooltip.classList.add('hidden'));});
 
-    // Autodiagnóstico
-    const steps=[
-      {q:'Seu sono está…', a:['regular','ruim','ótimo','imprevisível']},
-      {q:'Sua energia no dia a dia está…', a:['estável','baixa','picos e quedas','boa']},
-      {q:'Seu foco criativo está…', a:['travado','ok','fluindo','inconstante']},
-      {q:'Seu intestino está…', a:['sensível','ok','desregulado','não sei']},
-      {q:'Você sente que áreas da vida brigam entre si?', a:['sim','às vezes','não','muito']},
-    ];
-    let idx=0; const prog=document.getElementById('diagProgress');
-    const box=document.getElementById('diagStep'); const res=document.getElementById('diagResult');
-    const prev=document.getElementById('diagPrev'); const next=document.getElementById('diagNext');
-    const answers=[];
-    function render(){
-      const s=steps[idx]; prog.style.width=(idx/steps.length*100)+'%';
-      box.innerHTML=`<div class='panel p-4'><p class='text-sm mb-3'><span class='chip'>${idx+1}/${steps.length}</span></p><h3 class='font-[Cinzel Decorative] text-xl mb-3 text-[var(--nh-accent2)]'>${s.q}</h3><div class='grid sm:grid-cols-2 gap-2'>${s.a.map((x,i)=>`<button class='btn' data-i='${i}'>${x}</button>`).join('')}</div></div>`;
-      prev.disabled=idx===0; next.textContent= idx===steps.length-1 ? 'Finalizar' : 'Próximo';
-      box.querySelectorAll('button').forEach(b=>b.addEventListener('click',ev=>{
-        box.querySelectorAll('button').forEach(x=>x.classList.remove('btn-primary'));
-        ev.currentTarget.classList.add('btn-primary');
-        answers[idx]=ev.currentTarget.dataset.i;
-      }));
-    }
-    render();
-    prev.addEventListener('click',()=>{ if(idx>0){idx--; render();}});
-    next.addEventListener('click',()=>{
-      if(typeof answers[idx]==='undefined'){return;}
-      if(idx<steps.length-1){ idx++; render(); }
-      else { // finish
-        prog.style.width='100%';
-        const sum=answers.map(Number).reduce((a,b)=>a+b,0);
-        let perfil='Base instável'; let tip='Comece pelos rituais mínimos de sono, luz e alimentação por 14 dias.';
-        if(sum<=3){ perfil='Base quase estável'; tip='Ajuste fino de ritmos e comunicação entre áreas.'; }
-        else if(sum>=6){ perfil='Sistema em conflito'; tip='Aplique o mapa e, depois, migre para o Sistema Vivo.'; }
-        res.classList.remove('hidden');
-        res.innerHTML=`<h4 class='font-[Cinzel Decorative] text-lg mb-2 text-[var(--nh-accent1)]'>Seu ponto de ancoragem: ${perfil}</h4><p class='text-sm text-[var(--nh-ink-dim)] mb-3'>${tip}</p><button class='btn btn-primary' onclick="document.getElementById('comprar').scrollIntoView({behavior:'smooth'})">Começar agora</button>`;
-      }
-    });
-
-    // Botões de compra (placeholder -> aponte pra rota real)
-    function comprar(){
-      // substitua por window.location.href = '/checkout?sku=tudo-esta-conectado'
-      alert('Comprar: implemente a navegação para checkout/MP.');
-    }
-    document.getElementById('btnComprar')?.addEventListener('click',comprar);
-    document.getElementById('btnComprarTopo')?.addEventListener('click',comprar);
-
-    // Remoção defensiva de depoimentos
-    document.querySelectorAll('[aria-label="testemunhos"], [aria-label="depoimentos"], #testemunhos, #depoimentos, section[data-kind="testimonials"]').forEach(el=>el.remove());
-
-    // Brasas anim
+    // Brasas
     const c=document.getElementById('brasasCanvas');
-    if(c){
-      const ctx=c.getContext('2d'); let w,h,particles=[]; const N=70;
-      const resize=()=>{w=c.width=innerWidth;h=c.height=innerHeight}; addEventListener('resize',resize,{passive:true}); resize();
-      for(let i=0;i<N;i++) particles.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+0.5,s:Math.random()*0.6+0.25});
-      (function loop(){
-        ctx.clearRect(0,0,w,h);
-        for(const p of particles){ p.y-=p.s; if(p.y< -10){p.y=h+10; p.x=Math.random()*w}
-          const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*12);
-          g.addColorStop(0,'rgba(143,79,255,.22)'); g.addColorStop(1,'rgba(143,79,255,0)');
-          ctx.fillStyle=g; ctx.beginPath(); ctx.arc(p.x,p.y,p.r*12,0,Math.PI*2); ctx.fill(); }
-        requestAnimationFrame(loop); })();
+    (function brasas(){if(!c)return;const ctx=c.getContext('2d');let w,h,ps=[];const N=70;function rs(){w=c.width=innerWidth;h=c.height=innerHeight}addEventListener('resize',rs,{passive:true});rs();for(let i=0;i<N;i++)ps.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+0.6,s:Math.random()*0.6+0.25});(function lp(){ctx.clearRect(0,0,w,h);for(const p of ps){p.y-=p.s;if(p.y<-10){p.y=h+10;p.x=Math.random()*w}const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*12);g.addColorStop(0,'rgba(143,79,255,.22)');g.addColorStop(1,'rgba(143,79,255,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,p.r*12,0,Math.PI*2);ctx.fill()}requestAnimationFrame(lp)})()})();
+
+    // --- CHECKOUT ---
+    function getJwt(){const raw=(localStorage.getItem('token')||'').trim()||(localStorage.getItem('NoHeroes_token')||'').trim();return raw.replace(/^Bearer\s+/i,'')}
+    function assertAuth(){const t=getJwt(); if(!t){alert('Você precisa estar logado para comprar.'); window.location.href='/login.html?next='+encodeURIComponent(location.pathname+location.search+location.hash); return false;} return true}
+
+    async function criarPreferencia({bundle}){
+      // Se preferir mandar pra loja geral: window.location.href='/loja.html?add=tudo-esta-conectado'
+      // Abaixo: fluxo Mercado Pago via backend
+      const token=getJwt();
+      const res=await fetch('https://api.noheroes.com.br/api/checkout/mp/preference',{
+        method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
+        body:JSON.stringify({
+          items: bundle ? [
+            {sku:'ebook_tudo_conectado', title:'Tudo Está Conectado', quantity:1, unit_price:12.97},
+            {sku:'ebook_sistema_vivo', title:'Sistema Vivo (bundle)', quantity:1, unit_price:19.00}
+          ]:[
+            {sku:'ebook_tudo_conectado', title:'Tudo Está Conectado', quantity:1, unit_price:12.97}
+          ],
+          success_url:'https://noheroes.com.br/checkout/sucesso',
+          failure_url:'https://noheroes.com.br/checkout/erro',
+          pending_url:'https://noheroes.com.br/checkout/pendente'
+        })
+      });
+      if(!res.ok){const t=await res.text(); throw new Error(t||'Erro ao criar preferência');}
+      return res.json(); // { init_point }
     }
+
+    async function comprar(bundle){
+      if(!assertAuth()) return;
+      try{ const {init_point}=await criarPreferencia({bundle}); window.location.href=init_point; }
+      catch(err){ console.error(err); alert('Não foi possível iniciar o checkout.'); }
+    }
+
+    document.getElementById('btnComprar')?.addEventListener('click',()=>comprar(document.getElementById('addSistemaVivo').checked));
+    document.getElementById('ctaComprarTopo')?.addEventListener('click',()=>comprar(false));
+
+    // Limpador defensivo de depoimentos
+    document.querySelectorAll('[aria-label="testemunhos"], [aria-label="depoimentos"], #testemunhos, #depoimentos, section[data-kind="testimonials"]').forEach(el=>el.remove());
   </script></body>
 </html>
