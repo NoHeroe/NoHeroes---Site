@@ -1,858 +1,243 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!DOCTYPE html><html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NoHeroes | Sistema Vivo - Desperte a Centelha Ancestral</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-    <style>
-        /* Variáveis de Tema (Dark Fantasy & Soulslike) */
-        :root {
-            --color-dark-bg: #0A0710; /* Quase preto */
-            --color-deep-purple: #180C26; /* Roxo muito escuro */
-            --color-accent-purple: #9A3BFF; /* Roxo vibrante para destaque */
-            --color-accent-blue: #40A4FF; /* Azul etéreo para brilhos */
-            --color-text-light: #E8E2F0; /* Branco sujo */
-            --color-text-gray: #B0A0C0; /* Cinza-roxo para subtextos */
-            --color-border-dark: #3A1F5E; /* Borda roxa escura */
-            --color-glow-purple: rgba(154, 59, 255, 0.5);
-            --color-glow-blue: rgba(64, 164, 255, 0.4);
-            --color-button-bg: linear-gradient(90deg, #6D28D9, #9A3BFF);
-            --color-button-hover: linear-gradient(90deg, #9A3BFF, #6D28D9);
-            --color-attention: #FF5733; /* Laranja/vermelho para preço */
-        }
-
-        /* Reset Básico */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--color-dark-bg);
-            color: var(--color-text-light);
-            line-height: 1.6;
-            overflow-x: hidden;
-            background-image: url('https://via.placeholder.com/2000x1500/0A0710/0A0710?text=Subtle+Dark+Texture'); /* Textura de fundo sutil */
-            background-repeat: repeat;
-        }
-
-        /* Utilitários */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        /* Animações Gerais (para elementos que aparecem na rolagem) */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .fade-in.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .slide-in-left {
-            opacity: 0;
-            transform: translateX(-50px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .slide-in-left.active {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .slide-in-right {
-            opacity: 0;
-            transform: translateX(50px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .slide-in-right.active {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        /* Estilo dos Títulos */
-        h1, h2, h3 {
-            font-family: 'Cinzel Decorative', serif;
-            color: var(--color-accent-purple);
-            text-shadow: 0 0 20px var(--color-glow-purple);
-            margin-bottom: 20px;
-        }
-
-        h1 {
-            font-size: 4.5em;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 15px;
-            line-height: 1.1;
-        }
-
-        h2 {
-            font-size: 3em;
-            padding-bottom: 15px;
-            margin-top: 80px;
-            position: relative;
-            display: inline-block; /* Para o border-bottom animado */
-        }
-        h2::after { /* Linha de baixo animada */
-            content: '';
-            position: absolute;
-            left: 50%;
-            bottom: 0;
-            width: 0;
-            height: 3px;
-            background: var(--color-accent-blue);
-            box-shadow: 0 0 15px var(--color-glow-blue);
-            transition: width 0.6s ease-out, left 0.6s ease-out;
-        }
-        h2.active::after {
-            width: 100%;
-            left: 0;
-        }
-
-        h3 {
-            font-size: 2em;
-            margin-top: 30px;
-            color: var(--color-accent-blue);
-        }
-
-        /* Botões */
-        .btn-primary {
-            display: inline-block;
-            background: var(--color-button-bg);
-            color: var(--color-text-light);
-            padding: 18px 35px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.3em;
-            font-weight: 700;
-            text-transform: uppercase;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            box-shadow: 0 0 25px var(--color-glow-purple);
-            letter-spacing: 1.5px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-primary:hover {
-            background: var(--color-button-hover);
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 0 40px var(--color-accent-blue);
-        }
-
-        .btn-primary::before { /* Efeito de brilho no hover */
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.15);
-            transform: skewX(-20deg);
-            transition: all 0.6s ease-out;
-        }
-        .btn-primary:hover::before {
-            left: 100%;
-        }
-
-        /* Header / Hero Section */
-        .hero-section {
-            background: url('https://via.placeholder.com/1920x1080/0d081b/3a1f5e?text=NoHeroes+Header+Background') no-repeat center center/cover;
-            min-height: 100vh; /* Ocupa a tela toda */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            text-align: center;
-            padding: 40px 0;
-            overflow: hidden; /* Para garantir que o parallax não crie scrollbar */
-        }
-
-        .hero-overlay { /* Escurece a imagem de fundo */
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9));
-            z-index: 1;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            background: rgba(0, 0, 0, 0.7); /* Fundo sutil para o texto */
-            padding: 50px 70px;
-            border-radius: 20px;
-            backdrop-filter: blur(8px); /* Efeito de vidro fosco */
-            border: 2px solid var(--color-border-dark);
-            box-shadow: 0 0 60px var(--color-glow-purple);
-            max-width: 950px;
-        }
-
-        .hero-content p {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8em;
-            color: var(--color-text-gray);
-            margin-bottom: 50px;
-            font-style: italic;
-            text-shadow: 0 0 12px rgba(0,0,0,0.8);
-            line-height: 1.4;
-        }
-
-        .hero-price {
-            font-size: 2.5em;
-            color: var(--color-text-light);
-            margin-top: 30px;
-            margin-bottom: 20px;
-            font-weight: 700;
-            display: block;
-        }
-        .hero-price span.original {
-            text-decoration: line-through;
-            color: var(--color-text-gray);
-            font-size: 0.7em;
-            margin-right: 15px;
-        }
-        .hero-price span.offer {
-            color: var(--color-accent-purple);
-            font-size: 1.2em;
-            text-shadow: 0 0 20px var(--color-glow-purple);
-        }
-
-        /* Seções de Conteúdo */
-        section {
-            padding: 100px 0;
-            position: relative;
-            overflow: hidden;
-            border-top: 1px solid var(--color-border-dark);
-        }
-
-        section:nth-child(even) {
-            background-color: var(--color-deep-purple);
-        }
-
-        .section-title-wrapper {
-            text-align: center;
-            margin-bottom: 70px;
-        }
-
-        .section-quote {
-            font-family: 'Playfair Display', serif;
-            font-size: 2em;
-            color: var(--color-accent-blue);
-            text-align: center;
-            margin: 50px auto;
-            line-height: 1.5;
-            text-shadow: 0 0 15px var(--color-glow-blue);
-            max-width: 900px;
-            font-weight: 700;
-        }
-
-        /* Diagnóstico */
-        .diagnosis-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            margin-top: 50px;
-        }
-
-        .diagnosis-item {
-            background-color: var(--color-dark-bg);
-            padding: 35px;
-            border-radius: 15px;
-            border: 2px solid var(--color-border-dark);
-            box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
-            text-align: center;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .diagnosis-item::before { /* Efeito de borda luminosa */
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 15px;
-            padding: 2px;
-            background: linear-gradient(45deg, var(--color-accent-purple), var(--color-accent-blue));
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-        .diagnosis-item:hover::before {
-            opacity: 1;
-        }
-
-        .diagnosis-item h3 {
-            margin-top: 0;
-            font-size: 1.8em;
-            color: var(--color-accent-purple);
-            text-transform: uppercase;
-        }
-
-        .diagnosis-item p {
-            color: var(--color-text-gray);
-            font-size: 1.1em;
-            margin-top: 20px;
-        }
-
-        /* O Caminho */
-        .path-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); /* Dois colunas para desktop */
-            gap: 50px;
-            margin-top: 50px;
-        }
-
-        .path-item {
-            background-color: var(--color-dark-bg);
-            padding: 40px;
-            border-radius: 15px;
-            border: 2px solid var(--color-border-dark);
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
-            transition: background-color 0.4s ease;
-            position: relative;
-        }
-        .path-item:nth-child(odd) {
-            background-color: var(--color-deep-purple);
-        }
-
-        .path-item h3 {
-            margin-top: 0;
-            font-size: 1.8em;
-            color: var(--color-accent-blue);
-            text-transform: uppercase;
-            margin-bottom: 15px;
-        }
-
-        .path-item p {
-            color: var(--color-text-gray);
-            margin-top: 20px;
-        }
-        
-        .path-item ul {
-            list-style: none;
-            margin-top: 25px;
-            padding-left: 0;
-        }
-
-        .path-item ul li {
-            position: relative;
-            padding-left: 25px;
-            margin-bottom: 10px;
-            color: var(--color-text-light);
-        }
-
-        .path-item ul li::before {
-            content: '✦'; /* Ícone de estrela ou similar */
-            position: absolute;
-            left: 0;
-            color: var(--color-accent-purple);
-            font-size: 1.2em;
-            line-height: 1;
-        }
-
-        /* O Poder da Obra */
-        .power-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 40px;
-            margin-top: 50px;
-        }
-
-        .power-item {
-            background-color: var(--color-dark-bg);
-            padding: 40px;
-            border-radius: 15px;
-            border: 2px solid var(--color-border-dark);
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
-            text-align: center;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .power-item:hover {
-            transform: translateY(-15px) scale(1.03);
-            box-shadow: 0 0 50px var(--color-glow-blue);
-        }
-        .power-item::after { /* Efeito de "aura" */
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: radial-gradient(circle, rgba(64,164,255,0.2) 0%, transparent 70%);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.5s ease, height 0.5s ease;
-        }
-        .power-item:hover::after {
-            width: 200%;
-            height: 200%;
-        }
-
-        .power-item h3 {
-            margin-top: 0;
-            font-size: 1.8em;
-            color: var(--color-accent-purple);
-            text-transform: uppercase;
-        }
-
-        .power-item p {
-            color: var(--color-text-gray);
-            margin-top: 20px;
-        }
-
-        /* Sobre o Criador (Raul 'NoHeroe') */
-        .creator-section {
-            padding: 100px 0;
-            background-color: var(--color-deep-purple);
-            border-top: 1px solid var(--color-border-dark);
-            text-align: center;
-        }
-
-        .creator-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .creator-avatar {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: url('https://via.placeholder.com/150x150/503070/E8E2F0?text=Raul+NoHeroe') no-repeat center center/cover;
-            border: 3px solid var(--color-accent-purple);
-            box-shadow: 0 0 25px var(--color-glow-purple);
-            margin-bottom: 30px;
-            transition: transform 0.3s ease;
-        }
-        .creator-avatar:hover {
-            transform: scale(1.05);
-        }
-
-        .creator-section h2 {
-            margin-bottom: 30px;
-            color: var(--color-text-light);
-            text-shadow: none; /* Override default h2 shadow for better contrast */
-        }
-        .creator-section p {
-            font-size: 1.1em;
-            color: var(--color-text-gray);
-            margin-bottom: 20px;
-        }
-        .creator-section .quote {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5em;
-            font-style: italic;
-            color: var(--color-accent-blue);
-            margin-top: 30px;
-            text-shadow: 0 0 10px var(--color-glow-blue);
-        }
-
-        /* Chamado Final */
-        .final-cta-section {
-            background: url('https://via.placeholder.com/1920x800/1e0a2d/6d28d9?text=Dark+Fantasy+CTA+Background+2') no-repeat center center/cover;
-            padding: 120px 0;
-            text-align: center;
-            border-top: 1px solid var(--color-border-dark);
-            position: relative;
-            overflow: hidden;
-        }
-        .final-cta-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9));
-            z-index: 1;
-        }
-
-        .final-cta-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .final-cta-content h2 {
-            color: var(--color-text-light);
-            font-family: 'Playfair Display', serif;
-            font-size: 3.5em;
-            margin-bottom: 50px;
-            text-shadow: 0 0 25px rgba(255,255,255,0.4);
-            border-bottom: none;
-            line-height: 1.3;
-        }
-        .final-cta-content h2::after { /* remove underline from h2 in CTA */
-            content: none;
-        }
-
-        /* Frases Impactantes */
-        .impact-phrases {
-            background-color: var(--color-dark-bg);
-            padding: 80px 0;
-        }
-
-        .impact-phrases h2 {
-            margin-bottom: 60px;
-        }
-
-        .phrase-list {
-            list-style: none;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 25px;
-            padding: 0;
-        }
-
-        .phrase-list li {
-            background-color: var(--color-deep-purple);
-            padding: 20px 30px;
-            border-radius: 10px;
-            border: 1px solid var(--color-border-dark);
-            font-family: 'Playfair Display', serif;
-            font-size: 1.2em;
-            color: var(--color-accent-blue);
-            text-shadow: 0 0 10px rgba(64, 164, 250, 0.4);
-            max-width: 400px;
-            text-align: center;
-            line-height: 1.4;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .phrase-list li:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 0 35px var(--color-glow-purple);
-        }
-
-        /* Footer */
-        .footer {
-            background-color: #050308;
-            color: var(--color-text-gray);
-            text-align: center;
-            padding: 40px 0;
-            font-size: 0.9em;
-            border-top: 1px solid var(--color-border-dark);
-        }
-
-        /* Responsividade */
-        @media (max-width: 992px) {
-            h1 { font-size: 3.5em; }
-            h2 { font-size: 2.5em; }
-            .hero-content { padding: 40px 50px; }
-            .hero-content p { font-size: 1.5em; }
-            .section-quote { font-size: 1.6em; }
-            .path-grid { grid-template-columns: 1fr; } /* Stack columns on smaller screens */
-            .final-cta-content h2 { font-size: 2.8em; }
-            .creator-content { max-width: 90%; }
-        }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 2.8em; letter-spacing: 2px; }
-            h2 { font-size: 2em; }
-            h3 { font-size: 1.5em; }
-            .hero-section { min-height: 70vh; }
-            .hero-content { padding: 30px; }
-            .hero-content p { font-size: 1.2em; margin-bottom: 30px; }
-            .hero-price { font-size: 2em; }
-            .btn-primary { padding: 15px 25px; font-size: 1.1em; }
-            section { padding: 60px 0; }
-            .section-title-wrapper { margin-bottom: 40px; }
-            .section-quote { font-size: 1.4em; margin: 30px auto; }
-            .diagnosis-grid, .power-grid {
-                grid-template-columns: 1fr;
-            }
-            .final-cta-content h2 { font-size: 2.2em; margin-bottom: 30px; }
-            .creator-avatar { width: 120px; height: 120px; }
-            .creator-section .quote { font-size: 1.2em; }
-        }
-
-        @media (max-width: 480px) {
-            h1 { font-size: 2.2em; letter-spacing: 1px; }
-            h2 { font-size: 1.8em; }
-            .hero-section { min-height: 60vh; }
-            .hero-content { padding: 20px; }
-            .hero-content p { font-size: 1em; margin-bottom: 20px; }
-            .hero-price { font-size: 1.8em; }
-            .btn-primary { padding: 12px 20px; font-size: 0.9em; }
-            section { padding: 40px 0; }
-            .phrase-list li { font-size: 1em; padding: 15px 20px; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Sistema Vivo — eBook | NoHeroes</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{ --nh-bg:#0a0a0a; --nh-ink:#e5e5e5; --nh-ink-dim:#bfbfe0; --nh-accent1:#8f4fff; --nh-accent2:#facc15; }
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;background:#0a0a0a;color:#e5e5e5;margin:0}
+    h1,h2,.cinzel{font-family:'Cinzel Decorative',serif}
+    .gradiente-noheroes{background:linear-gradient(270deg,#8f4fff,#a855f7,#facc15,#8f4fff);background-size:600% 600%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:fluidPulse 8s ease-in-out infinite}
+    .barra-degrade{background:linear-gradient(to right,#8f4fff,#facc15);height:4px;box-shadow:0 0 6px #8f4fff88,0 0 10px #facc1588}
+    .btn-x{background:linear-gradient(270deg,#8f4fff,#a855f7,#facc15,#8f4fff);background-size:600% 600%;animation:fluidPulse 6s ease-in-out infinite;color:#000;font-weight:700;border-radius:.6rem;padding:.9rem 1.1rem;transition:transform .2s ease,filter .2s ease;box-shadow:0 8px 26px rgba(143,79,255,.18);display:inline-block;text-align:center}
+    .btn-x:hover{transform:translateY(-2px);filter:brightness(1.05)}
+    .btn-ghost{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:.6rem;padding:.8rem 1rem;display:inline-block;text-align:center}
+    @keyframes fluidPulse{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+    #brasasCanvas{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-1;pointer-events:none}
+    .panel{background:rgba(255,255,255,.06);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.12);border-radius:1rem}
+    .chip{padding:.35rem .6rem;border-radius:999px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);font-size:.78rem}
+    .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent)}
+  </style>
 </head>
 <body>
-    <header class="hero-section" id="home">
-        <div class="hero-overlay"></div>
-        <div class="hero-content fade-in">
-            <h1>SISTEMA VIVO</h1>
-            <p class="tagline">
-                **Desvende a Centelha Ancestral:** O Guia Oculto para Reequilibrar Sua Essência e Forjar um Destino Inabalável.
-            </p>
-            <p class="hero-intro">
-                Seu corpo sabe. Quando algo não vai bem, ele avisa. Dor, febre, cansaço. Mas você escuta? A vida também avisa. E a maioria continua calada, vivendo à sombra. **Chegou a hora de despertar a força que reside em você.**
-            </p>
-            <p class="hero-price">
-                <span class="original">De R$ 120,00</span>
-                Por Apenas <span class="offer">R$ 29,97</span>
-            </p>
-            <a href="#cta-final" class="btn-primary pulse-effect">DESPERTE SUA ESSÊNCIA AGORA</a>
+  <canvas id="brasasCanvas"></canvas>
+  <div class="fixed top-0 left-0 w-full barra-degrade z-40"></div>  <!-- HEADER -->  <header class="max-w-7xl mx-auto px-4 pt-6 pb-3">
+    <div class="panel px-4 py-3 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-md" style="background:linear-gradient(135deg,#8f4fff,#facc15)"></div>
+        <span class="cinzel text-lg gradiente-noheroes">NOHEROES</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-2">
+        <a class="btn-ghost" href="#conteudo">Conteúdo</a>
+        <a class="btn-ghost" href="#sumario">Sumário</a>
+        <a class="btn-ghost" href="#comprar">Comprar</a>
+      </nav>
+      <button class="md:hidden btn-ghost" id="openMenu" aria-label="Abrir menu">☰</button>
+    </div>
+  </header>  <!-- DRAWER -->  <div id="drawer" class="fixed top-0 right-0 w-72 h-full bg-black/90 z-50" style="transform: translateX(100%); transition: transform .25s ease; border-left:1px solid rgba(143,79,255,.25); box-shadow: inset 8px 0 18px rgba(143,79,255,.35)">
+    <button class="absolute top-4 right-4 text-3xl text-[#a855f7] hover:text-purple-400" onclick="toggleDrawer()">✕</button>
+    <div class="p-6 flex flex-col gap-3">
+      <h1 class="text-2xl cinzel gradiente-noheroes">NOHEROES</h1>
+      <nav class="mt-2 flex flex-col gap-2 text-sm">
+        <a href="#conteudo" class="p-3 rounded-lg hover:bg-[#1c1c1c]" onclick="toggleDrawer()">Conteúdo</a>
+        <a href="#sumario" class="p-3 rounded-lg hover:bg-[#1c1c1c]" onclick="toggleDrawer()">Sumário</a>
+        <a href="#comprar" class="p-3 rounded-lg hover:bg-[#1c1c1c]" onclick="toggleDrawer()">Comprar</a>
+      </nav>
+    </div>
+  </div>  <!-- HERO de Produto -->  <section class="max-w-7xl mx-auto px-4 pt-6 pb-4">
+    <div class="panel p-6 md:p-8">
+      <div class="flex flex-col md:flex-row gap-8 items-start">
+        <!-- CAPA (trocar pelo caminho real) -->
+        <div class="w-full md:w-80">
+          <img id="capaEbook" src="/imgs/capas/sistema-vivo.jpg" alt="Capa do eBook Sistema Vivo" class="w-full aspect-[3/4] object-cover rounded-xl"/>
+          <div class="mt-3 flex flex-wrap gap-2"><span class="chip">PDF • ~120 págs</span><span class="chip">Execução</span><span class="chip">Planos semanais</span></div>
         </div>
-    </header>
-
-    <section id="abertura-marcante">
-        <div class="container text-center">
-            <div class="section-title-wrapper">
-                <h2 class="animate-h2">AQUI SEUS LIMITES CAEM</h2>
-            </div>
-            <p class="section-quote fade-in">
-                "Seu ser é um templo de poder, sua mente uma fonte inesgotável. Mas a discórdia roubou sua harmonia. Quando um fio essencial se rompe, o sistema inteiro desaba."
-            </p>
-            <p class="fade-in" style="font-size: 1.2em; color: var(--color-text-gray); max-width: 800px; margin: 30px auto;">
-                A exaustão que você sente, a ansiedade que o aprisiona, a criatividade que se esvai — **não são falhas, são o eco do seu próprio desequilíbrio, a sombra de um potencial adormecido.** Ignorar este chamado é condenar-se a viver à sombra do que você poderia ser.
-            </p>
+        <!-- COPY + CTAs -->
+        <div class="flex-1">
+          <h1 class="cinzel text-4xl md:text-5xl gradiente-noheroes">Sistema Vivo</h1>
+          <p class="mt-3 text-[var(--nh-ink-dim)] max-w-2xl">O manual prático para operar o Sistema NoHeroes. Protocolos semanais, painéis de acompanhamento, rituais de energia e foco. É a continuação natural de <strong>Tudo Está Conectado</strong>, agora em modo execução.</p>
+          <div class="mt-5 grid sm:grid-cols-3 gap-3">
+            <a class="btn-x" id="ctaComprarTopo">Comprar — R$ 24,90</a>
+            <a class="btn-ghost" href="/static/preview/sistema-vivo-amostra.pdf" target="_blank">Ver amostra</a>
+            <a class="btn-ghost" href="#conteudo">O que tem dentro</a>
+          </div>
+          <div class="mt-5 panel p-4 text-sm text-[var(--nh-ink-dim)]">
+            Recomendo ler primeiro <span class="text-[#facc15] font-semibold">Tudo Está Conectado</span> (fundamentos). Aqui a gente executa: planejamento, rituais e métricas simples.
+          </div>
         </div>
-    </section>
-
-    <section id="diagnostico">
-        <div class="container">
-            <div class="section-title-wrapper">
-                <h2 class="animate-h2">Onde Sua Força Interior Está Bloqueada?</h2>
-            </div>
-            <p class="section-quote fade-in">
-                "O problema não é só o que está doendo. É o que deixou de se mover."
-            </p>
-            <p class="fade-in" style="font-size: 1.2em; color: var(--color-text-gray); text-align: center; margin-bottom: 60px;">
-                Identifique os focos de estagnação que sabotam sua vida. **Cada bloqueio é um selo**, mantendo sua verdadeira força cativa.
-            </p>
-            <div class="diagnosis-grid">
-                <div class="diagnosis-item slide-in-left">
-                    <h3>Mental</h3>
-                    <p>Sua mente é um campo de batalha, consumida pela névoa da confusão e ansiedade que sufoca sua clareza? A **conexão com seu próprio Oráculo Interno** está comprometida.</p>
-                </div>
-                <div class="diagnosis-item fade-in">
-                    <h3>Físico</h3>
-                    <p>O cansaço crônico é sua sombra, a vitalidade se esvai, e seu corpo se recusa a obedecer? Seu **templo físico** está desabitado, sem a força que pulsa.</p>
-                </div>
-                <div class="diagnosis-item slide-in-right">
-                    <h3>Emocional</h3>
-                    <p>O peso da culpa e frustrações antigas te acorrentam, impedindo qualquer avanço? As **correntes invisíveis da alma** te prendem ao passado.</p>
-                </div>
-                <div class="diagnosis-item slide-in-left">
-                    <h3>Criativo</h3>
-                    <p>Sente um vazio, um bloqueio que impede sua faísca de acender? O **fluxo da sua inspiração primordial** foi interrompido, e o vazio ecoa.</p>
-                </div>
-                <div class="diagnosis-item fade-in">
-                    <h3>Profissional</h3>
-                    <p>Sua jornada profissional se tornou um purgatório, sem propósito, com projetos que definham no esquecimento? Sua **missão superior** está oculta nas sombras.</p>
-                </div>
-            </div>
-            <p class="section-quote fade-in" style="font-size: 1.6em; margin-top: 60px; color: var(--color-accent-purple);">
-                "Crescimento que ignora o sistema é ilusão."
-            </p>
-            <a href="#cta-final" class="btn-primary fade-in" style="margin-top: 50px;">QUEBRE OS SELOS: ADQUIRA O SISTEMA VIVO</a>
+      </div>
+    </div>
+  </section>  <!-- CONTEÚDO / MAPA DE RITUAIS & PAINÉIS -->  <section id="conteudo" class="max-w-7xl mx-auto px-4 py-8">
+    <div class="grid lg:grid-cols-2 gap-6 items-stretch">
+      <div class="panel p-6">
+        <h2 class="cinzel text-2xl gradiente-noheroes">Painel do Sistema</h2>
+        <p class="text-sm text-[var(--nh-ink-dim)] mb-4">Núcleos e rotas de execução. Passe o mouse/toque para ver o foco semanal sugerido.</p>
+        <div class="relative h-[360px]">
+          <svg viewBox="0 0 600 360" class="absolute inset-0 w-full h-full">
+            <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#8f4fff"/><stop offset="100%" stop-color="#facc15"/></linearGradient></defs>
+            <g stroke="url(#g)" stroke-width="2" opacity="0.6">
+              <line x1="120" y1="90" x2="300" y2="180"/><line x1="480" y1="90" x2="300" y2="180"/>
+              <line x1="120" y1="270" x2="300" y2="180"/><line x1="480" y1="270" x2="300" y2="180"/>
+              <line x1="120" y1="90" x2="480" y2="270"/><line x1="480" y1="90" x2="120" y2="270"/>
+            </g>
+            <g class="nh-node" data-title="Ritmos" data-desc="Sono, luz, alimento, movimento — reset de 7 dias."><circle cx="120" cy="90" r="22" fill="rgba(143,79,255,.35)" stroke="#facc15" stroke-width="2"/><text x="120" y="90" dominant-baseline="middle" text-anchor="middle" font-size="11">Ritmos</text></g>
+            <g class="nh-node" data-title="Energia" data-desc="Respiração, frio/calor, pausa ativa — 10 min/dia."><circle cx="480" cy="90" r="22" fill="rgba(143,79,255,.35)" stroke="#facc15" stroke-width="2"/><text x="480" y="90" dominant-baseline="middle" text-anchor="middle" font-size="11">Energia</text></g>
+            <g class="nh-node" data-title="Criatividade" data-desc="Sprints de 50/10, captura e revisão semanal."><circle cx="120" cy="270" r="22" fill="rgba(143,79,255,.35)" stroke="#facc15" stroke-width="2"/><text x="120" y="270" dominant-baseline="middle" text-anchor="middle" font-size="11">Criatividade</text></g>
+            <g class="nh-node" data-title="Relações" data-desc="Limites, acordos, retro semanal de fricções."><circle cx="480" cy="270" r="22" fill="rgba(143,79,255,.35)" stroke="#facc15" stroke-width="2"/><text x="480" y="270" dominant-baseline="middle" text-anchor="middle" font-size="11">Relações</text></g>
+            <g class="nh-node" data-title="Núcleo" data-desc="Objetivo trimestral + 1 hábito-chave por vez."><circle cx="300" cy="180" r="30" fill="rgba(250,204,21,.2)" stroke="#8f4fff" stroke-width="2"/><text x="300" y="180" dominant-baseline="middle" text-anchor="middle" font-size="12">Núcleo</text></g>
+          </svg>
+          <div id="tooltip" class="hidden absolute -translate-x-1/2 -translate-y-full panel p-3 w-[220px] text-xs"></div>
         </div>
-    </section>
-
-    <section id="o-caminho">
-        <div class="container">
-            <div class="section-title-wrapper">
-                <h2 class="animate-h2">O Caminho: A Forja da Alma</h2>
-            </div>
-            <p class="fade-in" style="font-size: 1.2em; color: var(--color-text-gray); text-align: center; margin-bottom: 60px;">
-                O Sistema Vivo não é um atalho, mas um **mapa de iniciação para a forja da sua própria alma**. Revelamos os segredos para reequilibrar seu ser, para que a verdadeira força emerja e você forje um novo destino.
-            </p>
-            <div class="path-grid">
-                <div class="path-item slide-in-left">
-                    <h3>As Runas da Constância</h3>
-                    <p>Como rituais diários, por menores que sejam, forjam sua resiliência e te conectam a um propósito maior, transformando a rotina em um caminho de poder inabalável.</p>
-                </div>
-                <div class="path-item slide-in-right">
-                    <h3>O Canto do Artífice</h3>
-                    <p>Liberte o fluxo da sua expressão primordial, sem perder o foco. Transforme ideias etéreas em obras tangíveis, com a precisão de um Mestre Forjador, revelando seu gênio interior.</p>
-                </div>
-                <div class="path-item slide-in-left">
-                    <h3>O Propósito Primordial</h3>
-                    <p>Descubra o que te move além do reconhecimento. Encontre seu núcleo de força, o propósito que te impulsiona mesmo nas sombras, livre das amarras do ego e da vaidade vazia.</p>
-                </div>
-                <div class="path-item slide-in-right">
-                    <h3>O Oráculo Interior</h3>
-                    <p>Não se trata de fazer mais, mas de fazer o que ressoa. Reconheça seus ciclos, seus limites e sua verdadeira energia, ouvindo a sabedoria do seu oráculo interior para uma vida plena e eficaz.</p>
-                </div>
-            </div>
-            <h3 class="fade-in" style="text-align: center; margin-top: 80px; color: var(--color-accent-purple);">Desvende os Códigos de Seu Destino: Perguntas do Oráculo</h3>
-            <ul class="fade-in" style="text-align: center; list-style: none; padding: 0; margin-top: 30px;">
-                <li style="margin-bottom: 15px; font-size: 1.1em; color: var(--color-text-light);">“Se sua vida fosse um corpo, qual parte está atrofiada? **Responda honestamente, sem máscaras.**”</li>
-                <li style="margin-bottom: 15px; font-size: 1.1em; color: var(--color-text-light);">“Liste 3 áreas onde sua luz está crescendo. E 3 onde sua sombra está minguando. **Encare a realidade da sua força.**”</li>
-                <li style="font-size: 1.1em; color: var(--color-text-light);">“Qual parte do seu ser você negligenciou nos últimos 6 meses? **A hora da verdade para o seu renascimento.**”</li>
-            </ul>
+      </div>
+      <div class="panel p-6">
+        <h2 class="cinzel text-2xl gradiente-noheroes">Você vai executar</h2>
+        <ul class="grid sm:grid-cols-2 gap-3 text-sm text-[var(--nh-ink-dim)]">
+          <li class="panel p-3">Protocolos semanais com checklists.</li>
+          <li class="panel p-3">Plano de 4 semanas (reinício).</li>
+          <li class="panel p-3">Painéis para mente, corpo e relações.</li>
+          <li class="panel p-3">Sprints criativos e antifadiga.</li>
+          <li class="panel p-3">Revisão semanal de fricções.</li>
+          <li class="panel p-3">Rituais de energia (10 min/dia).</li>
+        </ul>
+        <div class="mt-4 flex flex-wrap items-center gap-2">
+          <span class="chip">Atualizações grátis</span>
+          <span class="chip">Download imediato</span>
+          <span class="chip">Acesso no inventário</span>
         </div>
-    </section>
-
-    <section id="o-poder-da-obra">
-        <div class="container">
-            <div class="section-title-wrapper">
-                <h2 class="animate-h2">NoHeroes: Sua Arena de Forjamento</h2>
-            </div>
-            <p class="section-quote fade-in">
-                "NoHeroes não é apenas uma saga; é um **campo de prova** para a sua própria jornada interior. Cada conflito, cada sacrifício, cada renascimento ecoa a luta do despertar."
-            </p>
-            <p class="fade-in" style="font-size: 1.2em; color: var(--color-text-gray); text-align: center; margin-bottom: 60px;">
-                Nossas criações não são meros contos, são **espelhos forjados para revelar a sua própria força latente**, preparando você para empunhar sua própria verdade nesta jornada implacável.
-            </p>
-            <div class="power-grid">
-                <div class="power-item slide-in-left">
-                    <h3>Animes</h3>
-                    <p>Não apenas entretenimento, mas espelhos emocionais e filosóficos para despertar camadas profundas do seu ser, revelando a dualidade e a força interior.</p>
-                </div>
-                <div class="power-item fade-in">
-                    <h3>Cursos</h3>
-                    <p>Pontes práticas que traduzem a filosofia de NoHeroes em ferramentas acionáveis para o seu despertar criativo e alinhamento vital, transformando conhecimento em poder.</p>
-                </div>
-                <div class="power-item slide-in-right">
-                    <h3>Mentorias & Comunidade</h3>
-                    <p>O campo de batalha onde heróis reais são forjados. Suporte contínuo e a força de um coletivo para sua ascensão, sua guilda em Caelum.</p>
-                </div>
-            </div>
-            <a href="#cta-final" class="btn-primary fade-in" style="margin-top: 70px;">SUA ASCENSÃO COMEÇA AGORA</a>
+      </div>
+    </div>
+  </section>  <!-- TABS: Sumário / Para quem é / Formatos -->  <section id="sumario" class="max-w-7xl mx-auto px-4 py-8">
+    <div class="panel p-6 md:p-8">
+      <div class="flex flex-wrap gap-2">
+        <button class="btn-x" data-tab="tab-sumario">Sumário</button>
+        <button class="btn-ghost" data-tab="tab-paraquem">Para quem é</button>
+        <button class="btn-ghost" data-tab="tab-formatos">Formatos & Entrega</button>
+      </div>
+      <div class="divider my-6"></div>
+      <div id="tab-sumario" class="tab">
+        <ol class="grid md:grid-cols-2 gap-3 text-sm text-[var(--nh-ink-dim)] list-decimal list-inside">
+          <li>Relembrando a base (2 págs)</li><li>Setup do painel</li><li>Semana 1: Ritmos</li><li>Semana 2: Energia</li><li>Semana 3: Criatividade</li><li>Semana 4: Relações</li><li>Revisão mensal</li><li>Escalonando hábitos</li>
+        </ol>
+      </div>
+      <div id="tab-paraquem" class="tab hidden">
+        <ul class="grid md:grid-cols-2 gap-3 text-sm text-[var(--nh-ink-dim)]">
+          <li class="panel p-3">Quem quer sair só da teoria.</li><li class="panel p-3">Quem vive em picos e quedas de energia.</li><li class="panel p-3">Criativos que travam ou oscilam.</li><li class="panel p-3">Quem precisa de painel simples pra seguir.</li>
+        </ul>
+      </div>
+      <div id="tab-formatos" class="tab hidden">
+        <div class="grid sm:grid-cols-3 gap-3 text-sm text:[var(--nh-ink-dim)]">
+          <div class="panel p-3"><strong>PDF</strong><br/>Qualquer dispositivo</div>
+          <div class="panel p-3"><strong>Inventário</strong><br/>Licença na conta</div>
+          <div class="panel p-3"><strong>Atualizações</strong><br/>Inclusas</div>
         </div>
-    </section>
-
-    <section class="creator-section">
-        <div class="container fade-in">
-            <div class="section-title-wrapper">
-                <h2 class="animate-h2">O Arquiteto Desta Realidade</h2>
-            </div>
-            <div class="creator-content">
-                <div class="creator-avatar"></div>
-                <h3>Raul "NoHeroe" Souza Silva</h3>
-                <p>
-                    Visionário por trás de NoHeroes, um universo onde o caos encontra a ordem e a fraqueza se forja em poder. Raul dedicou anos a desvendar os códigos da alma e do sistema, transpondo essa sabedoria para suas obras e, agora, para o Sistema Vivo. Ele é seu guia nesta jornada de descoberta e transformação.
-                </p>
-                <p class="quote">
-                    "Minha obra é um mapa. Sua vida, o território a ser conquistado."
-                </p>
-            </div>
+      </div>
+    </div>
+  </section>  <!-- COMPRAR + BUNDLE (adicionar Tudo Está Conectado por +7,07) -->  <section id="comprar" class="max-w-5xl mx-auto px-4 py-8">
+    <div class="grid md:grid-cols-2 gap-6 items-start">
+      <div class="panel p-6 md:p-8">
+        <h2 class="cinzel text-2xl gradiente-noheroes">Comprar agora</h2>
+        <div class="mt-3 flex items-end gap-3">
+          <div>
+            <div class="text-xs text-[var(--nh-ink-dim)] line-through">R$ 59,90</div>
+            <div class="text-4xl font-bold text-emerald-400">R$ 24,90</div>
+            <div class="text-xs text-[var(--nh-ink-dim)]">lançamento</div>
+          </div>
+          <div class="flex-1"></div>
+          <a id="btnComprar" class="btn-x">Finalizar compra</a>
         </div>
-    </section>
-
-    <section class="impact-phrases">
-        <div class="container text-center">
-            <div class="section-title-wrapper">
-                <h2 class="animate-h2">Os Ecos da Grande Conexão: Mantras Ancestrais</h2>
-            </div>
-            <ul class="phrase-list">
-                <li class="fade-in">“Crescimento que ignora o sistema é ilusão.”</li>
-                <li class="fade-in">“Nada floresce sozinho.”</li>
-                <li class="fade-in">“A doença não é o começo. É o grito final.”</li>
-                <li class="fade-in">“Criatividade é uma função vital do espírito.”</li>
-                <li class="fade-in">“NoHeroes não é um projeto. É um ritual.”</li>
-                <li class="fade-in">“Você não precisa de motivação. Precisa de sistema.”</li>
-                <li class="fade-in">“Seu corpo sente o que sua mente ignora.”</li>
-                <li class="fade-in">“Toda obra de arte é um reflexo do criador. E todo criador é reflexo do seu sistema.”</li>
-            </ul>
+        <p class="mt-3 text-sm text-[var(--nh-ink-dim)]">Pagamento seguro. Acesso imediato no inventário. Requer login.</p>
+      </div>
+      <div class="panel p-6 md:p-8">
+        <h3 class="cinzel text-xl text-[#facc15]">Oferta combinada (opcional)</h3>
+        <p class="text-sm text-[var(--nh-ink-dim)]">Adicione <strong>Tudo Está Conectado</strong> por apenas <span class="text-emerald-400 font-semibold">+ R$ 7,07</span> e leve os dois por <strong>R$ 31,97</strong>.</p>
+        <label class="mt-3 flex items-center gap-2 text-sm"><input type="checkbox" id="addIntro" class="accent-[#8f4fff]"/> Quero adicionar o Tudo Está Conectado</label>
+        <div class="mt-4 grid grid-cols-2 gap-3 text-xs">
+          <div class="panel p-3"><strong>Sistema Vivo</strong><br/>Protocolos práticos • ~120 págs</div>
+          <div class="panel p-3"><strong>Tudo Está Conectado</strong><br/>Fundamentos • 30 págs</div>
         </div>
-    </section>
-
-    <section id="cta-final" class="final-cta-section">
-        <div class="final-cta-overlay"></div>
-        <div class="container final-cta-content fade-in">
-            <h2>"A encruzilhada se revela. Você sente o chamado de sua essência adormecida, o eco de um poder ancestral aguardando ser despertado. Vai se render à estagnação ou vai **forjar seu próprio legado?**"</h2>
-            <p class="hero-price fade-in">
-                <span class="original">De R$ 120,00</span>
-                Por Apenas <span class="offer">R$ 29,97</span>
-            </p>
-            <p style="color: var(--color-text-gray); font-size: 1.1em; margin-bottom: 20px;">
-                (Oferta por tempo limitado ou enquanto durarem os Códigos de Acesso)
-            </p>
-            <a href="#" class="btn-primary pulse-effect">GARANTA SEU ACESSO AO SISTEMA VIVO AGORA</a>
-            <p style="color: var(--color-text-light); font-size: 0.9em; margin-top: 20px; text-shadow: 0 0 5px rgba(0,0,0,0.5);">
-                Sua jornada é segura. Compra Protegida.
-            </p>
-            <div style="margin-top: 30px;">
-                <img src="https://via.placeholder.com/100x50/3A1F5E/E8E2F0?text=Selo+Oraculo" alt="Selo de Conhecimento Ancestral" style="max-width: 150px; opacity: 0.8;">
-            </div>
+      </div>
+    </div>
+  </section>  <!-- FAQ -->  <section id="faq" class="max-w-5xl mx-auto px-4 py-8">
+    <div class="panel p-6 md:p-8">
+      <h2 class="cinzel text-2xl gradiente-noheroes">Perguntas frequentes</h2>
+      <div class="divide-y divide-white/10">
+        <details class="group py-3"><summary class="flex items-center justify-between cursor-pointer list-none"><span>Preciso ter conta?</span><span class="transition group-open:rotate-180">⌄</span></summary><p class="mt-2 text-sm text-[var(--nh-ink-dim)]">Sim. As compras e o inventário ficam atrelados à sua conta.</p></details>
+        <details class="group py-3"><summary class="flex items-center justify-between cursor-pointer list-none"><span>Como recebo?</span><span class="transition group-open:rotate-180">⌄</span></summary><p class="mt-2 text-sm text-[var(--nh-ink-dim)]">Após o pagamento, o PDF libera download e entra no seu inventário.</p></details>
+        <details class="group py-3"><summary class="flex items-center justify-between cursor-pointer list-none"><span>Preciso do eBook introdutório?</span><span class="transition group-open:rotate-180">⌄</span></summary><p class="mt-2 text-sm text-[var(--nh-ink-dim)]">Ajuda muito. Mas se você já entende a base, pode começar direto aqui.</p></details>
+      </div>
+    </div>
+  </section>  <!-- FOOTER -->  <footer class="max-w-7xl mx-auto px-4 py-10">
+    <div class="panel p-6">
+      <div class="grid md:grid-cols-3 gap-6">
+        <div><div class="cinzel text-xl gradiente-noheroes">NoHeroes</div><p class="text-sm text-[var(--nh-ink-dim)]">Universo dark‑fantasy. Loja, app, conteúdos.</p></div>
+        <nav class="grid gap-2 text-sm">
+          <a class="hover:underline" href="#">Termos</a>
+          <a class="hover:underline" href="#">Privacidade</a>
+          <a class="hover:underline" href="#">Contato</a>
+        </nav>
+        <div class="flex items-center gap-2">
+          <a class="btn-ghost" href="#">Instagram</a>
+          <a class="btn-ghost" href="#">YouTube</a>
+          <a class="btn-ghost" href="#">Discord</a>
         </div>
-    </section>
+      </div>
+      <div class="divider my-6"></div>
+      <p class="text-xs text-[var(--nh-ink-dim)]">© 2025 NoHeroes. Todos os direitos reservados.</p>
+    </div>
+  </footer>  <script>
+    // Drawer
+    const drawer=document.getElementById('drawer');
+    document.getElementById('openMenu')?.addEventListener('click',toggleDrawer);
+    function toggleDrawer(){drawer.style.transform = drawer.style.transform.includes('100%')? 'translateX(0%)':'translateX(100%)'}
 
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 NoHeroes. Todos os direitos reservados. Uma obra de Raul "NoHeroe".</p>
-        </div>
-    </footer>
+    // Tabs
+    const tabBtns=[...document.querySelectorAll('[data-tab]')];
+    tabBtns.forEach(btn=>btn.addEventListener('click',()=>{tabBtns.forEach(b=>b.classList.replace('btn-x','btn-ghost'));document.querySelectorAll('.tab').forEach(t=>t.classList.add('hidden'));btn.classList.replace('btn-ghost','btn-x');document.getElementById(btn.dataset.tab).classList.remove('hidden');}));
 
-    <script>
-        // Smooth scrolling para âncoras internas
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href').substring(1);
-                const targetElement = document.getElementById(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
+    // Tooltip do mapa
+    const tooltip=document.getElementById('tooltip');
+    document.querySelectorAll('.nh-node').forEach(n=>{n.addEventListener('mousemove',e=>{const t=e.currentTarget;tooltip.innerHTML=`<strong>${t.dataset.title}</strong><br><span style="opacity:.8">${t.dataset.desc}</span>`;tooltip.style.left=e.offsetX+'px';tooltip.style.top=e.offsetY+'px';tooltip.classList.remove('hidden');});n.addEventListener('mouseleave',()=>tooltip.classList.add('hidden'));});
 
-        // Animações de aparecimento na rolagem (Intersection Observer)
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1 // Ativa quando 10% do elemento está visível
-        };
+    // Brasas
+    const c=document.getElementById('brasasCanvas');
+    (function brasas(){if(!c)return;const ctx=c.getContext('2d');let w,h,ps=[];const N=70;function rs(){w=c.width=innerWidth;h=c.height=innerHeight}addEventListener('resize',rs,{passive:true});rs();for(let i=0;i<N;i++)ps.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+0.6,s:Math.random()*0.6+0.25});(function lp(){ctx.clearRect(0,0,w,h);for(const p of ps){p.y-=p.s;if(p.y<-10){p.y=h+10;p.x=Math.random()*w}const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*12);g.addColorStop(0,'rgba(143,79,255,.22)');g.addColorStop(1,'rgba(143,79,255,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,p.r*12,0,Math.PI*2);ctx.fill()}requestAnimationFrame(lp)})()})();
 
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    if (entry.target.tagName === 'H2' && entry.target.classList.contains('animate-h2')) {
-                        // Força a re-execução da animação da linha de baixo se já foi vista
-                        // Isso é um truque para garantir que a animação da linha ocorra sempre
-                        entry.target.classList.remove('active');
-                        void entry.target.offsetWidth; // Trigger reflow
-                        entry.target.classList.add('active');
-                    }
-                } else {
-                    // Opcional: remover a classe 'active' quando sai da tela para re-animar
-                    // entry.target.classList.remove('active');
-                }
-            });
-        }, observerOptions);
+    // --- CHECKOUT ---
+    function getJwt(){const raw=(localStorage.getItem('token')||'').trim()||(localStorage.getItem('NoHeroes_token')||'').trim();return raw.replace(/^Bearer\s+/i,'')}
+    function assertAuth(){const t=getJwt(); if(!t){alert('Você precisa estar logado para comprar.'); window.location.href='/login.html?next='+encodeURIComponent(location.pathname+location.search+location.hash); return false;} return true}
 
-        document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .animate-h2').forEach(element => {
-            observer.observe(element);
-        });
+    async function criarPreferencia({bundle}){
+      const token=getJwt();
+      const res=await fetch('https://api.noheroes.com.br/api/checkout/mp/preference',{
+        method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
+        body:JSON.stringify({
+          items: bundle ? [
+            {sku:'ebook_sistema_vivo', title:'Sistema Vivo', quantity:1, unit_price:24.90},
+            {sku:'ebook_tudo_conectado', title:'Tudo Está Conectado (bundle)', quantity:1, unit_price:7.07}
+          ]:[
+            {sku:'ebook_sistema_vivo', title:'Sistema Vivo', quantity:1, unit_price:24.90}
+          ],
+          success_url:'https://noheroes.com.br/checkout/sucesso',
+          failure_url:'https://noheroes.com.br/checkout/erro',
+          pending_url:'https://noheroes.com.br/checkout/pendente'
+        })
+      });
+      if(!res.ok){const t=await res.text(); throw new Error(t||'Erro ao criar preferência');}
+      return res.json();
+    }
 
-        // Efeito Parallax para a Hero Section
-        window.addEventListener('scroll', function() {
-            const heroSection = document.querySelector('.hero-section');
-            if (heroSection) {
-                let scrollPosition = window.scrollY;
-                heroSection.style.backgroundPositionY = -scrollPosition * 0.4 + 'px'; /* Ajuste o 0.4 para menos/mais intensidade */
-            }
-        });
-    </script>
-</body>
+    async function comprar(bundle){
+      if(!assertAuth()) return;
+      try{ const {init_point}=await criarPreferencia({bundle}); window.location.href=init_point; }
+      catch(err){ console.error(err); alert('Não foi possível iniciar o checkout.'); }
+    }
+
+    document.getElementById('btnComprar')?.addEventListener('click',()=>comprar(document.getElementById('addIntro').checked));
+    document.getElementById('ctaComprarTopo')?.addEventListener('click',()=>comprar(false));
+
+    // Alternativa simples: enviar pra loja
+    // window.location.href='/loja.html?add=ebook_sistema_vivo' + (document.getElementById('addIntro').checked?'&add=ebook_tudo_conectado&bundle=3197':'');
+  </script></body>
 </html>
