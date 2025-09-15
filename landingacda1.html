@@ -1,316 +1,203 @@
 <!DOCTYPE html><html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>NoHeroes: As Cinzas do Amanhã — Obra Principal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Sistema Vivo — eBook | NoHeroes</title>
   <style>
     :root{
-      --nh-bg:#0a0a0a; --nh-ink:#e8e7f5; --nh-ink-dim:#b9b8d6;
-      --nh-accent1:#8f4fff; --nh-accent2:#facc15; --nh-border:rgba(255,255,255,.09);
-      --nh-glass:rgba(255,255,255,.05);
+      --bg:#0a0a0a; --ink:#eaeaf1; --muted:#b9b9cc; --panel:#0f0f14; --line:#1c1c25;
+      --accent:#8f4fff; --accent2:#facc15;
     }
-    html,body{height:100%;background:var(--nh-bg);color:var(--nh-ink);font-family:Inter,system-ui,Segoe UI,Roboto,Ubuntu,Arial,sans-serif}
-    .grad-noheroes{background:linear-gradient(135deg,var(--nh-accent1),var(--nh-accent2));}
-    .ink-gradient{background:linear-gradient(135deg,#d8ccff,#ffe58a);-webkit-background-clip:text;background-clip:text;color:transparent}
-    .panel{background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.03));border:1px solid var(--nh-border);backdrop-filter:blur(10px);border-radius:18px}
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.9rem 1.1rem;border-radius:14px;border:1px solid var(--nh-border);background:var(--nh-glass);transition:transform .15s ease, background .2s ease, box-shadow .2s ease}
-    .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,0.09);box-shadow:0 6px 22px rgba(0,0,0,.35)}
-    .btn-primary{position:relative;overflow:hidden;border-color:rgba(143,79,255,.4);font-weight:600}
-    .btn-primary::before{content:"";position:absolute;inset:-40%;background:linear-gradient(90deg,rgba(143,79,255,.55),rgba(250,204,21,.55),rgba(143,79,255,.55));filter:blur(14px);animation:glow 5s linear infinite}
-    .btn-primary span{position:relative}
-    @keyframes glow{0%{transform:translateX(-35%)}100%{transform:translateX(35%)}}
-    .chip{padding:.35rem .6rem;border-radius:999px;border:1px solid var(--nh-border);background:rgba(255,255,255,.04);font-size:.8rem}
-    .divider{height:1px;background:linear-gradient(90deg,transparent,var(--nh-border),transparent)}
-    .shadow-gold{box-shadow:0 0 0 1px rgba(250,204,21,.22),0 10px 30px rgba(250,204,21,.08)}
-    .title-glow{position:relative}
-    .title-glow::after{content:"";position:absolute;inset:-20% -10%;background:radial-gradient(60% 40% at 50% 50%,rgba(143,79,255,.25),transparent 70%);filter:blur(24px);z-index:-1}
+    html,body{height:100%;background:var(--bg);color:var(--ink);margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Noto Sans","Apple Color Emoji","Segoe UI Emoji"}
+    a{color:var(--ink);text-decoration:none}
+    header{position:sticky;top:0;background:linear-gradient(180deg,rgba(10,10,10,.95),rgba(10,10,10,.75));backdrop-filter:saturate(140%) blur(6px);border-bottom:1px solid var(--line);z-index:50}
+    .wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+    .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+    .brand{font-family:"Cinzel Decorative",serif;letter-spacing:.08em;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:700}
+    .menu{display:flex;gap:20px}
+    .btn{display:inline-block;padding:12px 18px;border:1px solid var(--line);border-radius:10px;background:#11121a}
+    .btn.accent{border-color:transparent;background:linear-gradient(90deg,var(--accent),var(--accent2));color:#0a0a0a;font-weight:700}
+    .section{padding:56px 0;border-bottom:1px solid var(--line)}
+    h1{font-family:"Cinzel Decorative",serif;font-size:44px;margin:0 0 8px}
+    h2{font-size:28px;margin:0 0 12px;color:var(--accent)}
+    h3{font-size:20px;margin:20px 0 8px}
+    p{color:var(--ink);opacity:.92;line-height:1.6}
+    .muted{color:var(--muted)}
+    .grid{display:grid;gap:20px}
+    .grid-2{grid-template-columns:1.2fr .8fr}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
+    .hero-img{width:100%;border-radius:14px;border:1px solid var(--line);background:#0b0b10;aspect-ratio:3/4;display:block;object-fit:cover}
+    .kvs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .kvs>div{background:#0e0e14;border:1px solid var(--line);border-radius:12px;padding:14px}
+    ul{padding-left:18px}
+    li{margin:8px 0}
+    .price{font-size:36px;font-weight:800;letter-spacing:.5px}
+    .strike{opacity:.6;text-decoration:line-through}
+    .faq details{background:#0e0e14;border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0}
+    footer{padding:48px 0;color:var(--muted)}
+    .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:12px;color:var(--muted)}
+    @media (max-width:900px){.grid-2{grid-template-columns:1fr}.kvs{grid-template-columns:1fr 1fr}}
+    @media (max-width:640px){.menu{display:none}}
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- BG brasas roxas -->
-  <div aria-hidden="true" class="pointer-events-none fixed inset-0 overflow-hidden">
-    <div class="absolute -top-24 -left-24 h-[46rem] w-[46rem] grad-noheroes opacity-20 blur-3xl rounded-full"></div>
-    <div class="absolute bottom-[-6rem] right-[-8rem] h-[34rem] w-[40rem] grad-noheroes opacity-10 blur-2xl rounded-full"></div>
-    <canvas id="brasasCanvas" class="absolute inset-0 opacity-[0.10]"></canvas>
-  </div>  <!-- Barra de progresso -->  <div id="progressbar" class="fixed top-0 left-0 h-[5px] w-0 grad-noheroes z-50"></div>  <!-- Header (NoHeroes padrão) -->  <header class="relative z-10">
-    <div class="mx-auto max-w-7xl px-4 py-4">
-      <div class="panel px-4 py-3 flex items-center justify-between">
-        <a href="/" class="flex items-center gap-2">
-          <div class="w-8 h-8 rounded-md grad-noheroes"></div>
-          <span class="font-['Cinzel Decorative'] text-lg tracking-wide ink-gradient">NoHeroes</span>
-        </a>
-        <nav class="hidden md:flex items-center gap-2">
-          <a class="btn btn-ghost" href="#vivenciar">Vivenciar</a>
-          <a class="btn btn-ghost" href="#sinopse">Sinopse</a>
-          <a class="btn btn-ghost" href="#detalhes">Detalhes</a>
-          <a class="btn btn-ghost" href="#comprar">Comprar</a>
-          <a class="btn btn-ghost" href="#faq">FAQ</a>
-        </nav>
-        <div class="flex items-center gap-2">
-          <a class="btn btn-primary" href="#comprar"><span>Garantir exemplar</span></a>
-          <button id="openMenu" class="md:hidden btn" aria-label="Abrir menu">☰</button>
-        </div>
-      </div>
-    </div>
-  </header>  <!-- Drawer Mobile -->  <div id="drawer" class="fixed inset-0 z-40 hidden">
-    <div class="absolute inset-0 bg-black/60" data-close></div>
-    <aside class="absolute right-0 top-0 h-full w-80 panel p-4">
-      <div class="flex items-center justify-between">
-        <span class="font-['Cinzel Decorative'] text-xl">Menu</span>
-        <button class="btn" data-close>✕</button>
-      </div>
-      <div class="divider my-4"></div>
-      <nav class="flex flex-col gap-2">
-        <a class="btn" href="#vivenciar">Vivenciar</a>
-        <a class="btn" href="#sinopse">Sinopse</a>
-        <a class="btn" href="#detalhes">Detalhes</a>
-        <a class="btn" href="#comprar">Comprar</a>
-        <a class="btn btn-primary mt-2" href="#comprar"><span>Garantir exemplar</span></a>
+  <!-- Header -->
+  <header>
+    <div class="wrap nav">
+      <a href="#" class="brand">NOHEROES</a>
+      <nav class="menu">
+        <a href="#conteudo">Conteúdo</a>
+        <a href="#sumario">Sumário</a>
+        <a href="#comprar" class="btn">Comprar</a>
       </nav>
-    </aside>
-  </div>  <!-- HERO -->  <section class="relative z-10 mx-auto max-w-7xl px-4 pt-10 pb-8" id="topo">
-    <div class="panel p-6 md:p-10 overflow-hidden">
-      <div class="flex flex-col md:flex-row items-start gap-8">
-        <!-- Capa -->
-        <div class="w-full md:w-80">
-          <div class="aspect-[3/4] rounded-2xl shadow-gold relative overflow-hidden">
-            <img src="/imgs/capas/as-cinzas-do-amanha.jpg" alt="Capa de NoHeroes: As Cinzas do Amanhã" class="absolute inset-0 w-full h-full object-cover"/>
-          </div>
-          <div class="mt-3 flex items-center gap-2 flex-wrap">
-            <span class="chip">Dark‑Fantasy</span>
-            <span class="chip">~450 págs</span>
-            <span class="chip">Ilustrado</span>
-          </div>
+      <div aria-hidden="true">☰</div>
+    </div>
+  </header>  <!-- Hero -->  <main class="wrap">
+    <section class="section" id="top">
+      <div class="grid grid-2">
+        <div>
+          <span class="pill">PDF • ~120 págs &nbsp; Execução &nbsp; Planos semanais</span>
+          <h1 id="produto">Sistema Vivo</h1>
+          <p>O manual prático para operar o Sistema NoHeroes. Protocolos semanais, painéis de acompanhamento, rituais de energia e foco. É a continuação natural de <em>Tudo Está Conectado</em>, agora em modo execução.</p>
+          <p>
+            <a href="#comprar" class="btn accent">Comprar — R$ 24,90</a>
+            &nbsp; <a href="#amostra" class="btn">Ver amostra</a>
+            &nbsp; <a href="#conteudo" class="btn">O que tem dentro</a>
+          </p>
+          <p class="muted">Recomendo ler primeiro <em>Tudo Está Conectado</em> (fundamentos). Aqui a gente executa: planejamento, rituais e métricas simples.</p>
         </div>
-        <!-- Copy / CTAs -->
-        <div class="flex-1">
-          <p class="chip">Obra principal • Universo NoHeroes</p>
-          <h1 class="mt-3 font-['Cinzel Decorative'] text-4xl md:text-5xl leading-tight ink-gradient title-glow">NoHeroes: As Cinzas do Amanhã</h1>
-          <p class="mt-3 text-xl md:text-2xl text-[var(--nh-ink-dim)]"><strong>O amanhã só nasce para quem enfrenta a própria sombra.</strong></p>
-          <p class="mt-4 text-[var(--nh-ink-dim)] max-w-2xl">Azuos, um <strong>Vitalista assassino</strong> de cabelos brancos e olhos roxos, atravessa reinos quebrados onde essência é arma e dívida. Cada caça é um julgamento — e cada escolha, uma cicatriz.</p><div class="mt-6 grid sm:grid-cols-3 gap-3 w-full">
-        <button class="btn btn-primary w-full" id="btnComprarTopo"><span>Garantir meu exemplar</span></button>
-        <button class="btn w-full" id="btnScrollVivenciar">O que vou vivenciar</button>
-        <button class="btn w-full" id="btnScrollSinopse">Ler sinopse</button>
+        <aside>
+          <img src="capa-sistema-vivo.jpg" alt="Capa do eBook Sistema Vivo" class="hero-img" />
+        </aside>
+      </div>
+    </section><!-- Painel do Sistema -->
+<section class="section" id="conteudo">
+  <h2>Painel do Sistema</h2>
+  <p>Núcleos e rotas de execução. Passe o mouse/toque para ver o foco semanal sugerido.</p>
+  <div class="kvs">
+    <div><strong>Ritmos</strong><br><span class="muted">Rotina e cadência</span></div>
+    <div><strong>Energia</strong><br><span class="muted">Corpo e mente</span></div>
+    <div><strong>Criatividade</strong><br><span class="muted">Fluxo e ideias</span></div>
+    <div><strong>Relações</strong><br><span class="muted">Conexões</span></div>
+    <div><strong>Núcleo</strong><br><span class="muted">Prioridades</span></div>
+    <div class="card"><em class="muted">Passe o dedo para explorar</em></div>
+  </div>
+</section>
+
+<!-- Você vai executar -->
+<section class="section">
+  <h2>Você vai executar</h2>
+  <ul>
+    <li>Protocolos semanais com checklists.</li>
+    <li>Plano de 4 semanas (reinício).</li>
+    <li>Painéis para mente, corpo e relações.</li>
+    <li>Sprints criativos e antifadiga.</li>
+    <li>Revisão semanal de fricções.</li>
+    <li>Rituais de energia (10 min/dia).</li>
+  </ul>
+  <div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr));gap:14px">
+    <div class="card"><strong>Atualizações</strong><br><span class="muted">grátis</span></div>
+    <div class="card"><strong>Download</strong><br><span class="muted">imediato</span></div>
+    <div class="card"><strong>Acesso</strong><br><span class="muted">no inventário</span></div>
+  </div>
+</section>
+
+<!-- Sumário -->
+<section class="section" id="sumario">
+  <h2>Sumário</h2>
+  <ol>
+    <li>Relembrando a base (2 págs)</li>
+    <li>Setup do painel</li>
+    <li>Semana 1: Ritmos</li>
+    <li>Semana 2: Energia</li>
+    <li>Semana 3: Criatividade</li>
+    <li>Semana 4: Relações</li>
+    <li>Revisão mensal</li>
+    <li>Escalonando hábitos</li>
+  </ol>
+
+  <h3>Para quem é</h3>
+  <ul>
+    <li>Quem quer sair só da teoria.</li>
+    <li>Quem vive em picos e quedas de energia.</li>
+    <li>Criativos que travam ou oscilam.</li>
+    <li>Quem precisa de painel simples pra seguir.</li>
+  </ul>
+
+  <div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr));gap:14px">
+    <div class="card"><strong>PDF</strong><br><span class="muted">Qualquer dispositivo</span></div>
+    <div class="card"><strong>Inventário</strong><br><span class="muted">Licença na conta</span></div>
+    <div class="card"><strong>Atualizações</strong><br><span class="muted">Inclusas</span></div>
+  </div>
+</section>
+
+<!-- Comprar -->
+<section class="section" id="comprar">
+  <h2>Comprar agora</h2>
+  <div class="grid grid-2">
+    <div class="card">
+      <div class="muted">R$ <span class="strike">59,90</span></div>
+      <div class="price">R$ 24,90</div>
+      <div class="muted">lançamento</div>
+      <p><a href="#checkout" class="btn accent" style="width:100%;text-align:center">Finalizar compra</a></p>
+      <p class="muted">Pagamento seguro. Acesso imediato no inventário. Requer login.</p>
+    </div>
+    <div class="card">
+      <h3>Oferta combinada (opcional)</h3>
+      <p>Adicione <em>Tudo Está Conectado</em> por apenas + R$ 7,07 e leve os dois por R$ 31,97.</p>
+      <p><label><input type="checkbox" /> Quero adicionar o <em>Tudo Está Conectado</em></label></p>
+      <div class="grid" style="grid-template-columns:1fr 1fr;gap:12px">
+        <div class="card"><strong>Sistema Vivo</strong><br><span class="muted">Protocolos práticos • ~120 págs</span></div>
+        <div class="card"><strong>Tudo Está Conectado</strong><br><span class="muted">Fundamentos • 30 págs</span></div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
-  </section>  <!-- VIVENCIAR + SINOPSE -->  <section id="vivenciar" class="relative z-10 mx-auto max-w-7xl px-4 py-10">
-    <div class="grid lg:grid-cols-2 gap-6 items-stretch">
-      <div class="panel p-6">
-        <h2 class="font-['Cinzel Decorative'] text-2xl md:text-3xl mb-3 text-[var(--nh-accent1)]">O que você vai vivenciar</h2>
-        <ul class="grid sm:grid-cols-2 gap-3 text-sm text-[var(--nh-ink-dim)]">
-          <li class="panel p-3"> <strong>Vitalismo como arma</strong>: vida transformada em lâmina e sentença.</li>
-          <li class="panel p-3"> <strong>Caçada letal</strong>: rastros, paciência e execução cirúrgica.</li>
-          <li class="panel p-3"> <strong>Mundos partidos</strong>: vilas em ruínas, florestas hostis, luas pesadas.</li>
-          <li class="panel p-3"> <strong>Ação visceral</strong>: batalhas curtas, brutais, sem espaço para erro.</li>
-          <li class="panel p-3"> <strong>Sombras e vazio</strong>: tentação, custo psicológico e cicatrizes.</li>
-          <li class="panel p-3"> <strong>Ilustrações</strong>: artes que revelam a atmosfera do universo.</li>
-        </ul>
-        <div class="mt-4 flex flex-wrap items-center gap-2">
-          <span class="chip">Acesso via site + app</span>
-          <span class="chip">Offline no app</span>
-          <span class="chip">Atualizações incluídas</span>
-        </div>
-      </div>
-      <div class="panel p-6" id="sinopse">
-        <h2 class="font-['Cinzel Decorative'] text-2xl md:text-3xl mb-3 text-[var(--nh-accent1)]">Sinopse oficial</h2>
-        <div class="text-sm text-[var(--nh-ink-dim)] leading-relaxed">
-          <p class="mb-3"><strong>No coração de um mundo despedaçado pela guerra e pela ambição, antigos clãs disputam sob a vigília silenciosa da lua. Azuos, um jovem destinado a carregar um fardo maior do que a sua própria vida, vê-se arrastado para uma teia de segredos, traições e forças que ultrapassam a compreensão humana.</strong></p>
-          <p class="mb-3"><strong>Entre provas que o desafiam, monstros que habitam as sombras e um dragão vermelho cuja fúria ecoa como presságio, ele descobrirá que não existem heróis — apenas escolhas, cicatrizes e a luta desesperada por sobrevivência.</strong></p>
-          <p><strong>NoHeroes é uma jornada de fantasia sombria sobre lealdade, sacrifício e o peso de enfrentar o próprio destino.</strong></p>
-        </div>
-      </div>
+<!-- FAQ -->
+<section class="section faq">
+  <h2>Perguntas frequentes</h2>
+  <details>
+    <summary><strong>Preciso ter conta?</strong></summary>
+    <p>Sim. As compras e o inventário ficam atrelados à sua conta.</p>
+  </details>
+  <details>
+    <summary><strong>Como recebo?</strong></summary>
+    <p>Após o pagamento, o PDF libera download e entra no seu inventário.</p>
+  </details>
+  <details>
+    <summary><strong>Preciso do eBook introdutório?</strong></summary>
+    <p>Ajuda muito. Mas se você já entende a base, pode começar direto aqui.</p>
+  </details>
+</section>
+
+  </main>  <!-- Footer -->  <footer>
+    <div class="wrap">
+      <p><strong>NoHeroes</strong></p>
+      <p class="muted">Universo dark‑fantasy. Loja, app, conteúdos.</p>
+      <p class="muted"><a href="#">Termos</a> • <a href="#">Privacidade</a> • <a href="#">Contato</a></p>
+      <p class="muted"><a href="#">Instagram</a> • <a href="#">YouTube</a> • <a href="#">Discord</a></p>
+      <p class="muted">© 2025 NoHeroes. Todos os direitos reservados.</p>
     </div>
-  </section>  <!-- TABS -->  <section id="detalhes" class="relative z-10 mx-auto max-w-7xl px-4 py-10">
-    <div class="panel p-6 md:p-8">
-      <div class="flex flex-wrap gap-2">
-        <button class="btn btn-primary" data-tab="tab-ato"><span>Detalhes do Ato I (de 3)</span></button>
-        <button class="btn" data-tab="tab-paraquem">Para quem é</button>
-        <button class="btn" data-tab="tab-formatos">Formatos & Entrega</button>
-      </div>
-      <div class="divider my-6"></div>
-      <div id="tab-ato" class="tab">
-        <ul class="grid md:grid-cols-2 gap-3 text-sm text-[var(--nh-ink-dim)]">
-          <li class="panel p-3">Sob a lua, clãs em disputa e um nome que pesa.</li>
-          <li class="panel p-3">Provações que moldam a lâmina e o silêncio.</li>
-          <li class="panel p-3">Segredos do Vitalismo: pactos, dívidas, limites.</li>
-          <li class="panel p-3">O presságio vermelho que muda o tabuleiro.</li>
-        </ul>
-      </div>
-      <div id="tab-paraquem" class="tab hidden">
-        <ul class="grid md:grid-cols-2 gap-3 text-sm text-[var(--nh-ink-dim)]">
-          <li class="panel p-3">Leitores de dark‑fantasy com ação e mistério.</li>
-          <li class="panel p-3">Quem curte protagonistas calculistas e sistemas de poder.</li>
-          <li class="panel p-3">Fãs de universos expansivos (obra principal NoHeroes).</li>
-          <li class="panel p-3">Quem quer imersão longa: ~450 págs + ilustrações.</li>
-        </ul>
-      </div>
-      <div id="tab-formatos" class="tab hidden">
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm text-[var(--nh-ink-dim)]">
-          <div class="panel p-3"><strong>Digital</strong><br/>Acesso via site e app (offline no app).</div>
-          <div class="panel p-3"><strong>Físico</strong><br/>Lançamento simultâneo em plataforma parceira (link em breve).</div>
-          <div class="panel p-3"><strong>Inventário</strong><br/>Cópia vinculada à sua conta.</div>
-          <div class="panel p-3"><strong>Atualizações</strong><br/>Revisões futuras inclusas.</div>
-        </div>
-      </div>
-    </div>
-  </section>  <!-- COMPRAR -->  <section id="comprar" class="relative z-10 mx-auto max-w-5xl px-4 py-10">
-    <div class="grid md:grid-cols-2 gap-6 items-start">
-      <div class="panel p-6 md:p-8">
-        <h2 class="font-['Cinzel Decorative'] text-2xl md:text-3xl mb-3 ink-gradient">Garantir meu exemplar</h2>
-        <p class="text-sm text-[var(--nh-ink-dim)]">Acesso imediato no inventário. Leitura no site e no app (offline apenas no app). Sem combo.</p>
-        <div class="mt-4 flex items-end gap-3">
-          <div>
-            <div class="text-xs text-[var(--nh-ink-dim)] line-through">R$ 79,90</div>
-            <div class="text-3xl font-semibold text-emerald-400">R$ 69,00</div>
-            <div class="text-xs text-[var(--nh-ink-dim)]">obra principal</div>
-          </div>
-          <div class="flex-1"></div>
-          <button id="btnComprar" class="btn btn-primary px-6"><span>Comprar agora</span></button>
-        </div>
-        <div class="mt-4 grid sm:grid-cols-3 gap-3 text-xs text-[var(--nh-ink-dim)]">
-          <div class="panel p-3">Mercado Pago / PayPal</div>
-          <div class="panel p-3">Inventário NoHeroes</div>
-          <div class="panel p-3">Suporte rápido</div>
-        </div>
-      </div>
-      <div class="panel p-6 md:p-8">
-        <h3 class="font-['Cinzel Decorative'] text-xl mb-2 text-[var(--nh-accent2)]">Versão física</h3>
-        <p class="text-sm text-[var(--nh-ink-dim)]">Venda inicial em plataforma parceira. Assim que o link estiver ativo, aparece aqui.</p>
-        <button class="btn mt-3" disabled>Disponível em breve</button>
-      </div>
-    </div>
-  </section>  <!-- FAQ -->  <section id="faq" class="relative z-10 mx-auto max-w-5xl px-4 py-10">
-    <div class="panel p-6 md:p-8">
-      <h2 class="font-['Cinzel Decorative'] text-2xl md:text-3xl mb-3 text-[var(--nh-accent1)]">Perguntas frequentes</h2>
-      <div class="divide-y divide-[var(--nh-border)]">
-        <details class="group py-3">
-          <summary class="flex items-center justify-between cursor-pointer list-none">
-            <span>Preciso ler algo antes?</span>
-            <span class="transition group-open:rotate-180">⌄</span>
-          </summary>
-          <p class="mt-2 text-sm text-[var(--nh-ink-dim)]">Não. Este é o início da saga (Ato I de 3).</p>
-        </details>
-        <details class="group py-3">
-          <summary class="flex items-center justify-between cursor-pointer list-none">
-            <span>Tem ilustrações?</span>
-            <span class="transition group-open:rotate-180">⌄</span>
-          </summary>
-          <p class="mt-2 text-sm text-[var(--nh-ink-dim)]">Sim, artes internas selecionadas ao longo do volume.</p>
-        </details>
-        <details class="group py-3">
-          <summary class="flex items-center justify-between cursor-pointer list-none">
-            <span>Posso ler offline?</span>
-            <span class="transition group-open:rotate-180">⌄</span>
-          </summary>
-          <p class="mt-2 text-sm text-[var(--nh-ink-dim)]">Sim, no app NoHeroes (modo offline). No site a leitura é online.</p>
-        </details>
-        <details class="group py-3">
-          <summary class="flex items-center justify-between cursor-pointer list-none">
-            <span>Vai ter versão física?</span>
-            <span class="transition group-open:rotate-180">⌄</span>
-          </summary>
-          <p class="mt-2 text-sm text-[var(--nh-ink-dim)]">Sim, lançamento simultâneo em plataforma parceira. Link será divulgado nesta página.</p>
-        </details>
-      </div>
-    </div>
-  </section>  <!-- FOOTER -->  <footer class="relative z-10 mt-10">
-    <div class="mx-auto max-w-7xl px-4 py-10">
-      <div class="panel p-6">
-        <div class="grid md:grid-cols-3 gap-6">
-          <div>
-            <div class="font-['Cinzel Decorative'] text-xl mb-2 ink-gradient">NoHeroes</div>
-            <p class="text-sm text-[var(--nh-ink-dim)]">Universo dark‑fantasy. Loja, app e conteúdos.</p>
-          </div>
-          <nav class="grid gap-2 text-sm">
-            <a class="hover:underline" href="#">Termos</a>
-            <a class="hover:underline" href="#">Privacidade</a>
-            <a class="hover:underline" href="#">Contato</a>
-          </nav>
-          <div class="flex items-center gap-2">
-            <a class="btn" href="#">Instagram</a>
-            <a class="btn" href="#">YouTube</a>
-            <a class="btn" href="#">Discord</a>
-          </div>
-        </div>
-        <div class="divider my-6"></div>
-        <p class="text-xs text-[var(--nh-ink-dim)]">© 2025 NoHeroes. Todos os direitos reservados.</p>
-      </div>
-    </div>
-  </footer>  <script>
-    // Drawer
-    const drawer=document.getElementById('drawer');
-    document.getElementById('openMenu')?.addEventListener('click',()=>drawer.classList.remove('hidden'));
-    drawer?.addEventListener('click',e=>{ if(e.target.hasAttribute('data-close')) drawer.classList.add('hidden'); });
+  </footer>  <!-- ====== SUBSTITUIÇÃO RÁPIDA PARA O PRODUTO ACDA ======
+    Para criar a réplica exata para o produto "NoHeroes — As Cinzas do Amanhã",
+    altere apenas as ocorrências abaixo (mantendo layout, textos e preços):
 
-    // Progressbar
-    addEventListener('scroll',()=>{
-      const docHeight=document.documentElement.scrollHeight-innerHeight;
-      const scrolled=(scrollY/docHeight)*100; document.getElementById('progressbar').style.width=scrolled+'%';
-    },{passive:true});
+    1) <title> … </title>
+    2) #produto (H1)
+    3) imagem de capa (src e alt)
+    4) Cartões/menções do nome do produto na oferta combinada
 
-    // Tabs
-    const tabsBtns=[...document.querySelectorAll('[data-tab]')];
-    tabsBtns.forEach(btn=>btn.addEventListener('click',()=>{
-      tabsBtns.forEach(b=>b.classList.remove('btn-primary'));
-      document.querySelectorAll('.tab').forEach(t=>t.classList.add('hidden'));
-      btn.classList.add('btn-primary');
-      document.getElementById(btn.dataset.tab).classList.remove('hidden');
-    }));
-
-    // Scroll helpers
-    document.getElementById('btnScrollVivenciar')?.addEventListener('click',()=>document.getElementById('vivenciar').scrollIntoView({behavior:'smooth'}));
-    document.getElementById('btnScrollSinopse')?.addEventListener('click',()=>document.getElementById('sinopse').scrollIntoView({behavior:'smooth'}));
-    document.getElementById('btnComprarTopo')?.addEventListener('click',()=>document.getElementById('comprar').scrollIntoView({behavior:'smooth'}));
-
-    // Checkout (MP) — sem combo
-    function getJwt(){const raw=(localStorage.getItem('token')||'').trim()||(localStorage.getItem('NoHeroes_token')||'').trim();return raw.replace(/^Bearer\s+/i,'')}
-    function assertAuth(){const t=getJwt(); if(!t){alert('Você precisa estar logado para comprar.'); window.location.href='/login.html?next='+encodeURIComponent(location.pathname+location.search+location.hash); return false;} return true}
-
-    async function criarPreferencia(){
-      const token=getJwt();
-      const body={items:[{sku:'livro_cinzas_amanha_digital', title:'NoHeroes: As Cinzas do Amanhã (digital)', quantity:1, unit_price:69.00}]};
-      const res=await fetch('https://api.noheroes.com.br/api/checkout/mp/preference',{
-        method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
-        body:JSON.stringify({
-          ...body,
-          success_url:'https://noheroes.com.br/checkout/sucesso',
-          failure_url:'https://noheroes.com.br/checkout/erro',
-          pending_url:'https://noheroes.com.br/checkout/pendente'
-        })
-      });
-      if(!res.ok){const t=await res.text(); throw new Error(t||'Erro ao criar preferência');}
-      return res.json();
-    }
-
-    async function comprar(){
-      if(!assertAuth()) return;
-      try{ const {init_point}=await criarPreferencia(); window.location.href=init_point; }
-      catch(err){ console.error(err); alert('Não foi possível iniciar o checkout.'); }
-    }
-
-    document.getElementById('btnComprar')?.addEventListener('click',comprar);
-
-    // Remoção defensiva de depoimentos
-    document.querySelectorAll('[aria-label="testemunhos"], [aria-label="depoimentos"], #testemunhos, #depoimentos, section[data-kind="testimonials"]').forEach(el=>el.remove());
-
-    // Brasas animadas (igual às outras LPs)
-    const c=document.getElementById('brasasCanvas');
-    if(c){
-      const ctx=c.getContext('2d'); let w,h,particles=[]; const N=80;
-      const resize=()=>{w=c.width=innerWidth;h=c.height=innerHeight}; addEventListener('resize',resize,{passive:true}); resize();
-      for(let i=0;i<N;i++) particles.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+0.6,s:Math.random()*0.7+0.25});
-      (function loop(){
-        ctx.clearRect(0,0,w,h);
-        for(const p of particles){ p.y-=p.s; if(p.y< -10){p.y=h+10; p.x=Math.random()*w}
-          const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*12);
-          g.addColorStop(0,'rgba(143,79,255,.22)'); g.addColorStop(1,'rgba(143,79,255,0)');
-          ctx.fillStyle=g; ctx.beginPath(); ctx.arc(p.x,p.y,p.r*12,0,Math.PI*2); ctx.fill(); }
-        requestAnimationFrame(loop); })();
-    }
+    Exemplo de substituições:
+      - <title>NoHeroes — As Cinzas do Amanhã | NoHeroes</title>
+      - <h1 id="produto">NoHeroes — As Cinzas do Amanhã</h1>
+      - <img src="capa-acda.jpg" alt="Capa do livro NoHeroes — As Cinzas do Amanhã" …>
+      - No bloco da oferta, trocar "Sistema Vivo" por "As Cinzas do Amanhã"
+  ========================================================= -->  <script>
+    // Scroll suave básico
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',e=>{const id=a.getAttribute('href');if(id.length>1){e.preventDefault();document.querySelector(id)?.scrollIntoView({behavior:'smooth'});}})
+    });
   </script></body>
 </html>
