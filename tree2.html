@@ -19,7 +19,20 @@
     .glow-logo{animation:pulseLogo 3s ease-in-out infinite}
     @keyframes pulseLogo{0%,100%{filter:drop-shadow(0 0 4px #a855f7)}50%{filter:drop-shadow(0 0 16px #a855f7)}}
     /* Botão destaque (portfólio): vinho -> roxo com mesma animação */
-    .btn-vinho{background:linear-gradient(270deg,#7f1d1d,#7c2d6f,#8f4fff,#7f1d1d);background-size:600% 600%;animation:fluidPulse 6s ease-in-out infinite;color:#fff;font-weight:700;border-radius:.7rem;padding:.9rem 1.1rem;transition:transform .2s ease,filter .2s ease;box-shadow:0 10px 30px rgba(127,29,29,.25);display:block;text-align:center;border:1px solid rgba(255,255,255,.08)}
+    .btn-vinho {
+  background: linear-gradient(270deg,#7f1d1d,#111111,#000000,#7f1d1d);
+  background-size: 600% 600%;
+  animation: fluidPulse 6s ease-in-out infinite;
+  color:#fff;
+  font-weight:700;
+  border-radius:.7rem;
+  padding:.9rem 1.1rem;
+  transition:transform .2s ease,filter .2s ease;
+  box-shadow:0 10px 30px rgba(127,29,29,.25);
+  display:block;
+  text-align:center;
+  border:1px solid rgba(255,255,255,.08);
+}
     .btn-vinho:hover{transform:translateY(-2px);filter:brightness(1.06)}
     /* Ícones sociais/communities (SVG links) */
     .icon-btn{display:inline-flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:12px;border:1px solid var(--nh-border);background:rgba(255,255,255,.06);backdrop-filter:blur(8px);transition:transform .15s ease,filter .15s ease}
