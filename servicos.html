@@ -1,1 +1,390 @@
-xd
+<!DOCTYPE html><html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NoHeroes — Onde os Heróis Falham, Nós Entregamos</title>
+  <meta name="description" content="NoHeroes: design, código e estratégia para desafios que derrotam heróis." />
+  <meta property="og:title" content="NoHeroes — Onde os Heróis Falham, Nós Entregamos" />
+  <meta property="og:description" content="Guilda que resolve o impossível: branding, produto digital e growth." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#7D3FFF" />  <!-- Fonts -->  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600..800&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet" />  <style>
+    :root {
+      --bg-0: #0a0a0c;
+      --bg-1: #101014;
+      --bg-2: #16161d;
+      --text-0: #e9e9ef;
+      --text-1: #a7a7bf;
+      --accent-1: #7D3FFF; /* roxo */
+      --accent-2: #F3B24C; /* dourado */
+      --accent-3: #E14D92; /* magenta quente */
+      --glass: rgba(20, 20, 28, 0.5);
+      --border: rgba(255,255,255,0.08);
+      --radius: 16px;
+      --shadow: 0 10px 40px rgba(0,0,0,0.5);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text-0);
+      background: radial-gradient(1200px 800px at 20% 10%, rgba(125,63,255,0.15), transparent 60%),
+                  radial-gradient(1000px 700px at 80% 0%, rgba(243,178,76,0.1), transparent 60%),
+                  var(--bg-0);
+      overflow-x: hidden;
+    }
+
+    /* Glow blur pulsante roxo-dourado */
+    .glow-field { position: fixed; inset: -10vmax; pointer-events: none; z-index: 0; filter: blur(60px); }
+    .glow-blob { position: absolute; width: 45vmax; height: 45vmax; border-radius: 50%; opacity: .45; mix-blend-mode: screen; }
+    .glow-blob.a { background: radial-gradient(circle at 30% 30%, var(--accent-1), transparent 60%); animation: floatA 14s ease-in-out infinite alternate; left: -10vmax; top: -5vmax; }
+    .glow-blob.b { background: radial-gradient(circle at 70% 70%, var(--accent-2), transparent 60%); animation: floatB 16s ease-in-out infinite alternate; right: -8vmax; top: -6vmax; }
+    .glow-blob.c { background: radial-gradient(circle at 50% 50%, var(--accent-3), transparent 60%); animation: floatC 18s ease-in-out infinite alternate; left: 15vmax; bottom: -12vmax; opacity: .35; }
+    @keyframes floatA { to { transform: translate(6vmax, 3vmax) scale(1.1); } }
+    @keyframes floatB { to { transform: translate(-5vmax, 2vmax) scale(1.05); } }
+    @keyframes floatC { to { transform: translate(2vmax, -4vmax) scale(1.08); } }
+
+    /* Navbar glassmorphism */
+    .nav {
+      position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(160%) blur(12px);
+      background: linear-gradient(to right, rgba(10,10,15,0.55), rgba(10,10,15,0.35));
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 14px 20px; display: flex; align-items: center; gap: 24px; }
+    .brand { font-family: Cinzel, serif; font-weight: 800; letter-spacing: .08em; font-size: clamp(18px, 2.2vw, 24px); display: flex; align-items: center; gap: 10px; }
+    .brand .sig { width: 24px; height: 24px; background: conic-gradient(from 0deg, var(--accent-2), var(--accent-1), var(--accent-3), var(--accent-2)); border-radius: 50%; box-shadow: 0 0 25px rgba(125,63,255,.55); animation: spin 10s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .nav a { color: var(--text-1); text-decoration: none; font-weight: 500; position: relative; padding: 6px 10px; border-radius: 10px; }
+    .nav a:hover { color: var(--text-0); }
+    .nav a::after { content: ""; position: absolute; left: 10px; right: 10px; bottom: 2px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, var(--accent-2), var(--accent-1)); transform: scaleX(0); transform-origin: left; transition: transform .35s ease; }
+    .nav a:hover::after, .nav a.active::after { transform: scaleX(1); }
+    .nav-cta { margin-left: auto; }
+
+    /* Hero */
+    .hero {
+      position: relative; min-height: 90vh; display: grid; place-items: center; text-align: center; padding: 120px 24px 80px;
+      isolation: isolate; /* acima do canvas de brasas */
+    }
+    .hero h1 {
+      font-family: Cinzel, serif; font-weight: 800; text-transform: uppercase; letter-spacing: .12em;
+      font-size: clamp(32px, 6vw, 80px);
+      text-shadow: 0 0 24px rgba(125,63,255,.4);
+      background: linear-gradient(90deg, #fff, #e9e9ef 20%, var(--accent-2) 50%, #fff 80%);
+      -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 10px 30px rgba(243,178,76,.1));
+      animation: shimmer 6s linear infinite;
+    }
+    @keyframes shimmer { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+    .hero p { margin-top: 16px; color: var(--text-1); font-size: clamp(16px, 1.8vw, 20px); max-width: 780px; }
+    .hero-actions { display: flex; gap: 14px; justify-content: center; margin-top: 28px; flex-wrap: wrap; }
+
+    /* Botão com glow e gradiente fluido */
+    .btn {
+      --pad-x: 26px; --pad-y: 14px; --r: 14px;
+      position: relative; display: inline-flex; align-items: center; gap: 10px; padding: var(--pad-y) var(--pad-x);
+      font-family: Cinzel, serif; text-transform: uppercase; letter-spacing: .08em; font-weight: 700; cursor: pointer; border: 0; border-radius: var(--r);
+      color: #0b0b10; background: linear-gradient(120deg, var(--accent-2), var(--accent-1) 60%, var(--accent-3));
+      box-shadow: 0 10px 30px rgba(125,63,255,.45), inset 0 -2px 8px rgba(0,0,0,.35);
+      transition: transform .2s ease, filter .3s ease;
+    }
+    .btn:hover { transform: translateY(-2px); filter: brightness(1.08); }
+    .btn:active { transform: translateY(0); }
+    .btn .glow { position: absolute; inset: -2px; border-radius: calc(var(--r) + 2px); background: conic-gradient(from 0deg, rgba(243,178,76,.7), rgba(125,63,255,.85), rgba(225,77,146,.7), rgba(243,178,76,.7)); filter: blur(12px); opacity: .7; z-index: -1; animation: glowFlow 8s linear infinite; }
+    @keyframes glowFlow { to { transform: rotate(360deg); } }
+
+    /* Seções genericas */
+    section { position: relative; z-index: 1; padding: 90px 20px; }
+    .wrap { max-width: 1200px; margin: 0 auto; }
+    h2.section-title { font-family: Cinzel, serif; font-size: clamp(22px, 3vw, 38px); letter-spacing: .16em; text-transform: uppercase; margin-bottom: 18px; }
+    .section-sub { color: var(--text-1); margin-bottom: 28px; }
+
+    /* Cartões de disciplinas */
+    .grid { display: grid; gap: 22px; grid-template-columns: repeat(12, 1fr); }
+    .card { grid-column: span 4; background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); position: relative; overflow: hidden; transition: transform .25s ease; }
+    @media (max-width: 980px){ .card{ grid-column: span 6; } }
+    @media (max-width: 640px){ .card{ grid-column: span 12; } }
+    .card:hover { transform: translateY(-6px); }
+    .card .ico { width: 52px; height: 52px; color: var(--accent-1); margin-bottom: 16px; filter: drop-shadow(0 6px 14px rgba(125,63,255,.35)); transition: transform .5s ease; }
+    .card:hover .ico { transform: rotateY(180deg); }
+    .card h3 { font-size: 18px; margin-bottom: 10px; }
+    .card p { color: var(--text-1); line-height: 1.7; }
+    .card::after { content: ""; position: absolute; inset: -40%; background: radial-gradient(40% 40% at 70% 10%, rgba(243,178,76,.08), transparent 60%), radial-gradient(40% 40% at 10% 90%, rgba(125,63,255,.08), transparent 60%); filter: blur(30px); z-index: -1; }
+
+    /* Portfolio */
+    .folio-grid { display: grid; gap: 18px; grid-template-columns: repeat(12, 1fr); }
+    .folio-item { grid-column: span 4; position: relative; border-radius: 18px; overflow: hidden; border: 1px solid var(--border); background: var(--bg-2); }
+    @media (max-width: 980px){ .folio-item{ grid-column: span 6; } }
+    @media (max-width: 640px){ .folio-item{ grid-column: span 12; } }
+    .folio-item img { width: 100%; height: 260px; object-fit: cover; opacity: .92; transition: transform .6s ease; display: block; }
+    .folio-item:hover img { transform: scale(1.06); }
+    .folio-cap { position: absolute; inset: auto 0 0 0; padding: 18px; background: linear-gradient(180deg, rgba(10,10,15,0), rgba(10,10,15,.85)); }
+    .folio-cap h4 { font-size: 16px; letter-spacing: .12em; text-transform: uppercase; font-family: Cinzel, serif; }
+
+    /* Contato */
+    .contact { display: grid; grid-template-columns: 1.2fr .8fr; gap: 24px; align-items: start; }
+    @media (max-width: 900px){ .contact{ grid-template-columns: 1fr; } }
+    .panel { background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015)); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); }
+    .field { display: grid; gap: 8px; margin-bottom: 14px; }
+    .field label { font-size: 14px; color: var(--text-1); }
+    .field input, .field textarea { width: 100%; padding: 14px 16px; background: var(--bg-1); border: 1px solid var(--border); color: var(--text-0); border-radius: 12px; outline: none; transition: border-color .25s ease; }
+    .field input:focus, .field textarea:focus { border-color: color-mix(in oklab, var(--accent-1) 60%, var(--accent-2) 40%); }
+    .hint { font-size: 12px; color: var(--text-1); opacity: .8; }
+
+    /* Footer */
+    footer { margin-top: 80px; border-top: 1px solid var(--border); background: linear-gradient(180deg, rgba(125,63,255,.06), rgba(10,10,15,.6)); }
+    .foot { max-width: 1200px; margin: 0 auto; padding: 28px 20px 40px; display: grid; gap: 12px; }
+    .foot .brand { gap: 12px; }
+    .foot nav { display: flex; gap: 18px; flex-wrap: wrap; }
+    .foot a { color: var(--text-1); text-decoration: none; }
+    .copy { color: #74748b; font-size: 13px; }
+
+    /* Preferências de movimento */
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+    }
+  </style></head>
+<body>
+  <!-- Glow blur dinâmico -->
+  <div class="glow-field" aria-hidden="true">
+    <div class="glow-blob a"></div>
+    <div class="glow-blob b"></div>
+    <div class="glow-blob c"></div>
+  </div>  <!-- Canvas de brasas roxas (fundo) --><canvas id="embers" aria-hidden="true" style="position:fixed; inset:0; z-index:-1; background: radial-gradient(1200px 700px at 50% 120%, rgba(125,63,255,0.15), transparent 60%), var(--bg-0);"></canvas>
+
+  <!-- NAV -->  <header class="nav">
+    <div class="nav-inner">
+      <div class="brand"><span class="sig" aria-hidden="true"></span> NoHeroes</div>
+      <a href="#inicio" class="active">Início</a>
+      <a href="#credo">Credo</a>
+      <a href="#disciplinas">Disciplinas</a>
+      <a href="#portfolio">Feitos</a>
+      <a href="#contato" class="nav-cta"><button class="btn"><span class="glow"></span>Invocar a Guilda</button></a>
+    </div>
+  </header>  <!-- HERO -->  <section id="inicio" class="hero">
+    <div class="wrap">
+      <h1>Heróis falham. Nós, não.</h1>
+      <p>Quando estratégias comuns caem no abismo, entramos em cena com design, engenharia e growth para conquistar o impossível.</p>
+      <div class="hero-actions">
+        <a href="#contato"><button class="btn"><span class="glow"></span>Começar um Ritual</button></a>
+        <a href="#portfolio"><button class="btn" style="background:linear-gradient(120deg, var(--accent-1), var(--accent-2) 60%, var(--accent-3));"><span class="glow"></span>Ver Feitos</button></a>
+      </div>
+    </div>
+  </section>  <!-- CREDO -->  <section id="credo">
+    <div class="wrap">
+      <h2 class="section-title">O Credo dos Sem‑Heróis</h2>
+      <p class="section-sub">Problemas têm manual. Desafios têm abismo. Operamos onde o manual falha.</p>
+      <div class="grid">
+        <div class="card" style="grid-column: span 6;">
+          <svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3 7h7l-5.5 4 2.5 7-7-4.5L5.5 20 8 13 2 9h7z"/></svg>
+          <h3>Sem Glória, Só Entrega</h3>
+          <p>Não usamos capas. Usamos método, rigor e accountability para levar projetos do caos à realidade.</p>
+        </div>
+        <div class="card" style="grid-column: span 6;">
+          <svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3a9 9 0 100 18 9 9 0 000-18zm1 5v4l3 3-1.5 1.5L11 13V8h2z"/></svg>
+          <h3>Velocidade com Disciplina</h3>
+          <p>Entregas em ciclos curtos, sem sacrificar qualidade. Decisões informadas por dados e impacto.</p>
+        </div>
+      </div>
+    </div>
+  </section>  <!-- DISCIPLINAS -->  <section id="disciplinas">
+    <div class="wrap">
+      <h2 class="section-title">Nossas Disciplinas</h2>
+      <p class="section-sub">Três frentes. Um objetivo: vitória.</p>
+      <div class="grid">
+        <div class="card">
+          <svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2 19.29L20.48 2.39l1.13 1.13L12 13.13V22h-2v-6.13l-6.89 4.55L2 19.29z"/></svg>
+          <h3>Forja de Lendas</h3>
+          <p>Branding & Identidade Visual. Símbolos que ressoam, sistemas que escalam e guiam produto, marketing e cultura.</p>
+        </div>
+        <div class="card">
+          <svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 3v6h-2V3h2m0 12h-2v6h2v-6M21 11v2H3v-2h18"/></svg>
+          <h3>Arquitetura do Abismo</h3>
+          <p>Web & Mobile. Produtos robustos, acessíveis e performáticos, do MVP ao scale-up.</p>
+        </div>
+        <div class="card">
+          <svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.5 6.5C19.5 5.67 18.83 5 18 5h-1V3a1 1 0 00-1-1h-5a1 1 0 00-1 1V4.67C7.67 5.56 6 7.83 6 10.5 6 13.83 9.06 16.42 12.5 16.42 15.94 16.42 19 13.83 19 10.5c0-1.91-.96-3.53-2.5-4.37V5.5l3 1zM3 20a2 2 0 100-4 2 2 0 000 4m18 0a2 2 0 100-4 2 2 0 000 4"/></svg>
+          <h3>Sussurros na Multidão</h3>
+          <p>Growth, Conteúdo & SEO. Estratégias que perfuram ruído e viram demanda real.</p>
+        </div>
+      </div>
+    </div>
+  </section>  <!-- PORTFÓLIO -->  <section id="portfolio">
+    <div class="wrap">
+      <h2 class="section-title">Feitos Lendários</h2>
+      <p class="section-sub">Algumas batalhas vencidas (placeholders — substitua por cases reais).</p>
+      <div class="folio-grid">
+        <a class="folio-item" href="#" aria-label="Projeto Alpha">
+          <img src="https://images.unsplash.com/photo-1558655146-364adaf1fcc9?q=80&w=1964&auto=format&fit=crop" alt="Projeto Alpha" />
+          <div class="folio-cap"><h4>Projeto Alpha</h4></div>
+        </a>
+        <a class="folio-item" href="#" aria-label="Conquista Beta">
+          <img src="https://images.unsplash.com/photo-1596205255829-7971b816198f?q=80&w=1964&auto=format&fit=crop" alt="Conquista Beta" />
+          <div class="folio-cap"><h4>Conquista Beta</h4></div>
+        </a>
+        <a class="folio-item" href="#" aria-label="Feito Gamma">
+          <img src="https://images.unsplash.com/photo-1605379399642-870262d3d051?q=80&w=2106&auto=format&fit=crop" alt="Feito Gamma" />
+          <div class="folio-cap"><h4>Feito Gamma</h4></div>
+        </a>
+      </div>
+    </div>
+  </section>  <!-- CONTATO -->  <section id="contato">
+    <div class="wrap contact">
+      <div class="panel">
+        <h2 class="section-title">Pronto para Desafiar o Impossível?</h2>
+        <p class="section-sub">Conte o abismo. Trazemos o plano.</p>
+        <form id="contact-form" novalidate>
+          <div class="field">
+            <label for="name">Nome</label>
+            <input id="name" name="name" autocomplete="name" required placeholder="Seu nome" />
+          </div>
+          <div class="field">
+            <label for="email">Contato</label>
+            <input id="email" name="email" type="email" autocomplete="email" required placeholder="seu@email.com" />
+          </div>
+          <div class="field">
+            <label for="msg">Missão</label>
+            <textarea id="msg" name="message" required rows="6" placeholder="Descreva o desafio"></textarea>
+          </div>
+          <button type="submit" class="btn"><span class="glow"></span>Lançar o Sinal</button>
+          <div id="form-response" class="hint" role="status" aria-live="polite" style="margin-top:10px"></div>
+        </form>
+      </div>
+      <aside class="panel">
+        <h3 style="font-family:Cinzel,serif; letter-spacing:.12em; text-transform:uppercase; margin-bottom:10px;">Como trabalhamos</h3>
+        <ul style="line-height:1.9; color:var(--text-1); padding-left: 18px;">
+          <li>Imersão de 1–2 semanas para alinhar problema e impacto.</li>
+          <li>Sprints quinzenais com roadmap vivo e metas claras.</li>
+          <li>Métricas de resultado acima de métricas de vaidade.</li>
+        </ul>
+      </aside>
+    </div>
+  </section>  <footer>
+    <div class="foot">
+      <div class="brand"><span class="sig" aria-hidden="true"></span> NoHeroes</div>
+      <nav>
+        <a href="#inicio">Início</a>
+        <a href="#disciplinas">Disciplinas</a>
+        <a href="#portfolio">Feitos</a>
+        <a href="#contato">Contato</a>
+      </nav>
+      <div class="copy">© 2025 NoHeroes. Forjado no caos.</div>
+    </div>
+  </footer>  <script>
+    // ===== Canvas de brasas roxas (partículas com glow) =====
+    (() => {
+      const c = document.getElementById('embers');
+      const ctx = c.getContext('2d');
+      let DPR = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      let W, H, particles = [];
+
+      const COLORS = [
+        [125,63,255], // roxo
+        [243,178,76], // dourado
+        [225,77,146]  // magenta quente
+      ];
+
+      function resize(){
+        W = c.clientWidth = window.innerWidth; H = c.clientHeight = window.innerHeight;
+        c.width = W * DPR; c.height = H * DPR; ctx.setTransform(DPR,0,0,DPR,0,0);
+      }
+      window.addEventListener('resize', resize, { passive: true }); resize();
+
+      const COUNT = 90;
+      function spawn(i){
+        const angle = Math.random()*Math.PI*2;
+        const speed = 0.2 + Math.random()*0.8;
+        const life = 6 + Math.random()*8; // segundos
+        const [r,g,b] = COLORS[i % COLORS.length];
+        return {
+          x: Math.random()*W,
+          y: H + Math.random()*H*0.2,
+          vx: Math.cos(angle)*speed*0.4,
+          vy: - (0.6 + Math.random()*1.2),
+          r: 1.5 + Math.random()*3.5,
+          t: 0,
+          life,
+          col: `rgba(${r},${g},${b},` // alpha concatenada depois
+        };
+      }
+      for(let i=0;i<COUNT;i++) particles.push(spawn(i));
+
+      function tick(dt){
+        ctx.clearRect(0,0,W,H);
+        // leve vinheta
+        const grd = ctx.createRadialGradient(W*0.5,H*0.85,10,W*0.5,H*0.85,Math.max(W,H));
+        grd.addColorStop(0,'rgba(20,10,30,0.08)'); grd.addColorStop(1,'rgba(10,10,15,0.22)');
+        ctx.fillStyle = grd; ctx.fillRect(0,0,W,H);
+
+        for(let p of particles){
+          p.t += dt; p.x += p.vx; p.y += p.vy; p.vy -= 0.002; // sobe e desacelera
+          const lifeRatio = 1 - (p.t / p.life);
+          const alpha = Math.max(0, lifeRatio*0.9);
+          const radius = p.r * (0.8 + lifeRatio*0.6);
+
+          // glow
+          ctx.beginPath(); ctx.arc(p.x, p.y, radius*3.2, 0, Math.PI*2);
+          ctx.fillStyle = p.col + (alpha*0.08) + ')'; ctx.fill();
+          ctx.beginPath(); ctx.arc(p.x, p.y, radius, 0, Math.PI*2);
+          ctx.fillStyle = p.col + (alpha*0.85) + ')'; ctx.fill();
+
+          if(alpha<=0 || p.y < -40){ Object.assign(p, spawn(Math.floor(Math.random()*COLORS.length))); }
+        }
+      }
+
+      let last = performance.now();
+      function loop(now){
+        const dt = Math.min(0.05, (now - last)/1000); last = now; tick(dt); requestAnimationFrame(loop);
+      }
+      requestAnimationFrame(loop);
+    })();
+
+    // ===== Navbar ativa conforme seção =====
+    (() => {
+      const links = Array.from(document.querySelectorAll('.nav a[href^="#"]'));
+      const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+      const obs = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{ if(e.isIntersecting){
+          const id = '#' + e.target.id;
+          links.forEach(l=> l.classList.toggle('active', l.getAttribute('href')===id));
+        }})
+      }, { rootMargin: '-40% 0px -55% 0px', threshold: 0.01 });
+      sections.forEach(s=> obs.observe(s));
+    })();
+
+    // ===== Form fake submit =====
+    (function(){
+      const form = document.getElementById('contact-form');
+      const out = document.getElementById('form-response');
+      form.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        out.textContent = 'Enviando...';
+        setTimeout(()=>{
+          out.textContent = 'Sinal recebido. Retornaremos em breve.';
+          form.reset();
+          setTimeout(()=> out.textContent = '', 5000);
+        }, 1200);
+      });
+    })();
+
+    // ===== Parallax sutil no hero =====
+    (function(){
+      const hero = document.querySelector('.hero');
+      let cx = 0, cy = 0; let targetX = 0, targetY = 0;
+      hero.addEventListener('pointermove', (e)=>{
+        const r = hero.getBoundingClientRect();
+        cx = (e.clientX - r.left)/r.width - .5;
+        cy = (e.clientY - r.top)/r.height - .5;
+      });
+      function step(){
+        targetX += (cx - targetX)*0.06; targetY += (cy - targetY)*0.06;
+        hero.style.transform = `translate3d(0,0,0)`; // create new layer
+        document.documentElement.style.setProperty('--hero-tilt-x', (targetY*3).toFixed(2)+'deg');
+        document.documentElement.style.setProperty('--hero-tilt-y', (targetX*-3).toFixed(2)+'deg');
+        requestAnimationFrame(step);
+      }
+      step();
+    })();
+  </script>
+</body>
+</html>
