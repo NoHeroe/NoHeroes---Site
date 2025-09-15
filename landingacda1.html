@@ -1,297 +1,280 @@
 <!DOCTYPE html><html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NoHeroes | As Cinzas do Amanhã — Obra Principal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>NoHeroes: As Cinzas do Amanhã — Obra Principal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* =====================
-       NoHeroes — Tema Dark (clone do landingsv)
-       ===================== */
-    :root {
-      --color-dark-bg: #0A0710;      /* preto profundo */
-      --color-deep-purple: #180C26;  /* roxo muito escuro */
-      --color-accent-purple: #9A3BFF;/* roxo vibrante */
-      --color-accent-blue: #40A4FF;  /* brilho etéreo */
-      --color-text-light: #E8E2F0;   /* branco sujo */
-      --color-text-gray: #B0A0C0;    /* cinza roxo */
-      --color-border-dark: #3A1F5E;  /* borda roxa escura */
-      --color-glow-purple: rgba(154, 59, 255, 0.5);
-      --color-glow-blue: rgba(64, 164, 255, 0.4);
-      --color-button-bg: linear-gradient(90deg, #6D28D9, #9A3BFF);
-      --color-button-hover: linear-gradient(90deg, #9A3BFF, #6D28D9);
-      --color-attention: #FF5733;    /* preço */
-      --gold: #facc15;
-    }* { margin:0; padding:0; box-sizing:border-box }
-html { scroll-behavior:smooth }
-body {
-  background: radial-gradient(1200px 800px at 10% -10%, #160a22 0%, transparent 60%),
-              radial-gradient(1200px 900px at 110% 110%, #1d0d2b 0%, transparent 60%),
-              linear-gradient(180deg, var(--color-dark-bg), #08050c 60%);
-  color: var(--color-text-light);
-  font-family: 'Roboto', system-ui, -apple-system, Segoe UI, Ubuntu, Cantarell, sans-serif;
-  overflow-x: hidden;
-}
-
-/* brasas canvas */
-#brasas { position:fixed; inset:0; z-index:-1; opacity:.10; pointer-events:none }
-
-/* progress */
-#progressbar { position:fixed; top:0; left:0; height:6px; width:0; z-index:99;
-  background: linear-gradient(90deg, var(--color-accent-purple), var(--gold));
-  box-shadow: 0 0 16px rgba(154,59,255,.6)
-}
-
-/* containers */
-.container{ max-width:1200px; margin:0 auto; padding:0 18px }
-.section{ padding:72px 0; border-top:1px solid rgba(255,255,255,.06); background:transparent }
-
-/* hero */
-.hero-section{ position:relative; min-height:78vh; display:flex; align-items:center }
-.hero-overlay{ position:absolute; inset:0; background: radial-gradient(60rem 40rem at 70% 10%, rgba(154,59,255,.18), transparent 60%),
-                                         radial-gradient(45rem 30rem at 10% 80%, rgba(64,164,255,.14), transparent 60%) }
-.hero-grid{ position:relative; display:grid; grid-template-columns: 420px 1fr; gap:36px; align-items:start }
-.hero-card{ background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border:1px solid var(--color-border-dark); border-radius:22px; overflow:hidden; box-shadow:0 20px 80px rgba(0,0,0,.45) }
-.hero-cover{ aspect-ratio:3/4; width:100%; background:#12081b }
-.chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px }
-.chip{ font-size:.85rem; padding:.4rem .7rem; border-radius:999px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.04) }
-
-h1.title{ font-family:'Cinzel Decorative', serif; font-size: clamp(2.2rem, 5vw, 3.2rem); line-height:1.1; letter-spacing:.3px; background:linear-gradient(135deg,#d8ccff,#ffe58a); -webkit-background-clip:text; background-clip:text; color:transparent }
-.tag{ display:inline-block; margin-top:6px; font-weight:700; letter-spacing:.4px; color:#d9d2ff }
-.lead{ margin-top:12px; color: var(--color-text-gray); font-size:1.05rem; line-height:1.6 }
-
-.cta-row{ margin-top:20px; display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:10px }
-.btn{ display:inline-flex; align-items:center; justify-content:center; gap:.6rem; padding:0.9rem 1.15rem; border-radius:16px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.05); color:var(--color-text-light); cursor:pointer; transition: transform .15s ease, filter .2s ease, box-shadow .2s ease }
-.btn:hover{ transform:translateY(-1px); filter:brightness(1.08); box-shadow:0 14px 30px rgba(0,0,0,.35) }
-.btn-primary{ background: var(--color-button-bg); border-color: rgba(154,59,255,.5); font-weight:700 }
-.btn-primary:hover{ background: var(--color-button-hover) }
-
-.price{ margin-top:10px; font-size:1.1rem; }
-.price .from{ opacity:.6; text-decoration: line-through }
-.price .now{ color:#45e0a7; font-weight:800; font-size:1.8rem; text-shadow:0 0 12px rgba(69,224,167,.25) }
-
-/* cards/panels */
-.panel{ background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03)); border:1px solid var(--color-border-dark); border-radius:18px; box-shadow:0 20px 80px rgba(0,0,0,.35); padding:22px }
-.h2{ font-family:'Cinzel Decorative', serif; font-size:1.8rem; color: var(--gold); text-shadow:0 0 12px rgba(250,204,21,.25); margin-bottom:12px }
-.list{ display:grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap:12px }
-.list .li{ padding:14px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06); border-radius:14px; font-size:.98rem; color:var(--color-text-gray) }
-
-/* tabs */
-.tabs{ display:flex; flex-wrap:wrap; gap:8px }
-.tab-btn{ composes: btn; }
-.tab-btn.active{ background: var(--color-button-bg); border-color: rgba(154,59,255,.5); font-weight:700 }
-.tab-panel{ display:none }
-.tab-panel.active{ display:block }
-
-/* FAQ */
-details{ padding:14px 0; border-top: 1px solid rgba(255,255,255,.06) }
-summary{ list-style:none; display:flex; align-items:center; justify-content:space-between; cursor:pointer }
-
-/* footer */
-footer .cols{ display:grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap:18px }
-
-/* responsive */
-@media (max-width: 980px){ .hero-grid{ grid-template-columns:1fr } .cta-row{ grid-template-columns:1fr 1fr } .list{ grid-template-columns:1fr } }
-@media (max-width: 640px){ .cta-row{ grid-template-columns:1fr } }
-
+    :root{
+      --nh-bg:#0a0a0a; --nh-ink:#e8e7f5; --nh-ink-dim:#b9b8d6;
+      --nh-accent1:#8f4fff; --nh-accent2:#facc15; --nh-border:rgba(255,255,255,.09);
+      --nh-glass:rgba(255,255,255,.05);
+    }
+    html,body{height:100%;background:var(--nh-bg);color:var(--nh-ink);font-family:Inter,system-ui,Segoe UI,Roboto,Ubuntu,Arial,sans-serif}
+    .grad-noheroes{background:linear-gradient(135deg,var(--nh-accent1),var(--nh-accent2));}
+    .ink-gradient{background:linear-gradient(135deg,#d8ccff,#ffe58a);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .panel{background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.03));border:1px solid var(--nh-border);backdrop-filter:blur(10px);border-radius:18px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.9rem 1.1rem;border-radius:14px;border:1px solid var(--nh-border);background:var(--nh-glass);transition:transform .15s ease, background .2s ease, box-shadow .2s ease}
+    .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,0.09);box-shadow:0 6px 22px rgba(0,0,0,.35)}
+    .btn-primary{position:relative;overflow:hidden;border-color:rgba(143,79,255,.4);font-weight:700}
+    .btn-primary::before{content:"";position:absolute;inset:-40%;background:linear-gradient(90deg,rgba(143,79,255,.5),rgba(250,204,21,.5),rgba(143,79,255,.5));filter:blur(12px);animation:glow 4s linear infinite}
+    .btn-primary>span{position:relative}
+    @keyframes glow{0%{transform:translateX(-30%)}100%{transform:translateX(30%)}}
+    .title-glow{position:relative}
+    .title-glow::after{content:"";position:absolute;inset:-20% -10%;background:radial-gradient(60% 40% at 50% 50%,rgba(143,79,255,.25),transparent 70%);filter:blur(22px);z-index:-1}
+    .chip{padding:.35rem .6rem;border-radius:999px;border:1px solid var(--nh-border);background:rgba(255,255,255,.04);font-size:.8rem}
+    .divider{height:1px;background:linear-gradient(90deg,transparent,var(--nh-border),transparent)}
+    .shadow-gold{box-shadow:0 0 0 1px rgba(250,204,21,.22),0 10px 30px rgba(250,204,21,.08)}
+    .cover-safe{aspect-ratio:3/4}
   </style>
 </head>
 <body>
-  <canvas id="brasas"></canvas>
-  <div id="progressbar"></div>  <!-- HERO -->  <header class="hero-section" id="topo">
-    <div class="hero-overlay"></div>
-    <div class="container">
-      <div class="hero-grid">
-        <div class="hero-card">
-          <img class="hero-cover" src="/imgs/capas/as-cinzas-do-amanha.jpg" alt="Capa de NoHeroes: As Cinzas do Amanhã"/>
-          <div style="padding:12px">
-            <div class="chips">
-              <span class="chip">Dark‑Fantasy</span>
-              <span class="chip">~450 págs</span>
-              <span class="chip">Ilustrado</span>
-            </div>
-          </div>
-        </div>
-        <div>
-          <span class="chip">Obra principal • Universo NoHeroes</span>
-          <h1 class="title">NoHeroes: As Cinzas do Amanhã</h1>
-          <div class="tag">O amanhã só nasce para quem enfrenta a própria sombra.</div>
-          <p class="lead">Azuos, um <strong>Vitalista assassino</strong> de cabelos brancos e olhos roxos, atravessa reinos quebrados onde essência é lâmina e dívida. Cada caça é um julgamento — e cada escolha, uma cicatriz.</p>
-          <div class="cta-row">
-            <button id="btnComprarTopo" class="btn btn-primary">Garantir meu exemplar</button>
-            <button class="btn" data-scroll="#vivenciar">O que vou vivenciar</button>
-            <button class="btn" data-scroll="#sinopse">Ler sinopse</button>
-          </div>
-          <div class="price">
-            <span class="from">R$ 79,90</span> → <span class="now">R$ 69,00</span>
-          </div>
+  <!-- BG brasas roxas -->
+  <div aria-hidden="true" class="pointer-events-none fixed inset-0 overflow-hidden">
+    <div class="absolute -top-24 -left-24 h-[46rem] w-[46rem] grad-noheroes opacity-20 blur-3xl rounded-full"></div>
+    <div class="absolute bottom-[-6rem] right-[-8rem] h-[34rem] w-[40rem] grad-noheroes opacity-10 blur-2xl rounded-full"></div>
+    <canvas id="brasasCanvas" class="absolute inset-0 opacity-[0.10]"></canvas>
+  </div>  <!-- Barra de progresso -->  <div id="progressbar" class="fixed top-0 left-0 h-[5px] w-0 grad-noheroes z-50"></div>  <!-- Header (NoHeroes padrão) -->  <header class="relative z-10">
+    <div class="mx-auto max-w-7xl px-4 py-4">
+      <div class="panel px-4 py-3 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-md grad-noheroes"></div>
+          <span class="font-['Cinzel Decorative'] text-lg tracking-wide ink-gradient">NoHeroes</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-2">
+          <a class="btn btn-ghost" href="#vivenciar">Vivenciar</a>
+          <a class="btn btn-ghost" href="#sinopse">Sinopse</a>
+          <a class="btn btn-ghost" href="#detalhes">Detalhes</a>
+          <a class="btn btn-ghost" href="#comprar">Comprar</a>
+          <a class="btn btn-ghost" href="#faq">FAQ</a>
+        </nav>
+        <div class="flex items-center gap-2">
+          <a class="btn btn-primary" href="#comprar"><span>Garantir exemplar</span></a>
+          <button id="openMenu" class="md:hidden btn" aria-label="Abrir menu">☰</button>
         </div>
       </div>
     </div>
-  </header>  <!-- VIVENCIAR + SINOPSE -->  <section class="section" id="vivenciar">
-    <div class="container" style="display:grid; grid-template-columns:1fr 1fr; gap:18px">
-      <div class="panel">
-        <h2 class="h2">O que você vai vivenciar</h2>
-        <div class="list">
-          <div class="li"><strong>Vitalismo como arma</strong>: vida convertida em sentença.</div>
-          <div class="li"><strong>Caçada letal</strong>: rastros, paciência, execução cirúrgica.</div>
-          <div class="li"><strong>Mundos partidos</strong>: vilas em ruínas, florestas hostis.</div>
-          <div class="li"><strong>Ação visceral</strong>: batalhas curtas e brutais.</div>
-          <div class="li"><strong>Sombras e vazio</strong>: tentação, custo psicológico, cicatrizes.</div>
-          <div class="li"><strong>Ilustrações</strong>: artes que intensificam a atmosfera.</div>
+  </header>  <!-- Drawer Mobile -->  <div id="drawer" class="fixed inset-0 z-40 hidden">
+    <div class="absolute inset-0 bg-black/60" data-close></div>
+    <aside class="absolute right-0 top-0 h-full w-80 panel p-4">
+      <div class="flex items-center justify-between">
+        <span class="font-['Cinzel Decorative'] text-xl">Menu</span>
+        <button class="btn" data-close>✕</button>
+      </div>
+      <div class="divider my-4"></div>
+      <nav class="flex flex-col gap-2">
+        <a class="btn" href="#vivenciar">Vivenciar</a>
+        <a class="btn" href="#sinopse">Sinopse</a>
+        <a class="btn" href="#detalhes">Detalhes</a>
+        <a class="btn" href="#comprar">Comprar</a>
+        <a class="btn btn-primary mt-2" href="#comprar"><span>Garantir exemplar</span></a>
+      </nav>
+    </aside>
+  </div>  <!-- HERO -->  <section class="relative z-10 mx-auto max-w-7xl px-4 pt-10 pb-8" id="topo">
+    <div class="panel p-6 md:p-10 overflow-hidden">
+      <div class="flex flex-col md:flex-row items-start gap-8">
+        <!-- Capa -->
+        <div class="w-full md:w-80">
+          <div class="cover-safe rounded-2xl shadow-gold relative overflow-hidden">
+            <img src="/imgs/capas/as-cinzas-do-amanha.jpg" alt="Capa de NoHeroes: As Cinzas do Amanhã" class="absolute inset-0 w-full h-full object-cover"/>
+          </div>
+          <div class="mt-3 flex items-center gap-2 flex-wrap">
+            <span class="chip">Dark‑Fantasy</span>
+            <span class="chip">~450 págs</span>
+            <span class="chip">Ilustrado</span>
+          </div>
         </div>
-        <div class="chips" style="margin-top:12px">
+        <!-- Copy / CTAs -->
+        <div class="flex-1">
+          <p class="chip">Obra principal • Universo NoHeroes</p>
+          <h1 class="mt-3 font-['Cinzel Decorative'] text-4xl md:text-5xl leading-tight ink-gradient title-glow">NoHeroes: As Cinzas do Amanhã</h1>
+          <p class="mt-3 text-xl md:text-2xl text-[var(--nh-ink-dim)]"><strong>O amanhã só nasce para quem enfrenta a própria sombra.</strong></p>
+          <p class="mt-4 text-[var(--nh-ink-dim)] max-w-2xl">Azuos, um <strong>Vitalista assassino</strong> de cabelos brancos e olhos roxos, atravessa reinos quebrados onde essência é arma e dívida. Cada caça é um julgamento — e cada escolha, uma cicatriz.</p><div class="mt-6 grid sm:grid-cols-3 gap-3 w-full">
+        <button class="btn btn-primary w-full" id="btnComprarTopo"><span>Garantir meu exemplar</span></button>
+        <button class="btn w-full" id="btnScrollVivenciar">O que vou vivenciar</button>
+        <button class="btn w-full" id="btnScrollSinopse">Ler sinopse</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </section>  <!-- VIVENCIAR + SINOPSE -->  <section id="vivenciar" class="relative z-10 mx-auto max-w-7xl px-4 py-10">
+    <div class="grid lg:grid-cols-2 gap-6 items-stretch">
+      <div class="panel p-6">
+        <h2 class="font-['Cinzel Decorative'] text-2xl md:text-3xl mb-3 text-[var(--nh-accent1)]">O que você vai vivenciar</h2>
+        <ul class="grid sm:grid-cols-2 gap-3 text-sm text-[var(--nh-ink-dim)]">
+          <li class="panel p-3"> <strong>Vitalismo como arma</strong>: vida transformada em lâmina e sentença.</li>
+          <li class="panel p-3"> <strong>Caçada letal</strong>: rastros, paciência e execução cirúrgica.</li>
+          <li class="panel p-3"> <strong>Mundos partidos</strong>: vilas em ruínas, florestas hostis, luas pesadas.</li>
+          <li class="panel p-3"> <strong>Ação visceral</strong>: batalhas curtas, brutais, sem espaço para erro.</li>
+          <li class="panel p-3"> <strong>Sombras e vazio</strong>: tentação, custo psicológico e cicatrizes.</li>
+          <li class="panel p-3"> <strong>Ilustrações</strong>: artes que revelam a atmosfera do universo.</li>
+        </ul>
+        <div class="mt-4 flex flex-wrap items-center gap-2">
           <span class="chip">Acesso via site + app</span>
           <span class="chip">Offline no app</span>
           <span class="chip">Atualizações incluídas</span>
         </div>
       </div>
-      <div class="panel" id="sinopse">
-        <h2 class="h2">Sinopse oficial</h2>
-        <p class="lead" style="margin-top:0">
-          <strong>No coração de um mundo despedaçado pela guerra e pela ambição, antigos clãs disputam sob a vigília silenciosa da lua. Azuos, um jovem destinado a carregar um fardo maior do que a sua própria vida, vê-se arrastado para uma teia de segredos, traições e forças que ultrapassam a compreensão humana.</strong>
-        </p>
-        <p class="lead">
-          <strong>Entre provas que o desafiam, monstros que habitam as sombras e um dragão vermelho cuja fúria ecoa como presságio, ele descobrirá que não existem heróis — apenas escolhas, cicatrizes e a luta desesperada por sobrevivência.</strong>
-        </p>
-        <p class="lead">
-          <strong>NoHeroes é uma jornada de fantasia sombria sobre lealdade, sacrifício e o peso de enfrentar o próprio destino.</strong>
-        </p>
-      </div>
-    </div>
-  </section>  <!-- TABS (Ato I / Para quem é / Formatos) -->  <section class="section" id="detalhes">
-    <div class="container">
-      <div class="panel">
-        <div class="tabs" style="margin-bottom:12px">
-          <button class="btn tab-btn active" data-tab="ato">Detalhes do Ato I (de 3)</button>
-          <button class="btn tab-btn" data-tab="para">Para quem é</button>
-          <button class="btn tab-btn" data-tab="formatos">Formatos & Entrega</button>
-        </div>
-        <div id="tab-ato" class="tab-panel active">
-          <div class="list">
-            <div class="li">Sob a lua, clãs em disputa e um nome que pesa.</div>
-            <div class="li">Provações que moldam a lâmina e o silêncio.</div>
-            <div class="li">Segredos do Vitalismo: pactos, dívidas, limites.</div>
-            <div class="li">O presságio vermelho que muda o tabuleiro.</div>
-          </div>
-        </div>
-        <div id="tab-para" class="tab-panel">
-          <div class="list">
-            <div class="li">Leitores de dark‑fantasy com ação e mistério.</div>
-            <div class="li">Quem curte protagonistas calculistas e sistemas de poder.</div>
-            <div class="li">Fãs de universos expansivos (obra principal NoHeroes).</div>
-            <div class="li">Quem quer imersão longa: ~450 págs + ilustrações.</div>
-          </div>
-        </div>
-        <div id="tab-formatos" class="tab-panel">
-          <div class="list">
-            <div class="li"><strong>Digital</strong>: acesso via site e app (offline no app).</div>
-            <div class="li"><strong>Físico</strong>: lançamento simultâneo em plataforma parceira (link em breve).</div>
-            <div class="li"><strong>Inventário</strong>: sua cópia vinculada à conta NoHeroes.</div>
-            <div class="li"><strong>Atualizações</strong>: revisões futuras inclusas.</div>
-          </div>
+      <div class="panel p-6" id="sinopse">
+        <h2 class="font-['Cinzel Decorative'] text-2xl md:text-3xl mb-3 text-[var(--nh-accent1)]">Sinopse oficial</h2>
+        <div class="text-sm text-[var(--nh-ink-dim)] leading-relaxed">
+          <p class="mb-3"><strong>No coração de um mundo despedaçado pela guerra e pela ambição, antigos clãs disputam sob a vigília silenciosa da lua. Azuos, um jovem destinado a carregar um fardo maior do que a sua própria vida, vê-se arrastado para uma teia de segredos, traições e forças que ultrapassam a compreensão humana.</strong></p>
+          <p class="mb-3"><strong>Entre provas que o desafiam, monstros que habitam as sombras e um dragão vermelho cuja fúria ecoa como presságio, ele descobrirá que não existem heróis — apenas escolhas, cicatrizes e a luta desesperada por sobrevivência.</strong></p>
+          <p><strong>NoHeroes é uma jornada de fantasia sombria sobre lealdade, sacrifício e o peso de enfrentar o próprio destino.</strong></p>
         </div>
       </div>
     </div>
-  </section>  <!-- COMPRAR -->  <section class="section" id="comprar">
-    <div class="container" style="display:grid; grid-template-columns:1fr 1fr; gap:18px">
-      <div class="panel">
-        <h2 class="h2" style="color:var(--color-accent-purple)">Garantir meu exemplar</h2>
-        <p class="lead">Compra segura, acesso imediato no inventário. Leitura no site e no app (offline no app). Sem combo.</p>
-        <div style="display:flex; align-items:flex-end; gap:16px; margin-top:10px">
+  </section>  <!-- TABS -->  <section id="detalhes" class="relative z-10 mx-auto max-w-7xl px-4 py-10">
+    <div class="panel p-6 md:p-8">
+      <div class="flex flex-wrap gap-2">
+        <button class="btn btn-primary" data-tab="tab-ato"><span>Detalhes do Ato I (de 3)</span></button>
+        <button class="btn" data-tab="tab-paraquem">Para quem é</button>
+        <button class="btn" data-tab="tab-formatos">Formatos & Entrega</button>
+      </div>
+      <div class="divider my-6"></div>
+      <div id="tab-ato" class="tab">
+        <ul class="grid md:grid-cols-2 gap-3 text-sm text-[var(--nh-ink-dim)]">
+          <li class="panel p-3">Sob a lua, clãs em disputa e um nome que pesa.</li>
+          <li class="panel p-3">Provações que moldam a lâmina e o silêncio.</li>
+          <li class="panel p-3">Segredos do Vitalismo: pactos, dívidas, limites.</li>
+          <li class="panel p-3">O presságio vermelho que muda o tabuleiro.</li>
+        </ul>
+      </div>
+      <div id="tab-paraquem" class="tab hidden">
+        <ul class="grid md:grid-cols-2 gap-3 text-sm text-[var(--nh-ink-dim)]">
+          <li class="panel p-3">Leitores de dark‑fantasy com ação e mistério.</li>
+          <li class="panel p-3">Quem curte protagonistas calculistas e sistemas de poder.</li>
+          <li class="panel p-3">Fãs de universos expansivos (obra principal NoHeroes).</li>
+          <li class="panel p-3">Quem quer imersão longa: ~450 págs + ilustrações.</li>
+        </ul>
+      </div>
+      <div id="tab-formatos" class="tab hidden">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm text-[var(--nh-ink-dim)]">
+          <div class="panel p-3"><strong>Digital</strong><br/>Acesso via site e app (offline no app).</div>
+          <div class="panel p-3"><strong>Físico</strong><br/>Lançamento simultâneo em plataforma parceira (link em breve).</div>
+          <div class="panel p-3"><strong>Inventário</strong><br/>Cópia vinculada à sua conta.</div>
+          <div class="panel p-3"><strong>Atualizações</strong><br/>Revisões futuras inclusas.</div>
+        </div>
+      </div>
+    </div>
+  </section>  <!-- COMPRAR -->  <section id="comprar" class="relative z-10 mx-auto max-w-5xl px-4 py-10">
+    <div class="grid md:grid-cols-2 gap-6 items-start">
+      <div class="panel p-6 md:p-8">
+        <h2 class="font-['Cinzel Decorative'] text-2xl md:text-3xl mb-3 ink-gradient">Garantir meu exemplar</h2>
+        <p class="text-sm text-[var(--nh-ink-dim)]">Acesso imediato no inventário. Leitura no site e no app (offline apenas no app). Sem combo.</p>
+        <div class="mt-4 flex items-end gap-3">
           <div>
-            <div class="from" style="opacity:.6; text-decoration:line-through">R$ 79,90</div>
-            <div class="now" style="color:#45e0a7; font-size:2rem; font-weight:800">R$ 69,00</div>
-            <div class="chip" style="margin-top:6px">obra principal</div>
+            <div class="text-xs text-[var(--nh-ink-dim)] line-through">R$ 79,90</div>
+            <div class="text-3xl font-semibold text-emerald-400">R$ 69,00</div>
+            <div class="text-xs text-[var(--nh-ink-dim)]">obra principal</div>
           </div>
-          <div style="flex:1"></div>
-          <button id="btnComprar" class="btn btn-primary" style="padding:1rem 1.4rem">Comprar agora</button>
+          <div class="flex-1"></div>
+          <button id="btnComprar" class="btn btn-primary px-6"><span>Comprar agora</span></button>
         </div>
-        <div class="chips" style="margin-top:14px">
-          <span class="chip">Mercado Pago / PayPal</span>
-          <span class="chip">Inventário NoHeroes</span>
-          <span class="chip">Suporte rápido</span>
+        <div class="mt-4 grid sm:grid-cols-3 gap-3 text-xs text-[var(--nh-ink-dim)]">
+          <div class="panel p-3">Mercado Pago / PayPal</div>
+          <div class="panel p-3">Inventário NoHeroes</div>
+          <div class="panel p-3">Suporte rápido</div>
         </div>
       </div>
-      <div class="panel">
-        <h3 class="h2" style="font-size:1.3rem; color:var(--gold)">Versão física</h3>
-        <p class="lead">O livro físico será vendido inicialmente em plataforma parceira. Assim que o link estiver ativo, aparecerá aqui.</p>
-        <button class="btn" disabled style="margin-top:10px">Disponível em breve</button>
+      <div class="panel p-6 md:p-8">
+        <h3 class="font-['Cinzel Decorative'] text-xl mb-2 text-[var(--nh-accent2)]">Versão física</h3>
+        <p class="text-sm text-[var(--nh-ink-dim)]">Venda inicial em plataforma parceira. Assim que o link estiver ativo, aparece aqui.</p>
+        <button class="btn mt-3" disabled>Disponível em breve</button>
       </div>
     </div>
-  </section>  <!-- FAQ -->  <section class="section" id="faq">
-    <div class="container">
-      <div class="panel">
-        <h2 class="h2">Perguntas frequentes</h2>
-        <details>
-          <summary><span>Preciso ler algo antes?</span><span>⌄</span></summary>
-          <p class="lead">Não. Este é o início da saga (Ato I de 3).</p>
+  </section>  <!-- FAQ -->  <section id="faq" class="relative z-10 mx-auto max-w-5xl px-4 py-10">
+    <div class="panel p-6 md:p-8">
+      <h2 class="font-['Cinzel Decorative'] text-2xl md:text-3xl mb-3 text-[var(--nh-accent1)]">Perguntas frequentes</h2>
+      <div class="divide-y divide-[var(--nh-border)]">
+        <details class="group py-3">
+          <summary class="flex items-center justify-between cursor-pointer list-none">
+            <span>Preciso ler algo antes?</span>
+            <span class="transition group-open:rotate-180">⌄</span>
+          </summary>
+          <p class="mt-2 text-sm text-[var(--nh-ink-dim)]">Não. Este é o início da saga (Ato I de 3).</p>
         </details>
-        <details>
-          <summary><span>Tem ilustrações?</span><span>⌄</span></summary>
-          <p class="lead">Sim, artes internas selecionadas ao longo do volume.</p>
+        <details class="group py-3">
+          <summary class="flex items-center justify-between cursor-pointer list-none">
+            <span>Tem ilustrações?</span>
+            <span class="transition group-open:rotate-180">⌄</span>
+          </summary>
+          <p class="mt-2 text-sm text-[var(--nh-ink-dim)]">Sim, artes internas selecionadas ao longo do volume.</p>
         </details>
-        <details>
-          <summary><span>Posso ler offline?</span><span>⌄</span></summary>
-          <p class="lead">Sim, no app NoHeroes (o modo offline estará disponível lá). No site a leitura é online.</p>
+        <details class="group py-3">
+          <summary class="flex items-center justify-between cursor-pointer list-none">
+            <span>Posso ler offline?</span>
+            <span class="transition group-open:rotate-180">⌄</span>
+          </summary>
+          <p class="mt-2 text-sm text-[var(--nh-ink-dim)]">Sim, no app NoHeroes (modo offline). No site a leitura é online.</p>
         </details>
-        <details>
-          <summary><span>Vai ter versão física?</span><span>⌄</span></summary>
-          <p class="lead">Sim, lançamento simultâneo em plataforma parceira. Link será divulgado nesta página.</p>
+        <details class="group py-3">
+          <summary class="flex items-center justify-between cursor-pointer list-none">
+            <span>Vai ter versão física?</span>
+            <span class="transition group-open:rotate-180">⌄</span>
+          </summary>
+          <p class="mt-2 text-sm text-[var(--nh-ink-dim)]">Sim, lançamento simultâneo em plataforma parceira. Link será divulgado nesta página.</p>
         </details>
       </div>
     </div>
-  </section>  <!-- FOOTER -->  <footer class="section" style="border-top:1px solid rgba(255,255,255,.06)">
-    <div class="container">
-      <div class="panel" style="padding:24px">
-        <div class="cols">
+  </section>  <!-- FOOTER -->  <footer class="relative z-10 mt-10">
+    <div class="mx-auto max-w-7xl px-4 py-10">
+      <div class="panel p-6">
+        <div class="grid md:grid-cols-3 gap-6">
           <div>
-            <div class="title" style="font-size:1.5rem">NoHeroes</div>
-            <p class="lead" style="margin-top:6px">Universo dark‑fantasy. Loja, app e conteúdos.</p>
+            <div class="font-['Cinzel Decorative'] text-xl mb-2 ink-gradient">NoHeroes</div>
+            <p class="text-sm text-[var(--nh-ink-dim)]">Universo dark‑fantasy. Loja, app e conteúdos.</p>
           </div>
-          <nav style="display:grid; gap:6px; align-content:start">
-            <a href="#" class="btn" style="justify-content:flex-start">Termos</a>
-            <a href="#" class="btn" style="justify-content:flex-start">Privacidade</a>
-            <a href="#" class="btn" style="justify-content:flex-start">Contato</a>
+          <nav class="grid gap-2 text-sm">
+            <a class="hover:underline" href="#">Termos</a>
+            <a class="hover:underline" href="#">Privacidade</a>
+            <a class="hover:underline" href="#">Contato</a>
           </nav>
-          <div style="display:flex; gap:8px; align-items:center">
+          <div class="flex items-center gap-2">
             <a class="btn" href="#">Instagram</a>
             <a class="btn" href="#">YouTube</a>
             <a class="btn" href="#">Discord</a>
           </div>
         </div>
-        <div style="height:1px; background:linear-gradient(90deg,transparent,rgba(255,255,255,.09),transparent); margin:18px 0"></div>
-        <p class="lead" style="font-size:.8rem">© 2025 NoHeroes. Todos os direitos reservados.</p>
+        <div class="divider my-6"></div>
+        <p class="text-xs text-[var(--nh-ink-dim)]">© 2025 NoHeroes. Todos os direitos reservados.</p>
       </div>
     </div>
   </footer>  <script>
-    // ==== progressbar
+    // Drawer
+    const drawer=document.getElementById('drawer');
+    document.getElementById('openMenu')?.addEventListener('click',()=>drawer.classList.remove('hidden'));
+    drawer?.addEventListener('click',e=>{ if(e.target.hasAttribute('data-close')) drawer.classList.add('hidden'); });
+
+    // Progressbar
     addEventListener('scroll',()=>{
-      const doc=document.documentElement;
-      const h=doc.scrollHeight - innerHeight; const p=(scrollY/h)*100; document.getElementById('progressbar').style.width=p+'%';
+      const docHeight=document.documentElement.scrollHeight-innerHeight;
+      const scrolled=(scrollY/docHeight)*100; document.getElementById('progressbar').style.width=scrolled+'%';
     },{passive:true});
 
-    // ==== smooth buttons
-    document.querySelectorAll('[data-scroll]')?.forEach(b=>b.addEventListener('click',()=>{
-      const t=b.getAttribute('data-scroll'); document.querySelector(t)?.scrollIntoView({behavior:'smooth'});
+    // Tabs
+    const tabsBtns=[...document.querySelectorAll('[data-tab]')];
+    tabsBtns.forEach(btn=>btn.addEventListener('click',()=>{
+      tabsBtns.forEach(b=>b.classList.remove('btn-primary'));
+      document.querySelectorAll('.tab').forEach(t=>t.classList.add('hidden'));
+      btn.classList.add('btn-primary');
+      document.getElementById(btn.dataset.tab).classList.remove('hidden');
     }));
 
-    // ==== tabs
-    const tabBtns=document.querySelectorAll('.tab-btn');
-    const panels={ ato: document.getElementById('tab-ato'), para: document.getElementById('tab-para'), formatos: document.getElementById('tab-formatos') };
-    tabBtns.forEach(btn=>btn.addEventListener('click',()=>{
-      tabBtns.forEach(x=>x.classList.remove('active'));
-      Object.values(panels).forEach(p=>p.classList.remove('active'));
-      btn.classList.add('active');
-      panels[btn.dataset.tab].classList.add('active');
-    }));
+    // Scroll helpers
+    document.getElementById('btnScrollVivenciar')?.addEventListener('click',()=>document.getElementById('vivenciar').scrollIntoView({behavior:'smooth'}));
+    document.getElementById('btnScrollSinopse')?.addEventListener('click',()=>document.getElementById('sinopse').scrollIntoView({behavior:'smooth'}));
+    document.getElementById('btnComprarTopo')?.addEventListener('click',()=>document.getElementById('comprar').scrollIntoView({behavior:'smooth'}));
 
-    // ==== checkout MP (sem combo)
+    // Checkout (MP) — sem combo
     function getJwt(){const raw=(localStorage.getItem('token')||'').trim()||(localStorage.getItem('NoHeroes_token')||'').trim();return raw.replace(/^Bearer\s+/i,'')}
     function assertAuth(){const t=getJwt(); if(!t){alert('Você precisa estar logado para comprar.'); window.location.href='/login.html?next='+encodeURIComponent(location.pathname+location.search+location.hash); return false;} return true}
+
     async function criarPreferencia(){
       const token=getJwt();
-      const body={ items:[{ sku:'livro_cinzas_amanha_digital', title:'NoHeroes: As Cinzas do Amanhã (digital)', quantity:1, unit_price:69.00 }] };
+      const body={items:[{sku:'livro_cinzas_amanha_digital', title:'NoHeroes: As Cinzas do Amanhã (digital)', quantity:1, unit_price:69.00}]};
       const res=await fetch('https://api.noheroes.com.br/api/checkout/mp/preference',{
         method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
         body:JSON.stringify({
@@ -301,19 +284,34 @@ footer .cols{ display:grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap:
           pending_url:'https://noheroes.com.br/checkout/pendente'
         })
       });
-      if(!res.ok){throw new Error(await res.text()||'Erro ao criar preferência');}
+      if(!res.ok){const t=await res.text(); throw new Error(t||'Erro ao criar preferência');}
       return res.json();
     }
-    async function comprar(){ if(!assertAuth()) return; try{ const {init_point}=await criarPreferencia(); location.href=init_point } catch(e){ console.error(e); alert('Não foi possível iniciar o checkout.') } }
-    document.getElementById('btnComprar')?.addEventListener('click',comprar);
-    document.getElementById('btnComprarTopo')?.addEventListener('click',()=>document.getElementById('comprar').scrollIntoView({behavior:'smooth'}));
 
-    // ==== brasas (mesmo vibe do landingsv)
-    const cvs=document.getElementById('brasas');
-    if(cvs){ const ctx=cvs.getContext('2d'); let w,h; const N=90; const parts=[]; const R=()=>{ w=cvs.width=innerWidth; h=cvs.height=innerHeight }; addEventListener('resize',R,{passive:true}); R();
-      for(let i=0;i<N;i++){ parts.push({ x:Math.random()*w, y:Math.random()*h, r:Math.random()*2+0.6, s:Math.random()*0.6+0.25 }) }
-      (function loop(){ ctx.clearRect(0,0,w,h); for(const p of parts){ p.y-=p.s; if(p.y<-10){ p.y=h+10; p.x=Math.random()*w }
-        const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*14); g.addColorStop(0,'rgba(154,59,255,.24)'); g.addColorStop(1,'rgba(154,59,255,0)'); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(p.x,p.y,p.r*14,0,Math.PI*2); ctx.fill(); }
-        requestAnimationFrame(loop); })(); }
+    async function comprar(){
+      if(!assertAuth()) return;
+      try{ const {init_point}=await criarPreferencia(); window.location.href=init_point; }
+      catch(err){ console.error(err); alert('Não foi possível iniciar o checkout.'); }
+    }
+
+    document.getElementById('btnComprar')?.addEventListener('click',comprar);
+
+    // Remoção defensiva de depoimentos
+    document.querySelectorAll('[aria-label="testemunhos"], [aria-label="depoimentos"], #testemunhos, #depoimentos, section[data-kind="testimonials"]').forEach(el=>el.remove());
+
+    // Brasas animadas (igual às outras LPs)
+    const c=document.getElementById('brasasCanvas');
+    if(c){
+      const ctx=c.getContext('2d'); let w,h,particles=[]; const N=70;
+      const resize=()=>{w=c.width=innerWidth;h=c.height=innerHeight}; addEventListener('resize',resize,{passive:true}); resize();
+      for(let i=0;i<N;i++) particles.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+0.5,s:Math.random()*0.6+0.25});
+      (function loop(){
+        ctx.clearRect(0,0,w,h);
+        for(const p of particles){ p.y-=p.s; if(p.y< -10){p.y=h+10; p.x=Math.random()*w}
+          const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*12);
+          g.addColorStop(0,'rgba(143,79,255,.22)'); g.addColorStop(1,'rgba(143,79,255,0)');
+          ctx.fillStyle=g; ctx.beginPath(); ctx.arc(p.x,p.y,p.r*12,0,Math.PI*2); ctx.fill(); }
+        requestAnimationFrame(loop); })();
+    }
   </script></body>
 </html>
