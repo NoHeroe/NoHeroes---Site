@@ -1,52 +1,282 @@
-<!DOCTYPE html><html lang="pt-BR">
+<!doctype html>
+
+<html lang="pt-br" class="h-full">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NoHeroes | Página Inativa</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Oráculo — NoHeroes</title>
+  <!-- Tailwind CDN (pode trocar por build local) -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nhBg: "#0b0b0e",
+            nhInk: "#e6e3df",
+            nhInkDim: "#a8a29e",
+          },
+        }
+      }
+    }
+  </script>
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #1a1a1a;
-      color: #e5e5e5;
+    :root{
+      --nh-bg:#0b0b0e; --nh-ink:#e6e3df; --nh-ink-dim:#a8a29e; --nh-accent:#9b5de5;
     }
-    h1, h2 {
-      font-family: 'Playfair Display', serif;
-    }
-    .inactive-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(50, 50, 50, 0.9);
-      pointer-events: all;
-      z-index: 40;
-    }
-    .inactive-overlay * {
-      pointer-events: none;
-    }
-    /* exceção: footer button clicável */
-    .footer-button {
-      pointer-events: auto;
-    }
-    html { scroll-behavior: smooth; }
+    body{ background: var(--nh-bg); color: var(--nh-ink); }
+    .panel{ border-radius: 1rem; border:1px solid rgba(255,255,255,.08); background: color-mix(in lab, var(--nh-bg), black 10%); box-shadow: 0 10px 40px rgba(0,0,0,.35)}
+    .gradiente-noheroes{ -webkit-background-clip:text; background-clip:text; color: transparent; background-image: linear-gradient(90deg,#ffe1a8,#e36d6d 40%,#9b5de5)}
+    .btn-x{ display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:.6rem 1rem; border-radius:1rem; border:1px solid rgba(255,255,255,.1); background:rgba(255,255,255,.06); transition: transform .06s ease, background .2s ease; }
+    .btn-x:hover{ background: rgba(255,255,255,.12)}
+    .btn-x:active{ transform:scale(.98)}
+    .cinzel{ font-family: ui-serif, Georgia, Times, "Times New Roman", serif }
+    .chip{ font-size:.8rem; border:1px solid rgba(255,255,255,.12); border-radius:999px; padding:.35rem .7rem; background:rgba(255,255,255,.04)}
+    .chip:hover{ background:rgba(255,255,255,.09)}
+    .kbd{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; background:rgba(255,255,255,.08); padding:.1rem .35rem; border-radius:.4rem;}
+    .prose-lite p{ margin:.5rem 0 }
+    .prose-lite strong{ font-weight:700 }
+    .prose-lite code{ background:rgba(255,255,255,.1); padding:.1rem .35rem; border-radius:.3rem; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace }
+    /* Ícones simples */
+    .icon{ width:1.05rem; height:1.05rem; opacity:.8 }
   </style>
 </head>
-<body class="relative">
-  <!-- TOPO FIXO -->
-  <header class="fixed top-0 left-0 w-full bg-[#100d1a] border-b border-[#2e2e2e] z-50 flex items-center justify-between px-6 py-4">
-    <div>
-      <img src="assets/images/noheroes logo.png" alt="NoHeroes" class="h-16" />
-    </div>
-  </header>  <!-- RODAPÉ -->  <footer class="fixed bottom-0 left-0 w-full bg-[#100d1a] border-t border-[#2e2e2e] text-center py-4 z-50">
-    <button onclick="window.location.href='index.html'" class="footer-button px-6 py-2 bg-[#8f4fff] text-black rounded-lg font-semibold hover:bg-[#a16fff] transition">
-      Início
+<body class="h-full">
+  <!-- Se você já tem o brasasCanvas global, mantenha aqui em background -->
+  <canvas id="brasasCanvas" class="fixed inset-0 -z-10 opacity-[0.18] pointer-events-none"></canvas>  <main class="max-w-5xl mx-auto px-4 py-10">
+    <!-- Topo -->
+    <header class="mb-4">
+      <div class="flex items-center gap-3">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v3m0 12v3m9-9h-3M6 12H3m13.95 5.95-2.12-2.12M8.17 8.17 6.05 6.05m11.9 0-2.12 2.12M8.17 15.83l-2.12 2.12"/></svg>
+        <h1 class="cinzel text-3xl md:text-4xl gradiente-noheroes">Oráculo</h1>
+      </div>
+      <p class="text-nhInkDim mt-1">Pergunte sobre o universo NoHeroes. Respostas rápidas agora; IA depois.</p>
+    </header><!-- Caixa de pergunta -->
+<section class="panel p-4 md:p-6">
+  <div class="flex items-center gap-3">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    <input id="query" placeholder="Digite sua dúvida (Ctrl/⌘+K)" class="flex-1 bg-transparent outline-none placeholder:text-nhInkDim text-base" />
+    <button id="clearBtn" class="hidden text-sm text-nhInkDim hover:text-[var(--nh-ink)]">limpar</button>
+    <button id="askBtn" class="btn-x">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      Perguntar
     </button>
-  </footer>  <!-- Overlay de Inatividade -->  <div class="inactive-overlay flex flex-col items-center justify-center text-center px-4">
-    <!-- Espaço para nome da página -->
-    <h2 id="ORACULUM" class="text-2xl md:text-4xl font-bold mb-4 text-[#8f4fff]"></h2>
-    <h1 class="text-5xl md:text-7xl font-extrabold">EM BREVE</h1>
-  </div>  <!-- Espaço para futuro conteúdo das páginas -->  <div class="pt-20 pb-20">
-    <!-- Conteúdo inicial (logo, cabeçalho e rodapé) já estão fixos. --
   </div>
-</body>
-  </html>
+  <div id="suggestions" class="mt-3 flex flex-wrap gap-2"></div>
+</section>
+
+<!-- Resultados sugeridos -->
+<section id="quickResults" class="mt-4 grid md:grid-cols-2 gap-3"></section>
+
+<!-- Resposta -->
+<section class="mt-5">
+  <div class="panel p-5 md:p-6">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+        <h2 class="cinzel text-xl">Resposta</h2>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="historyToggle" class="chip">Histórico</button>
+        <button id="copyBtn" class="chip">Copiar</button>
+      </div>
+    </div>
+    <div id="answerBox" class="min-h-[140px] mt-3 rounded-lg border border-white/10 bg-black/20 p-4 prose-lite text-[0.98rem]"></div>
+    <div class="mt-4 flex flex-wrap items-center gap-3 text-sm">
+      <span class="text-nhInkDim">Não achou?</span>
+      <a id="whatsBtn" class="btn-x" href="#" target="_blank" rel="noopener">WhatsApp</a>
+      <a id="discordBtn" class="btn-x" href="#" target="_blank" rel="noopener">Discord</a>
+    </div>
+  </div>
+</section>
+
+<!-- Histórico -->
+<section id="historyPanel" class="hidden mt-4 panel overflow-hidden">
+  <div class="p-4 flex items-center justify-between">
+    <div class="text-sm text-nhInkDim">Últimas 10 perguntas</div>
+    <button id="historyClose" class="chip">Fechar</button>
+  </div>
+  <ul id="historyList" class="divide-y divide-white/10"></ul>
+</section>
+
+<footer class="mt-10 text-xs text-nhInkDim flex items-center gap-2">
+  <span class="kbd">Ctrl/⌘ + K</span> atalho para focar no campo
+</footer>
+
+  </main>  <script>
+    // ====== Dados base (substitua/expanda) ======
+    const FAQ = [
+      { q: 'O que é a NoHeroes?', a: 'NoHeroes é o estúdio/lar do universo criativo que inclui o eBook <strong>Manual das Sombras</strong>, projetos autorais e a comunidade. O Oráculo te ajuda a achar respostas rápidas.' , tags: ['sobre','institucional']},
+      { q: 'Como compro o Manual das Sombras?', a: 'Na página do eBook, clique em <strong>Finalizar compra</strong> (botão <code>#btnComprar</code>). O fluxo cria a preferência no Mercado Pago e redireciona ao <code>init_point</code>. Preço solo <strong>R$ 25</strong> e combo <code>#addCombo</code> por <strong>R$ 55</strong>.', tags:['comprar','manual','preço','mercado pago']},
+      { q: 'Quais comunidades existem?', a: 'Hoje mantemos <strong>WhatsApp</strong> e <strong>Discord</strong>. Os convites estão na Linktree, no bloco <em>Comunidades</em>.', tags:['comunidade','whatsapp','discord']},
+      { q: 'Quero falar com alguém, como faço?', a: 'Use os botões de <strong>WhatsApp</strong> e <strong>Discord</strong> acima. Se preferir e-mail, use o formulário no rodapé do site.', tags:['suporte','contato']},
+      { q: 'Onde vejo o sumário do Manual?', a: 'Na seção <strong>Sumário</strong> da página do eBook — mesma página onde estão os botões <code>#ctaComprarTopo</code> e <code>#btnComprar</code>.' , tags:['sumário','manual']},
+    ];
+    const SUGGESTIONS = [
+      'Como funciona o checkout?',
+      'Tem desconto no combo?',
+      'Onde encontro o sumário do Manual?',
+      'Quais são as comunidades?'
+    ];
+
+    // ====== Util ======
+    const $ = (s, el=document) => el.querySelector(s);
+    const $$ = (s, el=document) => Array.from(el.querySelectorAll(s));
+    const queryIpt = $('#query');
+    const askBtn = $('#askBtn');
+    const clearBtn = $('#clearBtn');
+    const suggestionsEl = $('#suggestions');
+    const quickResultsEl = $('#quickResults');
+    const answerBox = $('#answerBox');
+    const copyBtn = $('#copyBtn');
+    const historyToggle = $('#historyToggle');
+    const historyPanel = $('#historyPanel');
+    const historyClose = $('#historyClose');
+    const historyList = $('#historyList');
+
+    const whatsBtn = $('#whatsBtn');
+    const discordBtn = $('#discordBtn');
+    // Sete seus links oficiais aqui
+    whatsBtn.href = 'https://wa.me/5599999999999';
+    discordBtn.href = 'https://discord.gg/xxxxxxxx';
+
+    function fuseScore(q, doc){
+      q = (q||'').toLowerCase();
+      const hay = (doc||'').toLowerCase();
+      let score = 0;
+      q.split(/\s+/).forEach(tk=>{ if(tk && hay.includes(tk)) score++; });
+      return score;
+    }
+
+    function searchDocs(q){
+      if(!q.trim()) return [];
+      return FAQ.map(f=>({ f, s: fuseScore(q, `${f.q} ${f.a} ${(f.tags||[]).join(' ')}`) }))
+        .filter(x=>x.s>0)
+        .sort((a,b)=>b.s-a.s)
+        .slice(0,5)
+        .map(x=>x.f);
+    }
+
+    function renderSuggestions(){
+      suggestionsEl.innerHTML = '';
+      SUGGESTIONS.forEach(s=>{
+        const b = document.createElement('button');
+        b.className = 'chip';
+        b.textContent = s;
+        b.onclick = ()=>{ queryIpt.value = s; doAsk(s); };
+        suggestionsEl.appendChild(b);
+      });
+    }
+
+    function renderQuickResults(q){
+      const list = searchDocs(q);
+      quickResultsEl.innerHTML = '';
+      list.forEach(item=>{
+        const card = document.createElement('button');
+        card.className = 'text-left panel p-4 hover:bg-white/10 transition';
+        card.innerHTML = `
+          <div class="text-nhInkDim text-xs flex items-center gap-2">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5V4.5a2 2 0 0 1 2-2h8l6 6v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg>
+            Sugerido
+          </div>
+          <div class="mt-1 font-medium">${item.q}</div>
+          <div class="mt-1 text-sm text-nhInkDim line-clamp-2">${item.a}</div>`;
+        card.onclick = ()=>{ queryIpt.value = item.q; doAsk(item.q); };
+        quickResultsEl.appendChild(card);
+      });
+    }
+
+    // ====== Resposta / Histórico ======
+    const HISTORY_KEY = 'oraculo_history_v1';
+    function getHistory(){ try{ return JSON.parse(localStorage.getItem(HISTORY_KEY)||'[]'); }catch{return []} }
+    function setHistory(arr){ localStorage.setItem(HISTORY_KEY, JSON.stringify(arr.slice(0,10))); }
+
+    function renderHistory(){
+      const items = getHistory();
+      historyList.innerHTML = '';
+      if(items.length===0){
+        const li = document.createElement('li');
+        li.className = 'p-4 text-sm text-nhInkDim';
+        li.textContent = 'Vazio por enquanto.';
+        historyList.appendChild(li);
+        return;
+      }
+      items.forEach(({q,a})=>{
+        const li = document.createElement('li');
+        li.className = 'p-4';
+        li.innerHTML = `<div class="text-sm font-medium">${q}</div><div class="text-xs text-nhInkDim line-clamp-2">${a.replace(/<[^>]+>/g,'')}</div>`;
+        historyList.appendChild(li);
+      });
+    }
+
+    function setAnswer(html){
+      answerBox.innerHTML = html || '<span class="text-nhInkDim">Nenhuma pergunta ainda. Experimente uma sugestão acima.</span>';
+    }
+
+    function mdLite(text){
+      return text
+        .replace(/\n/g,'<br/>')
+        .replace(/\*\*(.*?)\*\*/g,'<strong>$1<\/strong>')
+        .replace(/`([^`]+)`/g,'<code>$1<\/code>');
+    }
+
+    function doAsk(qText){
+      const q = (qText ?? queryIpt.value).trim();
+      if(!q) return;
+      setAnswer('<span class="text-nhInkDim">Pensando…</span>');
+      setTimeout(()=>{
+        let picked = searchDocs(q)[0] || FAQ[0];
+        const html = `<p><strong>${picked.q}</strong></p><p>${picked.a}</p>`;
+        setAnswer(html);
+        const hist = getHistory();
+        hist.unshift({ q, a: html });
+        setHistory(hist);
+        renderHistory();
+      }, 350);
+    }
+
+    // ====== Eventos ======
+    askBtn.onclick = ()=> doAsk();
+    queryIpt.addEventListener('input', ()=>{
+      clearBtn.classList.toggle('hidden', queryIpt.value.trim().length===0);
+      renderQuickResults(queryIpt.value);
+    });
+    clearBtn.onclick = ()=>{ queryIpt.value=''; clearBtn.classList.add('hidden'); quickResultsEl.innerHTML=''; setAnswer(''); };
+
+    document.addEventListener('keydown', (e)=>{
+      if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==='k'){
+        e.preventDefault(); queryIpt.focus();
+      }
+      if(e.key==='Enter' && document.activeElement===queryIpt){ doAsk(); }
+    });
+
+    copyBtn.onclick = async ()=>{
+      const text = answerBox.textContent || '';
+      try{ await navigator.clipboard.writeText(text.trim()); copyBtn.textContent = 'Copiado!'; setTimeout(()=>copyBtn.textContent='Copiar', 1200) }catch{}
+    };
+
+    historyToggle.onclick = ()=>{ historyPanel.classList.toggle('hidden'); renderHistory(); };
+    historyClose.onclick = ()=> historyPanel.classList.add('hidden');
+
+    // boot
+    renderSuggestions();
+    renderQuickResults('');
+    setAnswer('');
+
+    // ====== (Opcional) brasasCanvas init simples de partículas ======
+    // Se já existe no seu layout, apague este bloco.
+    (function initBrasas(){
+      const c = document.getElementById('brasasCanvas'); if(!c) return;
+      const ctx = c.getContext('2d');
+      let w, h; const px = devicePixelRatio || 1; const parts = Array.from({length: 60}).map(()=>({ x: Math.random(), y: Math.random(), r: Math.random()*2+0.4, v: Math.random()*0.0007+0.0002 }));
+      function resize(){ w = c.width = innerWidth*px; h = c.height = innerHeight*px; }
+      window.addEventListener('resize', resize); resize();
+      function step(t){
+        ctx.clearRect(0,0,w,h);
+        parts.forEach(p=>{ p.y += p.v; if(p.y>1) p.y=0; const x = p.x*w, y = p.y*h; const g = ctx.createRadialGradient(x,y,0,x,y,p.r*18*px); g.addColorStop(0,'rgba(255,180,120,.15)'); g.addColorStop(1,'rgba(0,0,0,0)'); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x,y,p.r*10*px,0,Math.PI*2); ctx.fill(); });
+        requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    })();
+  </script></body>
+</html>
