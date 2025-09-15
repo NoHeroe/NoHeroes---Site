@@ -3,241 +3,201 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Sistema Vivo — eBook | NoHeroes</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    :root{ --nh-bg:#0a0a0a; --nh-ink:#e5e5e5; --nh-ink-dim:#bfbfe0; --nh-accent1:#8f4fff; --nh-accent2:#facc15; }
-    body{font-family:Inter,system-ui,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;background:#0a0a0a;color:#e5e5e5;margin:0}
-    h1,h2,.cinzel{font-family:'Cinzel Decorative',serif}
-    .gradiente-noheroes{background:linear-gradient(270deg,#8f4fff,#a855f7,#facc15,#8f4fff);background-size:600% 600%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:fluidPulse 8s ease-in-out infinite}
-    .barra-degrade{background:linear-gradient(to right,#8f4fff,#facc15);height:4px;box-shadow:0 0 6px #8f4fff88,0 0 10px #facc1588}
-    .btn-x{background:linear-gradient(270deg,#8f4fff,#a855f7,#facc15,#8f4fff);background-size:600% 600%;animation:fluidPulse 6s ease-in-out infinite;color:#000;font-weight:700;border-radius:.6rem;padding:.9rem 1.1rem;transition:transform .2s ease,filter .2s ease;box-shadow:0 8px 26px rgba(143,79,255,.18);display:inline-block;text-align:center}
-    .btn-x:hover{transform:translateY(-2px);filter:brightness(1.05)}
-    .btn-ghost{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:.6rem;padding:.8rem 1rem;display:inline-block;text-align:center}
-    @keyframes fluidPulse{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-    #brasasCanvas{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-1;pointer-events:none}
-    .panel{background:rgba(255,255,255,.06);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.12);border-radius:1rem}
-    .chip{padding:.35rem .6rem;border-radius:999px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);font-size:.78rem}
-    .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent)}
+    :root{
+      --bg:#0a0a0a; --ink:#eaeaf1; --muted:#b9b9cc; --panel:#0f0f14; --line:#1c1c25;
+      --accent:#8f4fff; --accent2:#facc15;
+    }
+    html,body{height:100%;background:var(--bg);color:var(--ink);margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Noto Sans","Apple Color Emoji","Segoe UI Emoji"}
+    a{color:var(--ink);text-decoration:none}
+    header{position:sticky;top:0;background:linear-gradient(180deg,rgba(10,10,10,.95),rgba(10,10,10,.75));backdrop-filter:saturate(140%) blur(6px);border-bottom:1px solid var(--line);z-index:50}
+    .wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+    .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+    .brand{font-family:"Cinzel Decorative",serif;letter-spacing:.08em;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:700}
+    .menu{display:flex;gap:20px}
+    .btn{display:inline-block;padding:12px 18px;border:1px solid var(--line);border-radius:10px;background:#11121a}
+    .btn.accent{border-color:transparent;background:linear-gradient(90deg,var(--accent),var(--accent2));color:#0a0a0a;font-weight:700}
+    .section{padding:56px 0;border-bottom:1px solid var(--line)}
+    h1{font-family:"Cinzel Decorative",serif;font-size:44px;margin:0 0 8px}
+    h2{font-size:28px;margin:0 0 12px;color:var(--accent)}
+    h3{font-size:20px;margin:20px 0 8px}
+    p{color:var(--ink);opacity:.92;line-height:1.6}
+    .muted{color:var(--muted)}
+    .grid{display:grid;gap:20px}
+    .grid-2{grid-template-columns:1.2fr .8fr}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
+    .hero-img{width:100%;border-radius:14px;border:1px solid var(--line);background:#0b0b10;aspect-ratio:3/4;display:block;object-fit:cover}
+    .kvs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .kvs>div{background:#0e0e14;border:1px solid var(--line);border-radius:12px;padding:14px}
+    ul{padding-left:18px}
+    li{margin:8px 0}
+    .price{font-size:36px;font-weight:800;letter-spacing:.5px}
+    .strike{opacity:.6;text-decoration:line-through}
+    .faq details{background:#0e0e14;border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0}
+    footer{padding:48px 0;color:var(--muted)}
+    .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:12px;color:var(--muted)}
+    @media (max-width:900px){.grid-2{grid-template-columns:1fr}.kvs{grid-template-columns:1fr 1fr}}
+    @media (max-width:640px){.menu{display:none}}
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <canvas id="brasasCanvas"></canvas>
-  <div class="fixed top-0 left-0 w-full barra-degrade z-40"></div>  <!-- HEADER -->  <header class="max-w-7xl mx-auto px-4 pt-6 pb-3">
-    <div class="panel px-4 py-3 flex items-center justify-between">
-      <a href="/" class="flex items-center gap-2">
-        <div class="w-8 h-8 rounded-md" style="background:linear-gradient(135deg,#8f4fff,#facc15)"></div>
-        <span class="cinzel text-lg gradiente-noheroes">NOHEROES</span>
-      </a>
-      <nav class="hidden md:flex items-center gap-2">
-        <a class="btn-ghost" href="#conteudo">Conteúdo</a>
-        <a class="btn-ghost" href="#sumario">Sumário</a>
-        <a class="btn-ghost" href="#comprar">Comprar</a>
+  <!-- Header -->
+  <header>
+    <div class="wrap nav">
+      <a href="#" class="brand">NOHEROES</a>
+      <nav class="menu">
+        <a href="#conteudo">Conteúdo</a>
+        <a href="#sumario">Sumário</a>
+        <a href="#comprar" class="btn">Comprar</a>
       </nav>
-      <button class="md:hidden btn-ghost" id="openMenu" aria-label="Abrir menu">☰</button>
+      <div aria-hidden="true">☰</div>
     </div>
-  </header>  <!-- DRAWER -->  <div id="drawer" class="fixed top-0 right-0 w-72 h-full bg-black/90 z-50" style="transform: translateX(100%); transition: transform .25s ease; border-left:1px solid rgba(143,79,255,.25); box-shadow: inset 8px 0 18px rgba(143,79,255,.35)">
-    <button class="absolute top-4 right-4 text-3xl text-[#a855f7] hover:text-purple-400" onclick="toggleDrawer()">✕</button>
-    <div class="p-6 flex flex-col gap-3">
-      <h1 class="text-2xl cinzel gradiente-noheroes">NOHEROES</h1>
-      <nav class="mt-2 flex flex-col gap-2 text-sm">
-        <a href="#conteudo" class="p-3 rounded-lg hover:bg-[#1c1c1c]" onclick="toggleDrawer()">Conteúdo</a>
-        <a href="#sumario" class="p-3 rounded-lg hover:bg-[#1c1c1c]" onclick="toggleDrawer()">Sumário</a>
-        <a href="#comprar" class="p-3 rounded-lg hover:bg-[#1c1c1c]" onclick="toggleDrawer()">Comprar</a>
-      </nav>
+  </header>  <!-- Hero -->  <main class="wrap">
+    <section class="section" id="top">
+      <div class="grid grid-2">
+        <div>
+          <span class="pill">PDF • ~120 págs &nbsp; Execução &nbsp; Planos semanais</span>
+          <h1 id="produto">Sistema Vivo</h1>
+          <p>O manual prático para operar o Sistema NoHeroes. Protocolos semanais, painéis de acompanhamento, rituais de energia e foco. É a continuação natural de <em>Tudo Está Conectado</em>, agora em modo execução.</p>
+          <p>
+            <a href="#comprar" class="btn accent">Comprar — R$ 24,90</a>
+            &nbsp; <a href="#amostra" class="btn">Ver amostra</a>
+            &nbsp; <a href="#conteudo" class="btn">O que tem dentro</a>
+          </p>
+          <p class="muted">Recomendo ler primeiro <em>Tudo Está Conectado</em> (fundamentos). Aqui a gente executa: planejamento, rituais e métricas simples.</p>
+        </div>
+        <aside>
+          <img src="capa-sistema-vivo.jpg" alt="Capa do eBook Sistema Vivo" class="hero-img" />
+        </aside>
+      </div>
+    </section><!-- Painel do Sistema -->
+<section class="section" id="conteudo">
+  <h2>Painel do Sistema</h2>
+  <p>Núcleos e rotas de execução. Passe o mouse/toque para ver o foco semanal sugerido.</p>
+  <div class="kvs">
+    <div><strong>Ritmos</strong><br><span class="muted">Rotina e cadência</span></div>
+    <div><strong>Energia</strong><br><span class="muted">Corpo e mente</span></div>
+    <div><strong>Criatividade</strong><br><span class="muted">Fluxo e ideias</span></div>
+    <div><strong>Relações</strong><br><span class="muted">Conexões</span></div>
+    <div><strong>Núcleo</strong><br><span class="muted">Prioridades</span></div>
+    <div class="card"><em class="muted">Passe o dedo para explorar</em></div>
+  </div>
+</section>
+
+<!-- Você vai executar -->
+<section class="section">
+  <h2>Você vai executar</h2>
+  <ul>
+    <li>Protocolos semanais com checklists.</li>
+    <li>Plano de 4 semanas (reinício).</li>
+    <li>Painéis para mente, corpo e relações.</li>
+    <li>Sprints criativos e antifadiga.</li>
+    <li>Revisão semanal de fricções.</li>
+    <li>Rituais de energia (10 min/dia).</li>
+  </ul>
+  <div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr));gap:14px">
+    <div class="card"><strong>Atualizações</strong><br><span class="muted">grátis</span></div>
+    <div class="card"><strong>Download</strong><br><span class="muted">imediato</span></div>
+    <div class="card"><strong>Acesso</strong><br><span class="muted">no inventário</span></div>
+  </div>
+</section>
+
+<!-- Sumário -->
+<section class="section" id="sumario">
+  <h2>Sumário</h2>
+  <ol>
+    <li>Relembrando a base (2 págs)</li>
+    <li>Setup do painel</li>
+    <li>Semana 1: Ritmos</li>
+    <li>Semana 2: Energia</li>
+    <li>Semana 3: Criatividade</li>
+    <li>Semana 4: Relações</li>
+    <li>Revisão mensal</li>
+    <li>Escalonando hábitos</li>
+  </ol>
+
+  <h3>Para quem é</h3>
+  <ul>
+    <li>Quem quer sair só da teoria.</li>
+    <li>Quem vive em picos e quedas de energia.</li>
+    <li>Criativos que travam ou oscilam.</li>
+    <li>Quem precisa de painel simples pra seguir.</li>
+  </ul>
+
+  <div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr));gap:14px">
+    <div class="card"><strong>PDF</strong><br><span class="muted">Qualquer dispositivo</span></div>
+    <div class="card"><strong>Inventário</strong><br><span class="muted">Licença na conta</span></div>
+    <div class="card"><strong>Atualizações</strong><br><span class="muted">Inclusas</span></div>
+  </div>
+</section>
+
+<!-- Comprar -->
+<section class="section" id="comprar">
+  <h2>Comprar agora</h2>
+  <div class="grid grid-2">
+    <div class="card">
+      <div class="muted">R$ <span class="strike">59,90</span></div>
+      <div class="price">R$ 24,90</div>
+      <div class="muted">lançamento</div>
+      <p><a href="#checkout" class="btn accent" style="width:100%;text-align:center">Finalizar compra</a></p>
+      <p class="muted">Pagamento seguro. Acesso imediato no inventário. Requer login.</p>
     </div>
-  </div>  <!-- HERO de Produto -->  <section class="max-w-7xl mx-auto px-4 pt-6 pb-4">
-    <div class="panel p-6 md:p-8">
-      <div class="flex flex-col md:flex-row gap-8 items-start">
-        <!-- CAPA (trocar pelo caminho real) -->
-        <div class="w-full md:w-80">
-          <img id="capaEbook" src="/imgs/capas/sistema-vivo.jpg" alt="Capa do eBook Sistema Vivo" class="w-full aspect-[3/4] object-cover rounded-xl"/>
-          <div class="mt-3 flex flex-wrap gap-2"><span class="chip">PDF • ~120 págs</span><span class="chip">Execução</span><span class="chip">Planos semanais</span></div>
-        </div>
-        <!-- COPY + CTAs -->
-        <div class="flex-1">
-          <h1 class="cinzel text-4xl md:text-5xl gradiente-noheroes">Sistema Vivo</h1>
-          <p class="mt-3 text-[var(--nh-ink-dim)] max-w-2xl">O manual prático para operar o Sistema NoHeroes. Protocolos semanais, painéis de acompanhamento, rituais de energia e foco. É a continuação natural de <strong>Tudo Está Conectado</strong>, agora em modo execução.</p>
-          <div class="mt-5 grid sm:grid-cols-3 gap-3">
-            <a class="btn-x" id="ctaComprarTopo">Comprar — R$ 24,90</a>
-            <a class="btn-ghost" href="/static/preview/sistema-vivo-amostra.pdf" target="_blank">Ver amostra</a>
-            <a class="btn-ghost" href="#conteudo">O que tem dentro</a>
-          </div>
-          <div class="mt-5 panel p-4 text-sm text-[var(--nh-ink-dim)]">
-            Recomendo ler primeiro <span class="text-[#facc15] font-semibold">Tudo Está Conectado</span> (fundamentos). Aqui a gente executa: planejamento, rituais e métricas simples.
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>  <!-- CONTEÚDO / MAPA DE RITUAIS & PAINÉIS -->  <section id="conteudo" class="max-w-7xl mx-auto px-4 py-8">
-    <div class="grid lg:grid-cols-2 gap-6 items-stretch">
-      <div class="panel p-6">
-        <h2 class="cinzel text-2xl gradiente-noheroes">Painel do Sistema</h2>
-        <p class="text-sm text-[var(--nh-ink-dim)] mb-4">Núcleos e rotas de execução. Passe o mouse/toque para ver o foco semanal sugerido.</p>
-        <div class="relative h-[360px]">
-          <svg viewBox="0 0 600 360" class="absolute inset-0 w-full h-full">
-            <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#8f4fff"/><stop offset="100%" stop-color="#facc15"/></linearGradient></defs>
-            <g stroke="url(#g)" stroke-width="2" opacity="0.6">
-              <line x1="120" y1="90" x2="300" y2="180"/><line x1="480" y1="90" x2="300" y2="180"/>
-              <line x1="120" y1="270" x2="300" y2="180"/><line x1="480" y1="270" x2="300" y2="180"/>
-              <line x1="120" y1="90" x2="480" y2="270"/><line x1="480" y1="90" x2="120" y2="270"/>
-            </g>
-            <g class="nh-node" data-title="Ritmos" data-desc="Sono, luz, alimento, movimento — reset de 7 dias."><circle cx="120" cy="90" r="22" fill="rgba(143,79,255,.35)" stroke="#facc15" stroke-width="2"/><text x="120" y="90" dominant-baseline="middle" text-anchor="middle" font-size="11">Ritmos</text></g>
-            <g class="nh-node" data-title="Energia" data-desc="Respiração, frio/calor, pausa ativa — 10 min/dia."><circle cx="480" cy="90" r="22" fill="rgba(143,79,255,.35)" stroke="#facc15" stroke-width="2"/><text x="480" y="90" dominant-baseline="middle" text-anchor="middle" font-size="11">Energia</text></g>
-            <g class="nh-node" data-title="Criatividade" data-desc="Sprints de 50/10, captura e revisão semanal."><circle cx="120" cy="270" r="22" fill="rgba(143,79,255,.35)" stroke="#facc15" stroke-width="2"/><text x="120" y="270" dominant-baseline="middle" text-anchor="middle" font-size="11">Criatividade</text></g>
-            <g class="nh-node" data-title="Relações" data-desc="Limites, acordos, retro semanal de fricções."><circle cx="480" cy="270" r="22" fill="rgba(143,79,255,.35)" stroke="#facc15" stroke-width="2"/><text x="480" y="270" dominant-baseline="middle" text-anchor="middle" font-size="11">Relações</text></g>
-            <g class="nh-node" data-title="Núcleo" data-desc="Objetivo trimestral + 1 hábito-chave por vez."><circle cx="300" cy="180" r="30" fill="rgba(250,204,21,.2)" stroke="#8f4fff" stroke-width="2"/><text x="300" y="180" dominant-baseline="middle" text-anchor="middle" font-size="12">Núcleo</text></g>
-          </svg>
-          <div id="tooltip" class="hidden absolute -translate-x-1/2 -translate-y-full panel p-3 w-[220px] text-xs"></div>
-        </div>
-      </div>
-      <div class="panel p-6">
-        <h2 class="cinzel text-2xl gradiente-noheroes">Você vai executar</h2>
-        <ul class="grid sm:grid-cols-2 gap-3 text-sm text-[var(--nh-ink-dim)]">
-          <li class="panel p-3">Protocolos semanais com checklists.</li>
-          <li class="panel p-3">Plano de 4 semanas (reinício).</li>
-          <li class="panel p-3">Painéis para mente, corpo e relações.</li>
-          <li class="panel p-3">Sprints criativos e antifadiga.</li>
-          <li class="panel p-3">Revisão semanal de fricções.</li>
-          <li class="panel p-3">Rituais de energia (10 min/dia).</li>
-        </ul>
-        <div class="mt-4 flex flex-wrap items-center gap-2">
-          <span class="chip">Atualizações grátis</span>
-          <span class="chip">Download imediato</span>
-          <span class="chip">Acesso no inventário</span>
-        </div>
-      </div>
-    </div>
-  </section>  <!-- TABS: Sumário / Para quem é / Formatos -->  <section id="sumario" class="max-w-7xl mx-auto px-4 py-8">
-    <div class="panel p-6 md:p-8">
-      <div class="flex flex-wrap gap-2">
-        <button class="btn-x" data-tab="tab-sumario">Sumário</button>
-        <button class="btn-ghost" data-tab="tab-paraquem">Para quem é</button>
-        <button class="btn-ghost" data-tab="tab-formatos">Formatos & Entrega</button>
-      </div>
-      <div class="divider my-6"></div>
-      <div id="tab-sumario" class="tab">
-        <ol class="grid md:grid-cols-2 gap-3 text-sm text-[var(--nh-ink-dim)] list-decimal list-inside">
-          <li>Relembrando a base (2 págs)</li><li>Setup do painel</li><li>Semana 1: Ritmos</li><li>Semana 2: Energia</li><li>Semana 3: Criatividade</li><li>Semana 4: Relações</li><li>Revisão mensal</li><li>Escalonando hábitos</li>
-        </ol>
-      </div>
-      <div id="tab-paraquem" class="tab hidden">
-        <ul class="grid md:grid-cols-2 gap-3 text-sm text-[var(--nh-ink-dim)]">
-          <li class="panel p-3">Quem quer sair só da teoria.</li><li class="panel p-3">Quem vive em picos e quedas de energia.</li><li class="panel p-3">Criativos que travam ou oscilam.</li><li class="panel p-3">Quem precisa de painel simples pra seguir.</li>
-        </ul>
-      </div>
-      <div id="tab-formatos" class="tab hidden">
-        <div class="grid sm:grid-cols-3 gap-3 text-sm text:[var(--nh-ink-dim)]">
-          <div class="panel p-3"><strong>PDF</strong><br/>Qualquer dispositivo</div>
-          <div class="panel p-3"><strong>Inventário</strong><br/>Licença na conta</div>
-          <div class="panel p-3"><strong>Atualizações</strong><br/>Inclusas</div>
-        </div>
-      </div>
-    </div>
-  </section>  <!-- COMPRAR + BUNDLE (adicionar Tudo Está Conectado por +7,07) -->  <section id="comprar" class="max-w-5xl mx-auto px-4 py-8">
-    <div class="grid md:grid-cols-2 gap-6 items-start">
-      <div class="panel p-6 md:p-8">
-        <h2 class="cinzel text-2xl gradiente-noheroes">Comprar agora</h2>
-        <div class="mt-3 flex items-end gap-3">
-          <div>
-            <div class="text-xs text-[var(--nh-ink-dim)] line-through">R$ 59,90</div>
-            <div class="text-4xl font-bold text-emerald-400">R$ 24,90</div>
-            <div class="text-xs text-[var(--nh-ink-dim)]">lançamento</div>
-          </div>
-          <div class="flex-1"></div>
-          <a id="btnComprar" class="btn-x">Finalizar compra</a>
-        </div>
-        <p class="mt-3 text-sm text-[var(--nh-ink-dim)]">Pagamento seguro. Acesso imediato no inventário. Requer login.</p>
-      </div>
-      <div class="panel p-6 md:p-8">
-        <h3 class="cinzel text-xl text-[#facc15]">Oferta combinada (opcional)</h3>
-        <p class="text-sm text-[var(--nh-ink-dim)]">Adicione <strong>Tudo Está Conectado</strong> por apenas <span class="text-emerald-400 font-semibold">+ R$ 7,07</span> e leve os dois por <strong>R$ 31,97</strong>.</p>
-        <label class="mt-3 flex items-center gap-2 text-sm"><input type="checkbox" id="addIntro" class="accent-[#8f4fff]"/> Quero adicionar o Tudo Está Conectado</label>
-        <div class="mt-4 grid grid-cols-2 gap-3 text-xs">
-          <div class="panel p-3"><strong>Sistema Vivo</strong><br/>Protocolos práticos • ~120 págs</div>
-          <div class="panel p-3"><strong>Tudo Está Conectado</strong><br/>Fundamentos • 30 págs</div>
-        </div>
+    <div class="card">
+      <h3>Oferta combinada (opcional)</h3>
+      <p>Adicione <em>Tudo Está Conectado</em> por apenas + R$ 7,07 e leve os dois por R$ 31,97.</p>
+      <p><label><input type="checkbox" /> Quero adicionar o <em>Tudo Está Conectado</em></label></p>
+      <div class="grid" style="grid-template-columns:1fr 1fr;gap:12px">
+        <div class="card"><strong>Sistema Vivo</strong><br><span class="muted">Protocolos práticos • ~120 págs</span></div>
+        <div class="card"><strong>Tudo Está Conectado</strong><br><span class="muted">Fundamentos • 30 págs</span></div>
       </div>
     </div>
-  </section>  <!-- FAQ -->  <section id="faq" class="max-w-5xl mx-auto px-4 py-8">
-    <div class="panel p-6 md:p-8">
-      <h2 class="cinzel text-2xl gradiente-noheroes">Perguntas frequentes</h2>
-      <div class="divide-y divide-white/10">
-        <details class="group py-3"><summary class="flex items-center justify-between cursor-pointer list-none"><span>Preciso ter conta?</span><span class="transition group-open:rotate-180">⌄</span></summary><p class="mt-2 text-sm text-[var(--nh-ink-dim)]">Sim. As compras e o inventário ficam atrelados à sua conta.</p></details>
-        <details class="group py-3"><summary class="flex items-center justify-between cursor-pointer list-none"><span>Como recebo?</span><span class="transition group-open:rotate-180">⌄</span></summary><p class="mt-2 text-sm text-[var(--nh-ink-dim)]">Após o pagamento, o PDF libera download e entra no seu inventário.</p></details>
-        <details class="group py-3"><summary class="flex items-center justify-between cursor-pointer list-none"><span>Preciso do eBook introdutório?</span><span class="transition group-open:rotate-180">⌄</span></summary><p class="mt-2 text-sm text-[var(--nh-ink-dim)]">Ajuda muito. Mas se você já entende a base, pode começar direto aqui.</p></details>
-      </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section faq">
+  <h2>Perguntas frequentes</h2>
+  <details>
+    <summary><strong>Preciso ter conta?</strong></summary>
+    <p>Sim. As compras e o inventário ficam atrelados à sua conta.</p>
+  </details>
+  <details>
+    <summary><strong>Como recebo?</strong></summary>
+    <p>Após o pagamento, o PDF libera download e entra no seu inventário.</p>
+  </details>
+  <details>
+    <summary><strong>Preciso do eBook introdutório?</strong></summary>
+    <p>Ajuda muito. Mas se você já entende a base, pode começar direto aqui.</p>
+  </details>
+</section>
+
+  </main>  <!-- Footer -->  <footer>
+    <div class="wrap">
+      <p><strong>NoHeroes</strong></p>
+      <p class="muted">Universo dark‑fantasy. Loja, app, conteúdos.</p>
+      <p class="muted"><a href="#">Termos</a> • <a href="#">Privacidade</a> • <a href="#">Contato</a></p>
+      <p class="muted"><a href="#">Instagram</a> • <a href="#">YouTube</a> • <a href="#">Discord</a></p>
+      <p class="muted">© 2025 NoHeroes. Todos os direitos reservados.</p>
     </div>
-  </section>  <!-- FOOTER -->  <footer class="max-w-7xl mx-auto px-4 py-10">
-    <div class="panel p-6">
-      <div class="grid md:grid-cols-3 gap-6">
-        <div><div class="cinzel text-xl gradiente-noheroes">NoHeroes</div><p class="text-sm text-[var(--nh-ink-dim)]">Universo dark‑fantasy. Loja, app, conteúdos.</p></div>
-        <nav class="grid gap-2 text-sm">
-          <a class="hover:underline" href="#">Termos</a>
-          <a class="hover:underline" href="#">Privacidade</a>
-          <a class="hover:underline" href="#">Contato</a>
-        </nav>
-        <div class="flex items-center gap-2">
-          <a class="btn-ghost" href="#">Instagram</a>
-          <a class="btn-ghost" href="#">YouTube</a>
-          <a class="btn-ghost" href="#">Discord</a>
-        </div>
-      </div>
-      <div class="divider my-6"></div>
-      <p class="text-xs text-[var(--nh-ink-dim)]">© 2025 NoHeroes. Todos os direitos reservados.</p>
-    </div>
-  </footer>  <script>
-    // Drawer
-    const drawer=document.getElementById('drawer');
-    document.getElementById('openMenu')?.addEventListener('click',toggleDrawer);
-    function toggleDrawer(){drawer.style.transform = drawer.style.transform.includes('100%')? 'translateX(0%)':'translateX(100%)'}
+  </footer>  <!-- ====== SUBSTITUIÇÃO RÁPIDA PARA O PRODUTO ACDA ======
+    Para criar a réplica exata para o produto "NoHeroes — As Cinzas do Amanhã",
+    altere apenas as ocorrências abaixo (mantendo layout, textos e preços):
 
-    // Tabs
-    const tabBtns=[...document.querySelectorAll('[data-tab]')];
-    tabBtns.forEach(btn=>btn.addEventListener('click',()=>{tabBtns.forEach(b=>b.classList.replace('btn-x','btn-ghost'));document.querySelectorAll('.tab').forEach(t=>t.classList.add('hidden'));btn.classList.replace('btn-ghost','btn-x');document.getElementById(btn.dataset.tab).classList.remove('hidden');}));
+    1) <title> … </title>
+    2) #produto (H1)
+    3) imagem de capa (src e alt)
+    4) Cartões/menções do nome do produto na oferta combinada
 
-    // Tooltip do mapa
-    const tooltip=document.getElementById('tooltip');
-    document.querySelectorAll('.nh-node').forEach(n=>{n.addEventListener('mousemove',e=>{const t=e.currentTarget;tooltip.innerHTML=`<strong>${t.dataset.title}</strong><br><span style="opacity:.8">${t.dataset.desc}</span>`;tooltip.style.left=e.offsetX+'px';tooltip.style.top=e.offsetY+'px';tooltip.classList.remove('hidden');});n.addEventListener('mouseleave',()=>tooltip.classList.add('hidden'));});
-
-    // Brasas
-    const c=document.getElementById('brasasCanvas');
-    (function brasas(){if(!c)return;const ctx=c.getContext('2d');let w,h,ps=[];const N=70;function rs(){w=c.width=innerWidth;h=c.height=innerHeight}addEventListener('resize',rs,{passive:true});rs();for(let i=0;i<N;i++)ps.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+0.6,s:Math.random()*0.6+0.25});(function lp(){ctx.clearRect(0,0,w,h);for(const p of ps){p.y-=p.s;if(p.y<-10){p.y=h+10;p.x=Math.random()*w}const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*12);g.addColorStop(0,'rgba(143,79,255,.22)');g.addColorStop(1,'rgba(143,79,255,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,p.r*12,0,Math.PI*2);ctx.fill()}requestAnimationFrame(lp)})()})();
-
-    // --- CHECKOUT ---
-    function getJwt(){const raw=(localStorage.getItem('token')||'').trim()||(localStorage.getItem('NoHeroes_token')||'').trim();return raw.replace(/^Bearer\s+/i,'')}
-    function assertAuth(){const t=getJwt(); if(!t){alert('Você precisa estar logado para comprar.'); window.location.href='/login.html?next='+encodeURIComponent(location.pathname+location.search+location.hash); return false;} return true}
-
-    async function criarPreferencia({bundle}){
-      const token=getJwt();
-      const res=await fetch('https://api.noheroes.com.br/api/checkout/mp/preference',{
-        method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
-        body:JSON.stringify({
-          items: bundle ? [
-            {sku:'ebook_sistema_vivo', title:'Sistema Vivo', quantity:1, unit_price:24.90},
-            {sku:'ebook_tudo_conectado', title:'Tudo Está Conectado (bundle)', quantity:1, unit_price:7.07}
-          ]:[
-            {sku:'ebook_sistema_vivo', title:'Sistema Vivo', quantity:1, unit_price:24.90}
-          ],
-          success_url:'https://noheroes.com.br/checkout/sucesso',
-          failure_url:'https://noheroes.com.br/checkout/erro',
-          pending_url:'https://noheroes.com.br/checkout/pendente'
-        })
-      });
-      if(!res.ok){const t=await res.text(); throw new Error(t||'Erro ao criar preferência');}
-      return res.json();
-    }
-
-    async function comprar(bundle){
-      if(!assertAuth()) return;
-      try{ const {init_point}=await criarPreferencia({bundle}); window.location.href=init_point; }
-      catch(err){ console.error(err); alert('Não foi possível iniciar o checkout.'); }
-    }
-
-    document.getElementById('btnComprar')?.addEventListener('click',()=>comprar(document.getElementById('addIntro').checked));
-    document.getElementById('ctaComprarTopo')?.addEventListener('click',()=>comprar(false));
-
-    // Alternativa simples: enviar pra loja
-    // window.location.href='/loja.html?add=ebook_sistema_vivo' + (document.getElementById('addIntro').checked?'&add=ebook_tudo_conectado&bundle=3197':'');
+    Exemplo de substituições:
+      - <title>NoHeroes — As Cinzas do Amanhã | NoHeroes</title>
+      - <h1 id="produto">NoHeroes — As Cinzas do Amanhã</h1>
+      - <img src="capa-acda.jpg" alt="Capa do livro NoHeroes — As Cinzas do Amanhã" …>
+      - No bloco da oferta, trocar "Sistema Vivo" por "As Cinzas do Amanhã"
+  ========================================================= -->  <script>
+    // Scroll suave básico
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',e=>{const id=a.getAttribute('href');if(id.length>1){e.preventDefault();document.querySelector(id)?.scrollIntoView({behavior:'smooth'});}})
+    });
   </script></body>
 </html>
