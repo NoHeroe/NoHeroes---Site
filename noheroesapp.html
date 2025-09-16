@@ -1,126 +1,220 @@
-import React, { useEffect, useRef } from "react";
+<!doctype html>
 
-// NoHeroes – Página de Download do App // Estilo: Roxo+Dourado, Cinzel Decorative, glass, degradês animados, fundo com partículas (brasas roxas) // Observação: Tailwind CSS disponível no preview. Fonts via @import no <style> inline.
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NoHeroes — Download do App</title>
+  <meta name="description" content="Baixe o app NoHeroes (MVP • Alpha). Gamifique seu dia a dia com missões, eventos e recompensas." />
+  <meta property="og:title" content="NoHeroes — Download do App" />
+  <meta property="og:description" content="Baixe o app NoHeroes (MVP • Alpha). Gamifique seu dia a dia com missões, eventos e recompensas." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#45247A" />  <!-- Tailwind CDN -->  <script src="https://cdn.tailwindcss.com"></script>  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { nhpurple: '#45247A', nhgold: '#FFD780' },
+          fontFamily: {
+            cinzel: ['"Cinzel Decorative"', 'serif'],
+            inter: ['Inter', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>  <!-- Fonts -->  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet" />  <style>
+    :root{ --nh-purple: 69 36 122; --nh-gold: 255 215 128; }
+    html,body{height:100%}
+    .gradient-anim{background:linear-gradient(90deg,#b58cff,#ffd780,#9b5cff,#ffd780);background-size:300% 300%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 8s ease-in-out infinite}
+    .btn-gradient{background:linear-gradient(100deg,rgba(181,140,255,.2),rgba(255,215,128,.2));border:1px solid rgba(255,215,128,.35);position:relative;overflow:hidden}
+    .btn-gradient:before{content:"";position:absolute;inset:-200% -50%;background:conic-gradient(from 0deg,rgba(181,140,255,0),rgba(181,140,255,.35),rgba(255,215,128,.4),rgba(181,140,255,0));animation:rotate 6s linear infinite}
+    .btn-gradient>span{position:relative;z-index:1}
+    .glass{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(12px)}
+    .gold-stroke{text-shadow:0 0 18px rgba(255,215,128,.25)}
+    .border-gradient{position:relative;border-radius:1.25rem}
+    .border-gradient:after{content:"";position:absolute;inset:0;padding:1px;border-radius:inherit;background:linear-gradient(135deg,#b58cff,#ffd780);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+    .badge{border:1px solid rgba(255,215,128,.35);background:rgba(181,140,255,.08)}
+    @keyframes shimmer{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    @keyframes rotate{to{transform:rotate(1turn)}}
+  </style></head>
+<body class="min-h-screen bg-[#0a0613] text-zinc-100 antialiased selection:bg-fuchsia-500/30 selection:text-fuchsia-100 relative overflow-x-clip font-inter">
+  <!-- Partículas -->
+  <canvas id="brasasCanvas" class="fixed inset-0 -z-10 opacity-70"></canvas>  <!-- Header (igual ao Manual das Sombras) -->  <header class="sticky top-0 z-30">
+    <div class="absolute inset-0 bg-gradient-to-b from-[#120a21]/70 to-transparent pointer-events-none"></div>
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="glass border-gradient mt-4 flex items-center justify-between rounded-2xl px-4 py-3">
+        <div class="flex items-center gap-3">
+          <div class="h-9 w-9 rounded-xl ring-1 ring-white/20 bg-gradient-to-br from-fuchsia-500/40 to-amber-300/40"></div>
+          <div class="leading-tight">
+            <div class="font-cinzel text-lg gradient-anim gold-stroke">NoHeroes</div>
+            <div class="text-xs text-zinc-300/70 -mt-0.5">Sistemas de evolução</div>
+          </div>
+        </div>
+        <nav class="hidden md:flex items-center gap-6 text-sm text-zinc-200/90">
+          <a href="#download" class="hover:text-white">Baixar</a>
+          <a href="#detalhes" class="hover:text-white">Sobre o App</a>
+          <a href="#roadmap" class="hover:text-white">Roadmap</a>
+          <a href="#faq" class="hover:text-white">FAQ</a>
+        </nav>
+        <div class="flex items-center gap-2">
+          <a href="#manual" class="hidden md:inline-flex btn-gradient rounded-xl px-4 py-2 text-sm font-medium hover:brightness-110 transition"><span>Manual das Sombras</span></a>
+          <button class="md:hidden inline-flex btn-gradient rounded-xl px-3 py-2 text-sm font-medium" aria-label="Menu">☰</button>
+        </div>
+      </div>
+    </div>
+  </header>  <main class="relative z-10">
+    <!-- Hero -->
+    <section id="download" class="relative">
+      <div class="absolute inset-0 -z-10 bg-[radial-gradient(60%_40%_at_50%_10%,rgba(181,140,255,0.25),transparent_60%)]"></div>
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+        <div class="grid lg:grid-cols-2 gap-8 items-center">
+          <div>
+            <h1 class="font-cinzel text-4xl sm:text-5xl lg:text-6xl leading-tight"><span class="gradient-anim gold-stroke">NoHeroes App</span></h1>
+            <p class="mt-4 text-lg text-zinc-300/90">Gamifique seu dia a dia. Transforme corpo, mente e espírito com missões diárias, eventos, penalidades e recompensas reais.</p>
+            <div class="mt-6 flex flex-wrap items-center gap-3">
+              <a id="btnApk" href="#apk" class="btn-gradient rounded-xl px-5 py-3 text-base font-semibold hover:brightness-110 transition"><span>⬇ Baixar APK (Android)</span></a>
+              <button disabled class="rounded-xl px-5 py-3 text-base font-semibold border border-white/20 text-zinc-400 cursor-not-allowed">iOS (em breve)</button>
+              <div class="badge rounded-lg px-3 py-1 text-xs uppercase tracking-wide text-amber-200/90">MVP • Alpha</div>
+            </div>
+            <ul class="mt-5 text-sm text-zinc-300/80 space-y-1">
+              <li>• Android 8.0+ • Download liberado por APK.</li>
+              <li>• Publicação na Play Store & App Store: em breve.</li>
+            </ul>
+          </div>
+          <div class="relative">
+            <div class="absolute -inset-6 -z-10 blur-3xl opacity-40 bg-gradient-to-tr from-fuchsia-500/30 via-indigo-500/20 to-amber-300/30"></div>
+            <div class="glass border-gradient rounded-2xl p-3">
+              <div class="aspect-[10/9] rounded-xl bg-gradient-to-br from-[#1a0f2e] to-[#0d0818] grid place-items-center">
+                <!-- Phone Mockup -->
+                <div class="relative w-full max-w-sm mx-auto">
+                  <div class="mx-auto h-[520px] w-[260px] rounded-[2.2rem] border border-white/20 bg-gradient-to-b from-zinc-900 to-zinc-800 p-2 shadow-2xl">
+                    <div class="h-full rounded-[1.8rem] bg-[#0c0a12] p-3 relative overflow-hidden">
+                      <div class="absolute left-1/2 -translate-x-1/2 top-2 h-6 w-32 bg-black/60 rounded-full"></div>
+                      <div class="mt-7 h-[420px] rounded-xl glass border-gradient p-3 grid place-items-center text-center">
+                        <div>
+                          <div class="font-cinzel text-xl gradient-anim">Seu Personagem</div>
+                          <div class="mt-1 text-xs text-zinc-300/80">Nível 3 • For 6 • Men 5 • Esp 4</div>
+                          <div class="mt-3 flex justify-center gap-2">
+                            <span class="badge rounded-md px-2 py-1 text-[10px]">Missões</span>
+                            <span class="badge rounded-md px-2 py-1 text-[10px]">Eventos</span>
+                            <span class="badge rounded-md px-2 py-1 text-[10px]">Loja</span>
+                          </div>
+                          <div class="mt-4">
+                            <button class="btn-gradient rounded-lg px-4 py-2 text-xs font-semibold hover:brightness-110"><span>Iniciar missão diária</span></button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="absolute left-1/2 -translate-x-1/2 bottom-2 h-1.5 w-24 bg-white/20 rounded-full"></div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /Phone Mockup -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- Trust Bar -->
+<section>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-6">
+    <div class="glass border-gradient rounded-2xl px-4 py-3 flex flex-wrap items-center justify-between gap-3 text-xs text-zinc-300/80">
+      <div class="flex items-center gap-2"><span>⚠️</span><span>Versão MVP (Alpha): em construção. Erros e mudanças frequentes.</span></div>
+      <div class="flex items-center gap-2"><span>🛡️</span><span>Assinaturas & loja integradas ao site NoHeroes.</span></div>
+      <div class="flex items-center gap-2"><span>📖</span><span>Funciona melhor com o Manual das Sombras — mas não é obrigatório.</span></div>
+    </div>
+  </div>
+</section>
 
-export default function NoHeroesDownload() { return ( <div className="min-h-screen bg-[#0a0613] text-zinc-100 antialiased selection:bg-fuchsia-500/30 selection:text-fuchsia-100 relative overflow-x-clip"> <Style /> <Particles /> <Header /> <main className="relative z-10"> <Hero /> <TrustBar /> <Details /> <Roadmap /> <FAQ /> </main> <Footer /> </div> ); }
+<!-- Details -->
+<section id="detalhes">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="glass border-gradient rounded-2xl p-6"><h3 class="font-cinzel text-xl gradient-anim gold-stroke">Missões diárias</h3><p class="mt-2 text-zinc-300/90 text-sm">Checklist vivo para hábitos: treino, leitura, respiração, foco. Falhou? Penalidades que doem — pra manter o jogo sério.</p></div>
+      <div class="glass border-gradient rounded-2xl p-6"><h3 class="font-cinzel text-xl gradient-anim gold-stroke">Eventos & Recompensas</h3><p class="mt-2 text-zinc-300/90 text-sm">Missões sazonais com itens únicos, moedas e XP. Evolua seu personagem — que é você.</p></div>
+      <div class="glass border-gradient rounded-2xl p-6"><h3 class="font-cinzel text-xl gradient-anim gold-stroke">Missões individuais</h3><p class="mt-2 text-zinc-300/90 text-sm">Crie suas próprias missões para ganhos extras. Mas atenção: falhar no que você mesmo definiu pune mais.</p></div>
+      <div class="glass border-gradient rounded-2xl p-6"><h3 class="font-cinzel text-xl gradient-anim gold-stroke">Lojas, Guilda & Facções</h3><p class="mt-2 text-zinc-300/90 text-sm">Conteúdos que desbloqueiam efeitos visuais e bônus. Entre na Guilda dos Aventureiros, escolha facção e classe.</p></div>
+      <div class="glass border-gradient rounded-2xl p-6"><h3 class="font-cinzel text-xl gradient-anim gold-stroke">Sistema Vivo</h3><p class="mt-2 text-zinc-300/90 text-sm">Aplique os princípios do NoHeroes. Com ou sem o eBook, o app guia a prática diária.</p></div>
+      <div class="glass border-gradient rounded-2xl p-6"><h3 class="font-cinzel text-xl gradient-anim gold-stroke">Progresso visível</h3><p class="mt-2 text-zinc-300/90 text-sm">Acompanhe atributos, equipamentos e habilidades vitalistas. Veja a evolução no app e na vida real.</p></div>
+    </div>
+  </div>
+</section>
 
-function Style() { return ( <style>{` @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Inter:wght@300;400;500;600;700;800&display=swap'); :root { --nh-purple: 69 36 122; /* #45247A / --nh-gold: 255 215 128; / dourado suave */ } .font-cinzel { font-family: 'Cinzel Decorative', serif; } .font-inter { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'; }
+<!-- Roadmap -->
+<section id="roadmap">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+    <div class="glass border-gradient rounded-2xl p-6">
+      <h2 class="font-cinzel text-2xl gradient-anim gold-stroke">Roadmap</h2>
+      <ol class="mt-4 grid md:grid-cols-3 gap-4 text-sm">
+        <li class="glass rounded-xl p-4">
+          <div class="text-amber-200/90 font-semibold">Fase 1 — Agora</div>
+          <ul class="mt-2 space-y-1 text-zinc-300/90">
+            <li>✔ APK Android disponível</li>
+            <li>✔ Missões diárias, eventos e penalidades</li>
+            <li>• Integração loja NoHeroes (em teste)</li>
+          </ul>
+        </li>
+        <li class="glass rounded-xl p-4">
+          <div class="text-amber-200/90 font-semibold">Fase 2 — Próximo</div>
+          <ul class="mt-2 space-y-1 text-zinc-300/90">
+            <li>• Play Store (listagem pública)</li>
+            <li>• iOS (TestFlight / App Store em breve)</li>
+            <li>• Guilda, facções e classes</li>
+          </ul>
+        </li>
+        <li class="glass rounded-xl p-4">
+          <div class="text-amber-200/90 font-semibold">Fase 3 — Futuro</div>
+          <ul class="mt-2 space-y-1 text-zinc-300/90">
+            <li>• Lançamento do jogo Caelum</li>
+            <li>• Conversão de ganhos do app → recompensas reais*</li>
+            <li class="text-xs text-zinc-400">*Sujeito a regras e elegibilidade</li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
 
-/* Degradê animado para textos/botões */
-  .gradient-anim {
-    background: linear-gradient(90deg, #b58cff, #ffd780, #9b5cff, #ffd780);
-    background-size: 300% 300%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    animation: shimmer 8s ease-in-out infinite;
-  }
-  .btn-gradient {
-    background: linear-gradient(100deg, rgba(181,140,255,.2), rgba(255,215,128,.2));
-    border: 1px solid rgba(255,215,128,.35);
-    position: relative;
-    overflow: hidden;
-  }
-  .btn-gradient::before {
-    content: "";
-    position: absolute;
-    inset: -200% -50%;
-    background: conic-gradient(from 0deg, rgba(181,140,255,.0), rgba(181,140,255,.35), rgba(255,215,128,.4), rgba(181,140,255,.0));
-    animation: rotate 6s linear infinite;
-  }
-  .btn-gradient > span { position: relative; z-index: 1; }
+<!-- FAQ -->
+<section id="faq">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="glass border-gradient rounded-2xl p-5"><div class="font-cinzel gradient-anim text-lg">O app funciona sem o eBook?</div><div class="mt-2 text-zinc-300/90 text-sm">Sim. O eBook potencializa o método, mas o app guia a prática mesmo sem leitura prévia.</div></div>
+      <div class="glass border-gradient rounded-2xl p-5"><div class="font-cinzel gradient-anim text-lg">Como instalo o APK no Android?</div><div class="mt-2 text-zinc-300/90 text-sm">Baixe o arquivo, permita fontes desconhecidas nas configurações e conclua a instalação. Em breve: Play Store.</div></div>
+      <div class="glass border-gradient rounded-2xl p-5"><div class="font-cinzel gradient-anim text-lg">iOS quando?</div><div class="mt-2 text-zinc-300/90 text-sm">Estamos preparando TestFlight/App Store. Sem data final — prioridade após estabilizar o Android.</div></div>
+      <div class="glass border-gradient rounded-2xl p-5"><div class="font-cinzel gradient-anim text-lg">E as recompensas reais?</div><div class="mt-2 text-zinc-300/90 text-sm">Planejadas para fases futuras, seguindo políticas e elegibilidade. Detalhes serão divulgados com antecedência.</div></div>
+    </div>
+  </div>
+</section>
 
-  .glass {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.12);
-    backdrop-filter: blur(12px);
-  }
-  .gold-stroke { text-shadow: 0 0 18px rgba(255,215,128,0.25); }
+  </main>  <footer class="relative z-10 border-t border-white/10 bg-black/20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 text-sm text-zinc-400">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="h-8 w-8 rounded-lg ring-1 ring-white/20 bg-gradient-to-br from-fuchsia-500/40 to-amber-300/40"></div>
+          <span class="font-cinzel text-zinc-200">NoHeroes</span>
+        </div>
+        <div class="opacity-80">© <span id="year"></span> NoHeroes. Todos os direitos reservados.</div>
+      </div>
+    </div>
+  </footer>  <script>
+    // Ano dinâmico
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-  @keyframes shimmer {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-  @keyframes rotate {
-    to { transform: rotate(1turn); }
-  }
+    // Estado do botão APK (mostra 'Baixando…' e volta depois)
+    const btn = document.getElementById('btnApk');
+    btn && btn.addEventListener('click', () => {
+      const span = btn.querySelector('span');
+      if(!span) return; const old = span.textContent; span.textContent = 'Baixando…';
+      setTimeout(() => { span.textContent = old; }, 3000);
+    });
 
-  /* Gradiente de borda utilitário */
-  .border-gradient {
-    position: relative;
-    border-radius: 1.25rem; /* rounded-2xl */
-  }
-  .border-gradient::after {
-    content: "";
-    position: absolute; inset: 0; padding: 1px; border-radius: inherit; background: linear-gradient(135deg, #b58cff, #ffd780);
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor; mask-composite: exclude;
-  }
-
-  /* Emblemas */
-  .badge { border: 1px solid rgba(255,215,128,.35); background: rgba(181,140,255,.08); }
-`}</style>
-
-); }
-
-function Header() { return ( <header className="sticky top-0 z-30"> <div className="absolute inset-0 bg-gradient-to-b from-[#120a21]/70 to-transparent pointer-events-none" /> <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"> <div className="glass border-gradient mt-4 flex items-center justify-between rounded-2xl px-4 py-3"> {/* Left: Logo + Brand /} <div className="flex items-center gap-3"> <div className="h-9 w-9 rounded-xl ring-1 ring-white/20 bg-gradient-to-br from-fuchsia-500/40 to-amber-300/40" /> <div className="leading-tight"> <div className="font-cinzel text-lg gradient-anim gold-stroke">NoHeroes</div> <div className="text-xs text-zinc-300/70 -mt-0.5">Sistemas de evolução</div> </div> </div> {/ Center: Nav /} <nav className="hidden md:flex items-center gap-6 text-sm text-zinc-200/90"> <a href="#download" className="hover:text-white">Baixar</a> <a href="#detalhes" className="hover:text-white">Sobre o App</a> <a href="#roadmap" className="hover:text-white">Roadmap</a> <a href="#faq" className="hover:text-white">FAQ</a> </nav> {/ Right: CTA */} <div className="flex items-center gap-2"> <a href="#manual" className="hidden md:inline-flex btn-gradient rounded-xl px-4 py-2 text-sm font-medium hover:brightness-110 transition"> <span>Manual das Sombras</span> </a> <button className="md:hidden inline-flex btn-gradient rounded-xl px-3 py-2 text-sm font-medium" aria-label="Menu">☰</button> </div> </div> </div> </header> ); }
-
-function Hero() { return ( <section id="download" className="relative"> <div className="absolute inset-0 -z-10 bg-[radial-gradient(60%_40%_at_50%_10%,rgba(181,140,255,0.25),transparent_60%)]" /> <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8"> <div className="grid lg:grid-cols-2 gap-8 items-center"> {/* Copy /} <div> <h1 className="font-cinzel text-4xl sm:text-5xl lg:text-6xl leading-tight"> <span className="gradient-anim gold-stroke">NoHeroes App</span> </h1> <p className="mt-4 text-lg text-zinc-300/90 font-inter"> Gamifique seu dia a dia. Transforme corpo, mente e espírito com missões diárias, eventos, penalidades e recompensas reais. </p> <div className="mt-6 flex flex-wrap items-center gap-3"> <a href="#apk" className="btn-gradient rounded-xl px-5 py-3 text-base font-semibold hover:brightness-110 transition"> <span>⬇ Baixar APK (Android)</span> </a> <button disabled className="rounded-xl px-5 py-3 text-base font-semibold border border-white/20 text-zinc-400 cursor-not-allowed"> iOS (em breve) </button> <div className="badge rounded-lg px-3 py-1 text-xs uppercase tracking-wide text-amber-200/90">MVP • Alpha</div> </div> <ul className="mt-5 text-sm text-zinc-300/80 space-y-1"> <li>• Android 8.0+ • Download liberado por APK.</li> <li>• Publicação na Play Store & App Store: em breve.</li> </ul> </div> {/ Mock / Image */} <div className="relative"> <div className="absolute -inset-6 -z-10 blur-3xl opacity-40 bg-gradient-to-tr from-fuchsia-500/30 via-indigo-500/20 to-amber-300/30" /> <div className="glass border-gradient rounded-2xl p-3"> <div className="aspect-[10/9] rounded-xl bg-gradient-to-br from-[#1a0f2e] to-[#0d0818] grid place-items-center"> <PhoneMockup /> </div> </div> </div> </div> </div> </section> ); }
-
-function TrustBar() { return ( <section className="relative"> <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-6"> <div className="glass border-gradient rounded-2xl px-4 py-3 flex flex-wrap items-center justify-between gap-3 text-xs text-zinc-300/80"> <div className="flex items-center gap-2"><span>⚠️</span><span>Versão MVP (Alpha): em construção. Erros e mudanças frequentes.</span></div> <div className="flex items-center gap-2"><span>🛡️</span><span>Assinaturas & loja integradas ao site NoHeroes.</span></div> <div className="flex items-center gap-2"><span>📖</span><span>Funciona melhor com o Manual das Sombras — mas não é obrigatório.</span></div> </div> </div> </section> ); }
-
-function Details() { return ( <section id="detalhes" className="relative"> <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12"> <div className="grid md:grid-cols-2 gap-8"> <Card title="Missões diárias" desc="Checklist vivo para hábitos: treino, leitura, respiração, foco. Falhou? Penalidades que doem — pra manter o jogo sério."/> <Card title="Eventos & Recompensas" desc="Missões sazonais com itens únicos, moedas e XP. Evolua seu personagem — que é você."/> <Card title="Missões individuais" desc="Crie suas próprias missões para ganhos extras. Mas atenção: falhar no que você mesmo definiu pune mais."/> <Card title="Lojas, Guilda & Facções" desc="Conteúdos que desbloqueiam efeitos visuais e bônus. Entre na Guilda dos Aventureiros, escolha facção e classe."/> <Card title="Sistema Vivo" desc="Aplique os princípios do NoHeroes. Com ou sem o eBook, o app guia a prática diária."/> <Card title="Progresso visível" desc="Acompanhe atributos, equipamentos e habilidades vitalistas. Veja a evolução no app e na vida real."/> </div> </div> </section> ); }
-
-function Roadmap() { return ( <section id="roadmap" className="relative"> <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12"> <div className="glass border-gradient rounded-2xl p-6"> <h2 className="font-cinzel text-2xl gradient-anim gold-stroke">Roadmap</h2> <ol className="mt-4 grid md:grid-cols-3 gap-4 text-sm"> <li className="glass rounded-xl p-4"> <div className="text-amber-200/90 font-semibold">Fase 1 — Agora</div> <ul className="mt-2 space-y-1 text-zinc-300/90"> <li>✔ APK Android disponível</li> <li>✔ Missões diárias, eventos e penalidades</li> <li>• Integração loja NoHeroes (em teste)</li> </ul> </li> <li className="glass rounded-xl p-4"> <div className="text-amber-200/90 font-semibold">Fase 2 — Próximo</div> <ul className="mt-2 space-y-1 text-zinc-300/90"> <li>• Play Store (listagem pública)</li> <li>• iOS (TestFlight / App Store em breve)</li> <li>• Guilda, facções e classes</li> </ul> </li> <li className="glass rounded-xl p-4"> <div className="text-amber-200/90 font-semibold">Fase 3 — Futuro</div> <ul className="mt-2 space-y-1 text-zinc-300/90"> <li>• Lançamento do jogo Caelum</li> <li>• Conversão de ganhos do app → recompensas reais*</li> <li className="text-xs text-zinc-400">*Sujeito a regras e elegibilidade</li> </ul> </li> </ol> </div> </div> </section> ); }
-
-function FAQ() { return ( <section id="faq" className="relative"> <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12"> <div className="grid md:grid-cols-2 gap-6"> <FaqItem q="O app funciona sem o eBook?" a="Sim. O eBook potencializa o método, mas o app guia a prática mesmo sem leitura prévia." /> <FaqItem q="Como instalo o APK no Android?" a="Baixe o arquivo, permita fontes desconhecidas nas configurações e conclua a instalação. Em breve: Play Store." /> <FaqItem q="iOS quando?" a="Estamos preparando TestFlight/App Store. Sem data final — prioridade após estabilizar o Android." /> <FaqItem q="E as recompensas reais?" a="Planejadas para fases futuras, seguindo políticas e elegibilidade. Detalhes serão divulgados com antecedência." /> </div> </div> </section> ); }
-
-function Footer() { return ( <footer className="relative z-10 border-t border-white/10 bg-black/20"> <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 text-sm text-zinc-400"> <div className="flex flex-col md:flex-row items-center justify-between gap-4"> <div className="flex items-center gap-3"> <div className="h-8 w-8 rounded-lg ring-1 ring-white/20 bg-gradient-to-br from-fuchsia-500/40 to-amber-300/40" /> <span className="font-cinzel text-zinc-200">NoHeroes</span> </div> <div className="opacity-80">© {new Date().getFullYear()} NoHeroes. Todos os direitos reservados.</div> </div> </div> </footer> ); }
-
-function Card({ title, desc }) { return ( <div className="glass border-gradient rounded-2xl p-6"> <h3 className="font-cinzel text-xl gradient-anim gold-stroke">{title}</h3> <p className="mt-2 text-zinc-300/90 text-sm">{desc}</p> </div> ); }
-
-function FaqItem({ q, a }) { return ( <div className="glass border-gradient rounded-2xl p-5"> <div className="font-cinzel gradient-anim text-lg">{q}</div> <div className="mt-2 text-zinc-300/90 text-sm">{a}</div> </div> ); }
-
-function PhoneMockup() { return ( <div className="relative w-full max-w-sm mx-auto"> <div className="mx-auto h-[520px] w-[260px] rounded-[2.2rem] border border-white/20 bg-gradient-to-b from-zinc-900 to-zinc-800 p-2 shadow-2xl"> <div className="h-full rounded-[1.8rem] bg-[#0c0a12] p-3 relative overflow-hidden"> {/* Notch /} <div className="absolute left-1/2 -translate-x-1/2 top-2 h-6 w-32 bg-black/60 rounded-full" /> {/ Screen /} <div className="mt-7 h-[420px] rounded-xl glass border-gradient p-3 grid place-items-center text-center"> <div> <div className="font-cinzel text-xl gradient-anim">Seu Personagem</div> <div className="mt-1 text-xs text-zinc-300/80">Nível 3 • For 6 • Men 5 • Esp 4</div> <div className="mt-3 flex justify-center gap-2"> <span className="badge rounded-md px-2 py-1 text-[10px]">Missões</span> <span className="badge rounded-md px-2 py-1 text-[10px]">Eventos</span> <span className="badge rounded-md px-2 py-1 text-[10px]">Loja</span> </div> <div className="mt-4"> <button className="btn-gradient rounded-lg px-4 py-2 text-xs font-semibold hover:brightness-110"><span>Iniciar missão diária</span></button> </div> </div> </div> {/ Home bar */} <div className="absolute left-1/2 -translate-x-1/2 bottom-2 h-1.5 w-24 bg-white/20 rounded-full" /> </div> </div> </div> ); }
-
-function Particles() { const ref = useRef(null); useEffect(() => { const canvas = ref.current; const ctx = canvas.getContext('2d'); let w, h, raf; const DPR = Math.min(window.devicePixelRatio || 1, 2); const particles = Array.from({ length: 80 }, () => spawn());
-
-function resize() {
-  w = canvas.width = Math.floor(window.innerWidth * DPR);
-  h = canvas.height = Math.floor(window.innerHeight * DPR);
-}
-function spawn() {
-  return {
-    x: Math.random() * (w || window.innerWidth) * DPR,
-    y: Math.random() * (h || window.innerHeight) * DPR,
-    r: 0.5 + Math.random() * 2.2 * DPR,
-    a: 0.18 + Math.random() * 0.35,
-    vx: (Math.random() - 0.5) * 0.15 * DPR,
-    vy: -0.15 * Math.random() * DPR,
-  };
-}
-function step() {
-  ctx.clearRect(0, 0, w, h);
-  for (let p of particles) {
-    p.x += p.vx; p.y += p.vy; p.a -= 0.0008; p.r += 0.003 * DPR;
-    if (p.a <= 0 || p.y < -10) Object.assign(p, spawn(), { y: h + 10 });
-    const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 4);
-    g.addColorStop(0, `rgba(155, 92, 255, ${p.a})`);
-    g.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = g;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fill();
-  }
-  raf = requestAnimationFrame(step);
-}
-resize();
-window.addEventListener('resize', resize);
-raf = requestAnimationFrame(step);
-return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', resize); };
-
-}, []);
-
-return ( <canvas id="brasasCanvas" ref={ref} className="fixed inset-0 -z-10 opacity-70" /> ); }
-
+    // Partículas brasas roxas
+    const canvas = document.getElementById('brasasCanvas');
+    const ctx = canvas.getContext('2d');
+    let w, h, raf; const DPR = Math.min(window.devicePixelRatio || 1, 2);
+    const particles = Array.from({ length: 80 }, () => spawn());
+    function resize(){ w = canvas.width = Math.floor(window.innerWidth * DPR); h = canvas.height = Math.floor(window.innerHeight * DPR); }
+    function spawn(){ return { x: Math.random()* (w||window.innerWidth)*DPR, y: Math.random()* (h||window.innerHeight)*DPR, r: 0.5 + Math.random()*2.2*DPR, a: 0.18 + Math.random()*0.35, vx: (Math.random()-0.5)*0.15*DPR, vy: -0.15*Math.random()*DPR }; }
+    function step(){ ctx.clearRect(0,0,w,h); for (let p of particles){ p.x+=p.vx; p.y+=p.vy; p.a-=0.0008; p.r+=0.003*DPR; if(p.a<=0||p.y<-10) Object.assign(p, spawn(), { y: h+10 }); const g = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*4); g.addColorStop(0, `rgba(155,92,255,${p.a})`); g.addColorStop(1,'rgba(0,0,0,0)'); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); } raf = requestAnimationFrame(step); }
+    resize(); window.addEventListener('resize', resize); raf = requestAnimationFrame(step);
+  </script></body>
+</html>
