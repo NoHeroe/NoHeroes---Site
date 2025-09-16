@@ -2,7 +2,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NoHeroes | Inventário do Usuário</title>
+  <title>NoHeroes | Inventário (Meus Produtos)</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
   <style>
     /* =====================
@@ -22,21 +22,23 @@
       --nh-rgb:155,89,182;         /* roxo NoHeroes */
       --gold:#c29546;              /* dourado */
       --shadow:rgba(0,0,0,.6);
-    }*{margin:0;padding:0;box-sizing:border-box}
-html,body{height:100%}
-body{
-  background: radial-gradient(1200px 600px at 70% -10%, rgba(var(--nh-rgb),.08), transparent 60%),
-              radial-gradient(900px 500px at -10% 40%, rgba(210,180,140,.06), transparent 60%),
-              var(--bg);
-  color:var(--text);
-  font-family:"Share Tech Mono", monospace;
-  overflow-x:hidden;
-}
-
-/* Brasas / partículas discretas */
+      --grad1:#7c3aed;             /* roxo */
+      --grad2:#06b6d4;             /* ciano */
+      --grad3:#f59e0b;             /* âmbar */
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      background: radial-gradient(1200px 600px at 70% -10%, rgba(var(--nh-rgb),.08), transparent 60%),
+                  radial-gradient(900px 500px at -10% 40%, rgba(210,180,140,.06), transparent 60%),
+                  var(--bg);
+      color:var(--text);
+      font-family:"Share Tech Mono", monospace;
+      overflow-x:hidden;
+    }/* ===== Brasas (canvas) ===== */
 #brasas{position:fixed;inset:0;z-index:-1;opacity:.15}
 
-/* ===== HUD Topo (fixo) ===== */
+/* ===== HUD Topo (mantido exatamente) ===== */
 .hud{position:fixed;inset:auto 0  auto 0; top:0; display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:10px 16px;background:rgba(10,10,10,.9);border-bottom:2px solid var(--border);box-shadow:0 8px 24px var(--shadow);z-index:50}
 .hud .group{display:flex;gap:12px;align-items:center}
 .badge{font-family:"Cinzel Decorative",serif;padding:4px 10px;border:1px solid var(--border);border-radius:6px;background:var(--slot);box-shadow:0 0 8px var(--shadow)}
@@ -54,69 +56,40 @@ body{
 
 .shell{background:var(--panel);border:2px solid var(--border);border-radius:12px;box-shadow:0 0 26px var(--shadow), inset 0 0 10px rgba(255,255,255,.04);padding:20px;display:flex;flex-direction:column;gap:18px}
 
-/* Tabs (Visão geral / Inventário / Equipamento) */
-.tabs{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;border-bottom:1px solid var(--border);padding-bottom:10px}
-.tab{background:var(--slot);border:1px solid var(--border);color:#cfcfcf;padding:6px 14px;border-radius:8px;cursor:pointer;text-transform:uppercase;font-family:"Cinzel Decorative",serif;font-size:.85em;transition:.2s}
-.tab.active{background:var(--xp);color:#111;border-color:var(--xp);box-shadow:0 0 14px rgba(var(--nh-rgb),.45)}
-.tab:not(.active):hover{background:rgba(var(--nh-rgb),.18);color:var(--xp);border-color:var(--xp)}
-
-.panes{display:grid;gap:18px}
-@media(min-width:1024px){.panes{grid-template-columns:1.2fr 1fr 1fr}}
-
-.panel{background:rgba(28,28,28,.7);border:1px solid var(--border);border-radius:10px;padding:16px;box-shadow:inset 0 0 10px rgba(0,0,0,.5), 0 0 12px var(--shadow)}
 .panel-title{font-family:"Cinzel Decorative",serif;text-transform:uppercase;font-size:1.3em;color:var(--xp);text-align:center;margin-bottom:12px;text-shadow:0 0 10px rgba(var(--nh-rgb),.5);border-bottom:2px solid var(--border);padding-bottom:8px}
 
-/* ===== Avatar + Equip slots (Minecraft vibe) ===== */
-.avatar-wrap{display:flex;align-items:center;justify-content:center;gap:10px}
-.avatar{width:280px;height:360px;background:linear-gradient(145deg,#2a2a2a,#151515);border:3px dashed var(--xp);border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--xp);font-family:"Cinzel Decorative",serif;font-weight:700;font-size:2em;box-shadow:0 0 28px rgba(0,0,0,.7), inset 0 0 14px rgba(255,255,255,.08)}
-.slots-col{display:flex;flex-direction:column;gap:8px}
-.slot,.inv-slot{width:64px;height:64px;background:var(--slot);border:2px solid var(--slot-b);border-radius:8px;display:grid;place-items:center;color:#bfbfbf;position:relative;box-shadow:inset 0 0 8px rgba(0,0,0,.55);transition:.2s}
-.slot:hover,.inv-slot:hover{border-color:var(--xp);box-shadow:0 0 14px rgba(var(--nh-rgb),.45), inset 0 0 10px rgba(255,255,255,.1)}
-.count{position:absolute;bottom:3px;right:4px;background:rgba(0,0,0,.72);font-size:.7em;padding:2px 4px;border-radius:4px}
-@media(max-width:768px){.avatar{width:160px;height:220px;font-size:1.2em}.slot,.inv-slot{width:50px;height:50px}}
+/* ===== Botões estilo NoHeroes (gradiente animado) ===== */
+.btn-x{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:10px 18px;border-radius:12px;border:1px solid #4b4b4b;text-decoration:none;font-family:"Cinzel Decorative",serif;text-transform:uppercase;letter-spacing:.5px;color:#111;background:linear-gradient(90deg,var(--grad1),var(--grad2),var(--grad3));background-size:200% 200%;animation:flow 6s linear infinite;box-shadow:0 6px 18px rgba(0,0,0,.5)}
+.btn-x span{color:#111;font-weight:700}
+.btn-x:hover{filter:brightness(1.08)}
+@keyframes flow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 
-/* ===== Inventário (grade 9xN estilo Minecraft) ===== */
+/* ===== Inventário ===== */
+.header-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.title{font-family:"Cinzel Decorative",serif;text-transform:uppercase;font-size:1.4rem;color:#eaeaea;letter-spacing:.8px}
+
+.sp-tabs{display:flex;gap:10px;flex-wrap:wrap}
+.sp-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid var(--border);border-radius:12px;background:linear-gradient(180deg, rgba(var(--nh-rgb),.2), rgba(0,0,0,.2));color:var(--text);text-decoration:none;text-transform:uppercase;font-family:"Cinzel Decorative",serif;font-size:.85em;transition:.2s}
+.sp-btn:hover{border-color:var(--xp);box-shadow:0 0 14px rgba(var(--nh-rgb),.4)}
+
+.note{font-size:.9rem;color:var(--muted)}
+
 .inv-filter{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;border-bottom:1px solid var(--border);padding-bottom:10px;margin-bottom:12px}
 .chip{background:var(--slot);border:1px solid var(--border);border-radius:999px;padding:6px 12px;font-family:"Cinzel Decorative",serif;text-transform:uppercase;font-size:.8em;color:#cfcfcf;cursor:pointer;transition:.2s}
 .chip.active{background:var(--xp);border-color:var(--xp);color:#111;box-shadow:0 0 12px rgba(var(--nh-rgb),.45)}
 
 .inv-grid{display:grid;gap:8px}
-/* 9 colunas no desktop, flui no mobile */
 @media(min-width:1024px){.inv-grid{grid-template-columns:repeat(9, 1fr)}}
 @media(max-width:1023px){.inv-grid{grid-template-columns:repeat(auto-fill, minmax(48px,1fr))}}
 
-/* ===== Produtos Especiais (entre HUD e inventário) ===== */
-.special{display:none;flex-direction:column;gap:12px}
-.special.show{display:flex}
-.special .head{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.special .legend{font-family:"Cinzel Decorative",serif;text-transform:uppercase;color:var(--xp)}
-.sp-tabs{display:flex;gap:8px;flex-wrap:wrap}
-.sp-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--border);border-radius:10px;background:linear-gradient(180deg, rgba(var(--nh-rgb),.2), rgba(0,0,0,.2));color:var(--text);text-decoration:none;text-transform:uppercase;font-family:"Cinzel Decorative",serif;font-size:.85em;transition:.2s}
-.sp-btn:hover{border-color:var(--xp);box-shadow:0 0 14px rgba(var(--nh-rgb),.4)}
-
-.sp-grid{display:grid;gap:10px}
-@media(min-width:1024px){.sp-grid{grid-template-columns:repeat(6, 1fr)}}
-@media(max-width:1023px){.sp-grid{grid-template-columns:repeat(3,1fr)}}
-
-.sp-card{position:relative;background:var(--slot);border:1px solid var(--border);border-radius:10px;overflow:hidden;cursor:pointer;aspect-ratio:3/4;display:flex;align-items:flex-end;justify-content:center}
-.sp-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.88) contrast(1.02)}
-.sp-card .label{position:relative;z-index:2;width:100%;text-align:center;padding:6px 8px;background:linear-gradient(180deg, transparent, rgba(0,0,0,.8));font-size:.85em}
-.sp-card .badge{position:absolute;top:6px;left:6px;background:rgba(0,0,0,.75);border-color:#444;color:#eaeaea}
-
-/* Tooltip / hover-detail */
-.tip{position:absolute;inset:auto 6px 6px 6px;opacity:0;transform:translateY(6px);pointer-events:none;transition:.18s;background:rgba(10,10,10,.92);border:1px solid var(--border);border-radius:10px;padding:10px;box-shadow:0 10px 24px var(--shadow);z-index:3}
-.sp-card:hover .tip,.sp-card[data-open="1"] .tip{opacity:1;transform:translateY(0)}
-.tip h4{font-family:"Cinzel Decorative",serif;margin-bottom:6px;color:var(--xp);font-size:.95em}
-.tip p{font-size:.85em;color:#ddd}
-.tip .go{margin-top:8px;display:inline-block;background:var(--xp);color:#111;border-radius:8px;padding:6px 10px;text-decoration:none;font-family:"Cinzel Decorative",serif;text-transform:uppercase}
-
-/* Acessibilidade foco */
-.sp-card:focus{outline:2px solid var(--xp);outline-offset:2px}
+.inv-slot{width:100%;aspect-ratio:1;border-radius:8px;background:var(--slot);border:2px solid var(--slot-b);display:grid;place-items:center;color:#bfbfbf;position:relative;box-shadow:inset 0 0 8px rgba(0,0,0,.55);transition:.2s}
+.inv-slot:hover{border-color:var(--xp);box-shadow:0 0 14px rgba(var(--nh-rgb),.45), inset 0 0 10px rgba(255,255,255,.1)}
+.count{position:absolute;bottom:3px;right:4px;background:rgba(0,0,0,.72);font-size:.7em;padding:2px 4px;border-radius:4px}
 
   </style>
 </head>
 <body>
-  <canvas id="brasas"></canvas>  <!-- ===== HUD ===== -->  <header class="hud" role="banner">
+  <canvas id="brasas"></canvas>  <!-- ===== HUD (copiado, manter exatamente como no arquivo enviado) ===== -->  <header class="hud" role="banner">
     <div class="group">
       <span class="badge">Nível: <span id="lv">3</span></span>
       <div class="bar"><div class="fill xp" id="barXP" data-val="67%" style="width:67%"></div></div>
@@ -129,145 +102,59 @@ body{
     <div class="actions">
       <button onclick="location.href='/store'">⛩ Loja</button>
     </div>
-  </header>  <!-- ===== MAIN ===== -->  <main class="main">
-    <section class="shell">
-      <!-- Abas -->
-      <nav class="tabs" aria-label="Seções">
-        <button class="tab active" data-tab="overview">Visão Geral</button>
-        <button class="tab" data-tab="inventory">Inventário</button>
-        <button class="tab" data-tab="equipment">Equipamento</button>
-      </nav><!-- Painéis -->
-  <div class="panes">
-    <!-- Esquerda -->
-    <aside class="panel" id="left-overview">
-      <h2 class="panel-title">Informações do Herói</h2>
-      <div style="display:grid;gap:10px;font-size:.95em">
-        <div style="display:flex;justify-content:space-between;border-bottom:1px dashed rgba(255,255,255,.08);padding-bottom:6px">
-          <span style="color:var(--muted)">Nome</span>
-          <span id="hero-name">Ghoul Pionkim <button id="edit-name" class="badge" style="padding:2px 6px">✎</button></span>
+  </header>  <!-- ===== MAIN ===== -->  <main class="main" aria-label="Inventário do usuário">
+    <section class="shell" id="inventario">
+      <div class="header-row">
+        <h1 class="title">Inventário — Meus Produtos</h1>
+        <div class="sp-tabs" aria-label="Acessos rápidos">
+          <a class="sp-btn" href="/ebooks">eBooks</a>
+          <a class="sp-btn" href="/animes">Animes</a>
+          <a class="sp-btn" href="/mangas">Mangás</a>
         </div>
-        <div style="display:flex;justify-content:space-between;border-bottom:1px dashed rgba(255,255,255,.08);padding-bottom:6px"><span style="color:var(--muted)">Classe</span><span>Portador das Sombras</span></div>
-        <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Facção</span><span>Noctis Ordinem</span></div>
-      </div>
+      </div><p class="note">Aqui aparecem todos os itens/vantagens que você <strong>já comprou</strong> no universo NoHeroes. Se ainda não comprou nada, os blocos ficam vazios — sem cards “soltos”.</p>
 
-      <h2 class="panel-title" style="margin-top:18px">Atributos</h2>
-      <div id="attrs" style="display:grid;gap:10px"></div>
-    </aside>
+  <!-- Filtros de categorias genéricas -->
+  <nav class="inv-filter" role="tablist">
+    <button class="chip active" data-filter="all">Tudo</button>
+    <button class="chip" data-filter="consumables">Consumíveis</button>
+    <button class="chip" data-filter="materials">Materiais</button>
+    <button class="chip" data-filter="quests">Missão</button>
+    <button class="chip" data-filter="misc">Diversos</button>
+  </nav>
 
-    <aside class="panel" id="left-inventory" hidden>
-      <h2 class="panel-title">Inventário</h2>
+  <!-- Grades por categoria -->
+  <section data-cat="consumables">
+    <h2 class="panel-title" style="font-size:1.05em">Consumíveis</h2>
+    <div class="inv-grid" id="inv-consumables"></div>
+  </section>
+  <section data-cat="materials">
+    <h2 class="panel-title" style="font-size:1.05em">Materiais</h2>
+    <div class="inv-grid" id="inv-materials"></div>
+  </section>
+  <section data-cat="quests">
+    <h2 class="panel-title" style="font-size:1.05em">Itens de Missão</h2>
+    <div class="inv-grid" id="inv-quests"></div>
+  </section>
+  <section data-cat="misc">
+    <h2 class="panel-title" style="font-size:1.05em">Diversos</h2>
+    <div class="inv-grid" id="inv-misc"></div>
+  </section>
 
-      <!-- Produtos especiais (acima do inventário, abaixo do HUD) -->
-      <section class="special" id="special">
-        <div class="head">
-          <span class="legend">Produtos especiais comprados</span>
-          <div class="sp-tabs">
-            <a class="sp-btn" href="/animes">Animes</a>
-            <a class="sp-btn" href="/mangas">Mangás</a>
-            <a class="sp-btn" href="/ebooks">eBooks</a>
-          </div>
-        </div>
-        <div class="sp-grid" id="sp-animes"></div>
-        <div class="sp-grid" id="sp-mangas"></div>
-        <div class="sp-grid" id="sp-ebooks"></div>
-      </section>
-
-      <div class="inv-filter" role="tablist">
-        <button class="chip active" data-filter="all">Tudo</button>
-        <button class="chip" data-filter="consumables">Consumíveis</button>
-        <button class="chip" data-filter="materials">Materiais</button>
-        <button class="chip" data-filter="quests">Missão</button>
-        <button class="chip" data-filter="misc">Diversos</button>
-      </div>
-
-      <div id="inv-wrap" style="display:grid;gap:16px">
-        <!-- Cada categoria -->
-        <section data-cat="consumables">
-          <h3 class="panel-title" style="font-size:1.05em">Consumíveis</h3>
-          <div class="inv-grid" id="inv-consumables"></div>
-        </section>
-        <section data-cat="materials">
-          <h3 class="panel-title" style="font-size:1.05em">Materiais</h3>
-          <div class="inv-grid" id="inv-materials"></div>
-        </section>
-        <section data-cat="quests">
-          <h3 class="panel-title" style="font-size:1.05em">Itens de Missão</h3>
-          <div class="inv-grid" id="inv-quests"></div>
-        </section>
-        <section data-cat="misc">
-          <h3 class="panel-title" style="font-size:1.05em">Diversos</h3>
-          <div class="inv-grid" id="inv-misc"></div>
-        </section>
-      </div>
-    </aside>
-
-    <!-- Centro (avatar + slots) -->
-    <section class="panel" id="center-panel">
-      <div class="avatar-wrap">
-        <div class="slots-col" id="equip-left" hidden>
-          <div class="slot" title="Cabeça">Cabeça</div>
-          <div class="slot" title="Ombros">Ombros</div>
-          <div class="slot" title="Braços">Braços</div>
-          <div class="slot" title="Luvas">Luvas</div>
-        </div>
-        <div class="avatar">Avatar</div>
-        <div class="slots-col" id="equip-right" hidden>
-          <div class="slot" title="Peito">Peito</div>
-          <div class="slot" title="Cintura">Cintura</div>
-          <div class="slot" title="Pernas">Pernas</div>
-          <div class="slot" title="Pés">Pés</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Direita -->
-    <aside class="panel" id="right-overview">
-      <h2 class="panel-title">Jornada e Progresso</h2>
-      <div style="display:grid;gap:10px">
-        <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Despertar Vitalista</span><span id="despertar">128.000 / 1.000.000</span></div>
-        <div class="bar"><div class="fill" id="barAwk" style="width:12.8%;background:linear-gradient(90deg,#8b0000,#daa520,#006400)"></div></div>
-      </div>
-
-      <h2 class="panel-title" style="margin-top:12px">Estatísticas</h2>
-      <div style="display:grid;gap:8px;font-size:.95em">
-        <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Ataque</span><span>+15</span></div>
-        <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Defesa</span><span>+10</span></div>
-        <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Crítico</span><span>5%</span></div>
-        <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Evasão</span><span>8%</span></div>
-        <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Dano Mágico</span><span>+20</span></div>
-        <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Res. Física</span><span>10%</span></div>
-        <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Res. Mágica</span><span>15%</span></div>
-      </div>
-    </aside>
-
-    <aside class="panel" id="right-inventory" hidden>
-      <h2 class="panel-title">Mochila</h2>
-      <div class="inv-grid" id="backpack"></div>
-    </aside>
-
-    <aside class="panel" id="right-equipment" hidden>
-      <h2 class="panel-title">Itens Equipados</h2>
-      <div style="display:grid;gap:14px">
-        <div>
-          <h3 class="panel-title" style="font-size:1.05em">Arma Principal</h3>
-          <div class="slot"></div>
-        </div>
-        <div>
-          <h3 class="panel-title" style="font-size:1.05em">Arma Secundária / Escudo</h3>
-          <div class="slot"></div>
-        </div>
-        <div>
-          <h3 class="panel-title" style="font-size:1.05em">Acessórios</h3>
-          <div style="display:flex;gap:8px;flex-wrap:wrap"><div class="slot"></div><div class="slot"></div><div class="slot"></div></div>
-        </div>
-      </div>
-    </aside>
-  </div>
+  <!-- Bloco de especiais COM APENAS os botões. Sem cards pré-carregados. -->
+  <section aria-label="Conteúdos especiais comprados">
+    <h2 class="panel-title" style="margin-top:8px">Especiais</h2>
+    <div class="sp-tabs">
+      <a class="btn-x" href="/ebooks"><span>Meus eBooks</span></a>
+      <a class="btn-x" href="/animes"><span>Meus Animes</span></a>
+      <a class="btn-x" href="/mangas"><span>Meus Mangás</span></a>
+    </div>
+    <p class="note" style="margin-top:10px">Sem cards aqui. As páginas acima listam somente o que é seu.</p>
+  </section>
 </section>
 
   </main>  <script>
     // =====================
-    // Brasas / partículas
+    // Brasas / partículas (igual vibe Manual das Sombras)
     // =====================
     const cvs = document.getElementById('brasas');
     const ctx = cvs.getContext('2d');
@@ -280,14 +167,12 @@ body{
       ctx.fillStyle=`rgba(200,200,200,${t.o})`;ctx.beginPath();ctx.arc(t.x,t.y,t.s,0,Math.PI*2);ctx.fill();});requestAnimationFrame(anim)})();
 
     // =====================
-    // Estado/HUD/Atributos
+    // HUD demo state (igual do seu arquivo — mantive)
     // =====================
     const state={
       nivel:3, xp:6700, xpMax:10000,
       hp:100, hpMax:100, mp:50, mpMax:50,
-      gold:1250,
-      pontos:4,
-      attrs:{forca:1,destreza:1,constituicao:1,inteligencia:1,espirito:1,carisma:1}
+      gold:1250
     };
     function upHUD(){
       document.getElementById('lv').textContent=state.nivel;
@@ -297,69 +182,30 @@ body{
       document.getElementById('barMP').style.width=mp+"%"; document.getElementById('barMP').dataset.val=`${state.mp}/${state.mpMax}`;
       document.getElementById('gold').textContent=state.gold;
     }
-    function renderAttrs(){
-      const wrap=document.getElementById('attrs');
-      wrap.innerHTML='';
-      const keys=Object.keys(state.attrs);
-      keys.forEach(k=>{
-        const v=state.attrs[k];
-        const row=document.createElement('div');
-        row.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center">
-          <span style="color:var(--muted);text-transform:uppercase">${k}</span>
-          <span>${v} <button class="badge" data-add="${k}" style="padding:2px 6px">+</button></span>
-        </div>
-        <div class="bar" style="height:8px;margin-top:6px"><div class="fill" style="width:${Math.min(v/20*100,100)}%;background:linear-gradient(90deg,var(--xp),rgba(var(--nh-rgb),.7))"></div></div>`;
-        wrap.appendChild(row);
-      });
-      wrap.querySelectorAll('[data-add]').forEach(b=>b.addEventListener('click',()=>{if(state.pontos>0){state.attrs[b.dataset.add]++;state.pontos--;renderAttrs()}}))
-    }
 
     // =====================
-    // Tabs
-    // =====================
-    const tabs=[...document.querySelectorAll('.tab')];
-    const panels={
-      left:{overview:document.getElementById('left-overview'), inventory:document.getElementById('left-inventory')},
-      right:{overview:document.getElementById('right-overview'), inventory:document.getElementById('right-inventory'), equipment:document.getElementById('right-equipment')},
-      center:document.getElementById('center-panel'),
-      equipLeft:document.getElementById('equip-left'),
-      equipRight:document.getElementById('equip-right'),
-      special:document.getElementById('special')
-    };
-    function setTab(key){
-      tabs.forEach(t=>t.classList.toggle('active', t.dataset.tab===key));
-      panels.left.overview.hidden = key!=="overview";
-      panels.left.inventory.hidden = key!=="inventory";
-      panels.right.overview.hidden = key!=="overview";
-      panels.right.inventory.hidden = key!=="inventory";
-      panels.right.equipment.hidden = key!=="equipment";
-      panels.center.hidden = key==="inventory"; // esconde avatar na aba inventário
-      panels.equipLeft.hidden = key!=="equipment";
-      panels.equipRight.hidden = key!=="equipment";
-      panels.special.classList.toggle('show', key==="inventory");
-    }
-    tabs.forEach(t=>t.addEventListener('click',()=>setTab(t.dataset.tab)));
-
-    // =====================
-    // Inventário (Minecraft grid)
+    // Inventário — slots (sem produtos “perdidos”)
     // =====================
     const invData={
-      consumables:[{name:'Poção de Cura', qty:3},{name:'Poção de Mana', qty:2},{name:'Antídoto', qty:1}],
-      materials:[{name:'Minério Sombrio', qty:6},{name:'Madeira Ancestral', qty:12}],
-      quests:[{name:'Flor de Lótus', qty:1}],
-      misc:[{name:'Moeda Antiga', qty:5}]
+      consumables:[],
+      materials:[],
+      quests:[],
+      misc:[]
     };
     function slotEl(item){
-      const d=document.createElement('div'); d.className='inv-slot'; d.title=item.name; d.innerHTML=`<span>${item.name.split(' ')[0]}</span>${item.qty?`<span class="count">${item.qty}</span>`:''}`; return d;
+      const d=document.createElement('div'); d.className='inv-slot';
+      if(item?.name){
+        d.title=item.name; d.innerHTML=`<span>${item.name.split(' ')[0]}</span>${item.qty?`<span class="count">${item.qty}</span>`:''}`;
+      }
+      return d;
     }
     function renderInv(){
       Object.entries(invData).forEach(([cat,arr])=>{
         const grid=document.getElementById('inv-'+cat);
         grid.innerHTML='';
-        // 9 colunas * 3 linhas base → 27 slots, preenche com itens depois placeholders
-        const targetSlots = 27; // ajuste livre
-        const nodes=arr.map(slotEl);
-        for(let i=nodes.length;i<targetSlots;i++){nodes.push(slotEl({name:'',qty:''}))}
+        const targetSlots = 27; // 9x3
+        const nodes=(arr||[]).map(slotEl);
+        for(let i=nodes.length;i<targetSlots;i++){nodes.push(slotEl({}))}
         nodes.forEach(n=>grid.appendChild(n));
       });
     }
@@ -369,69 +215,18 @@ body{
     chips.forEach(c=>c.addEventListener('click',()=>{
       chips.forEach(x=>x.classList.remove('active')); c.classList.add('active');
       const f=c.dataset.filter;
-      document.querySelectorAll('#inv-wrap [data-cat]').forEach(sec=>{
+      document.querySelectorAll('[data-cat]').forEach(sec=>{
         sec.style.display = (f==='all' || sec.dataset.cat===f) ? 'block' : 'none'
       });
     }));
 
     // =====================
-    // Produtos Especiais (Animes/Mangás/eBooks)
+    // Integração sugerida
     // =====================
-    const sp={
-      animes:[{id:'nh-an-01',title:'NoHeroes — ACDA (Teaser Anime)',cover:'https://images.unsplash.com/photo-1549880338-65ddcdfd017b?q=80&w=800&auto=format&fit=crop',href:'/animes/acda-teaser',desc:'Teaser oficial. Acesso vitalício.'}],
-      mangas:[{id:'nh-mg-01',title:'NoHeroes — Mangá Cap. 1',cover:'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?q=80&w=800&auto=format&fit=crop',href:'/mangas/cap-1',desc:'Edição digital. Leitura online.'}],
-      ebooks:[{id:'nh-eb-01',title:'NoHeroes — As Cinzas do Amanhã',cover:'https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=800&auto=format&fit=crop',href:'/ebooks/as-cinzas-do-amanha',desc:'E-book premium em PDF/EPUB.'}]
-    };
-    function card({title,cover,href,desc}){
-      const el=document.createElement('article'); el.className='sp-card'; el.tabIndex=0;
-      el.innerHTML=`<img alt="${title}" src="${cover}"/><span class="badge">Comprado</span><div class="label">${title}</div><div class="tip"><h4>${title}</h4><p>${desc||''}</p><a class="go" href="${href}">Abrir</a></div>`;
-      // mobile tap: toggle tooltip
-      el.addEventListener('click', e=>{
-        if(getComputedStyle(document.querySelector('.tip')).pointerEvents==='none'){return}
-        el.dataset.open = el.dataset.open==='1' ? '0' : '1';
-      });
-      return el;
-    }
-    function renderSP(){
-      const ga=document.getElementById('sp-animes'); ga.innerHTML=''; sp.animes.forEach(a=>ga.appendChild(card(a)));
-      const gm=document.getElementById('sp-mangas'); gm.innerHTML=''; sp.mangas.forEach(a=>gm.appendChild(card(a)));
-      const ge=document.getElementById('sp-ebooks'); ge.innerHTML=''; sp.ebooks.forEach(a=>ge.appendChild(card(a)));
-    }
-
-    // =====================
-    // Integração futura (plug & play)
-    // =====================
-    /*
-      Para integrar com seu backend Node/Express/PostgreSQL:
-      - Endpoint sugerido: GET /api/user/inventory (autenticado via JWT)
-      - Retorno esperado:
-        {
-          hero:{ level, xp, xpMax, hp, hpMax, mp, mpMax, gold, attrs:{...} },
-          inventory:{ consumables:[{name,qty,icon}], materials:[...], quests:[...], misc:[...] },
-          specials:{ animes:[{id,title,cover,href,desc}], mangas:[...], ebooks:[...] }
-        }
-      - Substitua os objetos "state", "invData" e "sp" pelos dados reais.
-      - Exemplo de fetch (com seu helper getJwt()):
-          const jwt = localStorage.getItem('token')?.replace(/^Bearer\s+/i,'') || '';
-          const res = await fetch('/api/user/inventory',{headers:{Authorization:`Bearer ${jwt}`}});
-          const data = await res.json();
-    */
-
-    // =====================
-    // Boot
-    // =====================
-    document.getElementById('edit-name').addEventListener('click',()=>{
-      const span=document.getElementById('hero-name');
-      const cur=span.textContent.replace('✎','').trim();
-      const novo=prompt('Novo nome:', cur);
-      if(novo && novo.length>1){ span.innerHTML = `${novo} <button id="edit-name" class="badge" style="padding:2px 6px">✎</button>`; }
-    });
+    /* GET /api/user/inventory → preencha invData dinamicamente
+       specials ficam em páginas dedicadas (/ebooks, /animes, /mangas). */
 
     upHUD();
-    renderAttrs();
     renderInv();
-    renderSP();
-    setTab('overview');
-  </script>
-</body>
+  </script></body>
 </html>
