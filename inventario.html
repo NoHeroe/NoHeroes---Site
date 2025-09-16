@@ -109,41 +109,59 @@ body{
 /* =========================================
    Títulos e legendas (gradiente roxo -> dourado)
    ========================================= */
-.panel-title{
-  font-family:"Cinzel Decorative",serif; text-transform:uppercase; font-size:1.3em; text-align:center;
-  margin-bottom:12px; border-bottom:2px solid var(--border); padding-bottom:8px;
-  background:var(--grad-title); -webkit-background-clip:text; -webkit-text-fill-color:transparent; color:transparent;
-  text-shadow:0 0 10px rgba(124,58,237,.45);
+
+@keyframes nh-flow-title {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
 }
-.legend{
-  font-family:"Cinzel Decorative",serif; text-transform:uppercase;
-  background:var(--grad-title); -webkit-background-clip:text; -webkit-text-fill-color:transparent; color:transparent;
+
+.title,
+.panel-title,
+.legend {
+  font-family:"Cinzel Decorative",serif;
+  text-transform:uppercase;
+  background: linear-gradient(90deg,#7c3aed,#c29546); /* roxo -> dourado */
+  background-size: 200% 200%;
+  animation: nh-flow-title 6s linear infinite;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  color:transparent;
+  text-shadow:0 0 10px rgba(124,58,237,.45);
 }
 
 /* =========================================
    Botões (vinho -> preto) unificados
    ========================================= */
-.sp-tabs{display:flex;gap:10px;flex-wrap:wrap}
+@keyframes nh-flow-btn {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
 .btn-x,
 .sp-btn,
-.hud .actions button{
-  background:var(--grad-btn);
+.hud .actions button {
+  background: linear-gradient(90deg,#8b0000,#000000); /* vermelho vinho -> preto */
+  background-size: 200% 200%;
+  animation: nh-flow-btn 8s linear infinite;
   color:#e6e6e6;
   border:1px solid #440000;
   border-radius:12px;
-  display:inline-flex; align-items:center; justify-content:center; gap:10px;
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
   padding:10px 18px;
-  font-family:"Cinzel Decorative",serif; text-transform:uppercase; letter-spacing:.5px;
+  font-family:"Cinzel Decorative",serif;
+  text-transform:uppercase;
+  letter-spacing:.5px;
   text-decoration:none;
-  background-size:auto; /* sem animação */
-  animation:none;       /* garante que não herde animações antigas */
   box-shadow:0 6px 18px rgba(0,0,0,.5);
   transition:.2s;
 }
 .btn-x:hover,
 .sp-btn:hover,
-.hud .actions button:hover{
-  filter:brightness(1.1); box-shadow:0 0 12px rgba(139,0,0,.6);
+.hud .actions button:hover {
+  filter:brightness(1.08);
+  box-shadow:0 0 16px rgba(139,0,0,.6);
 }
 
 /* =========================================
