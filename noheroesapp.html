@@ -38,30 +38,52 @@
   </style></head>
 <body class="min-h-screen bg-[#0a0613] text-zinc-100 antialiased selection:bg-fuchsia-500/30 selection:text-fuchsia-100 relative overflow-x-clip font-inter">
   <!-- Partículas -->
-  <canvas id="brasasCanvas" class="fixed inset-0 -z-10 opacity-70"></canvas>  <!-- Header (igual ao Manual das Sombras) -->  <header class="sticky top-0 z-30">
-    <div class="absolute inset-0 bg-gradient-to-b from-[#120a21]/70 to-transparent pointer-events-none"></div>
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="glass border-gradient mt-4 flex items-center justify-between rounded-2xl px-4 py-3">
-        <div class="flex items-center gap-3">
-          <div class="h-9 w-9 rounded-xl ring-1 ring-white/20 bg-gradient-to-br from-fuchsia-500/40 to-amber-300/40"></div>
-          <div class="leading-tight">
-            <div class="font-cinzel text-lg gradient-anim gold-stroke">NoHeroes</div>
-            <div class="text-xs text-zinc-300/70 -mt-0.5">Sistemas de evolução</div>
-          </div>
+  <canvas id="brasasCanvas" class="fixed inset-0 -z-10 opacity-70"></canvas>  <header class="sticky top-0 z-30">
+  <div class="absolute inset-0 bg-gradient-to-b from-[#120a21]/70 to-transparent pointer-events-none"></div>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="glass border-gradient mt-4 flex items-center justify-between rounded-2xl px-4 py-3">
+      <!-- Left: Logo + Brand -->
+      <a href="#download" class="flex items-center gap-3 focus:outline-none focus:ring-2 focus:ring-amber-300 rounded-xl">
+        <img src="/assets/noheroes-logo.png" alt="NoHeroes" class="h-9 w-auto select-none" id="logoNoHeroes"/>
+        <div class="leading-tight hidden sm:block">
+          <div class="font-cinzel text-lg gradient-anim gold-stroke">NoHeroes</div>
+          <div class="text-xs text-zinc-300/70 -mt-0.5">Sistemas de evolução</div>
         </div>
-        <nav class="hidden md:flex items-center gap-6 text-sm text-zinc-200/90">
-          <a href="#download" class="hover:text-white">Baixar</a>
-          <a href="#detalhes" class="hover:text-white">Sobre o App</a>
-          <a href="#roadmap" class="hover:text-white">Roadmap</a>
-          <a href="#faq" class="hover:text-white">FAQ</a>
-        </nav>
-        <div class="flex items-center gap-2">
-          <a href="#manual" class="hidden md:inline-flex btn-gradient rounded-xl px-4 py-2 text-sm font-medium hover:brightness-110 transition"><span>Manual das Sombras</span></a>
-          <button class="md:hidden inline-flex btn-gradient rounded-xl px-3 py-2 text-sm font-medium" aria-label="Menu">☰</button>
-        </div>
+      </a>
+
+      <!-- Center: Nav (desktop) -->
+      <nav class="hidden md:flex items-center gap-6 text-sm text-zinc-200/90">
+        <a href="#download" class="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 rounded-md">Baixar</a>
+        <a href="#detalhes" class="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 rounded-md">Sobre o App</a>
+        <a href="#roadmap" class="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 rounded-md">Roadmap</a>
+        <a href="#faq" class="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 rounded-md">FAQ</a>
+      </nav>
+
+      <!-- Right: CTA (desktop) -->
+      <div class="hidden md:flex items-center gap-2">
+        <a href="#download" class="btn-gradient rounded-xl px-4 py-2 text-sm font-medium hover:brightness-110 transition focus:outline-none focus:ring-2 focus:ring-amber-300">
+          <span>⬇ Baixar APK</span>
+        </a>
       </div>
+
+      <!-- Mobile: menu button -->
+      <button id="btnMenu" class="md:hidden inline-flex btn-gradient rounded-xl px-3 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-amber-300" aria-label="Abrir menu" aria-expanded="false" aria-controls="menuMobile">☰</button>
     </div>
-  </header>  <main class="relative z-10">
+
+    <!-- Mobile menu -->
+    <div id="menuMobile" class="hidden md:hidden mt-2 glass border-gradient rounded-2xl px-4 py-3">
+      <nav class="flex flex-col gap-3 text-sm">
+        <a href="#download" class="hover:text-white" data-close-menu>Baixar</a>
+        <a href="#detalhes" class="hover:text-white" data-close-menu>Sobre o App</a>
+        <a href="#roadmap" class="hover:text-white" data-close-menu>Roadmap</a>
+        <a href="#faq" class="hover:text-white" data-close-menu>FAQ</a>
+        <a href="#download" class="btn-gradient rounded-xl px-4 py-2 text-sm font-semibold text-center mt-2" data-close-menu><span>⬇ Baixar APK</span></a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+  <main class="relative z-10">
     <!-- Hero -->
     <section id="download" class="relative">
       <div class="absolute inset-0 -z-10 bg-[radial-gradient(60%_40%_at_50%_10%,rgba(181,140,255,0.25),transparent_60%)]"></div>
@@ -216,5 +238,35 @@
     function spawn(){ return { x: Math.random()* (w||window.innerWidth)*DPR, y: Math.random()* (h||window.innerHeight)*DPR, r: 0.5 + Math.random()*2.2*DPR, a: 0.18 + Math.random()*0.35, vx: (Math.random()-0.5)*0.15*DPR, vy: -0.15*Math.random()*DPR }; }
     function step(){ ctx.clearRect(0,0,w,h); for (let p of particles){ p.x+=p.vx; p.y+=p.vy; p.a-=0.0008; p.r+=0.003*DPR; if(p.a<=0||p.y<-10) Object.assign(p, spawn(), { y: h+10 }); const g = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*4); g.addColorStop(0, `rgba(155,92,255,${p.a})`); g.addColorStop(1,'rgba(0,0,0,0)'); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); } raf = requestAnimationFrame(step); }
     resize(); window.addEventListener('resize', resize); raf = requestAnimationFrame(step);
+// Toggle menu mobile e fechar ao clicar em um link
+    (function(){
+      const btn = document.getElementById('btnMenu');
+      const menu = document.getElementById('menuMobile');
+      if(!btn || !menu) return;
+      function toggle(){
+        const open = menu.classList.contains('hidden');
+        menu.classList.toggle('hidden');
+        btn.setAttribute('aria-expanded', String(open));
+      }
+      btn.addEventListener('click', toggle);
+      menu.querySelectorAll('[data-close-menu]').forEach(a => a.addEventListener('click', () => {
+        if(!menu.classList.contains('hidden')) toggle();
+      }));
+    })();
+
+    // Garantir que nav anchors funcionem suavemente no mobile
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const id = a.getAttribute('href');
+        if(id && id.length > 1){
+          const el = document.querySelector(id);
+          if(el){ e.preventDefault(); el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+        }
+      });
+    });
+
+    // Atualizar logo via JS se você fornecer outra URL
+    // window.NH_LOGO_URL = 'https://seu.dominio/logo.png';
+    if(window.NH_LOGO_URL){ const img = document.getElementById('logoNoHeroes'); if(img) img.src = window.NH_LOGO_URL; }
   </script></body>
 </html>
