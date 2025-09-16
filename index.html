@@ -712,7 +712,7 @@ backface-visibility: hidden;
 </div>
 
   <!-- 2. Seu Dojo Digital -->
-  <div class="glass p-6 rounded-xl shadow-md reveal-top text-center">
+<div class="glass p-6 rounded-xl shadow-md reveal-top text-center">
   <svg class="mx-auto mb-4" width="40" height="40" viewBox="0 0 24 24" fill="none">
     <defs>
       <linearGradient id="grad-dojo" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -720,13 +720,17 @@ backface-visibility: hidden;
         <stop offset="100%" stop-color="#facc15"/>
       </linearGradient>
     </defs>
-    <path d="M12 2a10 10 0 100 20M12 12a4 4 0 010-8" stroke="url(#grad-dojo)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    <circle cx="12" cy="8" r="1.5" fill="url(#grad-dojo)"/>
-    <circle cx="12" cy="16" r="1.5" fill="url(#grad-dojo)"/>
+    <!-- Yin Yang completo -->
+    <path d="M12 2a10 10 0 100 20c-2.21 0-4-1.79-4-4s1.79-4 4-4 
+             4-1.79 4-4-1.79-4-4-4z" fill="url(#grad-dojo)"/>
+    <circle cx="12" cy="8" r="1.5" fill="#000"/>
+    <circle cx="12" cy="16" r="1.5" fill="#fff"/>
   </svg>
+
   <h3 class="text-lg font-bold gradiente-titulo mb-2 font-[Cinzel Decorative]">Seu Dojo Digital</h3>
   <p class="text-sm text-gray-300 mb-4">Cada missão, leitura ou clique aqui ecoa fora da tela. Você cresce no jogo — e na vida. Um reflexo puxa o outro.</p>
-  <button onclick="document.querySelector('#dojo').scrollIntoView({ behavior: 'smooth' })"
+  
+  <button onclick="window.location.href='noheroesapp.html'"
     class="px-3 py-1 text-sm rounded-full bg-gradient-to-r from-[#8f4fff]/20 to-[#facc15]/20 border border-[#8f4fff] text-[#8f4fff] hover:brightness-125 transition">
     Evoluir Agora
   </button>
