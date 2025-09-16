@@ -694,15 +694,24 @@ backface-visibility: hidden;
 
   <!-- 1. Um Portal Multimídia -->
  <div class="glass p-6 rounded-xl shadow-md reveal-top text-center">
-  <svg class="mx-auto mb-4" width="40" height="40" viewBox="0 0 24 24" fill="none">
-    <defs>
-      <linearGradient id="grad-vortex" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#8f4fff"/>
-        <stop offset="100%" stop-color="#facc15"/>
-      </linearGradient>
-    </defs>
-    <path d="M12 2a10 10 0 100 20M12 6a6 6 0 100 12" stroke="url(#grad-vortex)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
+  <svg class="mx-auto mb-4" width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad-vortex" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8f4fff"/>
+      <stop offset="100%" stop-color="#facc15"/>
+    </linearGradient>
+  </defs>
+
+  <!-- arco externo do portal -->
+  <ellipse cx="12" cy="12" rx="9" ry="10" stroke="url(#grad-vortex)" stroke-width="2" fill="none"/>
+
+  <!-- arco interno, dando profundidade -->
+  <ellipse cx="12" cy="12" rx="5" ry="7" stroke="url(#grad-vortex)" stroke-width="2" fill="none"/>
+
+  <!-- linhas internas simulando energia -->
+  <path d="M12 5v2M12 17v2M8 12h-2M18 12h2" stroke="url(#grad-vortex)" stroke-width="2" stroke-linecap="round"/>
+</svg>
+
   <h3 class="text-lg font-bold gradiente-titulo mb-2 font-[Cinzel Decorative]">Um Portal Multimídia</h3>
   <p class="text-sm text-gray-300 mb-4">Animes, mangás, livros, eBooks, apps. Um universo em expansão onde tudo é feito com propósito — e alma.</p>
   <button onclick="document.querySelector('#universo').scrollIntoView({ behavior: 'smooth' })"
@@ -766,26 +775,15 @@ backface-visibility: hidden;
 
   <!-- 4. A Forja dos Sonhos -->
 <div class="glass p-6 rounded-xl shadow-md reveal-top text-center">
-  <svg class="mx-auto mb-4" width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg class="mx-auto mb-4" width="40" height="40" viewBox="0 0 24 24" fill="none">
     <defs>
       <linearGradient id="grad-forja" x1="0%" y1="0%" x2="100%" y2="100%">
         <stop offset="0%" stop-color="#8f4fff"/>
         <stop offset="100%" stop-color="#facc15"/>
       </linearGradient>
     </defs>
-
-    <!-- estilo line icon + degradê -->
-    <g fill="none" stroke="url(#grad-forja)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <!-- MESA / BIGORNA (seu traço original, preservado) -->
-      <path d="M4 10h16v3H4z"/>
-      <path d="M6 13v3h2v-3M16 13v3h2v-3"/>
-
-      <!-- MARTELO: cabeça e cabo inclinados, batendo no topo da mesa -->
-      <!-- cabeça do martelo (retângulo) -->
-      <path d="M14.5 4.5h5v2.5h-5z"/>
-      <!-- cabo do martelo, apontando para o ponto de impacto -->
-      <path d="M16 6.5L10 10"/>
-    </g>
+    <path d="M4 10h16v3H4zM6 13v3h2v-3M16 13v3h2v-3" stroke="url(#grad-forja)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M12 2v2m0 0l1-1m-1 1l-1-1" stroke="url(#grad-forja)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>
 
   <h3 class="text-lg font-bold gradiente-titulo mb-2 font-[Cinzel Decorative]">A Forja dos Sonhos</h3>
