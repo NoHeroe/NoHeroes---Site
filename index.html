@@ -767,23 +767,30 @@ backface-visibility: hidden;
   <!-- 4. A Forja dos Sonhos -->
 <div class="glass p-6 rounded-xl shadow-md reveal-top text-center">
   <svg class="mx-auto mb-4" width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="grad-forja" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#8f4fff"/>
-      <stop offset="100%" stop-color="#facc15"/>
-    </linearGradient>
-  </defs>
+    <defs>
+      <linearGradient id="grad-forja" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#8f4fff"/>
+        <stop offset="100%" stop-color="#facc15"/>
+      </linearGradient>
+    </defs>
 
-  <!-- Cabo inclinado -->
-  <rect x="10" y="6" width="2" height="12" rx="1" transform="rotate(-45 10 6)" fill="url(#grad-forja)"/>
+    <!-- estilo line icon + degradê -->
+    <g fill="none" stroke="url(#grad-forja)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <!-- MESA / BIGORNA (seu traço original, preservado) -->
+      <path d="M4 10h16v3H4z"/>
+      <path d="M6 13v3h2v-3M16 13v3h2v-3"/>
 
-  <!-- Cabeça do martelo -->
-  <rect x="13" y="3" width="6" height="3" rx="0.5" transform="rotate(-45 13 3)" fill="url(#grad-forja)"/>
-</svg>
+      <!-- MARTELO: cabeça e cabo inclinados, batendo no topo da mesa -->
+      <!-- cabeça do martelo (retângulo) -->
+      <path d="M14.5 4.5h5v2.5h-5z"/>
+      <!-- cabo do martelo, apontando para o ponto de impacto -->
+      <path d="M16 6.5L10 10"/>
+    </g>
+  </svg>
 
   <h3 class="text-lg font-bold gradiente-titulo mb-2 font-[Cinzel Decorative]">A Forja dos Sonhos</h3>
   <p class="text-sm text-gray-300 mb-4">Ajudamos você a tirar da mente o que vive preso há anos. Sites, projetos, marcas — aqui, a gente transforma sonhos em realidade palpável.</p>
-  
+
   <button onclick="window.location.href='portifólio.html'"
     class="px-3 py-1 text-sm rounded-full bg-gradient-to-r from-[#8f4fff]/20 to-[#facc15]/20 border border-[#8f4fff] text-[#8f4fff] hover:brightness-125 transition">
     Criar com a Gente
