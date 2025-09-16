@@ -766,17 +766,20 @@ backface-visibility: hidden;
 
   <!-- 4. A Forja dos Sonhos -->
 <div class="glass p-6 rounded-xl shadow-md reveal-top text-center">
-  <svg class="mx-auto mb-4" width="40" height="40" viewBox="0 0 24 24" fill="none">
-    <defs>
-      <linearGradient id="grad-forja" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#8f4fff"/>
-        <stop offset="100%" stop-color="#facc15"/>
-      </linearGradient>
-    </defs>
-    <!-- Martelo estilizado -->
-    <path d="M14 2h4v4h-4zM10 6h4v4h-4zM6 10h4v4H6z" fill="url(#grad-forja)"/>
-    <rect x="11" y="13" width="2" height="9" rx="1" fill="url(#grad-forja)"/>
-  </svg>
+  <svg class="mx-auto mb-4" width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad-forja" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8f4fff"/>
+      <stop offset="100%" stop-color="#facc15"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Cabo inclinado -->
+  <rect x="10" y="6" width="2" height="12" rx="1" transform="rotate(-45 10 6)" fill="url(#grad-forja)"/>
+
+  <!-- Cabeça do martelo -->
+  <rect x="13" y="3" width="6" height="3" rx="0.5" transform="rotate(-45 13 3)" fill="url(#grad-forja)"/>
+</svg>
 
   <h3 class="text-lg font-bold gradiente-titulo mb-2 font-[Cinzel Decorative]">A Forja dos Sonhos</h3>
   <p class="text-sm text-gray-300 mb-4">Ajudamos você a tirar da mente o que vive preso há anos. Sites, projetos, marcas — aqui, a gente transforma sonhos em realidade palpável.</p>
