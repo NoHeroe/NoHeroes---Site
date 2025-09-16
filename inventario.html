@@ -169,6 +169,18 @@ body{
   box-shadow:0 0 16px rgba(139,0,0,.6);
 }
 
+/* ADICIONA */
+.sp-tabs{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0,1fr)); /* 2 colunas no mobile */
+  gap:12px;
+}
+.sp-tabs .btn-x{ width:100%; justify-content:center; }
+
+@media (min-width:640px){
+  .sp-tabs{ grid-template-columns:repeat(3, minmax(0,1fr)); }
+}
+
 /* =========================================
    Inventário (grid 9xN)
    ========================================= */
@@ -221,6 +233,8 @@ body{
   border-bottom:1px solid #3a3a3a; padding-bottom:10px; margin-bottom:10px;
 }
 .modal-body{ font-size:.95rem; color:var(--text); }
+/* ADICIONA */
+body.modal-open{ overflow:hidden; }
   </style>
 </head>
 <body>
@@ -403,5 +417,8 @@ $bd?.addEventListener('click', (e)=>{ if(e.target === $bd) closeHelp(); });
 
 // fecha com ESC
 document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && !$bd.hidden) closeHelp(); });
+// ADICIONA nas funções do modal
+function openHelp(){ $bd.hidden = false; document.body.classList.add('modal-open'); }
+function closeHelp(){ $bd.hidden = true; document.body.classList.remove('modal-open'); }
   </script></body>
 </html>
