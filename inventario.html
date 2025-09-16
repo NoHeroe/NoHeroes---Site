@@ -235,6 +235,10 @@ body{
 .modal-body{ font-size:.95rem; color:var(--text); }
 /* ADICIONA */
 body.modal-open{ overflow:hidden; }
+/* garante que o atributo hidden realmente esconda o modal */
+.modal-backdrop[hidden]{
+  display: none !important;
+}
   </style>
 </head>
 <body>
@@ -402,21 +406,27 @@ const $bd   = document.getElementById('inv-help-backdrop');
 const $open = document.getElementById('open-help');
 const $close= document.getElementById('close-help');
 
-function openHelp(){ $bd.hidden = false; }
-function closeHelp(){ $bd.hidden = true; }
+function openHelp(){ 
+  $bd.hidden = false; 
+  document.body.classList.add('modal-open'); 
+}
+function closeHelp(){ 
+  $bd.hidden = true; 
+  document.body.classList.remove('modal-open'); 
+}
 
-// abre ao carregar (uma vez por dispositivo)
-if(!localStorage.getItem('nh_inv_help_seen')){ openHelp(); localStorage.setItem('nh_inv_help_seen','1'); }
-
-// botões
+// listeners primeiro
 $open?.addEventListener('click', openHelp);
 $close?.addEventListener('click', closeHelp);
-
-// fecha ao clicar fora
 $bd?.addEventListener('click', (e)=>{ if(e.target === $bd) closeHelp(); });
-
-// fecha com ESC
 document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && !$bd.hidden) closeHelp(); });
+
+// depois decide abrir 1x por dispositivo
+if(!localStorage.getItem('nh_inv_help_seen')){
+  openHelp();
+  localStorage.setItem('nh_inv_help_seen','1');
+}
+
 // ADICIONA nas funções do modal
 function openHelp(){ $bd.hidden = false; document.body.classList.add('modal-open'); }
 function closeHelp(){ $bd.hidden = true; document.body.classList.remove('modal-open'); }
