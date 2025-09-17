@@ -608,27 +608,18 @@ if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     //   if(max > vw + 2) console.warn('Elemento maior que viewport:', offender, max, '>', vw);
     // })();
 
-/**
- * Collage rotativa 1+3 — “orgânica”
- * - Rotaciona qual imagem é HERO e embaralha as pequenas
- * - Respeita prefers-reduced-motion
- * - Fácil trocar as URLs abaixo
- */
-
 (function initCollage(){
   const root = document.getElementById('collageIntro');
   if(!root) return;
 
-  // === 1) Troque as URLs/ALTs aqui ===
   const IMAGENS = [
     { src: 'assets/images/port1.png', alt: 'Interface moderna em tela escura' },
     { src: 'assets/images/port2.png', alt: 'Código em editor com luz roxa' },
     { src: 'assets/images/port3.png', alt: 'Poster/arte digital com gradientes' },
     { src: 'assets/images/port4.png', alt: 'Equipe trabalhando em mesa' },
   ];
-  const INTERVALO_MS = 7000 + Math.floor(Math.random()*1500); // leve variação
+  const INTERVALO_MS = 7000 + Math.floor(Math.random()*1500);
 
-  // === 2) Mapeamento dos slots
   const slots = {
     hero: root.querySelector('figure[data-slot="hero"] img'),
     a:    root.querySelector('figure[data-slot="a"] img'),
@@ -636,36 +627,38 @@ if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     c:    root.querySelector('figure[data-slot="c"] img'),
   };
   if(!slots.hero || !slots.a || !slots.b || !slots.c) return;
+  if(IMAGENS.length < 4) return; // evita duplicações
 
-  // Estado atual: qual idx está em cada slot
-  let ordem = [0,1,2,3]; // 0->hero, 1->a, 2->b, 3->c
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // Preload leve
   IMAGENS.forEach(i => { const im = new Image(); im.src = i.src; });
 
-  // Render inicial
+  let baseIndex = 0; // controla quem é o HERO
+  function ordemAtual(){
+    return [
+      baseIndex % IMAGENS.length,
+      (baseIndex + 1) % IMAGENS.length,
+      (baseIndex + 2) % IMAGENS.length,
+      (baseIndex + 3) % IMAGENS.length,
+    ];
+  }
+
   function render(){
-    const map = { hero: ordem[0], a: ordem[1], b: ordem[2], c: ordem[3] };
+    const current = ordemAtual();
+    const map = { hero: current[0], a: current[1], b: current[2], c: current[3] };
+
     Object.entries(map).forEach(([key, idx])=>{
       const el = slots[key];
       const data = IMAGENS[idx];
       if(!el) return;
-      // Evita flicker se src já é o mesmo
       if(el.getAttribute('src') !== data.src){
         if(!prefersReduced){ el.classList.add('collage-swap-out'); }
-        // troca com pequeno delay para permitir animação de saída
         setTimeout(()=>{
           el.src = data.src;
           el.alt = data.alt || '';
-          // sizes/responsivo — otimiza LCP
-          if(key === 'hero'){
-            el.sizes = '(min-width: 768px) 66vw, 100vw';
-          }else{
-            el.sizes = '(min-width: 768px) 32vw, 33vw';
-          }
+          el.sizes = key === 'hero'
+            ? '(min-width: 768px) 66vw, 100vw'
+            : '(min-width: 768px) 32vw, 33vw';
           if(!prefersReduced){
-            // força reflow para ativar classe de entrada
             void el.offsetWidth;
             el.classList.remove('collage-swap-out');
             el.classList.add('collage-swap-in');
@@ -676,36 +669,16 @@ if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     });
   }
 
-  // Estratégia de rotação “orgânica”:
-  //  - a cada passo, um dos três pequenos sobe para HERO
-  //  - o antigo HERO desce e toma a posição do escolhido (ou vai para o fim)
+  // primeiro render
+  render();
+
   function step(){
-    // escolhe uma pequena aleatória (1..3)
-    const pick = 1 + Math.floor(Math.random()*3);
-    const novoHero = ordem[pick];
-    const antigoHero = ordem[0];
-
-    // remove o escolhido do array e coloca no topo
-    ordem.splice(pick, 1);
-    ordem.unshift(novoHero);
-
-    // antigo hero desce para o fim com 50% de chance de entrar no meio
-    if(Math.random() < 0.5){
-      ordem.splice(1 + Math.floor(Math.random()*3), 0, antigoHero); // coloca em a/b/c aleatório
-      // remove o último para manter 4 (o splice acima inseriu 1)
-      ordem = ordem.slice(0,4);
-    } else {
-      ordem.push(antigoHero);
-      ordem = ordem.slice(0,4);
-    }
-
+    baseIndex = (baseIndex + 1) % IMAGENS.length; // rotação sequencial
     render();
   }
 
-  render();
   let timer = setInterval(step, INTERVALO_MS);
 
-  // pausa ao sair da aba
   document.addEventListener('visibilitychange', ()=>{
     if(document.hidden){ clearInterval(timer); }
     else { render(); timer = setInterval(step, INTERVALO_MS); }
