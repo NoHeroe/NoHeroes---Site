@@ -286,95 +286,157 @@ De sites a artes digitais, de gestão de projetos a obras criativas — unimos t
       </div>
     </section>
 
-    <!-- Vitrines -->
     <section id="vitrines" class="pb-24">
-      <div class="flex items-end justify-between gap-4 mb-6 vitrines-head">
-        <h2 class="font-display text-3xl grad-text vitrines-title">Vitrines</h2>
-        <div class="flex flex-wrap gap-2 text-xs vitrines-actions" role="tablist" aria-label="Categorias de vitrine">
-          <button class="btn" role="tab" aria-selected="true" aria-controls="tab-web" id="tab-web-btn" data-tab="web">Web design & Programação</button>
-          <button class="btn" role="tab" aria-selected="false" aria-controls="tab-arte" id="tab-arte-btn" data-tab="arte">Arte digital</button>
-          <button class="btn" role="tab" aria-selected="false" aria-controls="tab-escrita" id="tab-escrita-btn" data-tab="escrita">Escrita & Roteiro</button>
-        </div>
-      </div>
+  <div class="flex items-end justify-between gap-4 mb-6 vitrines-head">
+    <h2 class="font-display text-3xl grad-text vitrines-title">Vitrines</h2>
+    <div class="flex flex-wrap gap-2 text-xs vitrines-actions" role="tablist" aria-label="Categorias de vitrine">
+      <button class="btn" role="tab" aria-selected="true" aria-controls="tab-web" id="tab-web-btn" data-tab="web">Web design & Programação</button>
+      <button class="btn" role="tab" aria-selected="false" aria-controls="tab-arte" id="tab-arte-btn" data-tab="arte">Arte digital</button>
+      <button class="btn" role="tab" aria-selected="false" aria-controls="tab-escrita" id="tab-escrita-btn" data-tab="escrita">Escrita & Roteiro</button>
+    </div>
+  </div>
 
-      <div id="tab-web" class="tab" role="tabpanel" tabindex="0" aria-labelledby="tab-web-btn">
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <article class="card overflow-hidden reveal">
-            <div class="aspect-[4/3] ph"></div>
-            <div class="p-5">
-              <h3 class="font-semibold">Landing Page — Produto X</h3>
-              <p class="mt-1 text-sm text-zinc-400">UI/UX, performance, integração de pagamentos.</p>
-            </div>
-          </article>
-          <article class="card overflow-hidden reveal">
-            <div class="aspect-[4/3] ph"></div>
-            <div class="p-5">
-              <h3 class="font-semibold">E-commerce — Loja Y</h3>
-              <p class="mt-1 text-sm text-zinc-400">Node.js, PostgreSQL, autenticação JWT.</p>
-            </div>
-          </article>
-          <article class="card overflow-hidden reveal">
-            <div class="aspect-[4/3] ph"></div>
-            <div class="p-5">
-              <h3 class="font-semibold">Dashboard — Analytics</h3>
-              <p class="mt-1 text-sm text-zinc-400">Visual limpo, gráficos e filtros.</p>
-            </div>
-          </article>
+  <!-- WEB -->
+  <div id="tab-web" class="tab" role="tabpanel" tabindex="0" aria-labelledby="tab-web-btn">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <article class="card overflow-hidden reveal">
+        <div class="relative aspect-[4/3]">
+          <img
+            src="assets/images/landing-manual.jpg"
+            alt="Landing Page do Produto X — UI/UX e integração de pagamentos"
+            class="absolute inset-0 h-full w-full object-cover"
+            loading="lazy" decoding="async" />
         </div>
-      </div>
+        <div class="p-5">
+          <h3 class="font-semibold">Landing Page — Manual da Ancestralidade</h3>
+          <p class="mt-1 text-sm text-zinc-400">UI/UX, performance, integração de pagamentos.</p>
+        </div>
+      </article>
 
-      <div id="tab-arte" class="tab hidden" role="tabpanel" tabindex="-1" aria-labelledby="tab-arte-btn">
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <article class="card overflow-hidden reveal">
-            <div class="aspect-[3/4] ph"></div>
-            <div class="p-5">
-              <h3 class="font-semibold">Concept — Personagem</h3>
-              <p class="mt-1 text-sm text-zinc-400">Estudo de personagem, estética NoHeroes.</p>
-            </div>
-          </article>
-          <article class="card overflow-hidden reveal">
-            <div class="aspect-[16/9] ph"></div>
-            <div class="p-5">
-              <h3 class="font-semibold">Cena — Ambiente</h3>
-              <p class="mt-1 text-sm text-zinc-400">Luz, cor e composição cinematográfica.</p>
-            </div>
-          </article>
-          <article class="card overflow-hidden reveal">
-            <div class="aspect-[1/1] ph"></div>
-            <div class="p-5">
-              <h3 class="font-semibold">Poster — Série</h3>
-              <p class="mt-1 text-sm text-zinc-400">Branding e impacto visual.</p>
-            </div>
-          </article>
+      <article class="card overflow-hidden reveal">
+        <div class="relative aspect-[4/3]">
+          <img
+            src="assets/images/ecommerce.jpg"
+            alt="E-commerce Loja — Node.js, PostgreSQL e autenticação JWT"
+            class="absolute inset-0 h-full w-full object-cover"
+            loading="lazy" decoding="async" />
         </div>
-      </div>
+        <div class="p-5">
+          <h3 class="font-semibold">E-commerce — Loja Y</h3>
+          <p class="mt-1 text-sm text-zinc-400">Node.js, PostgreSQL, autenticação JWT.</p>
+        </div>
+      </article>
 
-      <div id="tab-escrita" class="tab hidden" role="tabpanel" tabindex="-1" aria-labelledby="tab-escrita-btn">
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <article class="card overflow-hidden reveal">
-            <div class="aspect-[21/9] ph"></div>
-            <div class="p-5">
-              <h3 class="font-semibold">Roteiro — Curta</h3>
-              <p class="mt-1 text-sm text-zinc-400">Estrutura, ritmo e diálogo natural.</p>
-            </div>
-          </article>
-          <article class="card overflow-hidden reveal">
-            <div class="aspect-[4/3] ph"></div>
-            <div class="p-5">
-              <h3 class="font-semibold">Capítulo — NoHeroes</h3>
-              <p class="mt-1 text-sm text-zinc-400">Worldbuilding e imersão sensorial.</p>
-            </div>
-          </article>
-          <article class="card overflow-hidden reveal">
-            <div class="aspect-[4/3] ph"></div>
-            <div class="p-5">
-              <h3 class="font-semibold">Copy — Campanha</h3>
-              <p class="mt-1 text-sm text-zinc-400">Mensagem clara e CTA forte.</p>
-            </div>
-          </article>
+      <article class="card overflow-hidden reveal">
+        <div class="relative aspect-[4/3]">
+          <img
+            src="assets/images/web/dashboard-analytics.jpg"
+            alt="Dashboard Analytics — visual limpo, gráficos e filtros"
+            class="absolute inset-0 h-full w-full object-cover"
+            loading="lazy" decoding="async" />
         </div>
-      </div>
-    </section>
+        <div class="p-5">
+          <h3 class="font-semibold">Dashboard — Analytics</h3>
+          <p class="mt-1 text-sm text-zinc-400">Visual limpo, gráficos e filtros.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <!-- ARTE -->
+  <div id="tab-arte" class="tab hidden" role="tabpanel" tabindex="-1" aria-labelledby="tab-arte-btn">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <article class="card overflow-hidden reveal">
+        <div class="relative aspect-[3/4]">
+          <img
+            src="assets/images/arte/concept-personagem.jpg"
+            alt="Concept de personagem — estética NoHeroes"
+            class="absolute inset-0 h-full w-full object-cover"
+            loading="lazy" decoding="async" />
+        </div>
+        <div class="p-5">
+          <h3 class="font-semibold">Concept — Personagem</h3>
+          <p class="mt-1 text-sm text-zinc-400">Estudo de personagem, estética NoHeroes.</p>
+        </div>
+      </article>
+
+      <article class="card overflow-hidden reveal">
+        <div class="relative aspect-[16/9]">
+          <img
+            src="assets/images/arte/cena-ambiente.jpg"
+            alt="Cena de ambiente — luz, cor e composição cinematográfica"
+            class="absolute inset-0 h-full w-full object-cover"
+            loading="lazy" decoding="async" />
+        </div>
+        <div class="p-5">
+          <h3 class="font-semibold">Cena — Ambiente</h3>
+          <p class="mt-1 text-sm text-zinc-400">Luz, cor e composição cinematográfica.</p>
+        </div>
+      </article>
+
+      <article class="card overflow-hidden reveal">
+        <div class="relative aspect-[1/1]">
+          <img
+            src="assets/images/arte/poster-serie.jpg"
+            alt="Pôster de série — branding e impacto visual"
+            class="absolute inset-0 h-full w-full object-cover"
+            loading="lazy" decoding="async" />
+        </div>
+        <div class="p-5">
+          <h3 class="font-semibold">Poster — Série</h3>
+          <p class="mt-1 text-sm text-zinc-400">Branding e impacto visual.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <!-- ESCRITA -->
+  <div id="tab-escrita" class="tab hidden" role="tabpanel" tabindex="-1" aria-labelledby="tab-escrita-btn">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <article class="card overflow-hidden reveal">
+        <div class="relative aspect-[21/9]">
+          <img
+            src="assets/images/escrita/roteiro-curta.jpg"
+            alt="Roteiro de curta — estrutura, ritmo e diálogo natural"
+            class="absolute inset-0 h-full w-full object-cover"
+            loading="lazy" decoding="async" />
+        </div>
+        <div class="p-5">
+          <h3 class="font-semibold">Roteiro — Curta</h3>
+          <p class="mt-1 text-sm text-zinc-400">Estrutura, ritmo e diálogo natural.</p>
+        </div>
+      </article>
+
+      <article class="card overflow-hidden reveal">
+        <div class="relative aspect-[4/3]">
+          <img
+            src="assets/images/escrita/capitulo-noheroes.jpg"
+            alt="Capítulo NoHeroes — worldbuilding e imersão sensorial"
+            class="absolute inset-0 h-full w-full object-cover"
+            loading="lazy" decoding="async" />
+        </div>
+        <div class="p-5">
+          <h3 class="font-semibold">Capítulo — NoHeroes</h3>
+          <p class="mt-1 text-sm text-zinc-400">Worldbuilding e imersão sensorial.</p>
+        </div>
+      </article>
+
+      <article class="card overflow-hidden reveal">
+        <div class="relative aspect-[4/3]">
+          <img
+            src="assets/images/escrita/copy-campanha.jpg"
+            alt="Copy para campanha — mensagem clara e CTA forte"
+            class="absolute inset-0 h-full w-full object-cover"
+            loading="lazy" decoding="async" />
+        </div>
+        <div class="p-5">
+          <h3 class="font-semibold">Copy — Campanha</h3>
+          <p class="mt-1 text-sm text-zinc-400">Mensagem clara e CTA forte.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
 
     <!-- Projetos Próprios -->
     <section id="proprios" class="pb-28">
