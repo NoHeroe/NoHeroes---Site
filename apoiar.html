@@ -152,7 +152,9 @@
     <!-- Ações -->
     <section class="mt-10 grid gap-3 sm:grid-cols-2 reveal" style="--reveal-delay:140ms">
       <button id="btnContribuir" class="btn btn-primary w-full">Contribuir / Doar</button>
-      <button id="btnSolicitar" class="btn btn-ghost w-full">Pedir serviço / ajuda</button>
+      <a href="portifólio.html" id="btnSolicitar" class="btn btn-ghost w-full">
+  Pedir serviço / ajuda
+</a>
     </section>
 
     <!-- Leads -->
@@ -240,20 +242,6 @@
     </div>
   </div>
 
-  <!-- MODAL: Solicitar serviço/ajuda -->
-  <div id="modalSolicitar" class="overlay" role="dialog" aria-modal="true" aria-label="Solicitar serviço/ajuda">
-    <div class="modal">
-      <h3 class="cinzel text-xl grad-text">Pedir serviço / ajuda</h3>
-      <form id="formSolicitar" class="mt-3 grid gap-3">
-        <input class="input" name="nome" placeholder="Seu nome" required />
-        <input class="input" type="email" name="email" placeholder="Seu e-mail" required />
-        <button class="btn btn-primary" type="submit">Enviar</button>
-      </form>
-      <div class="mt-3 flex justify-end">
-        <button class="btn" data-close>Fechar</button>
-      </div>
-    </div>
-  </div>
 
   <footer class="py-10 text-center text-white/50 text-sm">
     © <span id="year"></span> NoHeroes. Todos os direitos reservados.
