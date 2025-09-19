@@ -125,33 +125,17 @@
 @media (prefers-reduced-motion: reduce){
   .collage-img{ transition: none !important; }
 }
-/* Fix collage desktop */
+/* Corrige a compressão no desktop mantendo o mobile intacto */
 @media (min-width: 1024px){
-  /* garante grid com herói amplo */
-  #collageIntro .grid{
-    grid-template-columns: 2fr 1fr !important;
+  /* garante 12 colunas e evita alinhamento que achata */
+  #intro > .grid{
+    grid-template-columns: repeat(12, minmax(0,1fr));
+    align-items: stretch;
   }
 
-  /* herói grande e cinematográfico */
-  #collageIntro figure[data-slot="hero"]{
-    aspect-ratio: 16 / 9 !important;         /* vence aspect-[4/3] */
-    min-height: clamp(320px, 34vw, 560px);   /* evita “noz” */
-  }
-
-  /* miniaturas laterais equilibradas */
-  #collageIntro figure[data-slot="a"],
-  #collageIntro figure[data-slot="b"],
-  #collageIntro figure[data-slot="c"]{
-    aspect-ratio: 4 / 3 !important;
-    min-height: clamp(120px, 12vw, 240px);
-  }
-
-  /* segurança: imagem sempre preenche o figure */
-  #collageIntro img{
-    display: block;
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
+  /* dá 5 colunas pro collage (7 + 5 = 12) */
+  #collageIntro{
+    grid-column: span 5 / span 5;
   }
 }
   </style>
