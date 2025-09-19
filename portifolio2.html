@@ -126,6 +126,29 @@
   .collage-img{ transition: none !important; }
 }
 
+
+@media (min-width:1024px){
+  /* HERO ocupa a linha toda */
+  #collageIntro [data-slot="hero"]{
+    grid-column: span 3 / span 3 !important;
+  }
+
+  /* container das miniaturas: sempre 3 colunas em linha */
+  #collageIntro > .grid > div{
+    grid-column: span 3 / span 3 !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    grid-template-rows: unset !important;
+  }
+
+  /* miniaturas se ajustam lado a lado */
+  #collageIntro [data-slot="a"],
+  #collageIntro [data-slot="b"],
+  #collageIntro [data-slot="c"]{
+    grid-column: span 1 / span 1 !important;
+    aspect-ratio: 4 / 3 !important;
+  }
+}
   </style>
   <script type="application/ld+json">
   {
