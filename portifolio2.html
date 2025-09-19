@@ -125,19 +125,7 @@
 @media (prefers-reduced-motion: reduce){
   .collage-img{ transition: none !important; }
 }
-/* Corrige a compressão no desktop mantendo o mobile intacto */
-@media (min-width: 1024px){
-  /* garante 12 colunas e evita alinhamento que achata */
-  #intro > .grid{
-    grid-template-columns: repeat(12, minmax(0,1fr));
-    align-items: stretch;
-  }
 
-  /* dá 5 colunas pro collage (7 + 5 = 12) */
-  #collageIntro{
-    grid-column: span 5 / span 5;
-  }
-}
   </style>
   <script type="application/ld+json">
   {
@@ -214,7 +202,7 @@ De sites a artes digitais, de gestão de projetos a obras criativas — unimos t
             </a>
           </div>
         </div>
-        <div id="collageIntro" class="card p-4 sm:p-6 md:p-8 relative overflow-hidden reveal">
+        <div id="collageIntro" class="lg:col-span-5 card p-4 sm:p-6 md:p-8 relative overflow-hidden reveal">
   <div class="absolute -top-24 -right-24 w-64 h-64 rounded-full blur-3xl opacity-30" style="background:var(--grad)"></div>
 
   <div class="grid grid-cols-3 gap-3">
