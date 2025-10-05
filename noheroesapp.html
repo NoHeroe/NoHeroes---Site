@@ -288,19 +288,19 @@
       <div class="panel p-4 reveal" data-dir="left">
         <div class="text-2xl mb-2">📜</div>
         <h3 class="font-semibold mb-1">Missões & Conquistas</h3>
-        <p class="text-sm text-gray-300">Ganhe XP, enfrente desafios diários e prove seu valor.</p>
+        <p class="text-sm text-gray-300">Ganhe XP, enfrente desafios diários enquanto organiza sua jornada.</p>
       </div>
 
       <!-- 2 -->
       <div class="panel p-4 reveal" data-dir="right">
         <div class="text-2xl mb-2">💬</div>
         <h3 class="font-semibold mb-1">Guilda & Comunidade</h3>
-        <p class="text-sm text-gray-300">Junte-se a aventureiros, converse, compartilhe arte e histórias.</p>
+        <p class="text-sm text-gray-300">Junte-se a aventureiros, interaja, evolua e cresça em um ambiente mágico.</p>
       </div>
 
       <!-- 3 -->
       <div class="panel p-4 reveal" data-dir="left">
-        <div class="text-2xl mb-2">🔮</div>
+        <div class="text-2xl mb-2">🌌</div>
         <h3 class="font-semibold mb-1">Oráculo AI</h3>
         <p class="text-sm text-gray-300">Uma entidade viva que guia, ensina e observa.  
           Baseado em IA, responde dúvidas, dá conselhos e reage às suas decisões dentro do universo.</p>
@@ -311,7 +311,7 @@
         <div class="text-2xl mb-2">🌑</div>
         <h3 class="font-semibold mb-1">Vitalismo</h3>
         <p class="text-sm text-gray-300">Sistema de despertar único.  
-          A cada ação, energia vital é acumulada — até atingir o ponto de ruptura: o Despertar.</p>
+          A cada ação, energia vital é acumulada — até atingir o ponto de ruptura: o Despertar Vitalista.</p>
       </div>
 
       <!-- 5 -->
@@ -332,7 +332,7 @@
 
       <!-- 7 -->
       <div class="panel p-4 reveal" data-dir="left">
-        <div class="text-2xl mb-2">💎</div>
+        <div class="text-2xl mb-2">🗡️</div>
         <h3 class="font-semibold mb-1">Loja & Itens Sombrios</h3>
         <p class="text-sm text-gray-300">Adquira itens raros, relíquias e artefatos permanentes.  
           Os Itens Sombrios expandem seus atributos e contam histórias do universo.</p>
@@ -340,7 +340,7 @@
 
       <!-- 8 -->
       <div class="panel p-4 reveal" data-dir="right">
-        <div class="text-2xl mb-2">🕯️</div>
+        <div class="text-2xl mb-2">📜</div>
         <h3 class="font-semibold mb-1">Eventos & Conquistas</h3>
         <p class="text-sm text-gray-300">Participe de eventos temáticos, libere conquistas secretas  
           e receba gemas que desbloqueiam caminhos de poder dentro do app.</p>
@@ -465,17 +465,20 @@
       b.onclick = () => modal.classList.add('show'));
     modal.onclick = e => { if (e.target === modal || e.target.hasAttribute('data-close')) modal.classList.remove('show'); };
 
-    // Scroll Reveal — versão funcional e compatível com Tailwind
+    // Scroll Reveal com reset (anima toda vez que entra no viewport)
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
+    const el = entry.target;
     if (entry.isIntersecting) {
-      entry.target.classList.add('reveal-in');
-      observer.unobserve(entry.target); // evita reexecutar
+      el.classList.add('reveal-in');
+    } else {
+      // reseta quando sai da tela
+      el.classList.remove('reveal-in');
     }
   });
 }, { threshold: 0.15 });
 
-// aplica direções automáticas
+// aplica direções automaticamente (ou usa data-dir)
 document.querySelectorAll('.reveal').forEach((el, i) => {
   const dir = el.dataset.dir || (i % 2 === 0 ? 'left' : 'right');
   el.classList.add(`reveal-${dir}`);
