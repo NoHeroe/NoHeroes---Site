@@ -111,9 +111,14 @@
   to { opacity: 1; transform: scale(1); }
 }
 
-    /* Scroll animation */
-    .reveal { opacity: 0; transform: translateY(20px); transition: all .6s ease; }
-    .reveal.reveal-in { opacity: 1; transform: none; }
+    /* Base */
+.reveal { opacity: 0; transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal-left  { transform: translateX(-40px); }
+.reveal-right { transform: translateX(40px); }
+.reveal-down  { transform: translateY(30px); }
+
+/* Quando entra */
+.reveal-in { opacity: 1; transform: translate(0,0); }
 
     /* Brasas */
     #brasasCanvas {
@@ -460,23 +465,21 @@
       b.onclick = () => modal.classList.add('show'));
     modal.onclick = e => { if (e.target === modal || e.target.hasAttribute('data-close')) modal.classList.remove('show'); };
 
-    // Scroll reveal lateral
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('reveal-in');
-      const dir = e.target.getAttribute('data-dir');
-      if (dir === 'left') e.target.style.transform = 'translateX(0)';
-      if (dir === 'right') e.target.style.transform = 'translateX(0)';
+    // Scroll Reveal — versão funcional e compatível com Tailwind
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('reveal-in');
+      observer.unobserve(entry.target); // evita reexecutar
     }
   });
-}, { threshold: .2 });
+}, { threshold: 0.15 });
 
-document.querySelectorAll('.reveal').forEach(el => {
-  const dir = el.getAttribute('data-dir');
-  el.style.opacity = 0;
-  el.style.transform = dir === 'right' ? 'translateX(40px)' : dir === 'left' ? 'translateX(-40px)' : 'translateY(20px)';
-  obs.observe(el);
+// aplica direções automáticas
+document.querySelectorAll('.reveal').forEach((el, i) => {
+  const dir = el.dataset.dir || (i % 2 === 0 ? 'left' : 'right');
+  el.classList.add(`reveal-${dir}`);
+  observer.observe(el);
 });
 
   // Brasas (original do Portal NoHeroes)
