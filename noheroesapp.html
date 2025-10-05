@@ -8,6 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root {
+--nh-bg: #0a0a0a;
       --nh-ink: #e5e5e5;
       --nh-accent1: #8f4fff;
       --nh-accent2: #facc15;
@@ -107,7 +108,12 @@
     .reveal.reveal-in { opacity: 1; transform: none; }
 
     /* Brasas */
-    #brasasCanvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+    #brasasCanvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;           /* estava -1 */
+}
+body { background: transparent; } /* ou um gradiente sutil */
 
 .btn-support-purple {
   position: relative;
