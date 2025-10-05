@@ -254,11 +254,49 @@ section:nth-of-type(3) { /* ou id específico */
 .faq-toggle span:last-child { transform: rotate(0); }
 .faq-item.open .faq-toggle span:last-child { transform: rotate(180deg); }
 .faq-content { transition: max-height .4s ease, opacity .3s ease; overflow: hidden; }
+
+#menu-fixed button span {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+#menu-fixed.open button span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+#menu-fixed.open button span:nth-child(2) {
+  opacity: 0;
+}
+#menu-fixed.open button span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+#menu-drawer {
+  animation: fadeInMenu 0.3s ease;
+}
+@keyframes fadeInMenu {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
   </style>
 </head>
 
 <body class="text-center">
   <canvas id="brasasCanvas"></canvas>
+<!-- MENU HAMBÚRGUER FIXO -->
+<nav id="menu-fixed" class="fixed top-4 right-4 z-50">
+  <button id="menu-btn" class="w-11 h-11 rounded-xl border border-purple-500/40 bg-black/40 backdrop-blur-md flex flex-col justify-center items-center space-y-1 hover:bg-black/60 transition-all">
+    <span class="block w-6 h-[2px] bg-purple-400"></span>
+    <span class="block w-6 h-[2px] bg-purple-400"></span>
+    <span class="block w-6 h-[2px] bg-purple-400"></span>
+  </button>
+
+  <div id="menu-drawer" class="hidden absolute right-0 mt-3 w-48 panel p-4 text-left space-y-3 backdrop-blur-md">
+    <a href="#downloadone" class="menu-link block text-sm text-gray-200 hover:text-purple-300">Download</a>
+    <a href="#dentro" class="menu-link block text-sm text-gray-200 hover:text-purple-300">Dentro do App</a>
+    <a href="#proposito" class="menu-link block text-sm text-gray-200 hover:text-purple-300">Propósito</a>
+    <a href="#download" class="menu-link block text-sm text-gray-200 hover:text-purple-300">Versões</a>
+    <a href="#faq" class="menu-link block text-sm text-gray-200 hover:text-purple-300">FAQ</a>
+  </div>
+</nav>
 
   <!-- TOPO -->
   <header class="pt-12 pb-6 px-4">
@@ -698,6 +736,26 @@ document.querySelectorAll('.faq-toggle').forEach(btn => {
       content.style.opacity = 0;
       setTimeout(() => content.classList.add('hidden'), 300);
     }
+  });
+});
+// ===== MENU HAMBÚRGUER =====
+const menuBtn = document.getElementById('menu-btn');
+const menuDrawer = document.getElementById('menu-drawer');
+const menuNav = document.getElementById('menu-fixed');
+
+menuBtn.addEventListener('click', () => {
+  menuNav.classList.toggle('open');
+  menuDrawer.classList.toggle('hidden');
+});
+
+// fecha menu após clicar em um link
+document.querySelectorAll('.menu-link').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+    menuNav.classList.remove('open');
+    menuDrawer.classList.add('hidden');
   });
 });
 </script>
