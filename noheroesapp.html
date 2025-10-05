@@ -228,6 +228,14 @@
   filter: brightness(1.1);
   transform: translateY(-2px);
 }
+section:nth-of-type(3) { /* ou id específico */
+  background: radial-gradient(circle at 30% 50%, rgba(168,85,247,0.15), transparent 70%);
+  animation: bgPulse 8s ease-in-out infinite;
+}
+@keyframes bgPulse {
+  0%,100% { background-size: 100% 100%; opacity:.9; }
+  50% { background-size: 120% 120%; opacity:1; }
+}
   </style>
 </head>
 
@@ -349,23 +357,51 @@
   </div>
 </section>
 
-  <!-- CONTEÚDOS -->
-  <section class="px-4 py-10">
-    <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-6 items-center">
-      <div class="panel p-4 reveal"><img src="assets/images/mockup-app.png" class="rounded-lg" alt=""></div>
-      <div class="panel p-6 text-left reveal">
-        <h2 class="cinzel text-2xl mb-4 gradiente-noheroes">Conteúdos internos</h2>
-        <ul class="space-y-2 text-gray-200">
-          <li>🎭 <b>Personagem 3D</b> — personalize seu herói.</li>
-          <li>⚔️ <b>Missões soulslike</b> — esforço real, recompensa justa.</li>
-          <li>📖 <b>Biblioteca</b> — eBooks e mangás com progresso salvo.</li>
-          <li>💎 <b>Loja</b> — itens raros e colecionáveis únicos.</li>
-          <li>🕯️ <b>Eventos</b> — temporadas e conquistas.</li>
-          <li>🌑 <b>Vitalismo</b> — desperte seu poder interior.</li>
-        </ul>
-      </div>
+  <!-- PROPÓSITO DO SISTEMA -->
+<section class="px-4 py-16">
+  <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-6 items-center">
+
+    <!-- Mockup / Ilustração -->
+    <div class="panel p-4 reveal" data-dir="left">
+      <img src="assets/images/mockup-app.png" class="rounded-lg shadow-lg" alt="Interface do App NoHeroes">
     </div>
-  </section>
+
+    <!-- Texto -->
+    <div class="panel p-6 text-left reveal" data-dir="right">
+      <h2 class="cinzel text-3xl mb-4 gradiente-noheroes">Propósito do Sistema NoHeroes</h2>
+
+      <p class="text-gray-200 leading-relaxed mb-4">
+        O NoHeroes App nasceu com um propósito simples e poderoso:  
+        <b>transformar evolução pessoal em uma jornada divertida</b>.  
+        Aqui, crescer não é obrigação — é aventura.
+      </p>
+
+      <p class="text-gray-300 leading-relaxed mb-4">
+        Por meio da <b>gamificação do dia a dia</b>, cada tarefa concluída rende XP,  
+        recompensas e progresso real.  
+        Você avança no jogo e na vida, um passo de cada vez — com energia, propósito e foco.
+      </p>
+
+      <p class="text-gray-300 leading-relaxed mb-4">
+        O app acompanha sua <b>jornada individual</b>, sem receitas prontas.  
+        Cada usuário é único, com missões, ritmos e conquistas próprias.  
+        O sistema aprende com você e se molda à sua forma de evoluir.
+      </p>
+
+      <p class="text-gray-300 leading-relaxed mb-4">
+        Aqui, <b>o personagem é você</b>.  
+        Tudo o que faz — conquistas, crescimento, hábitos e equilíbrio —  
+        é refletido visualmente em seu avatar, status e equipamentos dentro do app.
+      </p>
+
+      <p class="text-gray-400 italic">
+        Nosso objetivo é simples: unir o real e o imaginário.  
+        Tornar o crescimento pessoal uma experiência mágica, imersiva e contínua.
+      </p>
+    </div>
+
+  </div>
+</section>
 
 <!-- DOWNLOAD DEMO APP -->
 <section id="download" class="px-4 py-10">
