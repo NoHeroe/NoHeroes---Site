@@ -249,6 +249,11 @@ section:nth-of-type(3) { /* ou id específico */
   0%,100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
 }
+
+.faq-item { transition: all .3s ease; }
+.faq-toggle span:last-child { transform: rotate(0); }
+.faq-item.open .faq-toggle span:last-child { transform: rotate(180deg); }
+.faq-content { transition: max-height .4s ease, opacity .3s ease; overflow: hidden; }
   </style>
 </head>
 
@@ -460,24 +465,98 @@ section:nth-of-type(3) { /* ou id específico */
   </div>
 </section>
 
-  <!-- ROADMAP -->
-  <section class="px-4 py-12">
-    <div class="max-w-4xl mx-auto panel p-8 text-left reveal">
-      <h2 class="cinzel text-2xl mb-3 gradiente-noheroes">Em breve / Roadmap</h2>
-      <p class="text-gray-200 mb-4">Atualização Vitalista em desenvolvimento. Prepare-se para o despertar.</p>
-      <div class="w-full h-3 rounded-full bg-white/10 overflow-hidden mb-4">
-        <div class="h-full bg-gradient-to-r from-purple-500 via-fuchsia-500 to-yellow-300 animate-[progress_6s_ease-in-out_infinite]"></div>
-      </div>
-      <style>@keyframes progress{0%{width:10%}50%{width:85%}100%{width:10%}}</style>
-      <a href="#" class="btn-x inline-flex">Ver Roadmap</a>
+  <!-- FAQ -->
+<div class="mt-12">
+  <h3 class="cinzel text-2xl mb-6 gradiente-noheroes text-center">Perguntas Frequentes</h3>
 
-      <div class="mt-8 grid md:grid-cols-3 gap-4 text-sm">
-        <div class="panel p-4"><b>O app é gratuito?</b><br>Sim, com versão Pro opcional.</div>
-        <div class="panel p-4"><b>Funciona offline?</b><br>Sim, para conteúdos baixados.</div>
-        <div class="panel p-4"><b>O que é Vitalismo?</b><br>Um caminho de poder. <a href="#" class="underline">Saiba mais</a>.</div>
+  <div class="space-y-3 max-w-3xl mx-auto">
+
+    <!-- 1 -->
+    <div class="faq-item panel overflow-hidden">
+      <button class="faq-toggle w-full text-left px-5 py-4 font-semibold flex justify-between items-center">
+        <span>O app é gratuito?</span>
+        <span class="text-purple-400 transition-transform duration-300">↓</span>
+      </button>
+      <div class="faq-content px-5 pb-4 text-gray-300 hidden">
+        Sim. Você pode usar o aplicativo gratuitamente e aproveitar todas as funções básicas: acompanhar seu progresso, realizar missões diárias e evoluir seu personagem.  
+        Existe também uma <b class="gradiente-inline">versão Pro</b> com recursos expandidos e personalizações avançadas para quem deseja aprofundar a experiência.
       </div>
     </div>
-  </section>
+
+    <!-- 2 -->
+    <div class="faq-item panel overflow-hidden">
+      <button class="faq-toggle w-full text-left px-5 py-4 font-semibold flex justify-between items-center">
+        <span>O que muda da versão Free para a versão Pro?</span>
+        <span class="text-purple-400 transition-transform duration-300">↓</span>
+      </button>
+      <div class="faq-content px-5 pb-4 text-gray-300 hidden">
+        A versão <b class="gradiente-inline">Pro</b> desbloqueia recursos exclusivos:
+        <ul class="list-disc ml-6 mt-2 space-y-1">
+          <li><b class="gradiente-inline">Oráculo AI avançado</b> — respostas mais profundas, acompanhamento do seu progresso e conselhos personalizados.</li>
+          <li><b class="gradiente-inline">Missões customizadas</b> — crie ou edite suas próprias tarefas, integrando com seus objetivos reais.</li>
+          <li><b class="gradiente-inline">Estatísticas detalhadas</b> — gráficos de evolução, análise de desempenho e relatórios semanais.</li>
+          <li><b class="gradiente-inline">Visual Premium</b> — temas adicionais, efeitos visuais exclusivos e trilhas imersivas.</li>
+          <li><b class="gradiente-inline">Eventos antecipados</b> — acesso prioritário a novos modos e desafios sazonais.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="faq-item panel overflow-hidden">
+      <button class="faq-toggle w-full text-left px-5 py-4 font-semibold flex justify-between items-center">
+        <span>Funciona offline?</span>
+        <span class="text-purple-400 transition-transform duration-300">↓</span>
+      </button>
+      <div class="faq-content px-5 pb-4 text-gray-300 hidden">
+        Sim. O app <b class="gradiente-inline">funciona offline</b> para conteúdos e missões baixadas.  
+        Alguns recursos, como o Oráculo AI e eventos comunitários, exigem conexão apenas no momento de sincronização.  
+        Assim, você pode continuar sua jornada mesmo sem internet — e evoluir onde quiser.
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="faq-item panel overflow-hidden">
+      <button class="faq-toggle w-full text-left px-5 py-4 font-semibold flex justify-between items-center">
+        <span>O que é o Vitalismo dentro do app?</span>
+        <span class="text-purple-400 transition-transform duration-300">↓</span>
+      </button>
+      <div class="faq-content px-5 pb-4 text-gray-300 hidden">
+        O <b class="gradiente-inline">Vitalismo</b> é o sistema central de energia e autoconhecimento do NoHeroes.  
+        Ele representa o equilíbrio entre esforço, foco e descanso.  
+        Quanto mais você age de forma coerente com seus propósitos, mais vitalismo acumula —  
+        até atingir o <b class="gradiente-inline">Despertar</b>, um marco de evolução pessoal dentro do universo.
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="faq-item panel overflow-hidden">
+      <button class="faq-toggle w-full text-left px-5 py-4 font-semibold flex justify-between items-center">
+        <span>O app coleta dados pessoais?</span>
+        <span class="text-purple-400 transition-transform duration-300">↓</span>
+      </button>
+      <div class="faq-content px-5 pb-4 text-gray-300 hidden">
+        Apenas o essencial.  
+        O app utiliza um sistema descentralizado de progresso — seus dados são criptografados e vinculados à sua conta de forma segura.  
+        O objetivo não é controlar, mas acompanhar: sua jornada pertence a você.  
+        Nenhuma informação é vendida ou compartilhada com terceiros.
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="faq-item panel overflow-hidden">
+      <button class="faq-toggle w-full text-left px-5 py-4 font-semibold flex justify-between items-center">
+        <span>Qual a diferença entre o app e o universo NoHeroes?</span>
+        <span class="text-purple-400 transition-transform duration-300">↓</span>
+      </button>
+      <div class="faq-content px-5 pb-4 text-gray-300 hidden">
+        O app é o <b class="gradiente-inline">portal interativo</b> do universo NoHeroes.  
+        Enquanto os livros, animações e histórias expandem a narrativa, o aplicativo coloca você dentro dela.  
+        Ele conecta o jogador ao universo, transformando o conceito “viva o que lê” em experiência real.
+      </div>
+    </div>
+
+  </div>
+</div>
 
   <footer class="mt-10 mb-8 text-gray-500 text-sm">
     <p>&copy; 2025 NoHeroes. Todos os direitos reservados.</p>
@@ -580,6 +659,24 @@ document.querySelectorAll('.reveal').forEach((el, i) => {
 
   createParticles(150);
   animate();
+
+// FAQ Acordeão
+document.querySelectorAll('.faq-toggle').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const content = item.querySelector('.faq-content');
+    const open = item.classList.toggle('open');
+    if (open) {
+      content.classList.remove('hidden');
+      content.style.maxHeight = content.scrollHeight + "px";
+      content.style.opacity = 1;
+    } else {
+      content.style.maxHeight = "0px";
+      content.style.opacity = 0;
+      setTimeout(() => content.classList.add('hidden'), 300);
+    }
+  });
+});
 </script>
 </body>
 </html>
