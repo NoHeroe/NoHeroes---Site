@@ -269,22 +269,80 @@
   </div>
 </section>
 
-  <!-- O QUE É -->
-  <section class="px-4 py-10">
-    <div class="max-w-4xl mx-auto panel p-8 text-left reveal">
-      <h2 class="cinzel text-3xl mb-4 gradiente-noheroes">O que o App NoHeroes faz?</h2>
-      <p class="text-gray-200 leading-relaxed mb-6">
-        Mais do que um app — é o seu portal entre mundos.
-        Aqui você gerencia seu personagem, lê os livros sombrios, assiste aos animes oficiais e conversa com aventureiros de todo o Reino.
-        NoHeroes App é a ponte entre o real e o universo que criamos. <b>Jogue, evolua, desperte.</b>
-      </p>
-      <div class="grid sm:grid-cols-3 gap-4">
-        <div class="panel p-4">📜 <b>Missões & Conquistas</b><br><small>Ganhe XP e prove seu valor.</small></div>
-        <div class="panel p-4">💬 <b>Guilda & Comunidade</b><br><small>Converse e compartilhe histórias.</small></div>
-        <div class="panel p-4">🔮 <b>Oráculo AI</b><br><small>Uma entidade que te guia e observa.</small></div>
+  <!-- DENTRO DO APP -->
+<section class="px-4 py-10">
+  <div class="max-w-5xl mx-auto panel p-8 soft-shadow text-left reveal">
+    <h2 class="cinzel text-3xl mb-4 gradiente-noheroes text-center">Dentro do App NoHeroes</h2>
+    <p class="text-gray-200 leading-relaxed mb-6 text-center">
+      O NoHeroes App é mais que um complemento — é o <b>coração vivo do universo</b>.  
+      Cada função conecta você à jornada: missões, aliados, vitalismo e histórias que ecoam do jogo para o real.
+    </p>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- 1 -->
+      <div class="panel p-4 reveal" data-dir="left">
+        <div class="text-2xl mb-2">📜</div>
+        <h3 class="font-semibold mb-1">Missões & Conquistas</h3>
+        <p class="text-sm text-gray-300">Ganhe XP, enfrente desafios diários e prove seu valor.</p>
+      </div>
+
+      <!-- 2 -->
+      <div class="panel p-4 reveal" data-dir="right">
+        <div class="text-2xl mb-2">💬</div>
+        <h3 class="font-semibold mb-1">Guilda & Comunidade</h3>
+        <p class="text-sm text-gray-300">Junte-se a aventureiros, converse, compartilhe arte e histórias.</p>
+      </div>
+
+      <!-- 3 -->
+      <div class="panel p-4 reveal" data-dir="left">
+        <div class="text-2xl mb-2">🔮</div>
+        <h3 class="font-semibold mb-1">Oráculo AI</h3>
+        <p class="text-sm text-gray-300">Uma entidade viva que guia, ensina e observa.  
+          Baseado em IA, responde dúvidas, dá conselhos e reage às suas decisões dentro do universo.</p>
+      </div>
+
+      <!-- 4 -->
+      <div class="panel p-4 reveal" data-dir="right">
+        <div class="text-2xl mb-2">🌑</div>
+        <h3 class="font-semibold mb-1">Vitalismo</h3>
+        <p class="text-sm text-gray-300">Sistema de despertar único.  
+          A cada ação, energia vital é acumulada — até atingir o ponto de ruptura: o Despertar.</p>
+      </div>
+
+      <!-- 5 -->
+      <div class="panel p-4 reveal" data-dir="left">
+        <div class="text-2xl mb-2">🎭</div>
+        <h3 class="font-semibold mb-1">Personagem 3D</h3>
+        <p class="text-sm text-gray-300">Crie e visualize seu personagem em 3D.  
+          Cada equipamento, cor e relíquia refletem suas conquistas reais.</p>
+      </div>
+
+      <!-- 6 -->
+      <div class="panel p-4 reveal" data-dir="right">
+        <div class="text-2xl mb-2">📖</div>
+        <h3 class="font-semibold mb-1">Biblioteca & Leitura</h3>
+        <p class="text-sm text-gray-300">Leitor interno de eBooks, mangás e manuais sombrios.  
+          Seu progresso é salvo e transforma leitura em conquistas.</p>
+      </div>
+
+      <!-- 7 -->
+      <div class="panel p-4 reveal" data-dir="left">
+        <div class="text-2xl mb-2">💎</div>
+        <h3 class="font-semibold mb-1">Loja & Itens Sombrios</h3>
+        <p class="text-sm text-gray-300">Adquira itens raros, relíquias e artefatos permanentes.  
+          Os Itens Sombrios expandem seus atributos e contam histórias do universo.</p>
+      </div>
+
+      <!-- 8 -->
+      <div class="panel p-4 reveal" data-dir="right">
+        <div class="text-2xl mb-2">🕯️</div>
+        <h3 class="font-semibold mb-1">Eventos & Conquistas</h3>
+        <p class="text-sm text-gray-300">Participe de eventos temáticos, libere conquistas secretas  
+          e receba gemas que desbloqueiam caminhos de poder dentro do app.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- CONTEÚDOS -->
   <section class="px-4 py-10">
@@ -402,11 +460,24 @@
       b.onclick = () => modal.classList.add('show'));
     modal.onclick = e => { if (e.target === modal || e.target.hasAttribute('data-close')) modal.classList.remove('show'); };
 
-    // Scroll reveal
-    const obs = new IntersectionObserver(entries=>{
-      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('reveal-in'); });
-    },{threshold:.2});
-    document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+    // Scroll reveal lateral
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('reveal-in');
+      const dir = e.target.getAttribute('data-dir');
+      if (dir === 'left') e.target.style.transform = 'translateX(0)';
+      if (dir === 'right') e.target.style.transform = 'translateX(0)';
+    }
+  });
+}, { threshold: .2 });
+
+document.querySelectorAll('.reveal').forEach(el => {
+  const dir = el.getAttribute('data-dir');
+  el.style.opacity = 0;
+  el.style.transform = dir === 'right' ? 'translateX(40px)' : dir === 'left' ? 'translateX(-40px)' : 'translateY(20px)';
+  obs.observe(el);
+});
 
   // Brasas (original do Portal NoHeroes)
   const canvas = document.getElementById("brasasCanvas");
