@@ -144,6 +144,21 @@
   0%,100% {opacity:.4; transform:scale(1);}
   50% {opacity:.9; transform:scale(1.1);}
 }
+.store-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #a855f7;
+  border-radius: 12px;
+  padding: 0.4rem 0.8rem;
+  background: rgba(255,255,255,0.05);
+  box-shadow: 0 0 10px rgba(168,85,247,0.25);
+  transition: transform 0.15s ease, box-shadow 0.3s ease;
+}
+.store-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 18px rgba(168,85,247,0.5);
+}
   </style>
 </head>
 
@@ -165,36 +180,27 @@
   <!-- DOWNLOAD -->
   <section id="download" class="pb-10 px-4">
   <div class="max-w-xl mx-auto text-center panel p-6 reveal space-y-6">
+
     <div class="flex flex-wrap justify-center gap-4">
       <!-- App Store -->
-      <button data-opens="modalSoon" class="transition-transform hover:-translate-y-1">
-        <img src="assets/badges/appstore-badge.png" alt="Download on the App Store" class="w-40 h-auto">
+      <button data-opens="modalSoon" class="store-badge">
+        <img src="assets/badges/appstore-badge.svg" alt="Download on the App Store" class="h-12 w-auto">
       </button>
+
       <!-- Google Play -->
-      <button data-opens="modalSoon" class="transition-transform hover:-translate-y-1">
-        <img src="assets/badges/googleplay-badge.png" alt="Get it on Google Play" class="w-44 h-auto">
+      <button data-opens="modalSoon" class="store-badge">
+        <img src="assets/badges/googleplay-badge.svg" alt="Get it on Google Play" class="h-12 w-auto">
       </button>
     </div>
 
-    <!-- Support Us (neon roxo, ícone mão + coração) -->
-<a href="apoiar.html" class="btn-support-purple inline-flex items-center justify-center gap-2">
-  <svg class="w-6 h-6" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
-    <!-- Coração (simétrico, acima da mão) -->
-    <path d="M12 7
-             C10 4, 5 5, 5 8
-             C5 11, 9 13.5, 12 15
-             C15 13.5, 19 11, 19 8
-             C19 5, 14 4, 12 7Z"/>
-    <!-- Mão (palm aberta segura o ar) -->
-    <path d="M3 14.5
-             a1.5 1.5 0 0 1 1.5-1.5H13
-             a1.5 1.5 0 0 1 1.5 1.5v.5H18
-             a2 2 0 1 1 0 4H12
-             L9.5 19H6
-             A3 3 0 0 1 3 16v-1.5Z"/>
-  </svg>
-  Support Us
-</a>
+    <!-- Support Us -->
+    <a href="apoiar.html" class="btn-support-purple inline-flex items-center justify-center gap-2">
+      <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 7C10 4 5 5 5 8C5 11 9 13.5 12 15C15 13.5 19 11 19 8C19 5 14 4 12 7Z"/>
+        <path d="M3 14.5a1.5 1.5 0 0 1 1.5-1.5H13a1.5 1.5 0 0 1 1.5 1.5v.5H18a2 2 0 1 1 0 4H12l-2.5.5H6A3 3 0 0 1 3 16v-1.5Z"/>
+      </svg>
+      Support Us
+    </a>
   </div>
 </section>
 
