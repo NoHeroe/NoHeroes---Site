@@ -82,26 +82,34 @@
     @keyframes neonPulse { 0%,100%{opacity:.5} 50%{opacity:1} }
     .btn-support:hover { transform: translateY(-2px); }
 
-    /* Modal */
     .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.6);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 50;
-    }
-    .modal.show { display: flex; }
-    .modal-card {
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(239,68,68,.4);
-      padding: 1.5rem;
-      border-radius: 1rem;
-      max-width: 20rem;
-      text-align: center;
-      color: #fff;
-    }
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65); /* escurece o fundo */
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+.modal.show { display: flex; }
+
+.modal-card {
+  background: rgba(20, 20, 35, 0.85); /* vidro escuro */
+  border: 1px solid rgba(168, 85, 247, 0.4); /* roxo translúcido */
+  box-shadow: 0 0 25px rgba(168, 85, 247, 0.3);
+  backdrop-filter: blur(14px);
+  border-radius: 1.1rem;
+  padding: 1.75rem 1.5rem;
+  max-width: 22rem;
+  width: 90%;
+  color: #e5e5ff;
+  text-align: center;
+  animation: modalFade 0.3s ease forwards;
+}
+@keyframes modalFade {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
 
     /* Scroll animation */
     .reveal { opacity: 0; transform: translateY(20px); transition: all .6s ease; }
