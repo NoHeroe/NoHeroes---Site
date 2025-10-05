@@ -276,6 +276,27 @@ section:nth-of-type(3) { /* ou id específico */
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+/* ===== Ajuste de posição do menu ===== */
+#menu-fixed {
+  right: 1rem;
+  top: 1rem;
+}
+
+/* Corrige posição e tamanho no mobile */
+@media (max-width: 480px) {
+  #menu-fixed {
+    right: 0.75rem; /* encosta levemente mais pro centro */
+    top: 0.75rem;
+  }
+  #menu-btn {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  #menu-drawer {
+    right: -0.5rem; /* centraliza o painel em relação ao botão */
+    width: 12rem; /* ajusta largura do menu pra caber certinho */
+  }
+}
   </style>
 </head>
 
