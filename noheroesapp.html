@@ -129,14 +129,25 @@
 
   <!-- DOWNLOAD -->
   <section id="download" class="pb-10 px-4">
-    <div class="max-w-3xl mx-auto panel p-6 reveal">
-      <div class="grid sm:grid-cols-3 gap-4">
-        <button class="panel p-4" data-opens="modalSoon"><br><b>App Store</b></button>
-        <button class="panel p-4" data-opens="modalSoon">▶️<br><b>Google Play</b></button>
-        <a href="apoiar.html" class="btn-support">💚 Support Us</a>
-      </div>
+  <div class="max-w-xl mx-auto text-center panel p-6 reveal space-y-6">
+    <div class="flex flex-wrap justify-center gap-4">
+      <!-- App Store -->
+      <button data-opens="modalSoon" class="transition-transform hover:-translate-y-1">
+        <img src="assets/badges/appstore-badge.svg" alt="Download on the App Store" class="w-40 h-auto">
+      </button>
+      <!-- Google Play -->
+      <button data-opens="modalSoon" class="transition-transform hover:-translate-y-1">
+        <img src="assets/badges/googleplay-badge.svg" alt="Get it on Google Play" class="w-44 h-auto">
+      </button>
     </div>
-  </section>
+
+    <!-- Support Us -->
+    <a href="apoiar.html" class="btn-support inline-flex items-center justify-center gap-2">
+      <svg class="w-6 h-6 heart-wave" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21s-6.716-4.253-9.193-6.73..."/></svg>
+      Support Us
+    </a>
+  </div>
+</section>
 
   <!-- O QUE É -->
   <section class="px-4 py-10">
