@@ -110,8 +110,12 @@
     /* Brasas */
     #brasasCanvas {
   position: fixed;
-  inset: 0;
-  z-index: 0;           /* estava -1 */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
 }
 
 .btn-support-purple {
@@ -334,15 +338,60 @@
     },{threshold:.2});
     document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
-    // Brasas animadas
-    const c = document.getElementById("brasasCanvas");
-    const ctx = c.getContext("2d");
-    let w,h,parts=[];
-    function resize(){w=c.width=innerWidth;h=c.height=innerHeight;}resize();
-    window.onresize=resize;
-    class P{constructor(){this.r();}r(i){this.x=Math.random()*w;this.y=i?Math.random()*h:h+Math.random()*100;this.s=1+Math.random()*2;this.v=.2+Math.random()*.4;this.a=.4+Math.random()*.3;this.d=(Math.random()-.5)*.4;}u(){this.y-=this.v;this.x+=this.d;if(this.y<-10||this.x<-50||this.x>w+50)this.r();}d(){ctx.beginPath();ctx.arc(this.x,this.y,this.s,0,Math.PI*2);ctx.fillStyle=`rgba(168,85,247,${this.a})`;ctx.shadowColor='#a855f7';ctx.shadowBlur=12;ctx.fill();}}
-    for(let i=0;i<150;i++)parts.push(new P());
-    (function anim(){ctx.clearRect(0,0,w,h);for(const p of parts)p.u(),p.d();requestAnimationFrame(anim);})();
-  </script>
+  // Brasas (original do Portal NoHeroes)
+  const canvas = document.getElementById("brasasCanvas");
+  const ctx = canvas.getContext("2d");
+  let particles = [];
+  let w, h;
+
+  function resizeCanvas() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+
+  window.addEventListener("resize", resizeCanvas);
+  resizeCanvas();
+
+  class Particle {
+    constructor() { this.reset(true); }
+
+    reset(initial = false) {
+      this.x = Math.random() * w;
+      this.y = initial ? Math.random() * h : h + Math.random() * 100;
+      this.size = 1 + Math.random() * 2.5;
+      this.speed = 0.2 + Math.random() * 0.5;
+      this.alpha = 0.4 + Math.random() * 0.3;
+      this.drift = (Math.random() - 0.5) * 0.5;
+    }
+
+    update() {
+      this.y -= this.speed;
+      this.x += this.drift;
+      if (this.y < -10 || this.x < -50 || this.x > w + 50) this.reset();
+    }
+
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`;
+      ctx.shadowColor = "#a855f7";
+      ctx.shadowBlur = 12;
+      ctx.fill();
+    }
+  }
+
+  function createParticles(n) {
+    for (let i = 0; i < n; i++) particles.push(new Particle());
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, w, h);
+    for (const p of particles) { p.update(); p.draw(); }
+    requestAnimationFrame(animate);
+  }
+
+  createParticles(150);
+  animate();
+</script>
 </body>
 </html>
