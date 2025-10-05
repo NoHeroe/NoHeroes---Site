@@ -236,6 +236,19 @@ section:nth-of-type(3) { /* ou id específico */
   0%,100% { background-size: 100% 100%; opacity:.9; }
   50% { background-size: 120% 120%; opacity:1; }
 }
+/* Gradiente animado no estilo NoHeroes para destacar palavras */
+.gradiente-inline {
+  background: linear-gradient(270deg, #8f4fff, #a855f7, #facc15, #8f4fff);
+  background-size: 600% 600%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradFlow 8s ease-in-out infinite;
+  font-weight: 700;
+}
+@keyframes gradFlow {
+  0%,100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
   </style>
 </head>
 
@@ -324,9 +337,8 @@ section:nth-of-type(3) { /* ou id específico */
 
       <!-- 5 -->
       <div class="panel p-4 reveal" data-dir="left">
-        <div class="text-2xl mb-2">🎭</div>
-        <h3 class="font-semibold mb-1">Personagem 3D</h3>
-        <p class="text-sm text-gray-300">Crie e visualize seu personagem em 3D.  
+        <h3 class="font-semibold mb-1">🎭 Personagem 3D</h3>
+        <p class="text-sm text-gray-300 gradiente-inline">Crie e visualize seu personagem em 3D.  
           Cada equipamento, cor e relíquia refletem suas conquistas reais.</p>
       </div>
 
