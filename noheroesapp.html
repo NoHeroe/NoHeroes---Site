@@ -282,20 +282,44 @@ section:nth-of-type(3) { /* ou id específico */
   top: 1rem;
 }
 
-/* Corrige posição e tamanho no mobile */
+/* ===== Correção de posição do menu no Android ===== */
+#menu-fixed {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 9999;
+}
+
 @media (max-width: 480px) {
   #menu-fixed {
-    right: 0.75rem; /* encosta levemente mais pro centro */
     top: 0.75rem;
+    right: 0.75rem;
+    transform: translateZ(0); /* trava posição na GPU */
   }
   #menu-btn {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 42px;
+    height: 42px;
   }
   #menu-drawer {
-    right: -0.5rem; /* centraliza o painel em relação ao botão */
-    width: 12rem; /* ajusta largura do menu pra caber certinho */
+    right: 0;
+    width: 12rem;
+    transform: translateZ(0);
   }
+}
+
+/* Evita que o botão "suba" quando as barras do navegador retraem */
+body {
+  overscroll-behavior-y: contain;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Canvas fixo otimizado (anti-flick Android) */
+#brasasCanvas {
+  will-change: opacity, transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  contain: strict;
 }
   </style>
 </head>
@@ -779,6 +803,16 @@ document.querySelectorAll('.menu-link').forEach(link => {
     menuDrawer.classList.add('hidden');
   });
 });
+// ===== Fixo real no Android (viewport dinâmica) =====
+let lastY = window.scrollY;
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('menu-fixed');
+  if (!nav) return;
+  const currentY = window.scrollY;
+  // trava posição (evita "sumiço" ao scroll rápido)
+  nav.style.top = Math.max(8, 8 + currentY - lastY) + 'px';
+  lastY = currentY;
+}, { passive: true });
 </script>
 </body>
 </html>
