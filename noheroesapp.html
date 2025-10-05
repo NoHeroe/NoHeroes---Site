@@ -1,272 +1,185 @@
-<!doctype html>
-
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NoHeroes — Download do App</title>
-  <meta name="description" content="Baixe o app NoHeroes (MVP • Alpha). Gamifique seu dia a dia com missões, eventos e recompensas." />
-  <meta property="og:title" content="NoHeroes — Download do App" />
-  <meta property="og:description" content="Baixe o app NoHeroes (MVP • Alpha). Gamifique seu dia a dia com missões, eventos e recompensas." />
-  <meta property="og:type" content="website" />
-  <meta name="theme-color" content="#45247A" />  <!-- Tailwind CDN -->  <script src="https://cdn.tailwindcss.com"></script>  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: { nhpurple: '#45247A', nhgold: '#FFD780' },
-          fontFamily: {
-            cinzel: ['"Cinzel Decorative"', 'serif'],
-            inter: ['Inter', 'system-ui', 'sans-serif']
-          }
-        }
-      }
+  <title>NoHeroes | App</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;700&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --nh-bg:#0a0a0a; --nh-ink:#e5e5e5; --nh-ink-dim:#bfbfe0;
+      --nh-accent1:#8f4fff; --nh-accent2:#facc15; --nh-border:rgba(255,255,255,.10);
+      --nh-neon:#22ff66; --nh-danger:#ef4444;
     }
-  </script>  <!-- Fonts -->  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet" />  <style>
-    :root{ --nh-purple: 69 36 122; --nh-gold: 255 215 128; }
     html,body{height:100%}
-    .gradient-anim{background:linear-gradient(90deg,#b58cff,#ffd780,#9b5cff,#ffd780);background-size:300% 300%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 8s ease-in-out infinite}
-    .btn-gradient{background:linear-gradient(100deg,rgba(181,140,255,.2),rgba(255,215,128,.2));border:1px solid rgba(255,215,128,.35);position:relative;overflow:hidden}
-    .btn-gradient:before{content:"";position:absolute;inset:-200% -50%;background:conic-gradient(from 0deg,rgba(181,140,255,0),rgba(181,140,255,.35),rgba(255,215,128,.4),rgba(181,140,255,0));animation:rotate 6s linear infinite}
-    .btn-gradient>span{position:relative;z-index:1}
-    .glass{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(12px)}
-    .gold-stroke{text-shadow:0 0 18px rgba(255,215,128,.25)}
-    .border-gradient{position:relative;border-radius:1.25rem}
-    .border-gradient:after{content:"";position:absolute;inset:0;padding:1px;border-radius:inherit;background:linear-gradient(135deg,#b58cff,#ffd780);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
-    .badge{border:1px solid rgba(255,215,128,.35);background:rgba(181,140,255,.08)}
-    @keyframes shimmer{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-    @keyframes rotate{to{transform:rotate(1turn)}}
-  </style></head>
-<body class="min-h-screen bg-[#0a0613] text-zinc-100 antialiased selection:bg-fuchsia-500/30 selection:text-fuchsia-100 relative overflow-x-clip font-inter">
-  <!-- Partículas -->
-  <canvas id="brasasCanvas" class="fixed inset-0 -z-10 opacity-70"></canvas>  <header class="sticky top-0 z-30">
-  <div class="absolute inset-0 bg-gradient-to-b from-[#120a21]/70 to-transparent pointer-events-none"></div>
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="glass border-gradient mt-4 flex items-center justify-between rounded-2xl px-4 py-3">
-      <!-- Left: Logo + Brand -->
-      <a href="#download" class="flex items-center gap-3 focus:outline-none focus:ring-2 focus:ring-amber-300 rounded-xl">
-        <img src="/assets/noheroes-logo.png" alt="NoHeroes" class="h-9 w-auto select-none" id="logoNoHeroes"/>
-        <div class="leading-tight hidden sm:block">
-          <div class="font-cinzel text-lg gradient-anim gold-stroke">NoHeroes</div>
-          <div class="text-xs text-zinc-300/70 -mt-0.5">Sistemas de evolução</div>
-        </div>
-      </a>
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;background:#0a0a0a;color:#e5e5e5;margin:0;overflow-x:hidden}
+    h1,h2,h3,.cinzel{font-family:'Cinzel Decorative',serif}
 
-      <!-- Center: Nav (desktop) -->
-      <nav class="hidden md:flex items-center gap-6 text-sm text-zinc-200/90">
-        <a href="#download" class="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 rounded-md">Baixar</a>
-        <a href="#detalhes" class="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 rounded-md">Sobre o App</a>
-        <a href="#roadmap" class="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 rounded-md">Roadmap</a>
-        <a href="#faq" class="hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 rounded-md">FAQ</a>
-      </nav>
+    .gradiente-noheroes{background:linear-gradient(270deg,#8f4fff,#a855f7,#facc15,#8f4fff);
+      background-size:600% 600%;-webkit-background-clip:text;background-clip:text;
+      color:transparent;-webkit-text-fill-color:transparent;animation:fluidPulse 8s ease-in-out infinite}
+    @keyframes fluidPulse{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
 
-      <!-- Right: CTA (desktop) -->
-      <div class="hidden md:flex items-center gap-2">
-        <a href="#download" class="btn-gradient rounded-xl px-4 py-2 text-sm font-medium hover:brightness-110 transition focus:outline-none focus:ring-2 focus:ring-amber-300">
-          <span>⬇ Baixar APK</span>
+    .panel{background:rgba(255,255,255,.06);backdrop-filter:blur(10px);
+      border:1px solid var(--nh-border);border-radius:1rem}
+    .soft-shadow{box-shadow:0 10px 30px rgba(0,0,0,.35)}
+
+    .glow-logo{animation:pulseLogo 3s ease-in-out infinite}
+    @keyframes pulseLogo{0%,100%{filter:drop-shadow(0 0 4px #a855f7)}50%{filter:drop-shadow(0 0 16px #a855f7)}}
+
+    .store-btn{display:flex;align-items:center;gap:.75rem;border-radius:.9rem;
+      border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);
+      backdrop-filter:blur(8px);padding:.9rem 1.1rem;transition:transform .15s ease,filter .15s ease, box-shadow .2s ease}
+    .store-btn:hover{transform:translateY(-2px);filter:brightness(1.03);box-shadow:0 10px 30px rgba(168,85,247,.18)}
+
+    .btn-x{background:linear-gradient(270deg,#8f4fff,#a855f7,#facc15,#8f4fff);
+      background-size:600% 600%;animation:fluidPulse 6s ease-in-out infinite;color:#000;font-weight:700;
+      border-radius:.9rem;padding:1rem 1.2rem;transition:transform .2s ease,filter .2s ease;
+      box-shadow:0 10px 30px rgba(143,79,255,.18);display:inline-flex;align-items:center;
+      justify-content:center;border:1px solid rgba(255,255,255,.08)}
+    .btn-x:hover{transform:translateY(-2px);filter:brightness(1.05)}
+
+    .btn-support{position:relative;display:flex;align-items:center;justify-content:center;gap:.6rem;
+      border-radius:1rem;border:2px solid var(--nh-neon);padding:1rem 1.2rem;color:var(--nh-neon);
+      font-weight:700;transition:transform .15s ease}
+    .btn-support::before{content:"";position:absolute;inset:-6px;border-radius:1.2rem;
+      filter:blur(10px);background:radial-gradient(closest-side,rgba(34,255,102,.45),transparent 60%);
+      opacity:.7;animation:neonPulse 2.8s ease-in-out infinite}
+    .btn-support:hover{transform:translateY(-2px)}
+    @keyframes neonPulse{0%,100%{opacity:.55}50%{opacity:.9}}
+    .heart-wave{animation:beat 1.4s infinite ease-in-out}
+    @keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.5);z-index:60}
+    .modal.show{display:flex}
+    .modal-card{background:rgba(255,255,255,.06);border:1px solid rgba(239,68,68,.45);
+      box-shadow:0 10px 40px rgba(239,68,68,.35);backdrop-filter:blur(12px);
+      border-radius:1rem;padding:1.25rem 1.1rem;max-width:22rem;text-align:center}
+
+    .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease, transform .7s ease}
+    .reveal.reveal-in{opacity:1;transform:translateY(0)}
+    .reveal[data-dir="left"].reveal-in{transform:translateX(0)}
+    .reveal[data-dir="left"]{transform:translateX(-30px)}
+    .reveal[data-dir="right"]{transform:translateX(30px)}
+    #brasasCanvas{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-1;pointer-events:none}
+  </style>
+</head>
+<body class="text-center">
+  <canvas id="brasasCanvas"></canvas>
+
+  <header class="pt-12 pb-6 px-4">
+    <img src="assets/images/noheroes logo.png" alt="Logotipo NoHeroes" class="mx-auto w-32 glow-logo">
+    <h1 class="cinzel text-3xl md:text-5xl gradiente-noheroes mt-4">O universo NoHeroes. Agora em suas mãos.</h1>
+    <p class="mt-4 max-w-2xl mx-auto text-gray-300 italic">
+      O app NoHeroes é o seu Dojo digital. Administre seu personagem, leia, assista, evolua e viva o universo NoHeroes onde quiser!
+    </p>
+    <div class="mt-6">
+      <button id="btnDemo" class="btn-x">Baixar Demo do App</button>
+    </div>
+  </header>
+
+  <section id="download" class="pb-10 px-4">
+    <div class="max-w-3xl mx-auto panel p-6 soft-shadow reveal">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <button class="store-btn justify-center" data-opens="modalSoon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="w-6 h-6" fill="#fff"><path d="M318.7 268.7..."/></svg>
+          <div><div class="text-xs text-gray-300">Download on the</div><div class="text-lg font-semibold">App Store</div></div>
+        </button>
+        <button class="store-btn justify-center" data-opens="modalSoon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-6 h-6" fill="#fff"><path d="M325.3 234.3..."/></svg>
+          <div><div class="text-xs text-gray-300">GET IT ON</div><div class="text-lg font-semibold">Google Play</div></div>
+        </button>
+        <a href="apoiar.html" class="btn-support">
+          <svg class="w-6 h-6 heart-wave" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-6.716-4.253-9.193-6.73..."/></svg>
+          Support Us
         </a>
       </div>
-
-      <!-- Mobile: menu button -->
-      <button id="btnMenu" class="md:hidden inline-flex btn-gradient rounded-xl px-3 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-amber-300" aria-label="Abrir menu" aria-expanded="false" aria-controls="menuMobile">☰</button>
     </div>
+  </section>
 
-    <!-- Mobile menu -->
-    <div id="menuMobile" class="hidden md:hidden mt-2 glass border-gradient rounded-2xl px-4 py-3">
-      <nav class="flex flex-col gap-3 text-sm">
-        <a href="#download" class="hover:text-white" data-close-menu>Baixar</a>
-        <a href="#detalhes" class="hover:text-white" data-close-menu>Sobre o App</a>
-        <a href="#roadmap" class="hover:text-white" data-close-menu>Roadmap</a>
-        <a href="#faq" class="hover:text-white" data-close-menu>FAQ</a>
-        <a href="#download" class="btn-gradient rounded-xl px-4 py-2 text-sm font-semibold text-center mt-2" data-close-menu><span>⬇ Baixar APK</span></a>
-      </nav>
-    </div>
-  </div>
-</header>
-
-  <main class="relative z-10">
-    <!-- Hero -->
-    <section id="download" class="relative">
-      <div class="absolute inset-0 -z-10 bg-[radial-gradient(60%_40%_at_50%_10%,rgba(181,140,255,0.25),transparent_60%)]"></div>
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-8">
-        <div class="grid lg:grid-cols-2 gap-8 items-center">
-          <div>
-            <h1 class="font-cinzel text-4xl sm:text-5xl lg:text-6xl leading-tight"><span class="gradient-anim gold-stroke">NoHeroes App</span></h1>
-            <p class="mt-4 text-lg text-zinc-300/90">Gamifique seu dia a dia. Transforme corpo, mente e espírito com missões diárias, eventos, penalidades e recompensas reais.</p>
-            <div class="mt-6 flex flex-wrap items-center gap-3">
-              <a id="btnApk" href="#apk" class="btn-gradient rounded-xl px-5 py-3 text-base font-semibold hover:brightness-110 transition"><span>⬇ Baixar APK (Android)</span></a>
-              <button disabled class="rounded-xl px-5 py-3 text-base font-semibold border border-white/20 text-zinc-400 cursor-not-allowed">iOS (em breve)</button>
-              <div class="badge rounded-lg px-3 py-1 text-xs uppercase tracking-wide text-amber-200/90">MVP • Alpha</div>
-            </div>
-            <ul class="mt-5 text-sm text-zinc-300/80 space-y-1">
-              <li>• Android 8.0+ • Download liberado por APK.</li>
-              <li>• Publicação na Play Store & App Store: em breve.</li>
-            </ul>
-          </div>
-          <div class="relative">
-            <div class="absolute -inset-6 -z-10 blur-3xl opacity-40 bg-gradient-to-tr from-fuchsia-500/30 via-indigo-500/20 to-amber-300/30"></div>
-            <div class="glass border-gradient rounded-2xl p-3">
-              <div class="aspect-[10/9] rounded-xl bg-gradient-to-br from-[#1a0f2e] to-[#0d0818] grid place-items-center">
-                <!-- Phone Mockup -->
-                <div class="relative w-full max-w-sm mx-auto">
-                  <div class="mx-auto h-[520px] w-[260px] rounded-[2.2rem] border border-white/20 bg-gradient-to-b from-zinc-900 to-zinc-800 p-2 shadow-2xl">
-                    <div class="h-full rounded-[1.8rem] bg-[#0c0a12] p-3 relative overflow-hidden">
-                      <div class="absolute left-1/2 -translate-x-1/2 top-2 h-6 w-32 bg-black/60 rounded-full"></div>
-                      <div class="mt-7 h-[420px] rounded-xl glass border-gradient p-3 grid place-items-center text-center">
-                        <div>
-                          <div class="font-cinzel text-xl gradient-anim">Seu Personagem</div>
-                          <div class="mt-1 text-xs text-zinc-300/80">Nível 3 • For 6 • Men 5 • Esp 4</div>
-                          <div class="mt-3 flex justify-center gap-2">
-                            <span class="badge rounded-md px-2 py-1 text-[10px]">Missões</span>
-                            <span class="badge rounded-md px-2 py-1 text-[10px]">Eventos</span>
-                            <span class="badge rounded-md px-2 py-1 text-[10px]">Loja</span>
-                          </div>
-                          <div class="mt-4">
-                            <button class="btn-gradient rounded-lg px-4 py-2 text-xs font-semibold hover:brightness-110"><span>Iniciar missão diária</span></button>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="absolute left-1/2 -translate-x-1/2 bottom-2 h-1.5 w-24 bg-white/20 rounded-full"></div>
-                    </div>
-                  </div>
-                </div>
-                <!-- /Phone Mockup -->
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section><!-- Trust Bar -->
-<section>
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-6">
-    <div class="glass border-gradient rounded-2xl px-4 py-3 flex flex-wrap items-center justify-between gap-3 text-xs text-zinc-300/80">
-      <div class="flex items-center gap-2"><span>⚠️</span><span>Versão MVP (Alpha): em construção. Erros e mudanças frequentes.</span></div>
-      <div class="flex items-center gap-2"><span>🛡️</span><span>Assinaturas & loja integradas ao site NoHeroes.</span></div>
-      <div class="flex items-center gap-2"><span>📖</span><span>Funciona melhor com o Manual das Sombras — mas não é obrigatório.</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- Details -->
-<section id="detalhes">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
-    <div class="grid md:grid-cols-2 gap-8">
-      <div class="glass border-gradient rounded-2xl p-6"><h3 class="font-cinzel text-xl gradient-anim gold-stroke">Missões diárias</h3><p class="mt-2 text-zinc-300/90 text-sm">Checklist vivo para hábitos: treino, leitura, respiração, foco. Falhou? Penalidades que doem — pra manter o jogo sério.</p></div>
-      <div class="glass border-gradient rounded-2xl p-6"><h3 class="font-cinzel text-xl gradient-anim gold-stroke">Eventos & Recompensas</h3><p class="mt-2 text-zinc-300/90 text-sm">Missões sazonais com itens únicos, moedas e XP. Evolua seu personagem — que é você.</p></div>
-      <div class="glass border-gradient rounded-2xl p-6"><h3 class="font-cinzel text-xl gradient-anim gold-stroke">Missões individuais</h3><p class="mt-2 text-zinc-300/90 text-sm">Crie suas próprias missões para ganhos extras. Mas atenção: falhar no que você mesmo definiu pune mais.</p></div>
-      <div class="glass border-gradient rounded-2xl p-6"><h3 class="font-cinzel text-xl gradient-anim gold-stroke">Lojas, Guilda & Facções</h3><p class="mt-2 text-zinc-300/90 text-sm">Conteúdos que desbloqueiam efeitos visuais e bônus. Entre na Guilda dos Aventureiros, escolha facção e classe.</p></div>
-      <div class="glass border-gradient rounded-2xl p-6"><h3 class="font-cinzel text-xl gradient-anim gold-stroke">Sistema Vivo</h3><p class="mt-2 text-zinc-300/90 text-sm">Aplique os princípios do NoHeroes. Com ou sem o eBook, o app guia a prática diária.</p></div>
-      <div class="glass border-gradient rounded-2xl p-6"><h3 class="font-cinzel text-xl gradient-anim gold-stroke">Progresso visível</h3><p class="mt-2 text-zinc-300/90 text-sm">Acompanhe atributos, equipamentos e habilidades vitalistas. Veja a evolução no app e na vida real.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- Roadmap -->
-<section id="roadmap">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
-    <div class="glass border-gradient rounded-2xl p-6">
-      <h2 class="font-cinzel text-2xl gradient-anim gold-stroke">Roadmap</h2>
-      <ol class="mt-4 grid md:grid-cols-3 gap-4 text-sm">
-        <li class="glass rounded-xl p-4">
-          <div class="text-amber-200/90 font-semibold">Fase 1 — Agora</div>
-          <ul class="mt-2 space-y-1 text-zinc-300/90">
-            <li>✔ APK Android disponível</li>
-            <li>✔ Missões diárias, eventos e penalidades</li>
-            <li>• Integração loja NoHeroes (em teste)</li>
-          </ul>
-        </li>
-        <li class="glass rounded-xl p-4">
-          <div class="text-amber-200/90 font-semibold">Fase 2 — Próximo</div>
-          <ul class="mt-2 space-y-1 text-zinc-300/90">
-            <li>• Play Store (listagem pública)</li>
-            <li>• iOS (TestFlight / App Store em breve)</li>
-            <li>• Guilda, facções e classes</li>
-          </ul>
-        </li>
-        <li class="glass rounded-xl p-4">
-          <div class="text-amber-200/90 font-semibold">Fase 3 — Futuro</div>
-          <ul class="mt-2 space-y-1 text-zinc-300/90">
-            <li>• Lançamento do jogo Caelum</li>
-            <li>• Conversão de ganhos do app → recompensas reais*</li>
-            <li class="text-xs text-zinc-400">*Sujeito a regras e elegibilidade</li>
-          </ul>
-        </li>
-      </ol>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section id="faq">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
-    <div class="grid md:grid-cols-2 gap-6">
-      <div class="glass border-gradient rounded-2xl p-5"><div class="font-cinzel gradient-anim text-lg">O app funciona sem o eBook?</div><div class="mt-2 text-zinc-300/90 text-sm">Sim. O eBook potencializa o método, mas o app guia a prática mesmo sem leitura prévia.</div></div>
-      <div class="glass border-gradient rounded-2xl p-5"><div class="font-cinzel gradient-anim text-lg">Como instalo o APK no Android?</div><div class="mt-2 text-zinc-300/90 text-sm">Baixe o arquivo, permita fontes desconhecidas nas configurações e conclua a instalação. Em breve: Play Store.</div></div>
-      <div class="glass border-gradient rounded-2xl p-5"><div class="font-cinzel gradient-anim text-lg">iOS quando?</div><div class="mt-2 text-zinc-300/90 text-sm">Estamos preparando TestFlight/App Store. Sem data final — prioridade após estabilizar o Android.</div></div>
-      <div class="glass border-gradient rounded-2xl p-5"><div class="font-cinzel gradient-anim text-lg">E as recompensas reais?</div><div class="mt-2 text-zinc-300/90 text-sm">Planejadas para fases futuras, seguindo políticas e elegibilidade. Detalhes serão divulgados com antecedência.</div></div>
-    </div>
-  </div>
-</section>
-
-  </main>  <footer class="relative z-10 border-t border-white/10 bg-black/20">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 text-sm text-zinc-400">
-      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-        <div class="flex items-center gap-3">
-          <div class="h-8 w-8 rounded-lg ring-1 ring-white/20 bg-gradient-to-br from-fuchsia-500/40 to-amber-300/40"></div>
-          <span class="font-cinzel text-zinc-200">NoHeroes</span>
-        </div>
-        <div class="opacity-80">© <span id="year"></span> NoHeroes. Todos os direitos reservados.</div>
+  <section class="px-4 py-10">
+    <div class="max-w-4xl mx-auto panel p-8 soft-shadow text-left reveal" data-dir="left">
+      <h2 class="cinzel text-3xl mb-4 gradiente-noheroes">O que o App NoHeroes faz?</h2>
+      <p class="text-gray-200 mb-6">
+        Mais do que um app — é o seu portal entre mundos...
+      </p>
+      <div class="grid sm:grid-cols-3 gap-4">
+        <div class="panel p-4">📜<h3>Missões & Conquistas</h3></div>
+        <div class="panel p-4">💬<h3>Guilda & Comunidade</h3></div>
+        <div class="panel p-4">🔮<h3>Oráculo AI</h3></div>
       </div>
     </div>
-  </footer>  <script>
-    // Ano dinâmico
-    document.getElementById('year').textContent = new Date().getFullYear();
+  </section>
 
-    // Estado do botão APK (mostra 'Baixando…' e volta depois)
-    const btn = document.getElementById('btnApk');
-    btn && btn.addEventListener('click', () => {
-      const span = btn.querySelector('span');
-      if(!span) return; const old = span.textContent; span.textContent = 'Baixando…';
-      setTimeout(() => { span.textContent = old; }, 3000);
-    });
+  <section class="px-4 py-10">
+    <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-6 items-center">
+      <div class="panel p-4 soft-shadow reveal" data-dir="left">
+        <img src="assets/images/mockup-app.png" class="w-full rounded-lg" alt="Mockup do App NoHeroes"/>
+      </div>
+      <div class="panel p-6 text-left soft-shadow reveal" data-dir="right">
+        <h2 class="cinzel text-2xl mb-4 gradiente-noheroes">Conteúdos internos</h2>
+        <ul class="space-y-3 text-gray-200">
+          <li>🎭 <b>Personagem 3D</b> — personalize seu herói.</li>
+          <li>⚔️ <b>Missões soulslike</b> — esforço real, recompensa justa.</li>
+          <li>📖 <b>Biblioteca & Leitura</b> — eBooks e missões automáticas.</li>
+          <li>💎 <b>Loja & Recompensas</b> — conquistas e colecionáveis.</li>
+          <li>🕯️ <b>Eventos</b> — temporadas e segredos do universo.</li>
+          <li>🌑 <b>Vitalismo & Despertar</b> — caminho único do jogador.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-    // Partículas brasas roxas
-    const canvas = document.getElementById('brasasCanvas');
-    const ctx = canvas.getContext('2d');
-    let w, h, raf; const DPR = Math.min(window.devicePixelRatio || 1, 2);
-    const particles = Array.from({ length: 80 }, () => spawn());
-    function resize(){ w = canvas.width = Math.floor(window.innerWidth * DPR); h = canvas.height = Math.floor(window.innerHeight * DPR); }
-    function spawn(){ return { x: Math.random()* (w||window.innerWidth)*DPR, y: Math.random()* (h||window.innerHeight)*DPR, r: 0.5 + Math.random()*2.2*DPR, a: 0.18 + Math.random()*0.35, vx: (Math.random()-0.5)*0.15*DPR, vy: -0.15*Math.random()*DPR }; }
-    function step(){ ctx.clearRect(0,0,w,h); for (let p of particles){ p.x+=p.vx; p.y+=p.vy; p.a-=0.0008; p.r+=0.003*DPR; if(p.a<=0||p.y<-10) Object.assign(p, spawn(), { y: h+10 }); const g = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*4); g.addColorStop(0, `rgba(155,92,255,${p.a})`); g.addColorStop(1,'rgba(0,0,0,0)'); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); } raf = requestAnimationFrame(step); }
-    resize(); window.addEventListener('resize', resize); raf = requestAnimationFrame(step);
-// Toggle menu mobile e fechar ao clicar em um link
-    (function(){
-      const btn = document.getElementById('btnMenu');
-      const menu = document.getElementById('menuMobile');
-      if(!btn || !menu) return;
-      function toggle(){
-        const open = menu.classList.contains('hidden');
-        menu.classList.toggle('hidden');
-        btn.setAttribute('aria-expanded', String(open));
-      }
-      btn.addEventListener('click', toggle);
-      menu.querySelectorAll('[data-close-menu]').forEach(a => a.addEventListener('click', () => {
-        if(!menu.classList.contains('hidden')) toggle();
-      }));
-    })();
+  <section class="px-4 py-12">
+    <div class="max-w-4xl mx-auto panel p-8 soft-shadow text-left reveal">
+      <h2 class="cinzel text-2xl mb-3 gradiente-noheroes">Em breve / Roadmap</h2>
+      <p class="text-gray-200 mb-4">Atualização Vitalista em desenvolvimento...</p>
+      <div class="w-full h-3 rounded-full bg-white/10 overflow-hidden mb-4">
+        <div class="h-full bg-gradient-to-r from-purple-500 via-fuchsia-500 to-yellow-300 animate-[progress_6s_ease-in-out_infinite]"></div>
+      </div>
+      <style>@keyframes progress{0%{width:10%}50%{width:85%}100%{width:10%}}</style>
+      <a href="#" class="btn-x inline-flex">Ver Roadmap</a>
+      <div class="mt-8 grid md:grid-cols-3 gap-4 text-sm">
+        <div class="panel p-4"><b>O app é gratuito?</b><p>Sim, com versão Pro opcional.</p></div>
+        <div class="panel p-4"><b>Funciona offline?</b><p>Sim, para conteúdos baixados.</p></div>
+        <div class="panel p-4"><b>O que é o Vitalismo?</b><p>Um caminho de poder. <a href="#" class="underline">Saiba mais</a></p></div>
+      </div>
+    </div>
+  </section>
 
-    // Garantir que nav anchors funcionem suavemente no mobile
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', (e) => {
-        const id = a.getAttribute('href');
-        if(id && id.length > 1){
-          const el = document.querySelector(id);
-          if(el){ e.preventDefault(); el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-        }
-      });
-    });
+  <footer class="mt-10 mb-8 text-gray-500 text-sm">
+    <p>&copy; 2025 NoHeroes. Todos os direitos reservados.</p>
+    <p class="italic mt-2">Explore. Escolha. Caia. Evolua.</p>
+  </footer>
 
-    // Atualizar logo via JS se você fornecer outra URL
-    // window.NH_LOGO_URL = 'https://seu.dominio/logo.png';
-    if(window.NH_LOGO_URL){ const img = document.getElementById('logoNoHeroes'); if(img) img.src = window.NH_LOGO_URL; }
-  </script></body>
+  <div id="modalSoon" class="modal">
+    <div class="modal-card">
+      <h3 class="cinzel text-xl mb-1" style="color:var(--nh-danger)">Disponível em breve</h3>
+      <p class="text-gray-200 text-sm">A versão das lojas será liberada em breve.</p>
+      <div class="mt-4 flex gap-2 justify-center">
+        <a href="apoiar.html" class="btn-support" style="padding:.6rem 1rem">Support Us</a>
+        <button class="store-btn" data-close>Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Scroll suave
+    document.getElementById('btnDemo').onclick=()=>document.getElementById('download').scrollIntoView({behavior:'smooth'});
+    // Modal
+    const modal=document.getElementById('modalSoon');
+    document.querySelectorAll('[data-opens="modalSoon"]').forEach(b=>b.onclick=()=>modal.classList.add('show'));
+    modal.onclick=e=>{if(e.target===modal||e.target.hasAttribute('data-close'))modal.classList.remove('show');}
+    // Reveal
+    const obs=new IntersectionObserver(e=>e.forEach(x=>x.isIntersecting&&x.target.classList.add('reveal-in')),{threshold:.15});
+    document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+    // Brasas animadas
+    const canvas=document.getElementById('brasasCanvas');const ctx=canvas.getContext('2d');let p=[],w,h;
+    function resize(){w=canvas.width=innerWidth;h=canvas.height=innerHeight;}resize();addEventListener('resize',resize);
+    class Particle{constructor(){this.rst(true);}rst(f=false){this.x=Math.random()*w;this.y=f?Math.random()*h:h+Math.random()*100;this.s=1+Math.random()*2.5;this.v=.2+Math.random()*.5;this.a=.4+Math.random()*.3;this.d=(Math.random()-.5)*.5;}upd(){this.y-=this.v;this.x+=this.d;if(this.y<-10||this.x<-50||this.x>w+50)this.rst();}dr(){ctx.beginPath();ctx.arc(this.x,this.y,this.s,0,Math.PI*2);ctx.fillStyle=`rgba(168,85,247,${this.a})`;ctx.shadowColor=\"#a855f7\";ctx.shadowBlur=12;ctx.fill();}}
+    for(let i=0;i<150;i++)p.push(new Particle());
+    (function anim(){ctx.clearRect(0,0,w,h);p.forEach(x=>{x.upd();x.dr();});requestAnimationFrame(anim);})();
+  </script>
+</body>
 </html>
