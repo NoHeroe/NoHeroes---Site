@@ -259,30 +259,6 @@ section:nth-of-type(3) { /* ou id específico */
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-#menu-fixed.open button span:nth-child(1) {
-  transform: translateY(6px) rotate(45deg);
-}
-#menu-fixed.open button span:nth-child(2) {
-  opacity: 0;
-}
-#menu-fixed.open button span:nth-child(3) {
-  transform: translateY(-6px) rotate(-45deg);
-}
-
-#menu-drawer {
-  animation: fadeInMenu 0.3s ease;
-}
-@keyframes fadeInMenu {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-/* ===== Ajuste de posição do menu ===== */
-#menu-fixed {
-  right: 1rem;
-  top: 1rem;
-}
-
-/* ===== Correção de posição do menu no Android ===== */
 #menu-fixed {
   position: fixed;
   top: 1rem;
@@ -292,9 +268,9 @@ section:nth-of-type(3) { /* ou id específico */
 
 @media (max-width: 480px) {
   #menu-fixed {
-    top: 0.75rem;
-    right: 0.75rem;
-    transform: translateZ(0); /* trava posição na GPU */
+    top: clamp(0.6rem, 2vw, 1rem);
+    right: clamp(0.6rem, 2vw, 1rem);
+    transform: none;
   }
   #menu-btn {
     width: 42px;
@@ -302,24 +278,10 @@ section:nth-of-type(3) { /* ou id específico */
   }
   #menu-drawer {
     right: 0;
-    width: 12rem;
-    transform: translateZ(0);
+    left: auto;
+    width: 11.5rem;
+    max-width: 90vw;
   }
-}
-
-/* Evita que o botão "suba" quando as barras do navegador retraem */
-body {
-  overscroll-behavior-y: contain;
-  position: relative;
-  min-height: 100vh;
-}
-
-/* Canvas fixo otimizado (anti-flick Android) */
-#brasasCanvas {
-  will-change: opacity, transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  contain: strict;
 }
   </style>
 </head>
