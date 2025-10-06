@@ -288,6 +288,20 @@ html, body {
   max-width: 100vw;
   overflow-x: hidden !important;
 }
+#scroll-hint {
+  background: rgba(10,10,20,0.45);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(168,85,247,0.25);
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  transition: opacity .6s ease, transform .6s ease;
+  box-shadow: 0 0 12px rgba(168,85,247,.25);
+}
+#scroll-hint.hide {
+  opacity: 0;
+  transform: translate(-50%, 40px);
+  pointer-events: none;
+}
   </style>
 </head>
 
@@ -321,6 +335,13 @@ html, body {
       <button id="btnDemo" class="btn-x">Baixar Versão Beta</button>
     </div>
   </header>
+
+<!-- INDICADOR DE SCROLL -->
+<div id="scroll-hint" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 
+text-sm text-gray-300 flex flex-col items-center gap-2 animate-bounce">
+  <span class="gradiente-inline text-base cinzel">Role para explorar ↓</span>
+  <div class="w-5 h-5 border-l-2 border-b-2 border-purple-400 rotate-[-45deg]"></div>
+</div>
 
   <!-- DOWNLOAD -->
   <section id="down1" class="pb-10 px-4">
@@ -779,6 +800,16 @@ window.addEventListener('scroll', () => {
   // trava posição (evita "sumiço" ao scroll rápido)
   nav.style.top = Math.max(8, 8 + currentY - lastY) + 'px';
   lastY = currentY;
+}, { passive: true });
+
+// ===== Indicador de scroll (some após rolar) =====
+const scrollHint = document.getElementById('scroll-hint');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 80) {
+    scrollHint.classList.add('hide');
+  } else {
+    scrollHint.classList.remove('hide');
+  }
 }, { passive: true });
 </script>
 </body>
