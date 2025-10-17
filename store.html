@@ -466,7 +466,14 @@
     // ==========================
     // Helpers
     // ==========================
-    function escapeHtml(s=''){ return String(s).replace(/[&<>"]g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c])); }
+    function escapeHtml(s=''){ 
+  return String(s).replace(/[&<>"]/g, c => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    "\"":"&quot;"
+  }[c]));
+}
     function escapeAttr(s=''){ return String(s).replace(/[`"'\\]/g, ch=>({"`":"\`","\"":"&quot;","'":"&#39;","\\":"\\\\"}[ch]||ch)); }
 
     // ==========================
