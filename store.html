@@ -1,0 +1,516 @@
+<!DOCTYPE html><html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>NoHeroes | Loja PRO</title>  <!-- Fonts -->  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            roxo: '#a855f7',
+            dourado: '#facc15',
+            cinza: '#1f1f1f',
+            fundo: '#0a0a0a',
+            claro: '#f4f4f4'
+          },
+          boxShadow: {
+            glow: '0 0 20px rgba(168,85,247,.35)'
+          },
+          fontFamily: {
+            display: ['Cinzel Decorative', 'serif'],
+            body: ['Roboto', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html, body {height: 100%;}
+    body { font-family: 'Roboto', system-ui, -apple-system, Segoe UI, sans-serif; background:#0a0a0a; color:#f4f4f4; }
+    /* Canvas brasas atrás de tudo */
+    #brasasCanvas{ position:fixed; inset:0; width:100vw; height:100vh; z-index:-2; pointer-events:none; }
+    /* Overlay sutil para melhorar contraste */
+    .bg-overlay{ position:fixed; inset:0; background:radial-gradient(1200px 800px at 60% -10%, rgba(168,85,247,.08), transparent 60%), rgba(0,0,0,.55); z-index:-1; }
+    /* Scrollbar discreta */
+    ::-webkit-scrollbar{ width:10px; height:10px; }
+    ::-webkit-scrollbar-thumb{ background:#2a2a2a; border-radius:10px; }
+    ::-webkit-scrollbar-track{ background:transparent; }
+    /* Badge "EM BREVE" */
+    .badge-embreve { position:absolute; top:.5rem; left:.5rem; background:#a855f7; color:#000; font-weight:700; font-size:.75rem; padding:.2rem .45rem; border-radius:.35rem; }
+  </style>
+</head>
+<body class="min-h-screen">
+  <canvas id="brasasCanvas"></canvas>
+  <div class="bg-overlay"></div>  <!-- HEADER -->  <header class="sticky top-0 z-40 backdrop-blur bg-black/40 border-b border-roxo/40">
+    <div class="mx-auto max-w-7xl px-4 py-3 flex items-center gap-4">
+      <div class="flex items-center gap-3">
+        <img src="assets/images/logo noheroes.png" alt="NoHeroes" class="h-8 w-auto drop-shadow"/>
+        <span class="hidden sm:block font-display text-lg tracking-wide text-roxo">NoHeroes • Loja</span>
+      </div><!-- Filtros (desktop) -->
+  <nav class="hidden md:flex items-center gap-2 mx-auto" id="filtersNav">
+    <!-- Botões gerados via JS -->
+  </nav>
+
+  <div class="ml-auto flex items-center gap-3">
+    <!-- Toggle filtros no mobile -->
+    <button id="btnOpenFiltersMobile" class="md:hidden inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-roxo/40 text-sm hover:bg-white/5">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M3 6h18v2H3V6zm3 5h12v2H6v-2zm3 5h6v2H9v-2z"/></svg>
+      Categorias
+    </button>
+
+    <!-- Carrinho -->
+    <button id="btnCart" class="relative inline-flex items-center justify-center h-10 w-10 rounded-xl border border-roxo/40 hover:bg-white/5">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4h-2l-1 2h2l3.6 7.59-1.35 2.45A1.99 1.99 0 0 0 10 19h9v-2h-8.42c-.14 0-.25-.11-.25-.25l.03-.12L11.1 14h5.45c.75 0 1.41-.41 1.75-1.03L21 7H6.21l-.94-2zM7 20c-1.1 0-1.99.9-1.99 2S5.9 24 7 24s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2S15.9 24 17 24s2-.9 2-2-.9-2-2-2z"/></svg>
+      <span id="cartBadge" class="absolute -top-1 -right-1 text-[11px] bg-red-600 text-white rounded-full px-1.5 py-0.5">0</span>
+    </button>
+  </div>
+</div>
+
+<!-- Filtros Mobile Drawer -->
+<div id="filtersDrawer" class="md:hidden hidden border-t border-roxo/30 bg-black/60 backdrop-blur">
+  <div class="max-w-7xl mx-auto px-4 py-3" id="filtersMobile">
+    <!-- Gerado via JS -->
+  </div>
+</div>
+
+  </header>  <!-- CONTEÚDO PRINCIPAL -->  <main class="mx-auto max-w-7xl px-4 py-6">
+    <!-- Título / descrição curta -->
+    <section class="mb-6">
+      <h1 class="font-display text-2xl md:text-3xl text-roxo drop-shadow">Explore o universo NoHeroes</h1>
+      <p class="text-sm md:text-base text-white/70 mt-1 max-w-2xl">Produtos organizados por categoria. Clique nos filtros para refinar e adicione rapidamente ao carrinho. Fácil, direto e responsivo.</p>
+    </section><!-- Filtros (fallback se JS ainda não carregou) -->
+<noscript>
+  <p class="text-dourado">Ative o JavaScript para filtrar os produtos.</p>
+</noscript>
+
+<!-- GRID DE PRODUTOS -->
+<section>
+  <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+    <!-- Cards gerados via JS -->
+  </div>
+  <!-- Estado vazio -->
+  <div id="emptyState" class="hidden text-center py-16 text-white/60">Nenhum produto encontrado para este filtro.</div>
+</section>
+
+  </main>  <!-- DRAWER DO CARRINHO -->  <aside id="cartDrawer" class="fixed top-0 right-0 h-full w-[92vw] sm:w-[420px] translate-x-full transition-transform duration-300 ease-in-out bg-zinc-900/90 backdrop-blur border-l border-roxo/40 z-50 flex flex-col">
+    <div class="p-4 border-b border-roxo/30 flex items-center justify-between">
+      <h3 class="font-display text-lg text-roxo">Seu carrinho</h3>
+      <button id="btnCloseCart" class="h-10 w-10 rounded-xl border border-roxo/40 hover:bg-white/5">✕</button>
+    </div><div id="cartItems" class="p-4 flex-1 overflow-y-auto space-y-3">
+  <!-- Itens -->
+</div>
+
+<div class="p-4 border-t border-roxo/30 space-y-3">
+  <div class="flex items-center justify-between text-sm">
+    <span class="text-white/70">Subtotal</span>
+    <span id="cartSubtotal" class="font-semibold">R$ 0,00</span>
+  </div>
+
+  <label class="block text-sm text-white/80">Método de pagamento</label>
+  <select id="paymentMethod" class="w-full bg-black/40 border border-roxo/40 rounded-xl px-3 py-2">
+    <option value="">Selecione...</option>
+    <option value="mercadopago">Mercado Pago (4,99%)</option>
+    <option value="paypal">PayPal (4,79% + R$ 0,60)</option>
+    <option value="moeda">Moeda Interna (0%)</option>
+  </select>
+
+  <div class="flex items-center justify-between text-sm">
+    <span class="text-white/70">Total com taxa</span>
+    <span id="cartTotalWithFee" class="font-semibold text-roxo">R$ 0,00</span>
+  </div>
+
+  <button id="btnCheckout" class="w-full mt-1 bg-roxo text-black font-bold rounded-xl px-4 py-3 hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed">Pagar agora</button>
+</div>
+
+  </aside>  <!-- MODAL INFO DO PRODUTO -->  <div id="infoModal" class="hidden fixed inset-0 z-50 items-center justify-center">
+    <div class="absolute inset-0 bg-black/70"></div>
+    <div class="relative w-[92vw] max-w-xl bg-zinc-900/95 border border-roxo/40 rounded-2xl p-4 backdrop-blur shadow-glow">
+      <button id="btnCloseInfo" class="absolute top-2 right-2 h-9 w-9 rounded-lg border border-roxo/40">✕</button>
+      <img id="infoImg" src="" alt="" class="w-full rounded-xl mb-3"/>
+      <h3 id="infoName" class="font-display text-xl text-roxo mb-1"></h3>
+      <p id="infoDesc" class="text-white/80 text-sm leading-relaxed"></p>
+    </div>
+  </div>  <script>
+    // ==========================
+    // Utilidades & Estado
+    // ==========================
+    const state = {
+      allProducts: [],
+      filtered: [],
+      categories: [],
+      activeCategory: 'todas',
+      cart: []
+    };
+
+    const taxes = {
+      mercadopago: 0.0499, // 4,99%
+      paypalPerc:  0.0479,
+      paypalFixed: 0.60,
+      moeda:       0
+    };
+
+    const qs = (s, el=document) => el.querySelector(s);
+    const qsa = (s, el=document) => Array.from(el.querySelectorAll(s));
+
+    const fmtBRL = (n) => (Number(n)||0).toLocaleString('pt-BR', { style:'currency', currency:'BRL' });
+
+    function getJwt() {
+      // Opcional: tenta coletar token se existir
+      const raw = (localStorage.getItem('NoHeroes_token') || localStorage.getItem('token') || '').trim();
+      return raw.replace(/^Bearer\s+/i, '');
+    }
+
+    function calcTotalWithFee(subtotal, method){
+      if(method === 'mercadopago') return subtotal * (1 + taxes.mercadopago);
+      if(method === 'paypal') return subtotal * (1 + taxes.paypalPerc) + taxes.paypalFixed;
+      return subtotal;
+    }
+
+    function saveCart(){
+      localStorage.setItem('noheroes_cart', JSON.stringify(state.cart));
+      updateCartBadge();
+    }
+
+    function loadCart(){
+      try { state.cart = JSON.parse(localStorage.getItem('noheroes_cart')||'[]') || []; }
+      catch { state.cart = []; }
+      updateCartBadge();
+    }
+
+    function updateCartBadge(){
+      qs('#cartBadge').textContent = state.cart.reduce((s,i)=>s+i.quantity, 0);
+    }
+
+    // ==========================
+    // Layout: Filtros
+    // ==========================
+    function buildFilters(){
+      const containerDesktop = qs('#filtersNav');
+      const containerMobile  = qs('#filtersMobile');
+      containerDesktop.innerHTML = '';
+      containerMobile.innerHTML  = '';
+
+      const all = ['todas', ...state.categories];
+
+      const mkBtn = (cat) => {
+        const active = state.activeCategory === cat;
+        const base = 'px-3 py-2 rounded-xl border text-sm transition hover:bg-white/5';
+        const cls  = active ? `${base} border-roxo bg-white/5 text-roxo` : `${base} border-roxo/30 text-white/80`;
+        const btn = document.createElement('button');
+        btn.className = cls;
+        btn.textContent = cat === 'todas' ? 'Todas' : cat;
+        btn.addEventListener('click', () => { state.activeCategory = cat; applyFilter(); highlightFilters(); });
+        return btn;
+      }
+
+      all.forEach(cat => {
+        containerDesktop.appendChild(mkBtn(cat));
+        containerMobile.appendChild(mkBtn(cat).cloneNode(true));
+      });
+
+      highlightFilters();
+    }
+
+    function highlightFilters(){
+      const isActive = (btn) => (btn.textContent.toLowerCase() === (state.activeCategory==='todas'?'todas':state.activeCategory.toLowerCase()));
+      qsa('#filtersNav button, #filtersMobile button').forEach(btn => {
+        const base = 'px-3 py-2 rounded-xl border text-sm transition hover:bg-white/5';
+        if (isActive(btn)) btn.className = `${base} border-roxo bg-white/5 text-roxo`;
+        else btn.className = `${base} border-roxo/30 text-white/80`;
+      });
+    }
+
+    function applyFilter(){
+      const cat = state.activeCategory;
+      state.filtered = cat==='todas' ? state.allProducts.slice() : state.allProducts.filter(p=>normalizeCat(p.category)===cat);
+      renderProducts();
+    }
+
+    const CATEGORY_MAP = { manga:'Mangás', 'mangá':'Mangás', animes:'Animes', anime:'Animes', ebooks:'Ebooks', ebook:'Ebooks', mentorias:'Mentorias', mentoria:'Mentorias', extras:'Extras' };
+    function normalizeCat(cat){
+      const key = String(cat||'').toLowerCase().trim();
+      return CATEGORY_MAP[key] || (String(cat||'').charAt(0).toUpperCase() + String(cat||'').slice(1));
+    }
+
+    // ==========================
+    // Render: Produtos
+    // ==========================
+    function productCard(p){
+      const emBreve = String(p.status||'').toLowerCase() === 'em_breve';
+      const precoReal = p.priceReal ? `<span class="font-semibold text-dourado">${fmtBRL(p.priceReal)}</span>` : '';
+      const precoCoin = p.priceCoins ? `<span class="text-dourado/80">${p.priceCoins} ✪</span>` : '';
+      const preco = (precoReal||precoCoin) ? `<div class="mt-1 flex items-center gap-2">${precoReal}${precoReal&&precoCoin?' / ':''}${precoCoin}</div>` : `<div class="mt-1 text-dourado">Gratuito</div>`;
+
+      const btnDisabled = emBreve ? 'opacity-60 cursor-not-allowed' : '';
+
+      return `
+      <article class="relative group rounded-2xl border border-white/10 bg-white/5 backdrop-blur hover:shadow-glow transition overflow-hidden">
+        ${emBreve?'<span class="badge-embreve">EM BREVE</span>':''}
+        <button class="absolute top-2 right-2 z-10 h-9 w-9 rounded-lg border border-roxo/40 bg-black/40 hover:bg-black/60 info-btn" data-name="${escapeHtml(p.name)}" data-img="${escapeAttr(p.imageUrl||p.image||'')}" data-desc="${escapeAttr(p.description||'Sem descrição.')}" title="Detalhes">i</button>
+        <img src="${p.imageUrl||p.image||''}" alt="${escapeAttr(p.name)}" class="w-full aspect-[4/5] object-cover"/>
+        <div class="p-3">
+          <h3 class="font-display text-base text-white leading-snug">${p.name}</h3>
+          ${p.rarity?`<p class="text-xs text-roxo/90 mt-0.5">${p.rarity}</p>`:''}
+          ${preco}
+          <button class="mt-3 w-full bg-roxo text-black font-bold rounded-xl px-3 py-2 add-btn ${btnDisabled}" data-id="${escapeAttr(p.id)}">${emBreve?'EM BREVE':'Adicionar ao carrinho'}</button>
+        </div>
+      </article>`;
+    }
+
+    function renderProducts(){
+      const grid = qs('#productsGrid');
+      grid.innerHTML = state.filtered.map(productCard).join('');
+
+      // Estado vazio
+      qs('#emptyState').classList.toggle('hidden', state.filtered.length>0);
+
+      // Bind dos botões: info
+      qsa('.info-btn', grid).forEach(btn => btn.addEventListener('click', () => {
+        const name = btn.getAttribute('data-name');
+        const img  = btn.getAttribute('data-img');
+        const desc = btn.getAttribute('data-desc');
+        openInfo({name, img, desc});
+      }));
+
+      // Bind dos botões: add ao carrinho
+      qsa('.add-btn', grid).forEach(btn => btn.addEventListener('click', () => {
+        if (btn.textContent.trim().toLowerCase() === 'em breve') return;
+        const id = btn.getAttribute('data-id');
+        const prod = state.filtered.find(p => String(p.id)===String(id));
+        if (prod) addToCart(prod);
+      }));
+    }
+
+    // ==========================
+    // Modal Info
+    // ==========================
+    function openInfo({name, img, desc}){
+      qs('#infoName').textContent = name;
+      qs('#infoImg').src = img;
+      qs('#infoImg').alt = name;
+      qs('#infoDesc').textContent = desc;
+      const modal = qs('#infoModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+    function closeInfo(){
+      const modal = qs('#infoModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // ==========================
+    // Carrinho
+    // ==========================
+    function toggleCart(open){
+      const el = qs('#cartDrawer');
+      const shouldOpen = (open===undefined) ? el.classList.contains('translate-x-full') : open;
+      el.classList.toggle('translate-x-full', !shouldOpen);
+    }
+
+    function addToCart(p){
+      const idx = state.cart.findIndex(i => String(i.id)===String(p.id));
+      if (idx>-1) state.cart[idx].quantity += 1; else state.cart.push({ id:p.id, name:p.name, imageUrl:p.imageUrl||p.image||'', priceReal:Number(p.priceReal||p.price||0), quantity:1 });
+      saveCart();
+      renderCart();
+      toggleCart(true);
+    }
+
+    function removeFromCart(id){
+      state.cart = state.cart.filter(i => String(i.id)!==String(id));
+      saveCart();
+      renderCart();
+    }
+
+    function changeQty(id, delta){
+      const item = state.cart.find(i => String(i.id)===String(id));
+      if (!item) return;
+      item.quantity = Math.max(1, item.quantity + delta);
+      saveCart();
+      renderCart();
+    }
+
+    function cartSubtotal(){
+      return state.cart.reduce((s,i)=> s + (Number(i.priceReal||0)*i.quantity), 0);
+    }
+
+    function renderCart(){
+      const box = qs('#cartItems');
+      if (!state.cart.length){
+        box.innerHTML = '<p class="text-white/60 text-sm">Seu carrinho está vazio.</p>';
+      } else {
+        box.innerHTML = state.cart.map(i => `
+          <div class="flex items-center gap-3 p-2 rounded-xl border border-white/10 bg-white/5">
+            <img src="${i.imageUrl}" class="h-16 w-16 rounded-lg object-cover"/>
+            <div class="flex-1">
+              <p class="font-medium">${escapeHtml(i.name)}</p>
+              <p class="text-sm text-white/70">${fmtBRL(i.priceReal)} • <span class="text-xs">Qtd.</span>
+                <button class="px-2" onclick="changeQty('${i.id}', -1)">−</button>
+                <span class="px-2 font-semibold">${i.quantity}</span>
+                <button class="px-2" onclick="changeQty('${i.id}', 1)">+</button>
+              </p>
+            </div>
+            <button class="h-9 w-9 rounded-lg border border-red-500/40 text-red-400" onclick="removeFromCart('${i.id}')">✕</button>
+          </div>`).join('');
+      }
+
+      const sub = cartSubtotal();
+      qs('#cartSubtotal').textContent = fmtBRL(sub);
+
+      // Recalcula total com taxa se houver método selecionado
+      updateTotalWithFee();
+    }
+
+    function updateTotalWithFee(){
+      const method = qs('#paymentMethod').value;
+      const total = calcTotalWithFee(cartSubtotal(), method);
+      qs('#cartTotalWithFee').textContent = fmtBRL(total);
+    }
+
+    // ==========================
+    // Checkout
+    // ==========================
+    let paying = false;
+    async function checkout(){
+      if (paying) return; paying = true;
+      const btn = qs('#btnCheckout');
+      btn.disabled = true; btn.textContent = 'Processando...';
+
+      try{
+        if (!state.cart.length) throw new Error('Seu carrinho está vazio.');
+        const method = qs('#paymentMethod').value;
+        if (!method) throw new Error('Selecione um método de pagamento.');
+
+        // MP: cria preferência e redireciona
+        if (method==='mercadopago'){
+          const itensComTaxa = state.cart.map(i => ({
+            id: i.id,
+            title: i.name,
+            quantity: i.quantity,
+            unit_price: Number((i.priceReal * (1 + taxes.mercadopago)).toFixed(2)),
+            category_id: 'others'
+          }));
+
+          // Email é opcional aqui (não vamos barrar se não houver login)
+          let userEmail = '';
+          try{
+            const jwt = getJwt();
+            if (jwt) {
+              const payload = JSON.parse(atob((jwt.split('.')[1]||''))||'{}');
+              userEmail = payload?.email || '';
+            }
+          }catch{}
+
+          const body = { items: itensComTaxa, email: userEmail, nome_completo: 'Cliente NoHeroes' };
+          const resp = await fetch('https://api.noheroes.com.br/checkout/create-preference', { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify(body) });
+          const data = await resp.json();
+          if (!resp.ok || !data.init_point) throw new Error(data.error || data.message || 'Falha ao iniciar pagamento.');
+          location.assign(data.init_point);
+          return; // encerra aqui, pois haverá redirecionamento
+        }
+
+        // PayPal / Moeda Interna: envia para backend
+        const totalWithFee = Number(qs('#cartTotalWithFee').textContent.replace(/[^0-9,.-]/g,'').replace('.', '').replace(',', '.')) || 0;
+        const jwt = getJwt();
+        const body = {
+          items: state.cart.map(i=>({ id:i.id, name:i.name, imageUrl:i.imageUrl, quantity:i.quantity, priceReal:i.priceReal })),
+          paymentMethod: method,
+          totalWithFee
+        };
+        const resp = await fetch('https://api.noheroes.com.br/shop/purchase', { method:'POST', headers:{ 'Content-Type':'application/json', ...(jwt?{ 'Authorization':`Bearer ${jwt}` }: {}) }, body: JSON.stringify(body) });
+        const data = await resp.json().catch(()=>({}));
+        if (!resp.ok) throw new Error(data.message || 'Erro ao finalizar compra.');
+        alert('Compra concluída com sucesso!');
+        state.cart = []; saveCart(); renderCart(); toggleCart(false);
+      }
+      catch(err){
+        alert('❌ ' + (err?.message || 'Erro inesperado.'));
+      }
+      finally{
+        paying = false; btn.disabled = false; btn.textContent = 'Pagar agora';
+      }
+    }
+
+    // ==========================
+    // Fetch de produtos
+    // ==========================
+    async function loadProducts(){
+      try{
+        const res = await fetch('https://api.noheroes.com.br/shop');
+        const json = await res.json();
+        if (!json?.success) throw new Error('Resposta inválida.');
+        state.allProducts = (json.data||[]).map(p => ({...p, category: normalizeCat(p.category)}));
+      } catch (e){
+        console.warn('Falha ao carregar produtos da API, usando fallback local.', e);
+        // Fallback mínimo para visual
+        state.allProducts = [
+          { id:'demo1', name:'Manga Sombrio I', imageUrl:'https://picsum.photos/seed/nh1/600/800', category:'Mangás', priceReal:25.9, rarity:'Comum' },
+          { id:'demo2', name:'Ebook Manual das Sombras', imageUrl:'https://picsum.photos/seed/nh2/600/800', category:'Ebooks', priceReal:25.0, priceCoins:250, rarity:'Raro' },
+          { id:'demo3', name:'Mentoria Nocturna', imageUrl:'https://picsum.photos/seed/nh3/600/800', category:'Mentorias', priceReal:199.9, rarity:'Épico' },
+          { id:'demo4', name:'Anime Piloto', imageUrl:'https://picsum.photos/seed/nh4/600/800', category:'Animes', status:'em_breve' },
+          { id:'demo5', name:'Poster Exclusivo', imageUrl:'https://picsum.photos/seed/nh5/600/800', category:'Extras', priceCoins:150 }
+        ];
+      }
+
+      // Extrai categorias únicas (ordenadas)
+      const setCats = new Set(state.allProducts.map(p => normalizeCat(p.category)));
+      state.categories = Array.from(setCats).sort((a,b)=>a.localeCompare(b));
+
+      buildFilters();
+      applyFilter();
+    }
+
+    // ==========================
+    // Helpers
+    // ==========================
+    function escapeHtml(s=''){ return String(s).replace(/[&<>"]g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c])); }
+    function escapeAttr(s=''){ return String(s).replace(/[`"'\\]/g, ch=>({"`":"\`","\"":"&quot;","'":"&#39;","\\":"\\\\"}[ch]||ch)); }
+
+    // ==========================
+    // Brasas Canvas (efeito suave)
+    // ==========================
+    (function brasas(){
+      const canvas = document.getElementById('brasasCanvas');
+      const ctx = canvas.getContext('2d');
+      let w, h, particles=[];
+      function resize(){ w=canvas.width=innerWidth; h=canvas.height=innerHeight; }
+      addEventListener('resize', resize, {passive:true}); resize();
+      class Particle{ constructor(init=false){ this.reset(init); } reset(init){ this.x=Math.random()*w; this.y= init? Math.random()*h : h+Math.random()*100; this.s=1+Math.random()*2.3; this.v=0.2+Math.random()*0.45; this.a=0.35+Math.random()*0.3; this.d=(Math.random()-0.5)*0.5; } update(){ this.y-=this.v; this.x+=this.d; if(this.y<-10||this.x<-50||this.x>w+50) this.reset(); } draw(){ ctx.beginPath(); ctx.arc(this.x,this.y,this.s,0,Math.PI*2); ctx.fillStyle=`rgba(168,85,247,${this.a})`; ctx.shadowColor='#a855f7'; ctx.shadowBlur=10; ctx.fill(); } }
+      function create(n){ for(let i=0;i<n;i++) particles.push(new Particle(true)); }
+      function loop(){ ctx.clearRect(0,0,w,h); particles.forEach(p=>{ p.update(); p.draw(); }); requestAnimationFrame(loop); }
+      create(140); loop();
+    })();
+
+    // ==========================
+    // Eventos de UI
+    // ==========================
+    document.addEventListener('DOMContentLoaded', () => {
+      // Abre/fecha carrinho
+      qs('#btnCart').addEventListener('click', ()=> toggleCart());
+      qs('#btnCloseCart').addEventListener('click', ()=> toggleCart(false));
+
+      // Filtros no mobile
+      const fm = qs('#filtersDrawer');
+      qs('#btnOpenFiltersMobile').addEventListener('click', ()=> fm.classList.toggle('hidden'));
+
+      // Modal info
+      qs('#btnCloseInfo').addEventListener('click', closeInfo);
+      qs('#infoModal').addEventListener('click', (e)=>{ if (e.target.id==='infoModal') closeInfo(); });
+
+      // Pagamento
+      qs('#paymentMethod').addEventListener('change', updateTotalWithFee);
+      qs('#btnCheckout').addEventListener('click', checkout);
+
+      // Carrinho persistido
+      loadCart();
+      renderCart();
+
+      // Produtos
+      loadProducts();
+    });
+  </script>
+</body>
+</html>
