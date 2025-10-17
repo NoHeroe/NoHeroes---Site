@@ -71,7 +71,7 @@
 </head>
 <body class="min-h-screen">
   <canvas id="brasasCanvas"></canvas>
-    <!-- HEADER -->  <header class="sticky top-0 z-40 backdrop-blur bg-black/40 border-b border-roxo/40">
+    <!-- HEADER -->  <header class="fixed top-0 left-0 right-0 z-40 backdrop-blur bg-black/40 border-b border-roxo/40">
     <div class="mx-auto max-w-7xl px-4 py-3 flex items-center gap-4">
       <div class="flex items-center gap-3">
         <img src="assets/images/logo noheroes.png" alt="NoHeroes" class="h-8 w-auto drop-shadow"/>
@@ -117,14 +117,21 @@
   </div>
 </div>
 
-  </header>  <!-- CONTEÚDO PRINCIPAL -->  <main class="mx-auto max-w-7xl px-4 py-6">
+  </header>
+
+<div class="h-[70px] md:h-[80px]"></div>
+
+  <!-- CONTEÚDO PRINCIPAL -->  <main class="mx-auto max-w-7xl px-4 py-6">
     <!-- Título / descrição curta -->
     <section class="mb-6">
-      <h1 class="cinzel gradiente-noheroes text-3xl md:text-4xl font-bold tracking-wide drop-shadow">
-  Explore o Universo NoHeroes
+      <h1 class="cinzel gradiente-noheroes text-2xl sm:text-3xl md:text-4xl font-bold tracking-wide drop-shadow text-center leading-tight">
+  Explore o Universo<br class="hidden sm:block" /> NoHeroes
 </h1>
-      <p class="text-sm md:text-base text-white/70 mt-1 max-w-2xl">Produtos organizados por categoria. Clique nos filtros para refinar e adicione rapidamente ao carrinho. Fácil, direto e responsivo.</p>
-    </section><!-- Filtros (fallback se JS ainda não carregou) -->
+      <p class="text-sm md:text-base text-white/70 mt-1 max-w-2xl">Cartel Velado — um portal entre mundos.
+Produtos do universo NoHeroes, organizados por categoria. Explore, filtre e adicione ao carrinho com facilidade. Tudo o que você vê, veio de algum lugar... e quer voltar.</p>
+    </section>
+
+<!-- Filtros (fallback se JS ainda não carregou) -->
 <noscript>
   <p class="text-dourado">Ative o JavaScript para filtrar os produtos.</p>
 </noscript>
@@ -277,7 +284,7 @@
 
       all.forEach(cat => {
         containerDesktop.appendChild(mkBtn(cat));
-        containerMobile.appendChild(mkBtn(cat).cloneNode(true));
+        containerMobile.appendChild(mkBtn(cat));
       });
 
       highlightFilters();
