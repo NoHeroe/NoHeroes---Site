@@ -33,7 +33,6 @@
     /* Canvas brasas atrás de tudo */
     #brasasCanvas{ position:fixed; inset:0; width:100vw; height:100vh; z-index:-2; pointer-events:none; }
     /* Overlay sutil para melhorar contraste */
-    .bg-overlay{ position:fixed; inset:0; background:radial-gradient(1200px 800px at 60% -10%, rgba(168,85,247,.08), transparent 60%), rgba(0,0,0,.55); z-index:-1; }
     /* Scrollbar discreta */
     ::-webkit-scrollbar{ width:10px; height:10px; }
     ::-webkit-scrollbar-thumb{ background:#2a2a2a; border-radius:10px; }
@@ -44,7 +43,7 @@
 </head>
 <body class="min-h-screen">
   <canvas id="brasasCanvas"></canvas>
-  <div class="bg-overlay"></div>  <!-- HEADER -->  <header class="sticky top-0 z-40 backdrop-blur bg-black/40 border-b border-roxo/40">
+    <!-- HEADER -->  <header class="sticky top-0 z-40 backdrop-blur bg-black/40 border-b border-roxo/40">
     <div class="mx-auto max-w-7xl px-4 py-3 flex items-center gap-4">
       <div class="flex items-center gap-3">
         <img src="assets/images/logo noheroes.png" alt="NoHeroes" class="h-8 w-auto drop-shadow"/>
