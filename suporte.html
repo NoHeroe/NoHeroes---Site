@@ -1,0 +1,540 @@
+<!DOCTYPE html><html lang="pt-BR" class="h-full">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NoHeroes — Suporte</title>
+  <meta name="description" content="Centro de Suporte NoHeroes: encontre respostas, acesse a base de conhecimento, e abra um ticket com nossa equipe." />
+  <meta name="robots" content="index,follow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['\"Cinzel Decorative\"', 'serif'],
+            sans: ['Roboto', 'ui-sans-serif', 'system-ui'],
+          },
+          colors: {
+            brasa: {
+              50: '#f7f1ff',
+              100: '#efe3ff',
+              200: '#d9bfff',
+              300: '#c29bff',
+              400: '#a86dff',
+              500: '#8f4fff',
+              600: '#6d35db',
+              700: '#5127aa',
+              800: '#391b79',
+              900: '#26114f'
+            }
+          },
+          boxShadow: {
+            glow: '0 0 30px rgba(143, 79, 255, 0.35)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: dark; }
+    html, body { height: 100%; }
+    .glass { background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04)); backdrop-filter: blur(8px); }
+    .grid-bg { background-image: radial-gradient(rgba(143,79,255,0.15) 1px, transparent 1px); background-size: 18px 18px; }
+    .focus-ring { outline: none; box-shadow: 0 0 0 3px rgba(143,79,255,0.45); }
+    .sr-only-focusable:focus { position: static; clip: auto; width: auto; height: auto; margin: 0; }
+  </style>
+</head>
+<body class="bg-[#0b0b0e] text-gray-100 font-sans antialiased relative overflow-x-hidden">
+  <!-- Brasas Canvas Background -->
+  <div class="pointer-events-none fixed inset-0 -z-10">
+    <canvas id="brasasCanvas" class="w-full h-full"></canvas>
+  </div>  <!-- Top Gradient Glow -->  <div aria-hidden="true" class="fixed inset-x-0 top-0 h-72 bg-gradient-to-b from-brasa-900/40 to-transparent blur-2xl -z-10"></div>  <!-- Skip to content --><a href="#conteudo" class="sr-only sr-only-focusable bg-brasa-700 text-white px-3 py-2">Pular para o conteúdo</a>
+
+  <!-- Header -->  <header class="sticky top-0 z-40 border-b border-white/10 backdrop-blur bg-black/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+      <a href="/" class="flex items-center gap-3 group">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-brasa-500 to-brasa-700 shadow-glow"></div>
+        <span class="font-display text-xl tracking-wide group-hover:text-brasa-200 transition">NoHeroes</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 text-sm text-gray-300">
+        <a href="/sobre.html" class="hover:text-white">Sobre</a>
+        <a href="/status" class="hover:text-white">Status</a>
+        <a href="/termos.html" class="hover:text-white">Termos</a>
+        <a href="#abrir-ticket" class="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-brasa-600 hover:bg-brasa-500 text-white shadow-glow">Abrir Ticket</a>
+      </nav>
+      <!-- Mobile -->
+      <button id="btnMenu" class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-xl border border-white/10 hover:bg-white/5" aria-expanded="false" aria-controls="menuMobile" aria-label="Abrir menu">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+    <div id="menuMobile" class="md:hidden hidden border-t border-white/10 bg-black/60 backdrop-blur">
+      <div class="px-4 py-3 space-y-2">
+        <a href="/sobre.html" class="block px-3 py-2 rounded-lg hover:bg-white/5">Sobre</a>
+        <a href="/status" class="block px-3 py-2 rounded-lg hover:bg-white/5">Status</a>
+        <a href="/termos.html" class="block px-3 py-2 rounded-lg hover:bg-white/5">Termos</a>
+        <a href="#abrir-ticket" class="block px-3 py-2 rounded-lg bg-brasa-600 hover:bg-brasa-500 text-white">Abrir Ticket</a>
+      </div>
+    </div>
+  </header>  <main id="conteudo" class="relative">
+    <!-- HERO -->
+    <section class="grid-bg">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+        <div class="grid lg:grid-cols-2 gap-10 items-center">
+          <div>
+            <h1 class="font-display text-4xl sm:text-5xl leading-tight">Centro de <span class="text-brasa-400">Suporte</span> NoHeroes</h1>
+            <p class="mt-4 text-gray-300 max-w-prose">Encontre respostas rápidas, explore a base de conhecimento, verifique o status dos serviços e, se precisar, abra um ticket que chega direto ao nosso time.</p>
+            <div class="mt-8 flex flex-wrap gap-3">
+              <a href="#busca" class="px-4 py-2 rounded-xl border border-white/10 hover:bg-white/5">Buscar respostas</a>
+              <a id="abrir-ticket" href="#form-ticket" class="px-4 py-2 rounded-xl bg-brasa-600 hover:bg-brasa-500 text-white shadow-glow">Abrir Ticket</a>
+              <a href="/status" class="px-4 py-2 rounded-xl border border-white/10 hover:bg-white/5">Status do Servidor</a>
+            </div>
+          </div>
+          <div class="rounded-2xl glass p-6 border border-white/10 shadow-xl">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brasa-500 to-brasa-700"></div>
+              <div>
+                <p class="text-sm text-gray-400">Tempo médio de resposta</p>
+                <p class="text-lg font-medium">&lt; 24h úteis</p>
+              </div>
+            </div>
+            <div class="mt-4 grid grid-cols-3 gap-4 text-center">
+              <div class="p-4 rounded-xl bg-white/5 border border-white/10">
+                <p class="text-2xl font-bold">99,9%</p>
+                <p class="text-xs text-gray-400">Uptime (últ. 30d)</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5 border border-white/10">
+                <p class="text-2xl font-bold">6 min</p>
+                <p class="text-xs text-gray-400">Primeira resposta</p>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5 border border-white/10">
+                <p class="text-2xl font-bold">CSAT 4,8</p>
+                <p class="text-xs text-gray-400">Satisfação</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- BUSCA -->
+<section id="busca" class="relative">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <label for="query" class="block text-sm text-gray-300 mb-2">O que você precisa?</label>
+    <div class="relative">
+      <input id="query" type="search" placeholder="Descreva seu problema (ex.: pagamento, login, download)…" class="w-full rounded-2xl bg-white/5 border border-white/10 px-4 py-3 pr-12 placeholder:text-gray-500 focus:focus-ring" />
+      <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    </div>
+    <p id="searchHint" class="mt-2 text-xs text-gray-400">Dica: tente palavras‑chave como “boleto”, “cartão recusado”, “erro 500”.</p>
+  </div>
+</section>
+
+<!-- CATEGORIAS -->
+<section class="">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4" id="cards-categorias">
+      <!-- Card -->
+      <article data-tags="conta segurança login 2fa privacidade" class="group rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition p-5">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brasa-500 to-brasa-700"></div>
+          <h3 class="font-medium">Contas & Segurança</h3>
+        </div>
+        <p class="mt-2 text-sm text-gray-400">Acesso, 2FA, privacidade, recuperação e proteção de conta.</p>
+        <ul class="mt-3 text-sm list-disc list-inside text-gray-300 space-y-1">
+          <li>Recuperar acesso</li>
+          <li>Ativar 2FA</li>
+          <li>Encerrar sessão em todos os dispositivos</li>
+        </ul>
+      </article>
+
+      <article data-tags="pagamento boleto cartão pix marketplace mercadopago reembolso fatura nota" class="group rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition p-5">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brasa-500 to-brasa-700"></div>
+          <h3 class="font-medium">Compras & Pagamentos</h3>
+        </div>
+        <p class="mt-2 text-sm text-gray-400">Boleto, cartão, Pix, reembolso, nota fiscal e assinaturas.</p>
+        <ul class="mt-3 text-sm list-disc list-inside text-gray-300 space-y-1">
+          <li>Comprovante não reconhecido</li>
+          <li>Pagamento recusado</li>
+          <li>Reembolso</li>
+        </ul>
+      </article>
+
+      <article data-tags="produtos downloads instalação update versão compatibilidade" class="group rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition p-5">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brasa-500 to-brasa-700"></div>
+          <h3 class="font-medium">Produtos & Downloads</h3>
+        </div>
+        <p class="mt-2 text-sm text-gray-400">Instalação, atualizações, compatibilidade e acesso a arquivos.</p>
+        <ul class="mt-3 text-sm list-disc list-inside text-gray-300 space-y-1">
+          <li>Baixar compras</li>
+          <li>Atualizações</li>
+          <li>Compatibilidade</li>
+        </ul>
+      </article>
+
+      <article data-tags="erro bug crash desempenho suporte técnico requisitos" class="group rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition p-5">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brasa-500 to-brasa-700"></div>
+          <h3 class="font-medium">Problemas Técnicos</h3>
+        </div>
+        <p class="mt-2 text-sm text-gray-400">Erros, desempenho, crash, requisitos e logs.</p>
+        <ul class="mt-3 text-sm list-disc list-inside text-gray-300 space-y-1">
+          <li>Erro de inicialização</li>
+          <li>FPS baixo</li>
+          <li>Envio de logs</li>
+        </ul>
+      </article>
+
+      <article data-tags="política privacidade dados remoção lgpd termos segurança" class="group rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition p-5">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brasa-500 to-brasa-700"></div>
+          <h3 class="font-medium">Política & Privacidade</h3>
+        </div>
+        <p class="mt-2 text-sm text-gray-400">LGPD, uso de dados, solicitações e termos.</p>
+        <ul class="mt-3 text-sm list-disc list-inside text-gray-300 space-y-1">
+          <li>Exercício de direitos LGPD</li>
+          <li>Remoção de dados</li>
+          <li>Cookies</li>
+        </ul>
+      </article>
+
+      <article data-tags="contato humano chat suporte telefone email urgência" class="group rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition p-5">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brasa-500 to-brasa-700"></div>
+          <h3 class="font-medium">Contato Direto</h3>
+        </div>
+        <p class="mt-2 text-sm text-gray-400">Fale com a equipe para casos específicos ou urgentes.</p>
+        <ul class="mt-3 text-sm list-disc list-inside text-gray-300 space-y-1">
+          <li>Chat de suporte</li>
+          <li>Email prioritário</li>
+          <li>Orientações de segurança</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ DINÂMICO -->
+<section aria-labelledby="faq-title" class="">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="flex items-end justify-between gap-4">
+      <div>
+        <h2 id="faq-title" class="font-display text-2xl">Perguntas frequentes</h2>
+        <p class="text-sm text-gray-400">Resultados filtram conforme você digita na busca.</p>
+      </div>
+      <a href="sobre.html#faq-section" class="px-4 py-2 rounded-xl border border-white/10 hover:bg-white/5">Ver mais perguntas</a>
+    </div>
+    <div id="faq" class="mt-6 space-y-3">
+      <!-- Item -->
+      <details class="group rounded-xl border border-white/10 bg-white/5 p-4" data-tags="pagamento boleto pix cartão mercadopago reembolso">
+        <summary class="flex cursor-pointer items-center justify-between">
+          <span class="font-medium">Meu pagamento foi aprovado mas não recebi o produto. E agora?</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-400 group-open:rotate-180 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <div class="mt-3 text-sm text-gray-300 leading-relaxed">
+          Verifique o email (inclusive spam). Se não encontrar, acesse "Minhas Compras" e baixe novamente. Persistindo, abra um ticket com o ID da transação ou anexe o comprovante.
+        </div>
+      </details>
+
+      <details class="group rounded-xl border border-white/10 bg-white/5 p-4" data-tags="login conta acesso senha 2fa recuperar email">
+        <summary class="flex cursor-pointer items-center justify-between">
+          <span class="font-medium">Esqueci minha senha ou perdi o 2FA. Como recuperar?</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-400 group-open:rotate-180 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <div class="mt-3 text-sm text-gray-300 leading-relaxed">
+          Use "Esqueci minha senha" para redefinição por email. Se perdeu o 2FA, valide a identidade com documento e comprovante de compra em um ticket.
+        </div>
+      </details>
+
+      <details class="group rounded-xl border border-white/10 bg-white/5 p-4" data-tags="nota fiscal nf reembolso tributação dados lgpd">
+        <summary class="flex cursor-pointer items-center justify-between">
+          <span class="font-medium">Como solicitar nota fiscal ou reembolso?</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-400 group-open:rotate-180 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <div class="mt-3 text-sm text-gray-300 leading-relaxed">
+          Anexe o comprovante e informe CNPJ/CPF para a nota. Reembolsos seguem a política publicada e análise antifraude.
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- FORM TICKET -->
+<section id="form-ticket" class="">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <form id="ticketForm" class="glass rounded-2xl border border-white/10 p-6">
+      <div class="flex items-center justify-between">
+        <h2 class="font-display text-2xl">Abrir Ticket</h2>
+        <span class="text-xs text-gray-400">Resposta em até 24h úteis</span>
+      </div>
+      <p class="text-sm text-gray-400 mt-1">Descreva o caso com detalhes. Você pode anexar arquivos (ex.: prints, logs).</p>
+
+      <div class="mt-6 grid sm:grid-cols-2 gap-4">
+        <div>
+          <label for="nome" class="block text-sm text-gray-300">Nome</label>
+          <input id="nome" name="nome" required class="mt-1 w-full rounded-xl bg-white/5 border border-white/10 px-3 py-2 focus:focus-ring" />
+        </div>
+        <div>
+          <label for="email" class="block text-sm text-gray-300">Email</label>
+          <input id="email" name="email" type="email" inputmode="email" required class="mt-1 w-full rounded-xl bg-white/5 border border-white/10 px-3 py-2 focus:focus-ring" />
+        </div>
+        <div>
+          <label for="categoria" class="block text-sm text-gray-300">Categoria</label>
+          <select id="categoria" name="categoria" required class="mt-1 w-full rounded-xl bg-white/5 border border-white/10 px-3 py-2 focus:focus-ring">
+            <option value="Pagamento">Compras & Pagamentos</option>
+            <option value="Conta">Contas & Segurança</option>
+            <option value="Produto">Produtos & Downloads</option>
+            <option value="Tecnico">Problemas Técnicos</option>
+            <option value="Privacidade">Política & Privacidade</option>
+            <option value="Outro">Outro</option>
+          </select>
+        </div>
+        <div>
+          <label for="prioridade" class="block text-sm text-gray-300">Prioridade</label>
+          <select id="prioridade" name="prioridade" class="mt-1 w-full rounded-xl bg-white/5 border border-white/10 px-3 py-2 focus:focus-ring">
+            <option value="Normal">Normal</option>
+            <option value="Alta">Alta</option>
+            <option value="Crítica">Crítica</option>
+          </select>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="assunto" class="block text-sm text-gray-300">Assunto</label>
+          <input id="assunto" name="assunto" required maxlength="140" class="mt-1 w-full rounded-xl bg-white/5 border border-white/10 px-3 py-2 focus:focus-ring" />
+        </div>
+        <div class="sm:col-span-2">
+          <label for="descricao" class="block text-sm text-gray-300">Descrição</label>
+          <textarea id="descricao" name="descricao" required rows="6" class="mt-1 w-full rounded-xl bg-white/5 border border-white/10 px-3 py-2 focus:focus-ring" placeholder="Explique o que aconteceu, passos para reproduzir, mensagens de erro, ambiente/versão…"></textarea>
+        </div>
+        <div>
+          <label for="pedidoId" class="block text-sm text-gray-300">ID do pedido (opcional)</label>
+          <input id="pedidoId" name="pedidoId" class="mt-1 w-full rounded-xl bg-white/5 border border-white/10 px-3 py-2 focus:focus-ring" />
+        </div>
+        <div>
+          <label for="anexos" class="block text-sm text-gray-300">Anexos (até 10MB)</label>
+          <input id="anexos" name="anexos" type="file" multiple accept="image/*,.pdf,.zip,.txt,.log" class="mt-1 w-full rounded-xl bg-white/5 border border-white/10 px-3 py-2 file:mr-3 file:px-3 file:py-2 file:rounded-lg file:border-0 file:bg-brasa-600 file:text-white hover:file:bg-brasa-500" />
+        </div>
+
+        <!-- Honeypot anti-bot -->
+        <div class="hidden">
+          <label for="website">Website</label>
+          <input id="website" name="website" autocomplete="off" tabindex="-1" />
+        </div>
+      </div>
+
+      <div class="mt-6 flex items-center justify-between">
+        <label class="text-xs text-gray-400 flex items-center gap-2">
+          <input id="consent" type="checkbox" class="rounded border-white/20 bg-white/5" required />
+          Concordo com os <a href="/termos.html" class="underline hover:text-white">Termos</a> e a <a href="/privacidade.html" class="underline hover:text-white">Privacidade</a>.
+        </label>
+        <button id="submitBtn" type="submit" class="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-brasa-600 hover:bg-brasa-500 text-white shadow-glow disabled:opacity-50 disabled:cursor-not-allowed">
+          <svg id="btnIcon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+          <span>Enviar ticket</span>
+            </button>
+          </div>
+
+          <!-- Toasts -->
+          <div id="toast" class="mt-4 hidden"></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid md:grid-cols-3 gap-8">
+      <div>
+        <h3 class="font-display text-lg">NoHeroes</h3>
+        <p class="mt-2 text-sm text-gray-400 max-w-prose">Suporte oficial. Para segurança, não compartilhe senhas ou códigos 2FA. Mensagens fora dos domínios noheroes.com.br podem ser phishing.</p>
+      </div>
+      <div class="text-sm text-gray-300 grid grid-cols-2 gap-2">
+        <a href="/status" class="hover:text-white">Status</a>
+        <a href="/sobre.html" class="hover:text-white">Sobre</a>
+        <a href="/termos.html" class="hover:text-white">Termos</a>
+        <a href="/privacidade.html" class="hover:text-white">Privacidade</a>
+        <a href="/seguranca.html" class="hover:text-white">Segurança</a>
+        <a href="mailto:support@noheroes.com.br" class="hover:text-white">support@noheroes.com.br</a>
+      </div>
+      <div class="text-sm text-gray-400">
+        <p>© <span id="year"></span> NoHeroes Corp. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // ====== CONFIG ======
+    const API_BASE = 'https://api.noheroes.com.br'; // ajuste conforme seu backend
+    const TICKET_ENDPOINT = API_BASE + '/suporte/ticket';
+    const MAX_TOTAL_UPLOAD_MB = 10;
+
+    // ====== UI Helpers ======
+    const $ = s => document.querySelector(s);
+    const $$ = s => Array.from(document.querySelectorAll(s));
+
+    function toast(type, msg) {
+      const t = $('#toast');
+      t.className = '';
+      t.classList.add('mt-4', 'p-3', 'rounded-xl', 'border', 'text-sm');
+      if (type === 'ok') {
+        t.classList.add('bg-emerald-500/10', 'border-emerald-500/30', 'text-emerald-300');
+      } else if (type === 'warn') {
+        t.classList.add('bg-amber-500/10', 'border-amber-500/30', 'text-amber-300');
+      } else {
+        t.classList.add('bg-rose-500/10', 'border-rose-500/30', 'text-rose-300');
+      }
+      t.textContent = msg;
+      t.classList.remove('hidden');
+    }
+
+    function bytesToMB(b) { return (b / (1024*1024)).toFixed(2); }
+
+    // ====== Mobile menu ======
+    $('#btnMenu')?.addEventListener('click', () => {
+      const m = $('#menuMobile');
+      const expanded = $('#btnMenu').getAttribute('aria-expanded') === 'true';
+      $('#btnMenu').setAttribute('aria-expanded', String(!expanded));
+      m.classList.toggle('hidden');
+    });
+
+    // ====== Ano footer ======
+    $('#year').textContent = new Date().getFullYear();
+
+    // ====== Busca / Filtro ======
+    const inputQuery = $('#query');
+    const hint = $('#searchHint');
+
+    function filterByQuery(q) {
+      const query = q.trim().toLowerCase();
+      // categorias
+      $$('#cards-categorias article').forEach(card => {
+        const tags = (card.getAttribute('data-tags') || '').toLowerCase();
+        card.classList.toggle('hidden', query && !tags.includes(query));
+      });
+      // faq
+      $$('#faq details').forEach(d => {
+        const tags = (d.getAttribute('data-tags') || '').toLowerCase();
+        const match = !query || tags.includes(query);
+        d.classList.toggle('hidden', !match);
+      });
+      hint.textContent = query ? `Filtrando por: "${query}"` : 'Dica: tente palavras‑chave como “boleto”, “cartão recusado”, “erro 500”.';
+    }
+
+    inputQuery?.addEventListener('input', (e) => filterByQuery(e.target.value));
+
+    // ====== Form Ticket ======
+    const form = $('#ticketForm');
+    const submitBtn = $('#submitBtn');
+    const btnIcon = $('#btnIcon');
+
+    function setLoading(loading) {
+      submitBtn.disabled = loading;
+      btnIcon.style.animation = loading ? 'spin 1s linear infinite' : '';
+    }
+
+    // Simple spinner keyframes
+    const style = document.createElement('style');
+    style.textContent = '@keyframes spin { from { transform: rotate(0deg);} to { transform: rotate(360deg);} }';
+    document.head.appendChild(style);
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if ($('#website').value) return; // honeypot
+
+      // Validate size
+      const files = $('#anexos').files || [];
+      let total = 0; for (const f of files) total += f.size;
+      if (total > MAX_TOTAL_UPLOAD_MB * 1024 * 1024) {
+        toast('warn', `Limite de upload excedido (${bytesToMB(total)}MB). Máximo: ${MAX_TOTAL_UPLOAD_MB}MB.`);
+        return;
+      }
+
+      const data = new FormData();
+      data.append('nome', $('#nome').value.trim());
+      data.append('email', $('#email').value.trim());
+      data.append('categoria', $('#categoria').value);
+      data.append('prioridade', $('#prioridade').value);
+      data.append('assunto', $('#assunto').value.trim());
+      data.append('descricao', $('#descricao').value.trim());
+      if ($('#pedidoId').value.trim()) data.append('pedidoId', $('#pedidoId').value.trim());
+      for (const f of files) data.append('anexos', f, f.name);
+
+      setLoading(true);
+      toast('warn', 'Enviando…');
+
+      try {
+        const res = await fetch(TICKET_ENDPOINT, {
+          method: 'POST',
+          // Credenciais/headers conforme backend; Authorization opcional
+          headers: { 'X-Client': 'noheroes-support-v1' },
+          body: data,
+          mode: 'cors',
+          credentials: 'omit'
+        });
+
+        if (!res.ok) {
+          const text = await res.text().catch(() => '');
+          throw new Error(text || `HTTP ${res.status}`);
+        }
+        const json = await res.json().catch(() => ({}));
+
+        toast('ok', 'Ticket enviado com sucesso! Você receberá um email com o protocolo.');
+        form.reset();
+        // Se backend retornar protocolo
+        if (json && json.protocolo) {
+          const t = $('#toast');
+          const p = document.createElement('div');
+          p.className = 'mt-2 text-xs text-gray-300';
+          p.textContent = `Protocolo: ${json.protocolo}`;
+          t.appendChild(p);
+        }
+      } catch (err) {
+        console.error(err);
+        toast('err', 'Não foi possível enviar o ticket agora. Tente novamente em instantes.');
+      } finally {
+        setLoading(false);
+      }
+    });
+
+    // ====== Brasas Canvas init ======
+    (function initBrasas(){
+      const canvas = document.getElementById('brasasCanvas');
+      if (!canvas) return;
+      try {
+        if (typeof brasasCanvas === 'function') {
+          brasasCanvas(canvas, {
+            intensity: 0.7,
+            hue: 270, // roxo
+            particles: 90,
+            parallax: 0.2,
+            drift: 0.4,
+            glow: true
+          });
+        } else {
+          // fallback: leve ruído animado
+          const ctx = canvas.getContext('2d');
+          function resize(){ canvas.width = innerWidth; canvas.height = innerHeight; }
+          resize(); addEventListener('resize', resize);
+          let t = 0; (function loop(){
+            t += 0.005;
+            const w = canvas.width, h = canvas.height;
+            const img = ctx.createImageData(w, h);
+            for (let i=0;i<img.data.length;i+=4){
+              const n = Math.random()*25;
+              img.data[i] = 20 + n; // r
+              img.data[i+1] = 10 + n; // g
+              img.data[i+2] = 35 + n*2; // b
+              img.data[i+3] = 10; // a
+            }
+            ctx.putImageData(img,0,0);
+            requestAnimationFrame(loop);
+          })();
+        }
+      } catch(e){ console.warn('brasasCanvas erro/fallback', e); }
+    })();
+  </script>
+
+  <!-- Carrega o script real das brasas (se existir no projeto) -->
+  <script src="/assets/js/brasasCanvas.js" defer></script>
+</body>
+</html>
