@@ -8,12 +8,10 @@
   <link rel="icon" href="/favicon.ico" />
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* Melhor legibilidade de âncoras fixas */
     :target { scroll-margin-top: 7rem; }
   </style>
 </head>
 <body class="min-h-screen bg-neutral-950 text-neutral-100 antialiased">
-  <!-- Header -->
   <header class="sticky top-0 z-40 backdrop-blur bg-neutral-950/80 border-b border-neutral-800">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center gap-4">
       <a href="/" class="inline-flex items-center gap-2 font-semibold text-neutral-100 hover:text-white">
@@ -25,12 +23,12 @@
         <time id="lastUpdated" class="text-neutral-200 font-medium">19 de outubro de 2025</time>
       </div>
     </div>
-  </header>  <!-- Hero -->  <section class="border-b border-neutral-800 bg-gradient-to-b from-neutral-900/50 to-neutral-950">
+  </header>  <section class="border-b border-neutral-800 bg-gradient-to-b from-neutral-900/50 to-neutral-950">
     <div class="max-w-6xl mx-auto px-4 py-10">
       <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
         <div>
           <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">Termos de Uso, Privacidade & Segurança</h1>
-          <p class="mt-2 text-neutral-300 max-w-2xl">Este documento descreve como você pode usar os produtos e serviços da NoHeroes e como tratamos seus dados pessoais, com transparência e em conformidade com a legislação brasileira (incluindo a LGPD — Lei nº 13.709/2018).</p>
+          <p class="mt-2 text-neutral-300 max-w-2xl">Este documento descreve como você pode usar os produtos e serviços da NoHeroes e como tratamos seus dados pessoais, em conformidade com a LGPD (Lei nº 13.709/2018).</p>
         </div>
         <div class="flex items-center gap-3">
           <a href="#contato" class="px-4 py-2 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-sm">Dúvidas? Fale conosco</a>
@@ -38,306 +36,92 @@
         </div>
       </div>
     </div>
-  </section>  <!-- Main -->  <main class="max-w-6xl mx-auto px-4 py-10 grid grid-cols-1 lg:grid-cols-[260px,1fr] gap-8">
-    <!-- Sidebar / TOC -->
+  </section>  <main class="max-w-6xl mx-auto px-4 py-10 grid grid-cols-1 lg:grid-cols-[260px,1fr] gap-8">
     <aside class="lg:sticky lg:top-24 h-fit border border-neutral-800 rounded-2xl p-4 bg-neutral-900/40">
       <div class="flex items-center gap-2 mb-3">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
         <span class="text-sm text-neutral-300">Navegação</span>
       </div>
-      <nav id="toc" class="space-y-1 text-sm">
-        <!-- Gerado por JS -->
-      </nav>
-      <div class="mt-4 pt-4 border-t border-neutral-800">
-        <label class="text-xs text-neutral-400">Pesquisar neste documento</label>
-        <div class="mt-1 relative">
-          <input id="searchInput" type="search" placeholder="Buscar palavras-chave" class="w-full rounded-lg bg-neutral-800/70 border border-neutral-700 px-3 py-2 text-sm placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-purple-500">
-          <div id="searchCount" class="absolute right-2 top-1/2 -translate-y-1/2 text-[11px] text-neutral-400"></div>
-        </div>
-      </div>
-    </aside><!-- Content -->
-<article class="prose prose-invert max-w-none">
-  <!-- Introdução -->
+      <nav id="toc" class="space-y-1 text-sm"></nav>
+    </aside><article class="prose prose-invert max-w-none">
+  <section id="aceitacao" class="doc-section">
+    <h2>1. Aceitação dos Termos</h2>
+    <p>Ao usar os serviços da NoHeroes, você declara ter lido, compreendido e aceitado integralmente estes Termos e a Política de Privacidade. Em cadastros e compras, poderá ser solicitado aceite explícito através de checkbox de confirmação.</p>
+  </section>
+
   <section id="introducao" class="doc-section">
-    <h2>1. Introdução</h2>
-    <p>A NoHeroes oferece um ecossistema de conteúdos e experiências — incluindo <strong>livros, imagens, ebooks, mangás, animes, aplicativos, jogos, lore, design e elementos visuais</strong> — além de uma <strong>loja digital</strong> para produtos digitais e, futuramente, uma loja para produtos físicos. Ao acessar ou usar os serviços, você concorda com estes Termos e com a Política de Privacidade e Segurança.</p>
-    <p>Se você não concordar com qualquer parte, deve interromper o uso. Recomendamos a leitura integral deste documento.</p>
+    <h2>2. Introdução</h2>
+    <p>A NoHeroes oferece um ecossistema de conteúdos e experiências — incluindo livros, imagens, ebooks, mangás, animes, aplicativos, jogos, lore e design — além de lojas digitais e físicas. Estes Termos regulam o uso de todos esses serviços.</p>
   </section>
 
-  <!-- Definições -->
   <section id="definicoes" class="doc-section">
-    <h2>2. Definições</h2>
-    <ul>
-      <li><strong>"NoHeroes"</strong> ou <strong>"nós"</strong>: pessoa jurídica responsável pelo site, apps e serviços (preencha os dados legais em <a href="#contato">Contato</a>).</li>
-      <li><strong>"Usuário"</strong> ou <strong>"você"</strong>: pessoa que acessa ou utiliza os serviços.</li>
-      <li><strong>"Serviços"</strong>: o site, aplicativos, APIs, conteúdos e lojas (digitais e físicas).</li>
-      <li><strong>"Conteúdos"</strong>: todo material disponibilizado: textos, imagens, vídeos, áudios, softwares, jogos, design, lore e demais ativos.</li>
-      <li><strong>"Dados Pessoais"</strong>: informações relacionadas a pessoa natural identificada ou identificável, conforme a LGPD.</li>
-    </ul>
+    <h2>3. Definições</h2>
+    <ul><li>NoHeroes: pessoa jurídica responsável pelo site e apps.</li><li>Usuário: pessoa que acessa os serviços.</li><li>Serviços: site, aplicativos, conteúdos e lojas.</li><li>Dados Pessoais: informações relacionadas a pessoa natural conforme LGPD.</li></ul>
   </section>
 
-  <!-- Escopo e Elegibilidade -->
   <section id="escopo" class="doc-section">
-    <h2>3. Escopo, Elegibilidade e Conta</h2>
-    <ul>
-      <li>Para certas funcionalidades, pode ser necessário criar uma conta. Você é responsável por manter suas credenciais em sigilo e por toda atividade sob sua conta.</li>
-      <li>Os serviços são destinados a maiores de 13 anos. Se você tiver menos de 18 anos, utilize com supervisão de um responsável.</li>
-      <li>Podemos oferecer acesso sem login para navegação geral; porém, ações como <strong>adicionar ao carrinho</strong> ou <strong>comprar</strong> podem exigir autenticação.</li>
-    </ul>
+    <h2>4. Escopo e Conta</h2>
+    <p>O uso pode exigir conta. Usuários menores de 18 devem ter supervisão. Ações de compra requerem autenticação.</p>
   </section>
 
-  <!-- Propriedade Intelectual -->
   <section id="propriedade" class="doc-section">
-    <h2>4. Conteúdos e Propriedade Intelectual</h2>
-    <p>Salvo indicação em contrário, todos os Conteúdos são de titularidade da NoHeroes e/ou licenciados, protegidos por direitos autorais, marcas e demais normas aplicáveis. É <strong>vedado</strong> copiar, reproduzir, distribuir, vender, publicar, modificar ou criar obras derivadas sem autorização expressa.</p>
-    <p>É permitida a <strong>utilização pessoal e não comercial</strong>, dentro do escopo da licença concedida no momento da compra/download. Qualquer uso além da licença requer autorização escrita.</p>
+    <h2>5. Propriedade Intelectual</h2>
+    <p>Todo conteúdo da NoHeroes é protegido por direitos autorais e marcas registradas. O uso comercial exige licença escrita. Fanarts e obras derivadas são permitidas apenas dentro das diretrizes oficiais.</p>
   </section>
 
-  <!-- Uso Permitido/Proibido -->
-  <section id="uso" class="doc-section">
-    <h2>5. Uso Permitido e Proibido</h2>
-    <ul>
-      <li>Proibido: engenharia reversa, scraping automatizado agressivo, ataques, distribuição não autorizada, uso para atividades ilícitas, violação de direitos de terceiros.</li>
-      <li>Permitido: navegação, aquisição e fruição de conteúdos conforme as licenças aplicáveis; uso de APIs conforme termos específicos quando oferecidas.</li>
-      <li>Podemos moderar conteúdos gerados por usuários (se disponíveis), removendo materiais que violem estes Termos.</li>
-    </ul>
-  </section>
-
-  <!-- Compras e Pagamentos -->
   <section id="compras" class="doc-section">
-    <h2>6. Compras, Pagamentos e Reembolsos</h2>
-    <ul>
-      <li>Compras de produtos digitais e, futuramente, físicos podem exigir <strong>nome, e-mail, endereço, telefone e CPF</strong> para processamento.</li>
-      <li>Os pagamentos são processados por <strong>instituições de pagamento</strong> (ex.: <em>Mercado Pago</em>). Esses terceiros tratam dados conforme suas próprias políticas.</li>
-      <li>Os preços, promoções e disponibilidade podem mudar sem aviso prévio. O preço exibido no checkout prevalece.</li>
-      <li>Produtos digitais: a entrega é normalmente imediata após a confirmação do pagamento (ex.: link de download/ativação). Em caso de falhas, entre em contato.</li>
-      <li>Reembolsos: siga as instruções de suporte descritas em <a href="#contato">Contato</a>. Analisamos cada solicitação conforme legislação aplicável e natureza do produto.</li>
-    </ul>
+    <h2>6. Compras e Pagamentos</h2>
+    <ul><li>Dados como nome, e-mail, CPF e endereço são usados para compras.</li><li>Pagamentos processados via Mercado Pago. A NoHeroes não armazena dados de cartão.</li><li>Reembolso: prazo de até 7 dias corridos conforme CDC Art.49.</li></ul>
   </section>
 
-  <!-- Licenciamento Digital -->
   <section id="licencas" class="doc-section">
-    <h2>7. Licenças de Conteúdo Digital</h2>
-    <p>A aquisição concede uma licença limitada, revogável, não exclusiva e intransferível para uso pessoal. Restrições específicas podem ser exibidas na página do produto (ex.: número de dispositivos, proibição de redistribuição, DRMs).</p>
+    <h2>7. Licenças Digitais</h2>
+    <p>O usuário recebe licença não exclusiva e pessoal. Distribuição ou uso comercial requer autorização.</p>
   </section>
 
-  <!-- Proteção de Dados (LGPD) -->
   <section id="dados" class="doc-section">
-    <h2>8. Privacidade e Proteção de Dados (LGPD)</h2>
-    <h3>8.1. Quais dados coletamos</h3>
-    <ul>
-      <li><strong>Cadastro/Compra (opcional e quando necessário)</strong>: nome, e-mail, endereço, telefone, CPF e dados de entrega para físicos (futuro).</li>
-      <li><strong>Transacionais</strong>: identificadores de pedido, itens adquiridos, valor, status do pagamento.</li>
-      <li><strong>Dados técnicos essenciais</strong>: logs de acesso (IP, data/hora, user agent) para segurança e prevenção a fraudes.</li>
-      <li><strong>Comunicações</strong>: mensagens de suporte, preferências de contato.</li>
-    </ul>
-    <h3>8.2. Bases legais e finalidades</h3>
-    <ul>
-      <li><strong>Execução de contrato</strong>: processar pedidos, entregar produtos/serviços, suporte.</li>
-      <li><strong>Cumprimento de obrigação legal</strong>: emissão de notas fiscais, registros contábeis.</li>
-      <li><strong>Legítimo interesse</strong>: melhorar experiência, segurança, prevenção a abusos; sempre com avaliação de impacto e opção de oposição quando aplicável.</li>
-      <li><strong>Consentimento</strong>: comunicações de marketing (quando oferecidas) e funcionalidades opcionais.</li>
-    </ul>
-    <h3>8.3. Compartilhamento</h3>
-    <p>Compartilhamos <strong>apenas o estritamente necessário</strong> com <strong>instituições de pagamento</strong> para processar transações. <strong>Não</strong> vendemos dados e <strong>não</strong> compartilhamos com outros terceiros para fins próprios.</p>
-    <h3>8.4. Retenção</h3>
-    <p>Guardamos dados pelo tempo necessário para cumprir as finalidades e prazos legais (ex.: fiscais). Após esse período, eliminamos ou anonimizamos de forma segura.</p>
-    <h3>8.5. Direitos do titular</h3>
-    <ul>
-      <li>Confirmação de tratamento e acesso aos dados.</li>
-      <li>Correção de dados incompletos, inexatos ou desatualizados.</li>
-      <li>Anonimização, bloqueio ou eliminação de dados desnecessários.</li>
-      <li>Portabilidade, quando aplicável.</li>
-      <li>Informação sobre compartilhamento.</li>
-      <li>Revogação de consentimento e oposição ao tratamento.</li>
-    </ul>
-    <p>Para exercer seus direitos, consulte <a href="#contato">Contato</a>.</p>
+    <h2>8. Privacidade e Proteção de Dados</h2>
+    <p>Coletamos dados para fins contratuais e legais. Dados podem ser processados no exterior com proteção adequada. Não vendemos dados.</p>
+    <ul><li>Direitos do titular: acesso, correção, exclusão, portabilidade, oposição e revogação.</li><li>Contato DPO: <a href="mailto:dpo@noheroes.app">dpo@noheroes.app</a></li></ul>
   </section>
 
-  <!-- Cookies -->
   <section id="cookies" class="doc-section">
-    <h2>9. Cookies e Tecnologias Semelhantes</h2>
-    <p>Utilizamos <strong>cookies essenciais</strong> para funcionamento (ex.: manter sessão, lembrar itens no carrinho). Se adicionarmos cookies de análise/marketing, exibiremos aviso e opções de controle.</p>
+    <h2>9. Cookies</h2>
+    <p>Usamos apenas cookies essenciais (sessão, carrinho). Não utilizamos cookies de marketing. Cada cookie tem duração de até 1 ano.</p>
   </section>
 
-  <!-- Segurança da Informação -->
   <section id="seguranca" class="doc-section">
     <h2>10. Segurança da Informação</h2>
-    <ul>
-      <li>Criptografia TLS em trânsito e práticas seguras de armazenamento.</li>
-      <li>Controle de acesso, logs e monitoramento de anomalias.</li>
-      <li>Políticas de backup e recuperação.</li>
-      <li>Minimização e segregação de dados; acesso baseado em necessidade.</li>
-      <li>Notificação a usuários e autoridades conforme LGPD em caso de incidentes relevantes.</li>
-    </ul>
+    <ul><li>Criptografia TLS e práticas de segurança.</li><li>Não solicitamos senhas por e-mail.</li><li>Em caso de incidentes graves, notificaremos ANPD e usuários em até 2 dias úteis.</li></ul>
   </section>
 
-  <!-- UGC e Moderação -->
-  <section id="ugc" class="doc-section">
-    <h2>11. Conteúdo de Usuários e Moderação (se aplicável)</h2>
-    <p>Onde houver áreas de comentários/avaliações, você concede à NoHeroes licença para exibir seu conteúdo nos Serviços. Reservamo-nos o direito de remover materiais que violem estes Termos, direitos de terceiros ou a lei.</p>
+  <section id="disputas" class="doc-section">
+    <h2>11. Solução de Conflitos</h2>
+    <p>Antes de qualquer ação judicial, o usuário deve buscar solução amigável via suporte. Aplica-se legislação brasileira e foro de Cuiabá/MT.</p>
   </section>
 
-  <!-- Alterações -->
-  <section id="alteracoes" class="doc-section">
-    <h2>12. Alterações destes Termos</h2>
-    <p>Poderemos atualizar este documento para refletir mudanças nos Serviços ou na legislação. Publicaremos a nova versão com a data de vigência indicada em <em>Última atualização</em>. Alterações relevantes podem ser comunicadas pelos canais cadastrados.</p>
-  </section>
-
-  <!-- Legislação e Foro -->
-  <section id="legislacao" class="doc-section">
-    <h2>13. Legislação Aplicável e Foro</h2>
-    <p>Aplica-se a legislação brasileira, incluindo a LGPD. Fica eleito o foro da Comarca de Cuiabá/MT, com renúncia a qualquer outro, salvo disposição legal em contrário.</p>
-  </section>
-
-  <!-- Contato / Encarregado -->
   <section id="contato" class="doc-section">
-    <h2>14. Contato e Encarregado (DPO)</h2>
-    <p><strong>Razão social:</strong> <em>Preencher</em><br/>
-       <strong>CNPJ:</strong> <em>Preencher</em><br/>
-       <strong>E-mail de suporte/DPO:</strong> <a href="mailto:suporte@noheroes.app">suporte@noheroes.app</a><br/>
-       <strong>Endereço:</strong> <em>Preencher</em>
-    </p>
+    <h2>12. Contato e Suporte</h2>
+    <p>Razão social: Preencher<br/>CNPJ: Preencher<br/>E-mail: suporte@noheroes.app<br/>DPO: dpo@noheroes.app<br/>Prazo de resposta: até 7 dias úteis.</p>
   </section>
 
-  <!-- FAQ rápida -->
-  <section id="faq" class="doc-section">
-    <h2>15. Perguntas Frequentes</h2>
-    <div class="divide-y divide-neutral-800 border border-neutral-800 rounded-xl overflow-hidden">
-      <details class="group">
-        <summary class="cursor-pointer list-none px-4 py-3 bg-neutral-900/60 hover:bg-neutral-900 flex items-center justify-between">
-          <span>Quais dados são compartilhados com terceiros?</span>
-          <span class="transition group-open:rotate-180">▾</span>
-        </summary>
-        <div class="px-4 py-3 text-neutral-300">Somente os dados necessários à confirmação e processamento do pagamento, com a instituição de pagamento (ex.: Mercado Pago).</div>
-      </details>
-      <details class="group">
-        <summary class="cursor-pointer list-none px-4 py-3 bg-neutral-900/60 hover:bg-neutral-900 flex items-center justify-between">
-          <span>Posso usar os conteúdos em projetos comerciais?</span>
-          <span class="transition group-open:rotate-180">▾</span>
-        </summary>
-        <div class="px-4 py-3 text-neutral-300">Não, salvo quando houver licença específica permitindo o uso comercial. Caso contrário, a licença é pessoal e não transferível.</div>
-      </details>
-      <details class="group">
-        <summary class="cursor-pointer list-none px-4 py-3 bg-neutral-900/60 hover:bg-neutral-900 flex items-center justify-between">
-          <span>Como exerço meus direitos pela LGPD?</span>
-          <span class="transition group-open:rotate-180">▾</span>
-        </summary>
-        <div class="px-4 py-3 text-neutral-300">Envie uma solicitação para o e-mail informado em <a href="#contato">Contato</a>, indicando o direito que deseja exercer.</div>
-      </details>
-    </div>
+  <section id="versoes" class="doc-section">
+    <h2>13. Vigência e Histórico</h2>
+    <p>Versão 1.0 — Vigente desde 19/10/2025. Versões anteriores arquivadas internamente.</p>
   </section>
 
-  <!-- Voltar ao topo -->
-  <div class="mt-10">
-    <button id="toTop" class="hidden fixed bottom-6 right-6 rounded-full p-3 bg-neutral-100 text-neutral-900 shadow-xl hover:bg-white" aria-label="Voltar ao topo">
-      ↑
-    </button>
-  </div>
+  <section id="denuncias" class="doc-section">
+    <h2>14. Denúncias e Compliance</h2>
+    <p>Para denúncias de violação de direitos autorais, envie e-mail com assunto “DMCA” para suporte@noheroes.app. Comprometemo-nos com diversidade, ética e combate a conteúdo ilegal.</p>
+  </section>
 </article>
 
-  </main>  <!-- Footer -->  <footer class="border-t border-neutral-800">
+  </main>  <footer class="border-t border-neutral-800">
     <div class="max-w-6xl mx-auto px-4 py-8 text-xs text-neutral-400 flex flex-col md:flex-row gap-2 md:items-center md:justify-between">
       <p>© <span id="year"></span> NoHeroes. Todos os direitos reservados.</p>
-      <p>Este documento tem caráter informativo e poderá ser atualizado. Guarde uma cópia para seus registros.</p>
+      <p>Documento informativo. Pode ser atualizado. Versão 1.0.</p>
     </div>
-  </footer>  <!-- JS -->  <script>
-    // Helper: formata data pt-BR
-    function formatDatePTBR(date) {
-      return new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' }).format(date);
-    }
-
-    // Preenche ano e última atualização
+  </footer>  <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-    // Se quiser, troque por uma data fixa de publicação
-    const lastUpdatedEl = document.getElementById('lastUpdated');
-    if (lastUpdatedEl && lastUpdatedEl.textContent.trim() === '19 de outubro de 2025') {
-      lastUpdatedEl.textContent = formatDatePTBR(new Date('2025-10-19'));
-    }
-
-    // Imprimir/Salvar PDF
-    document.getElementById('printBtn')?.addEventListener('click', () => window.print());
-
-    // Voltar ao topo
-    const toTop = document.getElementById('toTop');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 600) toTop.classList.remove('hidden'); else toTop.classList.add('hidden');
-    });
-    toTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-    // Gera TOC
-    const toc = document.getElementById('toc');
-    const sections = document.querySelectorAll('.doc-section > h2');
-    sections.forEach((h2) => {
-      const id = h2.parentElement.id;
-      const a = document.createElement('a');
-      a.href = `#${id}`;
-      a.textContent = h2.textContent;
-      a.className = 'block rounded-lg px-3 py-2 text-neutral-300 hover:bg-neutral-800 hover:text-white';
-      toc.appendChild(a);
-    });
-
-    // Busca simples no documento
-    const searchInput = document.getElementById('searchInput');
-    const searchCount = document.getElementById('searchCount');
-    const article = document.querySelector('article');
-
-    function clearHighlights() {
-      article.querySelectorAll('mark[data-hl]')?.forEach(m => {
-        const text = document.createTextNode(m.textContent);
-        m.replaceWith(text);
-      });
-    }
-
-    function highlight(term) {
-      clearHighlights();
-      if (!term) { searchCount.textContent = ''; return; }
-      const re = new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
-      let count = 0;
-      article.querySelectorAll('p, li, summary, h2, h3')?.forEach(node => {
-        node.childNodes.forEach(child => {
-          if (child.nodeType === Node.TEXT_NODE) {
-            const parts = child.textContent.split(re);
-            if (parts.length > 1) {
-              const frag = document.createDocumentFragment();
-              let lastIndex = 0;
-              child.textContent.replace(re, (match, offset) => {
-                frag.append(parts.shift() ?? '');
-                const mark = document.createElement('mark');
-                mark.setAttribute('data-hl','');
-                mark.className = 'bg-yellow-400/30 text-yellow-200 rounded px-0.5';
-                mark.textContent = match;
-                frag.appendChild(mark);
-                count++;
-                lastIndex = offset + match.length;
-              });
-              frag.append(parts.join(''));
-              child.replaceWith(frag);
-            }
-          }
-        });
-      });
-      searchCount.textContent = count ? `${count} resultado(s)` : '0';
-    }
-
-    let searchTimer;
-    searchInput?.addEventListener('input', (e) => {
-      clearTimeout(searchTimer);
-      searchTimer = setTimeout(() => highlight(e.target.value.trim()), 200);
-    });
-
-    // Link âncora ao copiar cabeçalho (UX)
-    document.querySelectorAll('.doc-section > h2').forEach(h2 => {
-      h2.classList.add('group','flex','items-center','gap-2');
-      const link = document.createElement('button');
-      link.className = 'opacity-0 group-hover:opacity-100 transition text-xs text-neutral-400 hover:text-neutral-200';
-      link.textContent = '#';
-      link.title = 'Copiar link da seção';
-      link.addEventListener('click', () => {
-        const url = `${location.origin}${location.pathname}#${h2.parentElement.id}`;
-        navigator.clipboard.writeText(url);
-      });
-      h2.appendChild(link);
-    });
   </script></body>
 </html>
