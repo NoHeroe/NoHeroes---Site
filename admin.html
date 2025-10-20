@@ -268,7 +268,268 @@
         </tbody>
       </table>
     </section>
+</main>
+<script>
+/* =========================================
+   🏛️ Painel Administrativo — NoHeroes
+   ========================================= */
 
-  </main>
+(() => {
+  const API_BASE = 'https://api.noheroes.com.br';
+  const token = localStorage.getItem('NoHeroes_token');
+
+  if (!token) {
+    alert('Sessão expirada. Faça login novamente.');
+    window.location.href = 'login.html';
+    return;
+  }
+
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  };
+
+  /* ------------------------
+     Helpers e utilitários
+  ------------------------ */
+  const formatDate = (iso) => {
+    if (!iso) return '-';
+    const d = new Date(iso);
+    return d.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
+  };
+
+  const formatMoney = (v) => {
+    return `R$ ${Number(v || 0).toFixed(2).replace('.', ',')}`;
+  };
+
+  const showAlert = (msg, type = 'info') => {
+    const c = document.createElement('div');
+    c.className = `fixed top-5 right-5 px-4 py-2 rounded-md text-sm z-50 ${
+      type === 'error'
+        ? 'bg-red-700 text-white'
+        : type === 'success'
+        ? 'bg-green-700 text-white'
+        : 'bg-gray-700 text-gray-100'
+    }`;
+    c.textContent = msg;
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 4000);
+  };
+
+  const loading = (el, show = true) => {
+    if (show) {
+      el.dataset.oldHtml = el.innerHTML;
+      el.innerHTML = '<span class="animate-pulse">Carregando...</span>';
+    } else {
+      el.innerHTML = el.dataset.oldHtml || '';
+    }
+  };
+
+  /* ------------------------
+     Fetch wrappers
+  ------------------------ */
+  async function apiGet(endpoint) {
+    const res = await fetch(`${API_BASE}${endpoint}`, { headers });
+    if (res.status === 401) {
+      localStorage.removeItem('NoHeroes_token');
+      location.href = 'login.html';
+      return;
+    }
+    const data = await res.json();
+    return data;
+  }
+
+  async function apiPatch(endpoint, body) {
+    const res = await fetch(`${API_BASE}${endpoint}`, {
+      method: 'PATCH',
+      headers,
+      body: JSON.stringify(body)
+    });
+    return res.json();
+  }
+
+  /* ------------------------
+     DOM Elements
+  ------------------------ */
+  const sections = {
+    users: document.querySelector('#section-users tbody'),
+    products: document.querySelector('#section-products tbody'),
+    orders: document.querySelector('#section-orders tbody'),
+    coupons: document.querySelector('#section-coupons tbody'),
+    logs: document.querySelector('#section-logs tbody')
+  };
+
+  /* ------------------------
+     USERS
+  ------------------------ */
+  async function loadUsers() {
+    try {
+      const json = await apiGet('/admin/users');
+      if (!json?.success) throw new Error('Falha ao carregar usuários.');
+      const tbody = sections.users;
+      tbody.innerHTML = '';
+      json.data.forEach(u => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${u.id}</td>
+          <td>${u.username}</td>
+          <td>${u.email}</td>
+          <td>${u.is_admin ? '✅' : '❌'}</td>
+          <td>
+            <button class="btn btn-sm btn-primary" data-edit-user="${u.id}">Editar</button>
+            <button class="btn btn-sm btn-danger" data-del-user="${u.id}">Excluir</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+      showAlert('Usuários carregados.', 'success');
+    } catch (err) {
+      console.error(err);
+      showAlert('Erro ao carregar usuários.', 'error');
+    }
+  }
+
+  /* ------------------------
+     PRODUCTS
+  ------------------------ */
+  async function loadProducts() {
+    try {
+      const json = await apiGet('/admin/products');
+      if (!json?.success) throw new Error('Falha ao carregar produtos.');
+      const tbody = sections.products;
+      tbody.innerHTML = '';
+      json.data.forEach(p => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${p.id}</td>
+          <td>${p.name}</td>
+          <td>${formatMoney(p.price)}</td>
+          <td>${p.stock ?? '-'}</td>
+          <td>${p.isActive ? '<span class="text-green-400">Ativo</span>' : '<span class="text-red-400">Inativo</span>'}</td>
+          <td>
+            <button class="btn btn-sm btn-primary" data-edit-prod="${p.id}">Editar</button>
+            <button class="btn btn-sm btn-danger" data-toggle-prod="${p.id}">
+              ${p.isActive ? 'Desativar' : 'Ativar'}
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+      showAlert('Produtos carregados.', 'success');
+    } catch (err) {
+      console.error(err);
+      showAlert('Erro ao carregar produtos.', 'error');
+    }
+  }
+
+  async function toggleProduct(id, currentStatus) {
+    try {
+      const res = await apiPatch(`/admin/products/${id}`, { isActive: !currentStatus });
+      if (res.success) {
+        showAlert('Produto atualizado.', 'success');
+        loadProducts();
+      } else {
+        throw new Error(res.message);
+      }
+    } catch (err) {
+      console.error(err);
+      showAlert('Erro ao atualizar produto.', 'error');
+    }
+  }
+
+  /* ------------------------
+     ORDERS
+  ------------------------ */
+  async function loadOrders() {
+    try {
+      const json = await apiGet('/admin/orders');
+      if (!json?.success) throw new Error('Falha ao carregar pedidos.');
+      const tbody = sections.orders;
+      tbody.innerHTML = '';
+      json.data.forEach(o => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${o.order_id}</td>
+          <td>${o.User?.username || '-'}</td>
+          <td>${formatMoney(o.total)}</td>
+          <td>${o.status}</td>
+          <td>${formatDate(o.createdAt)}</td>
+          <td><button class="btn btn-sm" data-view-order="${o.order_id}">Ver</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+      showAlert('Pedidos carregados.', 'success');
+    } catch (err) {
+      console.error(err);
+      showAlert('Erro ao carregar pedidos.', 'error');
+    }
+  }
+
+  /* ------------------------
+     COUPONS
+  ------------------------ */
+  async function loadCoupons() {
+    try {
+      const json = await apiGet('/admin/coupons');
+      if (!json?.success) throw new Error('Falha ao carregar cupons.');
+      const tbody = sections.coupons;
+      tbody.innerHTML = '';
+      json.data.forEach(c => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${c.code}</td>
+          <td>${c.discount}%</td>
+          <td>${c.usages}</td>
+          <td>${formatDate(c.expiresAt)}</td>
+          <td><button class="btn btn-sm">Editar</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+      showAlert('Cupons carregados.', 'success');
+    } catch (err) {
+      console.error(err);
+      showAlert('Erro ao carregar cupons.', 'error');
+    }
+  }
+
+  /* ------------------------
+     LOGS
+  ------------------------ */
+  async function loadLogs() {
+    try {
+      const json = await apiGet('/admin/logs');
+      if (!json?.success) throw new Error('Falha ao carregar logs.');
+      const tbody = sections.logs;
+      tbody.innerHTML = '';
+      json.data.forEach(l => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${formatDate(l.createdAt)}</td>
+          <td>${l.user || '-'}</td>
+          <td>${l.action || '-'}</td>
+          <td>${l.details || '-'}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+      showAlert('Logs carregados.', 'success');
+    } catch (err) {
+      console.error(err);
+      showAlert('Erro ao carregar logs.', 'error');
+    }
+  }
+
+  /* ------------------------
+     INIT
+  ------------------------ */
+  async function init() {
+    await loadUsers();
+    await loadProducts();
+    await loadOrders();
+    await loadLogs();
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+})();
+</script>
 </body>
 </html>
