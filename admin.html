@@ -1,308 +1,274 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NoHeroes | Admin</title>
-  <!-- Fonte e estilos -->
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Painel Admin | NoHeroes</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Cinzel Decorative', serif; background-color: #1f1f1f; color: #facc15; }
-    .sidebar-icon { transition: transform 0.2s; }
-    .sidebar-icon:hover { transform: scale(1.1); }
+    :root{
+      --nh-bg:#0a0a0a;
+      --nh-card:#121214;
+      --nh-border:#2a2a2e;
+      --nh-accent:#7c3aed;
+      --nh-gold:#d4af37;
+    }
+    body{
+      background:var(--nh-bg);
+      color:#f3f3f3;
+      font-family:'Inter',sans-serif;
+      min-height:100vh;
+      display:flex;
+    }
+    .sidebar{
+      width:270px;
+      background:linear-gradient(180deg,#141414,#0d0d0f);
+      border-right:1px solid var(--nh-border);
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+    .sidebar h1{
+      font-family:'Cinzel Decorative',serif;
+      font-size:1.5rem;
+      text-align:center;
+      padding:1.2rem;
+      background:linear-gradient(90deg,var(--nh-accent),var(--nh-gold));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+    .sidebar nav a{
+      display:block;
+      padding:.8rem 1.4rem;
+      margin:.3rem .8rem;
+      border-radius:.6rem;
+      color:#ccc;
+      font-weight:500;
+      transition:.2s;
+    }
+    .sidebar nav a:hover,
+    .sidebar nav a.active{
+      background:rgba(124,58,237,.15);
+      color:#e0d2ff;
+    }
+    .content{
+      flex:1;
+      padding:1.5rem 2rem;
+      overflow-y:auto;
+    }
+    .card{
+      background:var(--nh-card);
+      border:1px solid var(--nh-border);
+      border-radius:.8rem;
+      padding:1.2rem 1.5rem;
+      margin-bottom:1.5rem;
+    }
+    .card h2{
+      font-size:1.3rem;
+      font-weight:700;
+      margin-bottom:.8rem;
+      color:#dcd4ff;
+    }
+    .table{
+      width:100%;
+      border-collapse:collapse;
+    }
+    .table th,.table td{
+      padding:.6rem .8rem;
+      border-bottom:1px solid var(--nh-border);
+      text-align:left;
+    }
+    .table th{
+      text-transform:uppercase;
+      font-size:.8rem;
+      letter-spacing:.05em;
+      color:#aaa;
+    }
+    .table tr:hover{
+      background:rgba(255,255,255,.05);
+    }
+    .btn{
+      padding:.45rem .9rem;
+      border-radius:.5rem;
+      font-size:.85rem;
+      border:1px solid var(--nh-border);
+      background:rgba(255,255,255,.06);
+      transition:.2s;
+    }
+    .btn:hover{background:rgba(255,255,255,.12);}
+    .btn-primary{
+      background:linear-gradient(90deg,var(--nh-accent),#5b21b6);
+      color:#fff;
+      border:none;
+    }
+    .btn-danger{
+      background:#7f1d1d;
+      color:#fff;
+      border:none;
+    }
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:1.5rem;
+    }
   </style>
 </head>
-<body class="flex flex-col min-h-screen">
-  <!-- Header -->
-  <header class="flex items-center justify-between p-4 bg-black border-b border-gray-700">
-    <h1 class="text-xl font-bold">Admin NoHeroes</h1>
-  </header>
+<body>
 
-  <div class="flex flex-1 overflow-hidden">
-    <!-- Sidebar -->
-    <nav class="flex flex-col w-16 bg-gray-900 border-r border-gray-700">
-      <button class="p-3 sidebar-icon" onclick="showSection('loja')">🛍️</button>
-      <button class="p-3 sidebar-icon" onclick="showSection('novidades')">📰</button>
-      <button class="p-3 sidebar-icon" onclick="showSection('missoes')">🎯</button>
-      <button class="p-3 sidebar-icon" onclick="showSection('temas')">🎨</button>
-      <button class="p-3 sidebar-icon" onclick="showSection('contas')">👥</button>
-      <button class="p-3 sidebar-icon" onclick="showSection('dashboard')">📊</button>
-    </nav>
-
-    <!-- Main Content -->
-    <main class="flex-1 overflow-y-auto p-4 space-y-4">
-      <!-- Loja -->
-      <section id="loja" class="hidden">
-        <h2 class="text-lg font-bold">Loja</h2>
-        <p>Conteúdo mockado da Loja aqui.</p>
-      </section>
-
-      <!-- Novidades / News CRUD -->
-<section id="novidades" class="hidden">
-  <h2 class="text-lg font-bold mb-2">Novidades</h2>
-
-  <!-- Lista de posts -->
-  <div id="postsList" class="space-y-4 max-h-96 overflow-y-auto"></div>
-
-  <!-- Botão para criar novo post -->
-  <button onclick="openPostForm()" class="mt-2 p-2 bg-purple-700 rounded w-full">
-    Adicionar Post
-  </button>
-
-  <!-- Formulário de criação/edição -->
-  <div id="postFormContainer" class="hidden mt-4 p-4 bg-gray-800 rounded space-y-2">
-    <input id="postId"        placeholder="ID (ex: 2025-07-16-nova-001)"        class="w-full p-2 bg-gray-700 rounded" />
-    <input id="postDate"      placeholder="Data (DD/MM/AAAA)"                 class="w-full p-2 bg-gray-700 rounded" />
-    <input id="postCategory"  placeholder="Categoria (ex: Comunidade)"         class="w-full p-2 bg-gray-700 rounded" />
-    <input id="postTitle"     placeholder="Título"                             class="w-full p-2 bg-gray-700 rounded" />
-    <textarea id="postContent" rows="4" placeholder="Conteúdo HTML"              class="w-full p-2 bg-gray-700 rounded"></textarea>
-    <div class="flex space-x-2">
-      <button onclick="savePost()"       class="flex-1 bg-green-600 p-2 rounded">Salvar</button>
-      <button onclick="cancelPostForm()" class="flex-1 bg-gray-700 p-2 rounded">Cancelar</button>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div>
+      <h1>NoHeroes Admin</h1>
+      <nav>
+        <a href="#" class="active">📊 Dashboard</a>
+        <a href="#">🧍 Usuários</a>
+        <a href="#">🛒 Produtos</a>
+        <a href="#">💰 Pedidos</a>
+        <a href="#">🎁 Cupons</a>
+        <a href="#">📦 Inventário</a>
+        <a href="#">🧾 Logs</a>
+        <a href="#">⚙️ Configurações</a>
+      </nav>
     </div>
-  </div>
+    <div class="p-4 text-center border-t border-[#2a2a2e] text-sm text-gray-500">
+      © NoHeroes Corp.
+    </div>
+  </aside>
 
-  <!-- Botão para baixar JSON atualizado -->
-  <button onclick="downloadPosts()" class="mt-2 p-2 bg-gray-600 rounded w-full">
-    Baixar JSON
-  </button>
-</section>
+  <!-- Conteúdo -->
+  <main class="content">
 
-      <!-- Missões -->
-      <section id="missoes" class="hidden">
-        <h2 class="text-lg font-bold">Missões</h2>
-        <p>Missões mockadas.</p>
-      </section>
-
-      <!-- Temas -->
-      <section id="temas" class="hidden">
-        <h2 class="text-lg font-bold">Temas</h2>
-        <p>Escolha de tema mockado.</p>
-      </section>
-
-      <!-- Contas -->
-      <section id="contas" class="hidden">
-        <h2 class="text-lg font-bold mb-4">Gerenciar Contas</h2>
-        <div id="usuariosContainer" class="space-y-2">
-          <div class="p-2 bg-gray-800 rounded flex justify-between items-center">
-            <span>João Silva</span>
-            <button onclick="abrirDetalhesUsuario('1', 'João Silva', 'joao@email.com')" class="underline text-purple-400 text-sm">
-              joao@email.com
-            </button>
-          </div>
-          <div class="p-2 bg-gray-800 rounded flex justify-between items-center">
-            <span>Maria Souza</span>
-            <button onclick="abrirDetalhesUsuario('2', 'Maria Souza', 'maria@email.com')" class="underline text-purple-400 text-sm">
-              maria@email.com
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <!-- Dashboard -->
-      <section id="dashboard" class="hidden">
-        <h2 class="text-lg font-bold mb-2">Dashboard</h2>
-        <div class="flex space-x-2 mb-4">
-          <button onclick="exibirGrafico('usuarios')" class="p-2 bg-purple-700 rounded">Usuários</button>
-          <button onclick="exibirGrafico('vendasQtd')" class="p-2 bg-purple-700 rounded">Vendas - Qtd</button>
-          <button onclick="exibirGrafico('vendasValor')" class="p-2 bg-purple-700 rounded">Vendas - Valor</button>
-        </div>
-        <div class="w-full h-64">
-          <canvas id="grafico"></canvas>
-        </div>
-      </section>
-    </main>
-  </div>
-
-  <!-- Modal de Usuário -->
-  <div id="modalUsuario" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center p-4 z-50">
-    <div class="bg-gray-900 rounded-xl p-4 w-full max-w-sm space-y-3">
-      <h2 class="font-bold text-lg mb-2">Editar Usuário</h2>
-      <input id="modalNome" placeholder="Nome" class="w-full bg-gray-800 rounded p-2">
-      <input id="modalEmail" placeholder="Email" class="w-full bg-gray-800 rounded p-2">
-      <input id="modalTelefone" placeholder="Telefone" class="w-full bg-gray-800 rounded p-2">
-      <input id="modalEndereco" placeholder="Endereço" class="w-full bg-gray-800 rounded p-2">
-      <select id="modalStatus" class="w-full bg-gray-800 rounded p-2">
-        <option value="ativo">Ativo</option>
-        <option value="congelado">Congelado</option>
-        <option value="banido">Banido</option>
-      </select>
-      <input id="modalMoeda" placeholder="Moeda interna" type="number" class="w-full bg-gray-800 rounded p-2">
-      <input id="modalXP" placeholder="XP/Nível" type="number" class="w-full bg-gray-800 rounded p-2">
-      <textarea id="modalCompras" rows="3" class="w-full bg-gray-800 rounded p-2" readonly>Compra 1 - Pago\nCompra 2 - Pendente</textarea>
-      <div class="flex space-x-2">
-        <button onclick="salvarUsuario()" class="flex-1 bg-green-600 rounded p-2">Salvar</button>
-        <button onclick="excluirUsuario()" class="flex-1 bg-red-600 rounded p-2">Excluir</button>
-        <button onclick="fecharModalUsuario()" class="flex-1 bg-gray-700 rounded p-2">Fechar</button>
+    <!-- Header -->
+    <header>
+      <h2 class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-amber-300">Painel Administrativo</h2>
+      <div class="flex gap-2">
+        <button class="btn">Atualizar</button>
+        <button class="btn-primary">Nova Entrada</button>
       </div>
-    </div>
-  </div>
+    </header>
 
-  <script>
-    // Lógica de navegação entre seções
-    function showSection(id) {
-      document.querySelectorAll('main section').forEach(sec => sec.classList.add('hidden'));
-      const target = document.getElementById(id);
-      if (target) target.classList.remove('hidden');
-    }
+    <!-- Dashboard -->
+    <section class="card">
+      <h2>Visão Geral</h2>
+      <div class="grid md:grid-cols-4 gap-4">
+        <div class="bg-[#161616] p-4 rounded-xl border border-[#2a2a2e]">
+          <p class="text-gray-400 text-sm">Usuários ativos</p>
+          <h3 class="text-2xl font-bold mt-1">0</h3>
+        </div>
+        <div class="bg-[#161616] p-4 rounded-xl border border-[#2a2a2e]">
+          <p class="text-gray-400 text-sm">Produtos</p>
+          <h3 class="text-2xl font-bold mt-1">0</h3>
+        </div>
+        <div class="bg-[#161616] p-4 rounded-xl border border-[#2a2a2e]">
+          <p class="text-gray-400 text-sm">Pedidos aprovados</p>
+          <h3 class="text-2xl font-bold mt-1">0</h3>
+        </div>
+        <div class="bg-[#161616] p-4 rounded-xl border border-[#2a2a2e]">
+          <p class="text-gray-400 text-sm">Total de vendas</p>
+          <h3 class="text-2xl font-bold mt-1">R$ 0,00</h3>
+        </div>
+      </div>
+    </section>
 
-    // Funções do modal de usuário
-    function abrirDetalhesUsuario(id, nome, email) {
-      document.getElementById('modalNome').value = nome;
-      document.getElementById('modalEmail').value = email;
-      document.getElementById('modalTelefone').value = '+55 11 91234-5678';
-      document.getElementById('modalEndereco').value = 'Rua Exemplo, 123';
-      document.getElementById('modalStatus').value = 'ativo';
-      document.getElementById('modalMoeda').value = 100;
-      document.getElementById('modalXP').value = 10;
-      document.getElementById('modalCompras').value = 'Compra 1 - Pago\nCompra 2 - Pendente';
-      document.getElementById('modalUsuario').classList.remove('hidden');
-      document.getElementById('modalUsuario').classList.add('flex');
-    }
-    function fecharModalUsuario() {
-      document.getElementById('modalUsuario').classList.add('hidden');
-      document.getElementById('modalUsuario').classList.remove('flex');
-    }
-    function salvarUsuario() { alert('Salvar mock'); fecharModalUsuario(); }
-    function excluirUsuario() { alert('Excluir mock'); fecharModalUsuario(); }
+    <!-- Usuários -->
+    <section class="card">
+      <h2>Usuários</h2>
+      <table class="table">
+        <thead><tr><th>ID</th><th>Nome</th><th>Email</th><th>Admin</th><th>Ações</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Azuos</td>
+            <td>azuos@noheroes.com</td>
+            <td>Sim</td>
+            <td>
+              <button class="btn">Editar</button>
+              <button class="btn-danger">Excluir</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
 
-    // Dados mock para o gráfico
-    let chartInstance = null;
-    const dadosMock = {
-      usuarios: [5, 8, 12, 20, 15, 18, 22, 30, 25, 28, 32, 35],
-      vendasQtd: [10, 15, 20, 30, 25, 35, 40, 45, 38, 42, 50, 55],
-      vendasValor: [1000, 1200, 1500, 2000, 1800, 2200, 2500, 2700, 2600, 3000, 3200, 3500]
-    };
-    const meses = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+    <!-- Produtos -->
+    <section class="card">
+      <h2>Produtos</h2>
+      <div class="flex justify-between mb-2">
+        <input class="px-3 py-2 rounded-md bg-[#1a1a1a] border border-[#2a2a2e] text-sm w-1/3" placeholder="Buscar produto...">
+        <button class="btn-primary">Novo Produto</button>
+      </div>
+      <table class="table">
+        <thead><tr><th>ID</th><th>Nome</th><th>Preço</th><th>Estoque</th><th>Status</th><th>Ações</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>001</td>
+            <td>Manual das Sombras</td>
+            <td>R$ 25,00</td>
+            <td>120</td>
+            <td><span class="text-green-400">Ativo</span></td>
+            <td>
+              <button class="btn">Editar</button>
+              <button class="btn-danger">Desativar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
 
-    function exibirGrafico(tipo) {
-      const ctx = document.getElementById('grafico').getContext('2d');
-      if (chartInstance) chartInstance.destroy();
-      let titulo="", dados=[];
-      switch(tipo){
-        case 'usuarios': titulo="Novos Usuários por Mês"; dados=dadosMock.usuarios; break;
-        case 'vendasQtd': titulo="Produtos Vendidos por Mês"; dados=dadosMock.vendasQtd; break;
-        case 'vendasValor': titulo="Valor de Vendas (R$) por Mês"; dados=dadosMock.vendasValor; break;
-      }
-      chartInstance = new Chart(ctx, {
-        type: 'bar',
-        data: { labels: meses, datasets: [{ label: titulo, backgroundColor: '#a855f7', data: dados }] },
-        options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }
-      });
-    }
+    <!-- Pedidos -->
+    <section class="card">
+      <h2>Pedidos</h2>
+      <table class="table">
+        <thead><tr><th>ID</th><th>Usuário</th><th>Total</th><th>Status</th><th>Data</th><th>Ações</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>MP-9031</td>
+            <td>Azuos</td>
+            <td>R$ 55,00</td>
+            <td><span class="text-green-400">Aprovado</span></td>
+            <td>20/10/2025</td>
+            <td><button class="btn">Ver detalhes</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
 
-    // Inicialização
-    document.addEventListener('DOMContentLoaded', () => {
-      showSection('contas');    // abre Contas por padrão
-      exibirGrafico('usuarios');// prepara gráfico
-    });
-// --- Variáveis globais ---
-let posts = [];
-let editIndex = -1;
+    <!-- Cupons -->
+    <section class="card">
+      <h2>Cupons</h2>
+      <button class="btn-primary mb-3">Criar Novo Cupom</button>
+      <table class="table">
+        <thead><tr><th>Código</th><th>Desconto</th><th>Usos</th><th>Expira em</th><th>Ações</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>NOHEROES25</td>
+            <td>25%</td>
+            <td>12</td>
+            <td>31/12/2025</td>
+            <td><button class="btn">Editar</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
 
-// 1) Carrega posts.json (ou localStorage se falhar)
-async function initPosts() {
-  try {
-    const res = await fetch('/assets/data/posts.json');
-    const data = await res.json();
-    posts = data.posts;
-  } catch {
-    const saved = localStorage.getItem('posts');
-    posts = saved ? JSON.parse(saved).posts : [];
-  }
-  renderPosts();
-}
+    <!-- Logs -->
+    <section class="card">
+      <h2>Logs do Sistema</h2>
+      <table class="table text-sm">
+        <thead><tr><th>Data</th><th>Usuário</th><th>Ação</th><th>Detalhes</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>20/10/2025 08:21</td>
+            <td>Admin</td>
+            <td>Atualizou produto</td>
+            <td>Manual das Sombras → preço R$25</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
 
-// 2) Renderiza a lista de posts no admin
-function renderPosts() {
-  const container = document.getElementById('postsList');
-  container.innerHTML = '';
-  posts.forEach((post, i) => {
-    const div = document.createElement('div');
-    div.className = 'p-2 bg-gray-800 rounded';
-    div.innerHTML = `
-      <p class="text-sm">${post.date} — <strong>${post.category}</strong></p>
-      <h3 class="font-bold">${post.title}</h3>
-      <div class="flex space-x-2 mt-2">
-        <button onclick="editPost(${i})"   class="p-1 bg-blue-600 text-sm rounded">Editar</button>
-        <button onclick="deletePost(${i})" class="p-1 bg-red-600  text-sm rounded">Excluir</button>
-      </div>`;
-    container.appendChild(div);
-  });
-}
-
-// 3) Abre o formulário para novo post
-function openPostForm() {
-  editIndex = -1;
-  clearForm();
-  document.getElementById('postFormContainer').classList.remove('hidden');
-}
-
-// 4) Carrega dados no form para edição
-function editPost(i) {
-  editIndex = i;
-  const p = posts[i];
-  document.getElementById('postId').value       = p.id;
-  document.getElementById('postDate').value     = p.date;
-  document.getElementById('postCategory').value = p.category;
-  document.getElementById('postTitle').value    = p.title;
-  document.getElementById('postContent').value  = p.content;
-  document.getElementById('postFormContainer').classList.remove('hidden');
-}
-
-// 5) Remove post da lista
-function deletePost(i) {
-  if (!confirm('Excluir este post?')) return;
-  posts.splice(i, 1);
-  renderPosts();
-}
-
-// 6) Salva novo post ou edição
-function savePost() {
-  const id       = document.getElementById('postId').value.trim();
-  const date     = document.getElementById('postDate').value.trim();
-  const category = document.getElementById('postCategory').value.trim();
-  const title    = document.getElementById('postTitle').value.trim();
-  const content  = document.getElementById('postContent').value.trim();
-  if (!id||!date||!category||!title||!content) {
-    return alert('Preencha todos os campos antes de salvar.');
-  }
-  const newPost = { id, date, category, title, content };
-  if (editIndex >= 0) posts[editIndex] = newPost;
-  else             posts.push(newPost);
-  cancelPostForm();
-  renderPosts();
-}
-
-// 7) Cancela e esconde o form
-function cancelPostForm() {
-  document.getElementById('postFormContainer').classList.add('hidden');
-}
-
-// 8) Limpa inputs do form
-function clearForm() {
-  ['postId','postDate','postCategory','postTitle','postContent']
-    .forEach(id => document.getElementById(id).value = '');
-}
-
-// 9) Baixa o JSON formatado para colar em /assets/data/posts.json
-function downloadPosts() {
-  const data = JSON.stringify({ posts }, null, 2);
-  const blob = new Blob([data], { type: 'application/json' });
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement('a');
-  a.href     = url;
-  a.download = 'posts.json';
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-// 10) Inicializa ao carregar o admin
-document.addEventListener('DOMContentLoaded', () => {
-  initPosts();
-});
-  </script>
+  </main>
 </body>
 </html>
