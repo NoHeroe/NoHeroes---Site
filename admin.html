@@ -2,589 +2,892 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Painel Admin | NoHeroes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>NoHeroes • Admin</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
   <style>
     :root{
-      --nh-bg:#0a0a0a;
-      --nh-card:#121214;
-      --nh-border:#2a2a2e;
-      --nh-accent:#7c3aed;
-      --nh-gold:#d4af37;
+      --nh-bg:#0a0a0a; --nh-card:#121214; --nh-stroke:#2a2a2e;
+      --nh-purple:#7c3aed; --nh-gold:#d4af37;
     }
-    body{
-      background:var(--nh-bg);
-      color:#f3f3f3;
-      font-family:'Inter',sans-serif;
-      min-height:100vh;
-      display:flex;
+    html,body{height:100%}
+    body{background:var(--nh-bg); color:#eaeaea; font-family:Inter,system-ui,Arial,sans-serif; overflow-x:hidden}
+    .title-font{font-family:'Cinzel Decorative',serif}
+    .card{background:var(--nh-card); border:1px solid var(--nh-stroke); border-radius:14px}
+    .btn{display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--nh-stroke);border-radius:.75rem;padding:.55rem .9rem}
+    .btn-primary{background:linear-gradient(90deg,#7c3aed,#5b21b6); color:#fff; border:none}
+    .btn-danger{background:#7f1d1d; color:#fff; border:none}
+    .btn-ghost{background:rgba(255,255,255,.06)}
+    .btn-ghost:hover{background:rgba(255,255,255,.12)}
+    .input{width:100%;padding:.6rem .8rem;border:1px solid #303036;border-radius:.7rem;background:#0d0d0f;color:#fff}
+    .input:focus{outline:none;box-shadow:0 0 0 3px rgba(124,58,237,.25);border-color:#5b21b6}
+    .table{width:100%;border-collapse:collapse}
+    .table th,.table td{padding:.7rem .8rem;border-bottom:1px solid #25252a;text-align:left}
+    .table th{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:#a7a7ad}
+    .badge{display:inline-flex;align-items:center;gap:.35rem;padding:.2rem .5rem;border:1px solid #2f2f35;border-radius:.6rem;background:#141416;font-size:.75rem}
+    /* Drawer modal */
+    .drawer{position:fixed;inset:0;z-index:50;display:grid;grid-template-columns:280px 1fr;pointer-events:none}
+    .drawer > aside{pointer-events:auto;transform:translateX(-100%);transition:transform .25s ease; background:linear-gradient(180deg,#131314,#0b0b0d); border-right:1px solid var(--nh-stroke)}
+    .drawer[data-open="true"] > aside{transform:translateX(0)}
+    .drawer .scrim{background:rgba(0,0,0,.5);backdrop-filter:blur(2px);pointer-events:auto;opacity:0;transition:opacity .2s}
+    .drawer[data-open="true"] .scrim{opacity:1}
+    @media (min-width:1024px){
+      .drawer{position:relative; grid-template-columns:280px 1fr; pointer-events:auto}
+      .drawer > aside{transform:none}
+      .drawer .scrim{display:none}
     }
-    .sidebar{
-      width:270px;
-      background:linear-gradient(180deg,#141414,#0d0d0f);
-      border-right:1px solid var(--nh-border);
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-    }
-    .sidebar h1{
-      font-family:'Cinzel Decorative',serif;
-      font-size:1.5rem;
-      text-align:center;
-      padding:1.2rem;
-      background:linear-gradient(90deg,var(--nh-accent),var(--nh-gold));
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-    }
-    .sidebar nav a{
-      display:block;
-      padding:.8rem 1.4rem;
-      margin:.3rem .8rem;
-      border-radius:.6rem;
-      color:#ccc;
-      font-weight:500;
-      transition:.2s;
-    }
-    .sidebar nav a:hover,
-    .sidebar nav a.active{
-      background:rgba(124,58,237,.15);
-      color:#e0d2ff;
-    }
-    .content{
-      flex:1;
-      padding:1.5rem 2rem;
-      overflow-y:auto;
-    }
-    .card{
-      background:var(--nh-card);
-      border:1px solid var(--nh-border);
-      border-radius:.8rem;
-      padding:1.2rem 1.5rem;
-      margin-bottom:1.5rem;
-    }
-    .card h2{
-      font-size:1.3rem;
-      font-weight:700;
-      margin-bottom:.8rem;
-      color:#dcd4ff;
-    }
-    .table{
-      width:100%;
-      border-collapse:collapse;
-    }
-    .table th,.table td{
-      padding:.6rem .8rem;
-      border-bottom:1px solid var(--nh-border);
-      text-align:left;
-    }
-    .table th{
-      text-transform:uppercase;
-      font-size:.8rem;
-      letter-spacing:.05em;
-      color:#aaa;
-    }
-    .table tr:hover{
-      background:rgba(255,255,255,.05);
-    }
-    .btn{
-      padding:.45rem .9rem;
-      border-radius:.5rem;
-      font-size:.85rem;
-      border:1px solid var(--nh-border);
-      background:rgba(255,255,255,.06);
-      transition:.2s;
-    }
-    .btn:hover{background:rgba(255,255,255,.12);}
-    .btn-primary{
-      background:linear-gradient(90deg,var(--nh-accent),#5b21b6);
-      color:#fff;
-      border:none;
-    }
-    .btn-danger{
-      background:#7f1d1d;
-      color:#fff;
-      border:none;
-    }
-    header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      margin-bottom:1.5rem;
-    }
-#brasasCanvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 0;
-      pointer-events: none;
-    }
+    /* Modal base */
+    dialog{border:none;padding:0}
+    dialog::backdrop{background:rgba(0,0,0,.45);backdrop-filter:blur(4px)}
+    .modal{background:rgba(16,16,20,.95);border:1px solid #34343a;border-radius:16px;max-width:min(92vw,820px)}
+    .modal-head{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #2c2c32}
+    .modal-body{padding:16px}
+    /* Labels */
+    .label{font-size:.8rem;color:#bcbccd}
+    /* Hide default scrollbar inside content areas while preserving scroll */
+    .scroll-slim{scrollbar-width:none}
+    .scroll-slim::-webkit-scrollbar{width:0;height:0}
+    /* Background canvas slot (sem JS) */
+    #brasasCanvas{position:fixed;inset:0;z-index:-1;pointer-events:none}
   </style>
 </head>
 <body>
-<canvas id="brasasCanvas"></canvas>
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <div>
-      <h1>NoHeroes Admin</h1>
-      <nav>
-        <a href="#" class="active">📊 Dashboard</a>
-        <a href="#">🧍 Usuários</a>
-        <a href="#">🛒 Produtos</a>
-        <a href="#">💰 Pedidos</a>
-        <a href="#">🎁 Cupons</a>
-        <a href="#">📦 Inventário</a>
-        <a href="#">🧾 Logs</a>
-        <a href="#">⚙️ Configurações</a>
+
+  <!-- BG opcional (sem JS) -->
+  <canvas id="brasasCanvas" aria-hidden="true"></canvas>
+
+  <!-- Topbar -->
+  <header class="sticky top-0 z-40 bg-black/40 backdrop-blur border-b border-[#2a2a2e]">
+    <div class="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
+      <div class="flex items-center gap-3">
+        <button id="btnOpenDrawer" class="btn btn-ghost lg:hidden" aria-label="Abrir menu">☰</button>
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-600 to-amber-400"></div>
+        <span class="title-font text-lg tracking-wide bg-clip-text text-transparent bg-gradient-to-r from-purple-300 to-amber-200">NoHeroes • Admin</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="btnRefresh" class="btn btn-ghost">Atualizar</button>
+        <button id="btnNew" class="btn btn-primary">Nova Entrada</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Drawer (nav lateral em modal) -->
+  <div id="drawer" class="drawer" data-open="false" aria-hidden="true">
+    <aside class="h-[100dvh] flex flex-col">
+      <div class="px-4 py-4 border-b border-[#2a2a2e]">
+        <div class="title-font text-xl bg-clip-text text-transparent bg-gradient-to-r from-purple-300 to-amber-200">Painel</div>
+      </div>
+      <nav class="p-2 flex-1 overflow-y-auto scroll-slim">
+        <a data-nav="dashboard" class="block px-3 py-2 rounded-md hover:bg-white/5 text-sm">📊 Dashboard</a>
+        <a data-nav="users"     class="block px-3 py-2 rounded-md hover:bg-white/5 text-sm">🧍 Usuários</a>
+        <a data-nav="products"  class="block px-3 py-2 rounded-md hover:bg-white/5 text-sm">🛒 Produtos</a>
+        <a data-nav="orders"    class="block px-3 py-2 rounded-md hover:bg-white/5 text-sm">💰 Pedidos</a>
+        <a data-nav="coupons"   class="block px-3 py-2 rounded-md hover:bg-white/5 text-sm">🎁 Cupons</a>
+        <a data-nav="inventory" class="block px-3 py-2 rounded-md hover:bg-white/5 text-sm">📦 Inventário</a>
+        <a data-nav="logs"      class="block px-3 py-2 rounded-md hover:bg-white/5 text-sm">🧾 Logs</a>
+        <a data-nav="settings"  class="block px-3 py-2 rounded-md hover:bg-white/5 text-sm">⚙️ Configurações</a>
       </nav>
-    </div>
-    <div class="p-4 text-center border-t border-[#2a2a2e] text-sm text-gray-500">
-      © NoHeroes Corp.
-    </div>
-  </aside>
+      <div class="p-3 text-center text-xs text-gray-500 border-t border-[#2a2a2e]">© NoHeroes Corp.</div>
+    </aside>
+    <div class="scrim lg:hidden"></div>
+  </div>
 
   <!-- Conteúdo -->
-  <main class="content">
+  <main class="max-w-7xl mx-auto px-4 py-6 space-y-6">
 
-    <!-- Header -->
-    <header>
-      <h2 class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-amber-300">Painel Administrativo</h2>
-      <div class="flex gap-2">
-        <button class="btn">Atualizar</button>
-        <button class="btn-primary">Nova Entrada</button>
-      </div>
-    </header>
-
-    <!-- Dashboard -->
-    <section class="card">
-      <h2>Visão Geral</h2>
+    <!-- SECTION: Dashboard -->
+    <section data-section="dashboard" class="card p-5">
+      <h2 class="text-lg font-bold text-purple-200 mb-3">Visão Geral</h2>
       <div class="grid md:grid-cols-4 gap-4">
-        <div class="bg-[#161616] p-4 rounded-xl border border-[#2a2a2e]">
-          <p class="text-gray-400 text-sm">Usuários ativos</p>
-          <h3 class="text-2xl font-bold mt-1">0</h3>
+        <div class="rounded-xl border border-[#2a2a2e] p-4 bg-[#141416]">
+          <div class="text-gray-400 text-sm">Usuários</div>
+          <div id="statUsers" class="text-2xl font-extrabold mt-1">0</div>
         </div>
-        <div class="bg-[#161616] p-4 rounded-xl border border-[#2a2a2e]">
-          <p class="text-gray-400 text-sm">Produtos</p>
-          <h3 class="text-2xl font-bold mt-1">0</h3>
+        <div class="rounded-xl border border-[#2a2a2e] p-4 bg-[#141416]">
+          <div class="text-gray-400 text-sm">Produtos</div>
+          <div id="statProducts" class="text-2xl font-extrabold mt-1">0</div>
         </div>
-        <div class="bg-[#161616] p-4 rounded-xl border border-[#2a2a2e]">
-          <p class="text-gray-400 text-sm">Pedidos aprovados</p>
-          <h3 class="text-2xl font-bold mt-1">0</h3>
+        <div class="rounded-xl border border-[#2a2a2e] p-4 bg-[#141416]">
+          <div class="text-gray-400 text-sm">Pedidos aprovados</div>
+          <div id="statOrders" class="text-2xl font-extrabold mt-1">0</div>
         </div>
-        <div class="bg-[#161616] p-4 rounded-xl border border-[#2a2a2e]">
-          <p class="text-gray-400 text-sm">Total de vendas</p>
-          <h3 class="text-2xl font-bold mt-1">R$ 0,00</h3>
+        <div class="rounded-xl border border-[#2a2a2e] p-4 bg-[#141416]">
+          <div class="text-gray-400 text-sm">Total de vendas</div>
+          <div id="statSales" class="text-2xl font-extrabold mt-1">R$ 0,00</div>
         </div>
       </div>
     </section>
 
-    <!-- Usuários -->
-    <section class="card">
-      <h2>Usuários</h2>
-      <table class="table">
-        <thead><tr><th>ID</th><th>Nome</th><th>Email</th><th>Admin</th><th>Ações</th></tr></thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Azuos</td>
-            <td>azuos@noheroes.com</td>
-            <td>Sim</td>
-            <td>
-              <button class="btn">Editar</button>
-              <button class="btn-danger">Excluir</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- Produtos -->
-    <section class="card">
-      <h2>Produtos</h2>
-      <div class="flex justify-between mb-2">
-        <input class="px-3 py-2 rounded-md bg-[#1a1a1a] border border-[#2a2a2e] text-sm w-1/3" placeholder="Buscar produto...">
-        <button class="btn-primary">Novo Produto</button>
+    <!-- SECTION: Users -->
+    <section data-section="users" class="card p-5 hidden">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-lg font-bold text-purple-200">Usuários</h2>
+        <div class="flex gap-2">
+          <input id="searchUser" class="input w-56" placeholder="Buscar usuário...">
+          <button id="btnGrant" class="btn btn-primary">Conceder item</button>
+        </div>
       </div>
-      <table class="table">
-        <thead><tr><th>ID</th><th>Nome</th><th>Preço</th><th>Estoque</th><th>Status</th><th>Ações</th></tr></thead>
-        <tbody>
-          <tr>
-            <td>001</td>
-            <td>Manual das Sombras</td>
-            <td>R$ 25,00</td>
-            <td>120</td>
-            <td><span class="text-green-400">Ativo</span></td>
-            <td>
-              <button class="btn">Editar</button>
-              <button class="btn-danger">Desativar</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="overflow-x-auto">
+        <table class="table text-sm">
+          <thead><tr><th>ID</th><th>Nome</th><th>Email</th><th>Admin</th><th>Criado</th><th>Ações</th></tr></thead>
+          <tbody id="tbUsers"><tr><td colspan="6" class="py-6 text-center text-gray-500">Carregando...</td></tr></tbody>
+        </table>
+      </div>
     </section>
 
-    <!-- Pedidos -->
-    <section class="card">
-      <h2>Pedidos</h2>
-      <table class="table">
-        <thead><tr><th>ID</th><th>Usuário</th><th>Total</th><th>Status</th><th>Data</th><th>Ações</th></tr></thead>
-        <tbody>
-          <tr>
-            <td>MP-9031</td>
-            <td>Azuos</td>
-            <td>R$ 55,00</td>
-            <td><span class="text-green-400">Aprovado</span></td>
-            <td>20/10/2025</td>
-            <td><button class="btn">Ver detalhes</button></td>
-          </tr>
-        </tbody>
-      </table>
+    <!-- SECTION: Products -->
+    <section data-section="products" class="card p-5 hidden">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-lg font-bold text-purple-200">Produtos</h2>
+        <div class="flex gap-2">
+          <input id="searchProduct" class="input w-56" placeholder="Buscar produto...">
+          <button id="btnNewProduct" class="btn btn-primary">Novo Produto</button>
+        </div>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="table text-sm">
+          <thead><tr><th>ID</th><th>Nome</th><th>Preço</th><th>Estoque</th><th>Status</th><th>Ações</th></tr></thead>
+          <tbody id="tbProducts"><tr><td colspan="6" class="py-6 text-center text-gray-500">Carregando...</td></tr></tbody>
+        </table>
+      </div>
     </section>
 
-    <!-- Cupons -->
-    <section class="card">
-      <h2>Cupons</h2>
-      <button class="btn-primary mb-3">Criar Novo Cupom</button>
-      <table class="table">
-        <thead><tr><th>Código</th><th>Desconto</th><th>Usos</th><th>Expira em</th><th>Ações</th></tr></thead>
-        <tbody>
-          <tr>
-            <td>NOHEROES25</td>
-            <td>25%</td>
-            <td>12</td>
-            <td>31/12/2025</td>
-            <td><button class="btn">Editar</button></td>
-          </tr>
-        </tbody>
-      </table>
+    <!-- SECTION: Orders -->
+    <section data-section="orders" class="card p-5 hidden">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-lg font-bold text-purple-200">Pedidos</h2>
+        <input id="searchOrder" class="input w-64" placeholder="Buscar por ID/usuário...">
+      </div>
+      <div class="overflow-x-auto">
+        <table class="table text-sm">
+          <thead><tr><th>ID</th><th>Usuário</th><th>Total</th><th>Status</th><th>Data</th><th>Ações</th></tr></thead>
+          <tbody id="tbOrders"><tr><td colspan="6" class="py-6 text-center text-gray-500">Carregando...</td></tr></tbody>
+        </table>
+      </div>
     </section>
 
-    <!-- Logs -->
-    <section class="card">
-      <h2>Logs do Sistema</h2>
-      <table class="table text-sm">
-        <thead><tr><th>Data</th><th>Usuário</th><th>Ação</th><th>Detalhes</th></tr></thead>
-        <tbody>
-          <tr>
-            <td>20/10/2025 08:21</td>
-            <td>Admin</td>
-            <td>Atualizou produto</td>
-            <td>Manual das Sombras → preço R$25</td>
-          </tr>
-        </tbody>
-      </table>
+    <!-- SECTION: Coupons -->
+    <section data-section="coupons" class="card p-5 hidden">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-lg font-bold text-purple-200">Cupons</h2>
+        <button id="btnNewCoupon" class="btn btn-primary">Criar Cupom</button>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="table text-sm">
+          <thead><tr><th>Código</th><th>Desconto</th><th>Usos</th><th>Expira</th><th>Ações</th></tr></thead>
+          <tbody id="tbCoupons"><tr><td colspan="5" class="py-6 text-center text-gray-500">Carregando...</td></tr></tbody>
+        </table>
+      </div>
     </section>
-</main>
-<script>
-/* =========================================
-   🏛️ Painel Administrativo — NoHeroes
-   ========================================= */
 
-(() => {
-  const API_BASE = 'https://api.noheroes.com.br';
-  const token = localStorage.getItem('NoHeroes_token');
+    <!-- SECTION: Inventory -->
+    <section data-section="inventory" class="card p-5 hidden">
+      <h2 class="text-lg font-bold text-purple-200 mb-3">Inventário (por usuário)</h2>
+      <div class="flex gap-2 mb-3">
+        <select id="invUserSelect" class="input w-64"></select>
+        <button id="btnLoadInv" class="btn btn-ghost">Carregar</button>
+      </div>
+      <div id="invGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3"></div>
+    </section>
 
-  if (!token) {
-    alert('Sessão expirada. Faça login novamente.');
-    window.location.href = 'login.html';
-    return;
-  }
+    <!-- SECTION: Logs -->
+    <section data-section="logs" class="card p-5 hidden">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-lg font-bold text-purple-200">Logs do Sistema</h2>
+        <button id="btnClearLogs" class="btn btn-danger">Limpar</button>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="table text-sm">
+          <thead><tr><th>Data</th><th>Usuário</th><th>Ação</th><th>Detalhes</th></tr></thead>
+          <tbody id="tbLogs"><tr><td colspan="4" class="py-6 text-center text-gray-500">Carregando...</td></tr></tbody>
+        </table>
+      </div>
+    </section>
 
-  const headers = {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`
-  };
+    <!-- SECTION: Settings -->
+    <section data-section="settings" class="card p-5 hidden">
+      <h2 class="text-lg font-bold text-purple-200 mb-3">Configurações</h2>
+      <div class="grid md:grid-cols-2 gap-4">
+        <label class="block">
+          <span class="label">Nome do Projeto</span>
+          <input id="cfgName" class="input mt-1" value="NoHeroes">
+        </label>
+        <label class="block">
+          <span class="label">Moeda</span>
+          <input id="cfgCurrency" class="input mt-1" value="BRL">
+        </label>
+        <label class="block md:col-span-2">
+          <span class="label">Webhook Mercado Pago (callback)</span>
+          <input id="cfgWebhook" class="input mt-1" placeholder="https://api.noheroes.com.br/webhooks/mp">
+        </label>
+      </div>
+      <div class="mt-4">
+        <button id="btnSaveSettings" class="btn btn-primary">Salvar Configurações</button>
+      </div>
+    </section>
+  </main>
 
-  /* ------------------------
-     Helpers e utilitários
-  ------------------------ */
-  const formatDate = (iso) => {
-    if (!iso) return '-';
-    const d = new Date(iso);
-    return d.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
-  };
+  <!-- MODALS =================================================== -->
 
-  const formatMoney = (v) => {
-    return `R$ ${Number(v || 0).toFixed(2).replace('.', ',')}`;
-  };
+  <!-- Modal Produto -->
+  <dialog id="modalProduct">
+    <form method="dialog" class="modal w-[min(92vw,900px)]">
+      <div class="modal-head">
+        <h3 id="modalProductTitle" class="text-purple-200 font-semibold">Novo Produto</h3>
+        <button type="button" data-close class="btn btn-ghost">✕</button>
+      </div>
+      <div class="modal-body space-y-3">
+        <div class="grid md:grid-cols-2 gap-3">
+          <label class="block">
+            <span class="label">Nome</span>
+            <input id="prodName" class="input mt-1" required>
+          </label>
+          <label class="block">
+            <span class="label">Categoria</span>
+            <input id="prodCat" class="input mt-1" placeholder="ebooks, anime, misc...">
+          </label>
+          <label class="block">
+            <span class="label">Preço (R$)</span>
+            <input id="prodPrice" type="number" step="0.01" class="input mt-1" required>
+          </label>
+          <label class="block">
+            <span class="label">Estoque</span>
+            <input id="prodStock" type="number" class="input mt-1">
+          </label>
+          <label class="block">
+            <span class="label">URL da Imagem</span>
+            <input id="prodImg" class="input mt-1" placeholder="https://...">
+          </label>
+          <label class="block">
+            <span class="label">Raridade</span>
+            <select id="prodRarity" class="input mt-1">
+              <option>Comum</option><option>Raro</option><option>Épico</option><option>Lendário</option>
+            </select>
+          </label>
+        </div>
+        <label class="block">
+          <span class="label">Descrição</span>
+          <textarea id="prodDesc" class="input mt-1" rows="3"></textarea>
+        </label>
+        <div class="flex items-center justify-between">
+          <label class="flex items-center gap-2">
+            <input id="prodActive" type="checkbox" class="h-4 w-4 accent-purple-600">
+            <span class="text-sm">Ativo</span>
+          </label>
+          <div class="flex gap-2">
+            <button data-close type="button" class="btn btn-ghost">Cancelar</button>
+            <button id="btnSaveProduct" class="btn btn-primary" type="submit">Salvar</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </dialog>
 
-  const showAlert = (msg, type = 'info') => {
-    const c = document.createElement('div');
-    c.className = `fixed top-5 right-5 px-4 py-2 rounded-md text-sm z-50 ${
-      type === 'error'
-        ? 'bg-red-700 text-white'
-        : type === 'success'
-        ? 'bg-green-700 text-white'
-        : 'bg-gray-700 text-gray-100'
-    }`;
-    c.textContent = msg;
-    document.body.appendChild(c);
-    setTimeout(() => c.remove(), 4000);
-  };
+  <!-- Modal Conceder Item -->
+  <dialog id="modalGrant">
+    <form method="dialog" class="modal w-[min(92vw,720px)]">
+      <div class="modal-head">
+        <h3 class="text-purple-200 font-semibold">Conceder item ao usuário</h3>
+        <button type="button" data-close class="btn btn-ghost">✕</button>
+      </div>
+      <div class="modal-body space-y-3">
+        <div class="grid md:grid-cols-3 gap-3">
+          <label class="block md:col-span-1">
+            <span class="label">Usuário</span>
+            <select id="grantUser" class="input mt-1"></select>
+          </label>
+          <label class="block md:col-span-2">
+            <span class="label">Produto</span>
+            <select id="grantItem" class="input mt-1"></select>
+          </label>
+        </div>
+        <div class="grid md:grid-cols-3 gap-3">
+          <label class="block">
+            <span class="label">Quantidade</span>
+            <input id="grantQty" type="number" class="input mt-1" value="1" min="1">
+          </label>
+          <div class="md:col-span-2 flex items-end justify-end gap-2">
+            <button data-close type="button" class="btn btn-ghost">Cancelar</button>
+            <button id="btnDoGrant" class="btn btn-primary" type="submit">Conceder</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </dialog>
 
-  const loading = (el, show = true) => {
-    if (show) {
-      el.dataset.oldHtml = el.innerHTML;
-      el.innerHTML = '<span class="animate-pulse">Carregando...</span>';
-    } else {
-      el.innerHTML = el.dataset.oldHtml || '';
+  <!-- Modal Detalhe Pedido -->
+  <dialog id="modalOrder">
+    <form method="dialog" class="modal w-[min(92vw,780px)]">
+      <div class="modal-head">
+        <h3 class="text-purple-200 font-semibold">Detalhes do Pedido</h3>
+        <button type="button" data-close class="btn btn-ghost">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="orderDetails" class="text-sm space-y-2"></div>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Modal Confirm -->
+  <dialog id="modalConfirm">
+    <form method="dialog" class="modal w-[min(92vw,520px)]">
+      <div class="modal-head">
+        <h3 class="text-purple-200 font-semibold">Confirmar ação</h3>
+        <button type="button" data-close class="btn btn-ghost">✕</button>
+      </div>
+      <div class="modal-body">
+        <p id="confirmText" class="mb-4">Tem certeza?</p>
+        <div class="flex justify-end gap-2">
+          <button data-close type="button" class="btn btn-ghost">Cancelar</button>
+          <button id="btnConfirmYes" type="submit" class="btn btn-danger">Confirmar</button>
+        </div>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- JS (sem brasas) =================================================== -->
+  <script>
+  ;(() => {
+    /* ============================================================
+       CONFIG
+    ============================================================ */
+    const USE_API  = false; // << quando o backend estiver pronto, troque para true
+    const API_BASE = 'https://api.noheroes.com.br';
+
+    /* ============================================================
+       HELPERS
+    ============================================================ */
+    const $ = sel => document.querySelector(sel);
+    const $$ = sel => Array.from(document.querySelectorAll(sel));
+    const money = v => 'R$ ' + Number(v||0).toFixed(2).replace('.', ',');
+    const dateBR = iso => iso ? new Date(iso).toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'}) : '—';
+
+    function toast(msg, type='info'){
+      const box = document.createElement('div');
+      box.className = 'fixed top-4 right-4 z-[60] px-4 py-2 rounded-md text-sm ' + (
+        type==='error' ? 'bg-red-700 text-white' :
+        type==='success' ? 'bg-green-700 text-white' : 'bg-gray-700 text-gray-100'
+      );
+      box.textContent = msg;
+      document.body.appendChild(box);
+      setTimeout(()=>box.remove(), 3200);
     }
-  };
 
-  /* ------------------------
-     Fetch wrappers
-  ------------------------ */
-  async function apiGet(endpoint) {
-    const res = await fetch(`${API_BASE}${endpoint}`, { headers });
-    if (res.status === 401) {
-      localStorage.removeItem('NoHeroes_token');
-      location.href = 'login.html';
-      return;
+    function openDialog(dlg){
+      dlg.showModal();
+      // fechar ao clicar na borda
+      dlg.addEventListener('click', (e)=>{
+        const r = dlg.getBoundingClientRect();
+        const outside = e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+        if (e.target === dlg && outside) dlg.close();
+      }, { once:true });
+      // botões com data-close
+      dlg.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click', ()=>dlg.close(), { once:true }));
     }
-    const data = await res.json();
-    return data;
-  }
 
-  async function apiPatch(endpoint, body) {
-    const res = await fetch(`${API_BASE}${endpoint}`, {
-      method: 'PATCH',
-      headers,
-      body: JSON.stringify(body)
+    /* ============================================================
+       MOCK ADAPTER (funciona HOJE, sem backend)
+    ============================================================ */
+    const mock = {
+      users: [
+        { id:19, username:'Azuos',  email:'azuos@noheroes.com', is_admin:true,  createdAt:'2025-10-13T09:58:52.405Z' },
+        { id:16, username:'Noryan', email:'noryan@noheroes.com', is_admin:false, createdAt:'2025-09-05T23:32:58.065Z' },
+      ],
+      products: [
+        { id:1, name:'Manual das Sombras', price:25, stock:120, isActive:true,  category:'ebooks', rarity:'Épico', imageUrl:'', description:'—' },
+        { id:2, name:'Passe Animes',       price:15, stock:999, isActive:true,  category:'anime',  rarity:'Raro',  imageUrl:'', description:'—' },
+        { id:3, name:'Mentoria',           price:99, stock: 10, isActive:false, category:'mentoria',rarity:'Lendário', imageUrl:'', description:'—' },
+      ],
+      orders: [
+        { order_id:'MP-9031', user:'Azuos', total:55, status:'approved', createdAt:'2025-10-20T11:25:00.000Z',
+          items:[{title:'Manual das Sombras', qty:1, price:25},{title:'Passe Animes', qty:2, price:15}] },
+      ],
+      coupons: [
+        { code:'NOHEROES25', discount:25, usages:12, expiresAt:'2025-12-31T23:59:59.000Z' },
+      ],
+      logs: [
+        { createdAt:'2025-10-20T08:21:00.000Z', user:'Admin', action:'Atualizou produto', details:'Manual → R$25' }
+      ],
+      inventory: {
+        19: [{ name:'Manual das Sombras', qty:1 }, { name:'Passe Animes', qty:2 }],
+        16: [{ name:'Manual das Sombras', qty:1 }],
+      }
+    };
+
+    /* API adapter (quando ligar no backend, USE_API=true) */
+    async function api(endpoint, { method='GET', body }={}){
+      if(!USE_API){
+        // MOCK SWITCH
+        await new Promise(r=>setTimeout(r, 220)); // micro delay
+        switch(endpoint){
+          case '/admin/users':       return { success:true, data: mock.users };
+          case '/admin/products':    return { success:true, data: mock.products };
+          case '/admin/orders':      return { success:true, data: mock.orders };
+          case '/admin/coupons':     return { success:true, data: mock.coupons };
+          case '/admin/logs':        return { success:true, data: mock.logs };
+          case '/admin/stats': {
+            const total = mock.orders.filter(o=>o.status==='approved')
+                                     .reduce((s,o)=>s+Number(o.total||0),0);
+            return { success:true, users:mock.users.length, products:mock.products.length,
+                     orders:mock.orders.filter(o=>o.status==='approved').length, total };
+          }
+        }
+        // POST/PATCH/DELETE mocks
+        if(endpoint.startsWith('/admin/products') && method==='POST'){
+          const id = Math.max(0, ...mock.products.map(p=>p.id))+1;
+          mock.products.push({ id, ...body });
+          mock.logs.unshift({ createdAt:new Date().toISOString(), user:'Admin', action:'Criou produto', details:body.name });
+          return { success:true, item:{ id, ...body } };
+        }
+        if(endpoint.startsWith('/admin/products/') && method==='PATCH'){
+          const id = Number(endpoint.split('/').pop());
+          const p = mock.products.find(x=>x.id===id);
+          if(!p) return { success:false, message:'Produto não encontrado' };
+          Object.assign(p, body||{});
+          mock.logs.unshift({ createdAt:new Date().toISOString(), user:'Admin', action:'Editou produto', details:p.name });
+          return { success:true, item:p };
+        }
+        if(endpoint.startsWith('/admin/products/') && method==='DELETE'){
+          const id = Number(endpoint.split('/').pop());
+          const i = mock.products.findIndex(x=>x.id===id);
+          if(i>=0) mock.products.splice(i,1);
+          mock.logs.unshift({ createdAt:new Date().toISOString(), user:'Admin', action:'Removeu produto', details:String(id) });
+          return { success:true };
+        }
+        if(endpoint==='/admin/grant-item' && method==='POST'){
+          const { userId, itemId, quantity=1 } = body;
+          const userInv = mock.inventory[userId] || (mock.inventory[userId]=[]);
+          const prod = mock.products.find(p=>p.id===Number(itemId));
+          if(!prod) return { success:false, message:'Produto inexistente' };
+          const slot = userInv.find(i=>i.name===prod.name);
+          if(slot) slot.qty += Number(quantity); else userInv.push({ name:prod.name, qty:Number(quantity) });
+          mock.logs.unshift({ createdAt:new Date().toISOString(), user:'Admin', action:'Concedeu item', details:`${prod.name} x${quantity} → user ${userId}` });
+          return { success:true };
+        }
+        if(endpoint.startsWith('/admin/inventory/') && method==='GET'){
+          const userId = Number(endpoint.split('/').pop());
+          return { success:true, data: mock.inventory[userId] || [] };
+        }
+        if(endpoint==='/admin/logs/clear' && method==='POST'){
+          mock.logs.length = 0;
+          return { success:true };
+        }
+        if(endpoint==='/admin/settings' && method==='POST'){
+          mock.logs.unshift({ createdAt:new Date().toISOString(), user:'Admin', action:'Atualizou configurações', details: JSON.stringify(body) });
+          return { success:true };
+        }
+        return { success:false, message:'endpoint mock não mapeado' };
+      }
+
+      // REAL API
+      const headers = { 'Content-Type':'application/json' };
+      const res = await fetch(API_BASE + endpoint, {
+        method, headers, body: body ? JSON.stringify(body) : undefined
+      });
+      if(res.status===401){ /* gate opcional */ }
+      return res.json();
+    }
+
+    /* ============================================================
+       NAV (drawer + sections)
+    ============================================================ */
+    const drawer = $('#drawer');
+    const btnOpenDrawer = $('#btnOpenDrawer');
+    const scrim = drawer.querySelector('.scrim');
+    btnOpenDrawer?.addEventListener('click', ()=>{
+      drawer.dataset.open = drawer.dataset.open === 'true' ? 'false' : 'true';
+      drawer.setAttribute('aria-hidden', drawer.dataset.open !== 'true');
     });
-    return res.json();
-  }
+    scrim?.addEventListener('click', ()=>{ drawer.dataset.open='false'; drawer.setAttribute('aria-hidden','true'); });
 
-  /* ------------------------
-     DOM Elements
-  ------------------------ */
-  const sections = {
-    users: document.querySelector('#section-users tbody'),
-    products: document.querySelector('#section-products tbody'),
-    orders: document.querySelector('#section-orders tbody'),
-    coupons: document.querySelector('#section-coupons tbody'),
-    logs: document.querySelector('#section-logs tbody')
-  };
-
-  /* ------------------------
-     USERS
-  ------------------------ */
-  async function loadUsers() {
-    try {
-      const json = await apiGet('/admin/users');
-      if (!json?.success) throw new Error('Falha ao carregar usuários.');
-      const tbody = sections.users;
-      tbody.innerHTML = '';
-      json.data.forEach(u => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${u.id}</td>
-          <td>${u.username}</td>
-          <td>${u.email}</td>
-          <td>${u.is_admin ? '✅' : '❌'}</td>
-          <td>
-            <button class="btn btn-sm btn-primary" data-edit-user="${u.id}">Editar</button>
-            <button class="btn btn-sm btn-danger" data-del-user="${u.id}">Excluir</button>
-          </td>
-        `;
-        tbody.appendChild(tr);
+    const navLinks = $$('[data-nav]');
+    function activate(section){
+      // highlight menu
+      navLinks.forEach(a=>{
+        if(a.dataset.nav===section){ a.classList.add('bg-white/5','text-purple-200'); }
+        else { a.classList.remove('bg-white/5','text-purple-200'); }
       });
-      showAlert('Usuários carregados.', 'success');
-    } catch (err) {
-      console.error(err);
-      showAlert('Erro ao carregar usuários.', 'error');
-    }
-  }
-
-  /* ------------------------
-     PRODUCTS
-  ------------------------ */
-  async function loadProducts() {
-    try {
-      const json = await apiGet('/admin/products');
-      if (!json?.success) throw new Error('Falha ao carregar produtos.');
-      const tbody = sections.products;
-      tbody.innerHTML = '';
-      json.data.forEach(p => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${p.id}</td>
-          <td>${p.name}</td>
-          <td>${formatMoney(p.price)}</td>
-          <td>${p.stock ?? '-'}</td>
-          <td>${p.isActive ? '<span class="text-green-400">Ativo</span>' : '<span class="text-red-400">Inativo</span>'}</td>
-          <td>
-            <button class="btn btn-sm btn-primary" data-edit-prod="${p.id}">Editar</button>
-            <button class="btn btn-sm btn-danger" data-toggle-prod="${p.id}">
-              ${p.isActive ? 'Desativar' : 'Ativar'}
-            </button>
-          </td>
-        `;
-        tbody.appendChild(tr);
+      // show section
+      $$('[data-section]').forEach(s=>{
+        s.classList.toggle('hidden', s.dataset.section !== section);
       });
-      showAlert('Produtos carregados.', 'success');
-    } catch (err) {
-      console.error(err);
-      showAlert('Erro ao carregar produtos.', 'error');
-    }
-  }
-
-  async function toggleProduct(id, currentStatus) {
-    try {
-      const res = await apiPatch(`/admin/products/${id}`, { isActive: !currentStatus });
-      if (res.success) {
-        showAlert('Produto atualizado.', 'success');
-        loadProducts();
-      } else {
-        throw new Error(res.message);
+      // mobile: fecha drawer ao escolher
+      if (window.innerWidth < 1024) {
+        drawer.dataset.open='false';
+        drawer.setAttribute('aria-hidden','true');
       }
-    } catch (err) {
-      console.error(err);
-      showAlert('Erro ao atualizar produto.', 'error');
-    }
-  }
-
-  /* ------------------------
-     ORDERS
-  ------------------------ */
-  async function loadOrders() {
-    try {
-      const json = await apiGet('/admin/orders');
-      if (!json?.success) throw new Error('Falha ao carregar pedidos.');
-      const tbody = sections.orders;
-      tbody.innerHTML = '';
-      json.data.forEach(o => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${o.order_id}</td>
-          <td>${o.User?.username || '-'}</td>
-          <td>${formatMoney(o.total)}</td>
-          <td>${o.status}</td>
-          <td>${formatDate(o.createdAt)}</td>
-          <td><button class="btn btn-sm" data-view-order="${o.order_id}">Ver</button></td>
-        `;
-        tbody.appendChild(tr);
-      });
-      showAlert('Pedidos carregados.', 'success');
-    } catch (err) {
-      console.error(err);
-      showAlert('Erro ao carregar pedidos.', 'error');
-    }
-  }
-
-  /* ------------------------
-     COUPONS
-  ------------------------ */
-  async function loadCoupons() {
-    try {
-      const json = await apiGet('/admin/coupons');
-      if (!json?.success) throw new Error('Falha ao carregar cupons.');
-      const tbody = sections.coupons;
-      tbody.innerHTML = '';
-      json.data.forEach(c => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${c.code}</td>
-          <td>${c.discount}%</td>
-          <td>${c.usages}</td>
-          <td>${formatDate(c.expiresAt)}</td>
-          <td><button class="btn btn-sm">Editar</button></td>
-        `;
-        tbody.appendChild(tr);
-      });
-      showAlert('Cupons carregados.', 'success');
-    } catch (err) {
-      console.error(err);
-      showAlert('Erro ao carregar cupons.', 'error');
-    }
-  }
-
-  /* ------------------------
-     LOGS
-  ------------------------ */
-  async function loadLogs() {
-    try {
-      const json = await apiGet('/admin/logs');
-      if (!json?.success) throw new Error('Falha ao carregar logs.');
-      const tbody = sections.logs;
-      tbody.innerHTML = '';
-      json.data.forEach(l => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${formatDate(l.createdAt)}</td>
-          <td>${l.user || '-'}</td>
-          <td>${l.action || '-'}</td>
-          <td>${l.details || '-'}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-      showAlert('Logs carregados.', 'success');
-    } catch (err) {
-      console.error(err);
-      showAlert('Erro ao carregar logs.', 'error');
-    }
-  }
-
-  /* ------------------------
-     INIT
-  ------------------------ */
-  async function init() {
-    await loadUsers();
-    await loadProducts();
-    await loadOrders();
-    await loadLogs();
-  }
-
-  document.addEventListener('DOMContentLoaded', init);
-})();
-const canvas = document.getElementById("brasasCanvas");
-    const ctx = canvas.getContext("2d");
-    let particles = [], w, h;
-
-    function resizeCanvas() {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
-    }
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-
-    class Particle {
-      constructor() { this.reset(true); }
-      reset(initial = false) {
-        this.x = Math.random() * w;
-        this.y = initial ? Math.random() * h : h + Math.random() * 100;
-        this.size = 1 + Math.random() * 2.5;
-        this.speed = 0.2 + Math.random() * 0.5;
-        this.alpha = 0.4 + Math.random() * 0.3;
-        this.drift = (Math.random() - 0.5) * 0.5;
+      // rota no hash
+      if (location.hash.replace('#','') !== section) {
+        history.replaceState(null, '', '#'+section);
       }
-      update() {
-        this.y -= this.speed;
-        this.x += this.drift;
-        if (this.y < -10 || this.x < -50 || this.x > w + 50) this.reset();
-      }
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`;
-        ctx.shadowColor = "#a855f7";
-        ctx.shadowBlur = 12;
-        ctx.fill();
+    }
+    navLinks.forEach(a=>a.addEventListener('click', (e)=>{ e.preventDefault(); activate(a.dataset.nav); }));
+    window.addEventListener('hashchange', ()=>activate((location.hash||'#dashboard').slice(1)));
+    activate((location.hash||'#dashboard').slice(1));
+
+    /* ============================================================
+       RENDER / LOADERS
+    ============================================================ */
+    async function loadStats(){
+      const j = await api('/admin/stats');
+      if(j?.success){
+        $('#statUsers').textContent    = j.users;
+        $('#statProducts').textContent = j.products;
+        $('#statOrders').textContent   = j.orders;
+        $('#statSales').textContent    = money(j.total||0);
       }
     }
 
-    function createParticles(n) {
-      for (let i = 0; i < n; i++) particles.push(new Particle());
+    /* Users */
+    let _users = [];
+    async function loadUsers(){
+      const j = await api('/admin/users');
+      const tb = $('#tbUsers');
+      tb.innerHTML = '';
+      if(j?.success){
+        _users = j.data;
+        for(const u of j.data){
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${u.id}</td>
+            <td>${u.username}</td>
+            <td>${u.email}</td>
+            <td>${u.is_admin ? '✅' : '❌'}</td>
+            <td>${dateBR(u.createdAt)}</td>
+            <td class="space-x-2">
+              <button class="btn btn-ghost" data-grant-user="${u.id}">Conceder</button>
+              <button class="btn btn-ghost" disabled>Editar</button>
+            </td>`;
+          tb.appendChild(tr);
+        }
+      }
     }
-    function animate() {
-      ctx.clearRect(0, 0, w, h);
-      for (const p of particles) { p.update(); p.draw(); }
-      requestAnimationFrame(animate);
+
+    /* Products */
+    let _products = [];
+    async function loadProducts(){
+      const j = await api('/admin/products');
+      const tb = $('#tbProducts');
+      tb.innerHTML = '';
+      if(j?.success){
+        _products = j.data;
+        for(const p of j.data){
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${p.id}</td>
+            <td>${p.name}</td>
+            <td>${money(p.price)}</td>
+            <td>${p.stock ?? '—'}</td>
+            <td>${p.isActive ? '<span class="text-green-400">Ativo</span>' : '<span class="text-red-400">Inativo</span>'}</td>
+            <td class="space-x-2">
+              <button class="btn btn-ghost" data-edit-prod="${p.id}">Editar</button>
+              <button class="btn ${p.isActive ? 'btn-danger' : 'btn-primary'}" data-toggle-prod="${p.id}">
+                ${p.isActive ? 'Desativar' : 'Ativar'}
+              </button>
+              <button class="btn btn-danger" data-del-prod="${p.id}">Excluir</button>
+            </td>`;
+          tb.appendChild(tr);
+        }
+      }
     }
-    createParticles(150);
-    animate();
-</script>
+
+    /* Orders */
+    async function loadOrders(){
+      const j = await api('/admin/orders');
+      const tb = $('#tbOrders');
+      tb.innerHTML = '';
+      if(j?.success){
+        for(const o of j.data){
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${o.order_id}</td>
+            <td>${o.user || o.User?.username || '—'}</td>
+            <td>${money(o.total)}</td>
+            <td>${o.status}</td>
+            <td>${dateBR(o.createdAt)}</td>
+            <td><button class="btn btn-ghost" data-view-order="${o.order_id}">Ver</button></td>`;
+          // guarda itens (mock compat)
+          tr.dataset.order = JSON.stringify(o);
+          tb.appendChild(tr);
+        }
+      }
+    }
+
+    /* Coupons */
+    async function loadCoupons(){
+      const j = await api('/admin/coupons');
+      const tb = $('#tbCoupons');
+      tb.innerHTML = '';
+      if(j?.success){
+        for(const c of j.data){
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${c.code}</td>
+            <td>${c.discount}%</td>
+            <td>${c.usages}</td>
+            <td>${dateBR(c.expiresAt)}</td>
+            <td><button class="btn btn-ghost" disabled>Editar</button></td>`;
+          tb.appendChild(tr);
+        }
+      }
+    }
+
+    /* Logs */
+    async function loadLogs(){
+      const j = await api('/admin/logs');
+      const tb = $('#tbLogs');
+      tb.innerHTML = '';
+      if(j?.success){
+        for(const l of j.data){
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${dateBR(l.createdAt)}</td>
+            <td>${l.user || '—'}</td>
+            <td>${l.action || '—'}</td>
+            <td>${l.details || '—'}</td>`;
+          tb.appendChild(tr);
+        }
+      }
+    }
+
+    /* Inventory */
+    function fillInvUsers(){
+      const sel = $('#invUserSelect');
+      sel.innerHTML = _users.map(u=>`<option value="${u.id}">${u.id} — ${u.username}</option>`).join('');
+    }
+    async function loadInventory(userId){
+      const j = await api('/admin/inventory/'+userId, { method:'GET' });
+      const grid = $('#invGrid');
+      grid.innerHTML = '';
+      const items = j?.data || [];
+      if(items.length===0){
+        grid.innerHTML = '<div class="text-center text-gray-500 col-span-full py-6">— Sem itens —</div>';
+        return;
+      }
+      for(const it of items){
+        const el = document.createElement('div');
+        el.className = 'p-3 rounded-lg border border-[#2a2a2e] bg-[#141416] flex items-center justify-between';
+        el.innerHTML = `<div>${it.name}</div><span class="badge">x${it.qty || it.quantity || 1}</span>`;
+        grid.appendChild(el);
+      }
+    }
+
+    /* ============================================================
+       BUSCAS / LISTENERS por seção
+    ============================================================ */
+    $('#searchUser').addEventListener('input', e=>{
+      const q = e.target.value.toLowerCase();
+      $$('#tbUsers tr').forEach(tr=>{
+        const t = tr.textContent.toLowerCase();
+        tr.classList.toggle('hidden', !t.includes(q));
+      });
+    });
+
+    $('#searchProduct').addEventListener('input', e=>{
+      const q = e.target.value.toLowerCase();
+      $$('#tbProducts tr').forEach(tr=>{
+        const t = tr.textContent.toLowerCase();
+        tr.classList.toggle('hidden', !t.includes(q));
+      });
+    });
+
+    $('#searchOrder').addEventListener('input', e=>{
+      const q = e.target.value.toLowerCase();
+      $$('#tbOrders tr').forEach(tr=>{
+        const t = tr.textContent.toLowerCase();
+        tr.classList.toggle('hidden', !t.includes(q));
+      });
+    });
+
+    /* ============================================================
+       MODAL: Produto (criar/editar)
+    ============================================================ */
+    const mdProduct = $('#modalProduct');
+    const mode = { editId:null };
+    function openNewProduct(){
+      mode.editId = null;
+      $('#modalProductTitle').textContent = 'Novo Produto';
+      $('#prodName').value=''; $('#prodCat').value=''; $('#prodPrice').value=''; $('#prodStock').value='';
+      $('#prodImg').value=''; $('#prodRarity').value='Comum'; $('#prodDesc').value=''; $('#prodActive').checked=true;
+      openDialog(mdProduct);
+    }
+    function openEditProduct(id){
+      const p = _products.find(x=>x.id===id);
+      if(!p) return;
+      mode.editId = id;
+      $('#modalProductTitle').textContent = `Editar: ${p.name}`;
+      $('#prodName').value=p.name||''; $('#prodCat').value=p.category||'';
+      $('#prodPrice').value=p.price||''; $('#prodStock').value=p.stock??'';
+      $('#prodImg').value=p.imageUrl||''; $('#prodRarity').value=p.rarity||'Comum';
+      $('#prodDesc').value=p.description||''; $('#prodActive').checked=!!p.isActive;
+      openDialog(mdProduct);
+    }
+
+    $('#btnNewProduct').addEventListener('click', openNewProduct);
+    $('#btnSaveProduct').addEventListener('click', async (e)=>{
+      e.preventDefault();
+      const payload = {
+        name: $('#prodName').value.trim(),
+        category: $('#prodCat').value.trim(),
+        price: Number($('#prodPrice').value||0),
+        stock: Number($('#prodStock').value||0),
+        imageUrl: $('#prodImg').value.trim(),
+        rarity: $('#prodRarity').value,
+        description: $('#prodDesc').value.trim(),
+        isActive: $('#prodActive').checked
+      };
+      if(!payload.name){ toast('Nome obrigatório','error'); return; }
+      let res;
+      if(mode.editId){
+        res = await api('/admin/products/'+mode.editId, { method:'PATCH', body:payload });
+      }else{
+        res = await api('/admin/products', { method:'POST', body:payload });
+      }
+      if(res?.success){ mdProduct.close(); await loadProducts(); await loadStats(); toast('Produto salvo','success'); }
+      else { toast(res?.message||'Erro ao salvar','error'); }
+    });
+
+    /* Toggle / Delete product */
+    document.addEventListener('click', async (e)=>{
+      const t = e.target;
+      if(t.matches('[data-edit-prod]')){
+        openEditProduct(Number(t.dataset.editProd));
+      }
+      if(t.matches('[data-toggle-prod]')){
+        const id = Number(t.dataset.toggleProd);
+        const p = _products.find(x=>x.id===id);
+        const res = await api('/admin/products/'+id, { method:'PATCH', body:{ isActive: !p.isActive } });
+        if(res?.success){ await loadProducts(); toast('Produto atualizado','success'); }
+        else { toast(res?.message||'Falha ao atualizar','error'); }
+      }
+      if(t.matches('[data-del-prod]')){
+        confirmModal(`Excluir produto #${t.dataset.delProd}?`, async ()=>{
+          const res = await api('/admin/products/'+Number(t.dataset.delProd), { method:'DELETE' });
+          if(res?.success){ await loadProducts(); await loadStats(); toast('Produto removido','success'); }
+          else { toast(res?.message||'Falha ao remover','error'); }
+        });
+      }
+      if(t.matches('[data-view-order]')){
+        const tr = t.closest('tr');
+        const data = tr?.dataset?.order ? JSON.parse(tr.dataset.order) : null;
+        openOrderDetail(data);
+      }
+      if(t.matches('[data-grant-user]')){
+        openGrantModal(Number(t.dataset.grantUser));
+      }
+    });
+
+    /* ============================================================
+       MODAL: Conceder item
+    ============================================================ */
+    const mdGrant = $('#modalGrant');
+    function openGrantModal(userId=null){
+      // preencher selects
+      $('#grantUser').innerHTML = _users.map(u=>`<option value="${u.id}" ${userId===u.id?'selected':''}>${u.id} — ${u.username}</option>`).join('');
+      $('#grantItem').innerHTML = _products.map(p=>`<option value="${p.id}">${p.id} — ${p.name}</option>`).join('');
+      $('#grantQty').value = 1;
+      openDialog(mdGrant);
+    }
+    $('#btnGrant').addEventListener('click', ()=>openGrantModal());
+    $('#btnDoGrant').addEventListener('click', async (e)=>{
+      e.preventDefault();
+      const body = {
+        userId: Number($('#grantUser').value),
+        itemId: Number($('#grantItem').value),
+        quantity: Number($('#grantQty').value||1)
+      };
+      const res = await api('/admin/grant-item', { method:'POST', body });
+      if(res?.success){ mdGrant.close(); toast('Item concedido','success'); }
+      else { toast(res?.message||'Falha ao conceder','error'); }
+    });
+
+    /* ============================================================
+       MODAL: Pedido (detalhe)
+    ============================================================ */
+    const mdOrder = $('#modalOrder');
+    function openOrderDetail(data){
+      const box = $('#orderDetails');
+      if(!data){ box.innerHTML = '<div class="text-gray-500">Sem detalhes.</div>'; }
+      else{
+        const itemsHtml = (data.items||[]).map(i=>`<li class="flex justify-between"><span>${i.title}</span><span>x${i.qty} — ${money(i.price)}</span></li>`).join('');
+        box.innerHTML = `
+          <div class="grid md:grid-cols-2 gap-3">
+            <div><div class="label">Pedido</div><div class="badge">${data.order_id}</div></div>
+            <div><div class="label">Usuário</div><div>${data.user || data.User?.username || '—'}</div></div>
+            <div><div class="label">Total</div><div class="font-semibold">${money(data.total)}</div></div>
+            <div><div class="label">Status</div><div>${data.status}</div></div>
+            <div><div class="label">Criado</div><div>${dateBR(data.createdAt)}</div></div>
+          </div>
+          <div class="mt-3">
+            <div class="label mb-1">Itens</div>
+            <ul class="space-y-1">${itemsHtml || '<li class="text-gray-500">—</li>'}</ul>
+          </div>
+        `;
+      }
+      openDialog(mdOrder);
+    }
+
+    /* ============================================================
+       Confirm Modal (utilitário)
+    ============================================================ */
+    const mdConfirm = $('#modalConfirm');
+    function confirmModal(text, onYes){
+      $('#confirmText').textContent = text;
+      openDialog(mdConfirm);
+      const btn = $('#btnConfirmYes');
+      const handler = (e)=>{ e.preventDefault(); mdConfirm.close(); btn.removeEventListener('click', handler); onYes?.(); };
+      btn.addEventListener('click', handler);
+    }
+
+    /* ============================================================
+       SETTINGS + LOGS
+    ============================================================ */
+    $('#btnSaveSettings').addEventListener('click', async ()=>{
+      const body = {
+        project: $('#cfgName').value.trim(),
+        currency: $('#cfgCurrency').value.trim(),
+        webhook: $('#cfgWebhook').value.trim()
+      };
+      const res = await api('/admin/settings', { method:'POST', body });
+      if(res?.success) toast('Configurações salvas','success');
+      else toast(res?.message||'Falha ao salvar','error');
+    });
+
+    $('#btnClearLogs').addEventListener('click', ()=>{
+      confirmModal('Limpar todos os logs?', async ()=>{
+        const res = await api('/admin/logs/clear', { method:'POST' });
+        if(res?.success){ await loadLogs(); toast('Logs limpos','success'); }
+        else toast(res?.message||'Falha ao limpar','error');
+      });
+    });
+
+    /* ============================================================
+       INVENTORY LOAD
+    ============================================================ */
+    $('#btnLoadInv').addEventListener('click', async ()=>{
+      const userId = Number($('#invUserSelect').value);
+      if(!userId) return;
+      await loadInventory(userId);
+    });
+
+    /* ============================================================
+       GLOBAL REFRESH / INIT
+    ============================================================ */
+    $('#btnRefresh').addEventListener('click', async ()=>{
+      await Promise.all([loadStats(), loadUsers(), loadProducts(), loadOrders(), loadCoupons(), loadLogs()]);
+      fillInvUsers();
+      toast('Atualizado','success');
+    });
+
+    async function init(){
+      await Promise.all([loadStats(), loadUsers(), loadProducts(), loadOrders(), loadCoupons(), loadLogs()]);
+      fillInvUsers();
+      // CTA “Nova Entrada” abre criação de produto por padrão (UX direta)
+      $('#btnNew').addEventListener('click', openNewProduct);
+    }
+    document.addEventListener('DOMContentLoaded', init);
+  })();
+  </script>
 </body>
 </html>
