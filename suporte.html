@@ -506,42 +506,52 @@
       }
     });
 
-    // ====== Brasas Canvas init ======
-    (function initBrasas(){
-      const canvas = document.getElementById('brasasCanvas');
-      if (!canvas) return;
-      try {
-        if (typeof brasasCanvas === 'function') {
-          brasasCanvas(canvas, {
-            intensity: 0.7,
-            hue: 270, // roxo
-            particles: 90,
-            parallax: 0.2,
-            drift: 0.4,
-            glow: true
-          });
-        } else {
-          // fallback: leve ruído animado
-          const ctx = canvas.getContext('2d');
-          function resize(){ canvas.width = innerWidth; canvas.height = innerHeight; }
-          resize(); addEventListener('resize', resize);
-          let t = 0; (function loop(){
-            t += 0.005;
-            const w = canvas.width, h = canvas.height;
-            const img = ctx.createImageData(w, h);
-            for (let i=0;i<img.data.length;i+=4){
-              const n = Math.random()*25;
-              img.data[i] = 20 + n; // r
-              img.data[i+1] = 10 + n; // g
-              img.data[i+2] = 35 + n*2; // b
-              img.data[i+3] = 10; // a
-            }
-            ctx.putImageData(img,0,0);
-            requestAnimationFrame(loop);
-          })();
-        }
-      } catch(e){ console.warn('brasasCanvas erro/fallback', e); }
-    })();
+    const canvas = document.getElementById("brasasCanvas");
+    const ctx = canvas.getContext("2d");
+    let particles = [], w, h;
+
+    function resizeCanvas() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() { this.reset(true); }
+      reset(initial = false) {
+        this.x = Math.random() * w;
+        this.y = initial ? Math.random() * h : h + Math.random() * 100;
+        this.size = 1 + Math.random() * 2.5;
+        this.speed = 0.2 + Math.random() * 0.5;
+        this.alpha = 0.4 + Math.random() * 0.3;
+        this.drift = (Math.random() - 0.5) * 0.5;
+      }
+      update() {
+        this.y -= this.speed;
+        this.x += this.drift;
+        if (this.y < -10 || this.x < -50 || this.x > w + 50) this.reset();
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`;
+        ctx.shadowColor = "#a855f7";
+        ctx.shadowBlur = 12;
+        ctx.fill();
+      }
+    }
+
+    function createParticles(n) {
+      for (let i = 0; i < n; i++) particles.push(new Particle());
+    }
+    function animate() {
+      ctx.clearRect(0, 0, w, h);
+      for (const p of particles) { p.update(); p.draw(); }
+      requestAnimationFrame(animate);
+    }
+    createParticles(150);
+    animate();
   </script>
 
   <!-- Carrega o script real das brasas (se existir no projeto) -->
