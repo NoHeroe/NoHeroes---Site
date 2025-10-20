@@ -42,9 +42,17 @@
     :root { color-scheme: dark; }
     html, body { height: 100%; }
     .glass { background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04)); backdrop-filter: blur(8px); }
-    .grid-bg { background-image: radial-gradient(rgba(143,79,255,0.15) 1px, transparent 1px); background-size: 18px 18px; }
     .focus-ring { outline: none; box-shadow: 0 0 0 3px rgba(143,79,255,0.45); }
     .sr-only-focusable:focus { position: static; clip: auto; width: auto; height: auto; margin: 0; }
+#brasasCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body class="bg-[#0b0b0e] text-gray-100 font-sans antialiased relative overflow-x-hidden">
