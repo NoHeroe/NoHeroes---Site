@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoHeroes - Leitor de Mangá</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a0a;
+            --surface: #1a1a1a;
+            --accent: #c5a059; /* Dourado NoHeroes */
+            --text: #e0e0e0;
+            --header-height: 60px;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-dark);
+            color: var(--text);
+            font-family: 'Roboto', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Header Adaptativo */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: var(--header-height);
+            background: rgba(10, 10, 10, 0.95);
+            border-bottom: 1px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 15px;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        header.hidden {
+            transform: translateY(-100%);
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            color: var(--accent);
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+
+        .chapter-info {
+            font-size: 0.9rem;
+            text-align: right;
+        }
+
+        /* Área do Leitor */
+        #manga-container {
+            margin-top: var(--header-height);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .manga-page {
+            width: 100%;
+            max-width: 800px; /* Largura profissional para desktop e mobile */
+            display: block;
+            margin-bottom: -1px; /* Remove gaps entre imagens */
+            background: var(--surface);
+            min-height: 300px; /* Placeholder enquanto carrega */
+        }
+
+        /* Navegação Inferior */
+        .navigation-footer {
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            background: var(--bg-dark);
+        }
+
+        .btn {
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 12px 30px;
+            font-family: 'Cinzel', serif;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            text-align: center;
+            width: 200px;
+        }
+
+        .btn:hover {
+            background: var(--accent);
+            color: var(--bg-dark);
+        }
+
+        /* Progress Bar */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--accent);
+            z-index: 1001;
+            width: 0%;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="progress-bar"></div>
+
+    <header id="main-header">
+        <a href="/" class="logo">NoHeroes</a>
+        <div class="chapter-info">
+            <span id="series-name">Azuos</span><br>
+            <small id="chapter-number">Capítulo 01</small>
+        </div>
+    </header>
+
+    <main id="manga-container">
+        <img class="manga-page" src="LINK_DA_PAGINA_01.jpg" alt="Página 1" loading="lazy">
+        <img class="manga-page" src="LINK_DA_PAGINA_02.jpg" alt="Página 2" loading="lazy">
+        </main>
+
+    <footer class="navigation-footer">
+        <a href="#" class="btn">Próximo Capítulo</a>
+        <a href="/mangas" class="btn" style="border: none; font-size: 0.8rem;">Voltar para Biblioteca</a>
+    </footer>
+
+    <script>
+        // Lógica para esconder o header ao rolar
+        let lastScroll = 0;
+        const header = document.getElementById('main-header');
+        const progressBar = document.getElementById('progress-bar');
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            // Barra de progresso
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            progressBar.style.width = scrolled + "%";
+
+            // Mostrar/Esconder Header
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                header.classList.add('hidden');
+            } else {
+                header.classList.remove('hidden');
+            }
+            lastScroll = currentScroll;
+        });
+    </script>
+</body>
+</html>
