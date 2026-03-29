@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>NoHeroes • Biblioteca de Obras</title>
+<title>NoHeroes • Hub de Obras</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
   tailwind.config = {
     theme: { extend: {
-      colors:{ nh:{ bg:'#07060a', dark:'#0c0a10', accent:'#8f4fff', gold:'#d9b55a', border:'rgba(255,255,255,0.08)' } },
+      colors:{ nh:{ bg:'#07060a', dark:'#0c0a10', accent:'#8f4fff', gold:'#d9b55a', border:'rgba(255,255,255,0.08)', card:'rgba(255,255,255,0.04)' } },
       boxShadow:{ glow:'0 0 30px rgba(143,79,255,0.2)'},
       fontFamily:{ display:['Cinzel Decorative','serif'], sans:['Inter','sans-serif']}
     } }
@@ -19,103 +19,266 @@
   .grad-nh{background:linear-gradient(135deg,#8f4fff 0%,#d9b55a 100%);}
   .text-grad{background:linear-gradient(135deg,#b891ff 0%, #f5e3a5 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
   .hero-mask{background:linear-gradient(to top, #07060a 10%, transparent 100%);}
-  ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-thumb{background:#2b2440;border-radius:99px}
+  ::-webkit-scrollbar{width:6px; height:6px;}::-webkit-scrollbar-thumb{background:#2b2440;border-radius:99px}::-webkit-scrollbar-track{background:transparent}
+  
+  /* Transições suaves para os filtros e modal */
+  .fade-in { animation: fadeIn 0.3s ease-in-out; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  .modal-enter { animation: modalIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+  @keyframes modalIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
 </style>
 </head>
-<body class="bg-nh-bg text-white/90 font-sans antialiased">
+<body class="bg-nh-bg text-white/90 font-sans antialiased overflow-x-hidden">
 
-<header class="fixed top-0 inset-x-0 z-50 border-b border-nh-border bg-black/60 backdrop-blur-lg">
+<header class="fixed top-0 inset-x-0 z-40 border-b border-nh-border bg-black/60 backdrop-blur-lg">
   <nav class="mx-auto max-w-7xl px-4 h-16 flex items-center justify-between">
     <div class="flex items-center gap-2">
-      <div class="h-7 w-7 rounded-lg grad-nh"></div>
+      <div class="h-7 w-7 rounded-lg grad-nh shadow-glow"></div>
       <span class="font-display text-xl text-grad">NoHeroes</span>
     </div>
     <div class="flex gap-4 items-center">
-        <button class="text-sm font-semibold hover:text-nh-accent transition">Mangás</button>
+        <button class="text-sm font-semibold text-nh-accent transition">Hub</button>
         <button class="text-sm text-white/60 hover:text-white transition">Comunidade</button>
-        <div class="h-8 w-8 rounded-full bg-nh-dark border border-nh-border"></div>
+        <div id="userAvatar" class="h-8 w-8 rounded-full bg-nh-dark border border-nh-border grid place-items-center text-xs font-bold cursor-pointer hover:border-nh-accent transition">?</div>
     </div>
   </nav>
 </header>
 
-<main class="pt-16">
-  <section class="relative h-[60vh] flex items-end overflow-hidden">
-    <img src="URL_DA_SUA_ARTE_PRINCIPAL" class="absolute inset-0 w-full h-full object-cover opacity-40 animate-pulse" alt="Destaque">
-    <div class="absolute inset-0 hero-mask"></div>
-    <div class="relative z-10 px-6 pb-10 max-w-4xl">
-      <span class="px-3 py-1 rounded-full border border-nh-accent/40 bg-nh-accent/10 text-nh-accent text-xs font-bold uppercase tracking-widest">Destaque da Temporada</span>
-      <h1 class="text-5xl font-display text-grad mt-4 leading-tight">Azuos: O Despertar</h1>
-      <p class="text-white/70 mt-4 max-w-xl text-sm sm:text-base leading-relaxed">
-        Em um mundo onde as sombras devoram a esperança, um guerreiro busca o equilíbrio entre a maldição e a redenção. O épico Dark Fantasy que redefine os limites do NoHeroes.
-      </p>
-      <div class="mt-8 flex gap-4">
-        <button class="px-8 py-3 rounded-xl grad-nh text-black font-bold hover:scale-105 transition shadow-glow">Ler Agora</button>
-        <button class="px-8 py-3 rounded-xl bg-white/5 border border-white/10 font-bold hover:bg-white/10 transition">+ Detalhes</button>
-      </div>
+<main class="pt-16 min-h-screen">
+  
+  <section id="heroSection" class="relative h-[60vh] flex items-end overflow-hidden border-b border-nh-border/50">
+      <div class="absolute inset-0 flex items-center justify-center"><div class="w-8 h-8 border-4 border-nh-accent border-t-transparent rounded-full animate-spin"></div></div>
+  </section>
+
+  <section class="px-4 py-8 max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 sticky top-16 z-30 bg-nh-bg/90 backdrop-blur-md">
+    <div id="filterContainer" class="flex gap-2 overflow-x-auto w-full sm:w-auto pb-2 sm:pb-0 scroll-smooth">
+        </div>
+    <div class="relative w-full sm:w-72">
+        <input id="searchInput" type="text" placeholder="Buscar nos reinos..." class="w-full bg-nh-dark border border-nh-border rounded-xl px-4 py-2.5 pl-10 text-sm outline-none focus:border-nh-accent transition">
+        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-white/40">⌕</span>
     </div>
   </section>
 
-  <section class="px-4 py-8 max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-    <div class="flex gap-2 overflow-x-auto w-full sm:w-auto pb-2 sm:pb-0">
-        <button class="px-4 py-2 rounded-lg bg-nh-accent text-white font-bold text-xs whitespace-nowrap">Tudo</button>
-        <button class="px-4 py-2 rounded-lg bg-nh-dark border border-nh-border text-white/60 font-bold text-xs whitespace-nowrap">Dark Fantasy</button>
-        <button class="px-4 py-2 rounded-lg bg-nh-dark border border-nh-border text-white/60 font-bold text-xs whitespace-nowrap">Medieval</button>
-        <button class="px-4 py-2 rounded-lg bg-nh-dark border border-nh-border text-white/60 font-bold text-xs whitespace-nowrap">Seinen</button>
-    </div>
-    <input type="text" placeholder="Filtrar por nome..." class="w-full sm:w-64 bg-nh-dark border border-nh-border rounded-xl px-4 py-2 text-sm outline-none focus:border-nh-accent/50">
-  </section>
-
-  <section class="px-4 max-w-7xl mx-auto pb-20">
+  <section class="px-4 max-w-7xl mx-auto pb-20 min-h-[40vh]">
     <h2 class="font-display text-2xl mb-6 flex items-center gap-3">
         Explorar Obras <span class="h-px flex-1 bg-nh-border"></span>
     </h2>
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
-      
-      <article class="group relative bg-nh-dark rounded-2xl overflow-hidden border border-nh-border hover:border-nh-accent/50 transition-all duration-300">
-        <div class="aspect-[2/3] overflow-hidden">
-          <img src="URL_CAPA_MANGA" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="Capa">
-        </div>
-        <div class="p-4">
-          <h3 class="font-bold text-sm sm:text-base truncate group-hover:text-nh-accent transition">Noctilum Arcano</h3>
-          <div class="flex items-center justify-between mt-2">
-            <span class="text-[10px] text-white/40 uppercase font-bold tracking-tighter">Temporada 1</span>
-            <span class="text-[10px] px-2 py-0.5 rounded bg-nh-accent/20 text-nh-accent font-bold">Lançamento</span>
-          </div>
-        </div>
-        <a href="/leitor?id=1" class="absolute inset-0 z-10"></a>
-      </article>
-
-      <article class="border-2 border-dashed border-nh-border rounded-2xl flex flex-col items-center justify-center p-6 text-center opacity-40 grayscale">
-        <div class="text-4xl mb-2">🌑</div>
-        <p class="text-xs font-bold uppercase tracking-widest">Em Breve</p>
-      </article>
-
-    </div>
+    <div id="worksGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
+      </div>
   </section>
 
   <section class="mx-4 mb-20 max-w-5xl lg:mx-auto rounded-3xl p-8 sm:p-12 bg-nh-dark border border-nh-accent/20 relative overflow-hidden shadow-glow">
-    <div class="absolute top-0 right-0 w-64 h-64 bg-nh-accent/10 blur-[100px] rounded-full"></div>
+    <div class="absolute top-0 right-0 w-64 h-64 bg-nh-accent/10 blur-[100px] rounded-full pointer-events-none"></div>
     <div class="relative z-10 flex flex-col md:flex-row items-center gap-8">
       <div class="flex-1 text-center md:text-left">
         <h2 class="font-display text-3xl text-grad">Seja um Arauto da NoHeroes</h2>
         <p class="text-white/60 mt-4 text-sm sm:text-base">
           Tem uma obra Dark Fantasy ou Medieval e busca um portal profissional para publicar? Estamos em busca de parcerias para expandir o nosso universo.
         </p>
-        <div class="mt-8 flex flex-wrap justify-center md:justify-start gap-4">
-          <a href="mailto:parceria@noheroes.com.br" class="px-6 py-3 rounded-xl grad-nh text-black font-bold text-sm tracking-tight">Propor Parceria</a>
-          <a href="/termos-de-publicacao" class="px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-sm hover:bg-white/10 transition">Como funciona?</a>
+        <div class="mt-8 flex flex-wrap justify-center md:justify-start gap-3">
+          <a href="mailto:parceria@noheroes.com.br" class="px-6 py-3 rounded-xl grad-nh text-black font-bold text-sm tracking-tight active:scale-95 transition">Propor Parceria</a>
+          <a href="/termos-de-publicacao" class="px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-sm hover:bg-white/10 active:scale-95 transition">Como funciona?</a>
         </div>
       </div>
-      <div class="w-32 h-32 sm:w-48 sm:h-48 bg-nh-bg rounded-2xl border border-nh-border grid place-items-center shadow-inner">
-        <span class="text-5xl">🖋️</span>
-      </div>
+      <div class="w-32 h-32 bg-nh-bg rounded-2xl border border-nh-border grid place-items-center shadow-inner text-5xl">🖋️</div>
     </div>
   </section>
 </main>
 
-<footer class="border-t border-nh-border py-10 text-center text-white/30 text-xs tracking-widest uppercase">
+<footer class="border-t border-nh-border py-8 text-center text-white/30 text-xs tracking-widest uppercase bg-nh-dark">
   &copy; 2026 NoHeroes Project • Dark Fantasy Multimedia
 </footer>
 
+<div id="detailsModal" class="fixed inset-0 z-[100] hidden">
+    <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeModal()"></div>
+    <div class="absolute bottom-0 sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 w-full sm:w-full sm:max-w-lg bg-nh-dark border border-nh-border rounded-t-3xl sm:rounded-3xl p-6 modal-enter shadow-2xl flex flex-col max-h-[85vh]">
+        <button onclick="closeModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/10 text-white hover:bg-white/20 transition flex items-center justify-center">✕</button>
+        
+        <div id="modalContent" class="overflow-y-auto pr-2 custom-scrollbar">
+            </div>
+    </div>
+</div>
+
+<script>
+/* --- Configuração e Estado (Backend Ready) --- */
+const API_BASE = 'https://api.noheroes.com.br';
+const $ = (q) => document.querySelector(q);
+
+const state = {
+    works: [],
+    categories: ['Tudo', 'Dark Fantasy', 'Medieval', 'Seinen', 'Ação'],
+    activeCategory: 'Tudo',
+    searchQuery: '',
+    featuredWork: null,
+    user: null
+};
+
+/* --- Dados Simulados (Fallback enquanto o Neon não conecta) --- */
+const MockData = {
+    user: { name: 'Raul', avatarUrl: null }, // Mude para null para ver o estado deslogado
+    works: [
+        { id: 1, title: 'Azuos', synopsis: 'Em um mundo onde as sombras devoram a esperança, um guerreiro busca o equilíbrio entre a maldição e a redenção. O épico Dark Fantasy que redefine os limites do NoHeroes.', tags: ['Dark Fantasy', 'Ação'], thumb: 'https://via.placeholder.com/400x600/1a1a1a/8f4fff?text=Azuos', heroImg: 'https://via.placeholder.com/1200x600/0a0a0a/d9b55a?text=Azuos+Hero', status: 'Destaque', season: 'Temporada 1', featured: true },
+        { id: 2, title: 'Noctilum Arcano', synopsis: 'A magia proibida corrompeu a coroa. Agora, os renegados devem invadir o abismo.', tags: ['Dark Fantasy', 'Medieval'], thumb: 'https://via.placeholder.com/400x600/1a1a1a/444?text=Noctilum', status: 'Lançamento', season: 'Temporada 1', featured: false },
+        { id: 3, title: 'Lótus de Sangue', synopsis: 'Um conto Seinen sobre vingança e honra em terras destruídas.', tags: ['Seinen', 'Ação'], thumb: 'https://via.placeholder.com/400x600/1a1a1a/444?text=Lotus', status: 'Atualizado', season: 'Temporada 2', featured: false },
+        { id: 4, title: 'A Cidade do Vazio', synopsis: 'Ninguém entra. Ninguém sai. O mistério da cidade flutuante.', tags: ['Medieval', 'Seinen'], thumb: 'https://via.placeholder.com/400x600/1a1a1a/444?text=Vazio', status: '', season: 'One-shot', featured: false }
+    ]
+};
+
+/* --- Renderização Dinâmica (Templates) --- */
+const Templates = {
+    filterBtn: (cat, isActive) => `
+        <button onclick="setCategory('${cat}')" class="px-5 py-2 rounded-xl text-sm font-bold whitespace-nowrap transition-all duration-300 ${isActive ? 'grad-nh text-black shadow-glow' : 'bg-nh-card border border-nh-border text-white/60 hover:text-white hover:bg-white/10'}">${cat}</button>`,
+    
+    workCard: (work) => `
+        <article class="group relative bg-nh-dark rounded-2xl overflow-hidden border border-nh-border hover:border-nh-accent/50 transition-all duration-300 fade-in cursor-pointer" onclick="openModal(${work.id})">
+            <div class="aspect-[2/3] overflow-hidden bg-black/40 relative">
+                <img src="${work.thumb}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="${work.title}">
+                ${work.status ? `<div class="absolute top-2 right-2 px-2 py-1 bg-nh-accent/90 backdrop-blur-sm text-white text-[10px] font-bold rounded uppercase tracking-wider">${work.status}</div>` : ''}
+            </div>
+            <div class="p-3 sm:p-4">
+                <h3 class="font-bold text-sm sm:text-base truncate group-hover:text-nh-accent transition">${work.title}</h3>
+                <div class="flex items-center justify-between mt-1 sm:mt-2">
+                    <span class="text-[10px] text-white/40 uppercase font-bold tracking-tighter">${work.season}</span>
+                    <span class="text-[10px] text-nh-gold font-bold">${work.tags[0]}</span>
+                </div>
+            </div>
+            </article>`,
+    
+    hero: (work) => `
+        <img src="${work.heroImg}" class="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-screen fade-in" alt="Destaque">
+        <div class="absolute inset-0 hero-mask"></div>
+        <div class="relative z-10 px-6 pb-12 max-w-4xl fade-in">
+            <span class="px-3 py-1.5 rounded-full border border-nh-accent/40 bg-nh-accent/10 text-nh-accent text-[10px] font-bold uppercase tracking-widest">${work.status || 'Destaque'}</span>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-display text-grad mt-4 leading-tight tracking-tight">${work.title}</h1>
+            <p class="text-white/70 mt-4 max-w-xl text-sm sm:text-base leading-relaxed line-clamp-3">${work.synopsis}</p>
+            <div class="mt-8 flex flex-wrap gap-3">
+                <a href="leitor.html?id=${work.id}" class="px-8 py-3 rounded-xl grad-nh text-black font-bold hover:scale-105 active:scale-95 transition shadow-glow text-center">Ler Agora</a>
+                <button onclick="openModal(${work.id})" class="px-8 py-3 rounded-xl bg-white/5 border border-white/10 font-bold hover:bg-white/10 active:scale-95 transition text-center">+ Detalhes</button>
+            </div>
+        </div>`,
+    
+    modal: (work) => `
+        <div class="flex gap-4 mb-4">
+            <div class="w-24 h-36 flex-shrink-0 rounded-lg overflow-hidden border border-nh-border bg-black">
+                <img src="${work.thumb}" class="w-full h-full object-cover" alt="Capa">
+            </div>
+            <div class="flex flex-col justify-center">
+                <span class="text-[10px] text-nh-gold font-bold uppercase tracking-widest mb-1">${work.season}</span>
+                <h2 class="font-display text-2xl text-white leading-tight">${work.title}</h2>
+                <div class="flex gap-2 mt-2 flex-wrap">
+                    ${work.tags.map(t => `<span class="px-2 py-0.5 rounded border border-nh-border bg-white/5 text-[10px] text-white/60">${t}</span>`).join('')}
+                </div>
+            </div>
+        </div>
+        <div class="h-px w-full bg-nh-border my-4"></div>
+        <h3 class="text-xs font-bold text-white/40 uppercase tracking-widest mb-2">Sinopse</h3>
+        <p class="text-sm text-white/80 leading-relaxed mb-6">${work.synopsis}</p>
+        <div class="mt-auto">
+            <a href="leitor.html?id=${work.id}" class="block w-full py-3 rounded-xl grad-nh text-black text-center font-bold text-sm hover:opacity-90 transition active:scale-[0.98]">Entrar nos Realms (Ler Capítulo 1)</a>
+        </div>`
+};
+
+/* --- Lógica de View e Controladores --- */
+function renderFilters() {
+    const container = $('#filterContainer');
+    container.innerHTML = state.categories.map(cat => Templates.filterBtn(cat, cat === state.activeCategory)).join('');
+}
+
+function renderWorks() {
+    const grid = $('#worksGrid');
+    
+    // Filtro Lógico Duplo (Categoria + Busca)
+    let filtered = state.works;
+    if (state.activeCategory !== 'Tudo') {
+        filtered = filtered.filter(w => w.tags.includes(state.activeCategory));
+    }
+    if (state.searchQuery) {
+        filtered = filtered.filter(w => w.title.toLowerCase().includes(state.searchQuery.toLowerCase()));
+    }
+
+    if (filtered.length === 0) {
+        grid.innerHTML = '<div class="col-span-full py-12 text-center text-white/40 bg-nh-card border border-nh-border rounded-2xl fade-in">Nenhum tomo encontrado nestes realms.</div>';
+        return;
+    }
+
+    grid.innerHTML = filtered.map(w => Templates.workCard(w)).join('') + `
+        <article class="border-2 border-dashed border-nh-border rounded-2xl flex flex-col items-center justify-center p-6 text-center opacity-40 grayscale min-h-[250px]">
+            <div class="text-4xl mb-2">🌑</div><p class="text-xs font-bold uppercase tracking-widest">Em Breve</p>
+        </article>`;
+}
+
+function renderHero() {
+    const section = $('#heroSection');
+    if (state.featuredWork) {
+        section.innerHTML = Templates.hero(state.featuredWork);
+    }
+}
+
+function renderUser() {
+    const avatar = $('#userAvatar');
+    if (state.user) {
+        avatar.textContent = state.user.name.charAt(0).toUpperCase();
+        avatar.classList.add('bg-nh-accent', 'text-white', 'border-nh-accent');
+        avatar.classList.remove('text-white/60');
+    } else {
+        avatar.innerHTML = '<svg class="w-4 h-4 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>';
+    }
+}
+
+/* --- Ações do Usuário --- */
+function setCategory(cat) {
+    state.activeCategory = cat;
+    renderFilters();
+    renderWorks();
+}
+
+$('#searchInput').addEventListener('input', (e) => {
+    state.searchQuery = e.target.value;
+    renderWorks();
+});
+
+// Lógica do Modal
+function openModal(workId) {
+    const work = state.works.find(w => w.id === workId);
+    if (!work) return;
+    
+    $('#modalContent').innerHTML = Templates.modal(work);
+    const modal = $('#detailsModal');
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden'; // Impede scroll de fundo no mobile
+}
+
+function closeModal() {
+    $('#detailsModal').classList.add('hidden');
+    document.body.style.overflow = '';
+}
+
+/* --- Inicialização (Simulando API Fetch) --- */
+async function bootstrap() {
+    try {
+        // Quando plugar o backend:
+        // const response = await fetch(`${API_BASE}/novels`);
+        // const data = await response.json();
+        
+        // Usando Fallback por enquanto:
+        state.works = MockData.works;
+        state.featuredWork = state.works.find(w => w.featured) || state.works[0];
+        state.user = MockData.user;
+
+        // Renderiza tudo
+        renderHero();
+        renderFilters();
+        renderWorks();
+        renderUser();
+
+    } catch (error) {
+        console.error("Falha ao carregar as obras:", error);
+        $('#worksGrid').innerHTML = '<div class="col-span-full py-12 text-center text-red-400">Os servidores do abismo falharam. Tente novamente.</div>';
+    }
+}
+
+// Inicia a aplicação
+document.addEventListener('DOMContentLoaded', bootstrap);
+</script>
 </body>
 </html>
