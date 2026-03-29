@@ -1,164 +1,121 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NoHeroes - Leitor de Mangá</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-dark: #0a0a0a;
-            --surface: #1a1a1a;
-            --accent: #c5a059; /* Dourado NoHeroes */
-            --text: #e0e0e0;
-            --header-height: 60px;
-        }
-
-        body, html {
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-dark);
-            color: var(--text);
-            font-family: 'Roboto', sans-serif;
-            overflow-x: hidden;
-        }
-
-        /* Header Adaptativo */
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            height: var(--header-height);
-            background: rgba(10, 10, 10, 0.95);
-            border-bottom: 1px solid var(--accent);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 15px;
-            z-index: 1000;
-            transition: transform 0.3s ease;
-            box-sizing: border-box;
-        }
-
-        header.hidden {
-            transform: translateY(-100%);
-        }
-
-        .logo {
-            font-family: 'Cinzel', serif;
-            color: var(--accent);
-            font-size: 1.2rem;
-            text-decoration: none;
-        }
-
-        .chapter-info {
-            font-size: 0.9rem;
-            text-align: right;
-        }
-
-        /* Área do Leitor */
-        #manga-container {
-            margin-top: var(--header-height);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-        }
-
-        .manga-page {
-            width: 100%;
-            max-width: 800px; /* Largura profissional para desktop e mobile */
-            display: block;
-            margin-bottom: -1px; /* Remove gaps entre imagens */
-            background: var(--surface);
-            min-height: 300px; /* Placeholder enquanto carrega */
-        }
-
-        /* Navegação Inferior */
-        .navigation-footer {
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            background: var(--bg-dark);
-        }
-
-        .btn {
-            background: transparent;
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            padding: 12px 30px;
-            font-family: 'Cinzel', serif;
-            cursor: pointer;
-            transition: 0.3s;
-            text-decoration: none;
-            text-align: center;
-            width: 200px;
-        }
-
-        .btn:hover {
-            background: var(--accent);
-            color: var(--bg-dark);
-        }
-
-        /* Progress Bar */
-        #progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 3px;
-            background: var(--accent);
-            z-index: 1001;
-            width: 0%;
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>NoHeroes • Biblioteca de Obras</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: { extend: {
+      colors:{ nh:{ bg:'#07060a', dark:'#0c0a10', accent:'#8f4fff', gold:'#d9b55a', border:'rgba(255,255,255,0.08)' } },
+      boxShadow:{ glow:'0 0 30px rgba(143,79,255,0.2)'},
+      fontFamily:{ display:['Cinzel Decorative','serif'], sans:['Inter','sans-serif']}
+    } }
+  }
+</script>
+<style>
+  .grad-nh{background:linear-gradient(135deg,#8f4fff 0%,#d9b55a 100%);}
+  .text-grad{background:linear-gradient(135deg,#b891ff 0%, #f5e3a5 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero-mask{background:linear-gradient(to top, #07060a 10%, transparent 100%);}
+  ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-thumb{background:#2b2440;border-radius:99px}
+</style>
 </head>
-<body>
+<body class="bg-nh-bg text-white/90 font-sans antialiased">
 
-    <div id="progress-bar"></div>
+<header class="fixed top-0 inset-x-0 z-50 border-b border-nh-border bg-black/60 backdrop-blur-lg">
+  <nav class="mx-auto max-w-7xl px-4 h-16 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <div class="h-7 w-7 rounded-lg grad-nh"></div>
+      <span class="font-display text-xl text-grad">NoHeroes</span>
+    </div>
+    <div class="flex gap-4 items-center">
+        <button class="text-sm font-semibold hover:text-nh-accent transition">Mangás</button>
+        <button class="text-sm text-white/60 hover:text-white transition">Comunidade</button>
+        <div class="h-8 w-8 rounded-full bg-nh-dark border border-nh-border"></div>
+    </div>
+  </nav>
+</header>
 
-    <header id="main-header">
-        <a href="/" class="logo">NoHeroes</a>
-        <div class="chapter-info">
-            <span id="series-name">Azuos</span><br>
-            <small id="chapter-number">Capítulo 01</small>
+<main class="pt-16">
+  <section class="relative h-[60vh] flex items-end overflow-hidden">
+    <img src="URL_DA_SUA_ARTE_PRINCIPAL" class="absolute inset-0 w-full h-full object-cover opacity-40 animate-pulse" alt="Destaque">
+    <div class="absolute inset-0 hero-mask"></div>
+    <div class="relative z-10 px-6 pb-10 max-w-4xl">
+      <span class="px-3 py-1 rounded-full border border-nh-accent/40 bg-nh-accent/10 text-nh-accent text-xs font-bold uppercase tracking-widest">Destaque da Temporada</span>
+      <h1 class="text-5xl font-display text-grad mt-4 leading-tight">Azuos: O Despertar</h1>
+      <p class="text-white/70 mt-4 max-w-xl text-sm sm:text-base leading-relaxed">
+        Em um mundo onde as sombras devoram a esperança, um guerreiro busca o equilíbrio entre a maldição e a redenção. O épico Dark Fantasy que redefine os limites do NoHeroes.
+      </p>
+      <div class="mt-8 flex gap-4">
+        <button class="px-8 py-3 rounded-xl grad-nh text-black font-bold hover:scale-105 transition shadow-glow">Ler Agora</button>
+        <button class="px-8 py-3 rounded-xl bg-white/5 border border-white/10 font-bold hover:bg-white/10 transition">+ Detalhes</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="px-4 py-8 max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+    <div class="flex gap-2 overflow-x-auto w-full sm:w-auto pb-2 sm:pb-0">
+        <button class="px-4 py-2 rounded-lg bg-nh-accent text-white font-bold text-xs whitespace-nowrap">Tudo</button>
+        <button class="px-4 py-2 rounded-lg bg-nh-dark border border-nh-border text-white/60 font-bold text-xs whitespace-nowrap">Dark Fantasy</button>
+        <button class="px-4 py-2 rounded-lg bg-nh-dark border border-nh-border text-white/60 font-bold text-xs whitespace-nowrap">Medieval</button>
+        <button class="px-4 py-2 rounded-lg bg-nh-dark border border-nh-border text-white/60 font-bold text-xs whitespace-nowrap">Seinen</button>
+    </div>
+    <input type="text" placeholder="Filtrar por nome..." class="w-full sm:w-64 bg-nh-dark border border-nh-border rounded-xl px-4 py-2 text-sm outline-none focus:border-nh-accent/50">
+  </section>
+
+  <section class="px-4 max-w-7xl mx-auto pb-20">
+    <h2 class="font-display text-2xl mb-6 flex items-center gap-3">
+        Explorar Obras <span class="h-px flex-1 bg-nh-border"></span>
+    </h2>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
+      
+      <article class="group relative bg-nh-dark rounded-2xl overflow-hidden border border-nh-border hover:border-nh-accent/50 transition-all duration-300">
+        <div class="aspect-[2/3] overflow-hidden">
+          <img src="URL_CAPA_MANGA" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="Capa">
         </div>
-    </header>
+        <div class="p-4">
+          <h3 class="font-bold text-sm sm:text-base truncate group-hover:text-nh-accent transition">Noctilum Arcano</h3>
+          <div class="flex items-center justify-between mt-2">
+            <span class="text-[10px] text-white/40 uppercase font-bold tracking-tighter">Temporada 1</span>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-nh-accent/20 text-nh-accent font-bold">Lançamento</span>
+          </div>
+        </div>
+        <a href="/leitor?id=1" class="absolute inset-0 z-10"></a>
+      </article>
 
-    <main id="manga-container">
-        <img class="manga-page" src="LINK_DA_PAGINA_01.jpg" alt="Página 1" loading="lazy">
-        <img class="manga-page" src="LINK_DA_PAGINA_02.jpg" alt="Página 2" loading="lazy">
-        </main>
+      <article class="border-2 border-dashed border-nh-border rounded-2xl flex flex-col items-center justify-center p-6 text-center opacity-40 grayscale">
+        <div class="text-4xl mb-2">🌑</div>
+        <p class="text-xs font-bold uppercase tracking-widest">Em Breve</p>
+      </article>
 
-    <footer class="navigation-footer">
-        <a href="#" class="btn">Próximo Capítulo</a>
-        <a href="/mangas" class="btn" style="border: none; font-size: 0.8rem;">Voltar para Biblioteca</a>
-    </footer>
+    </div>
+  </section>
 
-    <script>
-        // Lógica para esconder o header ao rolar
-        let lastScroll = 0;
-        const header = document.getElementById('main-header');
-        const progressBar = document.getElementById('progress-bar');
+  <section class="mx-4 mb-20 max-w-5xl lg:mx-auto rounded-3xl p-8 sm:p-12 bg-nh-dark border border-nh-accent/20 relative overflow-hidden shadow-glow">
+    <div class="absolute top-0 right-0 w-64 h-64 bg-nh-accent/10 blur-[100px] rounded-full"></div>
+    <div class="relative z-10 flex flex-col md:flex-row items-center gap-8">
+      <div class="flex-1 text-center md:text-left">
+        <h2 class="font-display text-3xl text-grad">Seja um Arauto da NoHeroes</h2>
+        <p class="text-white/60 mt-4 text-sm sm:text-base">
+          Tem uma obra Dark Fantasy ou Medieval e busca um portal profissional para publicar? Estamos em busca de parcerias para expandir o nosso universo.
+        </p>
+        <div class="mt-8 flex flex-wrap justify-center md:justify-start gap-4">
+          <a href="mailto:parceria@noheroes.com.br" class="px-6 py-3 rounded-xl grad-nh text-black font-bold text-sm tracking-tight">Propor Parceria</a>
+          <a href="/termos-de-publicacao" class="px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-sm hover:bg-white/10 transition">Como funciona?</a>
+        </div>
+      </div>
+      <div class="w-32 h-32 sm:w-48 sm:h-48 bg-nh-bg rounded-2xl border border-nh-border grid place-items-center shadow-inner">
+        <span class="text-5xl">🖋️</span>
+      </div>
+    </div>
+  </section>
+</main>
 
-        window.addEventListener('scroll', () => {
-            const currentScroll = window.pageYOffset;
-            
-            // Barra de progresso
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
-            progressBar.style.width = scrolled + "%";
+<footer class="border-t border-nh-border py-10 text-center text-white/30 text-xs tracking-widest uppercase">
+  &copy; 2026 NoHeroes Project • Dark Fantasy Multimedia
+</footer>
 
-            // Mostrar/Esconder Header
-            if (currentScroll > lastScroll && currentScroll > 100) {
-                header.classList.add('hidden');
-            } else {
-                header.classList.remove('hidden');
-            }
-            lastScroll = currentScroll;
-        });
-    </script>
 </body>
 </html>
