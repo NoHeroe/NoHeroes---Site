@@ -54,6 +54,35 @@
 .page-fade { animation: imgReveal 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
 @keyframes imgReveal { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
+/* Esteira horizontal com Snap para Mobile */
+#libraryGrid {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  gap: 1rem;
+}
+
+#libraryGrid > * {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  width: 140px; /* Tamanho fixo para manter o padrão sem mexer no visual */
+}
+
+/* Animação de minimizar */
+.lib-collapsed {
+  max-height: 0;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin-top: 0 !important;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.rotate-180 { transform: rotate(180deg); }
+
 </style>
 </head>
 <body class="min-h-screen bg-nh-bg text-white/90 font-sans antialiased">
@@ -81,19 +110,36 @@
 
 <main class="mx-auto max-w-7xl px-4 pt-20 pb-16 grid gap-6 mobile-paddings relative z-10">
 
-  <aside class="rounded-2xl bg-nh-dark border border-nh-border p-4 shadow-xl">
-    <header class="flex items-center justify-between mb-4">
+  <aside class="rounded-2xl bg-nh-dark border border-nh-border shadow-xl overflow-hidden glass-nh transition-all duration-500">
+  <header class="flex items-center justify-between p-4 border-b border-nh-border/50">
+    <div class="flex items-center gap-3">
       <h2 class="font-display text-lg tracking-tight text-grad">Sua Biblioteca</h2>
-      <nav class="flex gap-1.5 text-xs">
-        <button id="tabAll" class="px-3 py-1.5 rounded-lg grad-nh text-black font-semibold">Todas</button>
-        <button id="tabContinue" class="px-3 py-1.5 rounded-lg bg-nh-card border border-nh-border">Continuar</button>
-      </nav>
-    </header>
-    <div id="libraryGrid" class="grid grid-cols-2 sm:flex sm:flex-row gap-3 sm:gap-4 overflow-x-auto pb-2 cursor-grab select-none">
-      <div class="aspect-[2/3] rounded-xl bg-nh-card animate-pulse border border-nh-border"></div>
-      <div class="aspect-[2/3] rounded-xl bg-nh-card animate-pulse border border-nh-border"></div>
+      <span class="text-[10px] px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-white/40 uppercase font-bold tracking-tighter">Explorar</span>
     </div>
-  </aside>
+    <button id="btnToggleLib" class="h-8 w-8 rounded-lg bg-nh-card border border-nh-border flex items-center justify-center hover:text-nh-accent transition-all duration-300">
+      <span class="text-xs transition-transform duration-300" id="libIcon">🔽</span>
+    </button>
+  </header>
+
+  <div id="libraryContent" class="transition-all duration-500 ease-in-out opacity-100 p-4">
+    
+    <div class="flex flex-col sm:flex-row gap-3 mb-6">
+      <div class="relative flex-1">
+        <input id="libLocalSearch" placeholder="Filtrar meus tomos..." class="nh-input text-xs py-2 pl-9 bg-white/[0.02]"/>
+        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-white/20 text-sm">⌕</span>
+      </div>
+      <button class="nh-btn-secondary py-2 text-[10px] font-bold uppercase tracking-widest whitespace-nowrap">
+        Biblioteca Completa ➔
+      </button>
+    </div>
+
+    <div id="libraryGrid" class="pb-2 cursor-grab select-none">
+      <div class="aspect-[2/3] rounded-xl bg-nh-card animate-pulse border border-nh-border w-[140px] shrink-0"></div>
+      <div class="aspect-[2/3] rounded-xl bg-nh-card animate-pulse border border-nh-border w-[140px] shrink-0"></div>
+      <div class="aspect-[2/3] rounded-xl bg-nh-card animate-pulse border border-nh-border w-[140px] shrink-0"></div>
+    </div>
+  </div>
+</aside>
 
   <article class="rounded-2xl bg-nh-dark border border-nh-border shadow-xl overflow-hidden relative">
     
