@@ -25,7 +25,7 @@
   }
 </script>
 <style>
-/* Corrigindo o erro de enquadramento mobile */
+
 .mobile-paddings { padding-left: 1rem; padding-right: 1rem; }
 @media (min-width: 640px) { .mobile-paddings { padding-left: 0; padding-right: 0; } }
 
@@ -37,20 +37,19 @@
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Ajuste do Canvas para não atrapalhar o clique */
 #brasasCanvas {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  z-index: -1; /* Garante que fique atrás de tudo */
-  pointer-events: none;
-}
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
 
-/* Scroll Suave e Ocultar Scrollbar da Biblioteca */
 #libraryGrid::-webkit-scrollbar { display: none; }
 #libraryGrid { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* Animação de entrada para as páginas */
 .page-fade { animation: imgReveal 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
 @keyframes imgReveal { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
