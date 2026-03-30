@@ -3,278 +3,454 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>NoHeroes • Painel do Arauto</title>
+<title>NoHeroes • Santuário do Autor</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
 <script>
   tailwind.config = {
     theme: { extend: {
-      colors:{ nh:{ bg:'#07060a', dark:'#0c0a10', accent:'#8f4fff', gold:'#d9b55a', border:'rgba(255,255,255,0.08)', card:'rgba(255,255,255,0.03)' } },
-      boxShadow:{ glow:'0 0 30px rgba(143,79,255,0.2)'},
+      colors:{ nh:{ bg:'#07060a', dark:'#0c0a10', accent:'#8f4fff', gold:'#d9b55a', border:'rgba(255,255,255,0.08)', card:'rgba(255,255,255,0.03)' },
+               admin:{ primary: '#ef4444', bg: 'rgba(239,68,68,0.05)' } 
+      },
+      boxShadow:{ glow:'0 0 30px rgba(143,79,255,0.2)', adminGlow:'0 0 30px rgba(239,68,68,0.2)' },
       fontFamily:{ display:['Cinzel Decorative','serif'], sans:['Inter','sans-serif']}
     } }
   }
 </script>
 <style>
-  .grad-nh{background:linear-gradient(135deg,#8f4fff 0%,#d9b55a 100%);}
-  .text-grad{background:linear-gradient(135deg,#b891ff 0%, #f5e3a5 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .nh-input{ @apply w-full rounded-xl bg-black/50 border border-nh-border px-4 py-3 outline-none focus:border-nh-accent/50 transition text-sm text-white; }
-  .nh-label{ @apply block text-xs font-bold uppercase tracking-widest text-white/50 mb-2; }
-  ::-webkit-scrollbar{width:4px; height:4px;}::-webkit-scrollbar-thumb{background:#2b2440;border-radius:99px}
+  .grad-nh { background: linear-gradient(135deg, #8f4fff 0%, #d9b55a 100%); }
+  .text-grad { background: linear-gradient(135deg, #b891ff 0%, #f5e3a5 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .nh-input { @apply w-full rounded-xl bg-black/50 border border-nh-border px-4 py-3 outline-none focus:border-nh-accent/50 transition text-sm text-white placeholder-white/20; }
+  .nh-label { @apply block text-xs font-bold uppercase tracking-widest text-white/50 mb-2; }
+  
+  ::-webkit-scrollbar { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-thumb { background: #2b2440; border-radius: 99px; }
+  
+  /* Animações e Drag&Drop */
+  .fade-in { animation: fadeIn 0.3s ease-out forwards; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  .sortable-ghost { opacity: 0.4; border: 2px dashed #8f4fff; }
+  .sortable-drag { cursor: grabbing !important; scale: 1.05; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+  
+  /* Toasts de Notificação */
+  #toast-container { position: fixed; top: 20px; right: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 10px; }
+  .toast { padding: 12px 20px; border-radius: 8px; font-size: 14px; font-weight: bold; color: white; opacity: 0; transform: translateX(100%); transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); backdrop-filter: blur(10px); }
+  .toast.show { opacity: 1; transform: translateX(0); }
+  .toast.success { background: rgba(34, 197, 94, 0.2); border: 1px solid rgba(34, 197, 94, 0.5); }
+  .toast.error { background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.5); }
 </style>
 </head>
-<body class="bg-nh-bg text-white/90 font-sans antialiased pb-24 md:pb-0 md:pl-64">
+<body class="bg-nh-bg text-white/90 font-sans antialiased pb-24 md:pb-0 md:pl-64 overflow-x-hidden">
 
-<nav class="fixed bottom-0 inset-x-0 md:top-0 md:left-0 md:w-64 md:h-screen bg-nh-dark border-t md:border-t-0 md:border-r border-nh-border z-50 flex md:flex-col justify-between md:justify-start px-2 md:px-6 py-3 md:py-8 backdrop-blur-xl">
+<div id="toast-container"></div>
+
+<nav class="fixed bottom-0 inset-x-0 md:top-0 md:left-0 md:w-64 md:h-screen bg-nh-dark border-t md:border-t-0 md:border-r border-nh-border z-50 flex md:flex-col justify-between md:justify-start px-2 md:px-6 py-2 md:py-8 backdrop-blur-xl">
     <div class="hidden md:block mb-10">
         <div class="h-8 w-8 rounded-lg grad-nh shadow-glow mb-4"></div>
-        <h1 class="font-display text-xl text-grad">Painel de Criação</h1>
-        <p class="text-xs text-white/40 uppercase tracking-widest mt-1">Santuário do Autor</p>
+        <h1 class="font-display text-xl text-grad">Santuário</h1>
+        <p class="text-[10px] text-white/40 uppercase tracking-widest mt-1">Painel do Autor</p>
     </div>
 
-    <div class="flex md:flex-col w-full md:w-auto justify-around md:justify-start gap-2 md:gap-4">
-        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="flex flex-col md:flex-row items-center gap-1 md:gap-3 p-2 md:p-3 rounded-xl text-nh-accent bg-nh-accent/10 transition flex-1 md:flex-none">
-            <span class="text-xl">📊</span><span class="text-[10px] md:text-sm font-bold">Visão Geral</span>
+    <div class="flex md:flex-col w-full md:w-auto justify-around md:justify-start gap-1 md:gap-2">
+        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn flex flex-col md:flex-row items-center gap-1 md:gap-3 p-2 md:p-3 rounded-xl text-nh-accent bg-nh-accent/10 transition flex-1 md:flex-none">
+            <span class="text-xl md:text-lg">📊</span><span class="text-[10px] md:text-sm font-bold">Resumo</span>
         </button>
-        <button onclick="switchTab('upload')" id="nav-upload" class="flex flex-col md:flex-row items-center gap-1 md:gap-3 p-2 md:p-3 rounded-xl text-white/60 hover:bg-white/5 hover:text-white transition flex-1 md:flex-none">
-            <span class="text-xl">📤</span><span class="text-[10px] md:text-sm font-bold">Novo Capítulo</span>
+        <button onclick="switchTab('works')" id="nav-works" class="nav-btn flex flex-col md:flex-row items-center gap-1 md:gap-3 p-2 md:p-3 rounded-xl text-white/60 hover:bg-white/5 hover:text-white transition flex-1 md:flex-none">
+            <span class="text-xl md:text-lg">📚</span><span class="text-[10px] md:text-sm font-bold">Obras</span>
         </button>
-        <button class="flex flex-col md:flex-row items-center gap-1 md:gap-3 p-2 md:p-3 rounded-xl text-white/60 hover:bg-white/5 hover:text-white transition flex-1 md:flex-none opacity-50 cursor-not-allowed">
-            <span class="text-xl">📚</span><span class="text-[10px] md:text-sm font-bold">Minhas Obras</span>
+        <button onclick="switchTab('upload')" id="nav-upload" class="nav-btn flex flex-col md:flex-row items-center gap-1 md:gap-3 p-2 md:p-3 rounded-xl text-white/60 hover:bg-white/5 hover:text-white transition flex-1 md:flex-none">
+            <span class="text-xl md:text-lg">📤</span><span class="text-[10px] md:text-sm font-bold">Capítulos</span>
+        </button>
+        <button onclick="switchTab('profile')" id="nav-profile" class="nav-btn flex flex-col md:flex-row items-center gap-1 md:gap-3 p-2 md:p-3 rounded-xl text-white/60 hover:bg-white/5 hover:text-white transition flex-1 md:flex-none">
+            <span class="text-xl md:text-lg">👤</span><span class="text-[10px] md:text-sm font-bold">Perfil</span>
+        </button>
+        
+        <button onclick="switchTab('admin')" id="nav-admin" class="nav-btn hidden flex-col md:flex-row items-center gap-1 md:gap-3 p-2 md:p-3 rounded-xl text-red-400/60 hover:bg-red-500/10 hover:text-red-400 transition flex-1 md:flex-none mt-0 md:mt-8 border border-transparent md:border-red-500/20">
+            <span class="text-xl md:text-lg">👑</span><span class="text-[10px] md:text-sm font-bold">Cidadela</span>
         </button>
     </div>
 
     <div class="hidden md:block mt-auto pt-6 border-t border-nh-border">
         <div class="flex items-center gap-3">
-            <div class="h-10 w-10 rounded-full bg-nh-card border border-nh-border grid place-items-center font-bold">R</div>
+            <div id="userAvatarMin" class="h-10 w-10 rounded-full bg-nh-card border border-nh-border grid place-items-center font-bold">R</div>
             <div>
-                <div class="text-sm font-bold">Raul Takagi</div>
-                <div class="text-xs text-nh-gold">CEO / Autor</div>
+                <div id="userNameMin" class="text-sm font-bold text-white">Carregando...</div>
+                <div id="userRoleMin" class="text-[10px] text-nh-gold uppercase tracking-wider">...</div>
             </div>
         </div>
     </div>
 </nav>
 
-<header class="md:hidden fixed top-0 inset-x-0 h-16 bg-nh-dark/90 backdrop-blur-md border-b border-nh-border z-40 flex items-center px-4 gap-3">
-    <div class="h-6 w-6 rounded flex-shrink-0 grad-nh"></div>
-    <span class="font-display text-lg text-grad truncate">Santuário do Autor</span>
+<header class="md:hidden fixed top-0 inset-x-0 h-14 bg-nh-dark/90 backdrop-blur-md border-b border-nh-border z-40 flex items-center justify-between px-4">
+    <div class="flex items-center gap-2">
+        <div class="h-5 w-5 rounded shrink-0 grad-nh"></div>
+        <span class="font-display text-base text-grad">Santuário</span>
+    </div>
+    <div class="h-8 w-8 rounded-full border border-nh-border grid place-items-center text-xs font-bold bg-nh-card">R</div>
 </header>
 
-<main class="p-4 pt-20 md:p-10 max-w-5xl mx-auto">
+<main class="p-4 pt-20 md:p-10 max-w-6xl mx-auto">
     
-    <section id="tab-dashboard" class="space-y-8 animate-[fadeIn_0.3s_ease-out]">
+    <section id="tab-dashboard" class="tab-content space-y-8 fade-in">
         <header>
-            <h2 class="text-2xl font-display text-white">Seus Reinos</h2>
-            <p class="text-sm text-white/50">Estatísticas das suas obras ativas.</p>
+            <h2 class="text-2xl md:text-3xl font-display text-white">Meus Reinos</h2>
+            <p class="text-sm text-white/50">Estatísticas do seu impacto no universo NoHeroes.</p>
         </header>
-
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div class="bg-nh-card border border-nh-border p-5 rounded-2xl">
-                <div class="text-white/40 text-xs font-bold uppercase tracking-wider mb-2">Leituras Totais</div>
-                <div class="text-3xl font-display text-white">12.4k</div>
-                <div class="text-xs text-green-400 mt-2">↑ 18% este mês</div>
-            </div>
-            <div class="bg-nh-card border border-nh-border p-5 rounded-2xl">
-                <div class="text-white/40 text-xs font-bold uppercase tracking-wider mb-2">Passes Vendidos</div>
-                <div class="text-3xl font-display text-nh-gold">342</div>
-                <div class="text-xs text-white/40 mt-2">Temporada 1</div>
-            </div>
-        </div>
-
-        <div>
-            <h3 class="nh-label">Modificação Recente</h3>
-            <div class="flex items-center gap-4 bg-nh-dark border border-nh-border p-4 rounded-2xl">
-                <div class="h-16 w-12 bg-black rounded shrink-0 border border-white/10 overflow-hidden">
-                    <img src="https://via.placeholder.com/100x150/1a1a1a/8f4fff?text=Azuos" class="w-full h-full object-cover">
-                </div>
-                <div class="flex-1 min-w-0">
-                    <h4 class="font-bold text-white truncate">Azuos</h4>
-                    <p class="text-xs text-white/50 truncate">Último cap: Capítulo 12 - Rascunho</p>
-                </div>
-                <button onclick="switchTab('upload')" class="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-xl text-xs font-bold transition">Continuar</button>
-            </div>
+            <div class="bg-nh-card border border-nh-border p-5 rounded-2xl"><div class="text-white/40 text-[10px] font-bold uppercase tracking-wider mb-1">Leituras Totais</div><div class="text-2xl md:text-3xl font-display text-white">12.4k</div><div class="text-[10px] text-green-400 mt-2">↑ 18% este mês</div></div>
+            <div class="bg-nh-card border border-nh-border p-5 rounded-2xl"><div class="text-white/40 text-[10px] font-bold uppercase tracking-wider mb-1">Passes Vendidos</div><div class="text-2xl md:text-3xl font-display text-nh-gold">342</div><div class="text-[10px] text-white/40 mt-2">Receita estimada: R$ 1.5k</div></div>
+            <div class="bg-nh-card border border-nh-border p-5 rounded-2xl"><div class="text-white/40 text-[10px] font-bold uppercase tracking-wider mb-1">Obras Ativas</div><div class="text-2xl md:text-3xl font-display text-white">2</div><div class="text-[10px] text-white/40 mt-2">Azuos, Noctilum</div></div>
+            <div class="bg-nh-card border border-nh-border p-5 rounded-2xl"><div class="text-white/40 text-[10px] font-bold uppercase tracking-wider mb-1">Seguidores</div><div class="text-2xl md:text-3xl font-display text-white">890</div><div class="text-[10px] text-nh-accent mt-2">Notificados a cada cap.</div></div>
         </div>
     </section>
 
-    <section id="tab-upload" class="hidden space-y-8 animate-[fadeIn_0.3s_ease-out]">
+    <section id="tab-works" class="tab-content hidden space-y-8 fade-in">
+        <header class="flex justify-between items-end border-b border-nh-border pb-4">
+            <div>
+                <h2 class="text-2xl font-display text-white">Forja de Obras</h2>
+                <p class="text-sm text-white/50">Crie ou edite os metadados dos seus Mangás/Novels.</p>
+            </div>
+            <button onclick="showToast('Obra salva com sucesso!', 'success')" class="hidden md:block px-6 py-2 rounded-xl grad-nh text-black font-bold text-sm hover:scale-105 active:scale-95 transition">Salvar Obra</button>
+        </header>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="md:col-span-1 space-y-4">
+                <div>
+                    <label class="nh-label">Capa Principal (2:3)</label>
+                    <div class="aspect-[2/3] w-full max-w-[200px] rounded-xl border-2 border-dashed border-nh-border bg-nh-card flex items-center justify-center cursor-pointer hover:border-nh-accent transition group overflow-hidden relative">
+                        <span class="text-2xl group-hover:scale-110 transition opacity-50">🖼️</span>
+                        <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition"><span class="text-xs font-bold">Alterar</span></div>
+                    </div>
+                </div>
+                <div>
+                    <label class="nh-label">Classificação Etária</label>
+                    <select class="nh-input"><option>Livre</option><option>14+ Anos</option><option>16+ Anos</option><option>18+ (Seinen/Dark)</option></select>
+                </div>
+            </div>
+            <div class="md:col-span-2 space-y-4">
+                <div><label class="nh-label">Título da Obra</label><input type="text" class="nh-input" placeholder="Ex: Azuos: O Despertar"></div>
+                <div><label class="nh-label">Sinopse</label><textarea class="nh-input h-32 resize-none" placeholder="O mundo caiu em ruínas..."></textarea></div>
+                <div><label class="nh-label">Tags (Separadas por vírgula)</label><input type="text" class="nh-input" placeholder="Dark Fantasy, Ação, Magia"></div>
+                <div class="p-4 bg-nh-accent/5 border border-nh-accent/20 rounded-xl mt-4">
+                    <h4 class="text-nh-accent font-bold text-sm mb-1">Dica de SEO</h4>
+                    <p class="text-xs text-white/60">Uma boa sinopse atrai 40% mais leitores do Hub. Evite spoilers diretos no primeiro parágrafo.</p>
+                </div>
+            </div>
+        </div>
+        <button class="w-full md:hidden px-6 py-4 rounded-xl grad-nh text-black font-bold text-sm active:scale-95 transition mt-4">Salvar Obra</button>
+    </section>
+
+    <section id="tab-upload" class="tab-content hidden space-y-8 fade-in">
         <header class="flex justify-between items-end border-b border-nh-border pb-4">
             <div>
                 <h2 class="text-2xl font-display text-white">Forjar Capítulo</h2>
                 <p class="text-sm text-white/50">Adicione páginas e defina as runas de acesso.</p>
             </div>
-            <button id="btnSave" class="px-6 py-2.5 rounded-xl grad-nh text-black font-bold text-sm hover:scale-105 active:scale-95 transition shadow-glow hidden md:block">
-                Publicar Capítulo
-            </button>
+            <button id="btnPublishChapter" class="hidden md:block px-6 py-2.5 rounded-xl grad-nh text-black font-bold text-sm hover:scale-105 active:scale-95 transition shadow-glow">Publicar Capítulo</button>
         </header>
 
         <div class="grid md:grid-cols-3 gap-8">
             <div class="md:col-span-1 space-y-5">
-                <div>
-                    <label class="nh-label">Obra Destino</label>
-                    <select class="nh-input appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%208l5%205%205-5%22%20stroke%3D%22%23666%22%20stroke-width%3D%222%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[position:right_1rem_center]">
-                        <option value="1">Azuos</option>
-                        <option value="2">Noctilum Arcano</option>
-                    </select>
-                </div>
-
+                <div><label class="nh-label">Obra Destino</label><select class="nh-input"><option>Azuos</option><option>Noctilum Arcano</option></select></div>
                 <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="nh-label">Nº do Cap.</label>
-                        <input type="number" placeholder="Ex: 13" class="nh-input">
-                    </div>
-                    <div>
-                        <label class="nh-label">Status</label>
-                        <select class="nh-input">
-                            <option>Rascunho</option>
-                            <option>Publicado</option>
-                        </select>
-                    </div>
+                    <div><label class="nh-label">Nº do Cap.</label><input type="number" id="capNumber" placeholder="13" class="nh-input"></div>
+                    <div><label class="nh-label">Status</label><select class="nh-input"><option>Rascunho</option><option>Publicar</option></select></div>
                 </div>
-
-                <div>
-                    <label class="nh-label">Título do Capítulo</label>
-                    <input type="text" placeholder="A Queda dos Deuses..." class="nh-input">
-                </div>
-
+                <div><label class="nh-label">Título do Capítulo</label><input type="text" id="capTitle" placeholder="A Queda..." class="nh-input"></div>
+                
                 <div class="p-4 rounded-xl border border-nh-accent/30 bg-nh-accent/5">
-                    <label class="nh-label text-nh-accent">Regras de Acesso (Paywall)</label>
+                    <label class="nh-label text-nh-accent">Regras de Acesso</label>
                     <div class="flex items-center justify-between mt-3">
-                        <span class="text-sm text-white/80">Exigir Passe da Temporada?</span>
+                        <span class="text-sm text-white/80">Premium (Passe Exigido)</span>
                         <label class="relative inline-flex items-center cursor-pointer">
-                          <input type="checkbox" id="togglePaywall" class="sr-only peer" checked>
-                          <div class="w-11 h-6 bg-nh-dark peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-nh-accent border border-nh-border"></div>
+                          <input type="checkbox" class="sr-only peer">
+                          <div class="w-11 h-6 bg-nh-dark rounded-full peer peer-checked:after:translate-x-full peer-checked:bg-nh-accent border border-nh-border after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
                         </label>
                     </div>
-                    <p class="text-[10px] text-white/40 mt-2 leading-relaxed">Se ativo, apenas usuários que compraram o Passe no Neon ou este capítulo avulso poderão ler as páginas.</p>
                 </div>
             </div>
 
-            <div class="md:col-span-2">
-                <label class="nh-label flex justify-between">
-                    <span>Páginas do Mangá</span>
-                    <span id="pageCount" class="text-nh-accent">0 selecionadas</span>
-                </label>
+            <div class="md:col-span-2 flex flex-col h-full">
+                <label class="nh-label flex justify-between"><span>Páginas (Arraste para reordenar)</span><span id="pageCount" class="text-nh-accent">0 páginas</span></label>
                 
-                <div class="relative w-full h-32 md:h-48 rounded-2xl border-2 border-dashed border-nh-border hover:border-nh-accent/50 bg-nh-card flex flex-col items-center justify-center transition cursor-pointer group overflow-hidden">
-                    <input type="file" id="fileInput" multiple accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
-                    <div class="text-3xl mb-2 group-hover:scale-110 transition group-hover:text-nh-accent">📸</div>
-                    <p class="text-sm font-bold text-white/70">Toque para selecionar imagens</p>
-                    <p class="text-xs text-white/40 mt-1">JPG, PNG, WEBP (Recomendado)</p>
+                <div class="relative w-full h-24 md:h-32 rounded-2xl border-2 border-dashed border-nh-border hover:border-nh-accent/50 bg-nh-card flex flex-col items-center justify-center transition cursor-pointer group overflow-hidden mb-4 shrink-0">
+                    <input type="file" id="fileInput" multiple accept="image/jpeg, image/png, image/webp" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                    <div class="text-2xl mb-1 group-hover:scale-110 transition group-hover:text-nh-accent">📸</div>
+                    <p class="text-sm font-bold text-white/70">Toque ou solte as imagens aqui</p>
+                    <p class="text-[10px] text-red-400 mt-1 font-bold tracking-wider">MÁX 5MB POR ARQUIVO</p>
                 </div>
 
-                <div id="previewGrid" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 mt-4 empty:hidden">
-                    </div>
+                <div id="previewGrid" class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-3 bg-black/20 p-4 rounded-xl border border-nh-border min-h-[150px] content-start">
+                    <div id="emptyGridMsg" class="col-span-full flex items-center justify-center h-full text-white/20 text-xs uppercase tracking-widest font-bold">Nenhuma página forjada</div>
+                </div>
             </div>
         </div>
-
-        <button class="w-full md:hidden px-6 py-4 rounded-xl grad-nh text-black font-bold text-sm active:scale-95 transition shadow-glow mt-8">
-            Forjar e Publicar Capítulo
-        </button>
+        <button id="btnPublishChapterMobile" class="w-full md:hidden px-6 py-4 rounded-xl grad-nh text-black font-bold text-sm active:scale-95 transition mt-8 shadow-glow">Publicar Capítulo</button>
     </section>
 
+    <section id="tab-profile" class="tab-content hidden space-y-8 fade-in">
+        <header><h2 class="text-2xl font-display text-white">Identidade do Arauto</h2><p class="text-sm text-white/50">Como os leitores verão você.</p></header>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="space-y-4 flex flex-col items-center md:items-start">
+                <div class="h-32 w-32 rounded-full border border-nh-border bg-nh-card grid place-items-center cursor-pointer overflow-hidden group relative">
+                    <span class="text-3xl font-display">R</span>
+                    <div class="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition"><span class="text-xs font-bold">Trocar</span></div>
+                </div>
+                <div class="w-full"><label class="nh-label">Nome / Pseudônimo</label><input type="text" class="nh-input" value="Raul Takagi"></div>
+            </div>
+            <div class="md:col-span-2 space-y-4">
+                <div><label class="nh-label">Biografia</label><textarea class="nh-input h-32 resize-none">Autor e CEO do projeto NoHeroes...</textarea></div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div><label class="nh-label">Link X (Twitter)</label><input type="text" class="nh-input" placeholder="https://x.com/..."></div>
+                    <div><label class="nh-label">Instagram</label><input type="text" class="nh-input" placeholder="@usuario"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tab-admin" class="tab-content hidden space-y-8 fade-in">
+        <div class="bg-admin-bg border border-admin-primary/20 p-6 rounded-2xl shadow-adminGlow relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-admin-primary/5 blur-[100px] rounded-full pointer-events-none"></div>
+            <h2 class="text-2xl font-display text-admin-primary mb-1 relative z-10">Cidadela de Controle</h2>
+            <p class="text-xs text-white/60 mb-8 uppercase tracking-widest relative z-10">Acesso Restrito ao CEO / Diretoria</p>
+            
+            <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4 relative z-10">
+                <button class="p-5 bg-black/60 border border-admin-primary/20 rounded-xl text-left hover:border-admin-primary/50 transition group">
+                    <span class="block text-2xl mb-2 group-hover:scale-110 transition origin-left">⚖️</span>
+                    <span class="font-bold text-sm block text-white">Moderar Obras</span>
+                    <span class="block text-xs text-admin-primary mt-1">3 Parceiros aguardando</span>
+                </button>
+                <button class="p-5 bg-black/60 border border-admin-primary/20 rounded-xl text-left hover:border-admin-primary/50 transition group">
+                    <span class="block text-2xl mb-2 group-hover:scale-110 transition origin-left">💎</span>
+                    <span class="font-bold text-sm block text-white">Caixa Forte (Financeiro)</span>
+                    <span class="block text-xs text-white/40 mt-1">Repasses Neon</span>
+                </button>
+                <button class="p-5 bg-black/60 border border-admin-primary/20 rounded-xl text-left hover:border-admin-primary/50 transition group">
+                    <span class="block text-2xl mb-2 group-hover:scale-110 transition origin-left">🎨</span>
+                    <span class="font-bold text-sm block text-white">Layout Global</span>
+                    <span class="block text-xs text-white/40 mt-1">Banners do Hub</span>
+                </button>
+            </div>
+        </div>
+    </section>
 </main>
 
 <script>
-// --- Lógica de Navegação do Painel ---
-function switchTab(tabId) {
-    // Esconde todas
-    document.getElementById('tab-dashboard').classList.add('hidden');
-    document.getElementById('tab-upload').classList.add('hidden');
+/* --- 1. MOCK DE AUTENTICAÇÃO E INICIALIZAÇÃO --- */
+// Simulando os dados que viriam do seu sistema de Login (Neon/Supabase)
+const currentUser = {
+    id: 1,
+    name: 'Raul Takagi',
+    role: 'admin', // Se mudar para 'author', a aba Cidadela some.
+    avatarUrl: null
+};
+
+function initApp() {
+    // Preencher mini perfil
+    document.getElementById('userNameMin').textContent = currentUser.name;
+    document.getElementById('userRoleMin').textContent = currentUser.role === 'admin' ? 'CEO / Admin' : 'Arauto (Autor)';
     
-    // Reseta botões
-    document.querySelectorAll('[id^="nav-"]').forEach(btn => {
-        btn.classList.remove('text-nh-accent', 'bg-nh-accent/10');
-        btn.classList.add('text-white/60');
+    // Controle de Permissão Frontend
+    if (currentUser.role === 'admin') {
+        const adminBtn = document.getElementById('nav-admin');
+        adminBtn.classList.remove('hidden');
+        adminBtn.classList.add('flex');
+    }
+
+    // Iniciar SortableJS na grade de preview de imagens
+    initSortable();
+}
+
+/* --- 2. SISTEMA DE TOASTS (Notificações Profissionais) --- */
+function showToast(message, type = 'success') {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.textContent = message;
+    
+    container.appendChild(toast);
+    
+    // Animação de entrada
+    setTimeout(() => toast.classList.add('show'), 10);
+    
+    // Auto remoção
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+/* --- 3. NAVEGAÇÃO DE ABAS (SPA Style) --- */
+function switchTab(tabId) {
+    // Esconder todas as seções
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+    
+    // Resetar visual de todos os botões
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        if(btn.id === 'nav-admin') {
+            btn.className = "nav-btn flex-col md:flex-row items-center gap-1 md:gap-3 p-2 md:p-3 rounded-xl text-red-400/60 hover:bg-red-500/10 hover:text-red-400 transition flex-1 md:flex-none mt-0 md:mt-8 border border-transparent md:border-red-500/20";
+        } else {
+            btn.className = "nav-btn flex flex-col md:flex-row items-center gap-1 md:gap-3 p-2 md:p-3 rounded-xl text-white/60 hover:bg-white/5 hover:text-white transition flex-1 md:flex-none";
+        }
     });
 
-    // Mostra a ativa
+    // Mostrar aba ativa
     document.getElementById(`tab-${tabId}`).classList.remove('hidden');
     
-    // Pinta o botão
+    // Destacar botão ativo
     const activeBtn = document.getElementById(`nav-${tabId}`);
-    activeBtn.classList.remove('text-white/60');
-    activeBtn.classList.add('text-nh-accent', 'bg-nh-accent/10');
+    if(tabId === 'admin') {
+        activeBtn.classList.add('bg-red-500/20', 'text-red-400', 'border-red-500/50');
+        activeBtn.classList.remove('text-red-400/60', 'border-transparent');
+    } else {
+        activeBtn.classList.add('text-nh-accent', 'bg-nh-accent/10');
+        activeBtn.classList.remove('text-white/60');
+    }
     
     window.scrollTo(0,0);
 }
 
-// --- Lógica Profissional de Upload e Preview de Imagens ---
+/* --- 4. LÓGICA DE UPLOAD E DRAG & DROP DE IMAGENS --- */
 const fileInput = document.getElementById('fileInput');
 const previewGrid = document.getElementById('previewGrid');
 const pageCount = document.getElementById('pageCount');
-let selectedFiles = [];
+const emptyMsg = document.getElementById('emptyGridMsg');
+let chapterPages = []; // Guarda os arquivos reais
+
+// Limite de 5MB por página
+const MAX_FILE_SIZE = 5 * 1024 * 1024; 
+
+function initSortable() {
+    new Sortable(previewGrid, {
+        animation: 150,
+        ghostClass: 'sortable-ghost',
+        dragClass: 'sortable-drag',
+        filter: '#emptyGridMsg', // Não deixa arrastar a mensagem de vazio
+        onEnd: function (evt) {
+            // Reordenar o array real baseado na nova posição do DOM
+            const movedItem = chapterPages.splice(evt.oldIndex, 1)[0];
+            chapterPages.splice(evt.newIndex, 0, movedItem);
+            updatePageNumbers();
+        }
+    });
+}
 
 fileInput.addEventListener('change', function(e) {
     const files = Array.from(e.target.files);
     if (!files.length) return;
 
-    // Adiciona os novos arquivos ao array mantendo a ordem
-    selectedFiles = [...selectedFiles, ...files];
-    updatePreviews();
-});
+    let errorCount = 0;
 
-function updatePreviews() {
-    previewGrid.innerHTML = '';
-    pageCount.textContent = `${selectedFiles.length} página${selectedFiles.length !== 1 ? 's' : ''}`;
-
-    selectedFiles.forEach((file, index) => {
-        const reader = new FileReader();
-        
-        reader.onload = function(e) {
-            const div = document.createElement('div');
-            div.className = "relative aspect-[2/3] bg-black rounded-lg overflow-hidden border border-nh-border group animate-[fadeIn_0.3s_ease-out]";
-            
-            div.innerHTML = `
-                <img src="${e.target.result}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
-                <div class="absolute top-1 left-1 bg-black/80 px-1.5 py-0.5 rounded text-[10px] font-bold border border-white/20">${index + 1}</div>
-                <button onclick="removeFile(${index})" class="absolute top-1 right-1 w-6 h-6 bg-red-500/80 hover:bg-red-500 text-white rounded grid place-items-center opacity-0 group-hover:opacity-100 transition active:scale-90">✕</button>
-            `;
-            previewGrid.appendChild(div);
+    files.forEach(file => {
+        // Validação de Tamanho
+        if (file.size > MAX_FILE_SIZE) {
+            errorCount++;
+            return; // Pula este arquivo
         }
         
+        // Criar ID único para cada arquivo para facilitar remoção
+        file.customId = Math.random().toString(36).substring(7);
+        chapterPages.push(file);
+        
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+            renderThumbnail(evt.target.result, file.customId);
+        }
         reader.readAsDataURL(file);
     });
+
+    if (errorCount > 0) {
+        showToast(`${errorCount} arquivo(s) ignorado(s) por passar de 5MB.`, 'error');
+    } else {
+        showToast('Páginas processadas com sucesso!', 'success');
+    }
+    
+    // Limpa o input para permitir selecionar a mesma imagem se o usuário deletou e quer por de novo
+    fileInput.value = ''; 
+});
+
+function renderThumbnail(src, customId) {
+    emptyMsg.style.display = 'none'; // Esconde mensagem de vazio
+    
+    const div = document.createElement('div');
+    div.className = "relative aspect-[2/3] bg-black rounded-lg overflow-hidden border border-nh-border group cursor-grab active:cursor-grabbing fade-in";
+    div.dataset.id = customId; // Vincula a DOM ao Array
+    
+    div.innerHTML = `
+        <img src="${src}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition pointer-events-none">
+        <div class="page-number absolute top-1 left-1 bg-black/90 text-white px-2 py-0.5 rounded text-[10px] font-bold border border-white/20"></div>
+        <button type="button" onclick="removePage('${customId}', this)" class="absolute top-1 right-1 w-7 h-7 bg-red-500/90 hover:bg-red-500 text-white rounded grid place-items-center opacity-0 group-hover:opacity-100 transition shadow-lg text-xs z-10">✕</button>
+    `;
+    
+    previewGrid.appendChild(div);
+    updatePageNumbers();
 }
 
-// Remover imagem individualmente (crucial para mobile onde errar o clique é comum)
-window.removeFile = function(index) {
-    selectedFiles.splice(index, 1);
-    updatePreviews();
+window.removePage = function(customId, btnElement) {
+    // Remove do DOM
+    const card = btnElement.closest('div[data-id]');
+    card.remove();
+    
+    // Remove do Array
+    chapterPages = chapterPages.filter(file => file.customId !== customId);
+    
+    if(chapterPages.length === 0) {
+        emptyMsg.style.display = 'flex';
+    }
+    
+    updatePageNumbers();
+    showToast('Página removida.', 'error'); // Usando estilo de erro apenas pela cor vermelha
 }
 
-// --- Preparação para o Backend (Neon/API) ---
-document.getElementById('btnSave')?.addEventListener('click', async () => {
-    if(selectedFiles.length === 0) {
-        alert("O capítulo precisa ter pelo menos uma página de conteúdo.");
+function updatePageNumbers() {
+    pageCount.textContent = `${chapterPages.length} página${chapterPages.length !== 1 ? 's' : ''}`;
+    
+    // Atualiza as etiquetas (1, 2, 3...) baseadas na ordem visual do DOM
+    const cards = previewGrid.querySelectorAll('div[data-id]');
+    cards.forEach((card, index) => {
+        card.querySelector('.page-number').textContent = index + 1;
+    });
+}
+
+/* --- 5. SUBMISSÃO DE DADOS (Mock API) --- */
+function handlePublish() {
+    const title = document.getElementById('capTitle').value;
+    const num = document.getElementById('capNumber').value;
+
+    if(!num || !title) {
+        showToast('Preencha o Número e o Título do capítulo.', 'error');
         return;
     }
-    
-    // Aqui você integraria com seu backend.
-    // Exemplo de como preparar o FormData para enviar arquivos:
-    /*
-    const formData = new FormData();
-    formData.append('novel_id', document.querySelector('select').value);
-    formData.append('title', document.querySelector('input[type="text"]').value);
-    formData.append('is_premium', document.getElementById('togglePaywall').checked);
-    
-    selectedFiles.forEach((file, i) => {
-        formData.append(`pages[${i}]`, file);
-    });
-
-    try {
-        const res = await fetch('SUA_URL_AQUI/admin/chapters', {
-            method: 'POST',
-            body: formData,
-            headers: { 'Authorization': 'Bearer SEU_TOKEN_DE_ADMIN' }
-        });
-        // Lidar com sucesso...
-    } catch (e) {
-        console.error(e);
+    if(chapterPages.length === 0) {
+        showToast('O capítulo precisa ter pelo menos uma página.', 'error');
+        return;
     }
-    */
-   
-   alert(`Pronto para enviar ${selectedFiles.length} páginas para o banco de dados!`);
-});
+
+    // AQUI ENTRA A LÓGICA DO BACKEND. O FormData organizará os arquivos
+    // na exata ordem que o autor definiu na tela (drag & drop).
+    console.log("Ordem de Upload:", chapterPages.map(f => f.name));
+    
+    showToast('Iniciando conexão com o Banco de Dados...', 'success');
+    
+    // Simula carregamento
+    setTimeout(() => {
+        showToast('Capítulo Forjado e Publicado com sucesso!', 'success');
+        // Reset form
+        chapterPages = [];
+        previewGrid.innerHTML = '<div id="emptyGridMsg" class="col-span-full flex items-center justify-center h-full text-white/20 text-xs uppercase tracking-widest font-bold">Nenhuma página forjada</div>';
+        updatePageNumbers();
+        document.getElementById('capTitle').value = '';
+        document.getElementById('capNumber').value = '';
+    }, 1500);
+}
+
+document.getElementById('btnPublishChapter').addEventListener('click', handlePublish);
+document.getElementById('btnPublishChapterMobile').addEventListener('click', handlePublish);
+
+// Iniciar a aplicação
+document.addEventListener('DOMContentLoaded', initApp);
 </script>
 </body>
 </html>
