@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>NoHeroes • Painel do Arauto</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: { extend: {
+      colors:{ nh:{ bg:'#07060a', dark:'#0c0a10', accent:'#8f4fff', gold:'#d9b55a', border:'rgba(255,255,255,0.08)', card:'rgba(255,255,255,0.03)' } },
+      boxShadow:{ glow:'0 0 30px rgba(143,79,255,0.2)'},
+      fontFamily:{ display:['Cinzel Decorative','serif'], sans:['Inter','sans-serif']}
+    } }
+  }
+</script>
+<style>
+  .grad-nh{background:linear-gradient(135deg,#8f4fff 0%,#d9b55a 100%);}
+  .text-grad{background:linear-gradient(135deg,#b891ff 0%, #f5e3a5 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .nh-input{ @apply w-full rounded-xl bg-black/50 border border-nh-border px-4 py-3 outline-none focus:border-nh-accent/50 transition text-sm text-white; }
+  .nh-label{ @apply block text-xs font-bold uppercase tracking-widest text-white/50 mb-2; }
+  ::-webkit-scrollbar{width:4px; height:4px;}::-webkit-scrollbar-thumb{background:#2b2440;border-radius:99px}
+</style>
+</head>
+<body class="bg-nh-bg text-white/90 font-sans antialiased pb-24 md:pb-0 md:pl-64">
+
+<nav class="fixed bottom-0 inset-x-0 md:top-0 md:left-0 md:w-64 md:h-screen bg-nh-dark border-t md:border-t-0 md:border-r border-nh-border z-50 flex md:flex-col justify-between md:justify-start px-2 md:px-6 py-3 md:py-8 backdrop-blur-xl">
+    <div class="hidden md:block mb-10">
+        <div class="h-8 w-8 rounded-lg grad-nh shadow-glow mb-4"></div>
+        <h1 class="font-display text-xl text-grad">Painel de Criação</h1>
+        <p class="text-xs text-white/40 uppercase tracking-widest mt-1">Santuário do Autor</p>
+    </div>
+
+    <div class="flex md:flex-col w-full md:w-auto justify-around md:justify-start gap-2 md:gap-4">
+        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="flex flex-col md:flex-row items-center gap-1 md:gap-3 p-2 md:p-3 rounded-xl text-nh-accent bg-nh-accent/10 transition flex-1 md:flex-none">
+            <span class="text-xl">📊</span><span class="text-[10px] md:text-sm font-bold">Visão Geral</span>
+        </button>
+        <button onclick="switchTab('upload')" id="nav-upload" class="flex flex-col md:flex-row items-center gap-1 md:gap-3 p-2 md:p-3 rounded-xl text-white/60 hover:bg-white/5 hover:text-white transition flex-1 md:flex-none">
+            <span class="text-xl">📤</span><span class="text-[10px] md:text-sm font-bold">Novo Capítulo</span>
+        </button>
+        <button class="flex flex-col md:flex-row items-center gap-1 md:gap-3 p-2 md:p-3 rounded-xl text-white/60 hover:bg-white/5 hover:text-white transition flex-1 md:flex-none opacity-50 cursor-not-allowed">
+            <span class="text-xl">📚</span><span class="text-[10px] md:text-sm font-bold">Minhas Obras</span>
+        </button>
+    </div>
+
+    <div class="hidden md:block mt-auto pt-6 border-t border-nh-border">
+        <div class="flex items-center gap-3">
+            <div class="h-10 w-10 rounded-full bg-nh-card border border-nh-border grid place-items-center font-bold">R</div>
+            <div>
+                <div class="text-sm font-bold">Raul Takagi</div>
+                <div class="text-xs text-nh-gold">CEO / Autor</div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<header class="md:hidden fixed top-0 inset-x-0 h-16 bg-nh-dark/90 backdrop-blur-md border-b border-nh-border z-40 flex items-center px-4 gap-3">
+    <div class="h-6 w-6 rounded flex-shrink-0 grad-nh"></div>
+    <span class="font-display text-lg text-grad truncate">Santuário do Autor</span>
+</header>
+
+<main class="p-4 pt-20 md:p-10 max-w-5xl mx-auto">
+    
+    <section id="tab-dashboard" class="space-y-8 animate-[fadeIn_0.3s_ease-out]">
+        <header>
+            <h2 class="text-2xl font-display text-white">Seus Reinos</h2>
+            <p class="text-sm text-white/50">Estatísticas das suas obras ativas.</p>
+        </header>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-nh-card border border-nh-border p-5 rounded-2xl">
+                <div class="text-white/40 text-xs font-bold uppercase tracking-wider mb-2">Leituras Totais</div>
+                <div class="text-3xl font-display text-white">12.4k</div>
+                <div class="text-xs text-green-400 mt-2">↑ 18% este mês</div>
+            </div>
+            <div class="bg-nh-card border border-nh-border p-5 rounded-2xl">
+                <div class="text-white/40 text-xs font-bold uppercase tracking-wider mb-2">Passes Vendidos</div>
+                <div class="text-3xl font-display text-nh-gold">342</div>
+                <div class="text-xs text-white/40 mt-2">Temporada 1</div>
+            </div>
+        </div>
+
+        <div>
+            <h3 class="nh-label">Modificação Recente</h3>
+            <div class="flex items-center gap-4 bg-nh-dark border border-nh-border p-4 rounded-2xl">
+                <div class="h-16 w-12 bg-black rounded shrink-0 border border-white/10 overflow-hidden">
+                    <img src="https://via.placeholder.com/100x150/1a1a1a/8f4fff?text=Azuos" class="w-full h-full object-cover">
+                </div>
+                <div class="flex-1 min-w-0">
+                    <h4 class="font-bold text-white truncate">Azuos</h4>
+                    <p class="text-xs text-white/50 truncate">Último cap: Capítulo 12 - Rascunho</p>
+                </div>
+                <button onclick="switchTab('upload')" class="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-xl text-xs font-bold transition">Continuar</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="tab-upload" class="hidden space-y-8 animate-[fadeIn_0.3s_ease-out]">
+        <header class="flex justify-between items-end border-b border-nh-border pb-4">
+            <div>
+                <h2 class="text-2xl font-display text-white">Forjar Capítulo</h2>
+                <p class="text-sm text-white/50">Adicione páginas e defina as runas de acesso.</p>
+            </div>
+            <button id="btnSave" class="px-6 py-2.5 rounded-xl grad-nh text-black font-bold text-sm hover:scale-105 active:scale-95 transition shadow-glow hidden md:block">
+                Publicar Capítulo
+            </button>
+        </header>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="md:col-span-1 space-y-5">
+                <div>
+                    <label class="nh-label">Obra Destino</label>
+                    <select class="nh-input appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%208l5%205%205-5%22%20stroke%3D%22%23666%22%20stroke-width%3D%222%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[position:right_1rem_center]">
+                        <option value="1">Azuos</option>
+                        <option value="2">Noctilum Arcano</option>
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="nh-label">Nº do Cap.</label>
+                        <input type="number" placeholder="Ex: 13" class="nh-input">
+                    </div>
+                    <div>
+                        <label class="nh-label">Status</label>
+                        <select class="nh-input">
+                            <option>Rascunho</option>
+                            <option>Publicado</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="nh-label">Título do Capítulo</label>
+                    <input type="text" placeholder="A Queda dos Deuses..." class="nh-input">
+                </div>
+
+                <div class="p-4 rounded-xl border border-nh-accent/30 bg-nh-accent/5">
+                    <label class="nh-label text-nh-accent">Regras de Acesso (Paywall)</label>
+                    <div class="flex items-center justify-between mt-3">
+                        <span class="text-sm text-white/80">Exigir Passe da Temporada?</span>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                          <input type="checkbox" id="togglePaywall" class="sr-only peer" checked>
+                          <div class="w-11 h-6 bg-nh-dark peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-nh-accent border border-nh-border"></div>
+                        </label>
+                    </div>
+                    <p class="text-[10px] text-white/40 mt-2 leading-relaxed">Se ativo, apenas usuários que compraram o Passe no Neon ou este capítulo avulso poderão ler as páginas.</p>
+                </div>
+            </div>
+
+            <div class="md:col-span-2">
+                <label class="nh-label flex justify-between">
+                    <span>Páginas do Mangá</span>
+                    <span id="pageCount" class="text-nh-accent">0 selecionadas</span>
+                </label>
+                
+                <div class="relative w-full h-32 md:h-48 rounded-2xl border-2 border-dashed border-nh-border hover:border-nh-accent/50 bg-nh-card flex flex-col items-center justify-center transition cursor-pointer group overflow-hidden">
+                    <input type="file" id="fileInput" multiple accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                    <div class="text-3xl mb-2 group-hover:scale-110 transition group-hover:text-nh-accent">📸</div>
+                    <p class="text-sm font-bold text-white/70">Toque para selecionar imagens</p>
+                    <p class="text-xs text-white/40 mt-1">JPG, PNG, WEBP (Recomendado)</p>
+                </div>
+
+                <div id="previewGrid" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 mt-4 empty:hidden">
+                    </div>
+            </div>
+        </div>
+
+        <button class="w-full md:hidden px-6 py-4 rounded-xl grad-nh text-black font-bold text-sm active:scale-95 transition shadow-glow mt-8">
+            Forjar e Publicar Capítulo
+        </button>
+    </section>
+
+</main>
+
+<script>
+// --- Lógica de Navegação do Painel ---
+function switchTab(tabId) {
+    // Esconde todas
+    document.getElementById('tab-dashboard').classList.add('hidden');
+    document.getElementById('tab-upload').classList.add('hidden');
+    
+    // Reseta botões
+    document.querySelectorAll('[id^="nav-"]').forEach(btn => {
+        btn.classList.remove('text-nh-accent', 'bg-nh-accent/10');
+        btn.classList.add('text-white/60');
+    });
+
+    // Mostra a ativa
+    document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+    
+    // Pinta o botão
+    const activeBtn = document.getElementById(`nav-${tabId}`);
+    activeBtn.classList.remove('text-white/60');
+    activeBtn.classList.add('text-nh-accent', 'bg-nh-accent/10');
+    
+    window.scrollTo(0,0);
+}
+
+// --- Lógica Profissional de Upload e Preview de Imagens ---
+const fileInput = document.getElementById('fileInput');
+const previewGrid = document.getElementById('previewGrid');
+const pageCount = document.getElementById('pageCount');
+let selectedFiles = [];
+
+fileInput.addEventListener('change', function(e) {
+    const files = Array.from(e.target.files);
+    if (!files.length) return;
+
+    // Adiciona os novos arquivos ao array mantendo a ordem
+    selectedFiles = [...selectedFiles, ...files];
+    updatePreviews();
+});
+
+function updatePreviews() {
+    previewGrid.innerHTML = '';
+    pageCount.textContent = `${selectedFiles.length} página${selectedFiles.length !== 1 ? 's' : ''}`;
+
+    selectedFiles.forEach((file, index) => {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            const div = document.createElement('div');
+            div.className = "relative aspect-[2/3] bg-black rounded-lg overflow-hidden border border-nh-border group animate-[fadeIn_0.3s_ease-out]";
+            
+            div.innerHTML = `
+                <img src="${e.target.result}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition">
+                <div class="absolute top-1 left-1 bg-black/80 px-1.5 py-0.5 rounded text-[10px] font-bold border border-white/20">${index + 1}</div>
+                <button onclick="removeFile(${index})" class="absolute top-1 right-1 w-6 h-6 bg-red-500/80 hover:bg-red-500 text-white rounded grid place-items-center opacity-0 group-hover:opacity-100 transition active:scale-90">✕</button>
+            `;
+            previewGrid.appendChild(div);
+        }
+        
+        reader.readAsDataURL(file);
+    });
+}
+
+// Remover imagem individualmente (crucial para mobile onde errar o clique é comum)
+window.removeFile = function(index) {
+    selectedFiles.splice(index, 1);
+    updatePreviews();
+}
+
+// --- Preparação para o Backend (Neon/API) ---
+document.getElementById('btnSave')?.addEventListener('click', async () => {
+    if(selectedFiles.length === 0) {
+        alert("O capítulo precisa ter pelo menos uma página de conteúdo.");
+        return;
+    }
+    
+    // Aqui você integraria com seu backend.
+    // Exemplo de como preparar o FormData para enviar arquivos:
+    /*
+    const formData = new FormData();
+    formData.append('novel_id', document.querySelector('select').value);
+    formData.append('title', document.querySelector('input[type="text"]').value);
+    formData.append('is_premium', document.getElementById('togglePaywall').checked);
+    
+    selectedFiles.forEach((file, i) => {
+        formData.append(`pages[${i}]`, file);
+    });
+
+    try {
+        const res = await fetch('SUA_URL_AQUI/admin/chapters', {
+            method: 'POST',
+            body: formData,
+            headers: { 'Authorization': 'Bearer SEU_TOKEN_DE_ADMIN' }
+        });
+        // Lidar com sucesso...
+    } catch (e) {
+        console.error(e);
+    }
+    */
+   
+   alert(`Pronto para enviar ${selectedFiles.length} páginas para o banco de dados!`);
+});
+</script>
+</body>
+</html>
