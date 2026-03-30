@@ -25,40 +25,57 @@
   }
 </script>
 <style>
-  /* Classes Utilitárias NoHeroes */
-  .grad-nh{background:linear-gradient(135deg,#8f4fff 0%,#d9b55a 100%);}
-  .text-grad{background:linear-gradient(135deg,#b891ff 0%, #f5e3a5 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .nh-input{ @apply w-full rounded-xl bg-white/5 border border-nh-border px-4 py-2.5 outline-none focus:border-nh-accent/50 transition; }
-  .nh-btn-primary{ @apply px-5 py-2.5 rounded-xl grad-nh text-black font-bold text-sm tracking-tight hover:opacity-90 transition active:scale-95; }
-  .nh-btn-secondary{ @apply px-5 py-2.5 rounded-xl bg-nh-card border border-nh-border text-white text-sm hover:bg-white/10 transition; }
-  
-  /* Progresso Circular */
-  .ring-progress{position:relative;width:32px;height:32px} .ring-progress svg{transform:rotate(-90deg)}
-  .ring-progress circle.track{stroke:rgba(255,255,255,.1)} .ring-progress circle.ind{stroke:#8f4fff;transition:stroke-dashoffset .3s ease}
-  
-  /* Scrollbar Customizado */
-  ::-webkit-scrollbar{height:6px;width:6px}::-webkit-scrollbar-thumb{background:#2b2440;border-radius:99px}::-webkit-scrollbar-track{background:transparent}
+/* Corrigindo o erro de enquadramento mobile */
+.mobile-paddings { padding-left: 1rem; padding-right: 1rem; }
+@media (min-width: 640px) { .mobile-paddings { padding-left: 0; padding-right: 0; } }
+
+/* Efeito Glassmorphism NoHeroes */
+.glass-nh { 
+  background: rgba(12, 10, 16, 0.7); 
+  backdrop-filter: blur(12px); 
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Ajuste do Canvas para não atrapalhar o clique */
+#brasasCanvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  z-index: -1; /* Garante que fique atrás de tudo */
+  pointer-events: none;
+}
+
+/* Scroll Suave e Ocultar Scrollbar da Biblioteca */
+#libraryGrid::-webkit-scrollbar { display: none; }
+#libraryGrid { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Animação de entrada para as páginas */
+.page-fade { animation: imgReveal 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+@keyframes imgReveal { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
 </style>
 </head>
 <body class="min-h-screen bg-nh-bg text-white/90 font-sans antialiased">
 
-<header class="fixed top-0 inset-x-0 z-50 border-b border-nh-border bg-black/60 backdrop-blur-lg">
-  <nav class="mx-auto max-w-7xl px-4 h-16 flex items-center gap-3">
-    <a href="/" class="flex items-center gap-2.5">
-      <div class="h-7 w-7 rounded-lg grad-nh shadow-glow"></div>
-      <span class="font-display text-xl tracking-tight text-grad">NoHeroes</span>
-    </a>
-    <div class="flex-1 max-w-sm ml-2">
-      <div class="relative">
-        <input id="globalSearch" placeholder="Buscar Azuos, Noctilum..." class="nh-input text-sm px-3 py-2 pl-9"/>
-        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 text-lg">⌕</span>
-      </div>
+<canvas id="brasasCanvas"></canvas>
+<script>
+  /* Insira aqui o script das partículas que você já tem, 
+     mas mude a cor para coincidir com o nh-accent: */
+  // ... (seu código de partículas)
+  // No draw(): ctx.fillStyle = `rgba(143, 79, 255, ${this.alpha})`;
+</script>
+
+<header class="sticky top-16 z-30 flex items-center justify-between px-4 py-2 border-b border-nh-border glass-nh">
+  <div class="min-w-0 flex-1">
+    <div class="flex items-center gap-2">
+       <h1 id="workTitle" class="truncate font-display text-sm md:text-lg text-grad uppercase tracking-wider">NoHeroes</h1>
+       <span class="text-[10px] bg-nh-accent/20 text-nh-accent px-1.5 py-0.5 rounded border border-nh-accent/30 font-bold">4K</span>
     </div>
-    <div class="ml-auto flex items-center gap-2">
-      <span id="userStatus" class="text-xs text-white/60 px-3 py-1.5 rounded-full bg-nh-card border border-nh-border">Visitante</span>
-      <button id="logoutBtn" class="hidden nh-btn-secondary py-1.5 px-3">Sair</button>
+    <p id="chapterBreadcrumb" class="text-[10px] text-white/40 truncate leading-none">Aguardando invocação...</p>
+  </div>
+  <div id="readerActions" class="flex items-center gap-2 ml-3">
     </div>
-  </nav>
 </header>
 
 <main class="mx-auto max-w-7xl px-4 pt-20 pb-16 grid gap-6 mobile-paddings">
