@@ -132,6 +132,99 @@
         <div class="h-16 rounded-xl bg-nh-card animate-pulse border border-nh-border"></div>
     </div>
   </section>
+<section class="max-w-4xl mx-auto px-4 py-12 border-t border-nh-border mt-10">
+    <div class="flex items-center justify-between mb-8">
+        <h3 class="font-display text-2xl text-grad">Discussão <span id="commentCount" class="text-sm font-sans text-white/40 ml-2">(12)</span></h3>
+        <select class="bg-transparent text-xs font-bold uppercase tracking-widest text-white/60 outline-none cursor-pointer hover:text-nh-accent transition">
+            <option value="recent">Mais Recentes</option>
+            <option value="popular">Mais Relevantes</option>
+        </select>
+    </div>
+
+    <div class="flex gap-4 mb-12 bg-nh-card p-4 rounded-2xl border border-nh-border">
+        <div class="h-10 w-10 rounded-full grad-nh shrink-0 flex items-center justify-center font-bold text-black text-xs">R</div>
+        <div class="flex-1 space-y-3">
+            <textarea id="mainCommentInput" class="w-full bg-transparent border-none outline-none resize-none text-sm text-white/80 placeholder-white/20 min-h-[60px]" placeholder="O que você achou deste capítulo, Arauto?"></textarea>
+            <div class="flex justify-end border-t border-nh-border pt-3">
+                <button onclick="postComment()" class="px-6 py-2 rounded-lg grad-nh text-black font-bold text-xs hover:scale-105 active:scale-95 transition">Enviar Comentário</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="commentsList" class="space-y-8">
+        <div class="group animate-[fadeIn_0.3s_ease-out]">
+            <div class="flex gap-4">
+                <div class="h-10 w-10 rounded-full bg-nh-card border border-nh-border shrink-0 grid place-items-center text-[10px] font-bold">AZ</div>
+                <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="font-bold text-sm text-white">AzuosFan_99</span>
+                        <span class="text-[10px] text-white/30 uppercase">Há 2 horas</span>
+                    </div>
+                    <p class="text-sm text-white/70 leading-relaxed mb-3">Essa arte está absurda! A forma como as sombras foram trabalhadas no quadro final me deu arrepios. Ansioso pelo próximo.</p>
+                    <div class="flex items-center gap-4">
+                        <button class="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-tighter text-white/40 hover:text-nh-accent transition">
+                            <span>🔥</span> 24
+                        </button>
+                        <button class="text-[10px] font-bold uppercase tracking-tighter text-white/40 hover:text-white transition">Responder</button>
+                    </div>
+                    
+                    <div class="mt-4 ml-4 pl-4 border-l-2 border-nh-border space-y-4">
+                        <div class="flex gap-3">
+                            <div class="h-8 w-8 rounded-full grad-nh shrink-0 grid place-items-center text-[8px] font-bold text-black">RA</div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="font-bold text-xs text-nh-gold">Raul Takagi</span>
+                                    <span class="px-1.5 py-0.5 rounded bg-nh-accent/20 text-nh-accent text-[8px] font-bold uppercase">Autor</span>
+                                </div>
+                                <p class="text-xs text-white/60">Muito obrigado! Fico feliz que tenha notado o detalhe das sombras, deu bastante trabalho.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+</section>
+
+<script>
+/* Lógica Simples de Frontend para os Comentários */
+function postComment() {
+    const input = document.getElementById('mainCommentInput');
+    const list = document.getElementById('commentsList');
+    
+    if (!input.value.trim()) return;
+
+    // Criar o novo comentário visualmente
+    const newComment = document.createElement('div');
+    newComment.className = "group animate-[fadeIn_0.3s_ease-out]";
+    newComment.innerHTML = `
+        <div class="flex gap-4">
+            <div class="h-10 w-10 rounded-full grad-nh shrink-0 flex items-center justify-center font-bold text-black text-xs">R</div>
+            <div class="flex-1">
+                <div class="flex items-center gap-2 mb-1">
+                    <span class="font-bold text-sm text-white font-bold text-nh-gold">Raul Takagi</span>
+                    <span class="text-[10px] text-white/30 uppercase">Agora mesmo</span>
+                </div>
+                <p class="text-sm text-white/70 leading-relaxed mb-3">${input.value}</p>
+                <div class="flex items-center gap-4">
+                    <button class="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-tighter text-white/40 hover:text-nh-accent transition"><span>🔥</span> 0</button>
+                    <button class="text-[10px] font-bold uppercase tracking-tighter text-white/40 hover:text-white transition">Responder</button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // Inserir no topo da lista
+    list.prepend(newComment);
+    input.value = '';
+    
+    // Feedback visual (Toast que criamos no painel)
+    if (typeof showToast === 'function') {
+        showToast('Comentário enviado!', 'success');
+    }
+}
+</script>
+
 </main>
 
 <script>
