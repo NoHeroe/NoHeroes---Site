@@ -175,7 +175,7 @@
 
     <footer class="sticky bottom-0 z-30 p-3 sm:p-4 border-t border-nh-border bg-nh-dark/95 backdrop-blur-sm flex items-center gap-2">
         <button id="btnPrev" class="nh-btn-secondary flex-1 py-3 text-center active:scale-95">◀ Ant.</button>
-        <button id="btnChapters" class="nh-btn-primary flex-[2] py-3 text-center active:scale-95">Capítulos 📖</button>
+        
         <button id="btnNext" class="nh-btn-secondary flex-1 py-3 text-center active:scale-95">Próx. ▶</button>
     </footer>
   </article>
@@ -187,7 +187,6 @@
         <span id="seasonBadge" class="text-xs px-2.5 py-1 rounded-full bg-nh-card border border-nh-border font-medium">Temporada 1</span>
       </div>
       <div class="flex items-center gap-3 text-xs text-white/70">
-        <label class="flex items-center gap-1.5"><input id="onlyUnlocked" type="checkbox" class="accent-nh-accent h-4 w-4 rounded"> Liberados</label>
         <label class="flex items-center gap-1.5"><input id="onlyUnread" type="checkbox" class="accent-nh-accent h-4 w-4 rounded"> Não lidos</label>
       </div>
     </header>
@@ -199,10 +198,6 @@
 <section class="max-w-4xl mx-auto px-4 py-12 border-t border-nh-border mt-10">
     <div class="flex items-center justify-between mb-8">
         <h3 class="font-display text-2xl text-grad">Discussão <span id="commentCount" class="text-sm font-sans text-white/40 ml-2">(12)</span></h3>
-        <select class="bg-transparent text-xs font-bold uppercase tracking-widest text-white/60 outline-none cursor-pointer hover:text-nh-accent transition">
-            <option value="recent">Mais Recentes</option>
-            <option value="popular">Mais Relevantes</option>
-        </select>
     </div>
 
     <div class="flex gap-4 mb-12 bg-nh-card p-4 rounded-2xl border border-nh-border">
