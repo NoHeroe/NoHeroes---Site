@@ -679,6 +679,30 @@ const canvas = document.getElementById("brasasCanvas");
     }
     createParticles(150);
     animate();
+
+// Lógica de Minimizar Biblioteca
+const btnToggleLib = $('#btnToggleLib');
+const libContent = $('#libraryContent');
+const libIcon = $('#libIcon');
+
+btnToggleLib.onclick = () => {
+    libContent.classList.toggle('lib-collapsed');
+    libIcon.classList.toggle('rotate-180');
+    
+    // Opcional: Feedback visual no container pai
+    btnToggleLib.closest('aside').classList.toggle('opacity-80');
+};
+
+// Vincula a busca interna (Filtro rápido)
+$('#libLocalSearch').oninput = (e) => {
+    const q = e.target.value.toLowerCase();
+    const cards = $$('#libraryGrid button'); // Seleciona os cards gerados
+    cards.forEach(card => {
+        const title = card.querySelector('.truncate').textContent.toLowerCase();
+        card.style.display = title.includes(q) ? 'block' : 'none';
+    });
+};
+
 </script>
 </body>
 </html>
