@@ -326,27 +326,24 @@
   /* ===== API base ===== */
 window.API_BASE = "https://api.noheroes.com.br";
 
-/* ===== Drawer ===== */
+const hamburgerBtn = document.getElementById('hamburgerBtn');
 const drawer = document.getElementById('drawer');
-const drawerOv = document.getElementById('drawerOverlay');
-const btnHam = document.getElementById('hamburgerBtn');
-const btnClose = document.getElementById('drawerClose');
-const toggleDrawer = (open) => {
-  drawer.classList.toggle('show', open);
-  drawerOv.classList.toggle('show', open);
-  if(open){
-    document.addEventListener('keydown', escDrawer);
-    setTimeout(()=>document.addEventListener('click', outsideDrawer, {capture:true}),0);
-  }else{
-    document.removeEventListener('keydown', escDrawer);
-    document.removeEventListener('click', outsideDrawer, {capture:true});
-  }
-};
-const escDrawer = (e)=>{ if(e.key==='Escape') toggleDrawer(false); };
-const outsideDrawer = (e)=>{ if(!drawer.contains(e.target) && e.target!==btnHam) toggleDrawer(false); };
-btnHam?.addEventListener('click', ()=>toggleDrawer(true));
-btnClose?.addEventListener('click', ()=>toggleDrawer(false));
-drawerOv?.addEventListener('click', ()=>toggleDrawer(false));
+const overlay = document.getElementById('drawerOverlay');
+
+let isDrawerOpen = false;
+
+function toggleDrawer() {
+  isDrawerOpen = !isDrawerOpen;
+
+  // Transições certas: abre e fecha para a direita
+  drawer.style.transform = isDrawerOpen ? 'translateX(0)' : 'translateX(100%)';
+
+  overlay.style.display = isDrawerOpen ? 'block' : 'none';
+  hamburgerBtn.textContent = isDrawerOpen ? '✕' : '☰';
+}
+
+hamburgerBtn.addEventListener('click', toggleDrawer);
+overlay.addEventListener('click', toggleDrawer);
 
 /* ===== Reveal ===== */
 const sections = document.querySelectorAll('main, header, footer');
