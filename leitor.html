@@ -335,7 +335,7 @@ function renderHero() {
             <h1 class="text-6xl md:text-8xl font-display text-grad mt-6 leading-none uppercase">${work.title}</h1>
             <p class="text-white/60 mt-6 text-lg max-w-xl italic leading-relaxed">"${work.desc}"</p>
             <div class="mt-10 flex flex-wrap gap-4">
-                <button onclick="location.href='leitor.html?id=${work.id}'" class="px-12 py-5 rounded-2xl grad-nh text-black font-black uppercase tracking-widest text-xs shadow-glow transition hover:scale-105 active:scale-95">Iniciar Leitura</button>
+                <button onclick="location.href='mangá.html?id=${work.id}'" class="px-12 py-5 rounded-2xl grad-nh text-black font-black uppercase tracking-widest text-xs shadow-glow transition hover:scale-105 active:scale-95">Iniciar Leitura</button>
                 <button onclick="openModal(${work.id})" class="px-12 py-5 rounded-2xl glass text-white font-black uppercase tracking-widest text-xs transition hover:bg-white/10">Ficha Técnica</button>
             </div>
         </div>
@@ -343,7 +343,7 @@ function renderHero() {
 }
 
 function renderFilters() {
-    const cats = ['Tudo', 'Dark Fantasy', 'Medieval', 'Mistério', 'Ação', 'Terror', 'Fantasia'];
+    const cats = ['Tudo', 'Dark Fantasy', 'Medieval', 'Mistério', 'Ação', 'Terror', 'Fantasia', 'Aventura' ];
     UI.filterBar.innerHTML = cats.map(c => `
         <button onclick="setFilter('${c}')" class="px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap
             ${STATE.activeFilter === c ? 'grad-nh text-black shadow-glow' : 'glass text-white/40 hover:text-white'}">
