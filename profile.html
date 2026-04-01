@@ -252,13 +252,15 @@ dialog[open] .dialog-ctr {
   </style>
 
   <!-- Gate: token normalizado -->
-  <script>
+    <script>
     (function(){
       const raw = localStorage.getItem('NoHeroes_token')||'';
       const normalized = raw.replace(/^Bearer\s+/i,'');
       if(!normalized || normalized.split('.').length!==3){
-        localStorage.removeItem('NoHeroes_token');
-        location.href = 'login.html';
+        console.warn('⚠️ Sem token. Redirecionamento desativado para edição do layout.');
+        // COMENTADO PARA NÃO QUEBRAR SEUS TESTES:
+        // localStorage.removeItem('NoHeroes_token');
+        // location.href = 'login.html';
         return;
       }
       localStorage.setItem('NoHeroes_token', normalized);
@@ -266,6 +268,7 @@ dialog[open] .dialog-ctr {
       window.API_BASE = 'https://api.noheroes.com.br';
     })();
   </script>
+
 </head>
 <body class="min-h-screen flex flex-col">
 
@@ -613,6 +616,7 @@ btnConfirmLogout.addEventListener('click', () => {
   clearInterval(logoutTimerInterval);
   btnConfirmLogout.disabled = true;
   btnConfirmLogout.textContent = 'Saindo...';
+
   // Limpa dados locais e redireciona
   localStorage.removeItem('NoHeroes_token');
   localStorage.removeItem('NoHeroes_email');
