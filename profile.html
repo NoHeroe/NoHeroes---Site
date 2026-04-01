@@ -301,41 +301,55 @@ dialog[open] .dialog-ctr {
 
   <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-8">
 
-  <section id="heroSection" class="relative overflow-hidden rounded-[2rem] border border-purple-500/20 bg-[#121212]/40 backdrop-blur-md p-6 shadow-2xl">
+    <section id="heroSection" class="relative overflow-hidden rounded-[2rem] border border-purple-500/20 bg-[#121212]/40 backdrop-blur-md p-6 shadow-2xl">
     <div class="absolute -top-24 -right-24 w-80 h-80 bg-purple-600/10 rounded-full blur-[100px]"></div>
     
     <div class="relative flex flex-col lg:flex-row items-center gap-8">
-      <div class="flex flex-col items-center gap-3 shrink-0">
-        <div class="relative group cursor-pointer" onclick="document.getElementById('avatarFile').click()">
-          <div class="absolute -inset-1 bg-gradient-to-tr from-purple-600 to-amber-400 rounded-full blur-sm opacity-40 group-hover:opacity-70 transition"></div>
+      
+      <div class="flex flex-col items-center gap-4 shrink-0">
+        <div class="relative group">
+          <div class="absolute -inset-1 bg-gradient-to-tr from-purple-600 to-amber-400 rounded-full blur-sm opacity-40"></div>
           <div class="relative w-24 h-24 rounded-full border-2 border-white/10 overflow-hidden bg-black">
-            <img id="miniAvatar" src="/assets/images/linktree.png" alt="Avatar" class="w-full h-full object-cover"/>
-            <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-              <span class="text-[10px] font-bold text-white uppercase">Trocar</span>
-            </div>
+            <img id="miniAvatar" src="/assets/images/linktree.png" alt="Avatar" class="w-full h-full object-cover shadow-inner"/>
           </div>
           <div class="absolute -bottom-1 -right-1 bg-gradient-to-r from-purple-600 to-indigo-600 px-2 py-0.5 rounded-full border border-white/20 text-[10px] font-black text-white italic">
             LVL <span id="userLevel">15</span>
           </div>
         </div>
+        
         <input id="avatarFile" type="file" accept="image/*" class="hidden">
+        <button id="btnSelectFile" type="button" class="text-[10px] font-bold text-purple-400 uppercase tracking-widest hover:text-amber-300 transition-colors">
+          [ Alterar Foto ]
+        </button>
       </div>
 
       <div class="flex-1 w-full space-y-4">
         <div class="text-center lg:text-left">
+          <p class="text-amber-400/80 text-[10px] uppercase tracking-[0.2em] font-bold mb-1">Status: Arauto Ativo</p>
           <h1 id="userName" class="text-2xl font-bold text-white italic tracking-tight">Carregando...</h1>
           <p id="userEmail" class="text-purple-300/40 text-xs italic">email@noheroes.com</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <input id="avatarUrl" type="url" placeholder="URL da nova imagem..." class="input !bg-black/40 !border-white/5 !text-[11px] w-full h-10">
-          <button id="btnSalvarAvatar" class="btn btn-primary !h-10 !text-[11px] font-bold uppercase tracking-widest shadow-lg shadow-purple-500/10">Atualizar Identidade</button>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 items-end">
+          <div class="flex flex-col gap-1">
+            <span class="text-[9px] text-gray-500 uppercase font-bold ml-1">Link da Imagem</span>
+            <input id="avatarUrl" type="url" placeholder="https://..." class="input !bg-black/40 !border-white/5 !text-[11px] w-full h-10">
+          </div>
+          <button id="btnSalvarAvatar" class="btn btn-primary !h-10 !text-[11px] font-bold uppercase tracking-widest" type="button">
+            Salvar Identidade
+          </button>
         </div>
       </div>
 
-      <div class="hidden lg:flex flex-col gap-2 border-l border-white/5 pl-8">
-        <div class="text-[10px] uppercase font-bold tracking-widest text-gray-500 text-right">Mangás Lidos: <span class="text-purple-400">142</span></div>
-        <div class="text-[10px] uppercase font-bold tracking-widest text-gray-500 text-right">Favoritos: <span class="text-amber-400">12</span></div>
+      <div class="hidden lg:flex flex-col gap-2 border-l border-white/5 pl-8 text-right">
+        <div>
+          <p class="text-[9px] text-gray-500 uppercase font-bold">Mangás Lidos</p>
+          <p class="text-lg font-black text-purple-200">142 <span class="text-[10px] opacity-40">CAPS</span></p>
+        </div>
+        <div>
+          <p class="text-[9px] text-gray-500 uppercase font-bold">Favoritos</p>
+          <p class="text-lg font-black text-amber-200">12 <span class="text-[10px] opacity-40">OBRAS</span></p>
+        </div>
       </div>
     </div>
   </section>
