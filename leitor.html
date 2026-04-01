@@ -231,10 +231,13 @@ body {
         <span class="text-[8px] font-black uppercase tracking-tighter text-white/30">Destaque</span>
     </button>
 
-    <button onclick="showToast('Perfil NoHeroes em breve')" class="flex flex-col items-center justify-center gap-1 flex-1 transition-all active:scale-90">
-        <svg class="w-6 h-6" fill="url(#nh-gradient)" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-        <span class="text-[8px] font-black uppercase tracking-tighter text-white/30">Perfil</span>
-    </button>
+    <button onclick="location.href='autordash.html'" class="flex flex-col items-center justify-center gap-1 flex-1 transition-all active:scale-90 group">
+    <svg class="w-6 h-6" fill="url(#nh-gradient)" viewBox="0 0 24 24">
+        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+    </svg>
+    <span class="text-[8px] font-black uppercase tracking-tighter text-white/30 group-hover:text-white/70 transition-colors">Perfil</span>
+</button>
+
 </nav>
 
 <div id="modal" class="fixed inset-0 z-[150] hidden opacity-0 transition-opacity duration-300">
