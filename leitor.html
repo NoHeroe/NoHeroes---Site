@@ -24,94 +24,88 @@
   .fade-in { animation: fadeIn 0.4s ease-out; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
   
-  .skeleton { background: linear-gradient(90deg, #0c0a10 25%, #1a1622 50%, #0c0a10 75%); background-size: 200% 100%; animation: loading 1.5s infinite; }
-  @keyframes loading { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+  .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08); }
+  .modal-enter { animation: modalIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+  @keyframes modalIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
 
-  .dropdown-anim { transform-origin: top right; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
-  .hidden-scale { opacity: 0; transform: scale(0.95) translateY(-10px); pointer-events: none; }
-
-  /* FIX DA BARRA MOBILE */
+  /* CORREÇÃO DEFINITIVA DA BARRA MOBILE */
   .mobile-bottom-nav {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      height: 70px;
-      background: rgba(7, 6, 10, 0.85);
-      backdrop-filter: blur(20px);
+      height: 64px;
+      background: rgba(7, 6, 10, 0.95);
+      backdrop-filter: blur(15px);
       border-top: 1px solid rgba(143, 79, 255, 0.2);
       display: flex;
-      flex-direction: row; /* Garante horizontal */
+      flex-direction: row; /* Alinhamento Horizontal */
       justify-content: space-around;
       align-items: center;
-      z-index: 90; /* Abaixo do modal, acima do conteúdo */
+      z-index: 50;
       padding-bottom: env(safe-area-inset-bottom);
   }
 </style>
 </head>
-<body class="bg-nh-bg text-white/90 font-sans antialiased overflow-x-hidden pb-24 sm:pb-0">
+<body class="bg-nh-bg text-white/90 font-sans antialiased overflow-x-hidden pb-20 sm:pb-0">
 
-<div id="toast" class="fixed top-20 right-4 z-[110] px-6 py-3 rounded-xl bg-nh-accent text-white font-bold text-sm shadow-glow transition-all duration-300 opacity-0 translate-x-10 pointer-events-none"></div>
-
-<header class="fixed top-0 inset-x-0 z-50 border-b border-nh-border bg-black/60 backdrop-blur-lg">
+<header class="fixed top-0 inset-x-0 z-40 border-b border-nh-border bg-black/60 backdrop-blur-lg">
   <nav class="mx-auto max-w-7xl px-4 h-16 flex items-center justify-between">
     <div class="flex items-center gap-2 cursor-pointer" onclick="resetHub()">
       <div class="h-7 w-7 rounded-lg grad-nh shadow-glow"></div>
       <span class="font-display text-xl text-grad">NoHeroes</span>
     </div>
-    
-    <div class="flex gap-6 items-center">
-        <button onclick="resetHub()" class="hidden md:block text-sm font-semibold text-nh-accent">Hub</button>
-        <button onclick="showToast('Em breve: Fóruns NoHeroes')" class="hidden md:block text-sm text-white/60 hover:text-white transition">Comunidade</button>
-        
-        <div class="relative">
-            <div id="userAvatar" onclick="toggleUserMenu()" class="h-9 w-9 rounded-full bg-nh-dark border border-nh-border grid place-items-center text-xs font-bold cursor-pointer hover:border-nh-accent transition overflow-hidden">
-                <span id="avatarInitial">R</span>
-            </div>
-            <div id="userMenu" class="absolute right-0 mt-3 w-56 bg-nh-dark border border-nh-border rounded-2xl shadow-2xl p-2 dropdown-anim hidden-scale">
-                <div class="px-4 py-3 border-b border-nh-border mb-2">
-                    <p class="text-xs text-white/40 uppercase font-black tracking-tighter">Explorador</p>
-                    <p id="userName" class="text-sm font-bold text-nh-gold">Raul Takagi</p>
-                </div>
-                <button onclick="showToast('Perfil em desenvolvimento...')" class="w-full text-left px-4 py-2 text-sm hover:bg-white/5 rounded-lg transition">👤 Meu Perfil</button>
-                <button onclick="showToast('Sua Biblioteca está vazia')" class="w-full text-left px-4 py-2 text-sm hover:bg-white/5 rounded-lg transition">📚 Biblioteca</button>
-                <div class="h-px bg-nh-border my-2"></div>
-                <button class="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-red-500/10 rounded-lg transition">Sair</button>
-            </div>
-        </div>
+    <div class="flex gap-4 items-center">
+        <button onclick="resetHub()" class="text-sm font-semibold text-nh-accent transition">Hub</button>
+        <button class="hidden sm:block text-sm text-white/60 hover:text-white transition">Comunidade</button>
+        <div id="userAvatar" class="h-8 w-8 rounded-full bg-nh-dark border border-nh-border grid place-items-center text-xs font-bold cursor-pointer hover:border-nh-accent transition">R</div>
     </div>
   </nav>
 </header>
 
 <main class="pt-16 min-h-screen">
-  
-  <section id="heroSection" class="relative h-[60vh] flex items-end overflow-hidden border-b border-nh-border/50">
-      <div class="absolute inset-0 flex items-center justify-center skeleton"></div>
+  <section id="heroSection" class="relative h-[65vh] flex items-end overflow-hidden border-b border-nh-border/50">
+      <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1200" class="absolute inset-0 w-full h-full object-cover opacity-40">
+      <div class="absolute inset-0 hero-mask"></div>
+      <div class="relative z-10 px-6 pb-16 max-w-4xl fade-in">
+          <span class="px-3 py-1 rounded-md grad-nh text-black text-[10px] font-black uppercase tracking-widest">Destaque</span>
+          <h1 class="text-5xl md:text-7xl font-display text-grad mt-4 uppercase">Azuos</h1>
+          <p class="text-white/60 mt-4 max-w-xl text-sm md:text-base leading-relaxed">As crônicas do Arauto Azuos em sua jornada pelo Abismo de Cristal. Uma história sobre sacrifício, sombras e o renascimento de um herói.</p>
+          <div class="mt-8 flex gap-3">
+              <button onclick="goToReader(1, 1)" class="px-8 py-3 rounded-xl grad-nh text-black font-bold text-xs uppercase tracking-widest active:scale-95 transition shadow-glow">Ler Agora</button>
+              <button onclick="openModal(1)" class="px-8 py-3 rounded-xl bg-white/5 border border-white/10 text-xs font-bold uppercase tracking-widest hover:bg-white/10 transition">Ver Detalhes</button>
+          </div>
+      </div>
   </section>
 
-  <section class="px-4 py-8 max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 sticky top-16 z-40 bg-nh-bg/90 backdrop-blur-md">
-    <div id="filterContainer" class="flex gap-2 overflow-x-auto w-full sm:w-auto pb-2 sm:pb-0 scroll-smooth no-scrollbar"></div>
-    <div class="relative w-full sm:w-80">
-        <input id="searchInput" type="text" placeholder="Buscar Azuos, Noctilum..." class="w-full bg-nh-dark border border-nh-border rounded-xl px-4 py-3 pl-11 text-sm outline-none focus:border-nh-accent transition shadow-inner">
-        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/20 text-lg">⌕</span>
+  <section class="px-4 py-8 max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 sticky top-16 z-30 bg-nh-bg/90 backdrop-blur-md">
+    <div id="filterContainer" class="flex gap-2 overflow-x-auto w-full sm:w-auto pb-2 sm:pb-0 no-scrollbar">
+        </div>
+    <div class="relative w-full sm:w-72">
+        <input id="searchInput" type="text" placeholder="Buscar nos reinos..." class="w-full bg-nh-dark border border-nh-border rounded-xl px-4 py-2.5 pl-10 text-sm outline-none focus:border-nh-accent transition">
+        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-white/40">⌕</span>
     </div>
   </section>
 
-  <section class="px-4 max-w-7xl mx-auto pb-20">
-    <h2 class="font-display text-2xl mb-8 flex items-center gap-4">
-        Explorar Obras <span class="h-px flex-1 bg-nh-border opacity-30"></span>
+  <section class="px-4 max-w-7xl mx-auto pb-20 min-h-[40vh]">
+    <h2 class="font-display text-2xl mb-6 flex items-center gap-3 text-grad">
+        Explorar Obras <span class="h-px flex-1 bg-nh-border opacity-20"></span>
     </h2>
-    <div id="worksGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6"></div>
+    <div id="worksGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        </div>
   </section>
 
-  <section class="mx-4 mb-20 max-w-6xl lg:mx-auto rounded-[2rem] p-8 bg-nh-dark border border-nh-accent/20 relative overflow-hidden shadow-glow">
+  <section class="mx-4 mb-24 max-w-5xl lg:mx-auto rounded-3xl p-8 sm:p-12 bg-nh-dark border border-nh-accent/20 relative overflow-hidden shadow-glow">
+    <div class="absolute top-0 right-0 w-64 h-64 bg-nh-accent/10 blur-[100px] rounded-full pointer-events-none"></div>
     <div class="relative z-10 flex flex-col md:flex-row items-center gap-8">
       <div class="flex-1 text-center md:text-left">
         <h2 class="font-display text-3xl text-grad">Seja um Arauto</h2>
-        <p class="text-white/60 mt-2 text-sm">Publicamos histórias épicas com visual Dark Fantasy.</p>
-        <button onclick="openPartnership()" class="mt-6 px-8 py-3 rounded-xl grad-nh text-black font-black text-xs uppercase tracking-widest transition shadow-glow">Propor Parceria</button>
+        <p class="text-white/60 mt-4 text-sm">Tem uma obra Dark Fantasy? Estamos em busca de parcerias para expandir o universo NoHeroes.</p>
+        <div class="mt-8 flex flex-wrap justify-center md:justify-start gap-3">
+          <a href="mailto:parceria@noheroes.com.br" class="px-6 py-3 rounded-xl grad-nh text-black font-bold text-xs tracking-widest uppercase active:scale-95 transition">Propor Parceria</a>
+        </div>
       </div>
-      <div class="text-6xl grayscale opacity-20">🖋️</div>
+      <div class="w-24 h-24 bg-nh-bg rounded-2xl border border-nh-border grid place-items-center text-4xl">🖋️</div>
     </div>
   </section>
 </main>
@@ -121,7 +115,7 @@
         <span class="text-xl">🏰</span>
         <span class="text-[9px] font-black uppercase">Hub</span>
     </button>
-    <button onclick="document.getElementById('searchInput').focus()" class="flex flex-col items-center gap-1 text-white/40 flex-1">
+    <button onclick="focusSearch()" class="flex flex-col items-center gap-1 text-white/40 flex-1">
         <span class="text-xl">🔍</span>
         <span class="text-[9px] font-black uppercase">Buscar</span>
     </button>
@@ -129,127 +123,46 @@
         <span class="text-xl">⭐</span>
         <span class="text-[9px] font-black uppercase">Destaque</span>
     </button>
-    <button onclick="toggleUserMenu()" class="flex flex-col items-center gap-1 text-white/40 flex-1">
+    <button class="flex flex-col items-center gap-1 text-white/40 flex-1">
         <span class="text-xl">👤</span>
         <span class="text-[9px] font-black uppercase">Perfil</span>
     </button>
 </div>
 
 <div id="detailsModal" class="fixed inset-0 z-[100] hidden">
-    <div class="absolute inset-0 bg-black/90 backdrop-blur-md" onclick="closeModal()"></div>
-    <div class="absolute bottom-0 sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 w-full sm:max-w-2xl bg-nh-dark border border-nh-border rounded-t-[2.5rem] sm:rounded-[2.5rem] overflow-hidden modal-enter shadow-2xl flex flex-col max-h-[90vh]">
-        <div id="modalBanner" class="h-48 w-full bg-cover bg-center relative">
-            <button onclick="closeModal()" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-black/50 text-white hover:bg-nh-accent transition z-10">✕</button>
-        </div>
-        <div id="modalContent" class="px-8 pb-10 overflow-y-auto custom-scrollbar -mt-12 relative z-10"></div>
+    <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeModal()"></div>
+    <div class="absolute bottom-0 sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 w-full sm:max-w-lg bg-nh-dark border border-nh-border rounded-t-3xl sm:rounded-3xl p-6 modal-enter shadow-2xl flex flex-col max-h-[85vh]">
+        <button onclick="closeModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/10 text-white hover:bg-nh-accent transition flex items-center justify-center">✕</button>
+        <div id="modalContent" class="overflow-y-auto pr-2">
+            </div>
     </div>
 </div>
 
 <script>
 const MockData = {
     works: [
-        { 
-            id: 1, title: 'Azuos', status: 'Destaque', season: 'S01', tags: ['Dark Fantasy'], 
-            synopsis: 'As crônicas do Arauto Azuos em sua jornada pelo Abismo de Cristal.',
-            thumb: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=400',
-            heroImg: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1200',
-            featured: true 
-        },
-        { 
-            id: 2, title: 'Noctilum', status: 'Novo', season: 'S01', tags: ['Medieval'], 
-            synopsis: 'Em Noctilum, o sol nunca se põe, mas a escuridão habita o coração.',
-            thumb: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=400',
-            heroImg: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=1200'
-        }
+        { id: 1, title: 'Azuos', status: 'Destaque', season: 'S01', tags: ['Dark Fantasy', 'Ação'], synopsis: 'As crônicas do Arauto Azuos em sua jornada pelo Abismo de Cristal.', thumb: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=400', featured: true },
+        { id: 2, title: 'Noctilum', status: 'Novo', season: 'S01', tags: ['Medieval', 'Mistério'], synopsis: 'Onde o sol nunca se põe, mas a escuridão habita o coração.', thumb: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=400' }
     ]
 };
 
-const state = { works: [], categories: ['Tudo', 'Dark Fantasy', 'Medieval', 'Seinen'], activeCategory: 'Tudo', searchQuery: '' };
+const state = {
+    works: MockData.works,
+    categories: ['Tudo', 'Dark Fantasy', 'Medieval', 'Seinen'],
+    activeCategory: 'Tudo',
+    searchQuery: ''
+};
+
 const $ = (q) => document.querySelector(q);
 
-function showToast(msg) {
-    const t = $('#toast');
-    t.textContent = msg;
-    t.classList.remove('opacity-0', 'translate-x-10', 'pointer-events-none');
-    setTimeout(() => t.classList.add('opacity-0', 'translate-x-10', 'pointer-events-none'), 3000);
-}
-
-function toggleUserMenu() { $('#userMenu').classList.toggle('hidden-scale'); }
-
-function renderHero() {
-    const hero = $('#heroSection');
-    const work = state.works.find(w => w.featured) || state.works[0];
-    hero.innerHTML = `
-        <img src="${work.heroImg}" class="absolute inset-0 w-full h-full object-cover opacity-40 fade-in">
-        <div class="absolute inset-0 hero-mask"></div>
-        <div class="relative z-10 px-6 pb-12 max-w-4xl fade-in">
-            <h1 class="text-5xl font-display text-grad uppercase">${work.title}</h1>
-            <p class="text-white/60 mt-4 max-w-xl text-sm line-clamp-2">${work.synopsis}</p>
-            <div class="mt-8 flex gap-4">
-                <button onclick="goToReader(${work.id}, 1)" class="px-8 py-3 rounded-xl grad-nh text-black font-black text-xs uppercase tracking-widest shadow-glow">Ler Agora</button>
-                <button onclick="openModal(${work.id})" class="px-8 py-3 rounded-xl bg-white/5 border border-white/10 text-xs font-bold uppercase tracking-widest">Detalhes</button>
-            </div>
-        </div>
-    `;
-}
-
-function renderWorks() {
-    const grid = $('#worksGrid');
-    const filtered = state.works.filter(w => {
-        const catMatch = state.activeCategory === 'Tudo' || w.tags.includes(state.activeCategory);
-        const searchMatch = w.title.toLowerCase().includes(state.searchQuery.toLowerCase());
-        return catMatch && searchMatch;
-    });
-
-    let html = filtered.map(w => `
-        <article class="group bg-nh-dark rounded-2xl overflow-hidden border border-nh-border hover:border-nh-accent transition-all duration-500 cursor-pointer" onclick="openModal(${w.id})">
-            <div class="aspect-[3/4] relative overflow-hidden">
-                <img src="${w.thumb}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-            </div>
-            <div class="p-4">
-                <h3 class="font-bold text-sm truncate group-hover:text-nh-accent transition">${w.title}</h3>
-                <p class="text-[9px] text-white/40 uppercase font-black mt-1">${w.tags[0]} • S01</p>
-            </div>
-        </article>
-    `).join('');
-
-    // PREENCHIMENTO VISUAL (SÓ APARECE SE NÃO ESTIVER BUSCANDO)
-    if (state.searchQuery === '' && state.activeCategory === 'Tudo') {
-        for (let i = 0; i < 3; i++) {
-            html += `
-            <div class="bg-nh-dark/30 rounded-2xl border border-white/5 p-4 flex flex-col items-center justify-center min-h-[200px] opacity-40 grayscale group">
-                <div class="w-10 h-10 rounded-full border border-nh-accent/20 grid place-items-center mb-3 group-hover:animate-pulse">
-                    <span class="text-nh-accent">📜</span>
-                </div>
-                <p class="text-[9px] font-black uppercase tracking-widest text-white/20">Em Breve</p>
-            </div>`;
-        }
-    }
-
-    grid.innerHTML = html;
-}
-
-function openModal(id) {
-    const w = state.works.find(work => work.id === id);
-    if(!w) return;
-    $('#modalBanner').style.backgroundImage = `url(${w.heroImg})`;
-    $('#modalContent').innerHTML = `
-        <h2 class="font-display text-3xl text-grad uppercase mb-4">${w.title}</h2>
-        <p class="text-white/60 text-sm mb-6">${w.synopsis}</p>
-        <button onclick="goToReader(${w.id}, 1)" class="w-full py-4 rounded-xl grad-nh text-black font-black uppercase tracking-widest text-xs">Iniciar Leitura</button>
-    `;
-    $('#detailsModal').classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
+function focusSearch() {
+    $('#searchInput').focus();
+    $('#searchInput').scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 function openFeaturedModal() {
-    const feat = state.works.find(w => w.featured);
-    if(feat) openModal(feat.id);
-}
-
-function closeModal() {
-    $('#detailsModal').classList.add('hidden');
-    document.body.style.overflow = '';
+    const featured = state.works.find(w => w.featured);
+    if(featured) openModal(featured.id);
 }
 
 function resetHub() {
@@ -264,19 +177,58 @@ function resetHub() {
 function renderFilters() {
     $('#filterContainer').innerHTML = state.categories.map(cat => `
         <button onclick="state.activeCategory='${cat}'; renderFilters(); renderWorks();" 
-                class="px-5 py-2 rounded-lg text-[10px] font-black uppercase tracking-tighter transition-all border
-                ${state.activeCategory === cat ? 'grad-nh text-black border-transparent shadow-glow' : 'bg-nh-card border-nh-border text-white/40'}">
+                class="px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border
+                ${state.activeCategory === cat ? 'grad-nh text-black border-transparent' : 'bg-nh-card border-nh-border text-white/40'}">
             ${cat}
         </button>
     `).join('');
 }
 
-async function bootstrap() {
-    await new Promise(r => setTimeout(r, 600));
-    state.works = MockData.works;
-    renderHero();
-    renderFilters();
-    renderWorks();
+function renderWorks() {
+    const grid = $('#worksGrid');
+    const filtered = state.works.filter(w => {
+        const catMatch = state.activeCategory === 'Tudo' || w.tags.includes(state.activeCategory);
+        const searchMatch = w.title.toLowerCase().includes(state.searchQuery.toLowerCase());
+        return catMatch && searchMatch;
+    });
+
+    grid.innerHTML = filtered.map(w => `
+        <article class="group bg-nh-dark rounded-2xl overflow-hidden border border-nh-border hover:border-nh-accent/50 transition-all duration-500 hover:-translate-y-1 cursor-pointer" onclick="openModal(${w.id})">
+            <div class="aspect-[2/3] overflow-hidden bg-black/40 relative">
+                <img src="${w.thumb}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-nh-bg to-transparent opacity-60"></div>
+                ${w.status ? `<div class="absolute top-3 right-3 px-2 py-1 bg-nh-accent text-white text-[9px] font-black rounded uppercase tracking-tighter">${w.status}</div>` : ''}
+            </div>
+            <div class="p-4 relative">
+                <h3 class="font-bold text-sm truncate group-hover:text-grad transition-colors">${w.title}</h3>
+                <div class="flex items-center justify-between mt-2">
+                    <span class="text-[9px] text-white/40 uppercase font-bold tracking-widest">${w.season}</span>
+                    <span class="text-[10px] text-nh-gold font-bold">${w.tags[0]}</span>
+                </div>
+            </div>
+        </article>
+    `).join('');
+}
+
+function openModal(id) {
+    const w = state.works.find(work => work.id === id);
+    if(!w) return;
+    $('#modalContent').innerHTML = `
+        <h2 class="font-display text-2xl text-grad uppercase mb-4">${w.title}</h2>
+        <p class="text-white/60 text-sm leading-relaxed mb-6">${w.synopsis}</p>
+        <button onclick="goToReader(${w.id}, 1)" class="w-full py-4 rounded-xl grad-nh text-black font-black uppercase tracking-widest text-xs">Iniciar Leitura</button>
+    `;
+    $('#detailsModal').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    $('#detailsModal').classList.add('hidden');
+    document.body.style.overflow = '';
+}
+
+function goToReader(id, ch) {
+    window.location.href = `leitor.html?id=${id}&ch=${ch}`;
 }
 
 $('#searchInput').oninput = (e) => {
@@ -284,7 +236,10 @@ $('#searchInput').oninput = (e) => {
     renderWorks();
 };
 
-document.addEventListener('DOMContentLoaded', bootstrap);
+document.addEventListener('DOMContentLoaded', () => {
+    renderFilters();
+    renderWorks();
+});
 </script>
 </body>
 </html>
