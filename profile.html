@@ -300,18 +300,70 @@ dialog[open] .dialog-ctr {
   </header>
 
   <!-- HERO -->
-<section class="relative py-8 px-6">
-  <div class="hero-wrap max-w-5xl mx-auto">
-    <img id="heroImg" src="/assets/images/banner1.jpg" alt="Destaque" class="hero-img card ring-gradient"/>
-    <div class="hero-dots" role="tablist" aria-label="Banners">
-      <button class="hero-dot" data-idx="0" aria-selected="true" aria-label="Banner 1"></button>
-      <button class="hero-dot" data-idx="1" aria-label="Banner 2"></button>
-      <button class="hero-dot" data-idx="2" aria-label="Banner 3"></button>
-      <button class="hero-dot" data-idx="3" aria-label="Banner 4"></button>
-      <button class="hero-dot" data-idx="4" aria-label="Banner 5"></button>
+<section id="heroSection" class="relative overflow-hidden rounded-[2rem] border border-purple-500/30 bg-[#121212]/60 backdrop-blur-md p-6 sm:p-8 shadow-2xl">
+    <div class="absolute -top-20 -right-20 w-80 h-80 bg-purple-600/10 rounded-full blur-[100px]"></div>
+    
+    <div class="relative flex flex-col lg:flex-row gap-8 items-start">
+      
+      <div class="flex items-center gap-6 w-full lg:w-1/2">
+        <div class="relative shrink-0">
+          <div class="absolute -inset-1 bg-gradient-to-tr from-purple-600 to-amber-400 rounded-full blur-sm opacity-40"></div>
+          <div class="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full border-2 border-white/10 overflow-hidden bg-black">
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Arauto" alt="Avatar" class="w-full h-full object-cover"/>
+          </div>
+          <div class="absolute -bottom-1 -right-1 bg-gradient-to-r from-purple-600 to-indigo-600 px-2 py-0.5 rounded-full border border-white/20 text-[10px] font-black text-white uppercase italic">
+            LVL <span id="userLevel">15</span>
+          </div>
+        </div>
+        
+        <div class="space-y-1">
+          <p class="text-amber-400/80 text-[10px] uppercase tracking-[0.2em] font-bold">Status: Arauto Ativo</p>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-white">
+            <span id="userName">Carregando...</span>
+          </h1>
+          <p id="userEmail" class="text-purple-300/50 text-xs italic truncate max-w-[200px]">email@noheroes.com</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-3 w-full lg:w-1/2 lg:justify-end">
+        <button id="btnEditProfile" class="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs font-bold hover:bg-purple-500/20 transition-all text-gray-300">
+           <span>Editar Perfil</span>
+        </button>
+
+        <a href="https://discord.gg/seulink" target="_blank" class="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#5865F2]/20 border border-[#5865F2]/30 text-xs font-bold hover:scale-105 transition-all text-[#9da5ff]">
+           <span>Discord</span>
+        </a>
+        <a href="https://wa.me/seulink" target="_blank" class="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#25D366]/10 border border-[#25D366]/30 text-xs font-bold hover:scale-105 transition-all text-[#85f7ae]">
+           <span>WhatsApp</span>
+        </a>
+      </div>
     </div>
-  </div>
-</section>
+
+    <div class="mt-8 pt-6 border-t border-white/5 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+      <div class="group cursor-help">
+        <p class="text-[10px] text-gray-500 uppercase font-bold tracking-widest group-hover:text-purple-400 transition">Mangás Lidos</p>
+        <p class="text-xl font-black text-purple-100">142 <span class="text-[10px] text-purple-500/50 italic">caps</span></p>
+      </div>
+      <div class="group cursor-help">
+        <p class="text-[10px] text-gray-500 uppercase font-bold tracking-widest group-hover:text-amber-400 transition">Favoritos</p>
+        <p class="text-xl font-black text-amber-100">12 <span class="text-[10px] text-amber-500/50 italic">obras</span></p>
+      </div>
+      </div>
+  </section>
+
+  <section class="space-y-6">
+    <div class="flex flex-wrap items-center gap-4 border-b border-white/5 pb-2">
+      <button class="pb-2 border-b-2 border-purple-500 text-purple-100 font-bold text-sm">Continuar Lendo</button>
+      <button class="pb-2 border-b-2 border-transparent text-gray-500 hover:text-gray-300 font-bold text-sm transition">Meus Favoritos</button>
+      <button class="pb-2 border-b-2 border-transparent text-gray-500 hover:text-gray-300 font-bold text-sm transition">Lidos recentemente</button>
+    </div>
+
+    <div id="mangaGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+      <div class="animate-pulse bg-white/5 rounded-2xl aspect-[3/4] border border-white/5"></div>
+      <div class="animate-pulse bg-white/5 rounded-2xl aspect-[3/4] border border-white/5"></div>
+      <div class="animate-pulse bg-white/5 rounded-2xl aspect-[3/4] border border-white/5"></div>
+    </div>
+  </section>
 
   <!-- GRID -->
   <main class="grid grid-cols-1 md:grid-cols-3 gap-8 px-6 pb-10">
