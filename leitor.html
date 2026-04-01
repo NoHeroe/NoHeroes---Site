@@ -458,20 +458,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderHero();
     renderFilters();
     renderGrid();
-    
-    // 4. CHECK DE DEEP LINKING (APENAS SE O ID FOR EXPLÍCITO NA URL)
-    const urlParams = new URLSearchParams(window.location.search);
-    const workId = urlParams.get('id');
-    
-    // Só abre o modal se o ID existir na URL E se esse ID for válido no nosso banco de dados
-    if (workId && !isNaN(workId)) {
-        const idInt = parseInt(workId);
-        const exists = STATE.data.find(w => w.id === idInt);
-        if (exists) {
-            openModal(idInt);
-        }
-    }
-});
 
 </script>
 </body>
