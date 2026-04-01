@@ -438,7 +438,7 @@ function resetHub() {
     renderGrid();
 }
 
-/* --- 5. INITIALIZATION --- */
+/* --- 5. INITIALIZATION (VERSÃO CORRIGIDA) --- */
 UI.searchInput.oninput = (e) => {
     STATE.searchQuery = e.target.value;
     renderGrid();
@@ -447,18 +447,30 @@ UI.searchInput.oninput = (e) => {
 window.addEventListener("resize", initCanvas);
 
 document.addEventListener('DOMContentLoaded', async () => {
+    // 1. Inicia o visual de fundo imediatamente
     initCanvas();
     animate();
     
-    await fetchWorks(); // Simula o carregamento do backend
+    // 2. Busca os dados (ativa o skeleton loader automaticamente)
+    await fetchWorks(); 
+    
+    // 3. Renderiza a interface com os dados carregados
     renderHero();
     renderFilters();
     renderGrid();
     
-    // Check para Deep Linking (Abrir obra direto pela URL)
+    // 4. CHECK DE DEEP LINKING (APENAS SE O ID FOR EXPLÍCITO NA URL)
     const urlParams = new URLSearchParams(window.location.search);
     const workId = urlParams.get('id');
-    if (workId) openModal(parseInt(workId));
+    
+    // Só abre o modal se o ID existir na URL E se esse ID for válido no nosso banco de dados
+    if (workId && !isNaN(workId)) {
+        const idInt = parseInt(workId);
+        const exists = STATE.data.find(w => w.id === idInt);
+        if (exists) {
+            openModal(idInt);
+        }
+    }
 });
 
 </script>
