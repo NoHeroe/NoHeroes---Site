@@ -1,244 +1,324 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>NoHeroes • Hub de Obras</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-  tailwind.config = {
-    theme: { extend: {
-      colors:{ nh:{ bg:'#07060a', dark:'#0c0a10', accent:'#8f4fff', gold:'#d9b55a', border:'rgba(255,255,255,0.08)', card:'rgba(255,255,255,0.04)' } },
-      boxShadow:{ glow:'0 0 30px rgba(143,79,255,0.2)'},
-      fontFamily:{ display:['Cinzel Decorative','serif'], sans:['Inter','sans-serif']}
-    } }
-  }
-</script>
-<style>
-  .grad-nh{background:linear-gradient(135deg,#8f4fff 0%,#d9b55a 100%);}
-  .text-grad{background:linear-gradient(135deg,#b891ff 0%, #f5e3a5 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .hero-mask{background:linear-gradient(to top, #07060a 10%, transparent 100%);}
-  ::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-thumb{background:#2b2440;border-radius:99px}
-  
-  .fade-in { animation: fadeIn 0.4s ease-out; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-  
-  .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08); }
-  .modal-enter { animation: modalIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
-  @keyframes modalIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>NoHeroes • Realm Hub</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Cinzel+Decorative:wght@700;900&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        nh: {
+                            bg: '#050507',
+                            dark: '#0c0a12',
+                            accent: '#8f4fff',
+                            gold: '#d9b55a',
+                            border: 'rgba(143, 79, 255, 0.15)',
+                            glass: 'rgba(255, 255, 255, 0.03)'
+                        }
+                    },
+                    fontFamily: {
+                        display: ['Cinzel Decorative', 'serif'],
+                        sans: ['Inter', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'glow': '0 0 20px rgba(143, 79, 255, 0.25)',
+                        'gold-glow': '0 0 20px rgba(217, 181, 90, 0.15)'
+                    }
+                }
+            }
+        }
+    </script>
 
-  /* CORREÇÃO DEFINITIVA DA BARRA MOBILE */
-  .mobile-bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 64px;
-      background: rgba(7, 6, 10, 0.95);
-      backdrop-filter: blur(15px);
-      border-top: 1px solid rgba(143, 79, 255, 0.2);
-      display: flex;
-      flex-direction: row; /* Alinhamento Horizontal */
-      justify-content: space-around;
-      align-items: center;
-      z-index: 50;
-      padding-bottom: env(safe-area-inset-bottom);
-  }
-</style>
+    <style>
+        /* UI Estilizada */
+        body { background-color: #050507; color: #e5e7eb; -webkit-tap-highlight-color: transparent; }
+        .text-grad { background: linear-gradient(135deg, #b891ff 0%, #f5e3a5 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .grad-nh { background: linear-gradient(135deg, #8f4fff 0%, #d9b55a 100%); }
+        .hero-mask { background: linear-gradient(to top, #050507 5%, rgba(5, 5, 7, 0.8) 40%, transparent 100%); }
+        
+        /* Glassmorphism Profissional */
+        .glass { background: rgba(12, 10, 18, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); }
+        
+        /* Mobile Nav Fix */
+        .mobile-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 72px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+            padding-bottom: env(safe-area-inset-bottom);
+            z-index: 100;
+        }
+
+        /* Animações de Entrada */
+        .fade-up { animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Custom Scroll */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: #2b2440; border-radius: 10px; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
 </head>
-<body class="bg-nh-bg text-white/90 font-sans antialiased overflow-x-hidden pb-20 sm:pb-0">
+<body class="font-sans antialiased overflow-x-hidden pb-24 sm:pb-0">
 
-<header class="fixed top-0 inset-x-0 z-40 border-b border-nh-border bg-black/60 backdrop-blur-lg">
-  <nav class="mx-auto max-w-7xl px-4 h-16 flex items-center justify-between">
-    <div class="flex items-center gap-2 cursor-pointer" onclick="resetHub()">
-      <div class="h-7 w-7 rounded-lg grad-nh shadow-glow"></div>
-      <span class="font-display text-xl text-grad">NoHeroes</span>
-    </div>
-    <div class="flex gap-4 items-center">
-        <button onclick="resetHub()" class="text-sm font-semibold text-nh-accent transition">Hub</button>
-        <button class="hidden sm:block text-sm text-white/60 hover:text-white transition">Comunidade</button>
-        <div id="userAvatar" class="h-8 w-8 rounded-full bg-nh-dark border border-nh-border grid place-items-center text-xs font-bold cursor-pointer hover:border-nh-accent transition">R</div>
-    </div>
-  </nav>
+<div id="toast" class="fixed top-6 right-6 z-[200] px-6 py-3 rounded-2xl glass text-white text-sm font-bold opacity-0 translate-y-[-20px] transition-all duration-300 pointer-events-none"></div>
+
+<header class="fixed top-0 inset-x-0 z-50 glass h-16 border-b border-nh-border/30">
+    <nav class="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
+        <div class="flex items-center gap-3 cursor-pointer" onclick="resetHub()">
+            <div class="h-8 w-8 rounded-xl grad-nh shadow-glow rotate-45"></div>
+            <span class="font-display text-xl tracking-tighter text-grad uppercase font-black">NoHeroes</span>
+        </div>
+        
+        <div class="hidden md:flex gap-8 items-center">
+            <button onclick="resetHub()" class="text-xs font-black uppercase tracking-widest text-nh-accent">Hub</button>
+            <button onclick="showToast('Sintonizando Fóruns...')" class="text-xs font-black uppercase tracking-widest text-white/40 hover:text-white transition">Comunidade</button>
+            <div class="h-10 w-10 rounded-full border border-nh-border bg-nh-dark grid place-items-center cursor-pointer hover:border-nh-accent transition group">
+                <span id="userInitial" class="text-xs font-black group-hover:scale-110 transition">R</span>
+            </div>
+        </div>
+    </nav>
 </header>
 
-<main class="pt-16 min-h-screen">
-  <section id="heroSection" class="relative h-[65vh] flex items-end overflow-hidden border-b border-nh-border/50">
-      <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1200" class="absolute inset-0 w-full h-full object-cover opacity-40">
-      <div class="absolute inset-0 hero-mask"></div>
-      <div class="relative z-10 px-6 pb-16 max-w-4xl fade-in">
-          <span class="px-3 py-1 rounded-md grad-nh text-black text-[10px] font-black uppercase tracking-widest">Destaque</span>
-          <h1 class="text-5xl md:text-7xl font-display text-grad mt-4 uppercase">Azuos</h1>
-          <p class="text-white/60 mt-4 max-w-xl text-sm md:text-base leading-relaxed">As crônicas do Arauto Azuos em sua jornada pelo Abismo de Cristal. Uma história sobre sacrifício, sombras e o renascimento de um herói.</p>
-          <div class="mt-8 flex gap-3">
-              <button onclick="goToReader(1, 1)" class="px-8 py-3 rounded-xl grad-nh text-black font-bold text-xs uppercase tracking-widest active:scale-95 transition shadow-glow">Ler Agora</button>
-              <button onclick="openModal(1)" class="px-8 py-3 rounded-xl bg-white/5 border border-white/10 text-xs font-bold uppercase tracking-widest hover:bg-white/10 transition">Ver Detalhes</button>
-          </div>
-      </div>
-  </section>
+<main>
+    <section id="hero-display" class="relative h-[75vh] w-full flex items-end overflow-hidden border-b border-nh-border/20">
+        </section>
 
-  <section class="px-4 py-8 max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 sticky top-16 z-30 bg-nh-bg/90 backdrop-blur-md">
-    <div id="filterContainer" class="flex gap-2 overflow-x-auto w-full sm:w-auto pb-2 sm:pb-0 no-scrollbar">
+    <section class="sticky top-16 z-40 glass border-b border-nh-border/10">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row gap-4 items-center justify-between">
+            <div id="filter-bar" class="flex gap-2 overflow-x-auto w-full no-scrollbar">
+                </div>
+            <div class="relative w-full md:w-80 group">
+                <input id="search-input" type="text" placeholder="Buscar Crônicas..." class="w-full bg-black/40 border border-white/5 rounded-2xl py-3 pl-12 text-sm focus:border-nh-accent/50 outline-none transition group-hover:border-white/10">
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/20">🔍</span>
+            </div>
         </div>
-    <div class="relative w-full sm:w-72">
-        <input id="searchInput" type="text" placeholder="Buscar nos reinos..." class="w-full bg-nh-dark border border-nh-border rounded-xl px-4 py-2.5 pl-10 text-sm outline-none focus:border-nh-accent transition">
-        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-white/40">⌕</span>
-    </div>
-  </section>
+    </section>
 
-  <section class="px-4 max-w-7xl mx-auto pb-20 min-h-[40vh]">
-    <h2 class="font-display text-2xl mb-6 flex items-center gap-3 text-grad">
-        Explorar Obras <span class="h-px flex-1 bg-nh-border opacity-20"></span>
-    </h2>
-    <div id="worksGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+    <section class="max-w-7xl mx-auto px-4 py-12">
+        <div class="flex items-center gap-4 mb-10">
+            <h2 class="font-display text-2xl text-grad uppercase tracking-widest">Biblioteca</h2>
+            <div class="h-[1px] flex-1 bg-nh-border/30"></div>
         </div>
-  </section>
+        <div id="works-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+            </div>
+    </section>
 
-  <section class="mx-4 mb-24 max-w-5xl lg:mx-auto rounded-3xl p-8 sm:p-12 bg-nh-dark border border-nh-accent/20 relative overflow-hidden shadow-glow">
-    <div class="absolute top-0 right-0 w-64 h-64 bg-nh-accent/10 blur-[100px] rounded-full pointer-events-none"></div>
-    <div class="relative z-10 flex flex-col md:flex-row items-center gap-8">
-      <div class="flex-1 text-center md:text-left">
-        <h2 class="font-display text-3xl text-grad">Seja um Arauto</h2>
-        <p class="text-white/60 mt-4 text-sm">Tem uma obra Dark Fantasy? Estamos em busca de parcerias para expandir o universo NoHeroes.</p>
-        <div class="mt-8 flex flex-wrap justify-center md:justify-start gap-3">
-          <a href="mailto:parceria@noheroes.com.br" class="px-6 py-3 rounded-xl grad-nh text-black font-bold text-xs tracking-widest uppercase active:scale-95 transition">Propor Parceria</a>
+    <section class="max-w-5xl mx-auto px-4 mb-32">
+        <div class="relative rounded-[2.5rem] p-10 md:p-16 overflow-hidden glass border-nh-accent/20">
+            <div class="absolute -top-20 -right-20 w-80 h-80 bg-nh-accent/10 blur-[100px] rounded-full"></div>
+            <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-10">
+                <div class="text-center md:text-left">
+                    <h2 class="font-display text-4xl text-grad leading-tight mb-4 uppercase">Torne-se um Arauto</h2>
+                    <p class="text-white/50 text-lg max-w-md">Sua história merece o padrão Dark Fantasy. Una-se ao conselho NoHeroes.</p>
+                </div>
+                <button onclick="location.href='mailto:parceria@noheroes.com.br'" class="px-12 py-5 rounded-2xl grad-nh text-black font-black uppercase tracking-widest text-xs hover:scale-105 active:scale-95 transition shadow-glow">Propor Obra</button>
+            </div>
         </div>
-      </div>
-      <div class="w-24 h-24 bg-nh-bg rounded-2xl border border-nh-border grid place-items-center text-4xl">🖋️</div>
-    </div>
-  </section>
+    </section>
 </main>
 
-<div class="mobile-bottom-nav sm:hidden">
-    <button onclick="resetHub()" class="flex flex-col items-center gap-1 text-nh-accent flex-1">
-        <span class="text-xl">🏰</span>
-        <span class="text-[9px] font-black uppercase">Hub</span>
+<nav class="mobile-nav glass md:hidden">
+    <button onclick="resetHub()" class="flex flex-col items-center gap-1 flex-1 text-nh-accent">
+        <span class="text-2xl">🏰</span>
+        <span class="text-[9px] font-black uppercase tracking-tighter">Hub</span>
     </button>
-    <button onclick="focusSearch()" class="flex flex-col items-center gap-1 text-white/40 flex-1">
-        <span class="text-xl">🔍</span>
-        <span class="text-[9px] font-black uppercase">Buscar</span>
+    <button onclick="focusSearch()" class="flex flex-col items-center gap-1 flex-1 text-white/30">
+        <span class="text-2xl">🔍</span>
+        <span class="text-[9px] font-black uppercase tracking-tighter">Buscar</span>
     </button>
-    <button onclick="openFeaturedModal()" class="flex flex-col items-center gap-1 text-white/40 flex-1">
-        <span class="text-xl">⭐</span>
-        <span class="text-[9px] font-black uppercase">Destaque</span>
+    <button onclick="openFeatured()" class="flex flex-col items-center gap-1 flex-1 text-white/30">
+        <span class="text-2xl">⭐</span>
+        <span class="text-[9px] font-black uppercase tracking-tighter">Destaque</span>
     </button>
-    <button class="flex flex-col items-center gap-1 text-white/40 flex-1">
-        <span class="text-xl">👤</span>
-        <span class="text-[9px] font-black uppercase">Perfil</span>
+    <button onclick="showToast('Perfil NoHeroes em breve')" class="flex flex-col items-center gap-1 flex-1 text-white/30">
+        <span class="text-2xl">👤</span>
+        <span class="text-[9px] font-black uppercase tracking-tighter">Perfil</span>
     </button>
-</div>
+</nav>
 
-<div id="detailsModal" class="fixed inset-0 z-[100] hidden">
-    <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeModal()"></div>
-    <div class="absolute bottom-0 sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 w-full sm:max-w-lg bg-nh-dark border border-nh-border rounded-t-3xl sm:rounded-3xl p-6 modal-enter shadow-2xl flex flex-col max-h-[85vh]">
-        <button onclick="closeModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/10 text-white hover:bg-nh-accent transition flex items-center justify-center">✕</button>
-        <div id="modalContent" class="overflow-y-auto pr-2">
-            </div>
-    </div>
+<div id="modal" class="fixed inset-0 z-[150] hidden opacity-0 transition-opacity duration-300">
+    <div class="absolute inset-0 bg-black/90 backdrop-blur-md" onclick="closeModal()"></div>
+    <div class="absolute bottom-0 md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 w-full md:max-w-2xl glass md:rounded-[3rem] rounded-t-[3rem] overflow-hidden transform translate-y-full md:translate-y-0 transition-transform duration-500" id="modal-content">
+        </div>
 </div>
 
 <script>
-const MockData = {
+/* --- Configurações e Dados --- */
+const DATA = {
     works: [
-        { id: 1, title: 'Azuos', status: 'Destaque', season: 'S01', tags: ['Dark Fantasy', 'Ação'], synopsis: 'As crônicas do Arauto Azuos em sua jornada pelo Abismo de Cristal.', thumb: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=400', featured: true },
-        { id: 2, title: 'Noctilum', status: 'Novo', season: 'S01', tags: ['Medieval', 'Mistério'], synopsis: 'Onde o sol nunca se põe, mas a escuridão habita o coração.', thumb: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=400' }
+        {
+            id: 1, title: 'Azuos', status: 'S01 • On-going', category: 'Dark Fantasy',
+            desc: 'Onde as sombras caminham, um herói renasce. A jornada de Azuos pelo Abismo de Cristal começa aqui.',
+            thumb: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80',
+            hero: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80',
+            tags: ['Ação', 'Seinen', 'Supernatural'], featured: true
+        },
+        {
+            id: 2, title: 'Noctilum', status: 'S01 • Novo', category: 'Medieval',
+            desc: 'Em um mundo onde o sol é apenas uma lenda, a luz artificial de Noctilum é a única esperança contra os monstros.',
+            thumb: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80',
+            hero: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1200&q=80',
+            tags: ['Mistério', 'Gótico', 'Horror']
+        }
     ]
 };
 
-const state = {
-    works: MockData.works,
-    categories: ['Tudo', 'Dark Fantasy', 'Medieval', 'Seinen'],
-    activeCategory: 'Tudo',
-    searchQuery: ''
-};
+let activeFilter = 'Tudo';
+let query = '';
 
-const $ = (q) => document.querySelector(q);
+/* --- Core Engine --- */
+const $ = (id) => document.getElementById(id);
+
+function showToast(msg) {
+    const t = $('toast');
+    t.innerText = msg;
+    t.style.opacity = '1';
+    t.style.transform = 'translateY(0)';
+    setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateY(-20px)'; }, 3000);
+}
 
 function focusSearch() {
-    $('#searchInput').focus();
-    $('#searchInput').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    window.scrollTo({ top: $('search-input').offsetTop - 100, behavior: 'smooth' });
+    $('search-input').focus();
 }
 
-function openFeaturedModal() {
-    const featured = state.works.find(w => w.featured);
-    if(featured) openModal(featured.id);
+function openFeatured() {
+    const feat = DATA.works.find(w => w.featured);
+    if(feat) openModal(feat.id);
 }
 
-function resetHub() {
-    state.activeCategory = 'Tudo';
-    state.searchQuery = '';
-    $('#searchInput').value = '';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    renderFilters();
-    renderWorks();
+/* --- Renderização --- */
+function renderHero() {
+    const work = DATA.works.find(w => w.featured) || DATA.works[0];
+    $('hero-display').innerHTML = `
+        <img src="${work.hero}" class="absolute inset-0 w-full h-full object-cover opacity-50 scale-105">
+        <div class="absolute inset-0 hero-mask"></div>
+        <div class="relative z-10 p-8 md:p-20 max-w-4xl fade-up">
+            <span class="px-4 py-1 rounded-full border border-nh-accent/30 bg-nh-accent/10 text-nh-accent text-[10px] font-black uppercase tracking-[0.3em]">Em Destaque</span>
+            <h1 class="text-6xl md:text-8xl font-display text-grad mt-6 leading-none uppercase">${work.title}</h1>
+            <p class="text-white/60 mt-6 text-lg max-w-xl italic leading-relaxed">"${work.desc}"</p>
+            <div class="mt-10 flex flex-wrap gap-4">
+                <button onclick="location.href='leitor.html?id=${work.id}'" class="px-12 py-5 rounded-2xl grad-nh text-black font-black uppercase tracking-widest text-xs shadow-glow">Iniciar Leitura</button>
+                <button onclick="openModal(${work.id})" class="px-12 py-5 rounded-2xl glass text-white font-black uppercase tracking-widest text-xs">Ficha Técnica</button>
+            </div>
+        </div>
+    `;
 }
 
 function renderFilters() {
-    $('#filterContainer').innerHTML = state.categories.map(cat => `
-        <button onclick="state.activeCategory='${cat}'; renderFilters(); renderWorks();" 
-                class="px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border
-                ${state.activeCategory === cat ? 'grad-nh text-black border-transparent' : 'bg-nh-card border-nh-border text-white/40'}">
-            ${cat}
+    const cats = ['Tudo', 'Dark Fantasy', 'Medieval', 'Mistério', 'Ação'];
+    $('filter-bar').innerHTML = cats.map(c => `
+        <button onclick="setFilter('${c}')" class="px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all
+            ${activeFilter === c ? 'grad-nh text-black shadow-glow' : 'glass text-white/40 hover:text-white'}">
+            ${c}
         </button>
     `).join('');
 }
 
-function renderWorks() {
-    const grid = $('#worksGrid');
-    const filtered = state.works.filter(w => {
-        const catMatch = state.activeCategory === 'Tudo' || w.tags.includes(state.activeCategory);
-        const searchMatch = w.title.toLowerCase().includes(state.searchQuery.toLowerCase());
-        return catMatch && searchMatch;
+function setFilter(c) {
+    activeFilter = c;
+    renderFilters();
+    renderGrid();
+}
+
+function renderGrid() {
+    const filtered = DATA.works.filter(w => {
+        const matchesCat = activeFilter === 'Tudo' || w.category === activeFilter || w.tags.includes(activeFilter);
+        const matchesSearch = w.title.toLowerCase().includes(query.toLowerCase());
+        return matchesCat && matchesSearch;
     });
 
-    grid.innerHTML = filtered.map(w => `
-        <article class="group bg-nh-dark rounded-2xl overflow-hidden border border-nh-border hover:border-nh-accent/50 transition-all duration-500 hover:-translate-y-1 cursor-pointer" onclick="openModal(${w.id})">
-            <div class="aspect-[2/3] overflow-hidden bg-black/40 relative">
-                <img src="${w.thumb}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                <div class="absolute inset-0 bg-gradient-to-t from-nh-bg to-transparent opacity-60"></div>
-                ${w.status ? `<div class="absolute top-3 right-3 px-2 py-1 bg-nh-accent text-white text-[9px] font-black rounded uppercase tracking-tighter">${w.status}</div>` : ''}
-            </div>
-            <div class="p-4 relative">
-                <h3 class="font-bold text-sm truncate group-hover:text-grad transition-colors">${w.title}</h3>
-                <div class="flex items-center justify-between mt-2">
-                    <span class="text-[9px] text-white/40 uppercase font-bold tracking-widest">${w.season}</span>
-                    <span class="text-[10px] text-nh-gold font-bold">${w.tags[0]}</span>
+    if(filtered.length === 0) {
+        $('works-grid').innerHTML = `<div class="col-span-full py-20 text-center opacity-20 font-display uppercase tracking-widest">Nenhuma obra encontrada.</div>`;
+        return;
+    }
+
+    $('works-grid').innerHTML = filtered.map(w => `
+        <article class="group relative cursor-pointer fade-up" onclick="openModal(${w.id})">
+            <div class="aspect-[3/4.5] rounded-[2rem] overflow-hidden border border-white/5 group-hover:border-nh-accent/50 transition-all duration-500 shadow-2xl">
+                <img src="${w.thumb}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000">
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
+                <div class="absolute bottom-6 left-6 right-6">
+                    <p class="text-[9px] font-black text-nh-accent uppercase tracking-[0.2em] mb-2">${w.category}</p>
+                    <h3 class="text-lg font-bold text-white group-hover:text-grad transition-colors">${w.title}</h3>
                 </div>
             </div>
         </article>
     `).join('');
 }
 
+/* --- Modais --- */
 function openModal(id) {
-    const w = state.works.find(work => work.id === id);
-    if(!w) return;
-    $('#modalContent').innerHTML = `
-        <h2 class="font-display text-2xl text-grad uppercase mb-4">${w.title}</h2>
-        <p class="text-white/60 text-sm leading-relaxed mb-6">${w.synopsis}</p>
-        <button onclick="goToReader(${w.id}, 1)" class="w-full py-4 rounded-xl grad-nh text-black font-black uppercase tracking-widest text-xs">Iniciar Leitura</button>
+    const w = DATA.works.find(work => work.id === id);
+    const m = $('modal');
+    const mc = $('modal-content');
+    
+    mc.innerHTML = `
+        <div class="h-64 relative bg-cover bg-center" style="background-image: url('${w.hero}')">
+            <div class="absolute inset-0 bg-gradient-to-t from-nh-dark to-transparent"></div>
+            <button onclick="closeModal()" class="absolute top-6 right-6 h-12 w-12 rounded-full glass flex items-center justify-center text-xl">✕</button>
+        </div>
+        <div class="p-10 -mt-12 relative z-10">
+            <div class="flex flex-wrap gap-2 mb-6">
+                ${w.tags.map(t => `<span class="px-4 py-1.5 rounded-full glass text-[9px] font-black uppercase text-nh-gold border-nh-gold/20 shadow-gold-glow">${t}</span>`).join('')}
+            </div>
+            <h2 class="font-display text-4xl text-grad uppercase mb-6">${w.title}</h2>
+            <p class="text-white/60 leading-relaxed mb-10 text-lg">${w.desc}</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <button onclick="location.href='leitor.html?id=${w.id}'" class="py-5 rounded-2xl grad-nh text-black font-black uppercase tracking-widest text-xs">Começar Leitura</button>
+                <button onclick="showToast('Adicionado à Biblioteca')" class="py-5 rounded-2xl glass text-white font-black uppercase tracking-widest text-xs">Salvar nos Favoritos</button>
+            </div>
+        </div>
     `;
-    $('#detailsModal').classList.remove('hidden');
+    
+    m.classList.remove('hidden');
+    setTimeout(() => {
+        m.classList.add('opacity-100');
+        mc.classList.remove('translate-y-full');
+    }, 10);
     document.body.style.overflow = 'hidden';
 }
 
 function closeModal() {
-    $('#detailsModal').classList.add('hidden');
-    document.body.style.overflow = '';
+    const m = $('modal');
+    const mc = $('modal-content');
+    m.classList.remove('opacity-100');
+    mc.classList.add('translate-y-full');
+    setTimeout(() => m.classList.add('hidden'), 300);
+    document.body.style.overflow = 'auto';
 }
 
-function goToReader(id, ch) {
-    window.location.href = `leitor.html?id=${id}&ch=${ch}`;
+function resetHub() {
+    activeFilter = 'Tudo';
+    query = '';
+    $('search-input').value = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    renderFilters();
+    renderGrid();
 }
 
-$('#searchInput').oninput = (e) => {
-    state.searchQuery = e.target.value;
-    renderWorks();
+/* --- Listeners --- */
+$('search-input').oninput = (e) => {
+    query = e.target.value;
+    renderGrid();
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+    renderHero();
     renderFilters();
-    renderWorks();
+    renderGrid();
 });
 </script>
 </body>
