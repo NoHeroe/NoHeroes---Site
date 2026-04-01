@@ -131,3 +131,26 @@
         </div>
     </div>
 </div>
+
+
+<script>
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const drawer = document.getElementById('drawer');
+const overlay = document.getElementById('drawerOverlay');
+
+let isDrawerOpen = false;
+
+function toggleDrawer() {
+  isDrawerOpen = !isDrawerOpen;
+
+  // Transições certas: abre e fecha para a direita
+  drawer.style.transform = isDrawerOpen ? 'translateX(0)' : 'translateX(100%)';
+
+  overlay.style.display = isDrawerOpen ? 'block' : 'none';
+  hamburgerBtn.textContent = isDrawerOpen ? '✕' : '☰';
+}
+
+hamburgerBtn.addEventListener('click', toggleDrawer);
+overlay.addEventListener('click', toggleDrawer);
+
+</script>
