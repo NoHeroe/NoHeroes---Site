@@ -5,9 +5,12 @@
   <title>NoHeroes | Inventário (Meus Produtos)</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
   <style>
-    /* =========================================
+/* =========================================
    NoHeroes — Inventário (Meus Produtos)
-   Paleta e estilos unificados
+   CSS unificado, sem redundâncias
+   Ajustes:
+   - Botões: roxo/dourado (remove vermelho/preto)
+   - Imagens nos slots: sempre inteiras (contain)
    ========================================= */
 
 /* ---------- Variáveis de design ---------- */
@@ -27,9 +30,9 @@
   --nh-rgb:155,89,182;          /* roxo NoHeroes (glow) */
   --gold:#c29546;               /* dourado */
 
-  /* Gradientes principais pedidos */
+  /* Gradientes NoHeroes */
   --grad-title:linear-gradient(90deg,#7c3aed,#c29546); /* roxo -> dourado */
-  --grad-btn:linear-gradient(90deg,#8b0000,#000000);  /* vinho -> preto */
+  --grad-btn:linear-gradient(90deg,#7c3aed,#c29546);   /* roxo -> dourado */
 
   --shadow:rgba(0,0,0,.6);
 }
@@ -38,6 +41,7 @@
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{height:100%}
 body{
+  width:100%;
   background:
     radial-gradient(1200px 600px at 70% -10%, rgba(var(--nh-rgb),.08), transparent 60%),
     radial-gradient(900px 500px at -10% 40%, rgba(210,180,140,.06), transparent 60%),
@@ -45,17 +49,26 @@ body{
   color:var(--text);
   font-family:"Share Tech Mono", monospace;
   overflow-x:hidden;
+  overflow-y:auto;
 }
 
-/* ---------- Canvas de brasas ---------- */
-#brasas{position:fixed;inset:0;z-index:-1;opacity:.15}
+/* Canvas brasas */
+#brasasCanvas{
+  position:fixed;
+  inset:0;
+  width:100vw;
+  height:100vh;
+  z-index:0;
+  pointer-events:none;
+}
 
 /* =========================================
-   HUD (manter exatamente como no arquivo)
+   HUD
    ========================================= */
 .hud{
   position:fixed; top:0; left:0; right:0;
-  display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between;
+  display:flex; flex-wrap:wrap; gap:12px;
+  align-items:center; justify-content:space-between;
   padding:10px 16px;
   background:rgba(10,10,10,.9);
   border-bottom:2px solid var(--border);
@@ -65,57 +78,57 @@ body{
 .hud .group{display:flex;gap:12px;align-items:center}
 .badge{
   font-family:"Cinzel Decorative",serif;
-  padding:4px 10px;border:1px solid var(--border);border-radius:6px;
-  background:var(--slot);box-shadow:0 0 8px var(--shadow)
+  padding:4px 10px;
+  border:1px solid var(--border);
+  border-radius:6px;
+  background:var(--slot);
+  box-shadow:0 0 8px var(--shadow);
 }
 .bar{
-  width:140px;height:12px;background:#1c1c1c;border:1px solid var(--border);
-  border-radius:3px;overflow:hidden;box-shadow:inset 0 0 6px rgba(0,0,0,.6);position:relative
+  width:140px;height:12px;
+  background:#1c1c1c;
+  border:1px solid var(--border);
+  border-radius:3px;
+  overflow:hidden;
+  position:relative;
+  box-shadow:inset 0 0 6px rgba(0,0,0,.6);
 }
 .fill{height:100%;width:70%;box-shadow:0 0 6px rgba(255,255,255,.2)}
 .fill[data-val]::after{
-  content:attr(data-val);position:absolute;right:6px;top:50%;
-  transform:translateY(-50%);font-size:.7em;color:#fff
+  content:attr(data-val);
+  position:absolute;right:6px;top:50%;
+  transform:translateY(-50%);
+  font-size:.7em;
+  color:#fff;
 }
 .hp{background:var(--hp)} .mp{background:var(--mp)} .xp{background:var(--xp)}
-.gold{color:var(--gold);display:flex;align-items:center;gap:6px;font-weight:700}
-.hud .actions button{
-  font-family:"Cinzel Decorative",serif; text-transform:uppercase; font-size:.85em;
-  padding:8px 14px; border-radius:12px; cursor:pointer; transition:.2s;
-  background:var(--grad-btn); color:#e6e6e6; border:1px solid #440000; box-shadow:0 0 6px var(--shadow);
-}
-.hud .actions button:hover{
-  filter:brightness(1.1); box-shadow:0 0 12px rgba(139,0,0,.6);
-}
 @media(min-width:1024px){.bar{width:180px}}
 
-/* =========================================
-   Layout principal
-   ========================================= */
-.main{
-  max-width:1200px;
-  margin:0 auto;
-  padding:150px 16px 24px; /* antes era ~110px */
-  display:flex; flex-direction:column; gap:18px;
-} 
-.shell{
-  background:var(--panel);border:2px solid var(--border);border-radius:12px;
-  box-shadow:0 0 26px var(--shadow), inset 0 0 10px rgba(255,255,255,.04);
-  padding:20px;display:flex;flex-direction:column;gap:18px
+.gold{
+  color: var(--gold);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  letter-spacing: .3px;
 }
-
-/* ---------- Cabeçalho da página ---------- */
-.header-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
-.title{
-  font-family:"Cinzel Decorative",serif; text-transform:uppercase; font-size:1.4rem; letter-spacing:.8px;
-  background:var(--grad-title); -webkit-background-clip:text; -webkit-text-fill-color:transparent; color:transparent;
+.gold .coin{
+  width: 18px;
+  height: 18px;
+  filter: drop-shadow(0 0 6px rgba(194,149,70,.35));
+}
+.gold::after{
+  content: " Coins";
+  margin-left: 2px;
+  font-weight: 700;
+  color: #e6e6e6;
+  opacity: .85;
 }
 
 /* =========================================
    Títulos e legendas (gradiente roxo -> dourado)
    ========================================= */
-
-@keyframes nh-flow-title {
+@keyframes nh-flow-title{
   0%{background-position:0% 50%}
   50%{background-position:100% 50%}
   100%{background-position:0% 50%}
@@ -123,11 +136,12 @@ body{
 
 .title,
 .panel-title,
-.legend { text-align:center;
+.legend{
+  text-align:center;
   font-family:"Cinzel Decorative",serif;
   text-transform:uppercase;
-  background: linear-gradient(90deg,#7c3aed,#c29546); /* roxo -> dourado */
-  background-size: 200% 200%;
+  background: var(--grad-title);
+  background-size:200% 200%;
   animation: nh-flow-title 6s linear infinite;
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
@@ -136,9 +150,9 @@ body{
 }
 
 /* =========================================
-   Botões (vinho -> preto) unificados
+   Botões (ROXO -> DOURADO) unificados
    ========================================= */
-@keyframes nh-flow-btn {
+@keyframes nh-flow-btn{
   0%{background-position:0% 50%}
   50%{background-position:100% 50%}
   100%{background-position:0% 50%}
@@ -146,80 +160,211 @@ body{
 
 .btn-x,
 .sp-btn,
-.hud .actions button {
-  background: linear-gradient(90deg,#8b0000,#000000); /* vermelho vinho -> preto */
-  background-size: 200% 200%;
+.hud .actions button,
+.item-modal .actions a,
+.item-modal .actions button{
+  background: var(--grad-btn);
+  background-size:200% 200%;
   animation: nh-flow-btn 8s linear infinite;
-  color:#e6e6e6;
-  border:1px solid #440000;
+
+  color:#0b0b0b;
+  border:1px solid rgba(194,149,70,.55);
   border-radius:12px;
-  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+
   padding:10px 18px;
   font-family:"Cinzel Decorative",serif;
   text-transform:uppercase;
   letter-spacing:.5px;
   text-decoration:none;
-  box-shadow:0 6px 18px rgba(0,0,0,.5);
-  transition:.2s;
+
+  box-shadow:
+    0 6px 18px rgba(0,0,0,.5),
+    0 0 14px rgba(124,58,237,.20);
+
+  cursor:pointer;
+  transition: filter .2s ease, box-shadow .2s ease, transform .15s ease;
 }
 .btn-x:hover,
 .sp-btn:hover,
-.hud .actions button:hover {
-  filter:brightness(1.08);
-  box-shadow:0 0 16px rgba(139,0,0,.6);
+.hud .actions button:hover,
+.item-modal .actions a:hover,
+.item-modal .actions button:hover{
+  filter:brightness(1.06);
+  box-shadow:
+    0 10px 26px rgba(0,0,0,.55),
+    0 0 18px rgba(124,58,237,.35),
+    0 0 14px rgba(194,149,70,.22);
+}
+.btn-x:active,
+.sp-btn:active,
+.hud .actions button:active,
+.item-modal .actions a:active,
+.item-modal .actions button:active{
+  transform: translateY(0);
+  filter:brightness(1.02);
 }
 
-/* ADICIONA */
+/* HUD: ajustes finos sem duplicar tema */
+.hud .actions button{
+  font-size:.85em;
+  padding:8px 14px;
+}
+
+/* Tabs */
 .sp-tabs{
   display:grid;
-  grid-template-columns:repeat(2, minmax(0,1fr)); /* 2 colunas no mobile */
+  grid-template-columns:repeat(2, minmax(0,1fr));
   gap:12px;
 }
 .sp-tabs .btn-x{ width:100%; justify-content:center; }
-
 @media (min-width:640px){
   .sp-tabs{ grid-template-columns:repeat(3, minmax(0,1fr)); }
+}
+
+/* =========================================
+   Layout principal
+   ========================================= */
+.main{
+  max-width:1200px;
+  margin:0 auto;
+  padding:150px 16px 24px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  position:relative;
+  z-index:1; /* acima do canvas */
+}
+.shell{
+  background:var(--panel);
+  border:2px solid var(--border);
+  border-radius:12px;
+  box-shadow:0 0 26px var(--shadow), inset 0 0 10px rgba(255,255,255,.04);
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+
+/* Cabeçalho */
+.header-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  align-items:center;
+  justify-content:center;
+}
+.title{ width:100%; font-size:1.4rem; letter-spacing:.8px; }
+
+/* Separador */
+.section-sep{
+  height:1px;
+  margin:14px 0 10px;
+  background:linear-gradient(
+    90deg,
+    transparent,
+    rgba(124,58,237,.6),
+    rgba(194,149,70,.6),
+    transparent
+  );
+  filter:drop-shadow(0 0 8px rgba(124,58,237,.35));
+  border-radius:999px;
 }
 
 /* =========================================
    Inventário (grid 9xN)
    ========================================= */
 .note{font-size:.9rem;color:var(--muted)}
-.inv-filter{
-  display:flex;flex-wrap:wrap;gap:8px;justify-content:center;
-  border-bottom:1px solid var(--border);padding-bottom:10px;margin-bottom:12px
-}
-.chip{
-  background:var(--slot);border:1px solid var(--border);border-radius:999px;padding:6px 12px;
-  font-family:"Cinzel Decorative",serif;text-transform:uppercase;font-size:.8em;color:#cfcfcf;cursor:pointer;transition:.2s
-}
-.chip.active{background:var(--xp);border-color:var(--xp);color:#111;box-shadow:0 0 12px rgba(var(--nh-rgb),.45)}
 
 .inv-grid{display:grid;gap:8px}
 @media(min-width:1024px){.inv-grid{grid-template-columns:repeat(9, 1fr)}}
 @media(max-width:1023px){.inv-grid{grid-template-columns:repeat(auto-fill, minmax(48px,1fr))}}
 
 .inv-slot{
-  width:100%;aspect-ratio:1;border-radius:8px;background:var(--slot);border:2px solid var(--slot-b);
-  display:grid;place-items:center;color:#bfbfbf;position:relative;
-  box-shadow:inset 0 0 8px rgba(0,0,0,.55);transition:.2s
+  width:100%;
+  aspect-ratio:1;
+  border-radius:8px;
+  background:var(--slot);
+  border:2px solid var(--slot-b);
+  display:grid;
+  place-items:center;
+  color:#bfbfbf;
+  position:relative;
+  cursor:pointer;
+  box-shadow:inset 0 0 8px rgba(0,0,0,.55);
+  transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+  overflow:hidden;
 }
-.inv-slot:hover{border-color:var(--xp);box-shadow:0 0 14px rgba(var(--nh-rgb),.45), inset 0 0 10px rgba(255,255,255,.1)}
-.count{position:absolute;bottom:3px;right:4px;background:rgba(0,0,0,.72);font-size:.7em;padding:2px 4px;border-radius:4px}
+.inv-slot:hover{
+  border-color:var(--xp);
+  box-shadow:0 0 14px rgba(var(--nh-rgb),.45), inset 0 0 10px rgba(255,255,255,.1);
+  transform: scale(1.02);
+}
+.count{
+  position:absolute;
+  bottom:3px;right:4px;
+  background:rgba(0,0,0,.72);
+  font-size:.7em;
+  padding:2px 4px;
+  border-radius:4px;
+}
 
-.section-sep{
-  height:1px;
-  margin:14px 0 10px;
-  background:linear-gradient(90deg, transparent, rgba(124,58,237,.6), rgba(194,149,70,.6), transparent);
-  filter:drop-shadow(0 0 8px rgba(124,58,237,.35));
-  border-radius:999px;
+/* Slots bloqueados (101–200) */
+.inv-slot.locked{
+  background:#121212;
+  border-color:#3c3c3c;
+  color:#777;
+  cursor:not-allowed;
+  box-shadow: inset 0 0 10px rgba(0,0,0,.6);
+  transform:none;
 }
+.inv-slot.locked::before{
+  content:"🔒";
+  font-size:1.1rem;
+  opacity:.65;
+}
+.inv-slot.locked:hover{
+  border-color:#4a4a4a;
+  box-shadow: 0 0 8px rgba(0,0,0,.4), inset 0 0 12px rgba(255,255,255,.06);
+}
+
+/* Raridades visuais */
+.inv-slot[data-rarity="Comum"]     { border-color:#fff; }
+.inv-slot[data-rarity="Raro"]      { border-color:#00ff88; box-shadow:0 0 10px rgba(0,255,136,.4), inset 0 0 8px rgba(0,0,0,.6); }
+.inv-slot[data-rarity="Épico"]     { border-color:#1e90ff; box-shadow:0 0 10px rgba(30,144,255,.45), inset 0 0 8px rgba(0,0,0,.6); }
+.inv-slot[data-rarity="Lendário"]  { border-color:#facc15; box-shadow:0 0 10px rgba(250,204,21,.5), inset 0 0 8px rgba(0,0,0,.6); }
+.inv-slot[data-rarity="Sombrio"]   { border-color:#8a2be2; box-shadow:0 0 12px rgba(138,43,226,.55), inset 0 0 8px rgba(0,0,0,.6); }
+
+/* Raridade Secreta com animação RGB */
+@keyframes rgbGlow{
+  0%   { border-color:#ff0000; box-shadow:0 0 10px #ff0000, inset 0 0 8px rgba(0,0,0,.6); }
+  25%  { border-color:#00ff00; box-shadow:0 0 10px #00ff00, inset 0 0 8px rgba(0,0,0,.6); }
+  50%  { border-color:#00ffff; box-shadow:0 0 10px #00ffff, inset 0 0 8px rgba(0,0,0,.6); }
+  75%  { border-color:#ff00ff; box-shadow:0 0 10px #ff00ff, inset 0 0 8px rgba(0,0,0,.6); }
+  100% { border-color:#ff0000; box-shadow:0 0 10px #ff0000, inset 0 0 8px rgba(0,0,0,.6); }
+}
+.inv-slot.raridade-secreto{
+  animation: rgbGlow 3s linear infinite;
+  border-width:2px;
+}
+
+/* =========================================
+   Modal de ajuda (Como funciona?)
+   ========================================= */
 .modal-backdrop{
-  position:fixed; inset:0; z-index:60;
+  position:fixed;
+  inset:0;
+  z-index:60;
   background:rgba(0,0,0,.55);
-  display:grid; place-items:center;
+  display:grid;
+  place-items:center;
   backdrop-filter: blur(2px);
 }
+.modal-backdrop[hidden]{ display:none !important; }
 .modal{
   width:min(92vw,640px);
   background:rgba(17,17,17,.95);
@@ -229,20 +374,78 @@ body{
   padding:14px;
 }
 .modal-head{
-  display:flex; align-items:center; justify-content:space-between; gap:12px;
-  border-bottom:1px solid #3a3a3a; padding-bottom:10px; margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  border-bottom:1px solid #3a3a3a;
+  padding-bottom:10px;
+  margin-bottom:10px;
 }
 .modal-body{ font-size:.95rem; color:var(--text); }
-/* ADICIONA */
 body.modal-open{ overflow:hidden; }
-/* garante que o atributo hidden realmente esconda o modal */
-.modal-backdrop[hidden]{
-  display: none !important;
+
+/* Botão "Como funciona?" */
+.help-btn{
+  margin:10px auto 0;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 18px;
+  border-radius:12px;
+  border:1px solid #3b1a3f;
+  background: linear-gradient(90deg,#2b0f32,#1a1a1a);
+  color:#e9ddff;
+  font-family:"Cinzel Decorative",serif;
+  text-transform:uppercase;
+  letter-spacing:.6px;
+  cursor:pointer;
+  box-shadow: 0 6px 18px rgba(0,0,0,.45), 0 0 12px rgba(124,58,237,.25) inset;
+  transition: transform .15s ease, box-shadow .2s ease, filter .2s ease;
 }
-  </style>
+.help-btn:hover{
+  transform:translateY(-1px);
+  box-shadow: 0 8px 22px rgba(0,0,0,.55), 0 0 18px rgba(194,149,70,.28) inset;
+  filter:brightness(1.05);
+}
+.help-btn:active{
+  transform:translateY(0);
+  filter:brightness(.98);
+}
+.help-btn .ico{
+  width:18px;
+  height:18px;
+  color: var(--gold);
+  filter: drop-shadow(0 0 6px rgba(194,149,70,.35));
+}
+
+/* =========================================
+   Compatibilidade com CSS injetado do JS
+   (não remove funcionalidade, apenas garante padrão)
+   ========================================= */
+
+/* Imagens dos slots: SEMPRE INTEIRAS (contain) */
+.inv-slot img{
+  width:100%;
+  height:100%;
+  padding:6px;
+  display:block;
+  object-fit:contain;         /* crucial: não corta */
+  object-position:center;
+  border-radius:8px;
+}
+
+/* Botões no modal do item: mantém sua tipografia mínima */
+.item-modal .actions button{
+  min-width:120px;
+  font-family:"Cinzel Decorative",serif;
+  letter-spacing:.8px;
+}
+</style>
 </head>
 <body>
-  <canvas id="brasas"></canvas>  <!-- ===== HUD (copiado, manter exatamente como no arquivo enviado) ===== -->  <header class="hud" role="banner">
+   <canvas id="brasasCanvas"></canvas>
+    <header class="hud" role="banner">
     <div class="group">
       <span class="badge">Nível: <span id="lv">3</span></span>
       <div class="bar"><div class="fill xp" id="barXP" data-val="67%" style="width:67%"></div></div>
@@ -251,9 +454,19 @@ body.modal-open{ overflow:hidden; }
       <div class="bar"><div class="fill hp" id="barHP" data-val="100/100" style="width:100%"></div></div>
       <div class="bar"><div class="fill mp" id="barMP" data-val="50/50" style="width:100%"></div></div>
     </div>
-    <div class="group"><span class="gold">🜚 <span id="gold">1250</span></span></div>
+    <div class="group">
+  <span class="gold">
+    <!-- Ícone de moeda -->
+    <svg class="coin" viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="9" fill="currentColor" opacity="0.18"/>
+      <circle cx="12" cy="12" r="7.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M12 7.5v9M8.5 12h7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    <span id="gold">0</span>
+  </span>
+</div>
     <div class="actions">
-      <button onclick="location.href='/store'">⛩ Loja</button>
+      <button onclick="location.href='store.html'">⛩ Loja</button>
     </div>
   </header> 
  <!-- ===== MAIN ===== -->  <main class="main" aria-label="Inventário do usuário">
@@ -264,25 +477,23 @@ body.modal-open{ overflow:hidden; }
 
 <div class="section-sep" aria-hidden="true"></div>
 
-<section aria-label="Conteúdos especiais comprados">
-    <h2 class="panel-title" style="margin-top:8px">Especiais</h2>
-    <div class="sp-tabs">
-      <a class="btn-x" href="ebooks.html"><span>Meus eBooks</span></a>
-      <a class="btn-x" href="watch.html"><span>Meus Animes</span></a>
-      <a class="btn-x" href="mangá.html"><span>Meus Mangás</span></a>
-    </div>
-    <p class="note" style="margin-top:10px">Sem cards aqui. As páginas acima listam somente o que é seu.</p>
-  </section>
-
 <!-- Botão opcional para reabrir a dica -->
-<button id="open-help" class="chip" style="margin:6px auto 0;display:block">Como funciona?</button>
+<!-- Botão estilizado -->
+<button id="open-help" class="help-btn" type="button">
+  <svg viewBox="0 0 24 24" aria-hidden="true" class="ico">
+    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.3" fill="none" opacity=".4"/>
+    <path d="M12 8a2 2 0 0 1 2 2c0 1.5-2 2-2 4m0 2h.01"
+          stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  Como funciona?
+</button>
 
 <!-- Modal de ajuda -->
 <div id="inv-help-backdrop" class="modal-backdrop" hidden>
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="help-title">
     <header class="modal-head">
-      <h3 id="help-title" class="panel-title" style="margin:0;border:0;padding:0">Como funciona o Inventário</h3>
-      <button id="close-help" class="btn-x" style="padding:6px 10px;border-radius:8px">Fechar</button>
+  <h3 id="help-title" class="panel-title" style="margin:0;border:0;padding:0">Como funciona o Inventário</h3>
+  <button id="close-help" class="btn-x" type="button" style="padding:6px 10px;border-radius:8px">Fechar</button>
     </header>
     <div class="modal-body">
       <p class="note" style="margin:0">
@@ -293,142 +504,506 @@ body.modal-open{ overflow:hidden; }
   </div>
 </div>
 
-  <!-- Filtros de categorias genéricas -->
-  <nav class="inv-filter" role="tablist">
-    <button class="chip active" data-filter="all">Tudo</button>
-    <button class="chip" data-filter="consumables">Consumíveis</button>
-    <button class="chip" data-filter="materials">Materiais</button>
-    <button class="chip" data-filter="quests">Missão</button>
-    <button class="chip" data-filter="misc">Diversos</button>
-  </nav>
-
-  <!-- Grades por categoria -->
-  <section data-cat="consumables">
-    <h2 class="panel-title" style="font-size:1.05em">Consumíveis</h2>
-    <div class="inv-grid" id="inv-consumables"></div>
-  </section>
-  <section data-cat="materials">
-    <h2 class="panel-title" style="font-size:1.05em">Materiais</h2>
-    <div class="inv-grid" id="inv-materials"></div>
-  </section>
-
-  <section data-cat="quests">
-    <h2 class="panel-title" style="font-size:1.05em">Itens de Missão</h2>
-    <div class="inv-grid" id="inv-quests"></div>
-  </section>
-  <section data-cat="misc">
-    <h2 class="panel-title" style="font-size:1.05em">Diversos</h2>
-    <div class="inv-grid" id="inv-misc"></div>
-  </section>
-
-  <!-- Bloco de especiais COM APENAS os botões. Sem cards pré-carregados. -->
-  
+<section aria-label="Inventário">
+  <h2 class="panel-title" style="font-size:1.05em">Inventário</h2>
+  <div class="inv-grid" id="inv-grid"></div>
+  <p class="note" style="margin-top:8px;text-align:center">
+    Slots <strong>101–200</strong> ficam bloqueados por enquanto.
+  </p>
 </section>
 
-  </main>  <script>
-    // =====================
-    // Brasas / partículas (igual vibe Manual das Sombras)
-    // =====================
-    const cvs = document.getElementById('brasas');
-    const ctx = cvs.getContext('2d');
-    let P=[]; const N=90;
-    function rs(){cvs.width=innerWidth;cvs.height=innerHeight}
-    addEventListener('resize',rs); rs();
-    function p(){return {x:Math.random()*cvs.width,y:Math.random()*cvs.height,s:.6+Math.random()*1.2,ox:(Math.random()-.5)*.3,oy:(Math.random()-.5)*.3,o:.15+Math.random()*.35}}
-    for(let i=0;i<N;i++)P.push(p());
-    (function anim(){ctx.clearRect(0,0,cvs.width,cvs.height);P.forEach(t=>{t.x+=t.ox;t.y+=t.oy;t.o-=.0007;if(t.o<=0||t.x< -10||t.x>cvs.width+10||t.y<-10||t.y>cvs.height+10){Object.assign(t,p())}
-      ctx.fillStyle=`rgba(200,200,200,${t.o})`;ctx.beginPath();ctx.arc(t.x,t.y,t.s,0,Math.PI*2);ctx.fill();});requestAnimationFrame(anim)})();
-
-    // =====================
-    // HUD demo state (igual do seu arquivo — mantive)
-    // =====================
-    const state={
-      nivel:3, xp:6700, xpMax:10000,
-      hp:100, hpMax:100, mp:50, mpMax:50,
-      gold:1250
-    };
-    function upHUD(){
-      document.getElementById('lv').textContent=state.nivel;
-      const xp=state.xp/state.xpMax*100; const hp=state.hp/state.hpMax*100; const mp=state.mp/state.mpMax*100;
-      document.getElementById('barXP').style.width=xp+"%"; document.getElementById('barXP').dataset.val=Math.floor(xp)+"%";
-      document.getElementById('barHP').style.width=hp+"%"; document.getElementById('barHP').dataset.val=`${state.hp}/${state.hpMax}`;
-      document.getElementById('barMP').style.width=mp+"%"; document.getElementById('barMP').dataset.val=`${state.mp}/${state.mpMax}`;
-      document.getElementById('gold').textContent=state.gold;
+  </main>
+  <script>
+/* ==========================
+   AUTH + API
+========================== */
+(function(){
+  const raw = localStorage.getItem('NoHeroes_token') || '';
+  const token = raw.replace(/^Bearer\s+/i, '');
+  if (!token || token.split('.').length !== 3) {
+    localStorage.removeItem('NoHeroes_token');
+    location.href = 'login.html';
+    return;
+  }
+  window.tokenJWT = token;
+  window.API_BASE = 'https://api.noheroes.com.br';
+})();
+async function api(path, opts={}) {
+  const res = await fetch(`${window.API_BASE}${path}`, {
+    ...opts,
+    headers: {
+      'Content-Type':'application/json',
+      'Authorization':`Bearer ${window.tokenJWT}`,
+      ...(opts.headers||{})
     }
+  });
+  if (res.status===401) {
+    localStorage.removeItem('NoHeroes_token');
+    location.href='login.html';
+  }
+  return res;
+}
 
-    // =====================
-    // Inventário — slots (sem produtos “perdidos”)
-    // =====================
-    const invData={
-      consumables:[],
-      materials:[],
-      quests:[],
-      misc:[]
-    };
-    function slotEl(item){
-      const d=document.createElement('div'); d.className='inv-slot';
-      if(item?.name){
-        d.title=item.name; d.innerHTML=`<span>${item.name.split(' ')[0]}</span>${item.qty?`<span class="count">${item.qty}</span>`:''}`;
+/* ==========================
+   DOWNLOAD — item digital (PDF)
+========================== */
+function getFilenameFromDisposition(disposition) {
+  if (!disposition) return null;
+
+  // tenta filename*=UTF-8''...
+  const mStar = disposition.match(/filename\*\s*=\s*UTF-8''([^;]+)/i);
+  if (mStar && mStar[1]) return decodeURIComponent(mStar[1].replace(/"/g, ''));
+
+  // tenta filename="..."
+  const m = disposition.match(/filename\s*=\s*"([^"]+)"/i);
+  if (m && m[1]) return m[1];
+
+  return null;
+}
+
+async function downloadDigitalItem(userItemId, fallbackName = 'download.pdf') {
+  if (!userItemId) {
+    alert('Item inválido para download.');
+    return;
+  }
+
+  try {
+    const res = await fetch(`${window.API_BASE}/inventory/${userItemId}/download`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${window.tokenJWT}`,
       }
-      return d;
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => null);
+      throw new Error(err?.message || 'Falha ao baixar arquivo.');
     }
-    function renderInv(){
-      Object.entries(invData).forEach(([cat,arr])=>{
-        const grid=document.getElementById('inv-'+cat);
-        grid.innerHTML='';
-        const targetSlots = 27; // 9x3
-        const nodes=(arr||[]).map(slotEl);
-        for(let i=nodes.length;i<targetSlots;i++){nodes.push(slotEl({}))}
-        nodes.forEach(n=>grid.appendChild(n));
+
+    const cd = res.headers.get('content-disposition');
+    const filename = getFilenameFromDisposition(cd) || fallbackName;
+
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    window.URL.revokeObjectURL(url);
+  } catch (e) {
+    console.error('download:', e);
+    alert(e.message || 'Erro ao baixar o arquivo.');
+  }
+}
+
+/* ==========================
+   HUD
+========================== */
+async function carregarPerfil() {
+  try {
+    const res = await api('/user/profile');
+    const json = await res.json();
+    if (json?.success && json.user) {
+      const u = json.user;
+      document.getElementById('lv').textContent   = u.level ?? 1;
+      document.getElementById('gold').textContent = u.coins ?? 0;
+      const xpPct = u.xpPct ?? 0;
+      const barXP = document.getElementById('barXP');
+      barXP.style.width = `${xpPct}%`;
+      barXP.dataset.val = `${xpPct}%`;
+    }
+  } catch (e) { console.error('perfil:', e); }
+}
+
+/* ==========================
+   CSS INJETADO (cartão, modal, skeleton)
+========================== */
+(function(){
+  if (document.getElementById('inv-css')) return;
+  const css = document.createElement('style');
+  css.id = 'inv-css';
+  css.textContent = `
+    .inv-slot{ position:relative; overflow:hidden; transition:transform .15s ease; }
+    .inv-slot img{ display:block; width:90%; height:90%; object-fit:cover; border-radius:8px; }
+    .inv-slot .count{ position:absolute; bottom:3px; right:4px; background:rgba(0,0,0,.72); font-size:.7em; padding:2px 4px; border-radius:4px }
+
+    .inv-card{
+      position:absolute; left:0; right:0; bottom:0;
+      transform:translateY(100%); opacity:0;
+      background:rgba(10,10,12,.96); border-top:1px solid #3a3a3a;
+      padding:10px 12px; font-size:.86rem; line-height:1.25; text-align:left;
+      box-shadow:0 -10px 22px rgba(0,0,0,.55);
+      transition:transform .14s ease, opacity .14s ease;
+    }
+    .inv-card .name{ display:block; font-weight:700; margin:0 0 2px 0 }
+    .inv-card .rarity{ opacity:.85; font-size:.78rem; margin:0 0 6px 0; display:inline-block }
+    .inv-card .mini-actions{ display:flex; gap:8px; margin-top:8px }
+    .inv-card .mini-actions a, .inv-card .mini-actions button{
+      border:1px solid #3a3a3a; background:#161616; color:#e6e6e6;
+      font-size:.78rem; padding:6px 8px; border-radius:8px; cursor:pointer;
+    }
+    @media (hover:hover){
+      .inv-slot:hover{ transform:scale(1.05); z-index:5 }
+      .inv-slot:hover .inv-card{ transform:translateY(0); opacity:1 }
+    }
+
+    /* MODAL */
+    .item-modal-backdrop{
+      position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
+      background:rgba(0,0,0,.8); z-index:999; backdrop-filter:blur(4px);
+    }
+    .item-modal{
+      position:relative; background:#111; border:1px solid #3a3a3a; border-radius:14px;
+      max-width:560px; width:min(96vw,560px); padding:18px;
+      box-shadow:0 24px 60px rgba(0,0,0,.6); text-align:center;
+    }
+    .item-modal .close-btn{
+      position:absolute; top:10px; right:12px; border:0; background:transparent; color:#fff;
+      font-size:1.1rem; cursor:pointer;
+    }
+    .item-modal .img-wrap{ display:flex; align-items:center; justify-content:center; margin-bottom:12px }
+    .item-modal img{ width:220px; height:220px; object-fit:contain; }
+    .item-modal h2{ margin:6px 0 2px 0; font-size:1.2rem }
+    .item-modal .rarity{ opacity:.85; font-style:italic; margin-bottom:8px }
+    .item-modal .desc{ color:#cfcfcf; margin:6px 0 10px 0; text-align:left }
+    .item-modal .owner{ background:#171717; padding:10px; border:1px solid #2c2c2c; border-radius:8px; color:#bbb; font-size:.92rem; text-align:left }
+    .item-modal .actions{ margin-top:12px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap }
+    .item-modal .actions a, .item-modal .actions button{
+      border:1px solid #3a3a3a; background:linear-gradient(90deg,#8b0000,#000); color:#e6e6e6;
+      padding:10px 14px; border-radius:12px; text-transform:uppercase; letter-spacing:.4px; cursor:pointer;
+    }
+
+    /* Skeleton */
+    .inv-skel{ width:100%; aspect-ratio:1; border-radius:8px; background:linear-gradient(90deg,#1a1a1a,#222,#1a1a1a);
+      animation: invSkel 1.2s infinite; border:2px solid #2e2e2e; }
+    @keyframes invSkel{ 0%{background-position:0%} 100%{background-position:200%} }
+  `;
+  document.head.appendChild(css);
+})();
+
+/* ==========================
+   RARIDADE / NORMALIZAÇÃO
+========================== */
+const RARITY_ORDER  = ['Comum','Raro','Épico','Lendário','Sombrio','Secreto'];
+const RARITY_COLORS = {
+  'Comum':    '#ffffff',
+  'Raro':     '#00ff88',
+  'Épico':    '#1e90ff',
+  'Lendário': '#facc15',
+  'Sombrio':  '#8a2be2'
+};
+function normalizeRarity(v){
+  if (!v) return 'Comum';
+  const s = String(v).normalize('NFD').replace(/\p{Diacritic}/gu,'').toLowerCase();
+  if (['comum','common'].includes(s)) return 'Comum';
+  if (['raro','rare'].includes(s)) return 'Raro';
+  if (['epico','épico','epic'].includes(s)) return 'Épico';
+  if (['lendario','lendário','legendary'].includes(s)) return 'Lendário';
+  if (['sombrio','shadow','dark'].includes(s)) return 'Sombrio';
+  if (['secreto','secret','rgb'].includes(s)) return 'Secreto';
+  return 'Comum';
+}
+
+/* ==========================
+   IMAGEM / URL
+========================== */
+const PLACEHOLDER = '/assets/images/placeholder.png';
+function resolveImageUrl(u){
+  if (!u) return PLACEHOLDER;
+  if (u.startsWith('http://') || u.startsWith('https://')) return u;
+  if (u.startsWith('noheroes.com.br')) return `https://${u}`;
+  if (u.startsWith('/uploads')) return `${window.API_BASE}${u}`;
+  if (u.startsWith('/')) return u;
+  return `https://${u}`;
+}
+function bindImgFallback(imgEl){
+  imgEl.addEventListener('error', () => { imgEl.src = PLACEHOLDER; }, { once:true });
+}
+
+/* ==========================
+   SLOT + CARTÃO
+========================== */
+function slotEl(raw){
+  const el = document.createElement('div');
+  el.className = 'inv-slot';
+  if (!raw) { el.classList.add('inv-skel'); return el; }
+
+  // normalização
+  const name  = raw.name ?? raw.titulo ?? raw.title ?? raw.cached_name ?? 'Item';
+  const desc  = raw.description ?? raw.descricao ?? '';
+  const img   = raw.imageUrl ?? raw.image_url ?? raw.image ?? '';
+  const qty   = raw.quantity ?? raw.qty ?? 1;
+  const rare  = normalizeRarity(raw.rarity ?? raw.raridade ?? 'Comum');
+  const isAct = (raw.isActive ?? raw.ativo ?? true);
+  const owner = raw.ownerDescription ?? raw.owner_desc ?? '';
+
+  if (isAct === false) { el.classList.add('inv-skel'); return el; }
+
+  // visual (cor pela raridade)
+  const color = RARITY_COLORS[rare] || '#777';
+  el.dataset.rarity = rare;
+
+  const src = resolveImageUrl(img);
+  el.innerHTML = `
+    <img alt="${name}">
+    <span class="count">${qty}</span>
+  `;
+  const imgEl = el.querySelector('img');
+  imgEl.src = src;
+  bindImgFallback(imgEl);
+
+  if (rare === 'Secreto') {
+    el.classList.add('raridade-secreto');
+  } else {
+    el.style.borderColor = color;
+    el.style.boxShadow = `0 0 10px ${color}80, inset 0 0 8px rgba(0,0,0,.6)`;
+  }
+
+  // Clique abre o modal imediatamente (desktop e mobile)
+  el.addEventListener('click', () => {
+    abrirModal({ raw, name, desc, rare, img: src, color, owner });
+  });
+
+  return el;
+}
+
+/* ==========================
+   Ações contextuais
+========================== */
+function makeQuickAction(item){
+  const id = item.id ?? item.item_id ?? '';
+  const arquivo = item.arquivo ? resolveImageUrl(item.arquivo) : null;
+  const cat = (item.category||'').toLowerCase();
+
+  // eBook: abre página de leitura/app com query
+  if (cat === 'ebook' || cat === 'ebooks') {
+    return `<a href="ebooks.html?open=${encodeURIComponent(id)}" rel="noopener">Ler</a>`;
+  }
+  // Se tiver arquivo direto, disponibiliza "Abrir"
+  if (arquivo) {
+    return `<a href="${arquivo}" target="_blank" rel="noopener">Abrir</a>`;
+  }
+  // Fallback
+  return `<button type="button" data-open-modal>Abrir</button>`;
+}
+
+/* ==========================
+   MODAL — versão final
+========================== */
+(() => {
+  // Cria fade-in suave
+  const fadeIn = (el) => {
+    el.style.opacity = 0;
+    el.style.transition = 'opacity .18s ease';
+    requestAnimationFrame(() => {
+      el.style.opacity = 1;
+    });
+  };
+
+  function escHandler(e) {
+    if (e.key === 'Escape') fecharModal();
+  }
+
+  window.fecharModal = function fecharModal() {
+    document.querySelectorAll('.item-modal-backdrop').forEach(n => {
+      n.style.opacity = 0;
+      setTimeout(() => n.remove(), 150);
+    });
+    document.removeEventListener('keydown', escHandler);
+  };
+
+  window.abrirModal = function abrirModal({raw, name, desc, rare, img, color, owner}) {
+    // Garante que não existe modal aberto
+    fecharModal();
+
+    const m = document.createElement('div');
+    m.className = 'item-modal-backdrop';
+    m.innerHTML = `
+      <div class="item-modal" role="dialog" aria-modal="true">
+        <button class="close-btn" aria-label="Fechar">✖</button>
+        <div class="img-wrap"><img src="${img}" alt="${name}"></div>
+        <h2 style="color:${color}">${name}</h2>
+        <div class="rarity">${rare}</div>
+        <p class="desc">${desc || 'Sem descrição.'}</p>
+        ${owner ? `<div class="owner"><strong>Descrição do dono:</strong><br>${owner}</div>` : ''}
+                <div class="actions">
+          ${
+            (raw?.permiteDownload === true && raw?.userItemId)
+              ? `<button type="button" class="btn-download" data-download>Baixar</button>`
+              : ``
+          }
+          <button type="button" class="btn-fechar">Fechar</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(m);
+
+    fadeIn(m);
+
+    // Fechar clicando no backdrop, no X, ou no botão "Fechar"
+    m.addEventListener('click', (e) => {
+      if (e.target === m || e.target.closest('.close-btn') || e.target.closest('.btn-fechar')) {
+        fecharModal();
+      }
+    });
+
+    // Baixar (se existir)
+    const btnDl = m.querySelector('[data-download]');
+    if (btnDl) {
+      btnDl.addEventListener('click', async () => {
+        btnDl.disabled = true;
+        btnDl.textContent = 'Baixando...';
+
+        // nome sugerido (pode ser alterado)
+        const safeName = `${(name || 'ebook').replace(/[\\/:*?"<>|]/g, '')}.pdf`;
+
+        await downloadDigitalItem(raw.userItemId, safeName);
+
+        btnDl.disabled = false;
+        btnDl.textContent = 'Baixar';
       });
     }
 
-    // Filtro por categoria
-    const chips=[...document.querySelectorAll('.chip')];
-    chips.forEach(c=>c.addEventListener('click',()=>{
-      chips.forEach(x=>x.classList.remove('active')); c.classList.add('active');
-      const f=c.dataset.filter;
-      document.querySelectorAll('[data-cat]').forEach(sec=>{
-        sec.style.display = (f==='all' || sec.dataset.cat===f) ? 'block' : 'none'
-      });
-    }));
+    // Fechar com ESC
+    document.addEventListener('keydown', escHandler);
+  };
+})();
 
-    // =====================
-    // Integração sugerida
-    // =====================
-    /* GET /api/user/inventory → preencha invData dinamicamente
-       specials ficam em páginas dedicadas (/ebooks, /animes, /mangas). */
+/* ==========================
+   RENDER + SKELETON
+========================== */
+function skeletonGrid(){
+  const grid = document.getElementById('inv-grid');
+  grid.innerHTML = '';
+  for(let i=0;i<36;i++){ // primeira dobra com skeleton
+    const d = document.createElement('div');
+    d.className='inv-skel';
+    grid.appendChild(d);
+  }
+}
+function renderInventory(itemsRaw){
+  const grid = document.getElementById('inv-grid');
+  grid.innerHTML = '';
 
-    upHUD();
-    renderInv();
-// --- Modal de ajuda ---
+  const MAX_SLOTS = 200;
+  const FREE_SLOTS = 100;
+
+  const fill = Math.min(Array.isArray(itemsRaw) ? itemsRaw.length : 0, FREE_SLOTS);
+  for (let i=0;i<fill;i++) grid.appendChild(slotEl(itemsRaw[i]));
+  for (let i=fill;i<FREE_SLOTS;i++) grid.appendChild(slotEl(null));
+
+  for (let i=FREE_SLOTS;i<MAX_SLOTS;i++){
+    const l = document.createElement('div');
+    l.className = 'inv-slot locked';
+    l.title = 'Slot bloqueado';
+    grid.appendChild(l);
+  }
+}
+
+/* ==========================
+   LOAD INVENTÁRIO
+========================== */
+async function carregarInventario(){
+  try{
+    skeletonGrid();
+    const res = await api('/inventory');
+    const json = await res.json();
+
+    const items = Array.isArray(json?.items) ? json.items
+                : Array.isArray(json)        ? json
+                : [];
+
+    // filtra ativos, normaliza e ordena por raridade
+    const ativos = items.filter(i => (i.isActive ?? i.ativo ?? true) !== false);
+    ativos.sort((a,b)=>{
+      const ra = normalizeRarity(a.rarity ?? a.raridade);
+      const rb = normalizeRarity(b.rarity ?? b.raridade);
+      const ia = RARITY_ORDER.indexOf(ra); const ib = RARITY_ORDER.indexOf(rb);
+      return (ia>=0?ia:999) - (ib>=0?ib:999);
+    });
+
+    renderInventory(ativos);
+  }catch(e){
+    console.error('inventário:', e);
+    renderInventory([]);
+  }
+}
+
+/* ==========================
+   AJUDA
+========================== */
 const $bd   = document.getElementById('inv-help-backdrop');
 const $open = document.getElementById('open-help');
 const $close= document.getElementById('close-help');
-
-function openHelp(){ 
-  $bd.hidden = false; 
-  document.body.classList.add('modal-open'); 
-}
-function closeHelp(){ 
-  $bd.hidden = true; 
-  document.body.classList.remove('modal-open'); 
-}
-
-// listeners primeiro
+function openHelp(){ $bd.hidden=false; document.body.classList.add('modal-open'); }
+function closeHelp(){ $bd.hidden=true; document.body.classList.remove('modal-open'); }
 $open?.addEventListener('click', openHelp);
 $close?.addEventListener('click', closeHelp);
-$bd?.addEventListener('click', (e)=>{ if(e.target === $bd) closeHelp(); });
-document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && !$bd.hidden) closeHelp(); });
+$bd?.addEventListener('click', e=>{ if(e.target === $bd) closeHelp(); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape' && !$bd.hidden) closeHelp(); });
+if(!localStorage.getItem('nh_inv_help_seen')){ openHelp(); localStorage.setItem('nh_inv_help_seen','1'); }
 
-// depois decide abrir 1x por dispositivo
-if(!localStorage.getItem('nh_inv_help_seen')){
-  openHelp();
-  localStorage.setItem('nh_inv_help_seen','1');
-}
+/* ==========================
+   BOOT
+========================== */
+document.addEventListener('DOMContentLoaded', ()=>{
+  carregarPerfil();
+  carregarInventario();
+});
 
-// ADICIONA nas funções do modal
-function openHelp(){ $bd.hidden = false; document.body.classList.add('modal-open'); }
-function closeHelp(){ $bd.hidden = true; document.body.classList.remove('modal-open'); }
-  </script></body>
+/* ==========================
+   BRASAS (igual)
+========================== */
+const canvas = document.getElementById("brasasCanvas");
+    const ctx = canvas.getContext("2d");
+    let particles = [], w, h;
+
+    function resizeCanvas() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() { this.reset(true); }
+      reset(initial = false) {
+        this.x = Math.random() * w;
+        this.y = initial ? Math.random() * h : h + Math.random() * 100;
+        this.size = 1 + Math.random() * 2.5;
+        this.speed = 0.2 + Math.random() * 0.5;
+        this.alpha = 0.4 + Math.random() * 0.3;
+        this.drift = (Math.random() - 0.5) * 0.5;
+      }
+      update() {
+        this.y -= this.speed;
+        this.x += this.drift;
+        if (this.y < -10 || this.x < -50 || this.x > w + 50) this.reset();
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`;
+        ctx.shadowColor = "#a855f7";
+        ctx.shadowBlur = 12;
+        ctx.fill();
+      }
+    }
+
+    function createParticles(n) {
+      for (let i = 0; i < n; i++) particles.push(new Particle());
+    }
+    function animate() {
+      ctx.clearRect(0, 0, w, h);
+      for (const p of particles) { p.update(); p.draw(); }
+      requestAnimationFrame(animate);
+    }
+    createParticles(150);
+    animate();
+</script>
+</body>
 </html>

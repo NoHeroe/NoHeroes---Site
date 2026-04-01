@@ -272,6 +272,20 @@ details p {
   padding-left: 1rem;
   color: #ccc;
 }
+.barra-gradiente-2{
+  width: 3px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to bottom,
+    rgba(124,58,237,.0),
+    rgba(124,58,237,.85),
+    rgba(194,149,70,.85),
+    rgba(194,149,70,.0)
+  );
+  filter: drop-shadow(0 0 10px rgba(124,58,237,.35));
+  opacity: .9;
+}
+
 </style>
 
 </head>  
@@ -339,17 +353,6 @@ details p {
       <span class="text-white">Início</span>
     </div>
     <span class="text-xs text-purple-400 cinzel">Portal</span>
-  </a>
-
-  <a href="produtos.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
-    <div class="flex items-center gap-2">
-      <!-- Ícone: Book -->
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12m0-12a2 2 0 012-2h4a2 2 0 012 2v12a2 2 0 01-2 2h-4a2 2 0 01-2-2zm0 0a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2h4a2 2 0 002-2z"/>
-      </svg>
-      <span class="text-white">Projetos</span>
-    </div>
-    <span class="text-xs text-purple-400 cinzel">Grimório</span>
   </a>
 
   <a href="sobre.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
@@ -465,7 +468,7 @@ details p {
       </div>
       <h3 class="text-lg font-semibold gradiente-noheroes text-center">Estúdio de Animação</h3>
       <p class="mt-2 text-sm text-gray-400 text-left">
-        Produção completa de animes e clipes com estética dark-fantasy, identidade autoral e conexão com o universo NoHeroes.
+        Produção completa de animes e clipes com estética refinada, identidade autoral e conexão com o universo NoHeroes.
       </p>
       <p class="mt-2 text-xs text-gray-500 italic text-left">Experiência sensorial em áudio e imagem — atmosfera única.</p>
     </div>
@@ -477,7 +480,7 @@ details p {
       </div>
       <h3 class="text-lg font-semibold gradiente-noheroes text-center">Editora Alternativa</h3>
       <p class="mt-2 text-sm text-gray-400 text-left">
-        Livros e eBooks com inovação narrativa real, onde lazer e educação se fundem com filosofia e introspecção.
+        Parceiria direta com editoras. Livros e eBooks com identidade forte onde lazer e educação se fundem com filosofia e intospecção.
       </p>
       <p class="mt-2 text-xs text-gray-500 italic text-left">Textos que ensinam e transformam enquanto entretêm.</p>
     </div>
@@ -529,73 +532,74 @@ details p {
 </section>
 
 <section id="como-funciona-mvv" class="py-20 px-4 text-gray-300 relative">
-  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-    
-    <!-- Bloco: Como Funciona -->
-    <div>
-      <h2 class="text-4xl md:text-5xl font-bold cinzel gradiente-noheroes mb-4 text-center md:text-left">Como funciona?</h2>
-      <p class="text-sm text-gray-400 leading-relaxed mb-8 text-center md:text-left">
-        Cada leitura, ação e conquista no NoHeroes conecta sua evolução no universo, na plataforma e na vida real — tudo faz parte do mesmo ecossistema vivo.
-      </p>
+  <div class="max-w-7xl mx-auto relative">
+    <!-- Barra central (desktop) -->
+    <div class="hidden md:block barra-gradiente-2 absolute top-2 bottom-2 left-1/2 -translate-x-1/2 z-0"></div>
 
-      <div class="space-y-4">
-        <!-- Pilar 1 -->
-        <div class="flex items-start gap-4 p-4 rounded-lg border border-gray-700 backdrop-blur-md hover:scale-[1.02] transition duration-300">
-          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-700 to-yellow-500 flex items-center justify-center text-2xl">📖</div>
-          <div>
-            <h3 class="font-semibold gradiente-noheroes text-sm">Conteúdo vivo</h3>
-            <p class="text-xs text-gray-400">Mangás, livros e animes que desbloqueiam aprendizado e XP real.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start relative z-10">
+      <!-- Bloco: Como Funciona -->
+      <div>
+        <h2 class="text-4xl md:text-5xl font-bold cinzel gradiente-noheroes mb-4 text-center md:text-left">
+          Como funciona?
+        </h2>
+        <p class="text-sm text-gray-400 leading-relaxed mb-8 text-center md:text-left">
+          Cada leitura, ação e conquista no NoHeroes conecta sua evolução no universo, na plataforma e na vida real — tudo faz parte do mesmo ecossistema vivo.
+        </p>
+
+        <div class="space-y-4">
+          <div class="flex items-start gap-4 p-4 rounded-lg border border-gray-700 backdrop-blur-md hover:scale-[1.02] transition duration-300">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-700 to-yellow-500 flex items-center justify-center text-2xl">📖</div>
+            <div>
+              <h3 class="font-semibold gradiente-noheroes text-sm">Conteúdo vivo</h3>
+              <p class="text-xs text-gray-400">Mangás, livros e animes que desbloqueiam aprendizado e XP real.</p>
+            </div>
           </div>
-        </div>
 
-        <!-- Pilar 2 -->
-        <div class="flex items-start gap-4 p-4 rounded-lg border border-gray-700 backdrop-blur-md hover:scale-[1.02] transition duration-300">
-          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-700 to-yellow-500 flex items-center justify-center text-2xl">🎯</div>
-          <div>
-            <h3 class="font-semibold gradiente-noheroes text-sm">Missões reais</h3>
-            <p class="text-xs text-gray-400">Desafios aplicáveis à vida real, com progresso rastreável no app.</p>
+          <div class="flex items-start gap-4 p-4 rounded-lg border border-gray-700 backdrop-blur-md hover:scale-[1.02] transition duration-300">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-700 to-yellow-500 flex items-center justify-center text-2xl">🎯</div>
+            <div>
+              <h3 class="font-semibold gradiente-noheroes text-sm">Missões reais</h3>
+              <p class="text-xs text-gray-400">Desafios aplicáveis à vida real, com progresso rastreável no app.</p>
+            </div>
           </div>
-        </div>
 
-        <!-- Pilar 3 -->
-        <div class="flex items-start gap-4 p-4 rounded-lg border border-gray-700 backdrop-blur-md hover:scale-[1.02] transition duration-300">
-          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-700 to-yellow-500 flex items-center justify-center text-2xl">🕸️</div>
-          <div>
-            <h3 class="font-semibold gradiente-noheroes text-sm">Ecossistema integrado</h3>
-            <p class="text-xs text-gray-400">Tudo o que você faz alimenta sua jornada no app, portal e comunidade.</p>
+          <div class="flex items-start gap-4 p-4 rounded-lg border border-gray-700 backdrop-blur-md hover:scale-[1.02] transition duration-300">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-700 to-yellow-500 flex items-center justify-center text-2xl">🕸️</div>
+            <div>
+              <h3 class="font-semibold gradiente-noheroes text-sm">Ecossistema integrado</h3>
+              <p class="text-xs text-gray-400">Tudo o que você faz alimenta sua jornada no app, portal e comunidade.</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-<div style="position: relative; z-index: 5;">
-  <div class="barra-gradiente-2"></div>
-</div>
+      <!-- Bloco: Missão Visão Valores -->
+      <div>
+        <h2 class="text-4xl md:text-5xl font-bold cinzel gradiente-noheroes mb-4 text-center md:text-left">
+          MVV
+        </h2>
 
-    <!-- Bloco: Missão Visão Valores -->
-    <div>
-      <h2 class="text-4xl md:text-5xl font-bold cinzel gradiente-noheroes mb-4 text-center md:text-left">MVV</h2>
-      <div class="space-y-4">
-<!-- Missão -->
-        <div class="p-4 rounded-lg border border-gray-700 backdrop-blur-md bg-gradient-to-br from-[#1a1a2e] to-[#0a0a0a]">
-          <h3 class="font-semibold text-purple-400 mb-1">Missão</h3>
-          <p class="text-xs text-gray-400 leading-relaxed">
-            Mostrar que viver não é trabalhar. A vida é feita para ser sentida e vivida de forma plural e criativa. NoHeroes ajuda cada pessoa a explorar seu potencial completo — sem fórmulas prontas, sem pressões, sem a ilusão de que sucesso é se tornar máquina.
-          </p>
-        </div>
-        <!-- Visão -->
-        <div class="p-4 rounded-lg border border-gray-700 backdrop-blur-md bg-gradient-to-br from-[#1a1a2e] to-[#0a0a0a]">
-          <h3 class="font-semibold text-purple-400 mb-1">Visão</h3>
-          <p class="text-xs text-gray-400 leading-relaxed">
-            Trazer mundos da imaginação para o mundo real. Tornar sonhos e ideias em experiências concretas. Ser um universo vivo onde arte, fantasia e evolução pessoal se encontram para inspirar, ensinar e transformar.
-          </p>
-        </div>
-        <!-- Valores -->
-        <div class="p-4 rounded-lg border border-gray-700 backdrop-blur-md bg-gradient-to-br from-[#1a1a2e] to-[#0a0a0a]">
-          <h3 class="font-semibold text-purple-400 mb-1">Valores</h3>
-          <p class="text-xs text-gray-400 leading-relaxed">
-            Seguimos a Cristo e cultivamos valores cristãos como bondade, verdade e serviço. Mesmo com estéticas sombrias, nossa mensagem é sempre clara: ensinar o bem e lembrar que até no escuro existe luz para quem busca propósito real.
-          </p>
+        <div class="space-y-4">
+          <div class="p-4 rounded-lg border border-gray-700 backdrop-blur-md bg-gradient-to-br from-[#1a1a2e] to-[#0a0a0a]">
+            <h3 class="font-semibold text-purple-400 mb-1">Missão</h3>
+            <p class="text-xs text-gray-400 leading-relaxed">
+              Mostrar que viver não é trabalhar. A vida é feita para ser sentida e vivida de forma plural e criativa. NoHeroes ajuda cada pessoa a explorar seu potencial completo — sem fórmulas prontas, sem pressões, sem a ilusão de que sucesso é se tornar máquina.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-lg border border-gray-700 backdrop-blur-md bg-gradient-to-br from-[#1a1a2e] to-[#0a0a0a]">
+            <h3 class="font-semibold text-purple-400 mb-1">Visão</h3>
+            <p class="text-xs text-gray-400 leading-relaxed">
+              Trazer mundos da imaginação para o mundo real. Tornar sonhos e ideias em experiências concretas. Ser um universo vivo onde arte, fantasia e evolução pessoal se encontram para inspirar, ensinar e transformar.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-lg border border-gray-700 backdrop-blur-md bg-gradient-to-br from-[#1a1a2e] to-[#0a0a0a]">
+            <h3 class="font-semibold text-purple-400 mb-1">Valores</h3>
+            <p class="text-xs text-gray-400 leading-relaxed">
+              Seguimos a Cristo e cultivamos valores cristãos como bondade, verdade e serviço. Mesmo com estéticas sombrias, nossa mensagem é sempre clara: ensinar o bem e lembrar que até no escuro existe luz para quem busca propósito real.
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -729,26 +733,6 @@ details p {
 
   <div class="timeline-divider"></div>
 
-  <h2 class="text-4xl md:text-5xl font-bold cinzel text-center timeline-title gradiente-noheroes">Próximos Passos</h2>
-  <div class="timeline-container">
-    <div class="timeline-box">
-      <div class="timeline-year">Meta 2025</div>
-      <div class="timeline-content">Lançamento da loja, do livro ROAR, dos eBooks. Primeira versão do app. Comunidade ativa. Serviços criativos.</div>
-    </div>
-    <div class="timeline-box">
-      <div class="timeline-year">Meta 2026</div>
-      <div class="timeline-content">Obras novas (FREQ, Echoes, Chrysalis). Jogo em produção. Estúdio e editora próprios. Mangás, animes e expansão criativa.</div>
-    </div>
-<!-- 2027 -->
-<div class="timeline-box reveal-fade">
-  <div class="timeline-year">2027</div>
-  <div class="timeline-text">
-    Ano de expansão silenciosa.<br>
-    Início da era dos mundos paralelos. <br>
-    Algo maior está vindo...
-  </div>
-</div>
-  </div>
 </section>
 
 <!-- 8. Sobre o Criador & Equipe -->
@@ -842,7 +826,7 @@ details p {
 
   <!-- Botões -->
   <div class="flex flex-col gap-4 items-center justify-center mt-10">
-    <a href="portifólio.html" class="bg-gradient-to-r from-purple-500 to-yellow-400 text-black font-semibold px-6 py-3 rounded-xl shadow hover:scale-105 transition">
+    <a href="portifólio.html#contato" class="bg-gradient-to-r from-purple-500 to-yellow-400 text-black font-semibold px-6 py-3 rounded-xl shadow hover:scale-105 transition">
       Indicar ou Tornar-se Colaborador
     </a>
   </div>
@@ -853,37 +837,84 @@ details p {
     <h2 class="text-4xl md:text-5xl font-bold cinzel-decorative gradiente-noheroes mb-4">
       Para a Imprensa e Parceiros
     </h2>
+
     <p class="text-lg text-gray-300 italic max-w-2xl mx-auto mb-10">
-      Reunimos tudo que você precisa para divulgar ou apresentar o projeto NoHeroes. Logos, mockups, banners, conceitos e visuais oficiais.
-    </p>
+  Este espaço reúne os materiais oficiais do projeto NoHeroes destinados à imprensa,
+  colaboradores e parceiros. Aqui você encontra documentos institucionais, apresentações
+  estratégicas e ativos visuais para divulgação, análise ou colaboração profissional.
+</p>
 
     <div class="bg-black/30 backdrop-blur-md border border-purple-600 rounded-xl p-6 md:p-10 shadow-md transition reveal-fade">
-      <h3 class="text-2xl font-semibold cinzel-decorative text-purple-400 mb-4">Press Kit NoHeroes</h3>
-      <ul class="text-left text-gray-300 space-y-2 text-base md:text-lg">
+      <h3 class="text-2xl font-semibold cinzel-decorative text-purple-400 mb-4">
+        Press & Media Kit — NoHeroes
+      </h3>
+
+      <ul class="text-left text-gray-300 space-y-2 text-base md:text-lg mb-8">
   <li>
-    <strong><span class="gradiente-noheroes">Logos Oficiais:</span></strong>
-    em PNG, SVG e com fundo transparente.
+    <strong class="gradiente-noheroes">Press Kit (PDF):</strong>
+    material institucional voltado à imprensa, com apresentação oficial do projeto,
+    contexto criativo, visão geral do universo e informações para divulgação editorial.
   </li>
   <li>
-    <strong><span class="gradiente-noheroes">Banners & Mockups:</span></strong>
-    imagens promocionais prontas para redes.
+    <strong class="gradiente-noheroes">Media Kit (PDF):</strong>
+    material direcionado a colaboradores e parceiros. Alem de diretrizes de uso visual da marca NoHeroes.
   </li>
   <li>
-    <strong><span class="gradiente-noheroes">Resumo do Projeto:</span></strong>
-    explicação visual e textual do universo NoHeroes.
+    <strong class="gradiente-noheroes">Pacote Completo (ZIP):</strong>
+    inclui todos os arquivos organizados, a pasta de assets para uso profissional
+    e o pitch oficial do projeto para apresentações e propostas.
   </li>
   <li>
-    <strong><span class="gradiente-noheroes">Entrevistas & Contato:</span></strong>
-    formas de contato com o criador.
+    <strong class="gradiente-noheroes">GitHub:</strong>
+    acesso direto ao repositório oficial para download manual de arquivos,
+    versões atualizadas e organização técnica dos materiais.
   </li>
 </ul>
 
-      <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4">
-        <a href="/assets/presskit-noheroes.zip" class="px-6 py-3 rounded-md bg-gradient-to-r from-purple-700 to-yellow-500 font-bold text-white hover:opacity-90 transition">
-          📥 Baixar Press Kit
+      <!-- Botões -->
+      <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-4">
+        <!-- ZIP completo -->
+        <a
+          href="/assets/press-media-kit-noheroes.zip"
+          class="px-6 py-3 rounded-md bg-gradient-to-r from-purple-700 to-yellow-500 font-bold text-white hover:opacity-90 transition"
+        >
+          📦 Baixar Press + Media Kit (ZIP)
         </a>
-        <a href="mailto:eco.noheroes@gmail.com" class="px-6 py-3 rounded-md border border-purple-500 text-purple-300 font-semibold hover:bg-purple-900/30 transition">
-          📩 Entrar em Contato
+
+        <!-- Press Kit PDF -->
+        <a
+          href="/assets/press-kit-noheroes.pdf"
+          class="px-6 py-3 rounded-md border border-purple-500 text-purple-300 font-semibold hover:bg-purple-900/30 transition"
+        >
+          📄 Press Kit (PDF)
+        </a>
+
+        <!-- Media Kit PDF -->
+        <a
+          href="/assets/media-kit-noheroes.pdf"
+          class="px-6 py-3 rounded-md border border-purple-500 text-purple-300 font-semibold hover:bg-purple-900/30 transition"
+        >
+          🎨 Media Kit (PDF)
+        </a>
+
+        <!-- GitHub -->
+        <a
+          href="https://github.com/NoHeroe/press-midea-kit"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="px-6 py-3 rounded-md border border-gray-600 text-gray-300 font-semibold hover:bg-gray-800/40 transition"
+        >
+          🔗 Acessar pasta no GitHub
+        </a>
+      </div>
+
+      <!-- Contato -->
+      <div class="mt-8">
+        <a
+          href="mailto:contato@noheroes.com.br"
+          class="inline-block px-6 py-3 rounded-md border border-purple-500 text-purple-300 font-semibold hover:bg-purple-900/30 transition"
+        >
+          📩 contato@noheroes.com.br
         </a>
       </div>
     </div>

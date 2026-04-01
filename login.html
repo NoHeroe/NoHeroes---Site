@@ -6,6 +6,7 @@
 <title>Login — NoHeroes</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
   :root{
     --nh-bg:#0a0a0a; --nh-fg:#e5e5e5; --nh-muted:#bdbdbd;
@@ -23,34 +24,37 @@
   .btn-primary:hover{filter:saturate(1.05); transform:translateY(-1px) scale(1.01)}
   .input{background:#0e0e0e; border:1px solid var(--border); border-radius:12px; padding:.8rem .9rem; color:var(--nh-fg); width:100%}
   .hint{font-size:.82rem; color:#bdbdbd}
+
   /* Reveal cinematográfico */
   .reveal{opacity:0; transform: translateY(18px) scale(.985); filter:blur(6px); will-change:opacity,transform,filter}
   .reveal.in{animation:cinematic var(--reveal-duration) cubic-bezier(.22,.61,.36,1) var(--reveal-delay,0ms) both}
   @keyframes cinematic{0%{opacity:0;transform:translateY(18px) scale(.985);filter:blur(6px)}60%{opacity:1;transform:translateY(0) scale(1);filter:blur(.8px)}100%{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
   @media (prefers-reduced-motion: reduce){ .reveal{opacity:1; transform:none; filter:none} .reveal.in{animation:none} }
 
-  /* Header (original) */
+  /* Header */
   .topbar{position:fixed; top:0; left:0; right:0; height:66px; background:rgba(10,10,10,.85); border-bottom:1px solid #262626; backdrop-filter: blur(10px); z-index:50}
   .logo-wrap{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); z-index:30}
   .logo-wrap img{height:52px; filter:drop-shadow(0 2px 8px rgba(250,204,21,.15))}
   .bar-grad{position:fixed; top:66px; left:0; right:0; height:4px; background:linear-gradient(90deg,#8f4fff,#facc15); box-shadow:0 0 6px #8f4fff88,0 0 10px #facc1588; z-index:40}
   .hamb{position:absolute; right:14px; top:50%; transform:translateY(-50%); width:40px; height:40px; border-radius:10px; display:grid; place-items:center; border:1px solid #2b2b2b; background:#0f0f0f}
+
   /* Drawer */
   #drawer{position:fixed; top:0; right:0; width:18rem; height:100%; background:#000; color:#fff; transform:translateX(100%); transition:transform .3s; z-index:55; border-left:1px solid #212121}
   #drawer.show{transform:translateX(0)}
   #drawerOverlay{position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; z-index:54}
   #drawerOverlay.show{display:block}
+
   /* Canvas brasas */
   #brasasCanvas{position:fixed; inset:0; width:100vw; height:100vh; z-index:-1; pointer-events:none}
-  /* Mobile safe */
+
+  /* Shake para erros */
+  @keyframes shake {0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
   html,body,main{max-width:100vw; overflow-x:hidden}
 </style>
 </head>
 <body>
-  <!-- BACKGROUND -->
   <canvas id="brasasCanvas" aria-hidden="true"></canvas>
 
-  <!-- HEADER -->
   <header class="topbar">
     <button id="hamburgerBtn" class="hamb" aria-label="Abrir menu" type="button">
       <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
@@ -65,12 +69,10 @@
   </header>
   <div class="bar-grad" aria-hidden="true"></div>
 
-  <!-- DRAWER -->
   <aside id="drawer" role="dialog" aria-modal="true" aria-label="Menu">
     <button id="drawerClose" class="absolute top-3 right-4 text-2xl">✕</button>
     <nav class="p-6 grid gap-2 text-sm mt-10">
       <a href="index.html" class="py-2 px-3 rounded hover:bg-[#151515]">Início</a>
-      <a href="produtos.html" class="py-2 px-3 rounded hover:bg-[#151515]">Projetos</a>
       <a href="sobre.html" class="py-2 px-3 rounded hover:bg-[#151515]">Sobre</a>
       <a href="store.html" class="py-2 px-3 rounded hover:bg-[#151515]">Loja</a>
       <a href="oraculum.html" class="py-2 px-3 rounded hover:bg-[#151515]">Oráculo</a>
@@ -78,7 +80,6 @@
   </aside>
   <div id="drawerOverlay" aria-hidden="true"></div>
 
-  <!-- CONTEÚDO -->
   <main class="max-w-md mx-auto px-4 pt-44 pb-24 relative z-10">
     <section class="reveal">
       <h1 class="cinzel text-3xl grad-text text-center">Entrar</h1>
@@ -110,6 +111,7 @@
           <span id="btnText">Entrar</span>
           <svg id="btnSpin" class="animate-spin h-4 w-4 hidden" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v3a5 5 0 00-5 5H4z"></path></svg>
         </button>
+        <div id="googleLoginContainer" class="mt-4"></div>
 
         <p id="error" class="text-red-400 text-sm hidden"></p>
       </form>
@@ -124,108 +126,160 @@
     © <span id="year"></span> NoHeroes. Todos os direitos reservados.
   </footer>
 
-  <!-- BG brasas -->
-  <canvas id="brasasCanvas" aria-hidden="true"></canvas>
-
 <script>
+/* ===== Config ===== */
+window.API_BASE = "https://api.noheroes.com.br";
+
 /* ===== Drawer ===== */
-const drawer = document.getElementById('drawer');
-const drawerOv = document.getElementById('drawerOverlay');
-const btnHam = document.getElementById('hamburgerBtn');
-const btnClose = document.getElementById('drawerClose');
-const toggleDrawer = (open) => {
-  drawer.classList.toggle('show', open);
-  drawerOv.classList.toggle('show', open);
-  if(open){
-    document.addEventListener('keydown', escDrawer);
-    setTimeout(()=>document.addEventListener('click', outsideDrawer, {capture:true}),0);
-  }else{
-    document.removeEventListener('keydown', escDrawer);
-    document.removeEventListener('click', outsideDrawer, {capture:true});
-  }
-};
-const escDrawer = (e)=>{ if(e.key==='Escape') toggleDrawer(false); };
-const outsideDrawer = (e)=>{ if(!drawer.contains(e.target) && e.target!==btnHam) toggleDrawer(false); };
-btnHam.addEventListener('click', ()=>toggleDrawer(true));
-btnClose.addEventListener('click', ()=>toggleDrawer(false));
-drawerOv.addEventListener('click', ()=>toggleDrawer(false));
+const drawer=document.getElementById('drawer'),drawerOv=document.getElementById('drawerOverlay'),
+btnHam=document.getElementById('hamburgerBtn'),btnClose=document.getElementById('drawerClose');
+const toggleDrawer=open=>{drawer.classList.toggle('show',open);drawerOv.classList.toggle('show',open);
+if(open){document.addEventListener('keydown',escDrawer);setTimeout(()=>document.addEventListener('click',outsideDrawer,{capture:true}),0);}
+else{document.removeEventListener('keydown',escDrawer);document.removeEventListener('click',outsideDrawer,{capture:true});}};
+const escDrawer=e=>{if(e.key==='Escape')toggleDrawer(false)},outsideDrawer=e=>{if(!drawer.contains(e.target)&&e.target!==btnHam)toggleDrawer(false)};
+btnHam.addEventListener('click',()=>toggleDrawer(true));btnClose.addEventListener('click',()=>toggleDrawer(false));drawerOv.addEventListener('click',()=>toggleDrawer(false));
 
 /* ===== Reveal ===== */
-const io = new IntersectionObserver((es,o)=>{ es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); o.unobserve(e.target);} });},{threshold:.14, rootMargin:'0px 0px -8% 0px'});
-document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
+const io=new IntersectionObserver((es,o)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');o.unobserve(e.target);}});},{threshold:.14,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-/* ===== Brasas canvas ===== */
-const canvas = document.getElementById('brasasCanvas'), ctx = canvas.getContext('2d');
-const fit=()=>{ canvas.width=innerWidth; canvas.height=innerHeight; }; addEventListener('resize',fit); fit();
-let parts=Array.from({length:90},()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:1+Math.random()*1.2,v:-.2-Math.random()*.5,a:.4+.4*Math.random()}));
-(function loop(){ ctx.clearRect(0,0,canvas.width,canvas.height);
-  for(const p of parts){ p.y+=p.v; if(p.y<0) p.y=canvas.height;
-    ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,2*Math.PI);
-    ctx.fillStyle=`rgba(168,85,247,${p.a})`; ctx.shadowColor="#a855f7"; ctx.shadowBlur=10; ctx.fill(); }
-  requestAnimationFrame(loop);
-})();
+/* ===== Brasas ===== */
+const canvas=document.getElementById("brasasCanvas"),ctx=canvas.getContext("2d");let particles=[],w,h;
+function resizeCanvas(){w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight;}
+window.addEventListener("resize",resizeCanvas);resizeCanvas();
+class Particle{constructor(){this.reset(true);}reset(initial=false){this.x=Math.random()*w;this.y=initial?Math.random()*h:h+Math.random()*100;
+this.size=1+Math.random()*2.5;this.speed=0.2+Math.random()*0.5;this.alpha=0.4+Math.random()*0.3;this.drift=(Math.random()-0.5)*0.5;}
+update(){this.y-=this.speed;this.x+=this.drift;if(this.y<-10||this.x<-50||this.x>w+50)this.reset();}
+draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fillStyle=`rgba(168,85,247,${this.alpha})`;ctx.shadowColor="#a855f7";ctx.shadowBlur=12;ctx.fill();}}
+function createParticles(n){for(let i=0;i<n;i++)particles.push(new Particle());}
+function animate(){ctx.clearRect(0,0,w,h);for(const p of particles){p.update();p.draw();}requestAnimationFrame(animate);}
+createParticles(150);animate();
 
 /* ===== Login ===== */
-const form = document.getElementById('loginForm');
-const errorEl = document.getElementById('error');
-const submitBtn = document.getElementById('submitBtn');
-const btnText = document.getElementById('btnText');
-const btnSpin = document.getElementById('btnSpin');
-const togglePass = document.getElementById('togglePass');
-togglePass.addEventListener('click', ()=>{
-  const i = document.getElementById('password');
-  const is = i.getAttribute('type') === 'password';
-  i.setAttribute('type', is ? 'text' : 'password');
-  togglePass.textContent = is ? 'Ocultar' : 'Mostrar';
-});
+const form=document.getElementById('loginForm'),errorEl=document.getElementById('error'),
+submitBtn=document.getElementById('submitBtn'),btnText=document.getElementById('btnText'),
+btnSpin=document.getElementById('btnSpin'),togglePass=document.getElementById('togglePass');
+togglePass.addEventListener('click',()=>{const i=document.getElementById('password');const is=i.type==='password';i.type=is?'text':'password';togglePass.textContent=is?'Ocultar':'Mostrar';});
 
-form.addEventListener('submit', async (e) => {
+form.addEventListener('submit',async e=>{
   e.preventDefault();
-  errorEl.classList.add("hidden"); errorEl.textContent = "";
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
-  if(!email || !password){ errorEl.textContent = "Preencha e-mail e senha."; errorEl.classList.remove("hidden"); return; }
+  errorEl.classList.add("hidden");errorEl.textContent="";
+  const email=document.getElementById("email").value.trim();
+  const password=document.getElementById("password").value;
+  if(!email||!password){errorEl.textContent="Preencha e-mail e senha.";errorEl.classList.remove("hidden");return;}
 
-  // Loading state
-  submitBtn.disabled = true; btnSpin.classList.remove('hidden'); btnText.textContent = 'Entrando...';
+  submitBtn.disabled=true;btnSpin.classList.remove('hidden');btnText.textContent='Entrando...';
 
-  try {
-    const res = await fetch("https://api.noheroes.com.br/login", { // mesmo endpoint do arquivo original
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password })
+  try{
+    const res=await fetch(`${window.API_BASE}/api/auth/login`,{
+      method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({email,password})
     });
+    const data=await res.json().catch(()=>({}));
 
-    const data = await res.json().catch(()=>({}));
-    if (res.ok && data && data.token) {
-      const bearer = `Bearer ${data.token}`;
-      localStorage.setItem("NoHeroes_token", bearer);
-      if (document.getElementById('remember').checked) {
-        localStorage.setItem("NoHeroes_email", email);
-      } else {
-        localStorage.removeItem("NoHeroes_email");
+    if(res.ok && data?.token){
+      localStorage.setItem("NoHeroes_token","Bearer "+data.token);
+      localStorage.setItem("adminToken",data.token);
+      const payload=JSON.parse(atob(data.token.split('.')[1]));
+      const isAdmin=!!payload.is_admin;
+      localStorage.setItem("isAdmin",isAdmin?"true":"false");
+      if(document.getElementById('remember').checked)
+        localStorage.setItem("NoHeroes_email",email);
+      else localStorage.removeItem("NoHeroes_email");
+      window.location.href=isAdmin?"admin.html":"profile.html";
+    }else{
+      if(data?.message?.includes("Verifique seu e-mail")){
+        errorEl.innerHTML=`Seu e-mail ainda não foi verificado.<br>
+          <a href="reenvio.html" class="underline text-purple-400">Reenviar verificação</a>`;
+      }else{
+        errorEl.textContent=data?.message||data?.error||"Credenciais inválidas. Tente novamente.";
       }
-      // Evita open-redirect: só navega para páginas internas conhecidas
-      window.location.href = "profile.html";
-    } else {
-      errorEl.textContent = (data && (data.message || data.error)) || "Credenciais inválidas. Tente novamente.";
       errorEl.classList.remove("hidden");
+      document.getElementById("password").value="";
+      errorEl.style.animation="shake .3s";setTimeout(()=>errorEl.style.animation="",300);
     }
-  } catch (err) {
-    console.error("Erro ao fazer login:", err);
-    errorEl.textContent = "Não foi possível conectar ao servidor.";
+  }catch(err){
+    errorEl.textContent="Não foi possível conectar ao servidor.";
     errorEl.classList.remove("hidden");
-  } finally {
-    submitBtn.disabled = false; btnSpin.classList.add('hidden'); btnText.textContent = 'Entrar';
+  }finally{
+    submitBtn.disabled=false;btnSpin.classList.add('hidden');btnText.textContent='Entrar';
   }
 });
 
-// Pré-preenche e-mail se marcado antes
-const remembered = localStorage.getItem("NoHeroes_email");
-if (remembered) { document.getElementById('email').value = remembered; document.getElementById('remember').checked = true; }
+const remembered=localStorage.getItem("NoHeroes_email");
+if(remembered){document.getElementById('email').value=remembered;document.getElementById('remember').checked=true;}
+document.getElementById('year').textContent=new Date().getFullYear();
 
-// Util
-document.getElementById('year').textContent = new Date().getFullYear();
+// login-google.js (ou dentro do script da página)
+(function () {
+  const API_BASE = 'https://api.noheroes.com.br';
+
+  function onGoogleCredential(response) {
+    const credential = response.credential;
+    if (!credential) return;
+
+    fetch(API_BASE + '/api/auth/google', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ credential })
+    })
+      .then(async (res) => {
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.success || !data.token) {
+          throw new Error(data.message || 'Falha no login com Google.');
+        }
+
+        // salva token como o resto do sistema
+        localStorage.setItem('NoHeroes_token', 'Bearer ' + data.token);
+        localStorage.setItem('token', 'Bearer ' + data.token);
+
+
+        alert('Login com Google realizado com sucesso.');
+        // redireciona para a loja ou dashboard
+        window.location.href = 'profile.html'; // ajuste se quiser outra página
+      })
+      .catch((err) => {
+        console.error('login google erro', err);
+        alert('Não foi possível entrar com Google. Tente novamente.');
+      });
+  }
+
+  function initGoogleButton() {
+    if (!window.google || !google.accounts || !google.accounts.id) return;
+
+    google.accounts.id.initialize({
+      client_id: '356288579641-hc457vliri7rif3h6vobbc4qmsr4blcm.apps.googleusercontent.com',
+      callback: onGoogleCredential,
+      auto_select: false,
+      cancel_on_tap_outside: true
+    });
+
+    const container = document.getElementById('googleLoginContainer');
+    if (!container) return;
+
+    google.accounts.id.renderButton(container, {
+      theme: 'outline',
+      size: 'large',
+      shape: 'pill',
+      text: 'continue_with',
+      logo_alignment: 'left'
+    });
+  }
+
+  window.addEventListener('load', () => {
+    // pequena espera para garantir que o script do Google carregou
+    let tries = 0;
+    const timer = setInterval(() => {
+      tries++;
+      if (window.google && google.accounts && google.accounts.id) {
+        clearInterval(timer);
+        initGoogleButton();
+      }
+      if (tries > 20) clearInterval(timer);
+    }, 150);
+  });
+})();
+
 </script>
 </body>
 </html>

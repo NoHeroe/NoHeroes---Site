@@ -269,7 +269,14 @@
         <p><strong>Razão social:</strong> <em>Preencher aqui</em> · <strong>CNPJ:</strong> <em>Preencher aqui</em> · <strong>Endereço:</strong> <em>Preencher aqui</em> · <strong>Cidade/UF:</strong> <em>Cuiabá/MT (ou ajustar)</em></p>
       </div>
     </div>
-  </footer>  <!-- JS -->  <script>
+    <button type="button"
+        onclick="window.NH_cookies && window.NH_cookies.openPreferences()"
+        class="text-xs text-gray-400 hover:text-gray-200">
+  Preferências de cookies
+</button>
+  </footer>  
+  <script src="assets/js/cookies.js"></script>
+  <script>
     // Helper: data pt-BR
     function formatDatePTBR(date){
       return new Intl.DateTimeFormat('pt-BR',{day:'2-digit',month:'long',year:'numeric'}).format(date);
@@ -369,5 +376,81 @@
       if(!localStorage.getItem(COOKIE_KEY)) cookieBanner.classList.remove('hidden');
       acceptCookies?.addEventListener('click', ()=>{ localStorage.setItem(COOKIE_KEY,'1'); cookieBanner.classList.add('hidden'); });
     }catch(e){ /* storage indisponível */ }
+    
+// =============================================
+// ⚙️ INTEGRAÇÃO BACKEND — TERMOS / PRIVACIDADE
+// =============================================
+const API = window.location.hostname.includes('localhost')
+  ? 'http://localhost:3000'
+  : 'https://api.noheroes.com.br';
+
+// ---- Atualiza metadados da versão e PDFs ----
+(async () => {
+  try {
+    const res = await fetch(`${API}/termos/status`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const j = await res.json();
+
+    // Atualiza versão e data
+    if (j.versao) document.getElementById('docVersion').textContent = j.versao;
+    if (j.ultima_atualizacao) {
+      const d = new Date(j.ultima_atualizacao);
+      document.getElementById('lastUpdated').textContent =
+        d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+    }
+
+    // Atualiza botão de download se houver PDFs
+    const downloadBtn = document.getElementById('downloadBtn');
+    if (j.pdf_termos) {
+      downloadBtn.textContent = 'Baixar Termos (PDF)';
+      downloadBtn.addEventListener('click', () => window.open(j.pdf_termos, '_blank'));
+    } else {
+      downloadBtn.addEventListener('click', () => window.print());
+    }
+  } catch (e) {
+    console.warn('⚠️ Falha ao obter status dos termos:', e);
+  }
+})();
+
+// ---- Atualiza dados da empresa no rodapé ----
+(async () => {
+  try {
+    const res = await fetch(`${API}/empresa/info`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const j = await res.json();
+
+    const rodape = document.querySelector('footer .border-t.pt-4');
+    if (rodape && j.razao_social) {
+      rodape.innerHTML = `
+        <p><strong>Razão social:</strong> ${j.razao_social || '-'} · 
+        <strong>CNPJ:</strong> ${j.cnpj || '(pendente)'} · 
+        <strong>Endereço:</strong> ${j.endereco || '(não informado)'} · 
+        <strong>Cidade/UF:</strong> ${j.cidade || 'Cuiabá/MT'}</p>
+        <p><strong>Email suporte:</strong> <a href="mailto:${j.email_suporte}" class="underline">${j.email_suporte}</a></p>`;
+    }
+  } catch (e) {
+    console.warn('⚠️ Falha ao obter info da empresa:', e);
+  }
+})();
+
+// ---- Registra aceite de termos (LGPD) ----
+async function registrarAceite() {
+  try {
+    const versao = document.getElementById('docVersion')?.textContent?.trim() || '1.0';
+    const payload = {
+      versao,
+      userAgent: navigator.userAgent,
+      data_aceite: new Date().toISOString()
+    };
+    await fetch(`${API}/termos/aceite`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Client': 'noheroes-terms-v1' },
+      body: JSON.stringify(payload)
+    });
+    console.log('✅ Aceite registrado localmente.');
+  } catch (e) {
+    console.warn('⚠️ Falha ao registrar aceite:', e.message);
+  }
+}
   </script></body>
 </html>

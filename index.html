@@ -606,17 +606,6 @@ backface-visibility: hidden;
     <span class="text-xs text-purple-400 cinzel">Portal</span>
   </a>
 
-  <a href="produtos.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
-    <div class="flex items-center gap-2">
-      <!-- Ícone: Book -->
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12m0-12a2 2 0 012-2h4a2 2 0 012 2v12a2 2 0 01-2 2h-4a2 2 0 01-2-2zm0 0a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2h4a2 2 0 002-2z"/>
-      </svg>
-      <span class="text-white">Projetos</span>
-    </div>
-    <span class="text-xs text-purple-400 cinzel">Grimório</span>
-  </a>
-
   <a href="sobre.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
     <div class="flex items-center gap-2">
       <!-- Ícone: User -->
@@ -829,7 +818,7 @@ backface-visibility: hidden;
     </div>
   </div>
 
-  <button class="btn-noheroes" onclick="window.location.href='produtos.html'">Ver todos os Projetos</button>
+  <button class="btn-noheroes" onclick="window.location.href='store.html'">Ver todos os Projetos</button>
 </section>
 
 <!-- 5. GAMIFICAÇÃO -->  
@@ -854,11 +843,19 @@ backface-visibility: hidden;
   <span class="glitch-text">Como funciona o sistema ?</span>
 </button>
 
-  <!-- Botões secundários -->
-<div class="flex justify-center mt-6">
-  <div class="botao-desativado-duplo">
-    <button><span class="ativo">Baixar App</span> <span class="em-breve">(em breve)</span></button>
-    <button><span class="ativo">Jogar Agora</span> <span class="em-breve">(em breve)</span></button>
+  <div class="flex justify-center mt-6">
+  <div class="flex flex-col sm:flex-row items-center gap-3">
+    <!-- Botão ativo -->
+    <a href="noheroesapp.html"
+       class="px-6 py-3 rounded-full bg-gradient-to-r from-purple-600 to-yellow-400 text-black font-semibold shadow-lg hover:scale-105 transition-transform duration-300">
+      Baixar App
+    </a>
+
+    <!-- Botão desativado -->
+    <button disabled
+            class="px-6 py-3 rounded-full bg-gray-700/60 text-gray-400 font-semibold border border-gray-600 cursor-not-allowed">
+      Jogar Agora <span class="text-xs italic opacity-70">(em breve)</span>
+    </button>
   </div>
 </div>
 </section>
@@ -1031,7 +1028,7 @@ backface-visibility: hidden;
 </div>
 
 <canvas id="brasasCanvas"></canvas>
-
+<script src="assets/js/cookies.js"></script>
  <script>  
   // Scroll suave  
   const scrollToSection = sectionId => {  
@@ -1041,7 +1038,7 @@ backface-visibility: hidden;
   
   // Placeholder do botão “Me Espelhar na Escuridão”  
   document.getElementById('mirror-btn').addEventListener('click', () => {  
-    window.location.href = 'login.html'; // ou personagem.html  
+    window.location.href = 'noheroesapp.html'; 
   });  
 
   const hamburgerBtn = document.getElementById('hamburgerBtn');
@@ -1236,14 +1233,14 @@ function startGlitch() {
 window.addEventListener('DOMContentLoaded', startGlitch);
 
   const produtos = [
-    { nome: "Manual do escritor", img: "assets/images/capas/manual-basico-escritor.jpg" },
-    { nome: "ACDA", img: "assets/images/rebirth-thumb.jpg" },
+    { nome: "Manual do escritor", img: "assets/images/manual-basico-escritor.jpg" },
+    { nome: "ACDA", img: "assets/images/ACDA.jpg" },
     { nome: "Manual das Sombras", img: "assets/images/manualsombras-thumb.jpg" },
-    { nome: "App", img: "assets/images/capas/noheroes-app.jpg" },
+    { nome: "App", img: "assets/images/noheroes-app.jpg" },
     { nome: "Jogar", img: "assets/images/game.png" },
     { nome: "Sistema Vivo", img: "assets/images/sistemavivo-thumb.jpg" },
-    { nome: "Tudo Está Conectado", img: "assets/images/capas/tudo-esta-conectado.jpg" },
-    { nome: "Círculo Interno", img: "assets/images/capas/circulo-interno.jpg" }
+    { nome: "Tudo Está Conectado", img: "assets/images/tudo-esta-conectado.jpg" },
+    { nome: "Círculo Interno", img: "assets/images/circulo-interno.jpg" }
   ];
 
   const inner = document.getElementById("carousel-inner");

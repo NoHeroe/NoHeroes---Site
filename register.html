@@ -1,231 +1,204 @@
-<!DOCTYPE html><html lang="pt-BR"><head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Cadastro — NoHeroes</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    :root{
-      --nh-bg:#0a0a0a; 
-      --nh-card:#0f0f10;
-      --nh-fg:#e5e5e5;
-      --nh-muted:#a1a1aa;
-      --nh-accent:#7c3aed;
-      --nh-accent-2:#d4af37;
-    }
-    html,body{height:100%; margin:0; padding:0}
-    body{background:#0a0a0a; color:var(--nh-fg); font-family:Inter,system-ui,Arial,sans-serif;}
-    .title-font{font-family:'Cinzel Decorative',serif}
-    .glass{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)); backdrop-filter: blur(10px);}
-    .ring-gradient{position:relative}
-    .ring-gradient:before{content:""; position:absolute; inset:-1px; border-radius:inherit; padding:1px; background:linear-gradient(135deg, rgba(124,58,237,.8), rgba(212,175,55,.7)); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude}
-    .fl{position:relative}
-    .fl input, .fl textarea, .fl select{width:100%; padding:14px 14px 12px; background:#0b0b0c; color:#fff; border:1px solid #2a2a2e; border-radius:12px; outline:none}
-    .fl input:focus, .fl textarea:focus, .fl select:focus{border-color:#5b21b6; box-shadow:0 0 0 3px rgba(124,58,237,.25)}
-    .fl label{position:absolute; left:12px; top:12px; padding:0 6px; color:#9ca3af; pointer-events:none; transition:all .15s ease; background:transparent}
-    .fl input:focus+label, .fl input:not(:placeholder-shown)+label,
-    .fl textarea:focus+label, .fl textarea:not(:placeholder-shown)+label,
-    .fl select:focus+label{transform:translateY(-14px) scale(.92); color:#c4b5fd; background:#0b0b0c}
-    #brasasCanvas{position:fixed; inset:0; z-index:-1; display:block;}
-    @media (prefers-reduced-motion: reduce){#brasasCanvas{display:none}}
-    body:after{content:""; position:fixed; inset:0; z-index:-2; pointer-events:none; background: radial-gradient(1200px 700px at 20% -10%, rgba(124,58,237,.25), transparent 60%), radial-gradient(900px 600px at 100% 110%, rgba(212,175,55,.20), transparent 60%), radial-gradient(100% 120% at 50% 110%, rgba(0,0,0,.45), transparent 40%); mix-blend-mode:screen; background-attachment:fixed}
-  </style>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cadastro — NoHeroes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root{
+    --nh-bg:#0a0a0a; --nh-fg:#e5e5e5; --nh-muted:#bdbdbd;
+    --grad:linear-gradient(135deg,#8f4fff 0%,#facc15 100%);
+    --border:rgba(255,255,255,.1); --glass:rgba(255,255,255,.04);
+    --radius:16px;
+  }
+  body{font-family:Inter,system-ui,Arial,sans-serif;background:var(--nh-bg);color:var(--nh-fg);overflow-x:hidden}
+  .cinzel{font-family:"Cinzel Decorative",serif}
+  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .card{background:var(--glass);border:1px solid var(--border);border-radius:var(--radius);backdrop-filter:blur(10px)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;padding:.85rem 1.1rem;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.05);transition:.25s;font-weight:600}
+  .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.08)}
+  .btn-primary{background:var(--grad);color:#000;border:none}
+  .btn-primary:hover{filter:saturate(1.05);transform:translateY(-1px) scale(1.01)}
+  .input{background:#0e0e0e;border:1px solid var(--border);border-radius:12px;padding:.8rem .9rem;color:var(--nh-fg);width:100%}
+  .hint{font-size:.82rem;color:#bdbdbd}
+  #brasasCanvas{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;pointer-events:none}
+</style>
 </head>
-<body class="min-h-screen flex flex-col">
-  <canvas id="brasasCanvas" aria-hidden="true"></canvas>  <!-- HEADER FIXO -->  <header class="fixed top-0 left-0 w-full z-50 bg-[#0a0a0a] border-b border-[#222]">
-    <div class="h-1.5 w-full bg-gradient-to-r from-purple-600 via-purple-400 to-amber-300"></div>
-    <div class="mx-auto max-w-6xl px-4 h-16 flex items-center justify-between">
-      <a href="index.html" class="flex items-center gap-3 group">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-600 to-amber-400 shadow"></div>
-        <span class="title-font text-xl tracking-wide bg-clip-text text-transparent bg-gradient-to-r from-purple-300 to-amber-200">NoHeroes</span>
-      </a>
-      <nav class="hidden sm:flex items-center gap-6 text-sm text-zinc-300">
-        <a href="sobre.html" class="hover:text-white">Sobre</a>
-        <a href="store.html" class="hover:text-white">Loja</a>
-        <a href="suporte.html" class="hover:text-white">Suporte</a>
-      </nav>
-      <a href="login.html" class="text-sm font-semibold px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10">Entrar</a>
-    </div>
-  </header>  <!-- OFFSET ESPAÇAMENTO -->  <div class="h-[76px]"></div>  <!-- MAIN -->  <main class="flex-1 flex items-center justify-center px-4 py-12">   
-    <section class="w-full max-w-xl ring-gradient rounded-2xl">
-      <div class="glass rounded-2xl p-6 sm:p-8 shadow-2xl">
-        <h1 class="title-font text-3xl sm:text-4xl text-center mb-2 bg-clip-text text-transparent bg-gradient-to-r from-purple-300 to-amber-200">Crie sua conta</h1>
-        <p class="text-center text-zinc-400 mb-6">Bem-vindo ao universo NoHeroes. Registre-se para desbloquear conteúdos, itens e novidades.</p>
+<body>
+<canvas id="brasasCanvas" aria-hidden="true"></canvas>
 
-        <form id="registerForm" class="grid grid-cols-1 gap-4">
-          <div class="fl">
-            <input id="nome_completo" name="nome_completo" type="text" placeholder=" " required autocomplete="name" inputmode="text"/>
-            <label for="nome_completo">Nome completo</label>
-          </div>
-          <div class="fl">
-            <input id="username" name="username" type="text" placeholder=" " required autocapitalize="off" autocomplete="username"/>
-            <label for="username">Nome de usuário</label>
-          </div>
-          <div class="fl">
-            <input id="email" name="email" type="email" placeholder=" " required autocomplete="email"/>
-            <label for="email">E-mail</label>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div class="fl">
-              <input id="password" name="password" type="password" placeholder=" " required autocomplete="new-password"/>
-              <label for="password">Senha</label>
-              <button type="button" id="togglePwd" class="absolute right-2 top-2.5 text-xs text-zinc-400 hover:text-zinc-200">mostrar</button>
-            </div>
-            <div class="fl">
-              <input id="confirmPassword" name="confirmPassword" type="password" placeholder=" " required autocomplete="new-password"/>
-              <label for="confirmPassword">Confirmar senha</label>
-            </div>
-          </div>
+<header class="fixed top-0 left-0 right-0 h-[70px] bg-[#0a0a0a]/85 border-b border-[#222] backdrop-blur-md z-50 flex items-center justify-between px-6">
+  <a href="index.html" class="flex items-center gap-3">
+    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-600 to-amber-400"></div>
+    <span class="cinzel text-xl bg-clip-text text-transparent bg-gradient-to-r from-purple-300 to-amber-200">NoHeroes</span>
+  </a>
+  <a href="login.html" class="text-sm font-semibold px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10">Entrar</a>
+</header>
+<div class="h-[70px]"></div>
 
-          <!-- Opcionais -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div class="fl">
-              <input id="phone" name="phone" type="tel" placeholder=" " inputmode="tel"/>
-              <label for="phone">Telefone (opcional)</label>
-            </div>
-            <div class="fl">
-              <input id="birthdate" name="birthdate" type="date" placeholder=" "/>
-              <label for="birthdate">Nascimento (opcional)</label>
-            </div>
-          </div>
-          <div class="fl">
-            <textarea id="bio" name="bio" rows="3" placeholder=" "></textarea>
-            <label for="bio">Sobre você (opcional)</label>
-          </div>
+<main class="max-w-md mx-auto px-4 py-16 relative z-10">
+  <section class="card p-6 sm:p-8">
+    <h1 class="cinzel text-3xl grad-text text-center mb-2">Criar Conta</h1>
+    <p class="text-center hint mb-6">Registre-se para acessar o universo NoHeroes.</p>
 
-          <div class="flex items-start gap-3 text-sm text-zinc-300">
-            <input id="terms" type="checkbox" required class="mt-1 accent-purple-600"/>
-            <label for="terms">Concordo com os <a class="underline hover:no-underline" href="/termos" target="_blank" rel="noopener">Termos</a> e a <a class="underline hover:no-underline" href="/privacidade" target="_blank" rel="noopener">Privacidade</a>.</label>
-          </div>
-
-          <button type="submit" class="mt-2 inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-semibold bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-500 hover:to-purple-600 focus:outline-none focus:ring-4 focus:ring-purple-700/40 disabled:opacity-60 disabled:cursor-not-allowed">
-            <span id="btnText">Cadastrar</span>
-            <svg id="btnSpinner" class="hidden w-5 h-5 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-            </svg>
-          </button>
-
-          <p class="text-sm text-zinc-400 text-center">Já tem uma conta? <a class="text-purple-300 underline hover:no-underline" href="login.html">Entrar</a></p>
-        </form>
+    <form id="registerForm" class="grid gap-4">
+      <label class="grid gap-2">
+        <span class="hint">Nome completo</span>
+        <input type="text" id="nome_completo" class="input" required>
+      </label>
+      <label class="grid gap-2">
+        <span class="hint">Nome de usuário</span>
+        <input type="text" id="username" class="input" required minlength="3" autocomplete="username">
+      </label>
+      <label class="grid gap-2">
+        <span class="hint">E-mail</span>
+        <input type="email" id="email" class="input" required autocomplete="email">
+      </label>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <label class="grid gap-2">
+          <span class="hint">Senha</span>
+          <input type="password" id="password" class="input" required minlength="6" autocomplete="new-password">
+        </label>
+        <label class="grid gap-2">
+          <span class="hint">Confirmar senha</span>
+          <input type="password" id="confirmPassword" class="input" required minlength="6" autocomplete="new-password">
+        </label>
       </div>
-    </section>
-  </main>
+      <label class="grid gap-2">
+        <span class="hint">Telefone (opcional)</span>
+        <input type="tel" id="phone" class="input">
+      </label>
+      <label class="grid gap-2">
+        <span class="hint">Data de nascimento (opcional)</span>
+        <input type="date" id="birthdate" class="input">
+      </label>
+      <label class="grid gap-2">
+        <span class="hint">Sobre você (opcional)</span>
+        <textarea id="bio" class="input" rows="3"></textarea>
+      </label>
 
-  <footer class="px-4 py-10 text-center text-xs text-zinc-500">
-    © <span id="year"></span> NoHeroes. Todos os direitos reservados.
-  </footer>
+      <label class="flex items-start gap-3 text-sm text-white/70 select-none">
+        <input id="terms" type="checkbox" class="accent-purple-500" required>
+        <span>Concordo com os <a href="termos.html" target="_blank" class="underline hover:no-underline">Termos</a> e a <a href="privacidade.html" target="_blank" class="underline hover:no-underline">Privacidade</a>.</span>
+      </label>
 
-  <script>
-    // Ano
-    document.getElementById('year').textContent = new Date().getFullYear();
+      <button id="submitBtn" type="submit" class="btn btn-primary w-full mt-3">
+        <span id="btnText">Cadastrar</span>
+        <svg id="btnSpin" class="animate-spin h-4 w-4 hidden" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v3a5 5 0 00-5 5H4z"></path></svg>
+      </button>
 
-    // Toggle senha
-    const pwd = document.getElementById('password');
-    const togglePwd = document.getElementById('togglePwd');
-    togglePwd.addEventListener('click', ()=>{
-      const isPwd = pwd.type === 'password';
-      pwd.type = isPwd ? 'text' : 'password';
-      togglePwd.textContent = isPwd ? 'ocultar' : 'mostrar';
-    });
+      <p id="error" class="text-red-400 text-sm hidden text-center"></p>
+    </form>
 
-    // Submit
-    const form = document.getElementById('registerForm');
-    const btnText = document.getElementById('btnText');
-    const btnSpinner = document.getElementById('btnSpinner');
+    <p class="mt-6 text-center text-sm text-white/60">
+      Já tem conta? <a href="login.html" class="text-white hover:underline">Entrar</a>
+    </p>
+  </section>
+</main>
 
-    function validateBasics(){
-      const email = document.getElementById('email').value.trim();
-      const username = document.getElementById('username').value.trim();
-      const rxEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if(username.length < 3){ alert('Username muito curto.'); return false; }
-      if(!rxEmail.test(email)){ alert('E-mail inválido.'); return false; }
-      return true;
+<footer class="py-10 text-center text-white/50 text-sm">
+  © <span id="year"></span> NoHeroes. Todos os direitos reservados.
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// === Brasas canvas ===
+const canvas = document.getElementById("brasasCanvas");
+    const ctx = canvas.getContext("2d");
+    let particles = [], w, h;
+
+    function resizeCanvas() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() { this.reset(true); }
+      reset(initial = false) {
+        this.x = Math.random() * w;
+        this.y = initial ? Math.random() * h : h + Math.random() * 100;
+        this.size = 1 + Math.random() * 2.5;
+        this.speed = 0.2 + Math.random() * 0.5;
+        this.alpha = 0.4 + Math.random() * 0.3;
+        this.drift = (Math.random() - 0.5) * 0.5;
+      }
+      update() {
+        this.y -= this.speed;
+        this.x += this.drift;
+        if (this.y < -10 || this.x < -50 || this.x > w + 50) this.reset();
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`;
+        ctx.shadowColor = "#a855f7";
+        ctx.shadowBlur = 12;
+        ctx.fill();
+      }
     }
 
-    form.addEventListener('submit', async (e)=>{
-      e.preventDefault();
-      if(!validateBasics()) return;
+    function createParticles(n) {
+      for (let i = 0; i < n; i++) particles.push(new Particle());
+    }
+    function animate() {
+      ctx.clearRect(0, 0, w, h);
+      for (const p of particles) { p.update(); p.draw(); }
+      requestAnimationFrame(animate);
+    }
+    createParticles(150);
+    animate();
 
-      const nome_completo = document.getElementById('nome_completo').value.trim();
-      const username = document.getElementById('username').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
-      const confirmPassword = document.getElementById('confirmPassword').value;
-      const phone = document.getElementById('phone').value.trim();
-      const birthdate = document.getElementById('birthdate').value;
-      const bio = document.getElementById('bio').value.trim();
+// === Cadastro ===
+const form=document.getElementById("registerForm");
+const errorEl=document.getElementById("error");
+const btnText=document.getElementById("btnText");
+const btnSpin=document.getElementById("btnSpin");
+const submitBtn=document.getElementById("submitBtn");
 
-      if(password !== confirmPassword){ alert('As senhas não coincidem.'); return; }
+form.addEventListener("submit",async e=>{
+  e.preventDefault();
+  errorEl.classList.add("hidden");errorEl.textContent="";
+  const nome_completo=document.getElementById("nome_completo").value.trim();
+  const username=document.getElementById("username").value.trim();
+  const email=document.getElementById("email").value.trim();
+  const password=document.getElementById("password").value;
+  const confirmPassword=document.getElementById("confirmPassword").value;
+  const phone=document.getElementById("phone").value.trim();
+  const birthdate=document.getElementById("birthdate").value;
+  const bio=document.getElementById("bio").value.trim();
 
-      const payload = { nome_completo, username, email, password, phone, birthdate, bio };
+  if(!nome_completo||!username||!email||!password){errorEl.textContent="Preencha todos os campos obrigatórios.";errorEl.classList.remove("hidden");return;}
+  if(password!==confirmPassword){errorEl.textContent="As senhas não coincidem.";errorEl.classList.remove("hidden");return;}
 
-      const submitBtn = e.submitter || form.querySelector('button[type="submit"]');
-      submitBtn.disabled = true; btnText.textContent = 'Processando…'; btnSpinner.classList.remove('hidden');
+  const payload={nome_completo,username,email,password,phone,birthdate,bio};
+  submitBtn.disabled=true;btnSpin.classList.remove("hidden");btnText.textContent="Criando conta...";
 
-      try{
-        const res = await fetch('https://api.noheroes.com.br/register',{
-          method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)
-        });
-        const data = await res.json().catch(()=>({}));
-        if(res.ok && data && (data.user || data.success)){
-          alert('Conta criada com sucesso!');
-          location.href = 'login.html';
-        } else {
-          alert(data.message || 'Erro ao cadastrar. Tente novamente.');
-          submitBtn.disabled = false; btnText.textContent = 'Cadastrar'; btnSpinner.classList.add('hidden');
-        }
-      }catch(err){
-        console.error(err);
-        alert('Falha de conexão. Tente novamente.');
-        submitBtn.disabled = false; btnText.textContent = 'Cadastrar'; btnSpinner.classList.add('hidden');
-      }
+  try{
+    const res = await fetch("https://api.noheroes.com.br/api/auth/register", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(payload)
     });
-
-    /* Brasas roxas — fixas, suaves (padrão NoHeroes) */
-    (function(){
-      const canvas = document.getElementById('brasasCanvas');
-      if(!canvas) return;
-      const ctx = canvas.getContext('2d', {alpha:true});
-      let particles = [];
-
-      function resize(){
-        canvas.width = innerWidth;
-        canvas.height = innerHeight;
-      }
-      addEventListener('resize', resize, {passive:true});
-      resize();
-
-      function create(count){
-        particles = [];
-        for(let i=0;i<count;i++){
-          particles.push({
-            x: Math.random()*canvas.width,
-            y: Math.random()*canvas.height,
-            r: Math.random()*1.4 + 0.8,
-            vy: -(Math.random()*0.28 + 0.12),
-            a: Math.random()*0.5 + 0.4
-          });
-        }
-      }
-
-      function loop(){
-        ctx.clearRect(0,0,canvas.width,canvas.height);
-        particles.forEach(p=>{
-          p.y += p.vy;
-          if(p.y < -10) { p.y = canvas.height + 10; p.x = Math.random()*canvas.width; }
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-          ctx.fillStyle = `rgba(168, 85, 247, ${p.a})`; // roxo
-          ctx.shadowColor = '#a855f7';
-          ctx.shadowBlur = 12;
-          ctx.fill();
-        });
-        requestAnimationFrame(loop);
-      }
-      create(110);
-      loop();
-    })();
-  </script>
+    const data=await res.json().catch(()=>({}));
+    if(res.ok && (data.user||data.success)){
+      localStorage.setItem("NoHeroes_token","Bearer "+(data.token||""));
+      alert("Conta criada com sucesso!");
+      window.location.href="profile.html";
+    }else{
+      errorEl.textContent=(data.message||data.error||"Não foi possível criar a conta.");errorEl.classList.remove("hidden");
+    }
+  }catch(err){
+    console.error("Erro:",err);
+    errorEl.textContent="Falha de conexão com o servidor.";errorEl.classList.remove("hidden");
+  }finally{
+    submitBtn.disabled=false;btnSpin.classList.add("hidden");btnText.textContent="Cadastrar";
+  }
+});
+</script>
 </body>
 </html>

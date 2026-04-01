@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>NoHeroes — Portfólio</title>
+  <meta name="description" content="Portfólio da NoHeroes: Web design & programação, arte digital e escrita/roteiro. Solicite orçamento." />
+  <meta property="og:title" content="NoHeroes — Portfólio" />
+  <meta property="og:description" content="Web design & programação, arte digital e escrita/roteiro. Solicite orçamento." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#0a0a0b" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            base: { 900:'#0a0a0b', 800:'#0f0f12', 700:'#14141a', 600:'#1a1a22' },
+            accent:{ 500:'#b88cff', 600:'#a779ff', 700:'#8f5bff' },
+            gold:{ 400:'#f6d68e', 500:'#f1c663', 600:'#e6b74a' }
+          },
+          fontFamily:{ sans:['Inter','system-ui','ui-sans-serif','Arial'], display:['Cinzel Decorative','serif'] },
+          boxShadow:{ glow:'0 0 40px rgba(184,140,255,0.25), inset 0 0 30px rgba(241,198,99,0.10)' },
+          animation:{
+            'fade-up':'fadeUp .8s cubic-bezier(.2,.6,.2,1) both',
+            'fade-in':'fadeIn .6s ease-out both',
+            'shimmer':'shimmer 2.2s linear infinite'
+          },
+          keyframes:{
+            fadeUp:{ from:{ opacity:0, transform:'translateY(18px) scale(.98)' }, to:{ opacity:1, transform:'translateY(0) scale(1)' } },
+            fadeIn:{ from:{ opacity:0 }, to:{ opacity:1 } },
+            shimmer:{ '0%':{ backgroundPosition:'-500px 0' }, '100%':{ backgroundPosition:'500px 0' } }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root{
+      --radius: 18px;
+      --glass: rgba(255,255,255,0.04);
+      --border: rgba(255,255,255,0.08);
+      --grad: linear-gradient(135deg, #8f5bff 0%, #b88cff 40%, #f1c663 100%);
+      --grad-soft: radial-gradient(60% 60% at 70% 30%, rgba(184,140,255,0.3) 0%, rgba(0,0,0,0) 60%), radial-gradient(40% 40% at 20% 80%, rgba(241,198,99,0.25) 0%, rgba(0,0,0,0) 60%);
+    }
+    .grad-text{ background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .card{ background:var(--glass); border:1px solid var(--border); border-radius:var(--radius); backdrop-filter:blur(10px); box-shadow:0 10px 30px rgba(0,0,0,.35); }
+    .btn{ border-radius:999px; border:1px solid var(--border); padding:.7rem 1rem; background:rgba(255,255,255,0.05); display:inline-flex; align-items:center; gap:.6rem; white-space:nowrap; }
+    .btn[aria-pressed="true"]{ outline:2px solid rgba(184,140,255,.5); }
+    .btn:hover{ background:rgba(255,255,255,0.08); transform:translateY(-1px); }
+    .ph{ position:relative; overflow:hidden; background:#121218; border-radius:14px; }
+    .ph::after{ content:''; position:absolute; inset:0; background-image:linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.08), rgba(255,255,255,0)); background-size:500px 100%; animation:shimmer 2.2s linear infinite; }
+    .reveal{ opacity:0; transform:translateY(16px) scale(.98); }
+    .reveal.in{ opacity:1; transform:none; transition:opacity .6s ease, transform .6s cubic-bezier(.2,.6,.2,1); }
+    .badge{ display:inline-flex; align-items:center; gap:.4rem; font-size:.72rem; line-height:1; padding:.45rem .7rem; border-radius:999px; border:1px solid var(--border); background:rgba(255,255,255,.04); }
+    .list-compact li{ margin-top:.5rem; display:flex; gap:.6rem; }
+    .list-compact li::before{ content:"•"; color:#b88cff; margin-top:.1rem; }
+    @media (prefers-reduced-motion: reduce){ *{ animation:none!important; transition:none!important } }
+
+    /* --- Correção overflow e mobile robustness --- */
+    html, body{ width:100%; max-width:100%; overflow-x:hidden; }
+    header, main, footer{ max-width:100vw; overflow-x:clip; }
+    img, video, canvas, svg{ max-width:100%; height:auto; }
+    .card, .ph{ contain:layout paint; }
+
+    /* Melhorias de layout no mobile para o header do bloco Vitrines */
+    .vitrines-head{ flex-wrap:wrap; }
+    .vitrines-title{ width:100%; }
+    .vitrines-actions{ width:100%; }
+
+    @media (min-width: 768px){
+      .vitrines-title{ width:auto; }
+      .vitrines-actions{ width:auto; }
+    }
+/* ==== Fade-in cinematográfico ==== */
+:root{
+  --reveal-duration: 900ms;   /* 800–1200ms fica ótimo */
+  --reveal-delay: 0ms;        /* custom por elemento via inline style ou data-attr */
+}
+
+.reveal{
+  opacity: 0;
+  transform: translateY(18px) scale(.985);
+  filter: blur(6px);
+  will-change: opacity, transform, filter;
+}
+
+.reveal.in{
+  animation: cinematicReveal var(--reveal-duration) cubic-bezier(.22,.61,.36,1) var(--reveal-delay) both;
+}
+
+@keyframes cinematicReveal{
+  0%{
+    opacity: 0;
+    transform: translateY(18px) scale(.985);
+    filter: blur(6px);
+  }
+  60%{
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(.8px);     /* ainda um “respiro” de nitidez */
+  }
+  100%{
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Reduz movimento quando o usuário prefere */
+@media (prefers-reduced-motion: reduce){
+  .reveal{ opacity:1; transform:none; filter:none; }
+  .reveal.in{ animation: none !important; }
+}
+/* crossfade/zoom suave sem brigar com suas reveals */
+.collage-img{
+  transition: opacity .6s ease, transform .8s cubic-bezier(.2,.6,.2,1), filter .6s ease;
+  will-change: opacity, transform, filter;
+}
+.collage-swap-out{ opacity:.0; transform: scale(1.03); filter: saturate(1.05); }
+.collage-swap-in{ opacity:1; transform: scale(1.0); filter: none; }
+@media (prefers-reduced-motion: reduce){
+  .collage-img{ transition: none !important; }
+}
+
+
+@media (min-width:1024px){
+  /* HERO ocupa a linha toda */
+  #collageIntro [data-slot="hero"]{
+    grid-column: span 3 / span 3 !important;
+  }
+
+  /* container das miniaturas: sempre 3 colunas em linha */
+  #collageIntro > .grid > div{
+    grid-column: span 3 / span 3 !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    grid-template-rows: unset !important;
+  }
+
+  /* miniaturas se ajustam lado a lado */
+  #collageIntro [data-slot="a"],
+  #collageIntro [data-slot="b"],
+  #collageIntro [data-slot="c"]{
+    grid-column: span 1 / span 1 !important;
+    aspect-ratio: 4 / 3 !important;
+  }
+}
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Person",
+    "name":"Raul",
+    "jobTitle":"Designer/Programador, Artista Digital, Escritor/Roteirista",
+    "url":"https://noheroes.com.br",
+    "sameAs":[]
+  }
+  </script>
+</head>
+<body class="bg-base-900 text-zinc-200 antialiased selection:bg-accent-600/30">
+  <!-- Background -->
+  <div class="pointer-events-none fixed inset-0 -z-10" aria-hidden="true">
+    <div class="absolute inset-0" style="background:var(--grad-soft)"></div>
+    <div class="absolute inset-0 opacity-[0.15]" style="background-image:radial-gradient(1px 1px at 20px 20px, rgba(255,255,255,0.08) 1px, transparent 0); background-size:24px 24px;"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 backdrop-blur border-b border-white/5 bg-base-900/70">
+    <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between" role="navigation" aria-label="Principal">
+      <a href="#intro" class="flex items-center gap-2 font-display text-xl">
+        <span class="w-6 h-6 rounded-full" style="background:var(--grad)"></span>
+        <span class="grad-text">NoHeroes</span>
+      </a>
+      <ul class="hidden md:flex items-center gap-6 text-sm">
+        <li><a class="hover:text-white/90" href="#intro">Início</a></li>
+        <li><a class="hover:text-white/90" href="#bio">Biografia</a></li>
+        <li><a class="hover:text-white/90" href="#vitrines">Vitrines</a></li>
+        <li><a class="hover:text-white/90" href="#proprios">Projetos</a></li>
+        <li><a class="hover:text-white/90" href="#contato">Contato</a></li>
+      </ul>
+      <div class="flex items-center gap-2">
+        <a href="#contato" class="btn" aria-label="Solicitar orçamento">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" stroke-width="1.5"/><path d="M7 10l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Contato
+        </a>
+        <button class="md:hidden btn" id="menuBtn" aria-label="Abrir menu" aria-controls="mobileMenu" aria-expanded="false">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </nav>
+    <!-- Mobile menu -->
+    <div id="mobileMenu" class="hidden md:hidden border-t border-white/5 bg-base-900" role="dialog" aria-modal="true">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3 grid gap-3">
+        <a class="btn" href="#intro" data-close-menu>Início</a>
+        <a class="btn" href="#bio" data-close-menu>Biografia</a>
+        <a class="btn" href="#vitrines" data-close-menu>Vitrines</a>
+        <a class="btn" href="#proprios" data-close-menu>Projetos</a>
+        <a class="btn" href="#contato" data-close-menu>Contato</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <!-- Intro -->
+    <section id="intro" class="pt-14 lg:pt-24 pb-14 lg:pb-24">
+      <div class="grid lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-7 reveal">
+          <p class="text-xs uppercase tracking-[0.2em] text-zinc-400">Apresentação</p>
+          <h1 class="mt-3 font-display text-4xl sm:text-5xl leading-tight">
+            Construimos <span class="grad-text">experiências digitais</span> que unem <span class="grad-text">design, código e narrativa</span>.
+          </h1>
+          <p class="mt-5 text-zinc-300/90 leading-relaxed max-w-2xl">
+            Na NoHeroes, transformamos ideias em realidade.
+De sites a artes digitais, de gestão de projetos a obras criativas — unimos técnica, estética e estratégia para gerar impacto real.
+          </p>
+          <div class="mt-7 flex flex-wrap gap-3">
+            <a href="#vitrines" class="btn">Ver vitrines</a>
+            <a href="#contato" class="btn" aria-label="Entrar em contato">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 10v6a2 2 0 0 1-2 2H7l-4 3V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2z" stroke="currentColor" stroke-width="1.5"/></svg>
+              Contato rápido
+            </a>
+          </div>
+        </div>
+        <div id="collageIntro" class="lg:col-span-5 card p-4 sm:p-6 md:p-8 relative overflow-hidden reveal">
+  <div class="absolute -top-24 -right-24 w-64 h-64 rounded-full blur-3xl opacity-30" style="background:var(--grad)"></div>
+
+  <div class="grid grid-cols-3 gap-3">
+    <!-- HERO (maior) -->
+    <figure data-slot="hero" class="relative col-span-3 md:col-span-2 aspect-[4/3] overflow-hidden rounded-[14px]">
+      <img class="collage-img w-full h-full object-cover" alt="Imagem destaque" loading="lazy" decoding="async">
+    </figure>
+
+    <!-- COLUNA DAS PEQUENAS -->
+    <div class="col-span-3 md:col-span-1 grid grid-cols-3 md:grid-cols-1 md:grid-rows-3 gap-3">
+      <figure data-slot="a" class="relative col-span-1 aspect-[3/2] md:aspect-[1/1] overflow-hidden rounded-[14px]">
+        <img class="collage-img w-full h-full object-cover" alt="Imagem 1" loading="lazy" decoding="async">
+      </figure>
+      <figure data-slot="b" class="relative col-span-1 aspect-[3/2] md:aspect-[1/1] overflow-hidden rounded-[14px]">
+        <img class="collage-img w-full h-full object-cover" alt="Imagem 2" loading="lazy" decoding="async">
+      </figure>
+      <figure data-slot="c" class="relative col-span-1 aspect-[3/2] md:aspect-[1/1] overflow-hidden rounded-[14px]">
+        <img class="collage-img w-full h-full object-cover" alt="Imagem 3" loading="lazy" decoding="async">
+      </figure>
+    </div>
+  </div>
+
+  <p class="mt-4 text-xs text-zinc-400">Explore.Escolha.Caia.Evolua.</p>
+</div>
+    </section>
+
+    <!-- Bio -->
+    <section id="bio" class="pb-20">
+      <div class="grid lg:grid-cols-12 gap-8 items-start">
+        <div class="lg:col-span-5 reveal">
+          <h2 class="font-display text-3xl grad-text">Biografia & atuação</h2>
+<p class="mt-4 text-zinc-300/90 leading-relaxed">
+  A <span class="font-semibold">NoHeroes</span> atua na interseção entre 
+  <span class="font-semibold">tecnologia, arte e narrativa</span>. 
+  Desenvolvemos sites e aplicativos (Node.js/Express, PostgreSQL, integrações de pagamentos), 
+  criamos identidades visuais e artes digitais, e elaboramos roteiros e universos criativos. 
+  Também ajudamos a transformar ideias em projetos concretos, do planejamento à execução.
+</p>
+<ul class="mt-6 space-y-3 text-sm text-zinc-300/90">
+  <li class="flex items-start gap-3">
+    <span class="mt-1 w-1.5 h-1.5 rounded-full" style="background:var(--grad)"></span>
+    Web design, UI/UX e front-end moderno.
+  </li>
+  <li class="flex items-start gap-3">
+    <span class="mt-1 w-1.5 h-1.5 rounded-full" style="background:var(--grad)"></span>
+    Back-end escalável, APIs e integrações (pagamentos, automações etc.).
+  </li>
+  <li class="flex items-start gap-3">
+    <span class="mt-1 w-1.5 h-1.5 rounded-full" style="background:var(--grad)"></span>
+    Gestão e acompanhamento de projetos — da ideia inicial ao produto final.
+  </li>
+  <li class="flex items-start gap-3">
+    <span class="mt-1 w-1.5 h-1.5 rounded-full" style="background:var(--grad)"></span>
+    Arte digital, concept design e branding.
+  </li>
+  <li class="flex items-start gap-3">
+    <span class="mt-1 w-1.5 h-1.5 rounded-full" style="background:var(--grad)"></span>
+    Escrita criativa, roteiros e construção de universos (worldbuilding).
+  </li>
+  <li class="flex items-start gap-3">
+    <span class="mt-1 w-1.5 h-1.5 rounded-full" style="background:var(--grad)"></span>
+    Apoio a escritores e roteiristas na finalização e publicação de obras.
+  </li>
+</ul>
+</div>
+        <div class="lg:col-span-7 grid md:grid-cols-3 gap-4">
+          <div class="card p-5 reveal">
+            <p class="text-sm text-zinc-400">Experiência</p>
+            <p class="mt-2 text-2xl font-semibold">5+ anos</p>
+            <p class="mt-2 text-sm text-zinc-400">Criação, código e narrativa</p>
+          </div>
+          <div class="card p-5 reveal">
+            <p class="text-sm text-zinc-400">Projetos</p>
+            <p class="mt-2 text-2xl font-semibold">25+</p>
+            <p class="mt-2 text-sm text-zinc-400">Sites, artes e roteiros</p>
+          </div>
+          <div class="card p-5 reveal">
+            <p class="text-sm text-zinc-400">Foco</p>
+            <p class="mt-2 text-2xl font-semibold">Qualidade</p>
+            <p class="mt-2 text-sm text-zinc-400">Entrega limpa e eficiente</p>
+          </div>
+      </div>
+    </section>
+
+    <section id="vitrines" class="pb-24">
+  <div class="flex items-end justify-between gap-4 mb-6 vitrines-head">
+    <h2 class="font-display text-3xl grad-text vitrines-title">Vitrines</h2>
+    <div class="flex flex-wrap gap-2 text-xs vitrines-actions" role="tablist" aria-label="Categorias de vitrine">
+      <button class="btn" role="tab" aria-selected="true" aria-controls="tab-web" id="tab-web-btn" data-tab="web">Web design & Programação</button>
+      <button class="btn" role="tab" aria-selected="false" aria-controls="tab-arte" id="tab-arte-btn" data-tab="arte">Arte digital</button>
+      <button class="btn" role="tab" aria-selected="false" aria-controls="tab-escrita" id="tab-escrita-btn" data-tab="escrita">Escrita & Roteiro</button>
+    </div>
+  </div>
+
+  <!-- WEB -->
+  <div id="tab-web" class="tab" role="tabpanel" tabindex="0" aria-labelledby="tab-web-btn">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <article class="card overflow-hidden reveal">
+        <div class="relative aspect-[4/3]">
+          <img
+            src="assets/images/landing-manual.jpg"
+            alt="Landing Page do Produto X — UI/UX e integração de pagamentos"
+            class="absolute inset-0 h-full w-full object-cover"
+            loading="lazy" decoding="async" />
+        </div>
+        <div class="p-5">
+          <h3 class="font-semibold">Landing Page — Manual da Ancestralidade</h3>
+          <p class="mt-1 text-sm text-zinc-400">UI/UX, performance, integração de formulário para newsletter.</p>
+        </div>
+      </article>
+
+      <article class="card overflow-hidden reveal">
+        <div class="relative aspect-[4/3]">
+          <img
+            src="assets/images/dashboard.jpg"
+            alt="Dashboard Analytics — visual limpo, gráficos e filtros"
+            class="absolute inset-0 h-full w-full object-cover"
+            loading="lazy" decoding="async" />
+        </div>
+        <div class="p-5">
+          <h3 class="font-semibold">Dashboard — Analytics</h3>
+          <p class="mt-1 text-sm text-zinc-400">Visual limpo, gráficos e filtros.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <!-- ARTE -->
+  <div id="tab-arte" class="tab hidden" role="tabpanel" tabindex="-1" aria-labelledby="tab-arte-btn">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <article class="card overflow-hidden reveal">
+        <div class="relative aspect-[3/4]">
+          <img
+            src="assets/images/concept.jpg"
+            alt="Concept de personagem — estética NoHeroes"
+            class="absolute inset-0 h-full w-full object-cover"
+            loading="lazy" decoding="async" />
+        </div>
+        <div class="p-5">
+          <h3 class="font-semibold">Concept — Personagem</h3>
+          <p class="mt-1 text-sm text-zinc-400">Estudo de personagem, estética NoHeroes.</p>
+        </div>
+      </article>
+
+      <article class="card overflow-hidden reveal">
+        <div class="relative aspect-[16/9]">
+          <img
+            src="assets/images/cena-ambiente.jpg"
+            alt="Cena de ambiente — luz, cor e composição cinematográfica"
+            class="absolute inset-0 h-full w-full object-cover"
+            loading="lazy" decoding="async" />
+        </div>
+        <div class="p-5">
+          <h3 class="font-semibold">Cena — Ambiente</h3>
+          <p class="mt-1 text-sm text-zinc-400">Luz, cor e composição cinematográfica.</p>
+        </div>
+      </article>
+
+      <article class="card overflow-hidden reveal">
+        <div class="relative aspect-[1/1]">
+          <img
+            src="assets/images/poster.jpg"
+            alt="Pôster de série — branding e impacto visual"
+            class="absolute inset-0 h-full w-full object-cover"
+            loading="lazy" decoding="async" />
+        </div>
+        <div class="p-5">
+          <h3 class="font-semibold">Poster — Exclusivo</h3>
+          <p class="mt-1 text-sm text-zinc-400"> Arte para colecionador |Formato: Poster.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <!-- ESCRITA -->
+  <div id="tab-escrita" class="tab hidden" role="tabpanel" tabindex="-1" aria-labelledby="tab-escrita-btn">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <article class="card overflow-hidden reveal">
+        <div class="relative aspect-[21/9]">
+          <img
+            src="assets/images/roteiro1.jpg"
+            alt="Roteiro de curta — estrutura, ritmo e diálogo natural"
+            class="absolute inset-0 h-full w-full object-cover"
+            loading="lazy" decoding="async" />
+        </div>
+        <div class="p-5">
+          <h3 class="font-semibold">Roteiro — Curta</h3>
+          <p class="mt-1 text-sm text-zinc-400">Estrutura, ritmo e diálogo natural.</p>
+        </div>
+      </article>
+
+      <article class="card overflow-hidden reveal">
+        <div class="relative aspect-[4/3]">
+          <img
+            src="assets/images/capitulonh1.jpg"
+            alt="Capítulo NoHeroes — worldbuilding e imersão sensorial"
+            class="absolute inset-0 h-full w-full object-cover"
+            loading="lazy" decoding="async" />
+        </div>
+        <div class="p-5">
+          <h3 class="font-semibold">Capítulo — NoHeroes</h3>
+          <p class="mt-1 text-sm text-zinc-400">Worldbuilding e imersão sensorial.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+    <!-- Projetos Próprios -->
+    <section id="proprios" class="pb-28">
+      <div class="flex items-end justify-between gap-4 mb-6 flex-wrap">
+        <h2 class="font-display text-3xl grad-text w-full md:w-auto">Projetos Próprios</h2>
+        <div class="flex flex-wrap gap-2 text-xs w-full md:w-auto">
+          <span class="badge">Transmídia</span>
+          <span class="badge">App + Web</span>
+          <span class="badge">IP Original</span>
+        </div>
+      </div>
+
+        <article class="lg:col-span-7 card p-6 sm:p-8">
+          <h3 class="text-2xl font-semibold">NoHeroes — Universo de Fantasia</h3>
+          <p class="mt-3 text-zinc-300/90">
+            IP autoral dark-fantasy em expansão: livro, app gamificado, loja digital e futuro game.
+            Responsável por identidade visual, produto, arquitetura web e narrativa.
+          </p>
+
+          <div class="mt-5 grid sm:grid-cols-2 gap-4">
+            <div>
+              <h4 class="text-sm text-zinc-400">Pilares</h4>
+              <ul class="mt-2 text-sm text-zinc-300/90 list-compact">
+                <li>Site oficial + loja (Node/Express, PostgreSQL, JWT, Mercado Pago)</li>
+                <li>App (MVP) com quests, inventário e moeda interna</li>
+                <li>Roteiro/lore originais (universo, clãs, criaturas, política)</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-sm text-zinc-400">Destaques</h4>
+              <ul class="mt-2 text-sm text-zinc-300/90 list-compact">
+                <li>Design dark moderno (gradiente roxo-dourado, “brasas”)</li>
+                <li>Arquitetura pronta para transmedia (web, app, game)</li>
+                <li>Sistema de doações e metas transparentes</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a class="btn" href="https://noheroes.com.br" target="_blank" rel="noopener">🌌 Site</a>
+            <a class="btn" href="https://noheroes.com.br/store.html" target="_blank" rel="noopener">🛒 Loja</a>
+            <a class="btn" href="noheroesapp.html" aria-disabled="false">📱 App</a>
+            <a class="btn" href="ROAR.html" aria-disabled="false">📜 Livro </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- CTA / Contato -->
+    <section id="contato" class="pb-28">
+      <div class="card p-6 md:p-10 reveal">
+        <div class="grid lg:grid-cols-2 gap-10 items-start">
+          <div>
+            <h2 class="font-display text-3xl grad-text">Vamos trabalhar juntos</h2>
+            <p class="mt-3 text-zinc-300/90">Descreva seu projeto, intenção e/ou ideia. Receba Orçamentos e respostas para Parceirias, Colab's e muito mais.</p>
+            <div class="mt-6 grid sm:grid-cols-2 gap-3">
+              <a class="btn" href="mailto:contato@noheroes.com.br">✉️ contato@noheroes.com.br</a>
+              <a class="btn" href="https://wa.me/5565993240270" target="_blank" rel="noopener">💬 WhatsApp</a>
+              
+            </div>
+          </div>
+          <form id="formPortfolio" class="space-y-4" aria-label="Formulário de contato">
+            <div class="grid sm:grid-cols-2 gap-4">
+              <label class="grid gap-2">
+                <span class="text-sm text-zinc-400">Seu nome</span>
+                <input class="w-full bg-transparent border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent-600/40" placeholder="Nome completo" required />
+              </label>
+              <label class="grid gap-2">
+                <span class="text-sm text-zinc-400">E-mail</span>
+                <input type="email" class="w-full bg-transparent border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent-600/40" placeholder="voce@email.com" required />
+              </label>
+            </div>
+            <label class="grid gap-2">
+              <span class="text-sm text-zinc-400">Assunto</span>
+              <input class="w-full bg-transparent border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent-600/40" placeholder="Ex.: Site para minha marca" required />
+            </label>
+            <label class="grid gap-2">
+              <span class="text-sm text-zinc-400">Mensagem</span>
+              <textarea rows="5" class="w-full bg-transparent border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent-600/40" placeholder="Descreva prazos, referências e escopo" required></textarea>
+            </label>
+            <div class="flex items-center justify-between">
+              <label class="inline-flex items-center gap-2 text-xs text-zinc-400">
+                <input type="checkbox" required class="accent-purple-500" />
+                Autorizo contato por e-mail/WhatsApp.
+              </label>
+              <button class="btn" type="submit">Enviar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-white/5 py-10 text-center text-sm text-zinc-500">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <p>© <span id="year"></span> Raul. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+<script src="assets/js/cookies.js"></script>
+  <script>
+    // Util: select
+    const $ = (sel, root=document) => root.querySelector(sel);
+    const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
+    // Ano atual
+    $('#year').textContent = new Date().getFullYear();
+
+    // Smooth scroll + fecha menu mobile ao navegar
+    $$('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const href = a.getAttribute('href');
+        if(href && href.length > 1){
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if(target){ target.scrollIntoView({behavior:'smooth', block:'start'}); }
+          if(a.hasAttribute('data-close-menu')) closeMobileMenu();
+        }
+      });
+    });
+
+    // Mobile menu: abrir/fechar + clicar fora
+    const menuBtn = $('#menuBtn');
+    const mobileMenu = $('#mobileMenu');
+    const openMobileMenu = () => {
+      mobileMenu.classList.remove('hidden');
+      menuBtn.setAttribute('aria-expanded','true');
+      document.addEventListener('click', outsideMenuHandler, { capture:true });
+      document.addEventListener('keydown', escMenuHandler);
+    };
+    const closeMobileMenu = () => {
+      mobileMenu.classList.add('hidden');
+      menuBtn.setAttribute('aria-expanded','false');
+      document.removeEventListener('click', outsideMenuHandler, { capture:true });
+      document.removeEventListener('keydown', escMenuHandler);
+    };
+    const outsideMenuHandler = (ev) => {
+      if(!mobileMenu.contains(ev.target) && ev.target !== menuBtn) closeMobileMenu();
+    };
+    const escMenuHandler = (ev) => { if(ev.key === 'Escape') closeMobileMenu(); };
+
+    if(menuBtn){
+      menuBtn.addEventListener('click', (e)=>{
+        const open = menuBtn.getAttribute('aria-expanded') === 'true';
+        open ? closeMobileMenu() : openMobileMenu();
+        e.stopPropagation();
+      });
+    }
+
+    // Tabs acessíveis (click, teclado, ARIA)
+    const tabButtons = $$('.vitrines-actions [data-tab]');
+    const tabPanels = {
+      web: $('#tab-web'),
+      arte: $('#tab-arte'),
+      escrita: $('#tab-escrita')
+    };
+
+    const activateTab = (key) => {
+      // botões
+      tabButtons.forEach(btn=>{
+        const isActive = btn.getAttribute('data-tab') === key;
+        btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+      // painéis
+      Object.entries(tabPanels).forEach(([k,el])=>{
+        if(k === key){
+          el.classList.remove('hidden');
+          el.setAttribute('tabindex','0');
+        } else {
+          el.classList.add('hidden');
+          el.setAttribute('tabindex','-1');
+        }
+      });
+    };
+
+    tabButtons.forEach(btn=>{
+      btn.addEventListener('click', ()=> activateTab(btn.getAttribute('data-tab')));
+      btn.addEventListener('keydown', (e)=>{
+        const idx = tabButtons.indexOf(btn);
+        if(['ArrowRight','ArrowLeft','Home','End'].includes(e.key)){
+          e.preventDefault();
+          let next = idx;
+          if(e.key === 'ArrowRight') next = (idx + 1) % tabButtons.length;
+          if(e.key === 'ArrowLeft')  next = (idx - 1 + tabButtons.length) % tabButtons.length;
+          if(e.key === 'Home')       next = 0;
+          if(e.key === 'End')        next = tabButtons.length - 1;
+          tabButtons[next].focus();
+          activateTab(tabButtons[next].getAttribute('data-tab'));
+        }
+      });
+    });
+    activateTab('web');
+
+    // ==== Reveal cinematográfico com stagger e respeito a reduced motion ====
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const sections = document.querySelectorAll('section, header, footer');
+
+  sections.forEach(section => {
+    const items = Array.from(section.querySelectorAll('.reveal'));
+    if (!items.length) return;
+
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+
+        // define delays progressivos (stagger) por ordem visual
+        items.forEach((el, i) => {
+          if (el._animated) return;
+          el.style.setProperty('--reveal-delay', `${i * 70}ms`); // 50–100ms é ideal
+        });
+
+        items.forEach(el => { el.classList.add('in'); el._animated = true; });
+        obs.unobserve(e.target); // anima 1x por seção
+      });
+    }, { threshold: 0.14, rootMargin: '0px 0px -8% 0px' });
+
+    io.observe(section);
+  });
+} else {
+  document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+}
+
+    // Hardening de layout: detecta elemento que estoura largura (debug opcional)
+    // (deixe comentado; use no DevTools se precisar)
+    // (() => {
+    //   const vw = document.documentElement.clientWidth;
+    //   let offender = null, max = vw;
+    //   document.querySelectorAll('body *').forEach(el => {
+    //     const rect = el.getBoundingClientRect();
+    //     const w = rect.right - rect.left;
+    //     if (w > max) { max = w; offender = el; }
+    //   });
+    //   if(max > vw + 2) console.warn('Elemento maior que viewport:', offender, max, '>', vw);
+    // })();
+
+(function initCollage(){
+  const root = document.getElementById('collageIntro');
+  if(!root) return;
+
+  const IMAGENS = [
+    { src: 'assets/images/port1.png', alt: 'Interface moderna em tela escura' },
+    { src: 'assets/images/port2.png', alt: 'Código em editor com luz roxa' },
+    { src: 'assets/images/port3.png', alt: 'Poster/arte digital com gradientes' },
+    { src: 'assets/images/port4.png', alt: 'Equipe trabalhando em mesa' },
+  ];
+  const INTERVALO_MS = 7000 + Math.floor(Math.random()*1500);
+
+  const slots = {
+    hero: root.querySelector('figure[data-slot="hero"] img'),
+    a:    root.querySelector('figure[data-slot="a"] img'),
+    b:    root.querySelector('figure[data-slot="b"] img'),
+    c:    root.querySelector('figure[data-slot="c"] img'),
+  };
+  if(!slots.hero || !slots.a || !slots.b || !slots.c) return;
+  if(IMAGENS.length < 4) return; // evita duplicações
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  IMAGENS.forEach(i => { const im = new Image(); im.src = i.src; });
+
+  let baseIndex = 0; // controla quem é o HERO
+  function ordemAtual(){
+    return [
+      baseIndex % IMAGENS.length,
+      (baseIndex + 1) % IMAGENS.length,
+      (baseIndex + 2) % IMAGENS.length,
+      (baseIndex + 3) % IMAGENS.length,
+    ];
+  }
+
+  function render(){
+    const current = ordemAtual();
+    const map = { hero: current[0], a: current[1], b: current[2], c: current[3] };
+
+    Object.entries(map).forEach(([key, idx])=>{
+      const el = slots[key];
+      const data = IMAGENS[idx];
+      if(!el) return;
+      if(el.getAttribute('src') !== data.src){
+        if(!prefersReduced){ el.classList.add('collage-swap-out'); }
+        setTimeout(()=>{
+          el.src = data.src;
+          el.alt = data.alt || '';
+          el.sizes = key === 'hero'
+            ? '(min-width: 768px) 66vw, 100vw'
+            : '(min-width: 768px) 32vw, 33vw';
+          if(!prefersReduced){
+            void el.offsetWidth;
+            el.classList.remove('collage-swap-out');
+            el.classList.add('collage-swap-in');
+            setTimeout(()=> el.classList.remove('collage-swap-in'), 700);
+          }
+        }, prefersReduced ? 0 : 140);
+      }
+    });
+  }
+
+  // primeiro render
+  render();
+
+  function step(){
+    baseIndex = (baseIndex + 1) % IMAGENS.length; // rotação sequencial
+    render();
+  }
+
+  let timer = setInterval(step, INTERVALO_MS);
+
+  document.addEventListener('visibilitychange', ()=>{
+    if(document.hidden){ clearInterval(timer); }
+    else { render(); timer = setInterval(step, INTERVALO_MS); }
+  }, { passive:true });
+})();
+const formPortfolio = document.getElementById("formPortfolio");
+
+formPortfolio.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const nome = formPortfolio.querySelector('input[placeholder="Nome completo"]').value.trim();
+  const email = formPortfolio.querySelector('input[type="email"]').value.trim();
+  const assunto = formPortfolio.querySelector('input[placeholder="Ex.: Site para minha marca"]').value.trim();
+  const mensagem = formPortfolio.querySelector('textarea').value.trim();
+  const autorizo = formPortfolio.querySelector('input[type="checkbox"]').checked;
+
+  if (!nome || !email || !assunto || !mensagem || !autorizo) {
+    alert("Por favor, preencha todos os campos e autorize o contato.");
+    return;
+  }
+
+  const payload = { nome, email, assunto, mensagem };
+
+  try {
+    const res = await fetch("https://api.noheroes.com.br/api/email/portfolio", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!res.ok) throw new Error("Falha ao enviar mensagem");
+
+    const data = await res.json();
+    if (data.success) {
+      alert("✅ Sua mensagem foi enviada com sucesso! Entraremos em contato em breve.");
+      formPortfolio.reset();
+    } else {
+      alert("⚠️ Ocorreu um problema ao enviar. Tente novamente mais tarde.");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("❌ Erro de conexão com o servidor.");
+  }
+});
+</script>
+</body>
+</html>

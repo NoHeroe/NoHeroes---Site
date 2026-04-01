@@ -50,9 +50,39 @@
 <!-- 3: Portfólio (destaque vinho->roxo) -->
     <a href="portifólio.html" class="btn-vinho">Ver Portfólio Profissional</a>
     <!-- 2: ACDA (ex-ROAR) -->
-    <a href="ROAR.html" class="btn-ghost">Projeto ACDA</a>
+    <div class="flex items-stretch gap-3 max-w-sm mx-auto">
+  <a href="ROAR.html"
+   class="btn-ghost w-full flex items-center gap-4 group
+          transition-transform duration-200 ease-out
+          hover:scale-[1.03]">
+  
+  <!-- CAPA -->
+  <span
+    class="h-20 aspect-[2/3] rounded-xl overflow-hidden flex-shrink-0
+           border border-white/25 bg-white/5
+           shadow-[0_0_24px_rgba(168,85,247,.45)]
+           transition-transform duration-200 ease-out
+           group-hover:scale-125"
+  >
+    <img
+      src="assets/images/ACDA.jpg"
+      alt="Capa — NoHeroes: As Cinzas do Amanhã"
+      class="w-full h-full object-cover"
+      loading="lazy"
+      onerror="this.parentElement.style.display='none';"
+    />
+  </span>
+
+  <!-- TEXTO -->
+  <span class="leading-tight text-left flex-1">
+    NoHeroes — As Cinzas do Amanhã (Livro)
+  </span>
+</a>
+
+</div>
+
     <!-- 4: Loja (ativa) -->
-    <a href="loja.html" class="btn-ghost">Loja</a>
+    <a href="store.html" class="btn-ghost">Loja</a>
     <!-- 5: Apoio Vitalista (abaixo do portfólio, mantendo ordem solicitada) -->
     <a href="apoiar.html" class="btn-ghost">Apoio Vitalista</a>
     <!-- 6: Novidades (ex-Blog) -->
@@ -69,7 +99,7 @@
     <a class="icon-btn" href="https://www.instagram.com/universo_noheroes?igsh=MTB6Y3J1amRvd3FpZQ==" target="_blank" rel="noopener" aria-label="Instagram">
       <img src="assets/icons/instagram icon.png" alt="" class="w-[26px] h-[26px]" />
     </a>
-    <a class="icon-btn" href="https://www.tiktok.com/@universo_noheroes?_t=ZM-8zkubvzt6am&_r=1"_blank" rel="noopener" aria-label="TikTok">
+    <a class="icon-btn" href="https://www.tiktok.com/@universo_noheroes?_t=ZM-8zkubvzt6am&_r=1" target="_blank" rel="noopener" aria-label="TikTok">
       <img src="assets/icons/tiktok icon.png" alt="" class="w-[26px] h-[26px]" />
     </a>
   </div>
@@ -122,7 +152,8 @@
       if (audio.paused) { audio.play(); toggleBtn.textContent = "Som: ON"; }
       else { audio.pause(); toggleBtn.textContent = "Som: OFF"; }
     });
-  </script>  <script>
+  </script> <script src="assets/js/cookies.js"></script>
+ <script>
     // Brasas (inalterado do original)
     const canvas = document.getElementById("brasasCanvas");
     const ctx = canvas.getContext("2d");
