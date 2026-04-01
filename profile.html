@@ -299,158 +299,148 @@ dialog[open] .dialog-ctr {
     </div>
   </header>
 
-  <!-- HERO -->
-<section id="heroSection" class="relative overflow-hidden rounded-[2rem] border border-purple-500/30 bg-[#121212]/60 backdrop-blur-md p-6 sm:p-8 shadow-2xl">
-    <div class="absolute -top-20 -right-20 w-80 h-80 bg-purple-600/10 rounded-full blur-[100px]"></div>
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-10">
+
+  <section id="heroSection" class="relative overflow-hidden rounded-[2rem] border border-purple-500/20 bg-[#121212]/40 backdrop-blur-md p-6 shadow-2xl">
+    <div class="absolute -top-24 -right-24 w-80 h-80 bg-purple-600/10 rounded-full blur-[100px]"></div>
     
-    <div class="relative flex flex-col lg:flex-row gap-8 items-start">
+    <div class="relative flex flex-col md:flex-row justify-between items-center gap-6">
       
-      <div class="flex items-center gap-6 w-full lg:w-1/2">
+      <div class="flex items-center gap-5">
         <div class="relative shrink-0">
-          <div class="absolute -inset-1 bg-gradient-to-tr from-purple-600 to-amber-400 rounded-full blur-sm opacity-40"></div>
-          <div class="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full border-2 border-white/10 overflow-hidden bg-black">
+          <div class="absolute -inset-1 bg-gradient-to-tr from-purple-600 to-amber-400 rounded-full blur-sm opacity-30"></div>
+          <div class="relative w-20 h-20 rounded-full border border-white/10 overflow-hidden bg-black">
             <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Arauto" alt="Avatar" class="w-full h-full object-cover"/>
           </div>
-          <div class="absolute -bottom-1 -right-1 bg-gradient-to-r from-purple-600 to-indigo-600 px-2 py-0.5 rounded-full border border-white/20 text-[10px] font-black text-white uppercase italic">
+          <div class="absolute -bottom-1 -right-1 bg-gradient-to-r from-purple-600 to-amber-500 px-2 py-0.5 rounded-full border border-white/20 text-[9px] font-black text-white italic">
             LVL <span id="userLevel">15</span>
           </div>
         </div>
         
-        <div class="space-y-1">
-          <p class="text-amber-400/80 text-[10px] uppercase tracking-[0.2em] font-bold">Status: Arauto Ativo</p>
-          <h1 class="text-2xl sm:text-3xl font-extrabold text-white">
-            <span id="userName">Carregando...</span>
+        <div>
+          <h1 class="text-xl sm:text-2xl font-bold text-white tracking-tight">
+            <span id="userName" class="bg-clip-text text-transparent bg-gradient-to-r from-purple-200 to-amber-100 italic">Carregando...</span>
           </h1>
-          <p id="userEmail" class="text-purple-300/50 text-xs italic truncate max-w-[200px]">email@noheroes.com</p>
+          <p id="userEmail" class="text-purple-300/40 text-[11px] font-medium truncate max-w-[150px]">email@noheroes.com</p>
+          
+          <div class="flex gap-4 mt-2">
+            <div class="text-[10px] uppercase font-bold tracking-widest text-purple-400/80">Lidos: <span class="text-white">142</span></div>
+            <div class="text-[10px] uppercase font-bold tracking-widest text-amber-400/80">Favoritos: <span class="text-white">12</span></div>
+          </div>
         </div>
       </div>
 
-      <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-3 w-full lg:w-1/2 lg:justify-end">
-        <button id="btnEditProfile" class="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs font-bold hover:bg-purple-500/20 transition-all text-gray-300">
-           <span>Editar Perfil</span>
+      <div class="flex flex-wrap justify-center gap-2">
+        <button id="btnEditProfile" class="btn btn-ghost !py-2 !px-4 !text-[11px] border border-white/5 rounded-xl hover:bg-white/5">
+          Editar Perfil
         </button>
-
-        <a href="https://discord.gg/seulink" target="_blank" class="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#5865F2]/20 border border-[#5865F2]/30 text-xs font-bold hover:scale-105 transition-all text-[#9da5ff]">
-           <span>Discord</span>
+        <a href="https://discord.gg/noheroes" target="_blank" class="btn !py-2 !px-4 !text-[11px] bg-[#5865F2]/20 border border-[#5865F2]/30 text-[#9da5ff] rounded-xl hover:bg-[#5865F2]/30 transition-all">
+          Discord
         </a>
-        <a href="https://wa.me/seulink" target="_blank" class="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#25D366]/10 border border-[#25D366]/30 text-xs font-bold hover:scale-105 transition-all text-[#85f7ae]">
-           <span>WhatsApp</span>
+        <a href="https://wa.me/noheroes" target="_blank" class="btn !py-2 !px-4 !text-[11px] bg-[#25D366]/10 border border-[#25D366]/30 text-[#85f7ae] rounded-xl hover:bg-[#25D366]/20 transition-all">
+          WhatsApp
         </a>
       </div>
-    </div>
-
-    <div class="mt-8 pt-6 border-t border-white/5 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-      <div class="group cursor-help">
-        <p class="text-[10px] text-gray-500 uppercase font-bold tracking-widest group-hover:text-purple-400 transition">Mangás Lidos</p>
-        <p class="text-xl font-black text-purple-100">142 <span class="text-[10px] text-purple-500/50 italic">caps</span></p>
-      </div>
-      <div class="group cursor-help">
-        <p class="text-[10px] text-gray-500 uppercase font-bold tracking-widest group-hover:text-amber-400 transition">Favoritos</p>
-        <p class="text-xl font-black text-amber-100">12 <span class="text-[10px] text-amber-500/50 italic">obras</span></p>
-      </div>
-      </div>
-  </section>
-
-  <section class="space-y-6">
-    <div class="flex flex-wrap items-center gap-4 border-b border-white/5 pb-2">
-      <button class="pb-2 border-b-2 border-purple-500 text-purple-100 font-bold text-sm">Continuar Lendo</button>
-      <button class="pb-2 border-b-2 border-transparent text-gray-500 hover:text-gray-300 font-bold text-sm transition">Meus Favoritos</button>
-      <button class="pb-2 border-b-2 border-transparent text-gray-500 hover:text-gray-300 font-bold text-sm transition">Lidos recentemente</button>
-    </div>
-
-    <div id="mangaGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-      <div class="animate-pulse bg-white/5 rounded-2xl aspect-[3/4] border border-white/5"></div>
-      <div class="animate-pulse bg-white/5 rounded-2xl aspect-[3/4] border border-white/5"></div>
-      <div class="animate-pulse bg-white/5 rounded-2xl aspect-[3/4] border border-white/5"></div>
     </div>
   </section>
 
-  <!-- GRID -->
-  <main class="grid grid-cols-1 md:grid-cols-3 gap-8 px-6 pb-10">
+  <section class="space-y-4">
+    <div class="flex items-center gap-6 border-b border-white/5 overflow-x-auto no-scrollbar">
+      <button class="pb-3 border-b-2 border-purple-500 text-purple-100 font-bold text-xs whitespace-nowrap">Continuar Lendo</button>
+      <button class="pb-3 border-b-2 border-transparent text-gray-500 hover:text-purple-300 font-bold text-xs whitespace-nowrap transition">Favoritos</button>
+      <button class="pb-3 border-b-2 border-transparent text-gray-500 hover:text-purple-300 font-bold text-xs whitespace-nowrap transition">Histórico</button>
+      <button class="pb-3 border-b-2 border-transparent text-amber-400/60 hover:text-amber-300 font-bold text-xs whitespace-nowrap transition italic">Comunidade</button>
+    </div>
 
-    <!-- Coluna 1 -->
-    <section class="md:col-span-1">
-      <h3 class="text-2xl font-bold text-purple-300 mb-1">Cartel Velado</h3>
-      <p class="text-sm text-gray-300/80 mb-4">Você pode comprar. Mas nem tudo está à mostra.</p>
-      <div class="flex flex-wrap md:flex-nowrap gap-4">
-        <a href="store.html" class="card ring-gradient w-[140px] rounded-xl overflow-hidden shadow-md hover:brightness-110 transition">
-          <img src="assets/images/lojanoheroes.png" alt="Loja" class="w-full h-auto object-cover"/>
-        </a>
-        <button id="openLocked" class="card w-[140px] rounded-xl overflow-hidden cursor-not-allowed opacity-60" type="button">
-          <img src="assets/images/mercadonegro.png" alt="Mercado Negro" class="w-full h-auto object-cover"/>
-        </button>
-      </div>
-      <div class="mt-4 flex flex-col gap-3">
-  <a href="inventario.html" class="btn btn-primary">Inventário</a>
-  <button id="btnCompras" class="btn btn-ghost border border-purple-500/40 hover:bg-purple-500/10 text-purple-300">
-    Minhas Compras
-  </button>
-</div>
-    </section>
+    <div id="mangaGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
+      <div class="animate-pulse bg-white/5 rounded-2xl aspect-[3/4] border border-white/5 shadow-inner"></div>
+      <div class="animate-pulse bg-white/5 rounded-2xl aspect-[3/4] border border-white/5 shadow-inner"></div>
+      <div class="hidden lg:block animate-pulse bg-white/5 rounded-2xl aspect-[3/4] border border-white/5 shadow-inner"></div>
+    </div>
+  </section>
 
-<!-- Coluna 2 (Perfil resumido) -->
-<section class="md:col-span-1">
-  <h3 class="text-2xl font-bold text-purple-300 mb-4">Seu Perfil</h3>
-  <div class="card ring-gradient p-5 relative z-10">
-    <div class="avatar-wrap mb-4">
-      <img id="miniAvatar" src="/assets/images/linktree.png" alt="Avatar" class="avatar-img">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+    <section class="space-y-5">
       <div>
-        <div id="miniNome" class="text-lg font-semibold">—</div>
-        <div id="miniNivel" class="text-sm text-purple-300/90">Nível —</div>
+        <h3 class="text-xl font-bold text-purple-200 tracking-tight">Cartel Velado</h3>
+        <p class="text-xs text-gray-500">Acesso exclusivo aos itens do projeto.</p>
       </div>
-    </div>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-      <div class="flex flex-col">
-        <span class="text-xs text-gray-400">Enviar nova imagem</span>
-        <input id="avatarFile" type="file" accept="image/*" class="hidden">
-        <button id="btnSelectFile" type="button" class="btn btn-ghost mt-1">Escolher arquivo</button>
-      </div>
-
-      <div class="flex flex-col">
-        <span class="text-xs text-gray-400">Ou usar URL</span>
-        <input id="avatarUrl" type="url" placeholder="https://..." class="input mt-1">
-      </div>
-
-      <button id="btnSalvarAvatar" class="btn btn-primary sm:col-span-2" type="button">Salvar Avatar</button>
-    </div>
-  </div>
-</section>
-
-    <!-- Coluna 3 -->
-    <section class="md:col-span-1 space-y-4">
-      <a href="ROAR.html" class="card p-4 flex items-center gap-4 hover:bg-white/5 transition">
-        <div class="w-8 h-8 bg-gradient-to-br from-purple-600 to-purple-400 rounded-full"></div>
-        <div>
-          <h4 class="text-lg font-bold text-purple-300">ACDA</h4>
-          <p class="text-sm text-gray-300/80">Acesse o mundo de ACDA</p>
-        </div>
-      </a>
-      <a href="EmBreve.html" class="card p-4 flex items-center gap-4 hover:bg-white/5 transition">
-        <div class="w-8 h-8 bg-gradient-to-br from-amber-400 to-yellow-300 rounded-full"></div>
-        <div>
-          <h4 class="text-lg font-bold text-amber-300">Sistema Vivo</h4>
-          <p class="text-sm text-gray-300/80">Explore o Sistema</p>
-        </div>
-      </a>
-<a href="EmBreve.html" class="card p-4 flex items-center gap-4 hover:bg-white/5 transition">
-        <div class="w-8 h-8 bg-gradient-to-br from-amber-400 to-green-300 rounded-full"></div>
-        <div>
-          <h4 class="text-lg font-bold text-amber-300">Chrysalis</h4>
-          <p class="text-sm text-gray-300/80">Descubra o Mundo Corrompido</p>
-        </div>
-      </a>
       
-      <button disabled class="card p-4 w-full flex items-center gap-4 opacity-60 cursor-not-allowed">
-        <div class="w-8 h-8 bg-gray-600 rounded-full"></div>
-        <div>
-          <h4 class="text-lg font-bold text-gray-300">Em breve</h4>
-          <p class="text-sm text-gray-400">Atualização futura</p>
-        </div>
-      </button>
+      <div class="flex gap-3">
+        <a href="store.html" class="card w-1/2 aspect-video rounded-2xl overflow-hidden border border-purple-500/20 hover:border-amber-500/40 transition-all group">
+          <img src="assets/images/lojanoheroes.png" alt="Loja" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"/>
+        </a>
+        <button id="openLocked" class="card w-1/2 aspect-video rounded-2xl overflow-hidden opacity-40 grayscale cursor-not-allowed border border-white/5">
+          <img src="assets/images/mercadonegro.png" alt="Mercado Negro" class="w-full h-full object-cover"/>
+        </button>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <a href="inventario.html" class="btn btn-primary !w-full shadow-[0_0_15px_rgba(124,58,237,0.2)]">Meu Inventário</a>
+        <button id="btnCompras" class="btn btn-ghost !w-full border border-purple-500/20 hover:bg-purple-500/10 text-purple-300 !text-xs font-bold uppercase tracking-wider">
+          Minhas Compras
+        </button>
+      </div>
     </section>
 
-  </main>
+    <section class="space-y-4">
+      <h3 class="text-xl font-bold text-purple-200 tracking-tight">Identidade</h3>
+      <div class="card bg-[#121212]/40 backdrop-blur-sm border border-white/5 p-5 rounded-[1.5rem] space-y-4">
+        <div class="flex items-center gap-4">
+          <img id="miniAvatar" src="/assets/images/linktree.png" alt="Avatar" class="w-12 h-12 rounded-full border border-purple-500/30">
+          <div>
+            <div id="miniNome" class="font-bold text-white text-sm">—</div>
+            <div id="miniNivel" class="text-[10px] text-amber-400 font-black italic uppercase">Nível —</div>
+          </div>
+        </div>
+
+        <div class="space-y-3 pt-2 border-t border-white/5">
+          <div class="flex flex-col">
+            <input id="avatarFile" type="file" accept="image/*" class="hidden">
+            <button id="btnSelectFile" type="button" class="btn btn-ghost !text-[10px] !py-2 border-dashed border-white/10 hover:border-purple-500/50 w-full">Escolher Arquivo</button>
+          </div>
+          <input id="avatarUrl" type="url" placeholder="Ou cole a URL da imagem..." class="input !bg-black/40 !border-white/5 !text-xs w-full">
+          <button id="btnSalvarAvatar" class="btn btn-primary !w-full !text-xs font-bold" type="button">Atualizar Avatar</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="space-y-3">
+      <h3 class="text-xl font-bold text-purple-200 tracking-tight">Universos</h3>
+      
+      <a href="ROAR.html" class="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-purple-500/30 transition-all group">
+        <div class="w-10 h-10 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-xl shadow-lg group-hover:rotate-6 transition-transform"></div>
+        <div>
+          <h4 class="text-sm font-bold text-white italic tracking-wider">ACDA</h4>
+          <p class="text-[10px] text-gray-500">Acesse o mundo de ACDA</p>
+        </div>
+      </a>
+
+      <a href="EmBreve.html" class="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-amber-500/30 transition-all group">
+        <div class="w-10 h-10 bg-gradient-to-br from-amber-500 to-amber-300 rounded-xl shadow-lg group-hover:rotate-6 transition-transform"></div>
+        <div>
+          <h4 class="text-sm font-bold text-white italic tracking-wider">SISTEMA VIVO</h4>
+          <p class="text-[10px] text-gray-500">Explore o Sistema</p>
+        </div>
+      </a>
+
+      <a href="EmBreve.html" class="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-green-500/30 transition-all group">
+        <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-green-300 rounded-xl shadow-lg group-hover:rotate-6 transition-transform"></div>
+        <div>
+          <h4 class="text-sm font-bold text-white italic tracking-wider">CHRYSALIS</h4>
+          <p class="text-[10px] text-gray-500">Mundo Corrompido</p>
+        </div>
+      </a>
+
+      <div class="p-4 rounded-2xl bg-black/20 border border-white/5 opacity-40 flex items-center gap-4">
+        <div class="w-10 h-10 bg-gray-800 rounded-xl"></div>
+        <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest">Em Breve</h4>
+      </div>
+    </section>
+
+  </div>
+</main>
 
   <!-- MODAL CONFIGURAÇÕES (maior e organizado) -->
   <dialog id="configModal">
