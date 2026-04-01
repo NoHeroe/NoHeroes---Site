@@ -160,7 +160,7 @@ const DATA = {
     works: [
         {
             id: 1, title: 'Azuos', status: 'S01 • On-going', category: 'Dark Fantasy',
-            desc: 'Onde as sombras caminham, um herói renasce. A jornada de Azuos pelo Abismo de Cristal começa aqui.',
+            desc: 'Onde as sombras caminham, um herói renasce. A jornada de Azuos pelo Abismo começa aqui.',
             thumb: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80',
             hero: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80',
             tags: ['Ação', 'Seinen', 'Supernatural'], featured: true
@@ -218,7 +218,7 @@ function renderHero() {
 }
 
 function renderFilters() {
-    const cats = ['Tudo', 'Dark Fantasy', 'Medieval', 'Mistério', 'Ação'];
+    const cats = ['Tudo', 'Drama', 'Medieval', 'Mistério', 'Ação', 'Romance', 'Terror', 'Aventura', 'Fantasia',];
     $('filter-bar').innerHTML = cats.map(c => `
         <button onclick="setFilter('${c}')" class="px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all
             ${activeFilter === c ? 'grad-nh text-black shadow-glow' : 'glass text-white/40 hover:text-white'}">
