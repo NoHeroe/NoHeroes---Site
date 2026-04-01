@@ -36,48 +36,102 @@
     </script>
 
     <style>
-        /* UI Estilizada */
-        body { background-color: #050507; color: #e5e7eb; -webkit-tap-highlight-color: transparent; }
-        .text-grad { background: linear-gradient(135deg, #b891ff 0%, #f5e3a5 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .grad-nh { background: linear-gradient(135deg, #8f4fff 0%, #d9b55a 100%); }
-        .hero-mask { background: linear-gradient(to top, #050507 5%, rgba(5, 5, 7, 0.8) 40%, transparent 100%); }
-        
-        /* Glassmorphism Profissional */
-        .glass { background: rgba(12, 10, 18, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); }
-        
-        /* Mobile Nav Fix */
-        .mobile-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 72px;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-around;
-            align-items: center;
-            padding-bottom: env(safe-area-inset-bottom);
-            z-index: 100;
-        }
+       /* --- FUNDAMENTOS & RESET --- */
+body { 
+    background-color: #050507; 
+    color: #e5e7eb; 
+    -webkit-tap-highlight-color: transparent; 
+    overscroll-behavior-y: none;
+}
 
-        /* Animações de Entrada */
-        .fade-up { animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Custom Scroll */
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-thumb { background: #2b2440; border-radius: 10px; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-
+/* --- ANIMAÇÃO DE BRASAS (PERFORMANCE) --- */
 #brasasCanvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 0;
-      pointer-events: none;
-    }
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1; /* Atrás de tudo */
+    pointer-events: none;
+    will-change: transform;
+    opacity: 0.8;
+}
+
+/* --- UI COMPONENTS (HIGH-END) --- */
+.text-grad { 
+    background: linear-gradient(135deg, #b891ff 0%, #f5e3a5 100%); 
+    -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent; 
+}
+
+.grad-nh { 
+    background: linear-gradient(135deg, #8f4fff 0%, #d9b55a 100%); 
+}
+
+.hero-mask { 
+    background: linear-gradient(to top, #050507 8%, rgba(5, 5, 7, 0.7) 45%, transparent 100%); 
+}
+
+.glass { 
+    background: rgba(12, 10, 18, 0.8); 
+    backdrop-filter: blur(16px); 
+    -webkit-backdrop-filter: blur(16px); 
+    border: 1px solid rgba(255,255,255,0.06); 
+}
+
+/* --- COBERTURA DO TOPO (CORREÇÃO PEDIDA) --- */
+#hero-display {
+    background-color: #050507; /* Fundo sólido para cobrir o canvas no topo */
+    z-index: 10;
+    position: relative;
+    border-bottom: 1px solid rgba(143, 79, 255, 0.1);
+}
+
+/* --- SKELETON LOADER --- */
+.skeleton {
+    background: linear-gradient(90deg, #0c0a12 25%, #16121f 50%, #0c0a12 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
+    border-radius: 2rem;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* --- MOBILE NAVIGATION --- */
+.mobile-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 72px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding-bottom: env(safe-area-inset-bottom);
+    z-index: 100;
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
+}
+
+/* --- ANIMAÇÕES --- */
+.fade-up { 
+    animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards; 
+}
+
+@keyframes fadeUp { 
+    from { opacity: 0; transform: translateY(30px); } 
+    to { opacity: 1; transform: translateY(0); } 
+}
+
+/* --- SCROLLBAR --- */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #050507; }
+::-webkit-scrollbar-thumb { background: #2b2440; border-radius: 10px; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
     </style>
 </head>
 <body class="font-sans antialiased overflow-x-hidden pb-24 sm:pb-0">
@@ -175,218 +229,238 @@
 </div>
 
 <script>
-/* --- Configurações e Dados --- */
-const DATA = {
-    works: [
-        {
-            id: 1, title: 'Azuos', status: 'S01 • On-going', category: 'Dark Fantasy',
-            desc: 'Onde as sombras caminham, um herói renasce. A jornada de Azuos pelo Abismo começa aqui.',
-            thumb: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80',
-            hero: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80',
-            tags: ['Ação', 'Seinen', 'Supernatural'], featured: true
-        },
-        {
-            id: 2, title: 'Noctilum', status: 'S01 • Novo', category: 'Medieval',
-            desc: 'Em um mundo onde o sol é apenas uma lenda, a luz artificial de Noctilum é a única esperança contra os monstros.',
-            thumb: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80',
-            hero: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1200&q=80',
-            tags: ['Mistério', 'Gótico', 'Horror']
-        }
-    ]
+/* NO HEROES - CORE ENGINE v2.0
+   Arquitetura preparada para Backend e Performance de Interface
+*/
+
+const STATE = {
+    data: [],
+    activeFilter: 'Tudo',
+    searchQuery: '',
+    isLoading: true
 };
 
-let activeFilter = 'Tudo';
-let query = '';
+const UI = {
+    canvas: document.getElementById("brasasCanvas"),
+    ctx: document.getElementById("brasasCanvas").getContext("2d"),
+    grid: document.getElementById('works-grid'),
+    filterBar: document.getElementById('filter-bar'),
+    searchInput: document.getElementById('search-input'),
+    toast: document.getElementById('toast'),
+    modal: document.getElementById('modal'),
+    modalContent: document.getElementById('modal-content')
+};
 
-/* --- Core Engine --- */
-const $ = (id) => document.getElementById(id);
+/* --- 1. MOTOR DE ANIMAÇÃO (BRASAS) --- */
+let particles = [], w, h;
 
-function showToast(msg) {
-    const t = $('toast');
-    t.innerText = msg;
-    t.style.opacity = '1';
-    t.style.transform = 'translateY(0)';
-    setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateY(-20px)'; }, 3000);
+function initCanvas() {
+    w = UI.canvas.width = window.innerWidth;
+    h = UI.canvas.height = window.innerHeight;
+    particles = Array.from({ length: 120 }, () => new Particle());
 }
 
-function focusSearch() {
-    window.scrollTo({ top: $('search-input').offsetTop - 100, behavior: 'smooth' });
-    $('search-input').focus();
+class Particle {
+    constructor() { this.reset(true); }
+    reset(initial = false) {
+        this.x = Math.random() * w;
+        this.y = initial ? Math.random() * h : h + Math.random() * 100;
+        this.size = 0.8 + Math.random() * 1.5;
+        this.speed = 0.4 + Math.random() * 0.8;
+        this.alpha = 0.3 + Math.random() * 0.4;
+        this.drift = (Math.random() - 0.5) * 0.4;
+    }
+    update() {
+        this.y -= this.speed;
+        this.x += this.drift;
+        if (this.y < -20) this.reset();
+    }
+    draw() {
+        UI.ctx.fillStyle = `rgba(143, 79, 255, ${this.alpha})`;
+        UI.ctx.beginPath();
+        UI.ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        UI.ctx.fill();
+    }
 }
 
-function openFeatured() {
-    const feat = DATA.works.find(w => w.featured);
-    if(feat) openModal(feat.id);
+function animate() {
+    UI.ctx.clearRect(0, 0, w, h);
+    particles.forEach(p => { p.update(); p.draw(); });
+    requestAnimationFrame(animate);
 }
 
-/* --- Renderização --- */
+/* --- 2. LOGICA DE DADOS (SIMULANDO BACKEND) --- */
+async function fetchWorks() {
+    renderSkeletons(); // Ativa loader visual
+    
+    // Simulação de delay de rede (Plugar API aqui no futuro)
+    return new Promise(resolve => {
+        setTimeout(() => {
+            STATE.data = [
+                {
+                    id: 1, title: 'Azuos', status: 'S01 • On-going', category: 'Dark Fantasy',
+                    desc: 'Onde as sombras caminham, um herói renasce. A jornada de Azuos pelo Abismo começa aqui.',
+                    thumb: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80',
+                    hero: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80',
+                    tags: ['Ação', 'Seinen', 'Supernatural'], featured: true
+                },
+                {
+                    id: 2, title: 'Noctilum', status: 'S01 • Novo', category: 'Medieval',
+                    desc: 'A luz artificial de Noctilum é a única esperança contra os monstros abissais.',
+                    thumb: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80',
+                    hero: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1200&q=80',
+                    tags: ['Mistério', 'Gótico', 'Horror']
+                }
+            ];
+            STATE.isLoading = false;
+            resolve();
+        }, 1200);
+    });
+}
+
+/* --- 3. RENDERIZAÇÃO --- */
+function renderSkeletons() {
+    UI.grid.innerHTML = Array(5).fill(0).map(() => `
+        <div class="aspect-[3/4.5] skeleton"></div>
+    `).join('');
+}
+
 function renderHero() {
-    const work = DATA.works.find(w => w.featured) || DATA.works[0];
-    $('hero-display').innerHTML = `
-        <img src="${work.hero}" class="absolute inset-0 w-full h-full object-cover opacity-50 scale-105">
+    const work = STATE.data.find(w => w.featured) || STATE.data[0];
+    document.getElementById('hero-display').innerHTML = `
+        <img src="${work.hero}" class="absolute inset-0 w-full h-full object-cover opacity-40 scale-100">
         <div class="absolute inset-0 hero-mask"></div>
         <div class="relative z-10 p-8 md:p-20 max-w-4xl fade-up">
             <span class="px-4 py-1 rounded-full border border-nh-accent/30 bg-nh-accent/10 text-nh-accent text-[10px] font-black uppercase tracking-[0.3em]">Em Destaque</span>
             <h1 class="text-6xl md:text-8xl font-display text-grad mt-6 leading-none uppercase">${work.title}</h1>
             <p class="text-white/60 mt-6 text-lg max-w-xl italic leading-relaxed">"${work.desc}"</p>
             <div class="mt-10 flex flex-wrap gap-4">
-                <button onclick="location.href='leitor.html?id=${work.id}'" class="px-12 py-5 rounded-2xl grad-nh text-black font-black uppercase tracking-widest text-xs shadow-glow">Iniciar Leitura</button>
-                <button onclick="openModal(${work.id})" class="px-12 py-5 rounded-2xl glass text-white font-black uppercase tracking-widest text-xs">Ficha Técnica</button>
+                <button onclick="location.href='leitor.html?id=${work.id}'" class="px-12 py-5 rounded-2xl grad-nh text-black font-black uppercase tracking-widest text-xs shadow-glow transition hover:scale-105 active:scale-95">Iniciar Leitura</button>
+                <button onclick="openModal(${work.id})" class="px-12 py-5 rounded-2xl glass text-white font-black uppercase tracking-widest text-xs transition hover:bg-white/10">Ficha Técnica</button>
             </div>
         </div>
     `;
 }
 
 function renderFilters() {
-    const cats = ['Tudo', 'Drama', 'Medieval', 'Mistério', 'Ação', 'Romance', 'Terror', 'Aventura', 'Fantasia',];
-    $('filter-bar').innerHTML = cats.map(c => `
-        <button onclick="setFilter('${c}')" class="px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all
-            ${activeFilter === c ? 'grad-nh text-black shadow-glow' : 'glass text-white/40 hover:text-white'}">
+    const cats = ['Tudo', 'Dark Fantasy', 'Medieval', 'Mistério', 'Ação', 'Terror', 'Fantasia'];
+    UI.filterBar.innerHTML = cats.map(c => `
+        <button onclick="setFilter('${c}')" class="px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap
+            ${STATE.activeFilter === c ? 'grad-nh text-black shadow-glow' : 'glass text-white/40 hover:text-white'}">
             ${c}
         </button>
     `).join('');
 }
 
-function setFilter(c) {
-    activeFilter = c;
-    renderFilters();
-    renderGrid();
-}
-
 function renderGrid() {
-    const filtered = DATA.works.filter(w => {
-        const matchesCat = activeFilter === 'Tudo' || w.category === activeFilter || w.tags.includes(activeFilter);
-        const matchesSearch = w.title.toLowerCase().includes(query.toLowerCase());
-        return matchesCat && matchesSearch;
+    if (STATE.isLoading) return;
+
+    const filtered = STATE.data.filter(w => {
+        const mCat = STATE.activeFilter === 'Tudo' || w.category === STATE.activeFilter || w.tags.includes(STATE.activeFilter);
+        const mSearch = w.title.toLowerCase().includes(STATE.searchQuery.toLowerCase());
+        return mCat && mSearch;
     });
 
-    if(filtered.length === 0) {
-        $('works-grid').innerHTML = `<div class="col-span-full py-20 text-center opacity-20 font-display uppercase tracking-widest">Nenhuma obra encontrada.</div>`;
-        return;
-    }
-
-    $('works-grid').innerHTML = filtered.map(w => `
+    UI.grid.innerHTML = filtered.length ? filtered.map(w => `
         <article class="group relative cursor-pointer fade-up" onclick="openModal(${w.id})">
             <div class="aspect-[3/4.5] rounded-[2rem] overflow-hidden border border-white/5 group-hover:border-nh-accent/50 transition-all duration-500 shadow-2xl">
-                <img src="${w.thumb}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000">
-                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
+                <img src="${w.thumb}" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" onerror="this.src='https://via.placeholder.com/400x600/0c0a12/8f4fff?text=NoHeroes'">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-80"></div>
                 <div class="absolute bottom-6 left-6 right-6">
                     <p class="text-[9px] font-black text-nh-accent uppercase tracking-[0.2em] mb-2">${w.category}</p>
                     <h3 class="text-lg font-bold text-white group-hover:text-grad transition-colors">${w.title}</h3>
                 </div>
             </div>
         </article>
-    `).join('');
+    `).join('') : `<div class="col-span-full py-20 text-center opacity-20 font-display uppercase tracking-widest">Nenhuma obra encontrada.</div>`;
 }
 
-/* --- Modais --- */
+/* --- 4. ACTIONS & UI CONTROL --- */
+function setFilter(c) {
+    STATE.activeFilter = c;
+    renderFilters();
+    renderGrid();
+}
+
+function showToast(msg) {
+    UI.toast.innerText = msg;
+    UI.toast.style.opacity = '1';
+    UI.toast.style.transform = 'translateY(0)';
+    setTimeout(() => { UI.toast.style.opacity = '0'; UI.toast.style.transform = 'translateY(-20px)'; }, 3000);
+}
+
+function focusSearch() {
+    UI.searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => UI.searchInput.focus(), 500);
+}
+
+function openFeatured() {
+    const feat = STATE.data.find(w => w.featured);
+    if(feat) openModal(feat.id);
+}
+
 function openModal(id) {
-    const w = DATA.works.find(work => work.id === id);
-    const m = $('modal');
-    const mc = $('modal-content');
-    
-    mc.innerHTML = `
+    const w = STATE.data.find(work => work.id === id);
+    UI.modalContent.innerHTML = `
         <div class="h-64 relative bg-cover bg-center" style="background-image: url('${w.hero}')">
             <div class="absolute inset-0 bg-gradient-to-t from-nh-dark to-transparent"></div>
-            <button onclick="closeModal()" class="absolute top-6 right-6 h-12 w-12 rounded-full glass flex items-center justify-center text-xl">✕</button>
+            <button onclick="closeModal()" class="absolute top-6 right-6 h-12 w-12 rounded-full glass flex items-center justify-center text-xl transition hover:rotate-90">✕</button>
         </div>
         <div class="p-10 -mt-12 relative z-10">
             <div class="flex flex-wrap gap-2 mb-6">
-                ${w.tags.map(t => `<span class="px-4 py-1.5 rounded-full glass text-[9px] font-black uppercase text-nh-gold border-nh-gold/20 shadow-gold-glow">${t}</span>`).join('')}
+                ${w.tags.map(t => `<span class="px-4 py-1.5 rounded-full glass text-[9px] font-black uppercase text-nh-gold border-nh-gold/20">${t}</span>`).join('')}
             </div>
             <h2 class="font-display text-4xl text-grad uppercase mb-6">${w.title}</h2>
-            <p class="text-white/60 leading-relaxed mb-10 text-lg">${w.desc}</p>
+            <p class="text-white/60 leading-relaxed mb-10 text-lg italic">"${w.desc}"</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <button onclick="location.href='leitor.html?id=${w.id}'" class="py-5 rounded-2xl grad-nh text-black font-black uppercase tracking-widest text-xs">Começar Leitura</button>
-                <button onclick="showToast('Adicionado à Biblioteca')" class="py-5 rounded-2xl glass text-white font-black uppercase tracking-widest text-xs">Salvar nos Favoritos</button>
+                <button onclick="location.href='leitor.html?id=${w.id}'" class="py-5 rounded-2xl grad-nh text-black font-black uppercase tracking-widest text-xs shadow-glow transition hover:scale-[1.02]">Começar Leitura</button>
+                <button onclick="showToast('Adicionado aos favoritos!')" class="py-5 rounded-2xl glass text-white font-black uppercase tracking-widest text-xs transition hover:bg-white/10">Salvar na Lista</button>
             </div>
         </div>
     `;
-    
-    m.classList.remove('hidden');
-    setTimeout(() => {
-        m.classList.add('opacity-100');
-        mc.classList.remove('translate-y-full');
-    }, 10);
+    UI.modal.classList.remove('hidden');
+    setTimeout(() => { UI.modal.classList.add('opacity-100'); UI.modalContent.classList.remove('translate-y-full'); }, 10);
     document.body.style.overflow = 'hidden';
 }
 
 function closeModal() {
-    const m = $('modal');
-    const mc = $('modal-content');
-    m.classList.remove('opacity-100');
-    mc.classList.add('translate-y-full');
-    setTimeout(() => m.classList.add('hidden'), 300);
-    document.body.style.overflow = 'auto';
+    UI.modal.classList.remove('opacity-100');
+    UI.modalContent.classList.add('translate-y-full');
+    setTimeout(() => { UI.modal.classList.add('hidden'); document.body.style.overflow = 'auto'; }, 300);
 }
 
 function resetHub() {
-    activeFilter = 'Tudo';
-    query = '';
-    $('search-input').value = '';
+    STATE.activeFilter = 'Tudo';
+    STATE.searchQuery = '';
+    UI.searchInput.value = '';
     window.scrollTo({ top: 0, behavior: 'smooth' });
     renderFilters();
     renderGrid();
 }
 
-/* --- Listeners --- */
-$('search-input').oninput = (e) => {
-    query = e.target.value;
+/* --- 5. INITIALIZATION --- */
+UI.searchInput.oninput = (e) => {
+    STATE.searchQuery = e.target.value;
     renderGrid();
 };
 
-document.addEventListener('DOMContentLoaded', () => {
+window.addEventListener("resize", initCanvas);
+
+document.addEventListener('DOMContentLoaded', async () => {
+    initCanvas();
+    animate();
+    
+    await fetchWorks(); // Simula o carregamento do backend
     renderHero();
     renderFilters();
     renderGrid();
+    
+    // Check para Deep Linking (Abrir obra direto pela URL)
+    const urlParams = new URLSearchParams(window.location.search);
+    const workId = urlParams.get('id');
+    if (workId) openModal(parseInt(workId));
 });
 
-const canvas = document.getElementById("brasasCanvas");
-    const ctx = canvas.getContext("2d");
-    let particles = [], w, h;
-
-    function resizeCanvas() {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
-    }
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-
-    class Particle {
-      constructor() { this.reset(true); }
-      reset(initial = false) {
-        this.x = Math.random() * w;
-        this.y = initial ? Math.random() * h : h + Math.random() * 100;
-        this.size = 1 + Math.random() * 2.5;
-        this.speed = 0.2 + Math.random() * 0.5;
-        this.alpha = 0.4 + Math.random() * 0.3;
-        this.drift = (Math.random() - 0.5) * 0.5;
-      }
-      update() {
-        this.y -= this.speed;
-        this.x += this.drift;
-        if (this.y < -10 || this.x < -50 || this.x > w + 50) this.reset();
-      }
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`;
-        ctx.shadowColor = "#a855f7";
-        ctx.shadowBlur = 12;
-        ctx.fill();
-      }
-    }
-
-    function createParticles(n) {
-      for (let i = 0; i < n; i++) particles.push(new Particle());
-    }
-    function animate() {
-      ctx.clearRect(0, 0, w, h);
-      for (const p of particles) { p.update(); p.draw(); }
-      requestAnimationFrame(animate);
-    }
-    createParticles(150);
-    animate();
 </script>
 </body>
 </html>
