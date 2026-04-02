@@ -471,7 +471,7 @@ document.getElementById('btnContribuir')?.addEventListener('click', ()=> documen
     if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(m)){alert('E-mail inválido.');return;}
     setBusy(true);
     try{
-      const url = `${window.API_BASE}/email/newsletter/subscribe`;
+      const url = `${window.API_BASE}/api/email/newsletter/subscribe`;
       const res = await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:m,name:n,source:'apoiar'})});
       const data = await res.json().catch(()=>({}));
       if(res.ok){form.reset();alert(data.message||'Inscrição registrada!');}
