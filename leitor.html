@@ -132,6 +132,61 @@ body {
 ::-webkit-scrollbar-thumb { background: #2b2440; border-radius: 10px; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
 
+/* --- DRAWER PREMIUM REFINEMENT --- */
+#drawer {
+    background: rgba(5, 5, 7, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-left: 1px solid rgba(143, 79, 255, 0.2);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.9);
+}
+
+.drawer-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid transparent;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.drawer-item:hover {
+    background: rgba(143, 79, 255, 0.08);
+    border-color: rgba(143, 79, 255, 0.3);
+    transform: translateX(-5px);
+}
+
+.drawer-item svg {
+    filter: drop-shadow(0 0 5px rgba(217, 181, 90, 0.3));
+    transition: transform 0.3s ease;
+}
+
+.drawer-item:hover svg {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 8px rgba(143, 79, 255, 0.6));
+}
+
+.drawer-tag {
+    font-size: 9px;
+    font-family: 'Cinzel Decorative', serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #8f4fff;
+    opacity: 0.7;
+}
+
+/* Scrollbar interna do drawer */
+#drawer::-webkit-scrollbar {
+    width: 3px;
+}
+#drawer::-webkit-scrollbar-thumb {
+    background: linear-gradient(#8f4fff, #d9b55a);
+    border-radius: 10px;
+}
+
     </style>
 </head>
 <body class="font-sans antialiased overflow-x-hidden pb-24 sm:pb-0">
