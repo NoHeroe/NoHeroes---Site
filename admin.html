@@ -7,55 +7,244 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --nh-bg:#0a0a0a; --nh-card:#121214; --nh-stroke:#2a2a2e;
-      --nh-purple:#7c3aed; --nh-gold:#d4af37;
-    }
-    html,body{height:100%}
-    body{background:var(--nh-bg); color:#eaeaea; font-family:Inter,system-ui,Arial,sans-serif; overflow-x:hidden}
-    .title-font{font-family:'Cinzel Decorative',serif}
-    .card{background:var(--nh-card); border:1px solid var(--nh-stroke); border-radius:14px}
-    .btn{display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--nh-stroke);border-radius:.75rem;padding:.55rem .9rem}
-    .btn-primary{background:linear-gradient(90deg,#7c3aed,#5b21b6); color:#fff; border:none}
-    .btn-danger{background:#7f1d1d; color:#fff; border:none}
-    .btn-ghost{background:rgba(255,255,255,.06)}
-    .btn-ghost:hover{background:rgba(255,255,255,.12)}
-    .input{width:100%;padding:.6rem .8rem;border:1px solid #303036;border-radius:.7rem;background:#0d0d0f;color:#fff}
-    .input:focus{outline:none;box-shadow:0 0 0 3px rgba(124,58,237,.25);border-color:#5b21b6}
-    .table{width:100%;border-collapse:collapse}
-    .table th,.table td{padding:.7rem .8rem;border-bottom:1px solid #25252a;text-align:left}
-    .table th{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:#a7a7ad}
-    .badge{display:inline-flex;align-items:center;gap:.35rem;padding:.2rem .5rem;border:1px solid #2f2f35;border-radius:.6rem;background:#141416;font-size:.75rem}
-    /* Drawer modal */
-    .drawer{position:fixed;inset:0;z-index:50;display:grid;grid-template-columns:280px 1fr;pointer-events:none}
-    .drawer > aside{pointer-events:auto;transform:translateX(-100%);transition:transform .25s ease; background:linear-gradient(180deg,#131314,#0b0b0d); border-right:1px solid var(--nh-stroke)}
-    .drawer[data-open="true"] > aside{transform:translateX(0)}
-    .drawer .scrim{background:rgba(0,0,0,.5);backdrop-filter:blur(2px);pointer-events:auto;opacity:0;transition:opacity .2s}
-    .drawer[data-open="true"] .scrim{opacity:1}
-    @media (min-width:1024px){
-      .drawer{position:relative; grid-template-columns:280px 1fr; pointer-events:auto}
-      .drawer > aside{transform:none}
-      .drawer .scrim{display:none}
-    }
-    /* Modal base */
-    dialog{border:none;padding:0}
-    dialog::backdrop{background:rgba(0,0,0,.45);backdrop-filter:blur(4px)}
-    .modal{background:rgba(16,16,20,.95);border:1px solid #34343a;border-radius:16px;max-width:min(92vw,820px)}
-    .modal-head{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #2c2c32}
-    .modal-body{padding:16px}
-    /* Labels */
-    .label{font-size:.8rem;color:#bcbccd}
-    /* Hide default scrollbar inside content areas while preserving scroll */
-    .scroll-slim{scrollbar-width:none}
-    .scroll-slim::-webkit-scrollbar{width:0;height:0}
-    /* Background canvas slot (sem JS) */
-    #brasasCanvas{position:fixed;inset:0;z-index:-1;pointer-events:none}
-  </style>
+  :root {
+    --nh-bg: #0a0a0a;
+    --nh-card: #121214;
+    --nh-stroke: #2a2a2e;
+    --nh-purple: #7c3aed;
+    --nh-gold: #d4af37;
+  }
+
+  html, body {
+    height: 100%;
+  }
+
+  body {
+    background: var(--nh-bg);
+    color: #eaeaea;
+    font-family: Inter, system-ui, Arial, sans-serif;
+    overflow-x: hidden;
+  }
+
+  .title-font {
+    font-family: 'Cinzel Decorative', serif;
+  }
+
+  .card {
+    background: var(--nh-card);
+    border: 1px solid var(--nh-stroke);
+    border-radius: 14px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    border: 1px solid var(--nh-stroke);
+    border-radius: .75rem;
+    padding: .55rem .9rem;
+    font-weight: 500;
+    transition: all .2s ease;
+  }
+
+  .btn-primary {
+    background: linear-gradient(90deg, #7c3aed, #5b21b6);
+    color: #fff;
+    border: none;
+  }
+
+  .btn-danger {
+    background: #7f1d1d;
+    color: #fff;
+    border: none;
+  }
+
+  .btn-ghost {
+    background: rgba(255,255,255,.06);
+  }
+
+  .btn-ghost:hover {
+    background: rgba(255,255,255,.12);
+  }
+
+  .input {
+    width: 100%;
+    padding: .6rem .8rem;
+    border: 1px solid #303036;
+    border-radius: .7rem;
+    background: #0d0d0f;
+    color: #fff;
+    font-size: .9rem;
+    transition: all .2s ease;
+  }
+
+  .input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(124,58,237,.25);
+    border-color: #5b21b6;
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .table th, .table td {
+    padding: .7rem .8rem;
+    border-bottom: 1px solid #25252a;
+    text-align: left;
+  }
+
+  .table th {
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: #a7a7ad;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    padding: .2rem .5rem;
+    border: 1px solid #2f2f35;
+    border-radius: .6rem;
+    background: #141416;
+    font-size: .75rem;
+  }
+
+  /* ===== Drawer unificado (mobile e desktop) ===== */
+.drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  pointer-events: none;
+}
+.drawer > aside {
+  pointer-events: auto;
+  transform: translateX(-100%);
+  transition: transform .3s ease;
+  background: linear-gradient(180deg, #131314, #0b0b0d);
+  border-right: 1px solid var(--nh-stroke);
+  height: 100dvh;
+}
+.drawer[data-open="true"] > aside {
+  transform: translateX(0);
+}
+.drawer .scrim {
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease;
+}
+.drawer[data-open="true"] .scrim {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* botão hambúrguer fixo e sempre visível */
+#btnOpenDrawer {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  cursor: pointer;
+  z-index: 60;
+  position: relative;
+  visibility: visible !important;
+  opacity: 1 !important;
+  transition: background .2s ease;
+}
+#btnOpenDrawer:hover {
+  background: rgba(255,255,255,0.12);
+}
+  dialog {
+    border: none;
+    padding: 0;
+  }
+
+  dialog::backdrop {
+    background: rgba(0,0,0,.45);
+    backdrop-filter: blur(4px);
+  }
+
+  .modal {
+    background: rgba(16,16,20,.96);
+    border: 1px solid #34343a;
+    border-radius: 16px;
+    max-width: min(92vw, 820px);
+    color: #eaeaea;
+  }
+
+  .modal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    border-bottom: 1px solid #2c2c32;
+  }
+
+  .modal-body {
+    padding: 16px;
+  }
+
+  .label {
+    font-size: .8rem;
+    color: #bcbccd;
+    margin-bottom: 2px;
+    display: block;
+  }
+
+  .scroll-slim {
+    scrollbar-width: none;
+  }
+
+  .scroll-slim::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  #brasasCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .text-gray-500 {
+    color: #8e8e93;
+  }
+
+  .border-gray-700 {
+    border-color: #2f2f35;
+  }
+
+  .mt-2 { margin-top: .5rem; }
+  .mt-3 { margin-top: .75rem; }
+  .mb-2 { margin-bottom: .5rem; }
+
+</style>
 </head>
 <body>
 
-  <!-- BG opcional (sem JS) -->
-  <canvas id="brasasCanvas" aria-hidden="true"></canvas>
+<canvas id="brasasCanvas"></canvas>
 
   <!-- Topbar -->
   <header class="sticky top-0 z-40 bg-black/40 backdrop-blur border-b border-[#2a2a2e]">
@@ -85,6 +274,7 @@
         <a data-nav="orders"    class="block px-3 py-2 rounded-md hover:bg-white/5 text-sm">💰 Pedidos</a>
         <a data-nav="coupons"   class="block px-3 py-2 rounded-md hover:bg-white/5 text-sm">🎁 Cupons</a>
         <a data-nav="inventory" class="block px-3 py-2 rounded-md hover:bg-white/5 text-sm">📦 Inventário</a>
+        <a data-nav="news"      class="block px-3 py-2 rounded-md hover:bg-white/5 text-sm">📰 Publicações</a>
         <a data-nav="logs"      class="block px-3 py-2 rounded-md hover:bg-white/5 text-sm">🧾 Logs</a>
         <a data-nav="settings"  class="block px-3 py-2 rounded-md hover:bg-white/5 text-sm">⚙️ Configurações</a>
       </nav>
@@ -96,28 +286,62 @@
   <!-- Conteúdo -->
   <main class="max-w-7xl mx-auto px-4 py-6 space-y-6">
 
-    <!-- SECTION: Dashboard -->
-    <section data-section="dashboard" class="card p-5">
-      <h2 class="text-lg font-bold text-purple-200 mb-3">Visão Geral</h2>
-      <div class="grid md:grid-cols-4 gap-4">
-        <div class="rounded-xl border border-[#2a2a2e] p-4 bg-[#141416]">
-          <div class="text-gray-400 text-sm">Usuários</div>
-          <div id="statUsers" class="text-2xl font-extrabold mt-1">0</div>
-        </div>
-        <div class="rounded-xl border border-[#2a2a2e] p-4 bg-[#141416]">
-          <div class="text-gray-400 text-sm">Produtos</div>
-          <div id="statProducts" class="text-2xl font-extrabold mt-1">0</div>
-        </div>
-        <div class="rounded-xl border border-[#2a2a2e] p-4 bg-[#141416]">
-          <div class="text-gray-400 text-sm">Pedidos aprovados</div>
-          <div id="statOrders" class="text-2xl font-extrabold mt-1">0</div>
-        </div>
-        <div class="rounded-xl border border-[#2a2a2e] p-4 bg-[#141416]">
-          <div class="text-gray-400 text-sm">Total de vendas</div>
-          <div id="statSales" class="text-2xl font-extrabold mt-1">R$ 0,00</div>
-        </div>
-      </div>
-    </section>
+    <section data-section="dashboard" class="p-6 space-y-6">
+  <h2 class="text-2xl font-bold title-font mb-4">📊 Dashboard</h2>
+
+  <!-- Indicadores -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div class="card p-4 text-center">
+      <div class="text-sm text-gray-400">Usuários</div>
+      <div id="statUsers" class="text-3xl font-bold mt-1">—</div>
+    </div>
+    <div class="card p-4 text-center">
+      <div class="text-sm text-gray-400">Produtos</div>
+      <div id="statProducts" class="text-3xl font-bold mt-1">—</div>
+    </div>
+    <div class="card p-4 text-center">
+      <div class="text-sm text-gray-400">Pedidos</div>
+      <div id="statOrders" class="text-3xl font-bold mt-1">—</div>
+    </div>
+    <div class="card p-4 text-center">
+  <div class="text-sm text-gray-400">Vendas Totais (R$)</div>
+  <div id="statSales" class="text-3xl font-bold mt-1 text-green-400">—</div>
+</div>
+<div class="card p-4 text-center">
+  <div class="text-sm text-gray-400">Moedas Arrecadadas</div>
+  <div id="statCoinsSpent" class="text-3xl font-bold mt-1 text-amber-400">—</div>
+</div>
+<div class="card p-4 text-center">
+  <div class="text-sm text-gray-400">Moedas em Circulação</div>
+  <div id="statCoinsCirculation" class="text-3xl font-bold mt-1 text-yellow-400">—</div>
+</div>
+  </div>
+
+  <!-- Pedidos recentes -->
+  <div class="card p-4">
+    <div class="flex items-center justify-between mb-3">
+      <h3 class="text-lg font-semibold">🛒 Pedidos Recentes</h3>
+      <button id="refreshDashboard" class="btn btn-ghost text-sm">Atualizar</button>
+    </div>
+    <table class="table text-sm">
+      <thead>
+        <tr>
+          <th>ID</th><th>Usuário</th><th>Status</th><th>Total</th><th>Data</th>
+        </tr>
+      </thead>
+      <tbody id="tbRecentOrders"></tbody>
+    </table>
+  </div>
+
+  <!-- Logs recentes -->
+  <div class="card p-4">
+    <div class="flex items-center justify-between mb-3">
+      <h3 class="text-lg font-semibold">🧾 Atividades Recentes</h3>
+      <button id="refreshLogs" class="btn btn-ghost text-sm">Atualizar</button>
+    </div>
+    <ul id="listRecentLogs" class="text-sm space-y-2"></ul>
+  </div>
+</section>
 
     <!-- SECTION: Users -->
     <section data-section="users" class="card p-5 hidden">
@@ -130,7 +354,7 @@
       </div>
       <div class="overflow-x-auto">
         <table class="table text-sm">
-          <thead><tr><th>ID</th><th>Nome</th><th>Email</th><th>Admin</th><th>Criado</th><th>Ações</th></tr></thead>
+          <thead><tr><th>ID</th><th>Nome</th><th>Email</th><th>Coins</th><th>Admin</th><th>Criado</th><th>Ações</th></tr></thead>
           <tbody id="tbUsers"><tr><td colspan="6" class="py-6 text-center text-gray-500">Carregando...</td></tr></tbody>
         </table>
       </div>
@@ -147,7 +371,11 @@
       </div>
       <div class="overflow-x-auto">
         <table class="table text-sm">
-          <thead><tr><th>ID</th><th>Nome</th><th>Preço</th><th>Estoque</th><th>Status</th><th>Ações</th></tr></thead>
+          <thead>
+  <tr>
+    <th>ID</th><th>Nome</th><th>Moedas</th><th>Preço (R$)</th><th>Estoque</th><th>Status</th><th>Ações</th>
+  </tr>
+</thead>
           <tbody id="tbProducts"><tr><td colspan="6" class="py-6 text-center text-gray-500">Carregando...</td></tr></tbody>
         </table>
       </div>
@@ -191,6 +419,36 @@
       <div id="invGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3"></div>
     </section>
 
+    <!-- SECTION: News -->
+<section data-section="news" class="card p-5 hidden">
+  <div class="flex items-center justify-between mb-3">
+    <h2 class="text-lg font-bold text-purple-200">Publicações</h2>
+    <div class="flex gap-2">
+      <input id="searchPost" class="input w-64" placeholder="Buscar por título/slug/categoria...">
+      <button id="btnNewPost" class="btn btn-primary">Novo Post</button>
+    </div>
+  </div>
+
+  <div class="overflow-x-auto">
+    <table class="table text-sm">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Data</th>
+          <th>Categoria</th>
+          <th>Título</th>
+          <th>Slug</th>
+          <th>Visível</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody id="tbPosts">
+        <tr><td colspan="7" class="py-6 text-center text-gray-500">Carregando...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
     <!-- SECTION: Logs -->
     <section data-section="logs" class="card p-5 hidden">
       <div class="flex items-center justify-between mb-3">
@@ -199,8 +457,19 @@
       </div>
       <div class="overflow-x-auto">
         <table class="table text-sm">
-          <thead><tr><th>Data</th><th>Usuário</th><th>Ação</th><th>Detalhes</th></tr></thead>
-          <tbody id="tbLogs"><tr><td colspan="4" class="py-6 text-center text-gray-500">Carregando...</td></tr></tbody>
+          <thead>
+  <tr>
+    <th>Data</th>
+    <th>Nível</th>
+    <th>Tipo</th>
+    <th>Escopo</th>
+    <th>Usuário</th>
+    <th>IP</th>
+    <th>User Agent</th>
+    <th>Mensagem</th>
+  </tr>
+</thead>
+          <tbody id="tbLogs"><tr><td colspan="8" class="py-6 text-center text-gray-500">Carregando...</td></tr></tbody>
         </table>
       </div>
     </section>
@@ -230,59 +499,232 @@
 
   <!-- MODALS =================================================== -->
 
-  <!-- Modal Produto -->
-  <dialog id="modalProduct">
-    <form method="dialog" class="modal w-[min(92vw,900px)]">
-      <div class="modal-head">
-        <h3 id="modalProductTitle" class="text-purple-200 font-semibold">Novo Produto</h3>
-        <button type="button" data-close class="btn btn-ghost">✕</button>
-      </div>
-      <div class="modal-body space-y-3">
-        <div class="grid md:grid-cols-2 gap-3">
-          <label class="block">
-            <span class="label">Nome</span>
-            <input id="prodName" class="input mt-1" required>
-          </label>
-          <label class="block">
-            <span class="label">Categoria</span>
-            <input id="prodCat" class="input mt-1" placeholder="ebooks, anime, misc...">
-          </label>
-          <label class="block">
-            <span class="label">Preço (R$)</span>
-            <input id="prodPrice" type="number" step="0.01" class="input mt-1" required>
-          </label>
-          <label class="block">
-            <span class="label">Estoque</span>
-            <input id="prodStock" type="number" class="input mt-1">
-          </label>
-          <label class="block">
-            <span class="label">URL da Imagem</span>
-            <input id="prodImg" class="input mt-1" placeholder="https://...">
-          </label>
-          <label class="block">
-            <span class="label">Raridade</span>
-            <select id="prodRarity" class="input mt-1">
-              <option>Comum</option><option>Raro</option><option>Épico</option><option>Lendário</option>
-            </select>
-          </label>
+  <dialog id="modalProduct" class="modal">
+  <form method="dialog" class="w-full max-w-2xl">
+    <div class="modal-head">
+      <h3 id="modalProductTitle" class="font-semibold text-lg">Novo Produto</h3>
+      <button type="button" data-close class="text-gray-400 hover:text-white">✕</button>
+    </div>
+    <div class="modal-body space-y-3 overflow-y-auto max-h-[80vh] pr-1 scroll-slim">
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="label">Nome</label>
+          <input id="prodName" type="text" class="input">
         </div>
-        <label class="block">
-          <span class="label">Descrição</span>
-          <textarea id="prodDesc" class="input mt-1" rows="3"></textarea>
+        <div>
+          <label class="label">Categoria</label>
+          <input id="prodCat" type="text" class="input">
+        </div>
+
+        <div>
+          <label class="label">Tipo</label>
+          <input id="prodType" type="text" class="input">
+        </div>
+        <div>
+          <label class="label">Raridade</label>
+          <input id="prodRarity" type="text" class="input">
+        </div>
+
+        <div>
+          <label class="label">Preço (Moedas)</label>
+          <input id="prodPriceCoins" type="number" class="input">
+        </div>
+        <div>
+          <label class="label">Preço (Real)</label>
+          <input id="prodPriceReal" type="number" class="input" step="0.01">
+        </div>
+
+        <div>
+          <label class="label">Desconto (Moedas)</label>
+          <input id="prodDiscountCoins" type="number" class="input">
+        </div>
+        <div>
+          <label class="label">Desconto (Real)</label>
+          <input id="prodDiscountReal" type="number" class="input" step="0.01">
+        </div>
+
+        <div>
+          <label class="label">Estoque</label>
+          <input id="prodStock" type="number" class="input">
+        </div>
+        <div>
+          <label class="label">Desbloqueio Nível</label>
+          <input id="prodUnlock" type="number" class="input">
+        </div>
+
+        <div>
+          <label class="label">Duração (dias)</label>
+          <input id="prodDuration" type="number" class="input">
+        </div>
+        <div>
+          <label class="label">Coleção</label>
+          <input id="prodCollection" type="text" class="input">
+        </div>
+
+        <div>
+          <label class="label">Imagem</label>
+          <input id="prodImg" type="text" class="input">
+        </div>
+        <div>
+          <label class="label">Link (prod fisico)</label>
+          <input id="prodArquivo" type="text" class="input">
+        </div>
+
+        <div>
+          <label class="label">Bônus</label>
+          <input id="prodBonus" type="text" class="input">
+        </div>
+        <div>
+          <label class="label">Utilidade</label>
+          <input id="prodUtility" type="text" class="input">
+        </div>
+
+        <div>
+          <label class="label">Classe Requerida</label>
+          <input id="prodClassReq" type="text" class="input">
+        </div>
+        <div>
+          <label class="label">Status</label>
+          <input id="prodStatus" type="text" class="input" placeholder="ativo / em_breve / esgotado">
+        </div>
+<div>
+  <label class="label">Link Detalhes (Landing)</label>
+  <input id="prodDetailsUrl" type="text" class="input" placeholder="/landingtec.html ou https://...">
+</div>
+<label class="flex items-center gap-2 mt-2">
+  <input type="checkbox" id="prodUnique">
+  <span>Único por usuário</span>
+</label>
+
+<label class="mt-2 block">
+  <span class="label">Max Stack</span>
+  <input id="prodMaxStack" type="number" class="input" value="99">
+</label>
+
+        <div class="col-span-2">
+          <label class="label">Tags (separadas por vírgula)</label>
+          <input id="prodTags" type="text" class="input" placeholder="ebook, magia, raro">
+        </div>
+
+        <div class="col-span-2">
+          <label class="label">Descrição</label>
+          <textarea id="prodDesc" class="input h-24"></textarea>
+        </div>
+
+        <div class="col-span-2 grid grid-cols-2 gap-2 mt-3">
+          <label><input id="prodActive" type="checkbox" class="mr-1"> Ativo</label>
+          <label><input id="prodConsumable" type="checkbox" class="mr-1"> Consumível</label>
+          <label><input id="prodEquipable" type="checkbox" class="mr-1"> Equipável</label>
+          <label><input id="prodPaginaProtegida" type="checkbox" class="mr-1"> Página Protegida</label>
+          <label><input id="prodPermiteDownload" type="checkbox" class="mr-1"> Permite Download</label>
+          <label><input id="prodTokenUsuario" type="checkbox" class="mr-1"> Token Usuário</label>
+          <label><input id="prodCriptografado" type="checkbox" class="mr-1"> Criptografado</label>
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-end p-3 border-t border-gray-700 mt-2">
+      <button type="submit" id="btnSaveProduct" class="btn btn-primary">Salvar</button>
+    </div>
+  </form>
+</dialog>
+<!-- ===== MODAL: Editar Usuário ===== -->
+<dialog id="modalUser" class="modal">
+  <form method="dialog" class="modal-box bg-[#111] text-gray-200 max-w-3xl">
+    <h3 id="modalUserTitle" class="text-xl font-semibold mb-4">Editar Usuário</h3>
+    <div class="grid grid-cols-2 gap-3 text-sm">
+
+      <!-- Identidade -->
+      <div>
+        <label class="block mb-1">Username</label>
+        <input id="usrUsername" type="text" class="input w-full bg-[#222]" />
+      </div>
+      <div>
+        <label class="block mb-1">Nome completo</label>
+        <input id="usrNomeCompleto" type="text" class="input w-full bg-[#222]" />
+      </div>
+
+      <!-- Email e Senha -->
+      <div>
+        <label class="block mb-1">Email</label>
+        <input id="usrEmail" type="email" class="input w-full bg-[#222]" />
+      </div>
+      <div>
+        <label class="block mb-1">Senha (nova opcional)</label>
+        <input id="usrPassword" type="password" placeholder="••••••••" class="input w-full bg-[#222]" />
+      </div>
+
+      <!-- Avatar e status -->
+      <div>
+        <label class="block mb-1">Avatar (URL ou base64)</label>
+        <input id="usrAvatar" type="text" class="input w-full bg-[#222]" />
+      </div>
+      <div>
+        <label class="block mb-1">Status</label>
+        <select id="usrStatus" class="input w-full bg-[#222]">
+          <option value="online">Online</option>
+          <option value="offline">Offline</option>
+          <option value="banido">Banido</option>
+          <option value="pendente">Pendente</option>
+        </select>
+      </div>
+
+      <!-- Sistema de Moeda Interna -->
+      <div>
+        <label class="block mb-1">Moeda Interna (coins)</label>
+        <input id="usrCoins" type="number" class="input w-full bg-[#222]" />
+      </div>
+
+      <!-- Nível e classe -->
+      <div>
+        <label class="block mb-1">Nível</label>
+        <input id="usrlevel" type="number" class="input w-full bg-[#222]" />
+      </div>
+      <div>
+        <label class="block mb-1">Classe</label>
+        <input id="usrClasse" type="text" class="input w-full bg-[#222]" />
+      </div>
+
+      <!-- Dados de pagamento (para futuras integrações) -->
+      <div>
+        <label class="block mb-1">Documento</label>
+        <input id="usrDocumento" type="text" class="input w-full bg-[#222]" />
+      </div>
+      <div>
+        <label class="block mb-1">Telefone</label>
+        <input id="usrTelefone" type="text" class="input w-full bg-[#222]" />
+      </div>
+
+      <div class="col-span-2">
+        <label class="block mb-1">Endereço</label>
+        <input id="usrEndereco" type="text" class="input w-full bg-[#222]" />
+      </div>
+
+      <div><label class="block mb-1">Número</label><input id="usrNumero" class="input w-full bg-[#222]" /></div>
+      <div><label class="block mb-1">Bairro</label><input id="usrBairro" class="input w-full bg-[#222]" /></div>
+      <div><label class="block mb-1">Cidade</label><input id="usrCidade" class="input w-full bg-[#222]" /></div>
+      <div><label class="block mb-1">Estado</label><input id="usrEstado" class="input w-full bg-[#222]" /></div>
+      <div><label class="block mb-1">CEP</label><input id="usrCep" class="input w-full bg-[#222]" /></div>
+      <div><label class="block mb-1">Complemento</label><input id="usrComplemento" class="input w-full bg-[#222]" /></div>
+
+      <!-- Admin -->
+      <div class="col-span-2 mt-3 flex justify-between items-center">
+        <label class="flex items-center gap-2">
+          <input type="checkbox" id="usrIsAdmin" class="checkbox" />
+          <span>Administrador</span>
         </label>
-        <div class="flex items-center justify-between">
-          <label class="flex items-center gap-2">
-            <input id="prodActive" type="checkbox" class="h-4 w-4 accent-purple-600">
-            <span class="text-sm">Ativo</span>
-          </label>
-          <div class="flex gap-2">
-            <button data-close type="button" class="btn btn-ghost">Cancelar</button>
-            <button id="btnSaveProduct" class="btn btn-primary" type="submit">Salvar</button>
-          </div>
-        </div>
+        <label class="flex items-center gap-2 text-red-400">
+          <input type="checkbox" id="usrBanido" class="checkbox" />
+          <span>Banir Usuário</span>
+        </label>
       </div>
-    </form>
-  </dialog>
+    </div>
+
+    <div class="mt-6 flex justify-end gap-3">
+      <button data-close class="btn">Cancelar</button>
+      <button id="btnSaveUser" class="btn btn-primary">Salvar</button>
+    </div>
+  </form>
+</dialog>
 
   <!-- Modal Conceder Item -->
   <dialog id="modalGrant">
@@ -346,548 +788,1240 @@
     </form>
   </dialog>
 
-  <!-- JS (sem brasas) =================================================== -->
-  <script>
-  ;(() => {
-    /* ============================================================
-       CONFIG
-    ============================================================ */
-    const USE_API  = false; // << quando o backend estiver pronto, troque para true
-    const API_BASE = 'https://api.noheroes.com.br';
+  
+<!-- MODAL: Post -->
+<dialog id="modalPost" class="modal">
+  <form method="dialog" class="w-full max-w-3xl">
+    <div class="modal-head">
+      <h3 id="modalPostTitle" class="font-semibold text-lg text-purple-200">Novo Post</h3>
+      <button type="button" data-close class="text-gray-400 hover:text-white">✕</button>
+    </div>
 
-    /* ============================================================
-       HELPERS
-    ============================================================ */
-    const $ = sel => document.querySelector(sel);
-    const $$ = sel => Array.from(document.querySelectorAll(sel));
-    const money = v => 'R$ ' + Number(v||0).toFixed(2).replace('.', ',');
-    const dateBR = iso => iso ? new Date(iso).toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'}) : '—';
+    <div class="modal-body space-y-3 overflow-y-auto max-h-[80vh] pr-1 scroll-slim">
+      <div class="grid md:grid-cols-2 gap-3">
+        <label class="block">
+          <span class="label">Slug (único)</span>
+          <input id="postSlug" class="input" placeholder="2025-11-10-patch-0-2-0" required>
+        </label>
+        <label class="block">
+          <span class="label">Data</span>
+          <input id="postDate" type="date" class="input" required>
+        </label>
 
-    function toast(msg, type='info'){
-      const box = document.createElement('div');
-      box.className = 'fixed top-4 right-4 z-[60] px-4 py-2 rounded-md text-sm ' + (
-        type==='error' ? 'bg-red-700 text-white' :
-        type==='success' ? 'bg-green-700 text-white' : 'bg-gray-700 text-gray-100'
-      );
-      box.textContent = msg;
-      document.body.appendChild(box);
-      setTimeout(()=>box.remove(), 3200);
+        <label class="block">
+          <span class="label">Categoria</span>
+          <select id="postCategory" class="input" required>
+            <option value="Notícias">Notícias</option>
+            <option value="Atualizações">Atualizações</option>
+            <option value="Comunidade">Comunidade</option>
+            <option value="Extras">Extras</option>
+          </select>
+        </label>
+        <label class="block">
+          <span class="label">Autor (opcional)</span>
+          <input id="postAuthor" class="input" placeholder="NoHeroes">
+        </label>
+
+        <label class="block md:col-span-2">
+          <span class="label">Título</span>
+          <input id="postTitle" class="input" required>
+        </label>
+
+        <label class="block md:col-span-2">
+          <span class="label">Conteúdo (HTML)</span>
+          <textarea id="postContent" class="input h-56" placeholder="<p>...</p>" required></textarea>
+        </label>
+      </div>
+
+      <label class="flex items-center gap-2 mt-2">
+        <input id="postVisible" type="checkbox" class="mr-1" checked>
+        <span>Visível ao público</span>
+      </label>
+    </div>
+
+    <div class="flex justify-end p-3 border-t border-gray-700 mt-2">
+      <button data-close type="button" class="btn">Cancelar</button>
+      <button id="btnSavePost" class="btn btn-primary ml-2">Salvar</button>
+    </div>
+  </form>
+</dialog>
+
+ <script>
+;(() => {
+  /* ============================================================
+     CONFIG
+  ============================================================ */
+  const USE_API  = true; // backend ligado
+  const API_BASE = 'https://api.noheroes.com.br';
+
+  /* ============================================================
+     HELPERS
+  ============================================================ */
+  const $  = sel => document.querySelector(sel);
+  const $$ = sel => Array.from(document.querySelectorAll(sel));
+  const money = v => 'R$ ' + Number(v||0).toFixed(2).replace('.', ',');
+  const dateBR = iso => iso ? new Date(iso).toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'}) : '—';
+
+  function toast(msg, type='info'){
+    const box = document.createElement('div');
+    box.className = 'fixed top-4 right-4 z-[60] px-4 py-2 rounded-md text-sm ' + (
+      type==='error' ? 'bg-red-700 text-white' :
+      type==='success' ? 'bg-green-700 text-white' : 'bg-gray-700 text-gray-100'
+    );
+    box.textContent = msg;
+    document.body.appendChild(box);
+    setTimeout(()=>box.remove(), 3200);
+  }
+
+  function openDialog(dlg){
+    dlg.showModal();
+    dlg.addEventListener('click', (e)=>{
+      const r = dlg.getBoundingClientRect();
+      const outside = e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+      if (e.target === dlg && outside) dlg.close();
+    }, { once:true });
+    dlg.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click', ()=>dlg.close(), { once:true }));
+  }
+
+  /* ============================================================
+     MOCK ADAPTER (funciona HOJE, sem backend)
+  ============================================================ */
+  const mock = {
+    users: [
+      { id:19, username:'Azuos',  email:'azuos@noheroes.com', is_admin:true,  createdAt:'2025-10-13T09:58:52.405Z' },
+      { id:16, username:'Noryan', email:'noryan@noheroes.com', is_admin:false, createdAt:'2025-09-05T23:32:58.065Z' },
+    ],
+    products: [
+      { id:1, name:'Manual das Sombras', price:25, stock:120, isActive:true,  category:'ebooks', rarity:'Épico', imageUrl:'', description:'—' },
+      { id:2, name:'Passe Animes',       price:15, stock:999, isActive:true,  category:'anime',  rarity:'Raro',  imageUrl:'', description:'—' },
+      { id:3, name:'Mentoria',           price:99, stock: 10, isActive:false, category:'mentoria',rarity:'Lendário', imageUrl:'', description:'—' },
+    ],
+    orders: [
+      { order_id:'MP-9031', user:'Azuos', total:55, status:'approved', createdAt:'2025-10-20T11:25:00.000Z',
+        items:[{title:'Manual das Sombras', qty:1, price:25},{title:'Passe Animes', qty:2, price:15}] },
+    ],
+    coupons: [
+      { code:'NOHEROES25', discount:25, usages:12, expiresAt:'2025-12-31T23:59:59.000Z' },
+    ],
+    logs: [
+      { createdAt:'2025-10-20T08:21:00.000Z', user:'Admin', action:'Atualizou produto', details:'Manual → R$25' }
+    ],
+    inventory: {
+      19: [{ name:'Manual das Sombras', qty:1 }, { name:'Passe Animes', qty:2 }],
+      16: [{ name:'Manual das Sombras', qty:1 }],
     }
+  };
 
-    function openDialog(dlg){
-      dlg.showModal();
-      // fechar ao clicar na borda
-      dlg.addEventListener('click', (e)=>{
-        const r = dlg.getBoundingClientRect();
-        const outside = e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
-        if (e.target === dlg && outside) dlg.close();
-      }, { once:true });
-      // botões com data-close
-      dlg.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click', ()=>dlg.close(), { once:true }));
-    }
+  /* ============================================================
+     STATE / REFS (declarados ANTES de qualquer uso)
+  ============================================================ */
+  let _users = [];
+  let _products = [];
+  let _coupons = [];
+  let _posts = [];
+  const mdProduct = document.getElementById('modalProduct');
+  const mode      = { editId: null };
 
-    /* ============================================================
-       MOCK ADAPTER (funciona HOJE, sem backend)
-    ============================================================ */
-    const mock = {
-      users: [
-        { id:19, username:'Azuos',  email:'azuos@noheroes.com', is_admin:true,  createdAt:'2025-10-13T09:58:52.405Z' },
-        { id:16, username:'Noryan', email:'noryan@noheroes.com', is_admin:false, createdAt:'2025-09-05T23:32:58.065Z' },
-      ],
-      products: [
-        { id:1, name:'Manual das Sombras', price:25, stock:120, isActive:true,  category:'ebooks', rarity:'Épico', imageUrl:'', description:'—' },
-        { id:2, name:'Passe Animes',       price:15, stock:999, isActive:true,  category:'anime',  rarity:'Raro',  imageUrl:'', description:'—' },
-        { id:3, name:'Mentoria',           price:99, stock: 10, isActive:false, category:'mentoria',rarity:'Lendário', imageUrl:'', description:'—' },
-      ],
-      orders: [
-        { order_id:'MP-9031', user:'Azuos', total:55, status:'approved', createdAt:'2025-10-20T11:25:00.000Z',
-          items:[{title:'Manual das Sombras', qty:1, price:25},{title:'Passe Animes', qty:2, price:15}] },
-      ],
-      coupons: [
-        { code:'NOHEROES25', discount:25, usages:12, expiresAt:'2025-12-31T23:59:59.000Z' },
-      ],
-      logs: [
-        { createdAt:'2025-10-20T08:21:00.000Z', user:'Admin', action:'Atualizou produto', details:'Manual → R$25' }
-      ],
-      inventory: {
-        19: [{ name:'Manual das Sombras', qty:1 }, { name:'Passe Animes', qty:2 }],
-        16: [{ name:'Manual das Sombras', qty:1 }],
+  const mdCoupon        = document.getElementById('modalCoupon');
+  const inpCode         = document.getElementById('couponCode');
+  const inpDiscount     = document.getElementById('couponDiscount');
+  const inpMax          = document.getElementById('couponMax');
+  const inpExpires      = document.getElementById('couponExpires');
+  const inpDesc         = document.getElementById('couponDesc');
+  const modalCouponTitle= document.getElementById('modalCouponTitle');
+  const couponMode      = { key: null };
+
+  const mdUser   = document.getElementById('modalUser');
+  const userMode = { editId: null };
+
+  const mdOrder   = $('#modalOrder');
+  const mdConfirm = $('#modalConfirm');
+
+  const mdPost = document.getElementById('modalPost');
+  const postMode = { editId: null }; // guarda ID numérico do post quando editando
+
+ /* ============================================================
+   API ADAPTER (corrigido)
+============================================================ */
+async function api(endpoint, { method = 'GET', body } = {}) {
+  if (!USE_API) {
+    await new Promise(r => setTimeout(r, 220));
+    switch (endpoint) {
+      case '/admin/users':   return { success: true, data: mock.users };
+      case '/admin/orders':  return { success: true, data: mock.orders };
+      case '/admin/coupons': return { success: true, data: mock.coupons };
+      case '/admin/logs':    return { success: true, data: mock.logs };
+      case '/admin/stats': {
+        const total = mock.orders.filter(o => o.status === 'approved')
+                                 .reduce((s, o) => s + Number(o.total || 0), 0);
+        return { success: true, users: mock.users.length, products: mock.products.length,
+                 orders: mock.orders.filter(o => o.status === 'approved').length, total };
       }
+    }
+    if (endpoint.startsWith('/admin/products')) {
+      const id = Number(endpoint.split('/').pop());
+      if (method === 'GET')  return { success: true, data: mock.products };
+      if (method === 'POST') {
+        const newId = Math.max(0, ...mock.products.map(p => p.id)) + 1;
+        mock.products.push({ id: newId, ...body });
+        return { success: true, item: { id: newId, ...body } };
+      }
+      if (method === 'PATCH') {
+        const p = mock.products.find(x => x.id === id);
+        if (!p) return { success: false, message: 'Produto não encontrado' };
+        Object.assign(p, body || {});
+        return { success: true, item: p };
+      }
+      if (method === 'DELETE') {
+        const i = mock.products.findIndex(x => x.id === id);
+        if (i >= 0) mock.products.splice(i, 1);
+        return { success: true };
+      }
+    }
+    return { success: false, message: 'endpoint mock não mapeado' };
+  }
+
+  try {
+    const token = localStorage.getItem('adminToken') || localStorage.getItem('NoHeroes_token');
+    const headers = {
+      'Content-Type': 'application/json',
+      ...(token ? { 'Authorization': 'Bearer ' + token } : {})
     };
 
-    /* API adapter (quando ligar no backend, USE_API=true) */
-    async function api(endpoint, { method='GET', body }={}){
-      if(!USE_API){
-        // MOCK SWITCH
-        await new Promise(r=>setTimeout(r, 220)); // micro delay
-        switch(endpoint){
-          case '/admin/users':       return { success:true, data: mock.users };
-          case '/admin/products':    return { success:true, data: mock.products };
-          case '/admin/orders':      return { success:true, data: mock.orders };
-          case '/admin/coupons':     return { success:true, data: mock.coupons };
-          case '/admin/logs':        return { success:true, data: mock.logs };
-          case '/admin/stats': {
-            const total = mock.orders.filter(o=>o.status==='approved')
-                                     .reduce((s,o)=>s+Number(o.total||0),0);
-            return { success:true, users:mock.users.length, products:mock.products.length,
-                     orders:mock.orders.filter(o=>o.status==='approved').length, total };
-          }
-        }
-        // POST/PATCH/DELETE mocks
-        if(endpoint.startsWith('/admin/products') && method==='POST'){
-          const id = Math.max(0, ...mock.products.map(p=>p.id))+1;
-          mock.products.push({ id, ...body });
-          mock.logs.unshift({ createdAt:new Date().toISOString(), user:'Admin', action:'Criou produto', details:body.name });
-          return { success:true, item:{ id, ...body } };
-        }
-        if(endpoint.startsWith('/admin/products/') && method==='PATCH'){
-          const id = Number(endpoint.split('/').pop());
-          const p = mock.products.find(x=>x.id===id);
-          if(!p) return { success:false, message:'Produto não encontrado' };
-          Object.assign(p, body||{});
-          mock.logs.unshift({ createdAt:new Date().toISOString(), user:'Admin', action:'Editou produto', details:p.name });
-          return { success:true, item:p };
-        }
-        if(endpoint.startsWith('/admin/products/') && method==='DELETE'){
-          const id = Number(endpoint.split('/').pop());
-          const i = mock.products.findIndex(x=>x.id===id);
-          if(i>=0) mock.products.splice(i,1);
-          mock.logs.unshift({ createdAt:new Date().toISOString(), user:'Admin', action:'Removeu produto', details:String(id) });
-          return { success:true };
-        }
-        if(endpoint==='/admin/grant-item' && method==='POST'){
-          const { userId, itemId, quantity=1 } = body;
-          const userInv = mock.inventory[userId] || (mock.inventory[userId]=[]);
-          const prod = mock.products.find(p=>p.id===Number(itemId));
-          if(!prod) return { success:false, message:'Produto inexistente' };
-          const slot = userInv.find(i=>i.name===prod.name);
-          if(slot) slot.qty += Number(quantity); else userInv.push({ name:prod.name, qty:Number(quantity) });
-          mock.logs.unshift({ createdAt:new Date().toISOString(), user:'Admin', action:'Concedeu item', details:`${prod.name} x${quantity} → user ${userId}` });
-          return { success:true };
-        }
-        if(endpoint.startsWith('/admin/inventory/') && method==='GET'){
-          const userId = Number(endpoint.split('/').pop());
-          return { success:true, data: mock.inventory[userId] || [] };
-        }
-        if(endpoint==='/admin/logs/clear' && method==='POST'){
-          mock.logs.length = 0;
-          return { success:true };
-        }
-        if(endpoint==='/admin/settings' && method==='POST'){
-          mock.logs.unshift({ createdAt:new Date().toISOString(), user:'Admin', action:'Atualizou configurações', details: JSON.stringify(body) });
-          return { success:true };
-        }
-        return { success:false, message:'endpoint mock não mapeado' };
-      }
-
-      // REAL API
-      const headers = { 'Content-Type':'application/json' };
-      const res = await fetch(API_BASE + endpoint, {
-        method, headers, body: body ? JSON.stringify(body) : undefined
-      });
-      if(res.status===401){ /* gate opcional */ }
-      return res.json();
-    }
-
-    /* ============================================================
-       NAV (drawer + sections)
-    ============================================================ */
-    const drawer = $('#drawer');
-    const btnOpenDrawer = $('#btnOpenDrawer');
-    const scrim = drawer.querySelector('.scrim');
-    btnOpenDrawer?.addEventListener('click', ()=>{
-      drawer.dataset.open = drawer.dataset.open === 'true' ? 'false' : 'true';
-      drawer.setAttribute('aria-hidden', drawer.dataset.open !== 'true');
-    });
-    scrim?.addEventListener('click', ()=>{ drawer.dataset.open='false'; drawer.setAttribute('aria-hidden','true'); });
-
-    const navLinks = $$('[data-nav]');
-    function activate(section){
-      // highlight menu
-      navLinks.forEach(a=>{
-        if(a.dataset.nav===section){ a.classList.add('bg-white/5','text-purple-200'); }
-        else { a.classList.remove('bg-white/5','text-purple-200'); }
-      });
-      // show section
-      $$('[data-section]').forEach(s=>{
-        s.classList.toggle('hidden', s.dataset.section !== section);
-      });
-      // mobile: fecha drawer ao escolher
-      if (window.innerWidth < 1024) {
-        drawer.dataset.open='false';
-        drawer.setAttribute('aria-hidden','true');
-      }
-      // rota no hash
-      if (location.hash.replace('#','') !== section) {
-        history.replaceState(null, '', '#'+section);
-      }
-    }
-    navLinks.forEach(a=>a.addEventListener('click', (e)=>{ e.preventDefault(); activate(a.dataset.nav); }));
-    window.addEventListener('hashchange', ()=>activate((location.hash||'#dashboard').slice(1)));
-    activate((location.hash||'#dashboard').slice(1));
-
-    /* ============================================================
-       RENDER / LOADERS
-    ============================================================ */
-    async function loadStats(){
-      const j = await api('/admin/stats');
-      if(j?.success){
-        $('#statUsers').textContent    = j.users;
-        $('#statProducts').textContent = j.products;
-        $('#statOrders').textContent   = j.orders;
-        $('#statSales').textContent    = money(j.total||0);
-      }
-    }
-
-    /* Users */
-    let _users = [];
-    async function loadUsers(){
-      const j = await api('/admin/users');
-      const tb = $('#tbUsers');
-      tb.innerHTML = '';
-      if(j?.success){
-        _users = j.data;
-        for(const u of j.data){
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td>${u.id}</td>
-            <td>${u.username}</td>
-            <td>${u.email}</td>
-            <td>${u.is_admin ? '✅' : '❌'}</td>
-            <td>${dateBR(u.createdAt)}</td>
-            <td class="space-x-2">
-              <button class="btn btn-ghost" data-grant-user="${u.id}">Conceder</button>
-              <button class="btn btn-ghost" disabled>Editar</button>
-            </td>`;
-          tb.appendChild(tr);
-        }
-      }
-    }
-
-    /* Products */
-    let _products = [];
-    async function loadProducts(){
-      const j = await api('/admin/products');
-      const tb = $('#tbProducts');
-      tb.innerHTML = '';
-      if(j?.success){
-        _products = j.data;
-        for(const p of j.data){
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td>${p.id}</td>
-            <td>${p.name}</td>
-            <td>${money(p.price)}</td>
-            <td>${p.stock ?? '—'}</td>
-            <td>${p.isActive ? '<span class="text-green-400">Ativo</span>' : '<span class="text-red-400">Inativo</span>'}</td>
-            <td class="space-x-2">
-              <button class="btn btn-ghost" data-edit-prod="${p.id}">Editar</button>
-              <button class="btn ${p.isActive ? 'btn-danger' : 'btn-primary'}" data-toggle-prod="${p.id}">
-                ${p.isActive ? 'Desativar' : 'Ativar'}
-              </button>
-              <button class="btn btn-danger" data-del-prod="${p.id}">Excluir</button>
-            </td>`;
-          tb.appendChild(tr);
-        }
-      }
-    }
-
-    /* Orders */
-    async function loadOrders(){
-      const j = await api('/admin/orders');
-      const tb = $('#tbOrders');
-      tb.innerHTML = '';
-      if(j?.success){
-        for(const o of j.data){
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td>${o.order_id}</td>
-            <td>${o.user || o.User?.username || '—'}</td>
-            <td>${money(o.total)}</td>
-            <td>${o.status}</td>
-            <td>${dateBR(o.createdAt)}</td>
-            <td><button class="btn btn-ghost" data-view-order="${o.order_id}">Ver</button></td>`;
-          // guarda itens (mock compat)
-          tr.dataset.order = JSON.stringify(o);
-          tb.appendChild(tr);
-        }
-      }
-    }
-
-    /* Coupons */
-    async function loadCoupons(){
-      const j = await api('/admin/coupons');
-      const tb = $('#tbCoupons');
-      tb.innerHTML = '';
-      if(j?.success){
-        for(const c of j.data){
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td>${c.code}</td>
-            <td>${c.discount}%</td>
-            <td>${c.usages}</td>
-            <td>${dateBR(c.expiresAt)}</td>
-            <td><button class="btn btn-ghost" disabled>Editar</button></td>`;
-          tb.appendChild(tr);
-        }
-      }
-    }
-
-    /* Logs */
-    async function loadLogs(){
-      const j = await api('/admin/logs');
-      const tb = $('#tbLogs');
-      tb.innerHTML = '';
-      if(j?.success){
-        for(const l of j.data){
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td>${dateBR(l.createdAt)}</td>
-            <td>${l.user || '—'}</td>
-            <td>${l.action || '—'}</td>
-            <td>${l.details || '—'}</td>`;
-          tb.appendChild(tr);
-        }
-      }
-    }
-
-    /* Inventory */
-    function fillInvUsers(){
-      const sel = $('#invUserSelect');
-      sel.innerHTML = _users.map(u=>`<option value="${u.id}">${u.id} — ${u.username}</option>`).join('');
-    }
-    async function loadInventory(userId){
-      const j = await api('/admin/inventory/'+userId, { method:'GET' });
-      const grid = $('#invGrid');
-      grid.innerHTML = '';
-      const items = j?.data || [];
-      if(items.length===0){
-        grid.innerHTML = '<div class="text-center text-gray-500 col-span-full py-6">— Sem itens —</div>';
-        return;
-      }
-      for(const it of items){
-        const el = document.createElement('div');
-        el.className = 'p-3 rounded-lg border border-[#2a2a2e] bg-[#141416] flex items-center justify-between';
-        el.innerHTML = `<div>${it.name}</div><span class="badge">x${it.qty || it.quantity || 1}</span>`;
-        grid.appendChild(el);
-      }
-    }
-
-    /* ============================================================
-       BUSCAS / LISTENERS por seção
-    ============================================================ */
-    $('#searchUser').addEventListener('input', e=>{
-      const q = e.target.value.toLowerCase();
-      $$('#tbUsers tr').forEach(tr=>{
-        const t = tr.textContent.toLowerCase();
-        tr.classList.toggle('hidden', !t.includes(q));
-      });
+    const res = await fetch(API_BASE + endpoint, {
+      method,
+      headers,
+      body: body ? JSON.stringify(body) : undefined
     });
 
-    $('#searchProduct').addEventListener('input', e=>{
-      const q = e.target.value.toLowerCase();
-      $$('#tbProducts tr').forEach(tr=>{
-        const t = tr.textContent.toLowerCase();
-        tr.classList.toggle('hidden', !t.includes(q));
-      });
-    });
-
-    $('#searchOrder').addEventListener('input', e=>{
-      const q = e.target.value.toLowerCase();
-      $$('#tbOrders tr').forEach(tr=>{
-        const t = tr.textContent.toLowerCase();
-        tr.classList.toggle('hidden', !t.includes(q));
-      });
-    });
-
-    /* ============================================================
-       MODAL: Produto (criar/editar)
-    ============================================================ */
-    const mdProduct = $('#modalProduct');
-    const mode = { editId:null };
-    function openNewProduct(){
-      mode.editId = null;
-      $('#modalProductTitle').textContent = 'Novo Produto';
-      $('#prodName').value=''; $('#prodCat').value=''; $('#prodPrice').value=''; $('#prodStock').value='';
-      $('#prodImg').value=''; $('#prodRarity').value='Comum'; $('#prodDesc').value=''; $('#prodActive').checked=true;
-      openDialog(mdProduct);
+    if (!res.ok) {
+      const text = await res.text();
+      console.error('❌ Erro API:', res.status, text);
+      if (res.status === 401) {
+        toast('Sessão expirada. Faça login novamente.', 'error');
+        localStorage.removeItem('adminToken');
+        setTimeout(() => (window.location.href = 'login.html'), 1200);
+      }
+      return { success: false, message: 'Erro ' + res.status };
     }
-    function openEditProduct(id){
-      const p = _products.find(x=>x.id===id);
-      if(!p) return;
-      mode.editId = id;
-      $('#modalProductTitle').textContent = `Editar: ${p.name}`;
-      $('#prodName').value=p.name||''; $('#prodCat').value=p.category||'';
-      $('#prodPrice').value=p.price||''; $('#prodStock').value=p.stock??'';
-      $('#prodImg').value=p.imageUrl||''; $('#prodRarity').value=p.rarity||'Comum';
-      $('#prodDesc').value=p.description||''; $('#prodActive').checked=!!p.isActive;
-      openDialog(mdProduct);
-    }
+    return await res.json();
+  } catch (err) {
+    console.error('❌ Erro API:', err);
+    toast('Erro de conexão com o servidor', 'error');
+    return { success: false, message: 'Erro de conexão' };
+  }
+}
 
-    $('#btnNewProduct').addEventListener('click', openNewProduct);
-    $('#btnSaveProduct').addEventListener('click', async (e)=>{
+  /* ============================================================
+     NAV (drawer + sections)
+  ============================================================ */
+  const drawer        = document.getElementById('drawer');
+  const btnOpenDrawer = document.getElementById('btnOpenDrawer');
+  const scrim         = drawer.querySelector('.scrim');
+  const navLinks      = document.querySelectorAll('[data-nav]');
+
+  function openDrawer()  { drawer.dataset.open = 'true';  drawer.setAttribute('aria-hidden', 'false'); }
+  function closeDrawer() { drawer.dataset.open = 'false'; drawer.setAttribute('aria-hidden', 'true'); }
+  function toggleDrawer(){ drawer.dataset.open === 'true' ? closeDrawer() : openDrawer(); }
+
+  if (btnOpenDrawer) btnOpenDrawer.addEventListener('click', toggleDrawer);
+  if (scrim) scrim.addEventListener('click', closeDrawer);
+
+  navLinks.forEach(a => {
+    a.addEventListener('click', (e) => {
       e.preventDefault();
-      const payload = {
-        name: $('#prodName').value.trim(),
-        category: $('#prodCat').value.trim(),
-        price: Number($('#prodPrice').value||0),
-        stock: Number($('#prodStock').value||0),
-        imageUrl: $('#prodImg').value.trim(),
-        rarity: $('#prodRarity').value,
-        description: $('#prodDesc').value.trim(),
-        isActive: $('#prodActive').checked
-      };
-      if(!payload.name){ toast('Nome obrigatório','error'); return; }
-      let res;
-      if(mode.editId){
-        res = await api('/admin/products/'+mode.editId, { method:'PATCH', body:payload });
-      }else{
-        res = await api('/admin/products', { method:'POST', body:payload });
-      }
-      if(res?.success){ mdProduct.close(); await loadProducts(); await loadStats(); toast('Produto salvo','success'); }
-      else { toast(res?.message||'Erro ao salvar','error'); }
+      activate(a.dataset.nav);
+      closeDrawer();
     });
+  });
 
-    /* Toggle / Delete product */
-    document.addEventListener('click', async (e)=>{
-      const t = e.target;
-      if(t.matches('[data-edit-prod]')){
-        openEditProduct(Number(t.dataset.editProd));
-      }
-      if(t.matches('[data-toggle-prod]')){
-        const id = Number(t.dataset.toggleProd);
-        const p = _products.find(x=>x.id===id);
-        const res = await api('/admin/products/'+id, { method:'PATCH', body:{ isActive: !p.isActive } });
-        if(res?.success){ await loadProducts(); toast('Produto atualizado','success'); }
-        else { toast(res?.message||'Falha ao atualizar','error'); }
-      }
-      if(t.matches('[data-del-prod]')){
-        confirmModal(`Excluir produto #${t.dataset.delProd}?`, async ()=>{
-          const res = await api('/admin/products/'+Number(t.dataset.delProd), { method:'DELETE' });
-          if(res?.success){ await loadProducts(); await loadStats(); toast('Produto removido','success'); }
-          else { toast(res?.message||'Falha ao remover','error'); }
-        });
-      }
-      if(t.matches('[data-view-order]')){
-        const tr = t.closest('tr');
-        const data = tr?.dataset?.order ? JSON.parse(tr.dataset.order) : null;
-        openOrderDetail(data);
-      }
-      if(t.matches('[data-grant-user]')){
-        openGrantModal(Number(t.dataset.grantUser));
-      }
-    });
+  function activate(section) {
+  navLinks.forEach(a => {
+    const active = (a.dataset.nav === section);
+    a.classList.toggle('bg-white/5', active);
+    a.classList.toggle('text-purple-200', active);
+  });
 
-    /* ============================================================
-       MODAL: Conceder item
-    ============================================================ */
-    const mdGrant = $('#modalGrant');
-    function openGrantModal(userId=null){
-      // preencher selects
-      $('#grantUser').innerHTML = _users.map(u=>`<option value="${u.id}" ${userId===u.id?'selected':''}>${u.id} — ${u.username}</option>`).join('');
-      $('#grantItem').innerHTML = _products.map(p=>`<option value="${p.id}">${p.id} — ${p.name}</option>`).join('');
-      $('#grantQty').value = 1;
-      openDialog(mdGrant);
+  document.querySelectorAll('[data-section]').forEach(s => {
+    s.classList.toggle('hidden', s.dataset.section !== section);
+  });
+
+  if (location.hash.replace('#','') !== section)
+    history.replaceState(null, '', '#' + section);
+  }
+  window.addEventListener('hashchange', () => activate(location.hash.slice(1) || 'dashboard'));
+  activate(location.hash.slice(1) || 'dashboard');
+
+  /* ============================================================
+     RENDER / LOADERS
+  ============================================================ */
+  async function loadStats(){
+    const j = await api('/admin/stats');
+    if (j && j.success) {
+      $('#statUsers').textContent  = j.users;
+      $('#statProducts').textContent = j.products;
+      $('#statOrders').textContent = j.orders;
+      $('#statSales').textContent = money(
+  j.totalRealSales != null
+    ? j.totalRealSales
+    : (j.total_sales != null ? j.total_sales : 0)
+);
+      $('#statCoinsSpent').textContent       = (j.totalCoinsSpent || 0).toLocaleString();
+      $('#statCoinsCirculation').textContent = (j.totalCoinsInCirculation || 0).toLocaleString();
     }
-    $('#btnGrant').addEventListener('click', ()=>openGrantModal());
-    $('#btnDoGrant').addEventListener('click', async (e)=>{
-      e.preventDefault();
-      const body = {
-        userId: Number($('#grantUser').value),
-        itemId: Number($('#grantItem').value),
-        quantity: Number($('#grantQty').value||1)
-      };
-      const res = await api('/admin/grant-item', { method:'POST', body });
-      if(res?.success){ mdGrant.close(); toast('Item concedido','success'); }
-      else { toast(res?.message||'Falha ao conceder','error'); }
-    });
+  }
 
-    /* ============================================================
-       MODAL: Pedido (detalhe)
-    ============================================================ */
-    const mdOrder = $('#modalOrder');
-    function openOrderDetail(data){
-      const box = $('#orderDetails');
-      if(!data){ box.innerHTML = '<div class="text-gray-500">Sem detalhes.</div>'; }
-      else{
-        const itemsHtml = (data.items||[]).map(i=>`<li class="flex justify-between"><span>${i.title}</span><span>x${i.qty} — ${money(i.price)}</span></li>`).join('');
-        box.innerHTML = `
-          <div class="grid md:grid-cols-2 gap-3">
-            <div><div class="label">Pedido</div><div class="badge">${data.order_id}</div></div>
-            <div><div class="label">Usuário</div><div>${data.user || data.User?.username || '—'}</div></div>
-            <div><div class="label">Total</div><div class="font-semibold">${money(data.total)}</div></div>
-            <div><div class="label">Status</div><div>${data.status}</div></div>
-            <div><div class="label">Criado</div><div>${dateBR(data.createdAt)}</div></div>
-          </div>
-          <div class="mt-3">
-            <div class="label mb-1">Itens</div>
-            <ul class="space-y-1">${itemsHtml || '<li class="text-gray-500">—</li>'}</ul>
-          </div>
-        `;
-      }
-      openDialog(mdOrder);
-    }
+  /* ============================================================
+     DASHBOARD
+  ============================================================ */
+  async function loadDashboard() {
+    await loadStats();
 
-    /* ============================================================
-       Confirm Modal (utilitário)
-    ============================================================ */
-    const mdConfirm = $('#modalConfirm');
-    function confirmModal(text, onYes){
-      $('#confirmText').textContent = text;
-      openDialog(mdConfirm);
-      const btn = $('#btnConfirmYes');
-      const handler = (e)=>{ e.preventDefault(); mdConfirm.close(); btn.removeEventListener('click', handler); onYes?.(); };
-      btn.addEventListener('click', handler);
-    }
-
-    /* ============================================================
-       SETTINGS + LOGS
-    ============================================================ */
-    $('#btnSaveSettings').addEventListener('click', async ()=>{
-      const body = {
-        project: $('#cfgName').value.trim(),
-        currency: $('#cfgCurrency').value.trim(),
-        webhook: $('#cfgWebhook').value.trim()
-      };
-      const res = await api('/admin/settings', { method:'POST', body });
-      if(res?.success) toast('Configurações salvas','success');
-      else toast(res?.message||'Falha ao salvar','error');
-    });
-
-    $('#btnClearLogs').addEventListener('click', ()=>{
-      confirmModal('Limpar todos os logs?', async ()=>{
-        const res = await api('/admin/logs/clear', { method:'POST' });
-        if(res?.success){ await loadLogs(); toast('Logs limpos','success'); }
-        else toast(res?.message||'Falha ao limpar','error');
+    // Pedidos recentes
+    const orders = await api('/admin/orders');
+    const tb = document.getElementById('tbRecentOrders');
+    tb.innerHTML = '';
+    if (orders && orders.success && orders.data && orders.data.length) {
+      orders.data.slice(0, 5).forEach(o => {
+        const tr = document.createElement('tr');
+        const color =
+          o.status === 'approved' ? 'text-green-400' :
+          o.status === 'pending'  ? 'text-yellow-400' : 'text-red-400';
+        const username = o.user || (o.User && o.User.username) || '—';
+        tr.innerHTML = `
+          <td>${o.order_id}</td>
+          <td>${username}</td>
+          <td class="${color}">${o.status}</td>
+          <td>${money(o.total)}</td>
+          <td>${dateBR(o.createdAt)}</td>`;
+        tb.appendChild(tr);
       });
-    });
-
-    /* ============================================================
-       INVENTORY LOAD
-    ============================================================ */
-    $('#btnLoadInv').addEventListener('click', async ()=>{
-      const userId = Number($('#invUserSelect').value);
-      if(!userId) return;
-      await loadInventory(userId);
-    });
-
-    /* ============================================================
-       GLOBAL REFRESH / INIT
-    ============================================================ */
-    $('#btnRefresh').addEventListener('click', async ()=>{
-      await Promise.all([loadStats(), loadUsers(), loadProducts(), loadOrders(), loadCoupons(), loadLogs()]);
-      fillInvUsers();
-      toast('Atualizado','success');
-    });
-
-    async function init(){
-      await Promise.all([loadStats(), loadUsers(), loadProducts(), loadOrders(), loadCoupons(), loadLogs()]);
-      fillInvUsers();
-      // CTA “Nova Entrada” abre criação de produto por padrão (UX direta)
-      $('#btnNew').addEventListener('click', openNewProduct);
+    } else {
+      tb.innerHTML = '<tr><td colspan="5" class="text-center text-gray-500 py-2">Nenhum pedido recente</td></tr>';
     }
-    document.addEventListener('DOMContentLoaded', init);
-  })();
-  </script>
+
+    // Logs recentes (DOM seguro)
+    const logs = await api('/admin/logs');
+    const list = document.getElementById('listRecentLogs');
+    list.innerHTML = '';
+
+    if (logs && logs.success && logs.data && logs.data.length) {
+      logs.data.slice(0, 6).forEach(l => {
+        const li   = document.createElement('li');
+
+        const time = document.createElement('span');
+        time.className = 'text-gray-400';
+        time.textContent = (l.time || dateBR(l.createdAt)) + ' — ';
+
+        const type = document.createElement('strong');
+        type.textContent = l.type || 'evento';
+
+        const level = document.createElement('span');
+        level.className = 'ml-1 text-xs px-2 py-[2px] rounded border border-[#2f2f35] bg-[#141416]';
+        level.textContent = String(l.level || 'info').toUpperCase();
+
+        li.appendChild(time);
+        li.appendChild(type);
+        li.appendChild(level);
+
+        if (l.scope) {
+          const scope = document.createElement('span');
+          scope.className = 'ml-1 text-xs text-gray-400';
+          scope.textContent = '[' + l.scope + ']';
+          li.appendChild(scope);
+        }
+
+        li.appendChild(document.createTextNode(' — ' + (l.message || '')));
+        list.appendChild(li);
+      });
+    } else {
+      list.innerHTML = '<li class="text-gray-500">Sem atividades recentes</li>';
+    }
+  }
+
+  /* ============================================================
+     USERS
+  ============================================================ */
+  async function loadUsers(){
+    const j = await api('/admin/users');
+    const tb = $('#tbUsers');
+    tb.innerHTML = '';
+    if (j && j.success) {
+      _users = j.data || j.users || [];
+      _users.forEach(u => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${u.id}</td>
+          <td>${u.username}</td>
+          <td>${u.email}</td>
+          <td><span class="text-amber-400 font-semibold">${(u.coins != null ? u.coins : 0)}</span></td>
+          <td>${(u.admin || u.is_admin) ? '✅' : '❌'}</td>
+          <td>${dateBR(u.createdAt)}</td>
+          <td class="space-x-2">
+            <button class="btn btn-ghost" data-grant-user="${u.id}">Conceder</button>
+            <button class="btn btn-ghost" data-edit-user="${u.id}">Editar</button>
+          </td>`;
+        tb.appendChild(tr);
+      });
+    }
+  }
+
+  /* ============================================================
+     SHOP ITEMS (Produtos)
+  ============================================================ */
+  async function loadProducts() {
+    const j = await api('/admin/products');
+    const tb = $('#tbProducts');
+    tb.innerHTML = '';
+    if (j && j.success) {
+      _products = j.data || [];
+      _products.forEach(p => {
+        const coins = (p.priceCoins != null ? p.priceCoins : (p.price != null ? p.price : 0));
+        const real  = (p.priceReal != null ? p.priceReal : 0);
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${p.id}</td>
+          <td>${p.name}</td>
+          <td>${coins}</td>
+          <td>${money(real)}</td>
+          <td>${(p.stock != null ? p.stock : '—')}</td>
+          <td>${p.isActive ? '<span class="text-green-400">Ativo</span>' : '<span class="text-red-400">Inativo</span>'}</td>
+          <td class="space-x-2">
+            <button class="btn btn-ghost" data-edit-prod="${p.id}">Editar</button>
+            <button class="btn ${p.isActive ? 'btn-danger' : 'btn-primary'}" data-toggle-prod="${p.id}">${p.isActive ? 'Desativar' : 'Ativar'}</button>
+            <button class="btn btn-danger" data-del-prod="${p.id}">Excluir</button>
+          </td>`;
+        tb.appendChild(tr);
+      });
+    }
+  }
+
+  // Salvar produto (create/edit)
+  const btnSaveProduct = document.getElementById('btnSaveProduct');
+  if (btnSaveProduct) btnSaveProduct.addEventListener('click', async (e) => {
+    e.preventDefault();
+
+    const payload = {
+  name: $('#prodName').value.trim(),
+  category: $('#prodCat').value.trim() || null,
+  type: $('#prodType').value.trim() || null,
+  rarity: $('#prodRarity').value.trim() || 'Comum',
+
+  // Preços
+  price: Number($('#prodPriceCoins').value || 0),
+  priceCoins: $('#prodPriceCoins').value ? Number($('#prodPriceCoins').value) : null,
+  priceReal:  $('#prodPriceReal').value  ? Number($('#prodPriceReal').value)  : null,
+
+  discountCoins: $('#prodDiscountCoins').value ? Number($('#prodDiscountCoins').value) : null,
+  discountReal:  $('#prodDiscountReal').value  ? Number($('#prodDiscountReal').value)  : null,
+
+  // Estoque e progressão
+  stock: $('#prodStock').value ? Number($('#prodStock').value) : null,
+  unlockLevel: $('#prodUnlock').value ? Number($('#prodUnlock').value) : null,
+  duration: $('#prodDuration').value ? Number($('#prodDuration').value) : null,
+
+  // Stack
+  uniquePerUser: $('#prodUnique').checked,
+  maxStack: Number($('#prodMaxStack').value || 99),
+
+  // Imagem / coleção / status
+  imageUrl: $('#prodImg').value.trim() || null,
+  collection: $('#prodCollection').value.trim() || null,
+  status: $('#prodStatus').value.trim() || null,
+
+  // Texto
+  description: $('#prodDesc').value.trim() || null,
+  tags: ($('#prodTags').value || '')
+    .split(',')
+    .map(t => t.trim())
+    .filter(Boolean),
+
+  // Flags
+  isActive: $('#prodActive').checked,
+  consumable: $('#prodConsumable').checked,
+  equipable: $('#prodEquipable').checked,
+
+  paginaProtegida: $('#prodPaginaProtegida').checked,
+  permiteDownload: $('#prodPermiteDownload').checked,
+  tokenUsuario: $('#prodTokenUsuario').checked,
+  criptografado: $('#prodCriptografado').checked,
+
+  // Campos “faltantes” que você já tem no model
+  arquivo: $('#prodArquivo').value.trim() || null,
+  bonus: $('#prodBonus').value.trim() || null,
+  utility: $('#prodUtility').value.trim() || null,
+  classRequired: $('#prodClassReq').value.trim() || null,
+  detailsUrl: $('#prodDetailsUrl').value.trim() || null,
+
+  // moeda
+  currencyType: Number($('#prodPriceReal').value || 0) > 0 ? 'real' : 'coins',
+};
+
+
+    let res;
+  if (mode.editId) {
+    res = await api('/admin/products/' + mode.editId, { method: 'PATCH', body: payload });
+  } else {
+    res = await api('/admin/products', { method: 'POST', body: payload });
+  }
+
+    if (res && res.success) {
+      mdProduct.close();
+      await loadProducts();
+      await loadStats();
+      toast('Produto salvo', 'success');
+    } else {
+      toast((res && res.message) || 'Erro ao salvar', 'error');
+    }
+  });
+
+  document.addEventListener('click', async (e) => {
+    const t = e.target;
+    if (t.matches('[data-toggle-prod]')) {
+      const id = Number(t.dataset.toggleProd);
+      const p = _products.find(x => x.id === id);
+      const res = await api('/admin/products/' + id, {
+        method: 'PATCH',
+        body: { isActive: !(p && p.isActive) }
+      });
+      if (res && res.success) {
+        await loadProducts();
+        toast('Produto atualizado', 'success');
+      } else {
+        toast((res && res.message) || 'Falha ao atualizar', 'error');
+      }
+    }
+    if (t.matches('[data-del-prod]')) {
+      confirmModal('Excluir produto #' + t.dataset.delProd + '?', async () => {
+        const res = await api('/admin/products/' + Number(t.dataset.delProd), { method: 'DELETE' });
+        if (res && res.success) {
+          await loadProducts();
+          await loadStats();
+          toast('Produto removido', 'success');
+        } else {
+          toast((res && res.message) || 'Falha ao remover', 'error');
+        }
+      });
+    }
+    if (t.matches('[data-edit-prod]')) {
+      openEditProduct(t.dataset.editProd);
+    }
+  });
+
+  function clearProductFields() {
+    ['prodName','prodCat','prodType','prodPrice','prodPriceReal','prodPriceCoins',
+     'prodDiscountPrice','prodDiscountReal','prodDiscountCoins','prodStock','prodRarity',
+     'prodUnlock','prodDuration','prodBonus','prodUtility','prodClassReq','prodImg',
+     'prodArquivo','prodCollection','prodStatus','prodTags','prodDesc'
+    ].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+    ['prodActive','prodConsumable','prodEquipable','prodPaginaProtegida','prodPermiteDownload','prodTokenUsuario','prodCriptografado']
+      .forEach(id => { const el = document.getElementById(id); if (el) el.checked = false; });
+  }
+  function fillProductFields(p) {
+    const set = (id, val) => { const el = document.getElementById(id); if (el) el.value = (val != null ? val : ''); };
+    set('prodName', p.name);
+    set('prodCat', p.category);
+    set('prodType', p.type);
+    set('prodPriceCoins', (p.priceCoins != null ? p.priceCoins : (p.price != null ? p.price : 0)));
+    set('prodPriceReal', (p.priceReal != null ? p.priceReal : 0));
+    set('prodDiscountPrice', p.discountPrice);
+    set('prodDiscountReal', p.discountReal);
+    set('prodDiscountCoins', p.discountCoins);
+    set('prodStock', p.stock);
+    set('prodRarity', p.rarity);
+    set('prodUnlock', p.unlockLevel);
+    set('prodDuration', p.duration);
+    set('prodBonus', p.bonus);
+    set('prodUtility', p.utility);
+    set('prodClassReq', p.classRequired);
+    set('prodImg', p.imageUrl);
+    set('prodArquivo', p.arquivo);
+    set('prodCollection', p.collection);
+    set('prodStatus', p.status);
+    set('prodTags', (p.tags || []).join(', '));
+    set('prodDesc', p.description);
+    set('prodMaxStack', p.maxStack);
+    set('prodDetailsUrl', p.detailsUrl);
+    const check = (id, val) => { const el = document.getElementById(id); if (el) el.checked = !!val; };
+    check('prodActive', p.isActive);
+    check('prodConsumable', p.consumable);
+    check('prodEquipable', p.equipable);
+    check('prodPaginaProtegida', p.paginaProtegida);
+    check('prodPermiteDownload', p.permiteDownload);
+    check('prodTokenUsuario', p.tokenUsuario);
+    check('prodCriptografado', p.criptografado);
+    check('prodUnique', p.uniquePerUser);
+  }
+  function openNewProduct() {
+    mode.editId = null;
+    document.getElementById('modalProductTitle').textContent = 'Novo Produto';
+    clearProductFields();
+    const chk = document.getElementById('prodActive'); if (chk) chk.checked = true;
+    openDialog(mdProduct);
+  }
+  function openEditProduct(id) {
+    const p = _products.find(x => x.id === Number(id));
+    if (!p) return toast('Produto não encontrado', 'error');
+    mode.editId = p.id;
+    document.getElementById('modalProductTitle').textContent = 'Editar: ' + p.name;
+    fillProductFields(p);
+    openDialog(mdProduct);
+  }
+  const btnNewProduct = document.getElementById('btnNewProduct');
+  if (btnNewProduct) btnNewProduct.addEventListener('click', openNewProduct);
+
+  /* ============================================================
+     ORDERS
+  ============================================================ */
+  async function loadOrders(){
+    const j = await api('/admin/orders');
+    const tb = $('#tbOrders');
+    tb.innerHTML = '';
+    if (j && j.success) {
+      (j.data || []).forEach(o => {
+        const tr = document.createElement('tr');
+        const username = o.user || (o.User && o.User.username) || '—';
+        tr.innerHTML = `
+          <td>${o.order_id}</td>
+          <td>${username}</td>
+          <td>${money(o.total)}</td>
+          <td>${o.status}</td>
+          <td>${dateBR(o.createdAt)}</td>
+          <td><button class="btn btn-ghost" data-view-order="${o.order_id}">Ver</button></td>`;
+        tr.dataset.order = JSON.stringify(o);
+        tb.appendChild(tr);
+      });
+    }
+  }
+
+  /* ============================================================
+     COUPONS
+  ============================================================ */
+  const couponKey = c => (c ? (c.id != null ? c.id : (c.coupon_id != null ? c.coupon_id : c.code)) : undefined);
+  const couponUrl = key => '/admin/coupons/' + encodeURIComponent(key);
+
+  const toDateInput = iso => {
+    if (!iso) return '';
+    const d = new Date(iso);
+    if (isNaN(d)) return String(iso).slice(0,10);
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+  };
+
+  async function loadCoupons() {
+    const j = await api('/admin/coupons');
+    const tb = $('#tbCoupons');
+    tb.innerHTML = '';
+
+    if (!(j && j.success && Array.isArray(j.data))) {
+      tb.innerHTML = '<tr><td colspan="5" class="text-center text-gray-500 py-6">Erro ao carregar cupons</td></tr>';
+      return;
+    }
+
+    _coupons = j.data;
+
+    _coupons.forEach(c => {
+      const key = couponKey(c);
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${c.code}</td>
+        <td>${Number(c.discount_percent || 0)}%</td>
+        <td>${(c.max_usage_per_user != null ? c.max_usage_per_user : 0)}</td>
+        <td>${c.expires_at ? new Date(c.expires_at).toLocaleDateString('pt-BR') : '—'}</td>
+        <td class="space-x-2">
+          <button class="btn btn-ghost text-purple-300" data-edit-coupon="${key}">Editar</button>
+          <button class="btn btn-danger" data-del-coupon="${key}">Excluir</button>
+        </td>`;
+      tb.appendChild(tr);
+    });
+  }
+
+  const btnNewCoupon = document.getElementById('btnNewCoupon');
+  if (btnNewCoupon) btnNewCoupon.addEventListener('click', () => {
+    couponMode.key = null;
+    modalCouponTitle.textContent = 'Novo Cupom';
+    inpCode.value     = '';
+    inpDiscount.value = '';
+    inpMax.value      = '1';
+    inpExpires.value  = '';
+    inpDesc.value     = '';
+    inpCode.removeAttribute('disabled');
+    openDialog(mdCoupon);
+  });
+
+  const btnSaveCoupon = document.getElementById('btnSaveCoupon');
+  if (btnSaveCoupon) btnSaveCoupon.addEventListener('click', async e => {
+    e.preventDefault();
+
+    const body = {
+      code: (inpCode.value || '').trim(),
+      discount_percent: Number(inpDiscount.value || 0),
+      max_usage_per_user: Number(inpMax.value || 1),
+      expires_at: inpExpires.value || null,
+      description: (inpDesc.value || '').trim()
+    };
+
+    if (!couponMode.key && !body.code) return toast('Informe o código do cupom', 'error');
+    if (body.discount_percent < 0 || body.discount_percent > 100) return toast('Desconto deve ser entre 0 e 100', 'error');
+    if (!couponMode.key) body.code = body.code.toUpperCase();
+
+    let res;
+    if (couponMode.key) res = await api(couponUrl(couponMode.key), { method: 'PATCH', body });
+    else                res = await api('/admin/coupons', { method: 'POST', body });
+
+    if (res && res.success) {
+      mdCoupon.close();
+      await loadCoupons();
+      toast(couponMode.key ? 'Cupom atualizado' : 'Cupom criado', 'success');
+    } else {
+      toast((res && res.message) || 'Erro ao salvar cupom', 'error');
+    }
+  });
+
+  document.addEventListener('click', async e => {
+    const t = e.target;
+
+    if (t.matches('[data-edit-coupon]')) {
+      const key = t.dataset.editCoupon;
+      let c = _coupons.find(x => String(couponKey(x)) === String(key));
+      if (!c) {
+        const res = await api(couponUrl(key), { method: 'GET' });
+        if (res && res.success) c = res.data;
+      }
+      if (!c) return toast('Não foi possível carregar o cupom', 'error');
+
+      couponMode.key = key;
+      modalCouponTitle.textContent = 'Editar Cupom';
+      inpCode.value     = c.code || '';
+      inpDiscount.value = (c.discount_percent != null ? c.discount_percent : 0);
+      inpMax.value      = (c.max_usage_per_user != null ? c.max_usage_per_user : 1);
+      inpExpires.value  = toDateInput(c.expires_at);
+      inpDesc.value     = c.description || '';
+      inpCode.setAttribute('disabled','true');
+      openDialog(mdCoupon);
+    }
+
+    if (t.matches('[data-del-coupon]')) {
+      const key = t.dataset.delCoupon;
+      confirmModal('Excluir este cupom?', async () => {
+        const del = await api(couponUrl(key), { method: 'DELETE' });
+        if (del && del.success) {
+          await loadCoupons();
+          toast('Cupom excluído', 'success');
+        } else {
+          toast((del && del.message) || 'Falha ao excluir', 'error');
+        }
+      });
+    }
+  });
+
+    // Botão "Novo Post"
+  const btnNewPost = document.getElementById('btnNewPost');
+  if (btnNewPost) btnNewPost.addEventListener('click', openNewPost);
+
+  // Salvar do modal
+  const btnSavePost = document.getElementById('btnSavePost');
+  if (btnSavePost) btnSavePost.addEventListener('click', savePost);
+
+  // Delegação: editar / publicar/ocultar / excluir
+  document.addEventListener('click', async (e) => {
+    const t = e.target;
+
+    if (t.matches('[data-edit-post]')) {
+      openEditPost(t.dataset.editPost);
+    }
+
+    if (t.matches('[data-toggle-post]')) {
+      const id = Number(t.dataset.togglePost);
+      const p  = _posts.find(x => x.id === id);
+      if (!p) return;
+      const res = await api('/admin/posts/' + id, { method:'PATCH', body:{ visible: !p.visible } });
+      if (res && res.success) { await loadPosts(); toast('Visibilidade atualizada', 'success'); }
+      else toast((res && res.message) || 'Falha ao atualizar', 'error');
+    }
+
+    if (t.matches('[data-del-post]')) {
+      const id = Number(t.dataset.delPost);
+      confirmModal('Excluir o post #' + id + '?', async () => {
+        const del = await api('/admin/posts/' + id, { method:'DELETE' });
+        if (del && del.success) { await loadPosts(); toast('Post excluído', 'success'); }
+        else toast((del && del.message) || 'Falha ao excluir', 'error');
+      });
+    }
+  });
+
+  // Filtro local na tabela
+  const searchPost = document.getElementById('searchPost');
+  if (searchPost) searchPost.addEventListener('input', (e) => {
+    const q = e.target.value.toLowerCase();
+    document.querySelectorAll('#tbPosts tr').forEach(tr => {
+      const t = tr.textContent.toLowerCase();
+      tr.classList.toggle('hidden', !t.includes(q));
+    });
+  });
+
+    /* ============================================================
+     POSTS (News)
+  ============================================================ */
+  function fillPostFields(p){
+    const set = (id, val) => { const el = document.getElementById(id); if (el) el.value = (val ?? ''); };
+    set('postSlug', p?.slug);
+    set('postDate', p?.date ? String(p.date).slice(0,10) : '');
+    set('postCategory', p?.category || 'Notícias');
+    set('postAuthor', p?.author || '');
+    set('postTitle', p?.title || '');
+    set('postContent', p?.content || '');
+    const vis = document.getElementById('postVisible');
+    if (vis) vis.checked = !!(p ? p.visible : true);
+  }
+
+  function readPostPayload(){
+    return {
+      slug: document.getElementById('postSlug').value.trim(),
+      date: document.getElementById('postDate').value,
+      category: document.getElementById('postCategory').value,
+      author: document.getElementById('postAuthor').value.trim() || 'NoHeroes',
+      title: document.getElementById('postTitle').value.trim(),
+      content: document.getElementById('postContent').value,
+      visible: document.getElementById('postVisible').checked
+    };
+  }
+
+  async function loadPosts(){
+    const tb = document.getElementById('tbPosts');
+    if (!tb) return;
+    tb.innerHTML = '<tr><td colspan="7" class="py-6 text-center text-gray-500">Carregando...</td></tr>';
+
+    const j = await api('/admin/posts'); // lista administrativa (inclui não visíveis)
+    tb.innerHTML = '';
+    if (!(j && j.success && Array.isArray(j.posts))) {
+      tb.innerHTML = '<tr><td colspan="7" class="py-6 text-center text-gray-500">Nenhum post</td></tr>';
+      return;
+    }
+
+    _posts = j.posts;
+    _posts.forEach(p => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${p.id}</td>
+        <td>${p.date ? new Date(p.date).toLocaleDateString('pt-BR') : '—'}</td>
+        <td>${p.category || '—'}</td>
+        <td>${p.title || '—'}</td>
+        <td>${p.slug || '—'}</td>
+        <td>${p.visible ? '<span class="text-green-400">Sim</span>' : '<span class="text-gray-400">Não</span>'}</td>
+        <td class="space-x-2">
+          <button class="btn btn-ghost" data-edit-post="${p.id}">Editar</button>
+          <button class="btn ${p.visible ? 'btn-danger' : 'btn-primary'}" data-toggle-post="${p.id}">
+            ${p.visible ? 'Ocultar' : 'Publicar'}
+          </button>
+          <button class="btn btn-danger" data-del-post="${p.id}">Excluir</button>
+        </td>`;
+      tb.appendChild(tr);
+    });
+  }
+
+  function openNewPost(){
+    postMode.editId = null;
+    document.getElementById('modalPostTitle').textContent = 'Novo Post';
+    fillPostFields(null);
+    openDialog(mdPost);
+  }
+
+  function openEditPost(id){
+    const p = _posts.find(x => x.id === Number(id));
+    if (!p) return toast('Post não encontrado', 'error');
+    postMode.editId = p.id;
+    document.getElementById('modalPostTitle').textContent = 'Editar: ' + (p.title || p.slug);
+    fillPostFields(p);
+    openDialog(mdPost);
+  }
+
+  async function savePost(e){
+    e?.preventDefault?.();
+    const body = readPostPayload();
+
+    if (!body.slug || !body.date || !body.category || !body.title || !body.content) {
+      return toast('Preencha slug, data, categoria, título e conteúdo.', 'error');
+    }
+
+    let res;
+    if (postMode.editId) {
+      res = await api('/admin/posts/' + postMode.editId, { method:'PATCH', body });
+    } else {
+      res = await api('/admin/posts', { method:'POST', body });
+    }
+
+    if (res && res.success) {
+      mdPost.close();
+      await loadPosts();
+      toast('Post salvo', 'success');
+    } else {
+      toast((res && res.error) || (res && res.message) || 'Falha ao salvar', 'error');
+    }
+  }
+
+  /* ============================================================
+     LOGS (tabela completa)
+  ============================================================ */
+  async function loadLogs() {
+    const j = await api('/admin/logs');
+    const tb = $('#tbLogs');
+    tb.innerHTML = '';
+
+    if (!(j && j.success && Array.isArray(j.data) && j.data.length)) {
+      tb.innerHTML = '<tr><td colspan="8" class="text-center text-gray-500 py-3">Nenhum log encontrado</td></tr>';
+      return;
+    }
+
+    const levelBadge = (lvl) => {
+      const L = String(lvl || 'info').toLowerCase();
+      const map = {
+        error: 'bg-red-700 text-white',
+        warn: 'bg-yellow-700 text-white',
+        warning: 'bg-yellow-700 text-white',
+        info: 'bg-blue-700 text-white',
+        debug: 'bg-gray-700 text-gray-100',
+        success: 'bg-green-700 text-white'
+      };
+      const cls = map[L] || map.info;
+      return '<span class="badge ' + cls + ' border-0">' + L + '</span>';
+    };
+
+    j.data.forEach(l => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${l.time || dateBR(l.createdAt)}</td>
+        <td>${levelBadge(l.level)}</td>
+        <td>${l.type || '—'}</td>
+        <td>${l.scope || '—'}</td>
+        <td>${l.user_id ? ('#' + l.user_id) : '—'}</td>
+        <td>${l.ip || '—'}</td>
+        <td title="${l.user_agent || ''}">${(l.user_agent || '—')}</td>
+        <td>
+          ${l.message || '—'}
+          ${l.extra ? '<pre class="mt-2 text-xs bg-[#0d0d0f] p-2 rounded border border-[#2a2a2e] overflow-x-auto">' + (typeof l.extra === 'string' ? l.extra : JSON.stringify(l.extra, null, 2)) + '</pre>' : ''}
+        </td>`;
+      tb.appendChild(tr);
+    });
+  }
+
+  /* ============================================================
+     INVENTORY
+  ============================================================ */
+  function fillInvUsers(){
+    const sel = $('#invUserSelect');
+    sel.innerHTML = _users.map(u=>'<option value="'+u.id+'">'+u.id+' — '+u.username+'</option>').join('');
+  }
+  async function loadInventory(userId){
+    const j = await api('/admin/inventory/'+userId, { method:'GET' });
+    console.log('🔍 INVENTORY RESPONSE:', j);
+    const grid = $('#invGrid');
+    grid.innerHTML = '';
+    const items = (j && Array.isArray(j.data))
+  ? j.data
+  : [];
+    if (!items.length){
+      grid.innerHTML = '<div class="text-center text-gray-500 col-span-full py-6">— Sem itens —</div>';
+      return;
+    }
+    items.forEach(it => {
+      const el = document.createElement('div');
+      el.className = 'p-3 rounded-lg border border-[#2a2a2e] bg-[#141416] flex items-center justify-between';
+      el.innerHTML = '<div>'+it.name+'</div><span class="badge">x'+(it.qty || it.quantity || 1)+'</span>';
+      grid.appendChild(el);
+    });
+  }
+
+  /* ============================================================
+     BUSCAS / LISTENERS por seção
+  ============================================================ */
+  $('#searchUser').addEventListener('input', e=>{
+    const q = e.target.value.toLowerCase();
+    $$('#tbUsers tr').forEach(tr=>{
+      const t = tr.textContent.toLowerCase();
+      tr.classList.toggle('hidden', !t.includes(q));
+    });
+  });
+  $('#searchProduct').addEventListener('input', e=>{
+    const q = e.target.value.toLowerCase();
+    $$('#tbProducts tr').forEach(tr=>{
+      const t = tr.textContent.toLowerCase();
+      tr.classList.toggle('hidden', !t.includes(q));
+    });
+  });
+  $('#searchOrder').addEventListener('input', e=>{
+    const q = e.target.value.toLowerCase();
+    $$('#tbOrders tr').forEach(tr=>{
+      const t = tr.textContent.toLowerCase();
+      tr.classList.toggle('hidden', !t.includes(q));
+    });
+  });
+
+  /* ============================================================
+     MODAL: Conceder item
+  ============================================================ */
+  const mdGrant = $('#modalGrant');
+  function openGrantModal(userId=null){
+    $('#grantUser').innerHTML = _users.map(u=>'<option value="'+u.id+'" '+(userId===u.id?'selected':'')+'>'+u.id+' — '+u.username+'</option>').join('');
+    $('#grantItem').innerHTML = _products.map(p=>'<option value="'+p.id+'">'+p.id+' — '+p.name+'</option>').join('');
+    $('#grantQty').value = 1;
+    openDialog(mdGrant);
+  }
+  const btnGrant = document.getElementById('btnGrant');
+  if (btnGrant) btnGrant.addEventListener('click', ()=>openGrantModal());
+  const btnDoGrant = document.getElementById('btnDoGrant');
+  if (btnDoGrant) btnDoGrant.addEventListener('click', async (e)=>{
+  e.preventDefault();
+
+  const body = {
+    userId: Number($('#grantUser').value),
+    itemId: Number($('#grantItem').value),
+    quantity: Number($('#grantQty').value || 1)
+  };
+
+  const res = await api('/admin/grant-item', { method:'POST', body });
+
+  if (res && res.success){
+    mdGrant.close();
+    toast(
+      `Concedido: ${res.granted} (motivo: ${res.reason})`,
+      'success'
+    );
+  } else {
+    toast(res?.message || 'Falha ao conceder', 'error');
+  }
+});
+
+  // Editar usuário
+  function openEditUser(id) {
+    const u = _users.find(x => x.id === Number(id));
+    if (!u) return toast('Usuário não encontrado', 'error');
+    userMode.editId = u.id;
+
+    $('#modalUserTitle').textContent = 'Editar: ' + u.username;
+    const set = (id, val) => { const el = $('#' + id); if (el) el.value = (val != null ? val : ''); };
+
+    set('usrUsername', u.username);
+    set('usrNomeCompleto', u.nome_completo);
+    set('usrEmail', u.email);
+    set('usrPassword', '');
+    set('usrAvatar', u.avatar);
+    set('usrStatus', u.status || 'online');
+    set('usrCoins', u.coins || 0);
+    set('usrlevel', u.level || 1);
+    set('usrClasse', u.classe || '');
+    set('usrDocumento', u.documento);
+    set('usrTelefone', u.telefone);
+    set('usrEndereco', u.endereco);
+    set('usrNumero', u.numero);
+    set('usrBairro', u.bairro);
+    set('usrCidade', u.cidade);
+    set('usrEstado', u.estado);
+    set('usrCep', u.cep);
+    set('usrComplemento', u.complemento);
+    $('#usrIsAdmin').checked = !!u.is_admin;
+    $('#usrBanido').checked  = (u.status === 'banido');
+
+    openDialog(mdUser);
+  }
+  document.addEventListener('click', (e) => {
+    const t = e.target;
+    if (t.matches('[data-edit-user]')) openEditUser(t.dataset.editUser);
+    if (t.matches('[data-grant-user]')) openGrantModal(Number(t.dataset.grantUser));
+  });
+  const btnSaveUser = document.getElementById('btnSaveUser');
+  if (btnSaveUser) btnSaveUser.addEventListener('click', async (e) => {
+    e.preventDefault();
+    const body = {
+      username: $('#usrUsername').value.trim(),
+      nome_completo: $('#usrNomeCompleto').value.trim(),
+      email: $('#usrEmail').value.trim(),
+      password: $('#usrPassword').value.trim() || undefined,
+      avatar: $('#usrAvatar').value.trim(),
+      status: $('#usrBanido').checked ? 'banido' : $('#usrStatus').value,
+      coins: Number($('#usrCoins').value || 0),
+      level: Number($('#usrlevel').value || 1),
+      classe: $('#usrClasse').value.trim(),
+      documento: $('#usrDocumento').value.trim(),
+      telefone: $('#usrTelefone').value.trim(),
+      endereco: $('#usrEndereco').value.trim(),
+      numero: $('#usrNumero').value.trim(),
+      bairro: $('#usrBairro').value.trim(),
+      cidade: $('#usrCidade').value.trim(),
+      estado: $('#usrEstado').value.trim(),
+      cep: $('#usrCep').value.trim(),
+      complemento: $('#usrComplemento').value.trim(),
+      is_admin: $('#usrIsAdmin').checked,
+    };
+
+    const res = await api('/admin/users/' + userMode.editId, { method: 'PATCH', body });
+    if (res && res.success) {
+      mdUser.close();
+      await loadUsers();
+      toast('Usuário atualizado com sucesso', 'success');
+    } else {
+      toast((res && res.message) || 'Falha ao salvar', 'error');
+    }
+  });
+
+  /* ============================================================
+     PEDIDO (detalhe) + CONFIRM
+  ============================================================ */
+  function openOrderDetail(data){
+    const box = $('#orderDetails');
+    if (!data) {
+      box.innerHTML = '<div class="text-gray-500">Sem detalhes.</div>';
+    } else {
+      const itemsHtml = (data.items||[]).map(i=>'<li class="flex justify-between"><span>'+i.title+'</span><span>x'+i.qty+' — '+money(i.price)+'</span></li>').join('');
+      const username = data.user || (data.User && data.User.username) || '—';
+      box.innerHTML = `
+        <div class="grid md:grid-cols-2 gap-3">
+          <div><div class="label">Pedido</div><div class="badge">${data.order_id}</div></div>
+          <div><div class="label">Usuário</div><div>${username}</div></div>
+          <div><div class="label">Total</div><div class="font-semibold">${money(data.total)}</div></div>
+          <div><div class="label">Status</div><div>${data.status}</div></div>
+          <div><div class="label">Criado</div><div>${dateBR(data.createdAt)}</div></div>
+        </div>
+        <div class="mt-3">
+          <div class="label mb-1">Itens</div>
+          <ul class="space-y-1">${itemsHtml || '<li class="text-gray-500">—</li>'}</ul>
+        </div>`;
+    }
+    openDialog(mdOrder);
+  }
+
+  function confirmModal(text, onYes){
+    $('#confirmText').textContent = text;
+    openDialog(mdConfirm);
+    const btn = $('#btnConfirmYes');
+    const handler = (e)=>{ e.preventDefault(); mdConfirm.close(); btn.removeEventListener('click', handler); if (typeof onYes === 'function') onYes(); };
+    btn.addEventListener('click', handler);
+  }
+
+  /* ============================================================
+     SETTINGS + LOGS
+  ============================================================ */
+  const btnSaveSettings = document.getElementById('btnSaveSettings');
+  if (btnSaveSettings) btnSaveSettings.addEventListener('click', async ()=>{
+    const body = {
+      project: $('#cfgName').value.trim(),
+      currency: $('#cfgCurrency').value.trim(),
+      webhook: $('#cfgWebhook').value.trim()
+    };
+    const res = await api('/admin/settings', { method:'POST', body });
+    if (res && res.success) toast('Configurações salvas','success');
+    else toast((res && res.message) || 'Falha ao salvar','error');
+  });
+
+  const btnClearLogs = document.getElementById('btnClearLogs');
+  if (btnClearLogs) btnClearLogs.addEventListener('click', ()=>{
+    confirmModal('Limpar todos os logs?', async ()=>{
+      const res = await api('/admin/logs/clear', { method:'POST' });
+      if (res && res.success){ await loadLogs(); toast('Logs limpos','success'); }
+      else toast((res && res.message) || 'Falha ao limpar','error');
+    });
+  });
+
+  /* ============================================================
+     INVENTORY LOAD
+  ============================================================ */
+  const btnLoadInv = document.getElementById('btnLoadInv');
+  if (btnLoadInv) btnLoadInv.addEventListener('click', async ()=>{
+    const userId = Number($('#invUserSelect').value);
+    if (!userId) return;
+    await loadInventory(userId);
+  });
+
+  /* ============================================================
+     GLOBAL REFRESH / INIT
+  ============================================================ */
+  const btnRefresh = document.getElementById('btnRefresh');
+  if (btnRefresh) btnRefresh.addEventListener('click', async ()=>{
+    await Promise.all([
+  loadDashboard(),   // <-- necessário
+  loadUsers(),
+  loadProducts(),
+  loadOrders(),
+  loadCoupons(),
+  loadLogs(),
+  loadPosts()
+]);
+fillInvUsers();
+toast('Atualizado','success');
+  });
+
+  async function init() {
+    await Promise.all([
+      loadDashboard(),
+      loadUsers(),
+      loadProducts(),
+      loadOrders(),
+      loadCoupons(),
+      loadLogs(),
+      loadPosts()
+    ]);
+    fillInvUsers();
+    const btnNew = document.getElementById('btnNew');
+    if (btnNew) btnNew.addEventListener('click', openNewProduct);
+  }
+  document.addEventListener('DOMContentLoaded', init);
+})(); 
+
+// ======= BRASAS CANVAS (efeito visual) =======
+const canvas = document.getElementById("brasasCanvas");
+if (canvas) {
+  const ctx = canvas.getContext("2d");
+  let particles = [], w, h;
+
+  function resizeCanvas() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+  window.addEventListener("resize", resizeCanvas);
+  resizeCanvas();
+
+  class Particle {
+    constructor() { this.reset(true); }
+    reset(initial = false) {
+      this.x = Math.random() * w;
+      this.y = initial ? Math.random() * h : h + Math.random() * 100;
+      this.size = 1 + Math.random() * 2.5;
+      this.speed = 0.2 + Math.random() * 0.5;
+      this.alpha = 0.4 + Math.random() * 0.3;
+      this.drift = (Math.random() - 0.5) * 0.5;
+    }
+    update() {
+      this.y -= this.speed;
+      this.x += this.drift;
+      if (this.y < -10 || this.x < -50 || this.x > w + 50) this.reset();
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(168, 85, 247, ' + this.alpha + ')';
+      ctx.shadowColor = "#a855f7";
+      ctx.shadowBlur = 12;
+      ctx.fill();
+    }
+  }
+
+  function createParticles(n) { for (let i = 0; i < n; i++) particles.push(new Particle()); }
+  function animate() {
+    ctx.clearRect(0, 0, w, h);
+    for (const p of particles) { p.update(); p.draw(); }
+    requestAnimationFrame(animate);
+  }
+  createParticles(150);
+  animate();
+}
+
+// util de modal legado (se existir couponModal no DOM)
+function toggleModal(show = true) {
+  const el = document.getElementById('couponModal');
+  if (el) el.classList.toggle('hidden', !show);
+}
+</script>
 </body>
 </html>

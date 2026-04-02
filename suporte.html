@@ -71,7 +71,7 @@
       </a>
       <nav class="hidden md:flex items-center gap-6 text-sm text-gray-300">
         <a href="/sobre.html" class="hover:text-white">Sobre</a>
-        <a href="/status" class="hover:text-white">Status</a>
+        <a href="/status.html" class="hover:text-white">Status</a>
         <a href="/termos.html" class="hover:text-white">Termos</a>
         <a href="#abrir-ticket" class="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-brasa-600 hover:bg-brasa-500 text-white shadow-glow">Abrir Ticket</a>
       </nav>
@@ -111,19 +111,19 @@
               </div>
             </div>
             <div class="mt-4 grid grid-cols-3 gap-4 text-center">
-              <div class="p-4 rounded-xl bg-white/5 border border-white/10">
-                <p class="text-2xl font-bold">99,9%</p>
-                <p class="text-xs text-gray-400">Uptime (últ. 30d)</p>
-              </div>
-              <div class="p-4 rounded-xl bg-white/5 border border-white/10">
-                <p class="text-2xl font-bold">6 min</p>
-                <p class="text-xs text-gray-400">Primeira resposta</p>
-              </div>
-              <div class="p-4 rounded-xl bg-white/5 border border-white/10">
-                <p class="text-2xl font-bold">CSAT 4,8</p>
-                <p class="text-xs text-gray-400">Satisfação</p>
-              </div>
-            </div>
+  <div class="p-4 rounded-xl bg-white/5 border border-white/10">
+    <p id="card-uptime" class="text-2xl font-bold">99,9%</p>
+    <p class="text-xs text-gray-400">Uptime (últ. 30d)</p>
+  </div>
+  <div class="p-4 rounded-xl bg-white/5 border border-white/10">
+    <p id="card-fst-resp" class="text-2xl font-bold">6 min</p>
+    <p class="text-xs text-gray-400">Primeira resposta</p>
+  </div>
+  <div class="p-4 rounded-xl bg-white/5 border border-white/10">
+    <p id="card-csat" class="text-2xl font-bold">CSAT 4,8</p>
+    <p class="text-xs text-gray-400">Satisfação</p>
+  </div>
+</div>
           </div>
         </div>
       </div>
@@ -136,6 +136,7 @@
       <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
     </div>
     <p id="searchHint" class="mt-2 text-xs text-gray-400">Dica: tente palavras‑chave como “boleto”, “cartão recusado”, “erro 500”.</p>
+    <div id="kbResults" class="mt-4 space-y-2"></div>
   </div>
 </section>
 
@@ -358,11 +359,11 @@
         <p class="mt-2 text-sm text-gray-400 max-w-prose">Suporte oficial. Para segurança, não compartilhe senhas ou códigos 2FA. Mensagens fora dos domínios noheroes.com.br podem ser phishing.</p>
       </div>
       <div class="text-sm text-gray-300 grid grid-cols-2 gap-2">
-        <a href="/status" class="hover:text-white">Status</a>
+        <a href="/status.html" class="hover:text-white">Status</a>
         <a href="/sobre.html" class="hover:text-white">Sobre</a>
         <a href="/termos.html" class="hover:text-white">Termos</a>
-        <a href="/privacidade.html" class="hover:text-white">Privacidade</a>
-        <a href="/seguranca.html" class="hover:text-white">Segurança</a>
+        <a href="/termos.html" class="hover:text-white">Privacidade</a>
+        <a href="/termos.html" class="hover:text-white">Segurança</a>
         <a href="mailto:support@noheroes.com.br" class="hover:text-white">support@noheroes.com.br</a>
       </div>
       <div class="text-sm text-gray-400">
@@ -370,191 +371,335 @@
       </div>
     </div>
   </footer>
+<script src="assets/js/cookies.js"></script>
+ <script>
+// ============================================
+// 🔧 CONFIGURAÇÃO BASE
+// ============================================
+const API = window.location.hostname === 'localhost' 
+  ? 'http://localhost:3000'
+  : 'https://api.noheroes.com.br';
 
-  <!-- Scripts -->
-  <script>
-    // ====== CONFIG ======
-    const API_BASE = 'https://api.noheroes.com.br'; // ajuste conforme seu backend
-    const TICKET_ENDPOINT = API_BASE + '/suporte/ticket';
-    const MAX_TOTAL_UPLOAD_MB = 10;
+const TICKET_ENDPOINT = API + '/suporte/ticket';
+const MAX_TOTAL_UPLOAD_MB = 10;
 
-    // ====== UI Helpers ======
-    const $ = s => document.querySelector(s);
-    const $$ = s => Array.from(document.querySelectorAll(s));
+// ============================================
+// 🔧 HELPERS GERAIS
+// ============================================
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
 
-    function toast(type, msg) {
+function toast(type, msg) {
+  const t = $('#toast');
+  t.className = '';
+  t.classList.add('mt-4', 'p-3', 'rounded-xl', 'border', 'text-sm');
+  const styles = {
+    ok: ['bg-emerald-500/10', 'border-emerald-500/30', 'text-emerald-300'],
+    warn: ['bg-amber-500/10', 'border-amber-500/30', 'text-amber-300'],
+    err: ['bg-rose-500/10', 'border-rose-500/30', 'text-rose-300']
+  };
+  (styles[type] || styles.err).forEach(c => t.classList.add(c));
+  t.textContent = msg;
+  t.classList.remove('hidden');
+}
+
+function bytesToMB(b) { return (b / (1024*1024)).toFixed(2); }
+
+// ============================================
+// 🔧 MENU MOBILE
+// ============================================
+$('#btnMenu')?.addEventListener('click', () => {
+  const m = $('#menuMobile');
+  const expanded = $('#btnMenu').getAttribute('aria-expanded') === 'true';
+  $('#btnMenu').setAttribute('aria-expanded', String(!expanded));
+  m.classList.toggle('hidden');
+});
+
+// ============================================
+// 🔧 FOOTER ANO AUTOMÁTICO
+// ============================================
+$('#year').textContent = new Date().getFullYear();
+
+// ============================================
+// 🔍 BUSCA E BASE DE CONHECIMENTO
+// ============================================
+const inputQuery = $('#query');
+const hint = $('#searchHint');
+
+function filterByQuery(q) {
+  const query = q.trim().toLowerCase();
+  $$('#cards-categorias article').forEach(card => {
+    const tags = (card.getAttribute('data-tags') || '').toLowerCase();
+    card.classList.toggle('hidden', query && !tags.includes(query));
+  });
+  $$('#faq details').forEach(d => {
+    const tags = (d.getAttribute('data-tags') || '').toLowerCase();
+    const match = !query || tags.includes(query);
+    d.classList.toggle('hidden', !match);
+  });
+  hint.textContent = query 
+    ? `Filtrando por: "${query}"`
+    : 'Dica: tente palavras-chave como “boleto”, “cartão recusado”, “erro 500”.';
+}
+
+const HELP_KB = [
+  { titulo: 'Pagamento aprovado e produto não entregue', tags: ['pagamento','aprovado','produto','mercadopago','pix','cartão','boleto'], solucao: 'Confira seu email (spam/lixo). Entre em "Minhas Compras". Persistindo, abra um ticket e informe o ID da transação ou anexe o comprovante.' },
+  { titulo: 'Pagamento recusado', tags: ['pagamento','recusado','cartão','pix','boleto'], solucao: 'Verifique saldo/limite, dados do cartão, ou tente outro método (Pix/Cartão). Se múltiplas recusas, tente em aba anônima e limpe cache.' },
+  { titulo: 'Reembolso', tags: ['reembolso','estorno','chargeback','mercadopago'], solucao: 'Siga a política de reembolsos. Abra um ticket com comprovante e motivo. O prazo de crédito varia conforme o método de pagamento.' },
+  { titulo: 'Esqueci a senha', tags: ['senha','login','acesso','recuperar'], solucao: 'Use "Esqueci minha senha" para redefinição via email. Se não chegar, verifique spam e confirme o endereço cadastrado.' },
+  { titulo: 'Perdi o 2FA', tags: ['2fa','dupla','fator','autenticação','login','acesso'], solucao: 'Abra um ticket com documento de identidade e comprovante de compra. A equipe fará a validação para desativar o 2FA com segurança.' },
+  { titulo: 'Baixar compras / downloads', tags: ['download','compras','arquivo','acesso','link'], solucao: 'Acesse "Minhas Compras" estando logado. Se o link expirar, abra um ticket informando o pedido para reativação do acesso.' },
+  { titulo: 'Compatibilidade / requisitos', tags: ['compatibilidade','requisito','erro','versão','atualização'], solucao: 'Confira requisitos mínimos e atualize para a versão mais recente. Se persistir, descreva sistema/versão e anexe logs no ticket.' },
+  { titulo: 'Nota fiscal', tags: ['nota','fiscal','nf','cnpj','cpf'], solucao: 'Solicite pelo ticket com o CNPJ/CPF e dados de faturamento. Envie o comprovante do pedido para emissão.' },
+  { titulo: 'Privacidade / LGPD', tags: ['lgpd','privacidade','dados','remoção'], solucao: 'Para exercer direitos (acesso/remoção), abra ticket na categoria "Política & Privacidade". Descreveremos os próximos passos e prazos.' }
+];
+
+function searchKB(query) {
+  const q = query.trim().toLowerCase();
+  if (!q) return [];
+  return HELP_KB
+    .map(item => {
+      const texto = (item.titulo + ' ' + item.tags.join(' ')).toLowerCase();
+      const score = (texto.includes(q) ? 1 : 0) + item.tags.reduce((s,t) => s + (t.includes(q) ? 1 : 0), 0);
+      return { ...item, score };
+    })
+    .filter(i => i.score > 0)
+    .sort((a,b) => b.score - a.score)
+    .slice(0, 6);
+}
+
+function renderKBResults(list) {
+  const box = $('#kbResults');
+  box.innerHTML = '';
+  if (!list.length) return;
+  list.forEach(i => {
+    const el = document.createElement('div');
+    el.className = 'rounded-xl border border-white/10 bg-white/5 p-4';
+    el.innerHTML = `
+      <div class="flex items-start justify-between gap-3">
+        <h4 class="font-medium">${i.titulo}</h4>
+      </div>
+      <p class="mt-2 text-sm text-gray-300">${i.solucao}</p>
+      <div class="mt-2 text-xs text-gray-400">
+        Tags: ${i.tags.map(t => `<span class="px-2 py-[2px] rounded bg-white/5 border border-white/10 mr-1">${t}</span>`).join('')}
+      </div>`;
+    box.appendChild(el);
+  });
+}
+
+// Busca integrada
+inputQuery?.addEventListener('input', e => {
+  const q = e.target.value;
+  filterByQuery(q);
+  renderKBResults(searchKB(q));
+});
+
+// ============================================
+// 📬 FORM DE TICKET (Resend)
+// ============================================
+const form = $('#ticketForm');
+const submitBtn = $('#submitBtn');
+const btnIcon = $('#btnIcon');
+
+function setLoading(loading) {
+  submitBtn.disabled = loading;
+  btnIcon.style.animation = loading ? 'spin 1s linear infinite' : '';
+}
+
+const spinStyle = document.createElement('style');
+spinStyle.textContent = '@keyframes spin { from { transform: rotate(0deg);} to { transform: rotate(360deg);} }';
+document.head.appendChild(spinStyle);
+
+form?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if ($('#website').value) return; // honeypot
+
+  const files = $('#anexos').files || [];
+  let total = 0; for (const f of files) total += f.size;
+  if (total > MAX_TOTAL_UPLOAD_MB * 1024 * 1024) {
+    toast('warn', `Limite de upload excedido (${bytesToMB(total)}MB). Máximo: ${MAX_TOTAL_UPLOAD_MB}MB.`);
+    return;
+  }
+
+  const data = new FormData();
+  ['nome','email','categoria','prioridade','assunto','descricao','pedidoId'].forEach(id => {
+    const el = $('#' + id);
+    if (el && el.value.trim()) data.append(id, el.value.trim());
+  });
+  for (const f of files) data.append('anexos', f, f.name);
+
+  setLoading(true);
+  toast('warn', 'Enviando…');
+
+  try {
+    const res = await fetch(TICKET_ENDPOINT, {
+      method: 'POST',
+      headers: { 'X-Client': 'noheroes-support-v1' },
+      body: data,
+      mode: 'cors',
+      credentials: 'omit'
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const json = await res.json().catch(() => ({}));
+
+    toast('ok', 'Ticket enviado com sucesso! Você receberá um email com o protocolo.');
+    form.reset();
+    if (json.protocolo) {
       const t = $('#toast');
-      t.className = '';
-      t.classList.add('mt-4', 'p-3', 'rounded-xl', 'border', 'text-sm');
-      if (type === 'ok') {
-        t.classList.add('bg-emerald-500/10', 'border-emerald-500/30', 'text-emerald-300');
-      } else if (type === 'warn') {
-        t.classList.add('bg-amber-500/10', 'border-amber-500/30', 'text-amber-300');
-      } else {
-        t.classList.add('bg-rose-500/10', 'border-rose-500/30', 'text-rose-300');
-      }
-      t.textContent = msg;
-      t.classList.remove('hidden');
+      const p = document.createElement('div');
+      p.className = 'mt-2 text-xs text-gray-300';
+      p.textContent = `Protocolo: ${json.protocolo}`;
+      t.appendChild(p);
     }
+  } catch (err) {
+    console.error(err);
+    toast('err', 'Não foi possível enviar o ticket agora. Tente novamente em instantes.');
+  } finally {
+    setLoading(false);
+  }
+});
 
-    function bytesToMB(b) { return (b / (1024*1024)).toFixed(2); }
+// ============================================
+// 🔥 ANIMAÇÃO BRASAS CANVAS
+// ============================================
+const canvas = $('#brasasCanvas');
+const ctx = canvas.getContext('2d');
+let particles = [], w, h;
 
-    // ====== Mobile menu ======
-    $('#btnMenu')?.addEventListener('click', () => {
-      const m = $('#menuMobile');
-      const expanded = $('#btnMenu').getAttribute('aria-expanded') === 'true';
-      $('#btnMenu').setAttribute('aria-expanded', String(!expanded));
-      m.classList.toggle('hidden');
+function resizeCanvas() {
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+class Particle {
+  constructor() { this.reset(true); }
+  reset(initial = false) {
+    this.x = Math.random() * w;
+    this.y = initial ? Math.random() * h : h + Math.random() * 100;
+    this.size = 1 + Math.random() * 2.5;
+    this.speed = 0.2 + Math.random() * 0.5;
+    this.alpha = 0.4 + Math.random() * 0.3;
+    this.drift = (Math.random() - 0.5) * 0.5;
+  }
+  update() {
+    this.y -= this.speed;
+    this.x += this.drift;
+    if (this.y < -10 || this.x < -50 || this.x > w + 50) this.reset();
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`;
+    ctx.shadowColor = '#a855f7';
+    ctx.shadowBlur = 12;
+    ctx.fill();
+  }
+}
+function createParticles(n) { for (let i = 0; i < n; i++) particles.push(new Particle()); }
+function animate() {
+  ctx.clearRect(0, 0, w, h);
+  for (const p of particles) { p.update(); p.draw(); }
+  requestAnimationFrame(animate);
+}
+createParticles(150);
+animate();
+
+// ============================================
+// 📊 STATUS SERVER / SUPPORT
+// ============================================
+async function fetchJSON(url) {
+  const r = await fetch(url, { headers: { 'X-Client': 'noheroes-support-v1' } });
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  return r.json();
+}
+
+async function loadServerStatus() {
+  try {
+    const s = await fetchJSON(`${API}/status/server`);
+    console.log('Server Status:', s);
+    $('#apiStatus')?.classList.add('text-emerald-400');
+    $('#apiStatus') && ($('#apiStatus').textContent = 'API Online');
+  } catch {
+    $('#apiStatus')?.classList.add('text-rose-400');
+    $('#apiStatus') && ($('#apiStatus').textContent = 'API Offline');
+  }
+}
+
+async function loadSupportStatus() {
+  try {
+    const s = await fetchJSON(`${API}/status/support`);
+    $('#card-uptime').textContent = s.kpis.uptime_30d || '—';
+    $('#card-fst-resp').textContent = (s.kpis.tmr_primeira_resposta_min || 0) + ' min';
+    $('#card-csat').textContent = 'CSAT ' + (s.kpis.csat_30d || '—');
+  } catch (e) {
+    console.warn('Status support indisponível:', e.message);
+  }
+}
+
+loadServerStatus();
+loadSupportStatus();
+setInterval(() => { loadServerStatus(); loadSupportStatus(); }, 60000);
+
+// ============================================
+// ⚡ POPUP STATUS DO SERVIDOR
+// ============================================
+async function fetchJSON(url) {
+  const r = await fetch(url, { headers: { 'X-Client': 'noheroes-support-v1' } });
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  return r.json();
+}
+
+async function getServerStatus() {
+  try {
+    const s = await fetchJSON(`${API}/status/server`);
+    const online = s?.ok !== false;
+    showStatusPopup({
+      online,
+      uptime: s?.uptime_30d || '—',
+      version: s?.version || '—',
+      latency: s?.latency_ms || '—'
     });
+  } catch (e) {
+    showStatusPopup({ online: false });
+  }
+}
 
-    // ====== Ano footer ======
-    $('#year').textContent = new Date().getFullYear();
-
-    // ====== Busca / Filtro ======
-    const inputQuery = $('#query');
-    const hint = $('#searchHint');
-
-    function filterByQuery(q) {
-      const query = q.trim().toLowerCase();
-      // categorias
-      $$('#cards-categorias article').forEach(card => {
-        const tags = (card.getAttribute('data-tags') || '').toLowerCase();
-        card.classList.toggle('hidden', query && !tags.includes(query));
-      });
-      // faq
-      $$('#faq details').forEach(d => {
-        const tags = (d.getAttribute('data-tags') || '').toLowerCase();
-        const match = !query || tags.includes(query);
-        d.classList.toggle('hidden', !match);
-      });
-      hint.textContent = query ? `Filtrando por: "${query}"` : 'Dica: tente palavras‑chave como “boleto”, “cartão recusado”, “erro 500”.';
-    }
-
-    inputQuery?.addEventListener('input', (e) => filterByQuery(e.target.value));
-
-    // ====== Form Ticket ======
-    const form = $('#ticketForm');
-    const submitBtn = $('#submitBtn');
-    const btnIcon = $('#btnIcon');
-
-    function setLoading(loading) {
-      submitBtn.disabled = loading;
-      btnIcon.style.animation = loading ? 'spin 1s linear infinite' : '';
-    }
-
-    // Simple spinner keyframes
-    const style = document.createElement('style');
-    style.textContent = '@keyframes spin { from { transform: rotate(0deg);} to { transform: rotate(360deg);} }';
-    document.head.appendChild(style);
-
-    form?.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      if ($('#website').value) return; // honeypot
-
-      // Validate size
-      const files = $('#anexos').files || [];
-      let total = 0; for (const f of files) total += f.size;
-      if (total > MAX_TOTAL_UPLOAD_MB * 1024 * 1024) {
-        toast('warn', `Limite de upload excedido (${bytesToMB(total)}MB). Máximo: ${MAX_TOTAL_UPLOAD_MB}MB.`);
-        return;
-      }
-
-      const data = new FormData();
-      data.append('nome', $('#nome').value.trim());
-      data.append('email', $('#email').value.trim());
-      data.append('categoria', $('#categoria').value);
-      data.append('prioridade', $('#prioridade').value);
-      data.append('assunto', $('#assunto').value.trim());
-      data.append('descricao', $('#descricao').value.trim());
-      if ($('#pedidoId').value.trim()) data.append('pedidoId', $('#pedidoId').value.trim());
-      for (const f of files) data.append('anexos', f, f.name);
-
-      setLoading(true);
-      toast('warn', 'Enviando…');
-
-      try {
-        const res = await fetch(TICKET_ENDPOINT, {
-          method: 'POST',
-          // Credenciais/headers conforme backend; Authorization opcional
-          headers: { 'X-Client': 'noheroes-support-v1' },
-          body: data,
-          mode: 'cors',
-          credentials: 'omit'
-        });
-
-        if (!res.ok) {
-          const text = await res.text().catch(() => '');
-          throw new Error(text || `HTTP ${res.status}`);
+function showStatusPopup(data) {
+  const modal = document.createElement('div');
+  modal.className =
+    'fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4';
+  modal.innerHTML = `
+    <div class="glass rounded-2xl border border-white/10 p-6 max-w-sm w-full text-sm relative">
+      <h3 class="font-display text-xl mb-3">Status do Servidor</h3>
+      <div class="space-y-2">
+        <p><strong>API:</strong> <span class="${
+          data.online ? 'text-emerald-400' : 'text-rose-400'
+        }">${data.online ? 'Online' : 'Offline'}</span></p>
+        ${
+          data.online
+            ? `
+          <p><strong>Uptime:</strong> ${data.uptime}</p>
+          <p><strong>Versão:</strong> ${data.version}</p>
+          <p><strong>Latência:</strong> ${data.latency} ms</p>`
+            : ''
         }
-        const json = await res.json().catch(() => ({}));
+      </div>
+      <button id="closeStatus" class="mt-4 w-full px-4 py-2 rounded-xl bg-brasa-600 hover:bg-brasa-500 text-white shadow-glow">Fechar</button>
+    </div>`;
+  document.body.appendChild(modal);
+  $('#closeStatus').addEventListener('click', () => modal.remove());
+}
 
-        toast('ok', 'Ticket enviado com sucesso! Você receberá um email com o protocolo.');
-        form.reset();
-        // Se backend retornar protocolo
-        if (json && json.protocolo) {
-          const t = $('#toast');
-          const p = document.createElement('div');
-          p.className = 'mt-2 text-xs text-gray-300';
-          p.textContent = `Protocolo: ${json.protocolo}`;
-          t.appendChild(p);
-        }
-      } catch (err) {
-        console.error(err);
-        toast('err', 'Não foi possível enviar o ticket agora. Tente novamente em instantes.');
-      } finally {
-        setLoading(false);
-      }
-    });
+// 🔗 Ativa o popup em todos os links/botões com "status" no href ou texto
+$$('a[href*="status"], button[href*="status"]').forEach(el => {
+  el.addEventListener('click', e => {
+    e.preventDefault();
+    getServerStatus();
+  });
+});
 
-    const canvas = document.getElementById("brasasCanvas");
-    const ctx = canvas.getContext("2d");
-    let particles = [], w, h;
-
-    function resizeCanvas() {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
-    }
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-
-    class Particle {
-      constructor() { this.reset(true); }
-      reset(initial = false) {
-        this.x = Math.random() * w;
-        this.y = initial ? Math.random() * h : h + Math.random() * 100;
-        this.size = 1 + Math.random() * 2.5;
-        this.speed = 0.2 + Math.random() * 0.5;
-        this.alpha = 0.4 + Math.random() * 0.3;
-        this.drift = (Math.random() - 0.5) * 0.5;
-      }
-      update() {
-        this.y -= this.speed;
-        this.x += this.drift;
-        if (this.y < -10 || this.x < -50 || this.x > w + 50) this.reset();
-      }
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`;
-        ctx.shadowColor = "#a855f7";
-        ctx.shadowBlur = 12;
-        ctx.fill();
-      }
-    }
-
-    function createParticles(n) {
-      for (let i = 0; i < n; i++) particles.push(new Particle());
-    }
-    function animate() {
-      ctx.clearRect(0, 0, w, h);
-      for (const p of particles) { p.update(); p.draw(); }
-      requestAnimationFrame(animate);
-    }
-    createParticles(150);
-    animate();
-  </script>
-
-  <!-- Carrega o script real das brasas (se existir no projeto) -->
-  <script src="/assets/js/brasasCanvas.js" defer></script>
+</script>
 </body>
 </html>

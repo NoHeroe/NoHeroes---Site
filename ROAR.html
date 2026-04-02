@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ROAR — Rebirth Of Order And Relentless Spirit</title>
+  <title>ACDA — NoHeroes: As Cinzas do Amanhã</title>
 
   <!-- Tailwind e fontes -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -221,6 +221,238 @@
   70%  { opacity:.25; transform: scale(1.08); }
   100% { opacity:.10; transform: scale(1.12); }
 }
+/* ===== UNIVERSO / AMBIENTAÇÃO (compacto + editorial) ===== */
+.nh-universe{
+  background: radial-gradient(1200px 500px at 50% 0%, rgba(143,79,255,.18), transparent 60%),
+              linear-gradient(to bottom, #111, #0a0a0a);
+  border: 1px solid rgba(143,79,255,.25);
+}
+
+.nh-universe .nh-subtle{
+  color: rgba(229,229,229,.82);
+}
+
+.nh-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
+  padding:.35rem .7rem;
+  border-radius:999px;
+  background: rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.10);
+}
+
+.nh-tabs{
+  background: rgba(0,0,0,.45);
+  border: 1px solid rgba(143,79,255,.22);
+  backdrop-filter: blur(10px);
+}
+
+/* botões tabs mais “profissionais” */
+.tab-btn{
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.04);
+  transition: .2s ease;
+}
+.tab-btn:hover{
+  border-color: rgba(250,204,21,.40);
+  transform: translateY(-1px);
+}
+.tab-btn.is-active{
+  background: linear-gradient(135deg, rgba(143,79,255,.22), rgba(250,204,21,.16));
+  border-color: rgba(250,204,21,.45);
+  color: #fff !important;
+}
+
+/* layout do painel do tab */
+.nh-tabpanel{
+  border: 1px solid rgba(143,79,255,.22);
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(10px);
+}
+
+/* Grid no desktop: texto | galeria */
+@media (min-width: 1024px){
+  .nh-two-col{
+    display:grid;
+    grid-template-columns: 1.15fr .85fr;
+    gap: 1.25rem;
+    align-items:start;
+  }
+}
+
+/* galeria compacta */
+.nh-gallery{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: .75rem;
+}
+@media (min-width: 640px){
+  .nh-gallery{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+}
+@media (min-width: 1024px){
+  .nh-gallery{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+
+.nh-thumb{
+  position: relative;
+  border-radius: .9rem;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+  transition:.2s ease;
+}
+.nh-thumb:hover{
+  border-color: rgba(250,204,21,.40);
+  transform: translateY(-2px);
+}
+
+.nh-thumb img{
+  width:100%;
+  height:140px;
+  object-fit: cover; /* aqui É preview, não é a imagem “oficial” */
+  display:block;
+  opacity:.95;
+}
+
+.nh-thumb .cap{
+  padding:.55rem .65rem;
+  font-size:.78rem;
+  color: rgba(229,229,229,.82);
+  line-height:1.25rem;
+}
+
+.nh-map{
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.55);
+}
+
+/* sem corte */
+.nh-map img{
+  width: 100%;
+  height: 260px;         /* controla altura no desktop */
+  object-fit: contain;   /* <- não corta */
+  display: block;
+  background: rgba(0,0,0,.35); /* preenche as barras */
+}
+
+@media (min-width: 1024px){
+  .nh-map img{ height: 240px; }
+}
+
+#imgModal{
+  position:fixed; inset:0; z-index:999;
+  display:none;
+  background: rgba(0,0,0,.78);
+  backdrop-filter: blur(6px);
+}
+
+#imgModal .box{
+  width: min(1100px, 92vw);
+  max-height: 86vh;
+  margin: 6vh auto;
+  background: rgba(10,10,10,.92);
+  border: 1px solid rgba(143,79,255,.35);
+  border-radius: 1rem;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1.2fr .8fr; /* imagem | texto */
+}
+
+@media (max-width: 860px){
+  #imgModal .box{ grid-template-columns: 1fr; }
+}
+
+#imgModal .media{
+  background: #000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding: 10px;
+}
+
+#imgModal img{
+  max-width: 100%;
+  max-height: 78vh;
+  width: auto;
+  height: auto;
+  object-fit: contain; /* imagem completa */
+  display:block;
+}
+
+#imgModal .side{
+  border-left: 1px solid rgba(255,255,255,.08);
+  padding: 14px 14px 18px;
+  overflow:auto;
+}
+
+@media (max-width: 860px){
+  #imgModal .side{ border-left: none; border-top: 1px solid rgba(255,255,255,.08); }
+}
+
+#imgModal .side h4{
+  margin: 0;
+  font-weight: 800;
+}
+
+#imgModal .side p{
+  margin-top: .75rem;
+  color: rgba(229,229,229,.85);
+  line-height: 1.6;
+  font-size: .95rem;
+}
+
+#imgModal .actions{
+  margin-top: 1rem;
+  display:flex;
+  justify-content:flex-end;
+}
+
+#imgModal .close{
+  cursor:pointer;
+  padding:.5rem .9rem;
+  border-radius:.7rem;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+}
+#imgModal .close:hover{
+  border-color: rgba(250,204,21,.45);
+}
+#imgModalDesc{
+  white-space: pre-line;
+}
+.nh-timeline .card{
+  border-radius: 1.25rem;
+}
+
+@media (min-width: 768px){
+  .nh-timeline .card{
+    box-shadow: 0 0 18px rgba(143,79,255,.18), 0 0 26px rgba(250,204,21,.10);
+  }
+}
+.nh-bg-fade{
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0,0,0,1) 22%,
+    rgba(0,0,0,1) 78%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0,0,0,1) 22%,
+    rgba(0,0,0,1) 78%,
+    transparent 100%
+  );
+
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
   </style>
 </head>
 <body class="leading-relaxed">
@@ -230,19 +462,20 @@
 <!-- Botão flutuante de navegação ( "?" ) -->
 <button id="navBtn">?</button>
 
-<!-- Modal/Drawer leve acionado pelo "?" (vamos usar para os links da ROAR) -->
+<!-- Modal/Drawer leve acionado pelo "?" (vamos usar para os links da ACDA) -->
 <div id="navModal">
   <div id="navModalContent">
     <span id="closeNavModal" class="absolute top-3 right-4 text-xl text-purple-400 hover:text-yellow-400 cursor-pointer">✕</span>
     <h3 class="text-lg font-bold text-purple-400 mb-4">Navegar nesta página</h3>
 
-    <!-- Links da ROAR movidos pra cá -->
+    <!-- Links da ACDA movidos pra cá -->
     <button onclick="goToSection('sinopse')"><span>Sinopse</span></button>
     <button onclick="goToSection('personagens')"><span>Personagens</span></button>
     <button onclick="goToSection('universo')"><span>Mundo</span></button>
-    <button onclick="goToSection('evento')"><span>Evento</span></button>
-    <button onclick="goToSection('bastidores')"><span>Bastidores</span></button>
-    <button onclick="goToSection('cta')"><span>Apoiar</span></button>
+    <button onclick="goToSection('trailer')"><span>Trailer</span></button>
+    <button onclick="goToSection('linha-do-tempo')"><span>Linha do Tempo</span></button>
+    <button onclick="goToSection('equipe')"><span>Criador</span></button>
+    <button onclick="location.href='apoiar.html'"><span>Apoiar</span></button>
   </div>
 </div>
 
@@ -280,14 +513,6 @@
         <span class="text-xs text-purple-400 cinzel">Portal</span>
       </a>
 
-      <a href="projects.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
-        <div class="flex items-center gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12m0-12a2 2 0 012-2h4a2 2 0 012 2v12a2 2 0 01-2 2h-4a2 2 0 01-2-2zm0 0a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2h4a2 2 0 002-2z"/></svg>
-          <span class="text-white">Projetos</span>
-        </div>
-        <span class="text-xs text-purple-400 cinzel">Grimório</span>
-      </a>
-
       <a href="sobre.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
         <div class="flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A7 7 0 0112 15a7 7 0 016.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
@@ -296,7 +521,7 @@
         <span class="text-xs text-purple-400 cinzel">Entidade</span>
       </a>
 
-      <a href="shop.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
+      <a href="store.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
         <div class="flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 11h14l1 9H4l1-9z"/></svg>
           <span class="text-white">Loja</span>
@@ -304,7 +529,7 @@
         <span class="text-xs text-purple-400 cinzel">Cartel Velado</span>
       </a>
 
-      <a href="login.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
+      <a href="profile.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
         <div class="flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12l1.5 4.5L11 13l4.5 3.5L18 12l-2.5-4.5L13 11 7.5 7.5z"/></svg>
           <span class="text-white">Perfil</span>
@@ -327,22 +552,51 @@
 <div id="drawerOverlay" class="fixed inset-0 bg-black bg-opacity-60 hidden z-30"></div>
 
   <!-- Hero Section -->
-  <section id="principal" class="relative h-screen bg-cover bg-center" style="background-image:url('assets/images/roar-hero.jpg')">
-  <div class="overlay"></div>
+ <section id="principal" class="relative h-screen "
+       
+  <!-- leve gradiente extra pra leitura -->
+  <div class="absolute inset-0 nh-overlay"></div>
 
   <div class="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
-    <h1 class="text-4xl md:text-6xl font-bold mb-4 leading-tight">
-      <span class="text-white">ACDA:</span><br/>
-      <span class="gradiente-noheroes font-extrabold">As Cinzas do Amanhã</span>
-    </h1>
+    <div class="max-w-3xl mx-auto">
+      <h1 class="text-4xl md:text-6xl font-bold mb-4 leading-tight">
+        <span class="text-white">NoHeroes:</span><br/>
+        <span class="gradiente-noheroes font-extrabold">As Cinzas do Amanhã</span>
+      </h1>
 
-    <p class="text-lg md:text-2xl italic mb-8 text-[#d9d6ff]">
-      Um épico sombrio sobre redenção, fé e poder perdido.
-    </p>
+      <p class="text-base md:text-xl text-[#d9d6ff] leading-relaxed">
+        Fantasia sombria em um mundo onde dragões governam eras, clãs sobrevivem por honra
+        e a energia negativa transforma medo em monstros.
+      </p>
 
-    <a href="#sinopse" class="nh-cta">Leia a Sinopse</a>
+      <p class="mt-3 text-sm md:text-base text-gray-300">
+        Comece pela sinopse — e decida se você aguenta Caelum.
+      </p>
 
-    <div class="mt-12 animate-bounce text-[#8f4fff]">↓</div>
+      <!-- CTAs -->
+      <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+        <button type="button"
+                class="nh-cta w-full sm:w-auto"
+                onclick="goToSection('sinopse')">
+          Conhecer Mais
+        </button>
+
+        <a href="store.html"
+           class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-lg
+                  border border-yellow-400 text-yellow-200 hover:bg-yellow-500/10 transition">
+          Comprar agora
+        </a>
+      </div>
+
+      <!-- micro prova / credibilidade (opcional, mas ajuda) -->
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-3 text-xs text-gray-400">
+        <span class="px-3 py-1 rounded-full border border-white/10 bg-black/30">Ato I publicado</span>
+        <span class="px-3 py-1 rounded-full border border-white/10 bg-black/30">Universo NoHeroes</span>
+        <span class="px-3 py-1 rounded-full border border-white/10 bg-black/30">Dark fantasy / souls vibe</span>
+      </div>
+
+      <div class="mt-12 animate-bounce text-[#8f4fff]">↓</div>
+    </div>
   </div>
 </section>
 
@@ -351,7 +605,7 @@
    <!-- 2. Sinopse — NoHeroes (vidro + acento + responsivo) -->
 <section id="sinopse" x-data="{ aberto:false }" class="relative py-20 px-6">
   <!-- BG com imagem + máscara -->
-  <div class="absolute inset-0 bg-center bg-cover"
+  <div class="absolute inset-0 bg-center bg-cover nh-bg-fade"
        style="background-image:url('assets/images/roar-sinopse-bg.jpg')"></div>
   <div class="absolute inset-0 bg-black/70"></div>
 
@@ -401,18 +655,24 @@
           </div>
 
           <!-- CTA opcional -->
-          <div class="mt-6">
-            <a href="#acda-sobre"
-               class="inline-flex items-center px-5 py-3 rounded-lg border border-purple-600 text-purple-300 hover:bg-purple-900/20 transition">
-              Sobre o Universo ACDA
-            </a>
-          </div>
+<div class="mt-10 flex flex-col items-start gap-3">
+  <a href="#universo"
+     class="inline-flex items-center px-5 py-3 rounded-lg border border-purple-600 text-purple-300 hover:bg-purple-900/20 transition">
+    Sobre o Universo ACDA
+  </a>
+
+  <a href="landingacda1.html"
+     class="inline-flex items-center px-5 py-3 rounded-lg border border-yellow-500 text-yellow-300 hover:bg-yellow-900/20 transition">
+    Sobre o Livro
+  </a>
+</div>
         </div>
+
 
         <!-- Arte lateral (md+) -->
         <figure class="md:col-span-2 hidden md:block">
           <div class="relative rounded-2xl overflow-hidden border border-purple-700/40 bg-black/40">
-            <img src="assets/images/concept1.jpg" alt="Arte de conceito ACDA" class="w-full h-80 object-cover">
+            <img src="assets/images/roar-sinopse-bg.jpg" alt="Arte de conceito ACDA" class="w-full h-80 object-cover">
             <div class="absolute inset-0 ring-1 ring-inset ring-white/5"></div>
           </div>
           <figcaption class="mt-3 text-xs text-gray-400 text-center">
@@ -691,296 +951,487 @@ Vitalista misterioso com poderes do sangue e da luz. Ator dos bastidores, guardi
 </script>
 <!-- ===== /Personagens ===== -->
 
-    <!-- 5. UNIVERSO & AMBIENTAÇÃO -->
-<section id="universo" class="py-16 px-8 max-w-5xl mx-auto bg-gradient-to-b from-[#111] to-[#0a0a0a] rounded-lg shadow-md">
-  <h2 class="text-3xl font-bold text-[#8f4fff] mb-2">Universo & Ambientação de ROAR</h2>
-  <p class="italic text-lg text-gray-300 mb-8">
-    “Caelum não é um mundo. É um campo de guerra entre monstros, memórias e ambições.”
-  </p>
-  <!-- Mapa Geral -->
-  <!-- IMAGEM: Mapa de Caelum -->
-  <div class="mb-8">
-    <img src="assets/images/caelum-map-placeholder.jpg"
-         alt="Mapa de Caelum"
-         class="w-full rounded-lg shadow-lg"/>
-  </div>
-  <p class="text-[#ccc] mb-6">
-    <strong>Em ROAR, o mundo não é apenas cenário — ele é um personagem.</strong><br>
-    Caelum é um continente forjado por guerras, criaturas colossais e segredos enterrados. 
-    Aqui, magia não é fantasia, é maldição ou redenção. Humanos sobrevivem entre muralhas, 
-    ruínas e fé quebrada.<br><br>
-    Este é o solo onde Azuos desperta, marcado, caçado e escolhido para algo que ele ainda 
-    não entende.<br><br>
-    <em>Bem-vindo a Caelum. Onde cada nome carrega uma maldição. E cada passo… um destino.</em>
-  </p>
+   <!-- 5. UNIVERSO & AMBIENTAÇÃO (REFEITO, compacto) -->
+<section id="universo" class="nh-universe py-14 px-6 max-w-6xl mx-auto rounded-2xl shadow-2xl">
+  <div class="text-center">
+    <h2 class="text-3xl md:text-4xl font-bold cinzel gradiente-noheroes">Universo & Ambientação</h2>
+    <p class="mt-3 italic text-lg nh-subtle">
+      “Caelum não é um mundo. É um campo de guerra entre monstros, memórias e ambições.”
+    </p>
 
-  <!-- Botões de Navegação Interna -->
-  <div class="flex flex-wrap gap-4 justify-center mb-12">
-    <button data-tab="tab-nações" class="tab-btn px-4 py-2 bg-[#222] hover:bg-[#333] rounded text-[#8f4fff]">Nações, Clãs & Facções</button>
-    <button data-tab="tab-magia"  class="tab-btn px-4 py-2 bg-[#222] hover:bg-[#333] rounded text-[#8f4fff]">Magia & Regras</button>
-    <button data-tab="tab-mitos"  class="tab-btn px-4 py-2 bg-[#222] hover:bg-[#333] rounded text-[#8f4fff]">Mitos & Lendas</button>
-    <button data-tab="tab-tecno" class="tab-btn px-4 py-2 bg-[#222] hover:bg-[#333] rounded text-[#8f4fff]">Magitecnologia</button>
-  </div>
-
-  <!-- Conteúdos dos Tabs -->
-  <div id="tab-nações" class="tab-content space-y-6 hidden">
-    <h3 class="text-2xl font-semibold text-[#8f4fff]">Nações</h3>
-    <div class="space-y-4">
-      <p><strong>Aeon — Teocracia totalitária</strong><br>
-      “Uma nação que diz servir aos deuses, mas age como se fosse um. 
-      Ordens são decretos divinos. Rebeliões são pecados. Com arquitetura monumental 
-      e templos que rasgam o céu, Aeon doutrina o mundo com luz — e aço.”</p>
-      <!-- IMAGEM: Catedral de Aeon -->
-      <img src="assets/images/aeon-cathedral.jpg" alt="Catedral de Aeon" class="rounded-lg shadow-lg"/>
-
-      <p><strong>Kaleidos — Democracia rebelde</strong><br>
-      “Fragmentada, multicultural, e por isso, perigosa. Cada bairro é uma cultura. 
-      Cada praça, uma ideologia. Unidos pela liberdade e pelo ódio à tirania de Aeon.”</p>
-      <!-- IMAGEM: Cidadela de Kaleidos -->
-      <img src="assets/images/kaleidos-city.jpg" alt="Cidadela de Kaleidos" class="rounded-lg shadow-lg"/>
-    </div>
-
-    <h3 class="text-2xl font-semibold text-[#8f4fff]">Clãs Principais</h3>
-    <div class="space-y-6">
-      <p><strong>Clã da Lua — Espiões. Silêncio. Vingança.</strong><br>
-      “Inspirados na honra oriental e nos ventos do Japão antigo, são assassinos poéticos. 
-      O inimigo só percebe que errou... quando sente a lâmina.”</p>
-      <!-- IMAGEM: Templo Clã da Lua -->
-      <img src="assets/images/clan-lua.jpg" alt="Clã da Lua" class="rounded-lg shadow-lg"/>
-
-      <p><strong>Clã do Sol — Sabedoria. Luxo. Desertos místicos.</strong><br>
-      “Ricos em ouro e saber, mesmo que habitem o deserto. Seus trajes lembram antigos 
-      faraós, seus magos dominam os ventos do tempo.”</p>
-      <!-- IMAGEM: Templo Clã do Sol -->
-      <img src="assets/images/clan-sol.jpg" alt="Clã do Sol" class="rounded-lg shadow-lg"/>
-
-      <p><strong>Clã das Feras — Instinto. Montanhas. Metamorfose.</strong><br>
-      “Tribos bárbaras organizadas, conectadas com a essência da natureza. Rituais 
-      xamânicos, pele marcada por pinturas de guerra.”</p>
-      <!-- IMAGEM: Clã das Feras -->
-      <img src="assets/images/clan-feras.jpg" alt="Clã das Feras" class="rounded-lg shadow-lg"/>
-
-      <p><strong>Clã das Runas — Magia antiga. Reino desfeito. Poder intacto.</strong><br>
-      “Vivem em castelos medievais protegidos por feitiços arcaicos. Cada palavra que 
-      pronunciam... pode abrir portais ou ruir montanhas.”</p>
-      <!-- IMAGEM: Clã das Runas -->
-      <img src="assets/images/clan-runas.jpg" alt="Clã das Runas" class="rounded-lg shadow-lg"/>
-    </div>
-
-    <h3 class="text-2xl font-semibold text-[#8f4fff]">Facções Alternativas</h3>
-    <div class="space-y-4">
-      <p><strong>Culto do Vazio — Silêncio. Corrupção. Eternidade.</strong><br>
-      “Não desejam reinos. Desejam o fim das nações. Alimentam dragões com dor, criam 
-      demônios com rituais esquecidos.”</p>
-      <!-- IMAGEM: Culto do Vazio -->
-      <img src="assets/images/culto-vazio.jpg" alt="Culto do Vazio" class="rounded-lg shadow-lg"/>
-
-      <p><strong>Guilda de Aventureiros — Caos útil.</strong><br>
-      “Vendem a espada para quem pagar mais. Alguns são heróis. Outros, ladrões. 
-      Todos sobreviventes.”</p>
-      <!-- IMAGEM: Guilda de Aventureiros -->
-      <img src="assets/images/guilda-avent.jpg" alt="Guilda de Aventureiros" class="rounded-lg shadow-lg"/>
+    <div class="mt-5 flex flex-wrap justify-center gap-2 text-xs">
+      <span class="nh-pill">Caelum</span>
+      <span class="nh-pill">Clãs</span>
+      <span class="nh-pill">Dragões</span>
+      <span class="nh-pill">Vitalismo</span>
+      <span class="nh-pill">Energia Negativa</span>
     </div>
   </div>
 
-  <div id="tab-magia" class="tab-content space-y-6 hidden">
+  <!-- Intro + mapa compacto -->
+  <div class="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+    <div class="text-left text-[#ccc] leading-relaxed">
+      <p class="mb-4">
+        <strong>Em ACDA, o mundo não é cenário — é um personagem.</strong>
+        Caelum foi forjado por guerras, criaturas colossais e segredos enterrados.
+        Aqui, magia não é fantasia: é maldição ou redenção.
+      </p>
+      <p class="text-gray-400">
+        Este é o solo onde Azuos desperta, marcado, caçado e escolhido para algo que ainda não entende.
+        <em class="block mt-3 text-[#cbb6ff]">Bem-vindo a Caelum. Onde cada nome carrega uma maldição.</em>
+      </p>
+    </div>
+
+    <figure class="nh-map">
+  <a href="assets/images/caelum-map-placeholder.jpg"
+     class="block w-full"
+     onclick="event.preventDefault(); openImg(
+ 'assets/images/caelum-map-placeholder.jpg',
+ IMG_DATA.MAPA_CAELUM
+);">
+    <img src="assets/images/caelum-map-placeholder.jpg" alt="Mapa de Caelum">
+  </a>
+  <figcaption class="px-3 py-2 text-xs text-gray-400">
+    Clique no mapa para ampliar.
+  </figcaption>
+</figure>
+</div>
+
+  <!-- Tabs -->
+  <div class="nh-tabs mt-10 rounded-2xl p-4 md:p-5">
+    <div class="flex flex-wrap gap-3 justify-center">
+      <button data-tab="tab-nações" class="tab-btn px-4 py-2 rounded-lg text-[#8f4fff]">Nações, Clãs & Facções</button>
+      <button data-tab="tab-magia"  class="tab-btn px-4 py-2 rounded-lg text-[#8f4fff]">Magia & Regras</button>
+      <button data-tab="tab-mitos"  class="tab-btn px-4 py-2 rounded-lg text-[#8f4fff]">Mitos & Lendas</button>
+      <button data-tab="tab-tecno"  class="tab-btn px-4 py-2 rounded-lg text-[#8f4fff]">Magitecnologia</button>
+    </div>
+
+    <!-- TAB: NAÇÕES -->
+    <div id="tab-nações" class="tab-content hidden mt-6">
+      <div class="nh-tabpanel rounded-2xl p-5 nh-two-col">
+        <div class="space-y-4 text-[#ccc] leading-relaxed">
+          <h3 class="text-2xl font-semibold text-[#8f4fff]">Nações & Clãs</h3>
+
+          <p><strong>Aeon — Teocracia totalitária</strong><br>
+            “Uma nação que diz servir aos deuses, mas age como se fosse um. Ordens são decretos divinos.”
+          </p>
+
+          <p><strong>Kaleidos — Democracia rebelde</strong><br>
+            “Fragmentada, multicultural, perigosa. Unidos pela liberdade e pelo ódio à tirania de Aeon.”
+          </p>
+
+          <p class="text-gray-400">
+            <strong>Clãs:</strong> Lua (assassinos), Sol (luxo/sabedoria), Feras (instinto), Runas (magia antiga).
+          </p>
+
+          <p class="text-gray-400">
+            <strong>Facções:</strong> Culto do Vazio (corrupção) e Guilda de Aventureiros (caos útil).
+          </p>
+        </div>
+
+        <!-- Galeria compacta -->
+        <div class="nh-gallery">
+          <button class="nh-thumb" type="button" onclick="openImg('assets/images/aeon-cathedral.jpg', IMG_DATA.AEON_CATEDRAL)">
+            <img src="assets/images/aeon-cathedral.jpg" alt="Catedral de Aeon">
+            <div class="cap">Aeon — Catedral</div>
+          </button>
+
+          <button class="nh-thumb" type="button" onclick="openImg('assets/images/kaleidos-city.jpg', IMG_DATA.KALEIDOS_CIDADE)">
+            <img src="assets/images/kaleidos-city.jpg" alt="Kaleidos">
+            <div class="cap">Kaleidos — Cidadela</div>
+          </button>
+
+          <button class="nh-thumb" type="button" onclick="openImg('assets/images/clan-lua.jpg', IMG_DATA.CLA_LUA)">
+            <img src="assets/images/clan-lua.jpg" alt="Clã da Lua">
+            <div class="cap">Clã da Lua</div>
+          </button>
+
+          <button class="nh-thumb" type="button" onclick="openImg('assets/images/clan-sol.jpg', IMG_DATA.CLA_SOL)">
+            <img src="assets/images/clan-sol.jpg" alt="Clã do Sol">
+            <div class="cap">Clã do Sol</div>
+          </button>
+
+         <button class="nh-thumb" type="button" onclick="openImg('assets/images/clan-feras.jpg', IMG_DATA.CLA_FERAS)">
+            <img src="assets/images/clan-feras.jpg" alt="Clã das Feras">
+            <div class="cap">Clã das Feras</div>
+          </button>
+
+          <button class="nh-thumb" type="button" onclick="openImg('assets/images/clan-runas.jpg', IMG_DATA.CLA_RUNAS)">
+            <img src="assets/images/clan-runas.jpg" alt="Clã das Runas">
+            <div class="cap">Clã das Runas</div>
+          </button>
+
+          <button class="nh-thumb" type="button" onclick="openImg('assets/images/culto-vazio.jpg', IMG_DATA.CULTO_VAZIO)">
+            <img src="assets/images/culto-vazio.jpg" alt="Culto do Vazio">
+            <div class="cap">Culto do Vazio</div>
+          </button>
+
+          <button class="nh-thumb" type="button" onclick="openImg('assets/images/guilda-avent.jpg', IMG_DATA.GUILDA_AVENTUREIROS)">
+            <img src="assets/images/guilda-avent.jpg" alt="Guilda">
+            <div class="cap">Guilda de Aventureiros</div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: MAGIA -->
+<div id="tab-magia" class="tab-content hidden mt-6">
+  <div class="nh-tabpanel rounded-2xl p-5">
     <h3 class="text-2xl font-semibold text-[#8f4fff]">Sistema de Magia & Regras</h3>
-    <p class="italic text-lg text-gray-400">“Aqui, poder não é privilégio. É herança, fardo... ou ruína.”</p>
+    <p class="italic text-lg text-gray-400 mt-1">
+      “Poder não é privilégio. É herança, fardo... ou ruína.”
+    </p>
 
-    <h4 class="font-bold">Fontes de Energia</h4>
-    <ul class="list-disc list-inside text-[#ccc] space-y-2 mb-4">
-      <li><strong>Vital:</strong> energia da vida. Até 190% → magia básica. ≥191% → Habilidade Única (Vitalistas).</li>
-      <li><strong>Positiva:</strong> luz que cura. Forma anjos e seres celestiais.</li>
-      <li><strong>Negativa:</strong> destruição e vingança. Forma demônios e dragões.</li>
-    </ul>
+    <p class="mt-4 text-sm text-[#ccc] leading-relaxed">
+      Em <strong>Caelum</strong>, magia não é “truque” nem “dom gratuito”.
+      Toda manifestação mágica vem de um mesmo princípio: <strong>mana excedente</strong> —
+      energia que transborda do corpo e da alma e pode ser <strong>moldada</strong> por estudo, instinto ou pela própria vida.
+      O problema é que esse poder sempre cobra: <strong>cansaço, risco, corrupção ou consequências irreversíveis</strong>.
+    </p>
 
-    <h4 class="font-bold">Tipos de Usuários</h4>
-    <ul class="list-disc list-inside text-[#ccc] space-y-2 mb-4">
-      <li><strong>Inertes:</strong> sem conexão com mana.</li>
-      <li><strong>Magos:</strong> preparam feitiços com mana, fórmulas e artefatos.</li>
-      <li><strong>Vitalistas:</strong> liberam poder instintivamente; podem absorver outros Vitalistas.</li>
-    </ul>
+    <div class="mt-5 grid grid-cols-1 md:grid-cols-3 gap-4 text-[#ccc]">
 
-    <h4 class="font-bold">Regras do Mundo</h4>
-    <ul class="list-decimal list-inside text-[#ccc] space-y-2">
-      <li>Só magia negra mexe com vida e morte.</li>
-      <li>Vitalistas sempre superam magos comuns.</li>
-      <li>Magia exige preparo; vitalismo é impulso.</li>
-      <li>Criar vida é impossível.</li>
-      <li>Dragões, demônios e anjos são exceções — nascem com dons nativos.</li>
-      <li>Demônios sempre renascem, mesmo sem memórias.</li>
-    </ul>
+      <!-- FONTES -->
+      <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+        <h4 class="font-bold mb-2 text-white">Fontes de Energia</h4>
 
-    <p class="mt-4 italic text-[#ccc]">
-      “A pergunta não é o que você pode fazer com poder... mas o que ele vai fazer com você.”
+        <p class="text-sm text-gray-300 leading-relaxed">
+          Existem <strong>três “sabores”</strong> de energia em Caelum. Elas não são só “elementos”:
+          são forças que alteram o mundo e também quem as usa.
+        </p>
+
+        <ul class="mt-3 list-disc list-inside space-y-2 text-sm">
+          <li>
+            <strong>Vital (Vita):</strong> energia pessoal, ligada ao corpo, instinto e vontade.
+            É a base do “poder comum” do mundo. <br/>
+            <span class="text-gray-400">
+              • até <strong>190%</strong>: manifestação “básica” (fortalecimento, técnicas, variações previsíveis) <br/>
+              • a partir de <strong>191%</strong>: desperta uma <strong>habilidade única</strong> — uma assinatura que ninguém replica do mesmo jeito.
+            </span>
+          </li>
+
+          <li>
+            <strong>Positiva (Lumen):</strong> energia de restauração, purificação e vínculo com o sagrado.
+            Aparece em curas, bênçãos e fenômenos raros ligados a seres de luz. <br/>
+            <span class="text-gray-400">
+              Nem sempre “bondosa”: pode queimar, expor e julgar.
+            </span>
+          </li>
+
+          <li>
+            <strong>Negativa (Umbra):</strong> energia de ruína, medo e distorção.
+            É o alimento natural de <strong>demônios</strong>, <strong>Voidrins</strong> e, em excesso, atrai <strong>dragões</strong>. <br/>
+            <span class="text-gray-400">
+              Ela concede poder rápido — mas cobra sanidade, humanidade e destino.
+            </span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- USUÁRIOS -->
+      <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+        <h4 class="font-bold mb-2 text-white">Quem Pode Usar</h4>
+
+        <p class="text-sm text-gray-300 leading-relaxed">
+          Nem todo mundo “lança magia”. Em Caelum, a diferença está em <strong>quanto mana você tem</strong>
+          e <strong>como você consegue moldar</strong> esse excedente.
+        </p>
+
+        <ul class="mt-3 list-disc list-inside space-y-2 text-sm">
+          <li>
+            <strong>Inertes:</strong> possuem pouco excedente. Podem sentir “pressão” de mana e sofrer com zonas corrompidas,
+            mas não canalizam magia de forma consciente.
+          </li>
+
+          <li>
+            <strong>Magos:</strong> moldam mana por <strong>técnica e estudo</strong>.
+            Dependem de treino, runas, catalisadores e fórmulas. <br/>
+            <span class="text-gray-400">
+              Versáteis e úteis em guerra e no cotidiano — porém limitados quando enfrentam monstros ou vitalistas de alto nível.
+            </span>
+          </li>
+
+          <li>
+            <strong>Vitalistas:</strong> são uma anomalia: o próprio corpo vira “motor mágico”.
+            Eles ultrapassam limites humanos e, em certos casos, despertam uma habilidade única (≥191%). <br/>
+            <span class="text-gray-400">
+              Em troca, vivem no limite: instabilidade, colapsos e risco de corrupção por energia negativa.
+            </span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- REGRAS -->
+      <div class="rounded-xl border border-white/10 bg-white/5 p-4">
+        <h4 class="font-bold mb-2 text-white">Regras de Caelum</h4>
+
+        <p class="text-sm text-gray-300 leading-relaxed">
+          Essas regras existem para o leitor entender o “chão” do universo.
+          Elas definem o que é possível, o que é proibido e o que sempre tem preço.
+        </p>
+
+        <ul class="mt-3 list-decimal list-inside space-y-2 text-sm">
+          <li>
+            <strong>Magia negra é proibida</strong> porque atravessa limites éticos:
+            mexe com vida, morte, sacrifícios e energia negativa de forma direta.
+          </li>
+          <li>
+            <strong>Vitalistas tendem a superar magos comuns</strong> em combate puro,
+            porque o poder deles é “interno”, rápido e brutal — sem tempo de conjuração.
+          </li>
+          <li>
+            <strong>Criar vida do zero é impossível.</strong>
+            O máximo que se faz é distorcer, corromper, remendar ou simular.
+          </li>
+          <li>
+            <strong>Demônios podem renascer.</strong>
+            Derrotar não significa encerrar — às vezes significa apenas adiar.
+          </li>
+          <li>
+            <strong>Energia negativa atrai predadores.</strong>
+            Onde há excesso de Umbra, o mundo “chama” coisas que não deveriam existir.
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-6 rounded-xl border border-white/10 bg-black/30 p-4">
+      <p class="text-sm text-[#ccc] leading-relaxed">
+        <strong>Dica de leitura:</strong> quando um personagem usa magia, observe o “custo”.
+        Se algo parece forte demais sem consequência, desconfie: em Caelum, quase sempre existe
+        um preço escondido — e ele costuma aparecer depois.
+      </p>
+    </div>
+
+    <p class="mt-5 italic text-[#ccc] text-center">
+      “A pergunta não é o que você faz com poder... é o que ele faz com você.”
     </p>
   </div>
+</div>
 
-  <div id="tab-mitos" class="tab-content space-y-6 hidden">
-    <h3 class="text-2xl font-semibold text-[#8f4fff]">Mitos & Lendas de Caelum</h3>
-    <p class="italic text-lg text-gray-400">“Os mitos sustentam o que a razão não explica. E alguns... estão vivos.”</p>
+    <!-- TAB: MITOS -->
+    <div id="tab-mitos" class="tab-content hidden mt-6">
+      <div class="nh-tabpanel rounded-2xl p-5 nh-two-col">
+        <div class="space-y-4 text-[#ccc]">
+          <h3 class="text-2xl font-semibold text-[#8f4fff]">Mitos & Lendas</h3>
+          <p class="text-gray-400">“Alguns mitos estão vivos. E eles lembram quem você é.”</p>
 
-    <ul class="space-y-6 text-[#ccc]">
-      <li>
-        <strong>Oni Vagante</strong><br>
-        “Um espadachim mascarado. Imortal. Nunca foi vencido. Nem pela morte.”<br>
-        <!-- IMAGEM: Oni Vagante -->
-        <img src="assets/images/oni-vagante.jpg" alt="Oni Vagante" class="rounded-lg shadow-lg mt-2"/>
-      </li>
-      <li>
-        <strong>O Bom Dragão</strong><br>
-        “Um oráculo alado. Só aparece para almas tão puras... que ninguém mais acredita que existam.”<br>
-        <!-- IMAGEM: O Bom Dragão -->
-        <img src="assets/images/bom-dragao.jpg" alt="O Bom Dragão" class="rounded-lg shadow-lg mt-2"/>
-      </li>
-      <li>
-        <strong>Dragões Barões Anciãos</strong><br>
-        “Criaturas que devoraram a dor humana… e tornaram-se humanos. Sua presença consome emoção.”<br>
-        <!-- IMAGEM: Dragão Barão Ancião -->
-        <img src="assets/images/baroes-anciais.jpg" alt="Dragões Barões Anciãos" class="rounded-lg shadow-lg mt-2"/>
-      </li>
-      <li>
-        <strong>Valdaryon</strong><br>
-        “Dizem que draconianos sobreviventes vivem escondidos no subsolo, guardando memórias e arte proibida.”<br>
-        <!-- IMAGEM: Valdaryon -->
-        <img src="assets/images/valdaryon.jpg" alt="Valdaryon" class="rounded-lg shadow-lg mt-2"/>
-      </li>
-      <li>
-        <strong>A Floresta Negra (Viva)</strong><br>
-        “Uma selva que respira. Tudo que entra... vira parte dela.”<br>
-        <!-- IMAGEM: A Floresta Negra -->
-        <img src="assets/images/floresta-negra.jpg" alt="A Floresta Negra" class="rounded-lg shadow-lg mt-2"/>
-      </li>
-    </ul>
+          <ul class="list-disc list-inside space-y-2 text-sm">
+            <li><strong>Oni Vagante</strong> — espadachim mascarado, imortal.</li>
+            <li><strong>O Bom Dragão</strong> — oráculo alado que aparece a almas raras.</li>
+            <li><strong>Barões Anciãos</strong> — devoram dor humana, tornam-se humanos.</li>
+            <li><strong>Valdaryon</strong> — sobreviventes escondidos no subsolo.</li>
+            <li><strong>Floresta Negra</strong> — selva viva.</li>
+          </ul>
+        </div>
+
+        <div class="nh-gallery">
+          <button class="nh-thumb" type="button" onclick="openImg('assets/images/oni-vagante.jpg', IMG_DATA.ONI_VAGANTE)">
+            <img src="assets/images/oni-vagante.jpg" alt="Oni Vagante">
+            <div class="cap">Oni Vagante</div>
+          </button>
+          <button class="nh-thumb" type="button" onclick="openImg('assets/images/bom-dragao.jpg', IMG_DATA.BOM_DRAGAO)">
+            <img src="assets/images/bom-dragao.jpg" alt="Bom Dragão">
+            <div class="cap">O Bom Dragão</div>
+          </button>
+          <button class="nh-thumb" type="button" onclick="openImg('assets/images/baroes-anciaos.jpg', IMG_DATA.BAROES_ANCIÃOS)">
+            <img src="assets/images/baroes-anciaos.jpg" alt="Barões">
+            <div class="cap">Barões Anciãos</div>
+          </button>
+          <button class="nh-thumb" type="button" onclick="openImg('assets/images/valdaryon.jpg', IMG_DATA.VALDARYON)">
+            <img src="assets/images/valdaryon.jpg" alt="Valdaryon">
+            <div class="cap">Valdaryon</div>
+          </button>
+          <button class="nh-thumb" type="button" onclick="openImg('assets/images/floresta-negra.jpg', IMG_DATA.FLORESTA_NEGRA)">
+            <img src="assets/images/floresta-negra.jpg" alt="Floresta Negra">
+            <div class="cap">Floresta Negra</div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: TECNO -->
+<div id="tab-tecno" class="tab-content hidden mt-6">
+  <div class="nh-tabpanel rounded-2xl p-5 nh-two-col">
+    <div class="space-y-4 text-[#ccc]">
+      <h3 class="text-2xl font-semibold text-[#8f4fff]">Magitecnologia</h3>
+      <p class="text-gray-400 italic">
+        “Ciência não morreu. Ela foi devorada pela magia.”
+      </p>
+      <p class="text-sm text-[#ccc]">
+        A magitecnologia une conhecimento arcano e necessidade prática.
+        Em Caelum, progresso e desigualdade caminham lado a lado.
+      </p>
+    </div>
+
+    <div class="nh-gallery">
+      <button class="nh-thumb" type="button"
+        onclick="openImg('assets/images/arma-encantada.jpg', IMG_DATA.ARTEFATOS_RUNICOS)">
+        <img src="assets/images/arma-encantada.jpg" alt="Artefatos Rúnicos">
+        <div class="cap">Artefatos rúnicos</div>
+      </button>
+
+      <button class="nh-thumb" type="button"
+        onclick="openImg('assets/images/zepelim.jpg', IMG_DATA.ZEPELINS_MAGICOS)">
+        <img src="assets/images/zepelim.jpg" alt="Zepelins mágicos">
+        <div class="cap">Zepelins mágicos</div>
+      </button>
+
+      <button class="nh-thumb" type="button"
+        onclick="openImg('assets/images/montaria-viva.jpg', IMG_DATA.MONTARIAS_VIVAS)">
+        <img src="assets/images/montaria-viva.jpg" alt="Montarias vivas">
+        <div class="cap">Montarias vivas</div>
+      </button>
+
+      <button class="nh-thumb" type="button"
+        onclick="openImg('assets/images/portal.jpg', IMG_DATA.PORTAIS_ARCANOS)">
+        <img src="assets/images/portal.jpg" alt="Portais arcanos">
+        <div class="cap">Portais arcanos</div>
+      </button>
+
+      <button class="nh-thumb" type="button"
+        onclick="openImg('assets/images/relogio-runico.jpg', IMG_DATA.RELOGIOS_RUNICOS)">
+        <img src="assets/images/relogio-runico.jpg" alt="Relógios rúnicos">
+        <div class="cap">Relógios rúnicos</div>
+      </button>
+    </div>
   </div>
 
-  <div id="tab-tecno" class="tab-content space-y-6 hidden">
-    <h3 class="text-2xl font-semibold text-[#8f4fff]">Magitecnologia</h3>
-    <p class="italic text-lg text-gray-400">“Ciência não morreu. Ela apenas foi devorada pela magia.”</p>
+  <p class="mt-5 italic text-[#ccc] text-center">
+    “Caelum não quer heróis. Só almas fortes o bastante para sobreviver a ele.”
+  </p>
+</div>
+  </div> 
+</section> 
 
-    <p class="text-[#ccc] mb-4">
-      Caelum não separa o sagrado do funcional. Runas alimentam espadas. Portais substituem cavalos.
-      Artefatos antigos são mais letais que qualquer bomba moderna.
-    </p>
-    <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 text-[#ccc]">
-      <li>
-        <strong>Armas encantadas</strong><br>
-        <!-- IMAGEM: Arma Encantada -->
-        <img src="assets/images/arma-encantada.jpg" alt="Armas Encantadas" class="rounded-lg shadow-lg mt-2"/>
-      </li>
-      <li>
-        <strong>Zepelins mágicos</strong><br>
-        <!-- IMAGEM: Zepelim Mágico -->
-        <img src="assets/images/zepelim.jpg" alt="Zepelins Mágicos" class="rounded-lg shadow-lg mt-2"/>
-      </li>
-      <li>
-        <strong>Montarias vivas</strong><br>
-        <!-- IMAGEM: Montaria Viva -->
-        <img src="assets/images/montaria-viva.jpg" alt="Montarias Vivas" class="rounded-lg shadow-lg mt-2"/>
-      </li>
-      <li>
-        <strong>Portais interdimensionais</strong><br>
-        <!-- IMAGEM: Portal -->
-        <img src="assets/images/portal.jpg" alt="Portais Interdimensionais" class="rounded-lg shadow-lg mt-2"/>
-      </li>
-      <li>
-        <strong>Relógios rúnicos</strong><br>
-        <!-- IMAGEM: Relógio Rúnico -->
-        <img src="assets/images/relogio-runico.jpg" alt="Relógios Rúnicos" class="rounded-lg shadow-lg mt-2"/>
-      </li>
-    </ul>
 
-    <p class="mt-6 italic text-[#ccc]">
-      “Caelum não quer heróis. Só almas fortes o bastante para sobreviver a ele.”
-    </p>
-  </div>
-</section>
-
-    <!-- LINHA DO TEMPO — NoHeroes -->
+    <!-- LINHA DO TEMPO — NoHeroes (REFEITO: fluido, alinhado, profissional) -->
 <section id="linha-do-tempo" class="nh-timeline relative py-16 px-6">
-  <div class="max-w-5xl mx-auto">
-    <h2 class="text-3xl md:text-4xl font-bold cinzel gradiente-noheroes mb-10">Linha do Tempo</h2>
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl md:text-4xl font-bold cinzel gradiente-noheroes">Linha do Tempo</h2>
+      <p class="mt-2 text-gray-400 text-sm">
+        “Alguns eventos não mudam apenas o mundo — mudam quem você se torna nele.”
+      </p>
+    </div>
 
+    <!-- Wrapper com trilho -->
     <div class="relative">
-      <!-- trilho -->
-      <div class="rail absolute left-4 md:left-1/2 top-0 bottom-0 -translate-x-1/2 md:translate-x-0"></div>
 
-      <div class="space-y-10">
+      <!-- Trilho: mobile à esquerda | desktop central -->
+      <div class="absolute top-0 bottom-0 w-[3px] rail
+                  left-[18px] md:left-1/2 md:-translate-x-1/2"></div>
 
-        <!-- ATO I -->
-        <div class="relative md:grid md:grid-cols-2 md:gap-10 items-start">
-          <div class="hidden md:block"></div>
-          <div class="relative md:pl-8">
-            <span class="dot absolute left-4 md:-left-5 top-2 w-5 h-5 rounded-full"></span>
-            <div class="card rounded-xl p-5 transition">
-              <h3 class="act-title text-xl font-bold">Ato I - Equilíbrio Rompido</h3>
-              <p class="mt-2 text-gray-300 text-sm leading-relaxed">
+      <div class="space-y-10 md:space-y-12">
+
+        <!-- ITEM 01 -->
+        <div class="relative">
+          <!-- Dot sempre preso ao trilho -->
+          <span class="dot absolute top-6 w-5 h-5 rounded-full
+                       left-[18px] -translate-x-1/2
+                       md:left-1/2 md:-translate-x-1/2"></span>
+
+          <!-- Conteúdo: mobile com recuo | desktop alterna -->
+          <div class="pl-12 md:pl-0 md:flex md:justify-end">
+            <div class="card rounded-2xl p-6 w-full md:w-[46%] transition">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="act-title text-xl font-bold">Ato I — Equilíbrio Rompido</h3>
+                <span class="text-xs text-gray-400 border border-white/10 bg-white/5 px-2 py-1 rounded-full">
+                  Início
+                </span>
+              </div>
+              <p class="mt-3 text-gray-300 text-sm leading-relaxed">
                 <!-- COLE AQUI o texto atual do Ato I (sem alterações) -->
               </p>
             </div>
           </div>
         </div>
 
-        <!-- ATO II -->
-        <div class="relative md:grid md:grid-cols-2 md:gap-10 items-start">
-          <div class="relative md:pr-8">
-            <span class="dot absolute left-4 md:-right-5 top-2 w-5 h-5 rounded-full"></span>
-            <div class="card rounded-xl p-5 transition">
-              <h3 class="act-title text-xl font-bold">Ato II - As Luzes se Apagam</h3>
-              <p class="mt-2 text-gray-300 text-sm leading-relaxed">
+        <!-- ITEM 02 -->
+        <div class="relative">
+          <span class="dot absolute top-6 w-5 h-5 rounded-full
+                       left-[18px] -translate-x-1/2
+                       md:left-1/2 md:-translate-x-1/2"></span>
+
+          <div class="pl-12 md:pl-0 md:flex md:justify-start">
+            <div class="card rounded-2xl p-6 w-full md:w-[46%] transition">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="act-title text-xl font-bold">Ato II — As Luzes se Apagam</h3>
+                <span class="text-xs text-gray-400 border border-white/10 bg-white/5 px-2 py-1 rounded-full">
+                  Escalada
+                </span>
+              </div>
+              <p class="mt-3 text-gray-300 text-sm leading-relaxed">
                 <!-- COLE AQUI o texto atual do Ato II (sem alterações) -->
               </p>
             </div>
           </div>
-          <div class="hidden md:block"></div>
         </div>
 
-        <!-- ATO III — somente 'A Legião Negra' -->
-        <div class="relative md:grid md:grid-cols-2 md:gap-10 items-start">
-          <div class="hidden md:block"></div>
-          <div class="relative md:pl-8">
-            <span class="dot absolute left-4 md:-left-5 top-2 w-5 h-5 rounded-full"></span>
-            <div class="card rounded-xl p-5 transition">
-              <h3 class="act-title text-xl font-bold">Ato III - A Legião Negra</h3>
-              <p class="mt-2 text-gray-300 text-sm leading-relaxed">
-                <!-- Coloque aqui o texto do Ato III, mantendo APENAS esta linha de trama:
-                     'A Legião Negra'. Remova as outras duas que existiam. -->
+        <!-- ITEM 03 -->
+        <div class="relative">
+          <span class="dot absolute top-6 w-5 h-5 rounded-full
+                       left-[18px] -translate-x-1/2
+                       md:left-1/2 md:-translate-x-1/2"></span>
+
+          <div class="pl-12 md:pl-0 md:flex md:justify-end">
+            <div class="card rounded-2xl p-6 w-full md:w-[46%] transition">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="act-title text-xl font-bold">Ato III — A Legião Negra</h3>
+                <span class="text-xs text-gray-400 border border-white/10 bg-white/5 px-2 py-1 rounded-full">
+                  Ruptura
+                </span>
+              </div>
+              <p class="mt-3 text-gray-300 text-sm leading-relaxed">
+                <!-- Coloque aqui o texto do Ato III, mantendo APENAS: "A Legião Negra". -->
               </p>
             </div>
           </div>
         </div>
 
-        <!-- ATO IV -->
-        <div class="relative md:grid md:grid-cols-2 md:gap-10 items-start">
-          <div class="relative md:pr-8">
-            <span class="dot absolute left-4 md:-right-5 top-2 w-5 h-5 rounded-full"></span>
-            <div class="card rounded-xl p-5 transition">
-              <h3 class="act-title text-xl font-bold">Ato IV - (em-breve)</h3>
-              <p class="mt-2 text-gray-300 text-sm leading-relaxed">
+        <!-- ITEM 04 -->
+        <div class="relative">
+          <span class="dot absolute top-6 w-5 h-5 rounded-full
+                       left-[18px] -translate-x-1/2
+                       md:left-1/2 md:-translate-x-1/2"></span>
+
+          <div class="pl-12 md:pl-0 md:flex md:justify-start">
+            <div class="card rounded-2xl p-6 w-full md:w-[46%] transition">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="act-title text-xl font-bold">Ato IV — (em breve)</h3>
+                <span class="text-xs text-gray-400 border border-white/10 bg-white/5 px-2 py-1 rounded-full">
+                  Em produção
+                </span>
+              </div>
+              <p class="mt-3 text-gray-300 text-sm leading-relaxed">
                 <!-- COLE AQUI o texto atual do Ato IV (sem alterações) -->
               </p>
             </div>
           </div>
-          <div class="hidden md:block"></div>
         </div>
 
-        <!-- ATO V -->
-        <div class="relative md:grid md:grid-cols-2 md:gap-10 items-start">
-          <div class="hidden md:block"></div>
-          <div class="relative md:pl-8">
-            <span class="dot absolute left-4 md:-left-5 top-2 w-5 h-5 rounded-full"></span>
-            <div class="card rounded-xl p-5 transition">
-              <h3 class="act-title text-xl font-bold">Ato V - (em-breve)</h3>
-              <p class="mt-2 text-gray-300 text-sm leading-relaxed">
+        <!-- ITEM 05 -->
+        <div class="relative">
+          <span class="dot absolute top-6 w-5 h-5 rounded-full
+                       left-[18px] -translate-x-1/2
+                       md:left-1/2 md:-translate-x-1/2"></span>
+
+          <div class="pl-12 md:pl-0 md:flex md:justify-end">
+            <div class="card rounded-2xl p-6 w-full md:w-[46%] transition">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="act-title text-xl font-bold">Ato V — (em breve)</h3>
+                <span class="text-xs text-gray-400 border border-white/10 bg-white/5 px-2 py-1 rounded-full">
+                  Roadmap
+                </span>
+              </div>
+              <p class="mt-3 text-gray-300 text-sm leading-relaxed">
                 <!-- COLE AQUI o texto atual do Ato V (sem alterações) -->
               </p>
             </div>
           </div>
         </div>
-
       </div>
-    </div>
-
+     </div>
   </div>
 </section>
 
@@ -1171,7 +1622,7 @@ Vitalista misterioso com poderes do sangue e da luz. Ator dos bastidores, guardi
         <a href="apoiar.html" class="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-purple-600 text-purple-300 hover:bg-purple-900/20 transition">
           Apoiar o Projeto
         </a>
-        <a href="/assets/presskit-noheroes.zip" class="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-yellow-400 text-yellow-300 hover:bg-yellow-500/10 transition">
+        <a href="/assets/press-media-kit-noheroes.zip" class="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-yellow-400 text-yellow-300 hover:bg-yellow-500/10 transition">
           Press Kit
         </a>
       </div>
@@ -1198,12 +1649,66 @@ Vitalista misterioso com poderes do sangue e da luz. Ator dos bastidores, guardi
     <p class="mt-2">© 2025 NoHeroes. Todos os direitos reservados.</p>
   </footer>
 
+<!-- ===== MODAL PERSONAGEM (reutilizável) ===== -->
+<div id="charModal" class="fixed inset-0 z-[120] hidden">
+  <div class="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
+
+  <div class="relative mx-auto mt-20 w-[92%] max-w-4xl">
+    <div class="nh-card rounded-2xl overflow-hidden border border-purple-700/40 shadow-2xl">
+      <button id="charModalClose"
+              class="absolute top-3 right-3 z-10 nh-zoom rounded-full w-10 h-10 flex items-center justify-center"
+              aria-label="Fechar" type="button">✕</button>
+
+      <div class="grid grid-cols-1 md:grid-cols-2">
+        <!-- imagem -->
+        <div class="relative bg-black">
+          <img id="charModalImg" src="" alt="" class="w-full h-[420px] md:h-full object-cover">
+          <div class="absolute inset-0 nh-overlay"></div>
+        </div>
+
+        <!-- texto -->
+        <div class="p-6 md:p-8">
+          <h3 id="charModalName" class="text-3xl font-bold nh-name"></h3>
+          <p id="charModalDesc" class="mt-4 text-gray-200 leading-relaxed"></p>
+
+          <div class="mt-6 flex gap-2">
+            <button id="charModalPrev" class="nh-nav px-4 py-2 rounded-lg" type="button">←</button>
+            <button id="charModalNext" class="nh-nav px-4 py-2 rounded-lg" type="button">→</button>
+          </div>
+
+          <p class="mt-4 text-xs text-gray-400">
+            Dica: ESC fecha • ←/→ navega
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ===== /MODAL PERSONAGEM ===== -->
+
+<div id="imgModal" role="dialog" aria-modal="true">
+  <div class="box">
+    <div class="media">
+      <img id="imgModalSrc" src="" alt="">
+    </div>
+
+    <div class="side">
+      <h4 id="imgModalTitle" class="cinzel gradiente-noheroes text-lg">Imagem</h4>
+      <p id="imgModalDesc"></p>
+
+      <div class="actions">
+        <button class="close" type="button" onclick="closeImg()">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
   <script>
   // Protege o resto do script caso ScrollReveal não exista
   try {
     if (window.ScrollReveal) {
       ScrollReveal().reveal('section', {
-        delay:200, duration:1000, origin:'bottom', distance:'50px', reset:true
+        delay:200, duration:1000, origin:'bottom', distance:'50px', reset:false
       });
       ScrollReveal().reveal('#lenda-roar', {
         delay:300, duration:1200, origin:'left', distance:'80px',
@@ -1325,6 +1830,530 @@ Vitalista misterioso com poderes do sangue e da luz. Ator dos bastidores, guardi
   });
   // inicializa primeiro
   document.querySelector('.tab-btn').click();
+
+/* ===== Dados dos personagens (descrição longa) ===== */
+const CHAR_DATA = {
+  "Azuos": {
+    img: "assets/images/azuos.jpg",
+    desc: "Portador da Marca Negra. Um vitalista jovem, marcado por algo que não devia existir. Carrega cicatrizes físicas e emocionais, e a sensação de que sua alma não está sozinha. Entre treinamento brutal e manipulação silenciosa, Azuos busca respostas sobre o próprio passado — e sobre a entidade que o empurra para a violência quando o mundo o encurrala."
+  },
+  "Entidade desconhecida": {
+    img: "assets/images/tyrian.jpg",
+    desc: "Nada se sabe com certeza. A presença dela perturba magos, vitalistas e até crenças antigas. Rumores apontam para uma origem anterior aos clãs — algo que observa, testa e deixa rastros. Não é só um inimigo: é um presságio. E cada encontro custa mais do que sangue."
+  },
+  "Cerverus": {
+    img: "assets/images/cerverus.jpg",
+    desc: "O último dragão. Membro da realeza draconiana e um dos guerreiros mais temidos vivos. Mestre de Azuos, tornou-se figura paterna — mas também um espelho cruel da realidade de Caelum: poder não é glória, é responsabilidade e peso. Seus silêncios dizem mais do que discursos."
+  },
+  "Sado": {
+    img: "assets/images/sado.jpg",
+    desc: "Irmão de armas. Vitalista do furto, parceiro fiel e brutal quando precisa. Leal no silêncio e feroz em combate, Sado não busca heroísmo — busca sobrevivência. Em Azuos, encontra algo raro: um propósito que não nasce de guerra, mas de escolha."
+  },
+  "Sakura": {
+    img: "assets/images/sakura.jpg",
+    desc: "A flor letal. Mestra prodígio do Clã da Lua, perita em furtividade e execução cirúrgica. Sakura é beleza e morte no mesmo gesto: controlada, rápida, inevitável. Sua disciplina esconde conflitos internos que ela nunca permitiria que alguém visse."
+  },
+  "Slyther": {
+    img: "assets/images/slyther.jpg",
+    desc: "A sombra que desafia. Rival impulsivo de Azuos — ágil, venenoso e arrogante. Seu orgulho o coloca em rota de colisão constante com quem brilha mais do que ele. Por trás da provocação, existe medo: de ser irrelevante em um mundo que devora os fracos."
+  },
+  "Runan": {
+    img: "assets/images/runan.jpg",
+    desc: "Guardião do Clã das Runas. Vitalista prodígio com poderes que desafiam lógica e tradição. Seus feitos intimidam até os experientes. Runan não é apenas forte: ele é um ponto fora da curva, e em Caelum isso atrai tanto reverência quanto caça."
+  },
+  "Yumi": {
+    img: "assets/images/yumi.jpg",
+    desc: "A lâmina do silêncio. Instrutora do Clã da Lua e guarda-costas de elite. Discreta, precisa e letal, Yumi protege o que acredita com disciplina inabalável. Sua lealdade não é emocional — é um pacto de vida. E ela nunca quebra pactos."
+  },
+  "Kagemitsu": {
+    img: "assets/images/kagemitsu.jpg",
+    desc: "General da Lua. Líder respeitado, mentor de jovens guerreiros e símbolo de estratégia e equilíbrio. Kagemitsu mantém o clã unido no limite entre honra e necessidade. Em um mundo onde princípios matam, ele tenta provar que ainda vale a pena ter um."
+  },
+  "Koda": {
+    img: "assets/images/koda.jpg",
+    desc: "O sol que sangra. Vitalista misterioso, ligado a poderes de sangue e luz. Atua nos bastidores, como guardião silencioso dos escolhidos — e executor quando o destino exige. Em Caelum, luz não significa pureza: significa custo."
+  }
+};
+
+/* ===== Modal logic ===== */
+(function(){
+  const modal = document.getElementById('charModal');
+  const imgEl = document.getElementById('charModalImg');
+  const nameEl = document.getElementById('charModalName');
+  const descEl = document.getElementById('charModalDesc');
+  const closeBtn = document.getElementById('charModalClose');
+  const prevBtn = document.getElementById('charModalPrev');
+  const nextBtn = document.getElementById('charModalNext');
+
+  if(!modal || !imgEl || !nameEl || !descEl) return;
+
+  const order = Object.keys(CHAR_DATA);
+  let currentIndex = 0;
+
+  function showByIndex(i){
+    currentIndex = (i + order.length) % order.length;
+    const key = order[currentIndex];
+    const data = CHAR_DATA[key];
+    nameEl.textContent = key;
+    descEl.textContent = data?.desc || "Descrição em breve.";
+    imgEl.src = data?.img || "";
+    imgEl.alt = key;
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+
+  window.openModal = function(imgSrc, name){
+    // compatível com seus botões atuais
+    const idx = order.indexOf(name);
+    if(idx !== -1){
+      showByIndex(idx);
+    } else {
+      // fallback se o name não estiver no dicionário
+      nameEl.textContent = name || "Personagem";
+      descEl.textContent = "Descrição em breve.";
+      imgEl.src = imgSrc || "";
+      imgEl.alt = name || "Personagem";
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+  };
+
+  function close(){
+    modal.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  function isOpen(){ return !modal.classList.contains('hidden'); }
+
+  closeBtn?.addEventListener('click', close);
+  modal.addEventListener('click', (e) => {
+    if(e.target === modal || e.target === modal.firstElementChild) close();
+  });
+
+  prevBtn?.addEventListener('click', () => showByIndex(currentIndex - 1));
+  nextBtn?.addEventListener('click', () => showByIndex(currentIndex + 1));
+
+  document.addEventListener('keydown', (e) => {
+    if(!isOpen()) return;
+    if(e.key === 'Escape') close();
+    if(e.key === 'ArrowLeft') showByIndex(currentIndex - 1);
+    if(e.key === 'ArrowRight') showByIndex(currentIndex + 1);
+  });
+})();
+
+/* ===== LORE / DESCRIÇÕES (MODAL IMAGENS) ===== */
+const IMG_DATA = {
+  MAPA_CAELUM: {
+    title: "Caelum — O Continente das Cinzas",
+    text: `Este mapa não representa apenas terras e fronteiras.
+Ele registra os limites do que ainda sobrevive.
+
+Caelum foi moldado por eras de conflito entre dragões, nações humanas e forças que precedem a própria história.
+Cada região marcada aqui carrega resquícios de guerras esquecidas, cidades soterradas e pactos jamais quebrados.
+
+As rotas antigas tornaram-se inúteis quando os céus passaram a pertencer aos dragões.
+Desde então, portais arcanos substituíram estradas, e o mundo fragmentou-se em centros de poder isolados.
+
+Nada em Caelum é estável.
+Fronteiras mudam.
+Nações caem.
+E o mapa… nunca permanece o mesmo por muito tempo.`
+  },
+
+  AEON_CATEDRAL: {
+    title: "Aeon — A Catedral da Ordem",
+    text: `Aeon se ergue sob o dogma absoluto.
+Suas catedrais não foram construídas para inspirar fé, mas para impor obediência.
+
+Cada estrutura monumental serve como lembrete constante de que questionar é heresia
+e que a ordem precede a liberdade.
+
+A luz que emana de Aeon não aquece.
+Ela observa.
+
+Sob seus vitrais e altares, decisões políticas são tratadas como mandamentos divinos,
+e execuções são justificadas como correções necessárias.
+
+Em Aeon, não há espaço para dúvida.
+A fé é lei.
+E a lei… é eterna.`
+  },
+
+  KALEIDOS_CIDADE: {
+    title: "Kaleidos — A Cidade Fragmentada",
+    text: `Kaleidos não é unificada.
+É um mosaico de culturas, crenças e contradições.
+
+Aqui, bairros funcionam como pequenas nações,
+cada um com suas próprias regras, líderes e conflitos internos.
+A convivência não nasce da harmonia, mas da necessidade.
+
+Unidos apenas pelo ódio comum à tirania de Aeon,
+os habitantes de Kaleidos vivem em constante tensão,
+equilibrando liberdade e caos.
+
+É uma cidade onde ideias florescem,
+mas onde nenhuma permanece intacta por muito tempo.`
+  },
+
+  MAPA_CLA_LUA: {
+    title: "Território do Clã da Lua",
+    text: `Este mapa retrata o domínio do Clã da Lua,
+uma região protegida mais pela geografia do que por muralhas.
+
+Cadeias montanhosas cercam o território como lâminas naturais,
+enquanto florestas densas e vales sombrios dificultam qualquer invasão.
+
+No centro encontra-se a fortaleza da vila,
+sede do clã e núcleo de treinamento de seus caçadores.
+
+As marcas rúnicas indicam rotas de patrulha,
+pontos de observação e zonas de emboscada.
+
+Poucos atravessam estas terras sem permissão.
+Menos ainda retornam sem serem vistos.`
+  },
+
+  CLA_LUA: {
+    title: "Clã da Lua — As Lâminas Invisíveis",
+    text: `Entre os quatro grandes clãs de Caelum,
+o Clã da Lua é lembrado pela precisão e pelo silêncio.
+
+Especialistas em espionagem, rastreamento e assassinato,
+forjaram sua reputação como os olhos ocultos de Kaleidos.
+
+Vivem ao sul de Lunaris Fortuna,
+em regiões onde dragões raramente se aventuram.
+A abundância de caça, pesca e ervas medicinais
+garante autossuficiência e isolamento prolongado.
+
+São responsáveis pela proteção da fronteira sul
+e pelo treinamento das forças táticas mais letais do continente.
+
+Silenciosos, pacientes e implacáveis,
+os filhos da Lua aprenderam a transformar o próprio silêncio em arma.`
+  },
+
+  CLA_SOL: {
+    title: "Clã do Sol — Guardiões da Memória",
+    text: `O Clã do Sol é o mais antigo entre os grandes clãs de Caelum.
+
+Estabelecidos em um vasto oásis a oeste de Lunaris Fortuna,
+sobreviveram onde outros sucumbiram ao deserto.
+A região é rica em cristais mágicos, especiarias e minérios raros.
+
+São mestres do conhecimento arcano,
+formando magos eruditos e guerreiros disciplinados.
+Também treinam guardas reais e soldados das nações aliadas.
+
+Administram a maior biblioteca de Kaleidos,
+onde repousam registros anteriores às próprias nações.
+
+Na guerra, são lanças de fogo.
+Na paz, são guardiões da palavra.`
+  },
+
+  CLA_RUNAS: {
+    title: "Clã das Runas — Arquitetos de Caelum",
+    text: `Nenhum clã carrega tradição tão profunda quanto o Clã das Runas.
+
+Localizados na fronteira entre Kaleidos e Aeon,
+ergueram Runeforth junto ao oceano,
+sede do maior porto naval, aéreo e de portais do continente.
+
+Mestres da magia rúnica e arcana,
+são responsáveis pela maior parte da magitecnologia conhecida.
+Armas encantadas, barreiras defensivas e rotas de transporte
+nascem de suas forjas e laboratórios.
+
+Mesmo após perderem seu antigo reino,
+continuam sendo o coração tecnológico de Caelum.
+
+Onde há progresso,
+há o toque das Runas.`
+  },
+
+  CLA_FERAS: {
+    title: "Clã das Feras — Instinto e Celebração",
+    text: `O Clã das Feras é lembrado tanto por sua força
+quanto pela alegria de seu povo.
+
+Habitam montanhas perigosas ao nordeste de Aeon,
+vivendo em grupos móveis para evitar dragões e monstros.
+Apesar disso, mantêm uma base central onde tradições são preservadas.
+
+São druidas e guerreiros de vigor extremo,
+muitos com traços animalescos herdados de rituais antigos.
+
+Fundaram a Guilda de Aventureiros
+e sustentam Caelum com produção de alimentos, bebidas e animais.
+
+Mesmo em tempos de guerra,
+são eles que lembram aos povos
+que viver também é motivo para brindar.`
+  },
+
+  GUILDA_AVENTUREIROS: {
+    title: "Guilda de Aventureiros — Neutralidade Armada",
+    text: `As Guildas de Aventureiros são organizações independentes,
+reconhecidas em todo o continente.
+
+Não servem a nações nem a clãs.
+Atendem vilarejos, cidades e indivíduos,
+desde escoltas simples até caçadas de alto risco.
+
+A hierarquia é definida por colares de prestígio,
+que variam do Rank E ao Rank S+.
+A partir dos níveis mais altos,
+os colares tornam-se artefatos rúnicos de proteção.
+
+Seu selo de neutralidade garante acesso a territórios proibidos
+e presença onde exércitos não chegam.
+
+Ser aventureiro não é apenas um ofício.
+É pertencer a uma irmandade que sobreviveu à ruína de reinos.`
+  },
+
+  FLORESTA_NEGRA: {
+    title: "A Floresta Negra — O Organismo Vivo",
+    text: `Conta-se que a Floresta Negra nasceu do pranto de um anjo.
+
+Cada lágrima caiu como veneno,
+e a terra despertou consciente.
+Árvores respiram.
+Raízes observam.
+O solo consome.
+
+Não há animais nem insetos.
+Apenas o verde faminto que devora o que entra.
+O que é consumido torna-se parte dela.
+
+Nem mesmo dragões se atrevem a sobrevoar suas copas.
+
+E isso, dizem,
+já basta para que os homens a temam.`
+  },
+CULTO_VAZIO: {
+    title: "Culto do Vazio — As Mãos Invisíveis",
+    text: `Há quem diga que o culto nasceu como uma seita,
+rezando às criaturas do vazio em troca de poder.
+Com o tempo, deixaram de se ajoelhar… e aprenderam a comandar.
+
+Sumiram dos olhos do povo, mas não das sombras.
+Hoje sussurra-se que movem nações como marionetes:
+compram reis, destroem cidades inteiras e vendem homens como gado.
+Ninguém sabe quantos são. Nem onde estão.
+Só se vê o resultado.
+
+Alguns afirmam que o Pentágono não desapareceu — apenas mudou de nome.
+Outros acreditam que o culto planeja algo maior do que guerras e comércio de almas:
+buscam supremacia sobre todo Caelum.
+
+Histórias, apenas histórias…
+Mas quando crianças desaparecem e exércitos somem sem deixar rastros,
+quem ousa duvidar?`
+  },
+
+  ONI_VAGANTE: {
+    title: "Oni Vagante — O Desafio que Não Termina",
+    text: `Conta-se sobre um demônio que lutou tanto que nem a morte ousou vencê-lo.
+Das trevas tomou forma, assumindo a pele de um viajante.
+Onde passa, deixa apenas silêncio, sangue e corpos sem nomes.
+
+Dizem que vaga pelo continente em busca de oponentes dignos —
+um desafio que possa enfim quebrar sua maldição.
+Alguns juram que não é um demônio, mas um homem…
+condenado a andar eternamente até encontrar alguém capaz de derrotá-lo.
+
+Ninguém jamais retornou para confirmar.`
+  },
+
+  BOM_DRAGAO: {
+    title: "O Bom Dragão — Oráculo Alado",
+    text: `Entre as lendas de Caelum, poucas são tão raras quanto a do Bom Dragão.
+Dizem que ele não caça por fome nem governa por medo.
+Ele aparece apenas quando o destino encontra uma alma incomum.
+
+Alguns o descrevem como um oráculo alado:
+um ser antigo que observa eras sem pertencer a nenhuma.
+Outros juram que suas palavras são maldição e salvação no mesmo sopro —
+e que ouvir seu chamado é ser marcado para sempre.
+
+Se ele existe, não é para ser seguido.
+É para ser temido com reverência:
+um presságio de que o mundo está prestes a mudar.`
+  },
+
+  BAROES_ANCIÃOS: {
+    title: "Barões Anciãos — O Ápice da Fome",
+    text: `No topo da evolução draconiana existem os chamados Dragões Barões Anciãos —
+seres que ultrapassaram os limites da própria espécie.
+
+Alguns estudiosos os descrevem como a tentativa mais próxima da natureza de tocar a ascensão.
+Eles não apenas caçam: dominam ecossistemas inteiros.
+Devoram demônios. Devoram Voidrins. Devoram homens.
+
+Há lendas que dizem que, ao consumirem dor humana em excesso,
+tornam-se “mais próximos” de nós — como se a fome os moldasse em algo híbrido.
+Verdade ou delírio, uma coisa é consenso:
+encontrar um Ancião é compreender, em segundos, o que é insignificância.`
+  },
+
+  VALDARYON: {
+    title: "Valdaryon — A Cidade que Talvez Respire",
+    text: `Nos dias de fogo e cinzas, quando Draconis foi devorada pelo próprio ódio,
+acreditava-se que os draconianos haviam sido extintos.
+
+Mas os velhos cantos falam de Valdaryon —
+uma cidade erguida sob a terra, onde sobreviventes se refugiaram
+longe dos olhos dos homens e dos deuses.
+
+Dizem que ali forjaram muralhas de pedra viva,
+rios de cristal e templos ocultos nas cavernas mais profundas.
+Não buscavam reinos… apenas silêncio e esquecimento.
+
+Alguns afirmam que Valdaryon ainda existe, enterrada sob o peso das montanhas.
+Outros dizem que foi apenas consolo para quem não suportou aceitar a extinção.
+
+Seja mito ou verdade,
+ninguém jamais viu o lugar.`
+  },
+  ARTEFATOS_RUNICOS: {
+    title: "Artefatos Rúnicos",
+    text: `Chamamos de artefatos rúnicos todo objeto capaz de canalizar, armazenar ou alterar o fluxo de mana por meio de inscrições arcanas.
+Isso inclui armas, relíquias sagradas, talismãs, selos portáteis e estruturas menores de contenção mágica.
+
+Ao contrário da crença popular, não se limitam a instrumentos de guerra.
+Existem incontáveis kits rúnicos voltados para exploração, defesa, suporte, cura, espionagem e controle territorial.
+
+Alguns artefatos carregam efeitos passivos permanentes.
+Outros exigem ativação consciente, sacrifícios energéticos ou condições específicas.
+Relíquias antigas, criadas antes da queda dos reinos, são raríssimas — e frequentemente disputadas por clãs, guildas e cultos.
+
+Nas mãos certas, um artefato rúnico não apenas muda uma batalha…
+muda o destino de uma região inteira.`
+  },
+
+  ZEPELINS_MAGICOS: {
+    title: "Zepelins Mágicos",
+    text: `Zepelins mágicos não são meros veículos aéreos.
+Foram projetados para operar em altitudes que nem mesmo dragões ousam alcançar.
+
+Sustentados por núcleos de mana e selos gravitacionais, são capazes de transportar cargas sobrenaturais, tropas inteiras e estruturas móveis.
+Sua estabilidade permitiu o surgimento de batalhas aéreas, cercos nos céus e campanhas militares acima das nuvens.
+
+Durante a Era da Expansão, projetos ambiciosos chegaram a propor cidades voadoras sustentadas por zepelins interligados.
+Entretanto, a escassez de recursos arcanos e o alto custo de manutenção interromperam tais avanços.
+
+Hoje, zepelins permanecem como símbolos de supremacia tecnológica — raros, estratégicos e decisivos.
+`
+  },
+
+  MONTARIAS_VIVAS: {
+    title: "Montarias Vivas",
+    text: `Montarias vivas são criaturas domesticadas ou vinculadas por pactos druidicos, rúnicos ou vitais.
+Entre elas estão grifos, hipogrifos, hipocampos, wyverns e inúmeras espécies híbridas.
+
+Cada montaria possui instintos próprios e exige treinamento, respeito e adaptação.
+Algumas respondem apenas a linhagens específicas.
+Outras exigem rituais de vínculo que podem falhar — ou matar o candidato.
+
+Além do transporte, muitas são usadas em combate, reconhecimento aéreo ou travessias impossíveis.
+Há relatos de montarias capazes de atravessar tempestades arcanas, mares amaldiçoados e zonas de energia negativa.
+
+Montar uma criatura viva não é dominação.
+É sobrevivência compartilhada.
+`
+  },
+
+  PORTAIS_ARCANOS: {
+    title: "Portais Arcanos",
+    text: `Com as estradas tomadas por dragões, feras e zonas instáveis de mana, os portais tornaram-se o principal meio de deslocamento seguro entre grandes centros.
+
+Fixados em cidades estratégicas, utilizam matrizes arcanas e runas de ancoragem para garantir precisão espacial.
+Falhas nesses sistemas podem resultar em desaparecimentos, fusões corporais ou deslocamentos temporais.
+
+Portais menores existem, mas são instáveis e altamente perigosos.
+A maioria das nações proíbe seu uso fora de supervisão oficial.
+
+Viajar por um portal é rápido.
+Mas nunca totalmente seguro.
+`
+  },
+
+  RELOGIOS_RUNICOS: {
+    title: "Relógios Rúnicos",
+    text: `Relógios rúnicos não medem o tempo.
+Eles o registram.
+
+São construções arcanas capazes de gravar acontecimentos, emoções e fluxos de energia ao longo das eras.
+Tudo o que ocorre em sua proximidade fica marcado em suas camadas rúnicas.
+
+Alguns tornaram-se verdadeiros arquivos vivos.
+Outros, dungeons temporais perigosas, onde eventos se repetem eternamente.
+
+O mais temido deles é o Relógio de Draugh, o Morto-Vivo.
+Carregado por tamanha energia negativa que rasgou a linearidade temporal, tornou-se um ponto fixo de sofrimento eterno.
+Ali, a Era do Caos nunca terminou.
+
+Relógios rúnicos são memória.
+E memória, em Caelum, pode matar.
+`
+  },
+
+};
+
+ function openImg(src, dataOrTitle, maybeDesc){
+  const modal = document.getElementById('imgModal');
+  const img   = document.getElementById('imgModalSrc');
+  const h4    = document.getElementById('imgModalTitle');
+  const p     = document.getElementById('imgModalDesc');
+
+  let title = '';
+  let desc  = '';
+
+  // se vier objeto {title,text}
+  if (dataOrTitle && typeof dataOrTitle === 'object'){
+    title = dataOrTitle.title || 'Imagem';
+    desc  = dataOrTitle.text  || '';
+  } else {
+    // compat com tua chamada antiga
+    title = dataOrTitle || 'Imagem';
+    desc  = maybeDesc || '';
+  }
+
+  img.src = src;
+  img.alt = title;
+  h4.textContent = title;
+  p.textContent = desc;
+
+  modal.style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+
+  function closeImg(){
+    const modal = document.getElementById('imgModal');
+    const img   = document.getElementById('imgModalSrc');
+    modal.style.display = 'none';
+    img.src = '';
+    document.body.style.overflow = '';
+  }
+
+  // fecha com ESC e clique fora
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape') closeImg();
+  });
+  document.getElementById('imgModal')?.addEventListener('click', (e)=>{
+    if(e.target.id === 'imgModal') closeImg();
+  });
+
+  // deixa o tab ativo com classe (opcional, mas melhora UX)
+  document.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+    });
+  });
 </script>
 </body>
 </html>

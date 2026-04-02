@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Reenviar Verificação — NoHeroes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+:root{
+  --nh-bg:#0a0a0a; --nh-fg:#e5e5e5; --nh-muted:#bdbdbd;
+  --grad:linear-gradient(135deg,#8f4fff 0%,#facc15 100%);
+  --border:rgba(255,255,255,.1); --glass:rgba(255,255,255,.04);
+  --radius:16px;
+}
+body{font-family:Inter,system-ui,Arial,sans-serif;background:var(--nh-bg);color:var(--nh-fg);overflow-x:hidden}
+.cinzel{font-family:"Cinzel Decorative",serif}
+.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.card{background:var(--glass);border:1px solid var(--border);border-radius:var(--radius);backdrop-filter:blur(10px)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;padding:.85rem 1.1rem;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.05);transition:.25s;font-weight:600}
+.btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.08)}
+.btn-primary{background:var(--grad);color:#000;border:none}
+.btn-primary:hover{filter:saturate(1.05);transform:translateY(-1px) scale(1.01)}
+.input{background:#0e0e0e;border:1px solid var(--border);border-radius:12px;padding:.8rem .9rem;color:var(--nh-fg);width:100%}
+.hint{font-size:.85rem;color:#bdbdbd}
+#brasasCanvas{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;pointer-events:none}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+</style>
+</head>
+<body>
+<canvas id="brasasCanvas" aria-hidden="true"></canvas>
+
+<header class="fixed top-0 left-0 right-0 h-[70px] bg-[#0a0a0a]/85 border-b border-[#222] backdrop-blur-md z-50 flex items-center justify-between px-6">
+  <a href="index.html" class="flex items-center gap-3">
+    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-600 to-amber-400"></div>
+    <span class="cinzel text-xl bg-clip-text text-transparent bg-gradient-to-r from-purple-300 to-amber-200">NoHeroes</span>
+  </a>
+</header>
+<div class="h-[70px]"></div>
+
+<main class="max-w-md mx-auto px-4 py-16 relative z-10">
+  <section class="card p-6 sm:p-8">
+    <h1 class="cinzel text-3xl grad-text text-center mb-2">Reenviar Verificação</h1>
+    <p class="text-center hint mb-6">Digite o e-mail da sua conta para receber um novo link de confirmação.</p>
+
+    <form id="resendForm" class="grid gap-4">
+      <label class="grid gap-2">
+        <span class="hint">E-mail da conta</span>
+        <input type="email" id="email" class="input" placeholder="voce@email.com" required>
+      </label>
+
+      <button id="submitBtn" type="submit" class="btn btn-primary w-full mt-2">
+        <span id="btnText">Reenviar E-mail</span>
+        <svg id="btnSpin" class="animate-spin h-4 w-4 hidden" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v3a5 5 0 00-5 5H4z"></path>
+        </svg>
+      </button>
+
+      <p id="msg" class="text-sm text-center hidden mt-2"></p>
+    </form>
+
+    <p class="mt-6 text-center text-sm text-white/60">
+      Já confirmou seu e-mail? <a href="login.html" class="text-white hover:underline">Entrar</a>
+    </p>
+  </section>
+</main>
+
+<footer class="py-10 text-center text-white/50 text-sm">
+  © <span id="year"></span> NoHeroes. Todos os direitos reservados.
+</footer>
+
+<script>
+window.API_BASE = "https://api.noheroes.com.br";
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* Brasas */
+const canvas = document.getElementById("brasasCanvas");
+    const ctx = canvas.getContext("2d");
+    let particles = [], w, h;
+
+    function resizeCanvas() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() { this.reset(true); }
+      reset(initial = false) {
+        this.x = Math.random() * w;
+        this.y = initial ? Math.random() * h : h + Math.random() * 100;
+        this.size = 1 + Math.random() * 2.5;
+        this.speed = 0.2 + Math.random() * 0.5;
+        this.alpha = 0.4 + Math.random() * 0.3;
+        this.drift = (Math.random() - 0.5) * 0.5;
+      }
+      update() {
+        this.y -= this.speed;
+        this.x += this.drift;
+        if (this.y < -10 || this.x < -50 || this.x > w + 50) this.reset();
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`;
+        ctx.shadowColor = "#a855f7";
+        ctx.shadowBlur = 12;
+        ctx.fill();
+      }
+    }
+
+    function createParticles(n) {
+      for (let i = 0; i < n; i++) particles.push(new Particle());
+    }
+    function animate() {
+      ctx.clearRect(0, 0, w, h);
+      for (const p of particles) { p.update(); p.draw(); }
+      requestAnimationFrame(animate);
+    }
+    createParticles(150);
+    animate();
+/* Reenvio */
+const form=document.getElementById("resendForm"),msg=document.getElementById("msg"),
+btn=document.getElementById("submitBtn"),txt=document.getElementById("btnText"),spin=document.getElementById("btnSpin");
+
+form.addEventListener("submit",async e=>{
+  e.preventDefault();
+  const email=document.getElementById("email").value.trim();
+  if(!email)return;
+  msg.classList.add("hidden");
+  btn.disabled=true;spin.classList.remove("hidden");txt.textContent="Enviando...";
+
+  try{
+    const res=await fetch(`${window.API_BASE}/api/auth/resend-verification`,{
+      method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email})
+    });
+    const data=await res.json().catch(()=>({}));
+    if(res.ok){
+      msg.textContent=data.message||"E-mail de verificação reenviado com sucesso!";
+      msg.className="text-green-400 text-sm text-center mt-2";
+    }else{
+      msg.textContent=data.message||"Não foi possível reenviar. Tente novamente.";
+      msg.className="text-red-400 text-sm text-center mt-2";
+      msg.style.animation="shake .3s";setTimeout(()=>msg.style.animation="",300);
+    }
+  }catch(err){
+    msg.textContent="Falha de conexão com o servidor.";
+    msg.className="text-red-400 text-sm text-center mt-2";
+  }finally{
+    btn.disabled=false;spin.classList.add("hidden");txt.textContent="Reenviar E-mail";
+    msg.classList.remove("hidden");
+  }
+});
+</script>
+</body>
+</html>

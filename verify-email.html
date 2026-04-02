@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Verificar E-mail — NoHeroes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+:root{
+  --grad:linear-gradient(135deg,#8f4fff 0%,#facc15 100%);
+  --glass:rgba(255,255,255,.04); --border:rgba(255,255,255,.1);
+}
+body{font-family:Inter,system-ui,sans-serif;background:#080808;color:#e5e5e5;overflow-x:hidden;text-align:center;}
+.card{background:var(--glass);border:1px solid var(--border);border-radius:16px;backdrop-filter:blur(12px);padding:2rem 1.5rem;max-width:480px;margin:10vh auto;}
+h1{font-family:"Cinzel Decorative",serif;font-size:1.8rem;margin-bottom:.5rem;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
+p{color:#ccc;font-size:.95rem;margin:.6rem 0;}
+a.btn{display:inline-block;margin-top:1.4rem;background:var(--grad);color:#000;padding:.8rem 1.8rem;border-radius:999px;font-weight:600;text-decoration:none;transition:.2s;}
+a.btn:hover{transform:translateY(-1px) scale(1.02);}
+.spinner{border:4px solid rgba(255,255,255,.1);border-top:4px solid #facc15;border-radius:50%;width:40px;height:40px;animation:spin 1s linear infinite;margin:1.2rem auto;}
+@keyframes spin{to{transform:rotate(360deg)}}
+#brasasCanvas{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;pointer-events:none}
+</style>
+</head>
+<body>
+<canvas id="brasasCanvas"></canvas>
+
+<div id="loading" class="card">
+  <div class="spinner"></div>
+  <p>Verificando seu e-mail...</p>
+</div>
+
+<div id="success" class="card hidden">
+  <h1>E-mail confirmado!</h1>
+  <p>Sua conta foi ativada com sucesso. Agora você pode fazer login e aproveitar o universo NoHeroes.</p>
+  <a href="login.html" class="btn">Ir para login</a>
+</div>
+
+<div id="error" class="card hidden">
+  <h1>Erro na verificação</h1>
+  <p>O link é inválido ou expirou. Solicite um novo e-mail de confirmação abaixo.</p>
+  <a href="reenvio.html" class="btn">Reenviar e-mail</a>
+</div>
+
+<script>
+window.API_BASE = "https://api.noheroes.com.br";
+
+// brasas (corrigido)
+const c=document.getElementById("brasasCanvas"),x=c.getContext("2d");
+let ps=[],W,H;
+function resize(){W=c.width=innerWidth;H=c.height=innerHeight;}
+addEventListener("resize",resize);resize();
+class P{constructor(){this.r(true);}r(i=!1){this.x=Math.random()*W;this.y=i?Math.random()*H:H+100*Math.random();this.s=1+Math.random()*2;this.v=0.2+Math.random()*0.5;this.a=0.4+Math.random()*0.3;this.d=(Math.random()-.5)*.5;}u(){this.y-=this.v;this.x+=this.d;if(this.y<-10||this.x<-50||this.x>W+50)this.r();}draw(){x.beginPath();x.arc(this.x,this.y,this.s,0,6.28);x.fillStyle=`rgba(168,85,247,${this.a})`;x.shadowColor="#a855f7";x.shadowBlur=12;x.fill();}}
+for(let i=0;i<150;i++)ps.push(new P());
+(function a(){x.clearRect(0,0,W,H);for(const p of ps)p.u(),p.draw();requestAnimationFrame(a)})();
+
+// verificação automática
+(async()=>{
+  const params=new URLSearchParams(window.location.search);
+  const token=params.get("token");
+  const loading=document.getElementById("loading");
+  const success=document.getElementById("success");
+  const error=document.getElementById("error");
+
+  if(!token){loading.classList.add("hidden");error.classList.remove("hidden");return;}
+
+  try{
+    const res=await fetch(`${window.API_BASE}/api/auth/verify-email?token=${encodeURIComponent(token)}`);
+    const data=await res.json().catch(()=>({}));
+    loading.classList.add("hidden");
+    if(res.ok && data && data.success){
+      success.classList.remove("hidden");
+    }else{
+      error.classList.remove("hidden");
+    }
+  }catch(e){
+    loading.classList.add("hidden");
+    error.classList.remove("hidden");
+  }
+})();
+</script>
+</body>
+</html>
