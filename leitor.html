@@ -187,6 +187,23 @@ body {
     border-radius: 10px;
 }
 
+/* --- FIX PARA O TÍTULO DO DRAWER --- */
+.gradiente-noheroes {
+    background: linear-gradient(135deg, #8f4fff 0%, #d9b55a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.font-cinzel {
+    font-family: 'Cinzel Decorative', serif !important;
+}
+
+.barra-degrade {
+    background: linear-gradient(90deg, #8f4fff, #d9b55a);
+    display: block;
+}
+
     </style>
 </head>
 <body class="font-sans antialiased overflow-x-hidden pb-24 sm:pb-0">
@@ -228,12 +245,13 @@ body {
 
     <div class="p-8 mt-12 flex flex-col h-full">
         <header class="mb-10">
-            <h1 class="text-3xl font-black gradiente-noheroes cinzel tracking-tighter">NOHEROES</h1>
-            <div class="flex items-center gap-2 mt-1">
-                <span class="h-[1px] w-8 barra-degrade"></span>
-                <p class="text-white/30 text-[10px] uppercase font-black tracking-[0.3em]">Universo Sombrio</p>
-            </div>
-        </header>
+    <h1 class="text-3xl font-black gradiente-noheroes font-cinzel tracking-tighter uppercase">NoHeroes</h1>
+    
+    <div class="flex items-center gap-2 mt-1">
+        <span class="h-[1px] w-8 barra-degrade"></span>
+        <p class="text-white/30 text-[10px] uppercase font-black tracking-[0.3em]">Universo Sombrio</p>
+    </div>
+</header>
 
         <nav class="flex flex-col">
             <a href="index.html" class="drawer-item">
