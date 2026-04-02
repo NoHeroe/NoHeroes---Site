@@ -147,12 +147,18 @@ body {
             <span class="font-display text-xl tracking-tighter text-grad uppercase font-black">NoHeroes</span>
         </div>
         
-        <div class="hidden md:flex gap-8 items-center">
-            <button onclick="resetHub()" class="text-xs font-black uppercase tracking-widest text-nh-accent">Hub</button>
-            <button onclick="openCommunityModal()" class="text-xs font-black uppercase tracking-widest text-white/40 hover:text-white transition">Comunidade</button>
-            <div class="h-10 w-10 rounded-full border border-nh-border bg-nh-dark grid place-items-center cursor-pointer hover:border-nh-accent transition group">
-                <span id="userInitial" class="text-xs font-black group-hover:scale-110 transition">R</span>
+        <div class="flex items-center gap-5">
+            <div class="hidden md:flex gap-8 items-center border-r border-nh-border/30 pr-5">
+                <button onclick="resetHub()" class="text-xs font-black uppercase tracking-widest text-nh-accent">Hub</button>
+                <button onclick="openCommunityModal()" class="text-xs font-black uppercase tracking-widest text-white/40 hover:text-white transition">Comunidade</button>
+                <div class="h-10 w-10 rounded-full border border-nh-border bg-nh-dark grid place-items-center cursor-pointer hover:border-nh-accent transition group">
+                    <span id="userInitial" class="text-xs font-black group-hover:scale-110 transition text-nh-gold">R</span>
+                </div>
             </div>
+            
+            <button id="hamburgerBtn" class="text-2xl sm:text-3xl text-white hover:text-[#a855f7] transition z-[60]">
+                ☰
+            </button>
         </div>
     </nav>
 </header>
