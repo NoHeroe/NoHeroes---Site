@@ -257,15 +257,13 @@ dialog[open] .dialog-ctr {
       const raw = localStorage.getItem('NoHeroes_token')||'';
       const normalized = raw.replace(/^Bearer\s+/i,'');
       if(!normalized || normalized.split('.').length!==3){
-        console.warn('⚠️ Sem token. Redirecionamento desativado para edição do layout.');
-        // COMENTADO PARA NÃO QUEBRAR SEUS TESTES:
-        // localStorage.removeItem('NoHeroes_token');
-        // location.href = 'login.html';
+        console.warn('⚠️ Sem token. Redirecionamento desativado para edição do layout.'); localStorage.removeItem('NoHeroes_token');
+ location.href = 'login.html';
         return;
       }
       localStorage.setItem('NoHeroes_token', normalized);
       window.tokenJWT = normalized;
-      window.API_BASE = 'https://api.noheroes.com.br';
+      window.API_BASE = 'https://dev-flmw.onrender.com';
     })();
   </script>
 
