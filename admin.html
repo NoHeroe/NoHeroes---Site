@@ -1119,7 +1119,7 @@ async function loadGoals() {
 
 /* ═══ NEWSLETTER ═══ */
 async function loadNewsletter() {
-  const {ok,data}=await api('/admin/newsletter');
+  const {ok,data} = await api('/api/email/newsletter/subscribers');
   const tb=document.getElementById('tb-newsletter');
   const stats=document.getElementById('newsletter-stats');
   if(!ok||!tb) return;
