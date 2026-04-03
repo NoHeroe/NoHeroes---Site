@@ -474,7 +474,7 @@ function resolveImageUrl(u){
   if (u.startsWith('noheroes.com.br')) return `https://${u}`;
 
   // uploads servidos pela API
-  if (u.startsWith('/uploads')) return `https://api.noheroes.com.br${u}`;
+  if (u.startsWith('/uploads')) return `https://dev-flmw.onrender.com${u}`;
 
   // caminho absoluto no front (ex: /assets/images/...)
   if (u.startsWith('/')) return u;
@@ -501,7 +501,7 @@ async function carregarPerfilLoja() {
   if (!jwt) return;
 
   try {
-    const res = await fetch('https://api.noheroes.com.br/user/profile', {
+    const res = await fetch('https://dev-flmw.onrender.com/user/profile', {
       headers: {
         'Authorization': `Bearer ${jwt}`,
         'Content-Type': 'application/json'
@@ -926,7 +926,7 @@ if (!jwt) {
   email: userEmail,
   nome_completo: userName
 };
-      const resp = await fetch('https://api.noheroes.com.br/checkout/create-preference', {
+      const resp = await fetch('https://dev-flmw.onrender.com/checkout/create-preference', {
         method:'POST',
         headers:{ 'Content-Type':'application/json', ...(jwt?{ 'Authorization':`Bearer ${jwt}` }: {}) },
         body: JSON.stringify(body)
@@ -955,7 +955,7 @@ if (!jwt) {
   totalWithFee
   };
 
-    const resp = await fetch('https://api.noheroes.com.br/coins/purchase-cart', {
+    const resp = await fetch('https://dev-flmw.onrender.com/coins/purchase-cart', {
       method:'POST',
       headers:{ 'Content-Type':'application/json', ...(jwt?{ 'Authorization':`Bearer ${jwt}` }: {}) },
       body: JSON.stringify(body)
@@ -999,7 +999,7 @@ async function loadProducts(){
   showProductsLoading();
 
   try{
-    const res = await fetch('https://api.noheroes.com.br/shop');
+    const res = await fetch('https://dev-flmw.onrender.com/shop');
     handleAuthError(res);
     if (!res.ok) throw new Error('Falha ao carregar produtos.');
 
