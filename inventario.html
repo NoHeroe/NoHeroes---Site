@@ -526,7 +526,7 @@ body.modal-open{ overflow:hidden; }
     return;
   }
   window.tokenJWT = token;
-  window.API_BASE = 'https://api.noheroes.com.br';
+  window.API_BASE = 'https://dev-flmw.onrender.com';
 })();
 async function api(path, opts={}) {
   const res = await fetch(`${window.API_BASE}${path}`, {
