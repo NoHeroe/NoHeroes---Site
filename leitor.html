@@ -399,12 +399,13 @@ body {
 </div>
 
 <script>
-/* NO HEROES - CORE ENGINE v2.0
-   Arquitetura preparada para Backend e Performance de Interface
-*/
+/* NO HEROES - CORE ENGINE v3.0 — API Real */
+
+const API_BASE = 'https://dev-flmw.onrender.com';
 
 const STATE = {
     data: [],
+    featured: null,
     activeFilter: 'Tudo',
     searchQuery: '',
     isLoading: true
@@ -421,15 +422,13 @@ const UI = {
     modalContent: document.getElementById('modal-content')
 };
 
-/* --- 1. MOTOR DE ANIMAÇÃO (BRASAS) --- */
+/* --- BRASAS --- */
 let particles = [], w, h;
-
 function initCanvas() {
     w = UI.canvas.width = window.innerWidth;
     h = UI.canvas.height = window.innerHeight;
     particles = Array.from({ length: 120 }, () => new Particle());
 }
-
 class Particle {
     constructor() { this.reset(true); }
     reset(initial = false) {
@@ -440,11 +439,7 @@ class Particle {
         this.alpha = 0.3 + Math.random() * 0.4;
         this.drift = (Math.random() - 0.5) * 0.4;
     }
-    update() {
-        this.y -= this.speed;
-        this.x += this.drift;
-        if (this.y < -20) this.reset();
-    }
+    update() { this.y -= this.speed; this.x += this.drift; if (this.y < -20) this.reset(); }
     draw() {
         UI.ctx.fillStyle = `rgba(143, 79, 255, ${this.alpha})`;
         UI.ctx.beginPath();
@@ -452,43 +447,44 @@ class Particle {
         UI.ctx.fill();
     }
 }
-
 function animate() {
     UI.ctx.clearRect(0, 0, w, h);
     particles.forEach(p => { p.update(); p.draw(); });
     requestAnimationFrame(animate);
 }
 
-/* --- 2. LOGICA DE DADOS (SIMULANDO BACKEND) --- */
-async function fetchWorks() {
-    renderSkeletons(); // Ativa loader visual
-    
-    // Simulação de delay de rede (Plugar API aqui no futuro)
-    return new Promise(resolve => {
-        setTimeout(() => {
-            STATE.data = [
-                {
-                    id: 1, title: 'Azuos', status: 'S01 • On-going', category: 'Dark Fantasy',
-                    desc: 'Onde as sombras caminham, um herói renasce. A jornada de Azuos pelo Abismo começa aqui.',
-                    thumb: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80',
-                    hero: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80',
-                    tags: ['Ação', 'Seinen', 'Supernatural'], featured: true
-                },
-                {
-                    id: 2, title: 'Noctilum', status: 'S01 • Novo', category: 'Medieval',
-                    desc: 'A luz artificial de Noctilum é a única esperança contra os monstros abissais.',
-                    thumb: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80',
-                    hero: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1200&q=80',
-                    tags: ['Mistério', 'Gótico', 'Horror']
-                }
-            ];
-            STATE.isLoading = false;
-            resolve();
-        }, 1200);
-    });
+/* --- API --- */
+async function apiFetch(path) {
+    try {
+        const res = await fetch(`${API_BASE}${path}`);
+        const data = await res.json();
+        return data;
+    } catch (e) {
+        console.error('API error:', e);
+        return null;
+    }
 }
 
-/* --- 3. RENDERIZAÇÃO --- */
+/* --- FETCH OBRAS --- */
+async function fetchWorks() {
+    renderSkeletons();
+
+    // busca em paralelo: obras + destaque
+    const params = new URLSearchParams();
+    if (STATE.activeFilter !== 'Tudo') params.set('category', STATE.activeFilter);
+    if (STATE.searchQuery) params.set('search', STATE.searchQuery);
+
+    const [worksData, featuredData] = await Promise.all([
+        apiFetch(`/api/works?${params.toString()}`),
+        apiFetch('/api/works/featured')
+    ]);
+
+    STATE.data = worksData?.works || [];
+    STATE.featured = featuredData?.work || STATE.data[0] || null;
+    STATE.isLoading = false;
+}
+
+/* --- RENDERIZAÇÃO --- */
 function renderSkeletons() {
     UI.grid.innerHTML = Array(5).fill(0).map(() => `
         <div class="aspect-[3/4.5] skeleton"></div>
@@ -496,24 +492,32 @@ function renderSkeletons() {
 }
 
 function renderHero() {
-    const work = STATE.data.find(w => w.featured) || STATE.data[0];
+    const work = STATE.featured;
+    if (!work) {
+        document.getElementById('hero-display').innerHTML = '';
+        return;
+    }
+
+    const img = work.banner_url || work.cover_url || '';
+    const tags = Array.isArray(work.tags) ? work.tags : [];
+
     document.getElementById('hero-display').innerHTML = `
-        <img src="${work.hero}" class="absolute inset-0 w-full h-full object-cover opacity-40 scale-100">
+        ${img ? `<img src="${img}" class="absolute inset-0 w-full h-full object-cover opacity-40">` : ''}
         <div class="absolute inset-0 hero-mask"></div>
         <div class="relative z-10 p-8 md:p-20 max-w-4xl fade-up">
             <span class="px-4 py-1 rounded-full border border-nh-accent/30 bg-nh-accent/10 text-nh-accent text-[10px] font-black uppercase tracking-[0.3em]">Em Destaque</span>
             <h1 class="text-6xl md:text-8xl font-display text-grad mt-6 leading-none uppercase">${work.title}</h1>
-            <p class="text-white/60 mt-6 text-lg max-w-xl italic leading-relaxed">"${work.desc}"</p>
+            <p class="text-white/60 mt-6 text-lg max-w-xl italic leading-relaxed">"${work.synopsis || ''}"</p>
             <div class="mt-10 flex flex-wrap gap-4">
-                <button onclick="location.href='mangá.html?id=${work.id}'" class="px-12 py-5 rounded-2xl grad-nh text-black font-black uppercase tracking-widest text-xs shadow-glow transition hover:scale-105 active:scale-95">Iniciar Leitura</button>
-                <button onclick="openModal(${work.id})" class="px-12 py-5 rounded-2xl glass text-white font-black uppercase tracking-widest text-xs transition hover:bg-white/10">Ficha Técnica</button>
+                <button onclick="location.href='leitor.html?slug=${work.slug}'" class="px-12 py-5 rounded-2xl grad-nh text-black font-black uppercase tracking-widest text-xs shadow-glow transition hover:scale-105 active:scale-95">Iniciar Leitura</button>
+                <button onclick="openModal('${work.slug}')" class="px-12 py-5 rounded-2xl glass text-white font-black uppercase tracking-widest text-xs transition hover:bg-white/10">Ficha Técnica</button>
             </div>
         </div>
     `;
 }
 
 function renderFilters() {
-    const cats = ['Tudo', 'Dark Fantasy', 'Medieval', 'Mistério', 'Ação', 'Terror', 'Fantasia', 'Aventura' ];
+    const cats = ['Tudo', 'Dark Fantasy', 'Medieval', 'Mistério', 'Ação', 'Terror', 'Fantasia', 'Aventura'];
     UI.filterBar.innerHTML = cats.map(c => `
         <button onclick="setFilter('${c}')" class="px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap
             ${STATE.activeFilter === c ? 'grad-nh text-black shadow-glow' : 'glass text-white/40 hover:text-white'}">
@@ -525,38 +529,95 @@ function renderFilters() {
 function renderGrid() {
     if (STATE.isLoading) return;
 
-    const filtered = STATE.data.filter(w => {
-        const mCat = STATE.activeFilter === 'Tudo' || w.category === STATE.activeFilter || w.tags.includes(STATE.activeFilter);
-        const mSearch = w.title.toLowerCase().includes(STATE.searchQuery.toLowerCase());
-        return mCat && mSearch;
-    });
+    if (!STATE.data.length) {
+        UI.grid.innerHTML = `<div class="col-span-full py-20 text-center opacity-20 font-display uppercase tracking-widest">Nenhuma obra encontrada.</div>`;
+        return;
+    }
 
-    UI.grid.innerHTML = filtered.length ? filtered.map(w => `
-        <article class="group relative cursor-pointer fade-up" onclick="openModal(${w.id})">
+    UI.grid.innerHTML = STATE.data.map(w => {
+        const tags = Array.isArray(w.tags) ? w.tags : [];
+        const thumb = w.cover_url || 'https://via.placeholder.com/400x600/0c0a12/8f4fff?text=NoHeroes';
+        return `
+        <article class="group relative cursor-pointer fade-up" onclick="openModal('${w.slug}')">
             <div class="aspect-[3/4.5] rounded-[2rem] overflow-hidden border border-white/5 group-hover:border-nh-accent/50 transition-all duration-500 shadow-2xl">
-                <img src="${w.thumb}" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" onerror="this.src='https://via.placeholder.com/400x600/0c0a12/8f4fff?text=NoHeroes'">
+                <img src="${thumb}" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" onerror="this.src='https://via.placeholder.com/400x600/0c0a12/8f4fff?text=NoHeroes'">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-80"></div>
                 <div class="absolute bottom-6 left-6 right-6">
-                    <p class="text-[9px] font-black text-nh-accent uppercase tracking-[0.2em] mb-2">${w.category}</p>
+                    <p class="text-[9px] font-black text-nh-accent uppercase tracking-[0.2em] mb-2">${w.category || ''}</p>
                     <h3 class="text-lg font-bold text-white group-hover:text-grad transition-colors">${w.title}</h3>
                 </div>
             </div>
-        </article>
-    `).join('') : `<div class="col-span-full py-20 text-center opacity-20 font-display uppercase tracking-widest">Nenhuma obra encontrada.</div>`;
+        </article>`;
+    }).join('');
 }
 
-/* --- 4. ACTIONS & UI CONTROL --- */
-function setFilter(c) {
+/* --- MODAL: FICHA TÉCNICA --- */
+async function openModal(slug) {
+    UI.modal.classList.remove('hidden');
+    UI.modalContent.innerHTML = `<div class="p-10 text-center text-white/40">Carregando...</div>`;
+    setTimeout(() => { UI.modal.classList.add('opacity-100'); UI.modalContent.classList.remove('translate-y-full'); }, 10);
+    document.body.style.overflow = 'hidden';
+
+    const data = await apiFetch(`/api/works/${slug}`);
+    const w = data?.work;
+
+    if (!w) {
+        UI.modalContent.innerHTML = `<div class="p-10 text-center text-red-400">Erro ao carregar obra.</div>`;
+        return;
+    }
+
+    const tags = Array.isArray(w.tags) ? w.tags : [];
+    const img = w.banner_url || w.cover_url || '';
+
+    UI.modalContent.innerHTML = `
+        <div class="h-64 relative bg-cover bg-center" style="background-image: url('${img}')">
+            <div class="absolute inset-0 bg-gradient-to-t from-nh-dark to-transparent"></div>
+            <button onclick="closeModal()" class="absolute top-6 right-6 h-12 w-12 rounded-full glass flex items-center justify-center text-xl transition hover:rotate-90">✕</button>
+        </div>
+        <div class="p-10 -mt-12 relative z-10">
+            <div class="flex flex-wrap gap-2 mb-6">
+                ${tags.map(t => `<span class="px-4 py-1.5 rounded-full glass text-[9px] font-black uppercase text-nh-gold border-nh-gold/20">${t}</span>`).join('')}
+            </div>
+            <h2 class="font-display text-4xl text-grad uppercase mb-6">${w.title}</h2>
+            <p class="text-white/60 leading-relaxed mb-10 text-lg italic">"${w.synopsis || ''}"</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <button onclick="location.href='leitor.html?slug=${w.slug}'" class="py-5 rounded-2xl grad-nh text-black font-black uppercase tracking-widest text-xs shadow-glow transition hover:scale-[1.02]">Começar Leitura</button>
+                <button onclick="favWork('${w.slug}', ${w.id})" class="py-5 rounded-2xl glass text-white font-black uppercase tracking-widest text-xs transition hover:bg-white/10">Salvar na Lista</button>
+            </div>
+        </div>
+    `;
+}
+
+/* --- FAVORITAR --- */
+async function favWork(slug, id) {
+    const token = localStorage.getItem('NoHeroes_token');
+    if (!token) { showToast('Faça login para favoritar.'); return; }
+
+    try {
+        const res = await fetch(`${API_BASE}/api/works/${id}/favorite`, {
+            method: 'POST',
+            headers: { Authorization: token }
+        });
+        const data = await res.json();
+        showToast(data.active ? 'Adicionado aos favoritos!' : 'Removido dos favoritos.');
+    } catch {
+        showToast('Erro ao favoritar.');
+    }
+}
+
+function closeModal() {
+    UI.modal.classList.remove('opacity-100');
+    UI.modalContent.classList.add('translate-y-full');
+    setTimeout(() => { UI.modal.classList.add('hidden'); document.body.style.overflow = 'auto'; }, 300);
+}
+
+/* --- FILTROS E BUSCA --- */
+async function setFilter(c) {
     STATE.activeFilter = c;
+    STATE.isLoading = true;
     renderFilters();
+    await fetchWorks();
     renderGrid();
-}
-
-function showToast(msg) {
-    UI.toast.innerText = msg;
-    UI.toast.style.opacity = '1';
-    UI.toast.style.transform = 'translateY(0)';
-    setTimeout(() => { UI.toast.style.opacity = '0'; UI.toast.style.transform = 'translateY(-20px)'; }, 3000);
 }
 
 function focusSearch() {
@@ -565,54 +626,17 @@ function focusSearch() {
 }
 
 function openFeatured() {
-    const feat = STATE.data.find(w => w.featured);
-    if(feat) openModal(feat.id);
+    if (STATE.featured) openModal(STATE.featured.slug);
 }
 
-function openModal(id) {
-    const w = STATE.data.find(work => work.id === id);
-    UI.modalContent.innerHTML = `
-        <div class="h-64 relative bg-cover bg-center" style="background-image: url('${w.hero}')">
-            <div class="absolute inset-0 bg-gradient-to-t from-nh-dark to-transparent"></div>
-            <button onclick="closeModal()" class="absolute top-6 right-6 h-12 w-12 rounded-full glass flex items-center justify-center text-xl transition hover:rotate-90">✕</button>
-        </div>
-        <div class="p-10 -mt-12 relative z-10">
-            <div class="flex flex-wrap gap-2 mb-6">
-                ${w.tags.map(t => `<span class="px-4 py-1.5 rounded-full glass text-[9px] font-black uppercase text-nh-gold border-nh-gold/20">${t}</span>`).join('')}
-            </div>
-            <h2 class="font-display text-4xl text-grad uppercase mb-6">${w.title}</h2>
-            <p class="text-white/60 leading-relaxed mb-10 text-lg italic">"${w.desc}"</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <button onclick="location.href='leitor.html?id=${w.id}'" class="py-5 rounded-2xl grad-nh text-black font-black uppercase tracking-widest text-xs shadow-glow transition hover:scale-[1.02]">Começar Leitura</button>
-                <button onclick="showToast('Adicionado aos favoritos!')" class="py-5 rounded-2xl glass text-white font-black uppercase tracking-widest text-xs transition hover:bg-white/10">Salvar na Lista</button>
-            </div>
-        </div>
-    `;
-    UI.modal.classList.remove('hidden');
-    setTimeout(() => { UI.modal.classList.add('opacity-100'); UI.modalContent.classList.remove('translate-y-full'); }, 10);
-    document.body.style.overflow = 'hidden';
-}
-
-function closeModal() {
-    UI.modal.classList.remove('opacity-100');
-    UI.modalContent.classList.add('translate-y-full');
-    setTimeout(() => { 
-        UI.modal.classList.add('hidden'); 
-        document.body.style.overflow = 'auto'; 
-    }, 300);
-}
-
-// NOVA FUNÇÃO: Modal de Comunidade
 function openCommunityModal() {
     UI.modalContent.innerHTML = `
         <div class="p-10 relative">
             <button onclick="closeModal()" class="absolute top-6 right-6 h-10 w-10 rounded-full glass flex items-center justify-center text-sm transition hover:rotate-90">✕</button>
-            
             <div class="text-center mb-8">
                 <h2 class="font-display text-3xl text-grad uppercase mb-2">União dos Arautos</h2>
                 <p class="text-white/40 text-xs uppercase tracking-widest font-bold">Escolha sua Guilda</p>
             </div>
-
             <div class="grid grid-cols-1 gap-4">
                 <a href="https://discord.gg/SEU_CONVITE" target="_blank" class="flex items-center gap-6 p-6 rounded-3xl bg-[#5865F2]/10 border border-[#5865F2]/20 hover:bg-[#5865F2]/20 transition-all group">
                     <div class="w-12 h-12 rounded-2xl bg-[#5865F2] flex items-center justify-center shadow-lg group-hover:scale-110 transition">
@@ -623,24 +647,11 @@ function openCommunityModal() {
                         <p class="text-white/30 text-[10px]">Fóruns, Avisos e Eventos</p>
                     </div>
                 </a>
-
-                <a href="https://wa.me/SEU_NUMERO" target="_blank" class="flex items-center gap-6 p-6 rounded-3xl bg-[#25D366]/5 border border-[#25D366]/10 hover:bg-[#25D366]/10 transition-all group">
-                    <div class="w-12 h-12 rounded-2xl bg-[#25D366] flex items-center justify-center shadow-lg group-hover:scale-110 transition">
-                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 .018 5.394 0 12.03c0 2.12.554 4.189 1.604 6.04L0 24l6.104-1.602a11.803 11.803 0 005.941 1.604h.005c6.634 0 12.032-5.39 12.035-12.029a11.79 11.79 0 00-3.526-8.483z"/></svg>
-                    </div>
-                    <div class="text-left">
-                        <h3 class="font-bold text-white uppercase text-sm">WhatsApp Guild</h3>
-                        <p class="text-white/30 text-[10px]">Chat Rápido e Suporte</p>
-                    </div>
-                </a>
             </div>
         </div>
     `;
     UI.modal.classList.remove('hidden');
-    setTimeout(() => { 
-        UI.modal.classList.add('opacity-100'); 
-        UI.modalContent.classList.remove('translate-y-full'); 
-    }, 10);
+    setTimeout(() => { UI.modal.classList.add('opacity-100'); UI.modalContent.classList.remove('translate-y-full'); }, 10);
     document.body.style.overflow = 'hidden';
 }
 
@@ -650,56 +661,48 @@ function resetHub() {
     UI.searchInput.value = '';
     window.scrollTo({ top: 0, behavior: 'smooth' });
     renderFilters();
-    renderGrid();
+    fetchWorks().then(() => { renderHero(); renderGrid(); });
 }
 
-/* --- 5. INITIALIZATION --- */
+/* --- BUSCA COM DEBOUNCE --- */
+let searchTimer;
 UI.searchInput.oninput = (e) => {
     STATE.searchQuery = e.target.value;
-    renderGrid();
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(async () => {
+        STATE.isLoading = true;
+        await fetchWorks();
+        renderGrid();
+    }, 400);
 };
 
 window.addEventListener("resize", initCanvas);
 
-document.addEventListener('DOMContentLoaded', async () => {
-    initCanvas();
-    animate();
-    
-    await fetchWorks(); 
-    
-    renderHero();
-    renderFilters();
-    renderGrid();
-}); 
-
-/* --- DRAWER LOGIC --- */
+/* --- DRAWER --- */
 const hamburgerBtn = document.getElementById('hamburgerBtn');
 const drawer = document.getElementById('drawer');
 const overlay = document.getElementById('drawerOverlay');
-
 let isDrawerOpen = false;
-
 function toggleDrawer() {
     isDrawerOpen = !isDrawerOpen;
-
-    if (isDrawerOpen) {
-        // Abrir Drawer
-        drawer.style.transform = 'translateX(0)';
-        overlay.classList.remove('hidden');
-        // Usamos setTimeout para o CSS ter tempo de processar a opacidade após remover o 'hidden'
-        setTimeout(() => overlay.classList.remove('opacity-0'), 10);
-        document.body.style.overflow = 'hidden'; // Evita que a página atrás role
-    } else {
-        // Fechar Drawer
-        drawer.style.transform = 'translateX(100%)';
-        overlay.classList.add('opacity-0');
-        setTimeout(() => overlay.classList.add('hidden'), 300); // Aguarda a animação
-        document.body.style.overflow = ''; // Devolve o scroll
-    }
+    drawer.style.transform = isDrawerOpen ? 'translateX(0)' : 'translateX(100%)';
+    overlay.classList.toggle('hidden', !isDrawerOpen);
+    if (isDrawerOpen) setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+    else overlay.classList.add('opacity-0');
+    document.body.style.overflow = isDrawerOpen ? 'hidden' : '';
 }
-
 hamburgerBtn.addEventListener('click', toggleDrawer);
 overlay.addEventListener('click', toggleDrawer);
+
+/* --- INIT --- */
+document.addEventListener('DOMContentLoaded', async () => {
+    initCanvas();
+    animate();
+    renderFilters();
+    await fetchWorks();
+    renderHero();
+    renderGrid();
+});
 
 </script>
 </body>
