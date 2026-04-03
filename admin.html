@@ -678,10 +678,6 @@ function confirm_(msg, fn) {
 }
 
 /* ─── BOOT ── */
-  async function boot() {
-  const raw = localStorage.getItem('NoHeroes_token');
-  const token = Auth.token();
-  alert(`RAW: ${raw}\n\nTOKEN: ${token}`);
     
 async function boot() {
   if(!Auth.token()) { location.href='login.html'; return; }
