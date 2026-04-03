@@ -179,7 +179,7 @@ form.addEventListener("submit",async e=>{
   submitBtn.disabled=true;btnSpin.classList.remove("hidden");btnText.textContent="Criando conta...";
 
   try{
-    const res = await fetch("https://api.noheroes.com.br/api/auth/register", {
+    const res = await fetch("https://dev-flmw.onrender.com/api/auth/register", {
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify(payload)
