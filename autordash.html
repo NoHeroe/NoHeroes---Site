@@ -1,0 +1,2195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>NoHeroes • Santuário do Arauto</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Cinzel+Decorative:wght@700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+<style>
+:root {
+  --bg: #06050a;
+  --surface: #0d0b14;
+  --surface2: #13101c;
+  --accent: #8f4fff;
+  --accent2: #d9b55a;
+  --red: #ef4444;
+  --green: #22c55e;
+  --border: rgba(143,79,255,0.12);
+  --border2: rgba(255,255,255,0.06);
+  --text: #e8e4f0;
+  --muted: rgba(232,228,240,0.4);
+  --font-display: 'Cinzel Decorative', serif;
+  --font-body: 'Syne', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 99px; opacity: 0.5; }
+
+/* ─── LAYOUT ─── */
+.layout {
+  display: block;
+  min-height: 100vh;
+}
+
+/* Drawer overlay */
+#drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+  z-index: 49;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+#drawer-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (max-width: 768px) {
+  .mobile-nav { display: flex !important; }
+  .main-header { display: flex !important; }
+
+  /* Main content fills full width on mobile */
+  .main-content {
+    grid-column: 1 !important;
+    padding: 72px 14px 24px !important;
+    max-width: 100vw !important;
+  }
+
+  /* KPI grid: 2 cols on mobile */
+  .kpi-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
+  .kpi-card { padding: 14px !important; }
+  .kpi-value { font-size: 22px !important; }
+
+  /* Chapters grid: stack on mobile */
+  .chapters-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+
+  /* Profile grid: stack on mobile */
+  .profile-grid { grid-template-columns: 1fr !important; }
+  .profile-grid > div:first-child { align-items: center !important; }
+
+  /* Section header: stack on mobile */
+  .section-header { flex-direction: column; align-items: flex-start !important; gap: 12px; }
+  .section-header .btn { width: 100%; justify-content: center; }
+
+  /* Cards */
+  .card { padding: 16px !important; border-radius: 12px !important; }
+  .card-sm { padding: 12px !important; }
+
+  /* Modal box */
+  .modal-box { 
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 20px 20px 0 0 !important;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .modal-backdrop { align-items: flex-end !important; }
+
+  /* Work modal inner grid */
+  .modal-box > div[style*="grid-template-columns:auto 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+  .cover-upload { max-width: 100% !important; width: 140px !important; margin: 0 auto; }
+
+  /* Works table → cards */
+  .works-table thead { display: none !important; }
+  .works-table, .works-table tbody, .works-table tr, .works-table td {
+    display: block !important;
+    width: 100% !important;
+  }
+  .works-table tr {
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 10px;
+  }
+  .works-table td {
+    padding: 3px 0 !important;
+    border: none !important;
+  }
+  .works-table td:nth-child(3)::before { content: 'Caps: '; color: var(--muted); font-size: 11px; }
+  .works-table td:nth-child(4)::before { content: 'Views: '; color: var(--muted); font-size: 11px; }
+  .works-table td:nth-child(5)::before { content: 'Likes: '; color: var(--muted); font-size: 11px; }
+  .works-table td:nth-child(6)::before { content: 'Favs: '; color: var(--muted); font-size: 11px; }
+
+  /* Revenue bars */
+  .revenue-bar { flex-wrap: wrap; gap: 6px; }
+  .revenue-track { flex: 1 1 100%; order: 3; }
+  .revenue-value { order: 2; }
+
+  /* Page grid: smaller thumbs */
+  .page-grid { grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)) !important; gap: 6px !important; }
+
+  /* Upload zone smaller */
+  .upload-zone { padding: 20px 12px !important; }
+
+  /* Mod items stack */
+  .mod-item { flex-wrap: wrap; gap: 10px; }
+  .mod-actions { width: 100%; justify-content: flex-end; }
+
+  /* Chapter item */
+  .chapter-actions { gap: 4px; }
+
+  /* Comment filter row */
+  #tab-comments .section-header > div:last-child { 
+    display: flex; 
+    width: 100%; 
+    gap: 8px;
+  }
+  #tab-comments .section-header > div:last-child select { flex: 1; }
+
+  /* Stats row center */
+  .stats-row { justify-content: center; gap: 16px; }
+
+  /* Admin cards grid */
+  #tab-admin > div:nth-child(2) { grid-template-columns: 1fr 1fr !important; }
+}
+
+/* ─── SIDEBAR / DRAWER ─── */
+.sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 260px;
+  height: 100vh;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 28px 16px;
+  z-index: 50;
+  overflow-y: auto;
+  transform: translateX(-100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar.open {
+  transform: translateX(0);
+  box-shadow: 4px 0 40px rgba(0,0,0,0.6);
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 8px;
+  margin-bottom: 32px;
+}
+
+.logo-gem {
+  width: 32px; height: 32px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  border-radius: 8px;
+  transform: rotate(45deg);
+  flex-shrink: 0;
+  box-shadow: 0 0 20px rgba(143,79,255,0.4);
+}
+
+.logo-text {
+  font-family: var(--font-display);
+  font-size: 14px;
+  background: linear-gradient(135deg, #c4a3ff, #f0d99a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.05em;
+}
+
+.nav-section-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0 12px;
+  margin: 20px 0 8px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+  width: 100%;
+  background: none;
+  text-align: left;
+  letter-spacing: 0.02em;
+}
+
+.nav-item:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+.nav-item.active { color: var(--accent); background: rgba(143,79,255,0.1); border-color: rgba(143,79,255,0.2); }
+.nav-item.admin-item { color: rgba(239,68,68,0.6); }
+.nav-item.admin-item:hover { color: var(--red); background: rgba(239,68,68,0.08); }
+.nav-item.admin-item.active { color: var(--red); background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.3); }
+.nav-item .icon { font-size: 16px; width: 20px; text-align: center; }
+
+.nav-badge {
+  margin-left: auto;
+  background: var(--red);
+  color: white;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 99px;
+  font-family: var(--font-mono);
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid var(--border2);
+}
+
+.user-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+}
+
+.avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 13px;
+  color: #000;
+  flex-shrink: 0;
+}
+
+.user-name { font-size: 13px; font-weight: 700; color: var(--text); }
+.user-role { font-size: 10px; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--font-mono); }
+
+/* ─── MOBILE NAV ─── */
+.mobile-nav {
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 64px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  z-index: 50;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.mobile-nav-items {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+  padding: 0 8px;
+}
+
+.mobile-nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--muted);
+  transition: all 0.2s;
+  flex: 1;
+}
+
+.mobile-nav-btn.active { color: var(--accent); }
+.mobile-nav-btn .mob-icon { font-size: 20px; }
+.mobile-nav-btn .mob-label { font-size: 9px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; font-family: var(--font-body); }
+
+/* ─── MAIN ─── */
+.main-header {
+  display: flex;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 56px;
+  background: rgba(6,5,10,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  z-index: 40;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.main-content {
+  padding: 80px 40px 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: 72px 14px 100px !important;
+    max-width: 100vw !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content { grid-column: 1; padding: 72px 16px 16px; }
+}
+
+/* ─── TAB CONTENT ─── */
+.tab { display: none; }
+.tab.active { display: block; animation: fadeUp 0.3s ease-out; }
+@keyframes fadeUp { from { opacity:0; transform: translateY(12px); } to { opacity:1; transform: translateY(0); } }
+
+/* ─── CARDS & COMPONENTS ─── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.card-sm {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+.kpi-card {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 14px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 60px; height: 60px;
+  background: radial-gradient(circle, rgba(143,79,255,0.15), transparent);
+  border-radius: 50%;
+}
+
+.kpi-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; font-family: var(--font-mono); }
+.kpi-value { font-size: 28px; font-weight: 800; font-family: var(--font-display); line-height: 1; }
+.kpi-sub { font-size: 11px; margin-top: 8px; color: var(--muted); }
+.kpi-up { color: var(--green); }
+.kpi-down { color: var(--red); }
+
+/* ─── SECTION HEADER ─── */
+.section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border2);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  background: linear-gradient(135deg, #c4a3ff, #f0d99a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.section-sub { font-size: 12px; color: var(--muted); margin-top: 4px; font-family: var(--font-mono); }
+
+/* ─── BUTTONS ─── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  font-family: var(--font-body);
+}
+
+.btn:active { transform: scale(0.97); }
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), #6b2fff);
+  color: white;
+  box-shadow: 0 0 20px rgba(143,79,255,0.3);
+}
+.btn-primary:hover { box-shadow: 0 0 30px rgba(143,79,255,0.5); transform: translateY(-1px); }
+
+.btn-gold {
+  background: linear-gradient(135deg, var(--accent2), #b8922a);
+  color: #000;
+}
+
+.btn-ghost {
+  background: var(--surface2);
+  color: var(--text);
+  border: 1px solid var(--border2);
+}
+.btn-ghost:hover { border-color: rgba(143,79,255,0.4); color: var(--accent); }
+
+.btn-danger {
+  background: rgba(239,68,68,0.15);
+  color: var(--red);
+  border: 1px solid rgba(239,68,68,0.3);
+}
+.btn-danger:hover { background: rgba(239,68,68,0.25); }
+
+.btn-sm { padding: 6px 12px; font-size: 10px; }
+.btn-icon { padding: 8px; border-radius: 8px; }
+
+/* ─── INPUTS ─── */
+.field { margin-bottom: 16px; }
+.label { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; font-family: var(--font-mono); }
+
+.input {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 11px 14px;
+  color: var(--text);
+  font-size: 13px;
+  font-family: var(--font-body);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.input:focus { border-color: rgba(143,79,255,0.5); }
+.input::placeholder { color: rgba(232,228,240,0.2); }
+
+select.input { cursor: pointer; }
+textarea.input { resize: vertical; min-height: 100px; }
+
+/* ─── TOGGLE ─── */
+.toggle-wrap { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; background: var(--surface2); border: 1px solid var(--border2); border-radius: 10px; }
+.toggle-label { font-size: 13px; font-weight: 600; }
+.toggle { position: relative; display: inline-block; width: 44px; height: 24px; flex-shrink: 0; }
+.toggle input { opacity: 0; width: 0; height: 0; }
+.toggle-slider { position: absolute; inset: 0; background: rgba(255,255,255,0.1); border-radius: 99px; cursor: pointer; transition: 0.3s; border: 1px solid var(--border2); }
+.toggle-slider::before { content: ''; position: absolute; width: 18px; height: 18px; left: 2px; top: 2px; background: white; border-radius: 50%; transition: 0.3s; }
+.toggle input:checked + .toggle-slider { background: var(--accent); }
+.toggle input:checked + .toggle-slider::before { transform: translateX(20px); }
+
+/* ─── BADGES ─── */
+.badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 99px; font-size: 9px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; font-family: var(--font-mono); }
+.badge-draft { background: rgba(255,255,255,0.06); color: var(--muted); border: 1px solid var(--border2); }
+.badge-pending { background: rgba(217,181,90,0.12); color: var(--accent2); border: 1px solid rgba(217,181,90,0.3); }
+.badge-published { background: rgba(34,197,94,0.1); color: var(--green); border: 1px solid rgba(34,197,94,0.25); }
+.badge-suspended { background: rgba(239,68,68,0.1); color: var(--red); border: 1px solid rgba(239,68,68,0.25); }
+.badge-premium { background: rgba(143,79,255,0.12); color: #c4a3ff; border: 1px solid rgba(143,79,255,0.3); }
+
+/* ─── WORKS TABLE ─── */
+.works-table { width: 100%; border-collapse: collapse; }
+.works-table th { font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); padding: 8px 12px; text-align: left; font-family: var(--font-mono); border-bottom: 1px solid var(--border2); }
+.works-table td { padding: 14px 12px; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 13px; vertical-align: middle; }
+.works-table tr:last-child td { border-bottom: none; }
+.works-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+/* ─── CHAPTER LIST ─── */
+.chapter-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  margin-bottom: 8px;
+  transition: border-color 0.2s;
+}
+.chapter-item:hover { border-color: rgba(143,79,255,0.3); }
+.chapter-num { font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--accent); width: 32px; text-align: center; flex-shrink: 0; }
+.chapter-info { flex: 1; min-width: 0; }
+.chapter-title { font-size: 13px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chapter-meta { font-size: 11px; color: var(--muted); margin-top: 3px; font-family: var(--font-mono); }
+.chapter-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+/* ─── UPLOAD GRID ─── */
+.upload-zone {
+  width: 100%;
+  border: 2px dashed var(--border2);
+  border-radius: 14px;
+  padding: 32px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+  background: var(--surface2);
+}
+.upload-zone:hover, .upload-zone.drag-over { border-color: var(--accent); background: rgba(143,79,255,0.05); }
+.upload-zone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.upload-icon { font-size: 32px; margin-bottom: 8px; }
+.upload-text { font-size: 13px; font-weight: 700; color: var(--muted); }
+.upload-sub { font-size: 11px; color: rgba(232,228,240,0.25); margin-top: 4px; font-family: var(--font-mono); }
+
+.page-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 10px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 14px;
+  padding: 16px;
+  min-height: 120px;
+}
+
+.page-thumb {
+  position: relative;
+  aspect-ratio: 2/3;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border2);
+  cursor: grab;
+  background: var(--surface);
+}
+
+.page-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.page-num {
+  position: absolute;
+  top: 4px; left: 4px;
+  background: rgba(0,0,0,0.85);
+  color: white;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+}
+
+.page-del {
+  position: absolute;
+  top: 4px; right: 4px;
+  background: rgba(239,68,68,0.9);
+  color: white;
+  width: 20px; height: 20px;
+  border-radius: 4px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  cursor: pointer;
+  border: none;
+}
+
+.page-thumb:hover .page-del { display: flex; }
+
+.empty-grid {
+  grid-column: 1/-1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: rgba(232,228,240,0.2);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  min-height: 80px;
+}
+
+.sortable-ghost { opacity: 0.3; border: 2px dashed var(--accent) !important; }
+
+/* ─── COMMENT CARD ─── */
+.comment-card {
+  display: flex;
+  gap: 14px;
+  padding: 16px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+.comment-meta { font-size: 12px; font-weight: 700; }
+.comment-time { font-size: 10px; color: var(--muted); font-family: var(--font-mono); margin-left: 8px; }
+.comment-text { font-size: 13px; color: rgba(232,228,240,0.7); margin-top: 6px; line-height: 1.6; }
+.comment-actions { display: flex; gap: 12px; margin-top: 10px; }
+.comment-action-btn { font-size: 10px; font-weight: 700; color: var(--muted); background: none; border: none; cursor: pointer; letter-spacing: 0.05em; text-transform: uppercase; transition: color 0.2s; font-family: var(--font-body); }
+.comment-action-btn:hover { color: var(--text); }
+
+/* ─── NOTIFICATION ITEM ─── */
+.notif-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border2);
+  margin-bottom: 8px;
+  transition: all 0.2s;
+  cursor: pointer;
+  background: var(--surface2);
+}
+.notif-item.unread { border-color: rgba(143,79,255,0.25); background: rgba(143,79,255,0.05); }
+.notif-item:hover { border-color: rgba(143,79,255,0.4); }
+.notif-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 5px; }
+.notif-dot.read { background: transparent; border: 1px solid var(--border2); }
+.notif-title { font-size: 13px; font-weight: 700; }
+.notif-body { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.notif-time { font-size: 10px; color: var(--muted); font-family: var(--font-mono); margin-top: 4px; }
+
+/* ─── ADMIN CARDS ─── */
+.admin-card {
+  background: rgba(239,68,68,0.04);
+  border: 1px solid rgba(239,68,68,0.15);
+  border-radius: 14px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.admin-card:hover { border-color: rgba(239,68,68,0.4); background: rgba(239,68,68,0.08); }
+.admin-icon { font-size: 28px; margin-bottom: 10px; }
+.admin-title { font-size: 14px; font-weight: 700; color: var(--text); }
+.admin-sub { font-size: 11px; color: rgba(239,68,68,0.7); margin-top: 4px; font-family: var(--font-mono); }
+
+/* ─── MODERATION ITEM ─── */
+.mod-item {
+  display: flex;
+  gap: 14px;
+  padding: 16px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+.mod-thumb { width: 48px; height: 64px; border-radius: 6px; object-fit: cover; background: var(--surface); flex-shrink: 0; border: 1px solid var(--border2); }
+.mod-info { flex: 1; min-width: 0; }
+.mod-title { font-size: 14px; font-weight: 700; }
+.mod-author { font-size: 11px; color: var(--muted); margin-top: 2px; font-family: var(--font-mono); }
+.mod-synopsis { font-size: 12px; color: rgba(232,228,240,0.5); margin-top: 6px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.mod-actions { display: flex; gap: 8px; flex-shrink: 0; }
+
+/* ─── REVENUE ─── */
+.revenue-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border2);
+}
+.revenue-bar:last-child { border-bottom: none; }
+.revenue-label { font-size: 12px; font-weight: 700; flex: 1; }
+.revenue-track { flex: 2; height: 6px; background: var(--surface2); border-radius: 99px; overflow: hidden; }
+.revenue-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+.revenue-value { font-size: 12px; font-weight: 700; font-family: var(--font-mono); color: var(--accent2); text-align: right; min-width: 80px; }
+
+/* ─── TOAST ─── */
+#toast-container { position: fixed; top: 20px; right: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
+.toast { display: flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 10px; font-size: 13px; font-weight: 700; color: var(--text); opacity: 0; transform: translateX(110%); transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); backdrop-filter: blur(12px); font-family: var(--font-body); pointer-events: auto; }
+.toast.show { opacity: 1; transform: translateX(0); }
+.toast.success { background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.4); }
+.toast.error { background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.4); }
+.toast.info { background: rgba(143,79,255,0.15); border: 1px solid rgba(143,79,255,0.4); }
+
+/* ─── PROFILE AVATAR ─── */
+.avatar-upload {
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  font-weight: 800;
+  color: #000;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  border: 3px solid rgba(143,79,255,0.3);
+  flex-shrink: 0;
+}
+
+.avatar-upload:hover .avatar-overlay { opacity: 1; }
+.avatar-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; opacity: 0; transition: 0.2s; }
+.avatar-upload input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+
+/* ─── STATS ROW ─── */
+.stats-row { display: flex; gap: 24px; flex-wrap: wrap; }
+.stat { text-align: center; }
+.stat-value { font-size: 22px; font-weight: 800; font-family: var(--font-display); }
+.stat-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--font-mono); }
+
+/* ─── PROGRESS BAR ─── */
+.progress-bar { height: 4px; background: var(--surface2); border-radius: 99px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 0.6s ease; }
+
+/* ─── SEPARATOR ─── */
+.sep { height: 1px; background: var(--border2); margin: 24px 0; }
+
+/* ─── COVER UPLOAD ─── */
+.cover-upload {
+  aspect-ratio: 2/3;
+  width: 100%;
+  max-width: 180px;
+  border-radius: 14px;
+  border: 2px dashed var(--border2);
+  background: var(--surface2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.cover-upload:hover { border-color: var(--accent); }
+.cover-upload input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.cover-upload img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* ─── MODAL ─── */
+.modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 200; display: none; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
+.modal-backdrop.show { display: flex; }
+.modal-box { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; width: min(540px, 92vw); padding: 28px; animation: fadeUp 0.25s ease; }
+.modal-title { font-family: var(--font-display); font-size: 18px; margin-bottom: 20px; background: linear-gradient(135deg, #c4a3ff, #f0d99a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.modal-footer { display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border2); }
+
+/* ─── CANVAS ─── */
+#brasasCanvas { position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.5; }
+.main-content { position: relative; z-index: 1; }
+</style>
+</head>
+<body>
+
+<canvas id="brasasCanvas"></canvas>
+<div id="toast-container"></div>
+
+<!-- ═══ DRAWER OVERLAY ═══ -->
+<div id="drawer-overlay" onclick="closeDrawer()"></div>
+
+<!-- ═══ SIDEBAR DRAWER ═══ -->
+<aside class="sidebar" id="sidebar">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;">
+    <div class="sidebar-logo" style="margin-bottom:0;">
+      <div class="logo-gem"></div>
+      <span class="logo-text">NoHeroes</span>
+    </div>
+    <button onclick="closeDrawer()" style="background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;padding:4px;line-height:1;">✕</button>
+  </div>
+
+  <span class="nav-section-label">Painel</span>
+  <button class="nav-item active" onclick="switchTab('dashboard')" id="nav-dashboard">
+    <span class="icon">📊</span> Dashboard
+  </button>
+  <button class="nav-item" onclick="switchTab('notifications')" id="nav-notifications">
+    <span class="icon">🔔</span> Notificações
+    <span class="nav-badge" id="notif-badge">3</span>
+  </button>
+
+  <span class="nav-section-label">Conteúdo</span>
+  <button class="nav-item" onclick="switchTab('works')" id="nav-works">
+    <span class="icon">📚</span> Minhas Obras
+  </button>
+  <button class="nav-item" onclick="switchTab('chapters')" id="nav-chapters">
+    <span class="icon">📤</span> Capítulos
+  </button>
+  <button class="nav-item" onclick="switchTab('comments')" id="nav-comments">
+    <span class="icon">💬</span> Comentários
+  </button>
+
+  <span class="nav-section-label">Conta</span>
+  <button class="nav-item" onclick="switchTab('revenue')" id="nav-revenue">
+    <span class="icon">💰</span> Caixa Forte
+  </button>
+
+  <div class="sidebar-footer">
+    <div class="user-card">
+      <div class="avatar" id="sidebar-avatar">R</div>
+      <div>
+        <div class="user-name" id="sidebar-name">Raul Takagi</div>
+        <div class="user-role" id="sidebar-role">Admin · CEO</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- HEADER FIXO (todos os dispositivos) -->
+<header class="main-header">
+  <div style="display:flex;align-items:center;gap:14px;">
+    <button onclick="toggleDrawer()" style="background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:4px;" aria-label="Menu">
+      <span style="display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:0.3s;"></span>
+      <span style="display:block;width:16px;height:2px;background:var(--text);border-radius:2px;transition:0.3s;"></span>
+      <span style="display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:0.3s;"></span>
+    </button>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div class="logo-gem" style="width:22px;height:22px;border-radius:5px;"></div>
+      <span class="logo-text" style="font-size:13px;">Santuário</span>
+    </div>
+  </div>
+  <div class="avatar" style="width:34px;height:34px;font-size:12px;" id="mobile-avatar">R</div>
+</header>
+
+<!-- NAV MOBILE (bottom) -->
+<nav class="mobile-nav">
+  <div class="mobile-nav-items">
+    <button class="mobile-nav-btn active" onclick="switchTab('dashboard')" id="mob-dashboard">
+      <span class="mob-icon">📊</span><span class="mob-label">Painel</span>
+    </button>
+    <button class="mobile-nav-btn" onclick="switchTab('works')" id="mob-works">
+      <span class="mob-icon">📚</span><span class="mob-label">Obras</span>
+    </button>
+    <button class="mobile-nav-btn" onclick="switchTab('chapters')" id="mob-chapters">
+      <span class="mob-icon">📤</span><span class="mob-label">Caps</span>
+    </button>
+    <button class="mobile-nav-btn" onclick="switchTab('comments')" id="mob-comments">
+      <span class="mob-icon">💬</span><span class="mob-label">Chat</span>
+    </button>
+    <button class="mobile-nav-btn" onclick="openMobileMore()" id="mob-more">
+      <span class="mob-icon">⋯</span><span class="mob-label">Mais</span>
+    </button>
+  </div>
+  <div id="mobile-more-drawer" style="display:none;position:fixed;bottom:64px;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);border-radius:20px 20px 0 0;padding:16px;z-index:200;box-shadow:0 -10px 40px rgba(0,0,0,0.6);">
+    <div style="width:40px;height:4px;background:var(--border2);border-radius:99px;margin:0 auto 16px;"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <button onclick="switchTab('notifications');closeMobileMore()" style="display:flex;align-items:center;gap:10px;padding:14px;background:var(--surface2);border:1px solid var(--border2);border-radius:12px;color:var(--text);font-family:var(--font-body);font-size:13px;font-weight:700;cursor:pointer;"><span style="font-size:20px;">🔔</span> Notificações</button>
+      <button onclick="switchTab('revenue');closeMobileMore()" style="display:flex;align-items:center;gap:10px;padding:14px;background:var(--surface2);border:1px solid var(--border2);border-radius:12px;color:var(--text);font-family:var(--font-body);font-size:13px;font-weight:700;cursor:pointer;"><span style="font-size:20px;">💰</span> Caixa Forte</button>
+    </div>
+    <button onclick="closeMobileMore()" style="width:100%;margin-top:12px;padding:12px;background:none;border:1px solid var(--border2);border-radius:12px;color:var(--muted);font-family:var(--font-body);font-size:12px;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:0.1em;">Fechar</button>
+  </div>
+  <div id="mobile-more-overlay" onclick="closeMobileMore()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:199;backdrop-filter:blur(4px);"></div>
+</nav>
+
+<!-- ═══ MAIN CONTENT ═══ -->
+<main class="main-content">
+
+  <!-- ── DASHBOARD ── -->
+  <div id="tab-dashboard" class="tab active">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Meus Reinos</div>
+        <div class="section-sub">Visão geral do seu impacto · Atualizado agora</div>
+      </div>
+      <button class="btn btn-ghost btn-sm">Exportar Dados</button>
+    </div>
+
+    <div class="kpi-grid" style="margin-bottom:24px;">
+      <div class="kpi-card">
+        <div class="kpi-label">Leituras Totais</div>
+        <div class="kpi-value" id="kpi-views" style="background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">—</div>
+        <div class="kpi-sub"><span class="kpi-up">↑ 18%</span> este mês</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Passes Vendidos</div>
+        <div class="kpi-value" id="kpi-revenue" style="color:var(--accent2);">—</div>
+        <div class="kpi-sub">R$ 1.540 em receita</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Seguidores</div>
+        <div class="kpi-value" id="kpi-followers">—</div>
+        <div class="kpi-sub"><span class="kpi-up">↑ 42</span> esta semana</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Comentários</div>
+        <div class="kpi-value" id="kpi-comments">—</div>
+        <div class="kpi-sub"><span class="kpi-down">12</span> aguardando resposta</div>
+      </div>
+    </div>
+
+    <!-- Obras resumo -->
+    <div class="card" style="margin-bottom:20px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <span style="font-size:14px;font-weight:700;">Obras em Andamento</span>
+        <button class="btn btn-ghost btn-sm" onclick="switchTab('works')">Ver Todas</button>
+      </div>
+      <div id="dashboard-works-list"></div>
+    </div>
+
+    <!-- Últimos comentários -->
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <span style="font-size:14px;font-weight:700;">Comentários Recentes</span>
+        <button class="btn btn-ghost btn-sm" onclick="switchTab('comments')">Ver Todos</button>
+      </div>
+      <div id="dashboard-comments-list"></div>
+    </div>
+  </div>
+
+  <!-- ── OBRAS ── -->
+  <div id="tab-works" class="tab">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Forja de Obras</div>
+        <div class="section-sub">Crie, edite e gerencie seus mangás e novels</div>
+      </div>
+      <button class="btn btn-primary" onclick="openWorkModal()">+ Nova Obra</button>
+    </div>
+
+    <div id="works-list"></div>
+
+    <!-- Engajamento por obra -->
+    <div id="works-engagement" style="margin-top:24px;display:none;">
+      <div style="font-size:14px;font-weight:700;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--border2);">📊 Engajamento por Obra</div>
+      <div id="engagement-list"></div>
+    </div>
+  </div>
+
+  <!-- ── CAPÍTULOS ── -->
+  <div id="tab-chapters" class="tab">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Forjar Capítulo</div>
+        <div class="section-sub">Publique e gerencie os capítulos das suas obras</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;" class="chapters-grid">
+      <!-- Formulário -->
+      <div class="card">
+        <div style="font-size:13px;font-weight:700;margin-bottom:16px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-mono);">Novo Capítulo</div>
+
+        <div class="field">
+          <label class="label">Obra</label>
+          <select class="input" id="cap-work">
+            <option value="">Selecione uma obra...</option>
+          </select>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="field">
+            <label class="label">Nº do Capítulo</label>
+            <input type="number" class="input" id="cap-number" placeholder="01" min="1">
+          </div>
+          <div class="field">
+            <label class="label">Status</label>
+            <select class="input" id="cap-status">
+              <option value="draft">Rascunho</option>
+              <option value="pending">Enviar pra Revisão</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Título do Capítulo</label>
+          <input type="text" class="input" id="cap-title" placeholder="O Despertar das Sombras...">
+        </div>
+
+        <div class="field">
+          <label class="label">Tempo estimado de leitura</label>
+          <select class="input" id="cap-readtime">
+            <option value="300">5 min</option>
+            <option value="600">10 min</option>
+            <option value="900">15 min</option>
+            <option value="1200">20 min</option>
+            <option value="1800">30 min</option>
+          </select>
+        </div>
+
+        <div class="sep"></div>
+
+        <div style="font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-mono);margin-bottom:12px;">Regras de Acesso</div>
+
+        <div class="field">
+          <div class="toggle-wrap">
+            <div>
+              <div class="toggle-label">Capítulo Premium</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:2px;">Exige passe ou compra avulsa</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="cap-premium">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div id="premium-options" style="display:none;">
+          <div class="field">
+            <label class="label">ID do Produto (Passe da Temporada)</label>
+            <input type="text" class="input" id="cap-season-product" placeholder="Ex: PASSE_S01_AZUOS">
+          </div>
+          <div class="field">
+            <label class="label">ID do Produto (Capítulo Avulso)</label>
+            <input type="text" class="input" id="cap-chapter-product" placeholder="Ex: CAP_013_AZUOS">
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Capítulos gratuitos desta obra</label>
+          <input type="number" class="input" id="cap-free-count" placeholder="Ex: 3 (primeiros 3 são grátis)" min="0">
+        </div>
+
+        <button class="btn btn-primary" style="width:100%;margin-top:8px;justify-content:center;" onclick="publishChapter()">
+          Publicar Capítulo
+        </button>
+      </div>
+
+      <!-- Upload de Páginas -->
+      <div>
+        <div class="card" style="margin-bottom:16px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+            <span style="font-size:13px;font-weight:700;">Páginas</span>
+            <span id="page-count-label" style="font-size:12px;color:var(--accent);font-family:var(--font-mono);font-weight:700;">0 páginas</span>
+          </div>
+
+          <div class="upload-zone" id="upload-zone">
+            <input type="file" id="file-input" multiple accept="image/jpeg,image/png,image/webp">
+            <div class="upload-icon">📸</div>
+            <div class="upload-text">Solte as imagens aqui</div>
+            <div class="upload-sub">JPG · PNG · WEBP · Máx 5MB/arquivo</div>
+            <div class="upload-sub" style="margin-top:4px;color:rgba(143,79,255,0.6);">Convertidas para WebP automaticamente</div>
+          </div>
+        </div>
+
+        <div id="page-grid" class="page-grid">
+          <div class="empty-grid" id="empty-grid-msg">Nenhuma página adicionada</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- Lista capítulos existentes -->
+    <div class="section-header">
+      <div>
+        <div style="font-size:16px;font-weight:700;">Capítulos Publicados</div>
+        <div class="section-sub">Gerencie os capítulos existentes</div>
+      </div>
+      <select class="input" id="filter-work-chapters" style="width:auto;min-width:160px;" onchange="renderChapterList()">
+        <option value="">Todas as obras</option>
+      </select>
+    </div>
+    <div id="chapter-list"></div>
+  </div>
+
+  <!-- ── COMENTÁRIOS ── -->
+  <div id="tab-comments" class="tab">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Comentários</div>
+        <div class="section-sub">Interaja com sua comunidade de leitores</div>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <select class="input btn-sm" style="width:auto;" id="comment-filter-work">
+          <option value="">Todas as obras</option>
+        </select>
+        <select class="input btn-sm" style="width:auto;" id="comment-filter-status">
+          <option value="all">Todos</option>
+          <option value="unanswered">Sem resposta</option>
+          <option value="reported">Reportados</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="comments-list"></div>
+  </div>
+
+  <!-- ── NOTIFICAÇÕES ── -->
+  <div id="tab-notifications" class="tab">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Notificações</div>
+        <div class="section-sub">Atualizações do seu universo NoHeroes</div>
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="markAllRead()">Marcar tudo como lido</button>
+    </div>
+    <div id="notifications-list"></div>
+  </div>
+
+  <!-- ── FINANCEIRO ── -->
+  <div id="tab-revenue" class="tab">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Caixa Forte</div>
+        <div class="section-sub">Receita, repasses e histórico financeiro</div>
+      </div>
+      <button class="btn btn-ghost btn-sm">Solicitar Repasse</button>
+    </div>
+
+    <div class="kpi-grid" style="margin-bottom:24px;">
+      <div class="kpi-card">
+        <div class="kpi-label">Receita Total</div>
+        <div class="kpi-value" id="rev-total" style="color:var(--accent2);">—</div>
+        <div class="kpi-sub">Bruto · Este mês</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Seu Saldo (90%)</div>
+        <div class="kpi-value" id="rev-net" style="color:var(--green);">—</div>
+        <div class="kpi-sub">Disponível para repasse</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Taxa Plataforma</div>
+        <div class="kpi-value" id="rev-fee" style="color:var(--muted);font-size:20px;">—</div>
+        <div class="kpi-sub">10% NoHeroes</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Repassado</div>
+        <div class="kpi-value" id="rev-paid">R$ 0</div>
+        <div class="kpi-sub">Aguardando solicitação</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:20px;">
+      <div style="font-size:14px;font-weight:700;margin-bottom:16px;">Receita por Obra</div>
+      <div id="revenue-by-work"></div>
+    </div>
+
+    <div class="card">
+      <div style="font-size:14px;font-weight:700;margin-bottom:16px;">Histórico de Transações</div>
+      <div id="revenue-history"></div>
+    </div>
+  </div>
+
+</main>
+</div>
+
+<!-- ═══ TAB: CANDIDATURA (usuário comum) ═══ -->
+<div id="tab-herald-apply" class="tab main-content" style="display:none;"></div>
+
+<!-- ═══ MODAL: OBRA ═══ -->
+<div class="modal-backdrop" id="work-modal">
+  <div class="modal-box">
+    <div class="modal-title" id="work-modal-title">Nova Obra</div>
+
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start;">
+      <div class="cover-upload" id="cover-upload-btn">
+        <input type="file" accept="image/*" onchange="previewCover(this)">
+        <img id="cover-preview-img" style="display:none;">
+        <div id="cover-upload-placeholder" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px;">
+          <span style="font-size:24px;">🖼️</span>
+          <span style="font-size:10px;color:var(--muted);text-align:center;font-family:var(--font-mono);">Capa 2:3</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="field">
+          <label class="label">Título</label>
+          <input type="text" class="input" id="work-title" placeholder="Azuos: O Despertar">
+        </div>
+        <div class="field">
+          <label class="label">Categoria</label>
+          <select class="input" id="work-category">
+            <option>Dark Fantasy</option>
+            <option>Medieval</option>
+            <option>Ação</option>
+            <option>Terror</option>
+            <option>Mistério</option>
+            <option>Fantasia</option>
+            <option>Aventura</option>
+            <option>Romance</option>
+            <option>Sci-Fi</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="label">Classificação Etária</label>
+          <select class="input" id="work-rating">
+            <option value="free">Livre</option>
+            <option value="14">14+ Anos</option>
+            <option value="16">16+ Anos</option>
+            <option value="18">18+ (Seinen / Dark)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Sinopse</label>
+      <textarea class="input" id="work-synopsis" style="height:100px;" placeholder="Onde as sombras caminham..."></textarea>
+    </div>
+
+    <div class="field">
+      <label class="label">Tags (separadas por vírgula)</label>
+      <input type="text" class="input" id="work-tags" placeholder="Ação, Seinen, Supernatural">
+    </div>
+
+    <div class="field">
+      <label class="label">Temporada / Arco Atual</label>
+      <input type="text" class="input" id="work-season" placeholder="Temporada 1">
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('work-modal')">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveWork()">Salvar Obra</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: CONFIRMAR DELETE ═══ -->
+<div class="modal-backdrop" id="confirm-modal">
+  <div class="modal-box" style="max-width:400px;">
+    <div class="modal-title" style="-webkit-text-fill-color:var(--red);background:none;color:var(--red);">⚠️ Confirmar Exclusão</div>
+    <p style="font-size:13px;color:var(--muted);line-height:1.6;" id="confirm-modal-msg">Esta ação não pode ser desfeita.</p>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('confirm-modal')">Cancelar</button>
+      <button class="btn btn-danger" id="confirm-modal-btn">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   AUTORDASH — NoHeroes | API Real + Controle de Acesso
+   Roles: admin > herald > user (candidatura) > visitante
+═══════════════════════════════════════════════════════════ */
+
+const API_BASE = 'https://dev-flmw.onrender.com';
+
+/* ─── AUTH ──────────────────────────────────────────────── */
+const Auth = {
+  token: () => (localStorage.getItem('NoHeroes_token') || '').replace(/^Bearer\s+/i, '').trim(),
+  headers: () => ({ 'Content-Type': 'application/json', Authorization: `Bearer ${Auth.token()}` }),
+  clear: () => localStorage.removeItem('NoHeroes_token')
+};
+
+/* ─── STATE ─────────────────────────────────────────────── */
+const S = {
+  user: null,        // dados do usuário logado
+  works: [],         // obras do arauto
+  chapters: [],      // capítulos do arauto
+  chapterPages: [],  // páginas em edição
+  editWorkId: null   // obra sendo editada
+};
+
+/* ─── API ───────────────────────────────────────────────── */
+async function api(path, opts = {}) {
+  const res = await fetch(`${API_BASE}${path}`, {
+    ...opts,
+    headers: { ...Auth.headers(), ...(opts.headers || {}) }
+  });
+  const data = await res.json().catch(() => ({}));
+  return { ok: res.ok, status: res.status, data };
+}
+
+/* ─── TOAST ─────────────────────────────────────────────── */
+function showToast(msg, type = 'success') {
+  const c = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  const icons = { success: '✓', error: '✕', info: 'ℹ' };
+  t.innerHTML = `<span>${icons[type] || '•'}</span><span>${msg}</span>`;
+  c.appendChild(t);
+  setTimeout(() => t.classList.add('show'), 10);
+  setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 350); }, 3500);
+}
+
+/* ─── NAVIGATION ────────────────────────────────────────── */
+function switchTab(id) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-item, .mobile-nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(`tab-${id}`)?.classList.add('active');
+  document.getElementById(`nav-${id}`)?.classList.add('active');
+  document.getElementById(`mob-${id}`)?.classList.add('active');
+  closeDrawer();
+  window.scrollTo(0, 0);
+}
+
+/* ─── MODALS ────────────────────────────────────────────── */
+function openModal(id) {
+  document.getElementById(id).classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('show');
+  document.body.style.overflow = '';
+}
+document.querySelectorAll('.modal-backdrop').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) closeModal(m.id); });
+});
+
+function openConfirm(msg, onConfirm) {
+  document.getElementById('confirm-modal-msg').textContent = msg;
+  const btn = document.getElementById('confirm-modal-btn');
+  btn.onclick = () => { onConfirm(); closeModal('confirm-modal'); };
+  openModal('confirm-modal');
+}
+
+/* ─── HELPERS ───────────────────────────────────────────── */
+function statusLabel(s) {
+  return { draft: 'Rascunho', pending: 'Revisão', published: 'Publicado', suspended: 'Suspenso', rejected: 'Rejeitado' }[s] || s;
+}
+
+function fmtNum(n) { return Number(n || 0).toLocaleString('pt-BR'); }
+function fmtBRL(n) { return Number(n || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
+
+function initials(name) {
+  if (!name) return '?';
+  return name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CONTROLE DE ACESSO — roda antes de qualquer render
+═══════════════════════════════════════════════════════════ */
+async function boot() {
+  if (!Auth.token()) {
+    // não logado — redireciona
+    window.location.href = 'login.html';
+    return;
+  }
+
+  // busca dados do usuário
+  const { ok, data } = await api('/users/me');
+  if (!ok) {
+    Auth.clear();
+    window.location.href = 'login.html';
+    return;
+  }
+
+  S.user = data.user || data;
+  renderUserUI();
+
+  const isAdmin  = S.user.is_admin;
+  const isHerald = S.user.is_herald;
+
+  if (isAdmin) {
+    bootAdmin();
+  } else if (isHerald) {
+    bootHerald();
+  } else {
+    bootCandidate();
+  }
+}
+
+/* ─── BOOT: ADMIN ───────────────────────────────────────── */
+function bootAdmin() {
+  switchTab('dashboard');
+  loadDashboard();
+  loadWorks();
+  loadChapterList();
+  loadComments();
+  loadNotifications();
+  loadRevenue();
+  populateWorkSelects();
+}
+
+/* ─── BOOT: ARAUTO ──────────────────────────────────────── */
+function bootHerald() {
+  switchTab('dashboard');
+  loadDashboard();
+  loadWorks();
+  loadChapterList();
+  loadComments();
+  loadNotifications();
+  loadRevenue();
+  populateWorkSelects();
+}
+
+/* ─── BOOT: CANDIDATO (usuário comum) ───────────────────── */
+async function bootCandidate() {
+  const hideTabs = ['dashboard', 'works', 'chapters', 'comments', 'revenue', 'notifications'];
+  hideTabs.forEach(id => {
+    document.getElementById(`nav-${id}`)?.style.setProperty('display', 'none', 'important');
+    document.getElementById(`mob-${id}`)?.style.setProperty('display', 'none', 'important');
+  });
+  document.getElementById('nav-herald')?.style.setProperty('display', 'flex');
+  switchTab('herald-apply');
+  loadHeraldApplication();
+}
+
+/* ─── RENDER USER UI ────────────────────────────────────── */
+function renderUserUI() {
+  const u = S.user;
+  const ini = initials(u.username || u.nome_completo);
+  const role = u.is_admin ? 'Admin · CEO' : u.is_herald ? 'Arauto · Autor' : 'Membro';
+
+  ['sidebar-avatar', 'mobile-avatar'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = ini;
+  });
+  const sn = document.getElementById('sidebar-name');
+  if (sn) sn.textContent = u.username || u.nome_completo || 'Usuário';
+  const sr = document.getElementById('sidebar-role');
+  if (sr) sr.textContent = role;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DASHBOARD
+═══════════════════════════════════════════════════════════ */
+async function loadDashboard() {
+  const { ok, data } = await api('/api/herald/dashboard');
+  if (!ok) return;
+
+  const s = data.summary || {};
+
+  // KPIs
+  const kpis = {
+    'kpi-views':     fmtNum(s.total_views),
+    'kpi-revenue':   fmtBRL(s.total_revenue),
+    'kpi-followers': fmtNum(s.total_followers),
+    'kpi-comments':  fmtNum(s.total_comments)
+  };
+  Object.entries(kpis).forEach(([id, val]) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val;
+  });
+
+  // obras no dashboard
+  const container = document.getElementById('dashboard-works-list');
+  if (container) {
+    const works = data.works || [];
+    container.innerHTML = works.length ? works.map(w => `
+      <div style="display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--border2);">
+        <div style="width:40px;height:56px;border-radius:8px;background:var(--surface2);border:1px solid var(--border2);flex-shrink:0;overflow:hidden;">
+          ${w.cover_url ? `<img src="${w.cover_url}" style="width:100%;height:100%;object-fit:cover;">` : '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:16px;">📖</div>'}
+        </div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:13px;font-weight:700;">${w.title}</div>
+          <div style="font-size:11px;color:var(--muted);font-family:var(--font-mono);margin-top:2px;">${w.category || '—'}</div>
+          <div class="progress-bar" style="margin-top:8px;">
+            <div class="progress-fill" style="width:${Math.min(100, (w.total_views / 10000 * 100)).toFixed(0)}%"></div>
+          </div>
+        </div>
+        <div style="text-align:right;flex-shrink:0;">
+          <div style="font-size:14px;font-weight:800;font-family:var(--font-mono);">${fmtNum(w.total_views)}</div>
+          <div style="font-size:10px;color:var(--muted);">views</div>
+        </div>
+        <span class="badge badge-${w.status}">${statusLabel(w.status)}</span>
+      </div>
+    `).join('') : '<p style="color:var(--muted);font-size:13px;text-align:center;padding:20px;">Nenhuma obra publicada ainda.</p>';
+  }
+
+  // comentários recentes no dashboard
+  const commContainer = document.getElementById('dashboard-comments-list');
+  if (commContainer) {
+    const comments = data.recent_comments || [];
+    commContainer.innerHTML = comments.length ? comments.map(c => `
+      <div style="display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border2);">
+        <div class="avatar" style="width:30px;height:30px;font-size:10px;flex-shrink:0;">${initials(c.user?.username)}</div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:12px;font-weight:700;">${c.user?.username || 'Usuário'} <span style="color:var(--muted);font-weight:400;font-family:var(--font-mono);">${timeAgo(c.createdAt)}</span></div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${c.content}</div>
+        </div>
+      </div>
+    `).join('') : '<p style="color:var(--muted);font-size:13px;text-align:center;padding:20px;">Nenhum comentário ainda.</p>';
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   OBRAS
+═══════════════════════════════════════════════════════════ */
+async function loadWorks() {
+  const { ok, data } = await api('/api/herald/works');
+  if (!ok) return;
+  S.works = data.works || [];
+  renderWorks();
+}
+
+function renderWorks() {
+  const container = document.getElementById('works-list');
+  if (!container) return;
+
+  if (!S.works.length) {
+    container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);">Nenhuma obra criada ainda.</div>';
+    return;
+  }
+
+  container.innerHTML = `
+    <table class="works-table">
+      <thead>
+        <tr>
+          <th>Obra</th><th>Status</th><th>Caps.</th>
+          <th>Views</th><th>Likes</th><th>Favoritos</th><th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${S.works.map(w => `
+          <tr>
+            <td>
+              <div style="font-weight:700;font-size:13px;">${w.title}</div>
+              <div style="font-size:11px;color:var(--muted);font-family:var(--font-mono);">${w.category || '—'} · ${w.season_label || 'T1'}</div>
+            </td>
+            <td><span class="badge badge-${w.status}">${statusLabel(w.status)}</span></td>
+            <td style="font-family:var(--font-mono);font-size:12px;">${w.chapters?.length || 0}</td>
+            <td style="font-family:var(--font-mono);font-size:12px;">${fmtNum(w.total_views)}</td>
+            <td style="font-family:var(--font-mono);font-size:12px;">${fmtNum(w.total_likes)}</td>
+            <td style="font-family:var(--font-mono);font-size:12px;">${fmtNum(w.total_favorites)}</td>
+            <td>
+              <div style="display:flex;gap:6px;">
+                <button class="btn btn-ghost btn-sm btn-icon" title="Editar" onclick="editWork(${w.id})">✏️</button>
+                <button class="btn btn-danger btn-sm btn-icon" title="Excluir" onclick="confirmDeleteWork(${w.id})">🗑️</button>
+              </div>
+            </td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+
+  renderEngagement();
+}
+
+function renderEngagement() {
+  const section = document.getElementById('works-engagement');
+  const list = document.getElementById('engagement-list');
+  if (!section || !list || !S.works.length) return;
+
+  section.style.display = 'block';
+
+  list.innerHTML = S.works.map(w => {
+    const maxViews = Math.max(...S.works.map(x => x.total_views || 0), 1);
+    const pct = Math.min(100, ((w.total_views || 0) / maxViews * 100)).toFixed(0);
+    return `
+      <div style="padding:16px;background:var(--surface2);border:1px solid var(--border2);border-radius:12px;margin-bottom:10px;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap;">
+          <div style="width:36px;height:50px;border-radius:7px;background:var(--surface);border:1px solid var(--border2);flex-shrink:0;overflow:hidden;">
+            ${w.cover_url ? `<img src="${w.cover_url}" style="width:100%;height:100%;object-fit:cover;">` : '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:14px;">📖</div>'}
+          </div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:13px;font-weight:700;">${w.title}</div>
+            <div style="font-size:10px;color:var(--muted);font-family:var(--font-mono);margin-top:2px;">${w.category || '—'} · <span class="badge badge-${w.status}" style="font-size:9px;">${statusLabel(w.status)}</span></div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:10px;margin-bottom:12px;">
+          <div style="text-align:center;padding:10px;background:var(--surface);border-radius:9px;border:1px solid var(--border2);">
+            <div style="font-size:18px;font-weight:800;font-family:var(--font-mono);">${fmtNum(w.total_views)}</div>
+            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:2px;">👁 Views</div>
+          </div>
+          <div style="text-align:center;padding:10px;background:var(--surface);border-radius:9px;border:1px solid var(--border2);">
+            <div style="font-size:18px;font-weight:800;font-family:var(--font-mono);color:var(--red);">${fmtNum(w.total_likes)}</div>
+            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:2px;">❤️ Likes</div>
+          </div>
+          <div style="text-align:center;padding:10px;background:var(--surface);border-radius:9px;border:1px solid var(--border2);">
+            <div style="font-size:18px;font-weight:800;font-family:var(--font-mono);color:var(--accent2);">${fmtNum(w.total_favorites)}</div>
+            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:2px;">⭐ Favoritos</div>
+          </div>
+          <div style="text-align:center;padding:10px;background:var(--surface);border-radius:9px;border:1px solid var(--border2);">
+            <div style="font-size:18px;font-weight:800;font-family:var(--font-mono);color:var(--accent);">${fmtNum(w.total_followers)}</div>
+            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:2px;">👥 Seguidores</div>
+          </div>
+          <div style="text-align:center;padding:10px;background:var(--surface);border-radius:9px;border:1px solid var(--border2);">
+            <div style="font-size:18px;font-weight:800;font-family:var(--font-mono);color:var(--green);">${fmtNum(w.total_comments)}</div>
+            <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:2px;">💬 Comentários</div>
+          </div>
+        </div>
+
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:4px;font-family:var(--font-mono);">
+            <span>Popularidade relativa</span><span>${pct}%</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function openWorkModal(editId = null) {
+  S.editWorkId = editId;
+  document.getElementById('work-modal-title').textContent = editId ? 'Editar Obra' : 'Nova Obra';
+
+  if (editId) {
+    const w = S.works.find(x => x.id === editId);
+    if (w) {
+      document.getElementById('work-title').value = w.title || '';
+      document.getElementById('work-category').value = w.category || '';
+      document.getElementById('work-rating').value = w.age_rating || 'free';
+      document.getElementById('work-synopsis').value = w.synopsis || '';
+      document.getElementById('work-tags').value = Array.isArray(w.tags) ? w.tags.join(', ') : '';
+      document.getElementById('work-season').value = w.season_label || '';
+    }
+  } else {
+    ['work-title', 'work-synopsis', 'work-tags', 'work-season'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+  }
+
+  openModal('work-modal');
+}
+
+function editWork(id) { openWorkModal(id); }
+
+async function saveWork() {
+  const title    = document.getElementById('work-title').value.trim();
+  const synopsis = document.getElementById('work-synopsis').value.trim();
+  const category = document.getElementById('work-category').value;
+  const age_rating = document.getElementById('work-rating').value;
+  const tagsRaw  = document.getElementById('work-tags').value;
+  const season_label = document.getElementById('work-season').value.trim();
+
+  if (!title) { showToast('Título obrigatório.', 'error'); return; }
+
+  const tags = tagsRaw.split(',').map(t => t.trim()).filter(Boolean);
+  const payload = { title, synopsis, category, age_rating, tags, season_label };
+
+  let result;
+  if (S.editWorkId) {
+    result = await api(`/api/herald/works/${S.editWorkId}`, {
+      method: 'PATCH',
+      body: JSON.stringify(payload)
+    });
+  } else {
+    result = await api('/api/herald/works', {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+  }
+
+  if (result.ok) {
+    showToast(S.editWorkId ? 'Obra atualizada!' : 'Obra enviada para revisão!', 'success');
+    closeModal('work-modal');
+    await loadWorks();
+    populateWorkSelects();
+  } else {
+    showToast(result.data.message || 'Erro ao salvar obra.', 'error');
+  }
+}
+
+function confirmDeleteWork(id) {
+  const w = S.works.find(x => x.id === id);
+  openConfirm(`Excluir a obra "${w?.title}"? Todos os capítulos serão removidos permanentemente.`, async () => {
+    const { ok } = await api(`/api/herald/works/${id}`, { method: 'DELETE' });
+    if (ok) { showToast('Obra excluída.', 'error'); await loadWorks(); }
+    else showToast('Erro ao excluir.', 'error');
+  });
+}
+
+function previewCover(input) {
+  const file = input.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = document.getElementById('cover-preview-img');
+    if (img) { img.src = e.target.result; img.style.display = 'block'; }
+    const ph = document.getElementById('cover-upload-placeholder');
+    if (ph) ph.style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CAPÍTULOS
+═══════════════════════════════════════════════════════════ */
+async function loadChapterList() {
+  // carrega capítulos de todas as obras do arauto
+  const allChapters = [];
+  for (const w of S.works) {
+    const { ok, data } = await api(`/api/works/${w.slug}/chapters`);
+    if (ok) {
+      (data.chapters || []).forEach(c => {
+        c.workTitle = w.title;
+        c.workId = w.id;
+        allChapters.push(c);
+      });
+    }
+  }
+  S.chapters = allChapters;
+  renderChapterList();
+}
+
+function renderChapterList() {
+  const filterWork = document.getElementById('filter-work-chapters')?.value;
+  const filtered = filterWork
+    ? S.chapters.filter(c => c.workId == filterWork)
+    : S.chapters;
+
+  const container = document.getElementById('chapter-list');
+  if (!container) return;
+
+  if (!filtered.length) {
+    container.innerHTML = '<div style="text-align:center;padding:32px;color:var(--muted);">Nenhum capítulo encontrado.</div>';
+    return;
+  }
+
+  container.innerHTML = filtered.map(ch => `
+    <div class="chapter-item">
+      <div class="chapter-num">C${String(ch.number).padStart(2, '0')}</div>
+      <div class="chapter-info">
+        <div class="chapter-title">${ch.title}</div>
+        <div class="chapter-meta">${ch.workTitle} · ${fmtNum(ch.views)} views</div>
+      </div>
+      ${ch.is_premium ? '<span class="badge badge-premium">Premium</span>' : ''}
+      <span class="badge badge-${ch.status}">${statusLabel(ch.status)}</span>
+      <div class="chapter-actions">
+        <button class="btn btn-danger btn-sm btn-icon" title="Excluir" onclick="confirmDeleteChapter(${ch.id}, '${ch.title}')">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function confirmDeleteChapter(id, title) {
+  openConfirm(`Excluir o capítulo "${title}"? Esta ação não pode ser desfeita.`, async () => {
+    const { ok } = await api(`/api/herald/chapters/${id}`, { method: 'DELETE' });
+    if (ok) { showToast('Capítulo excluído.', 'error'); await loadChapterList(); }
+    else showToast('Erro ao excluir capítulo.', 'error');
+  });
+}
+
+async function publishChapter() {
+  const workId = document.getElementById('cap-work').value;
+  const number = document.getElementById('cap-number').value;
+  const title  = document.getElementById('cap-title').value.trim();
+  const status = document.getElementById('cap-status').value;
+  const isPremium = document.getElementById('cap-premium').checked;
+  const seasonProduct  = document.getElementById('cap-season-product').value.trim();
+  const chapterProduct = document.getElementById('cap-chapter-product').value.trim();
+  const readTime = document.getElementById('cap-readtime').value;
+
+  if (!workId) { showToast('Selecione uma obra.', 'error'); return; }
+  if (!number)  { showToast('Informe o número do capítulo.', 'error'); return; }
+  if (!title)   { showToast('Informe o título do capítulo.', 'error'); return; }
+  if (!S.chapterPages.length) { showToast('Adicione pelo menos uma página.', 'error'); return; }
+
+  // 1. cria o capítulo
+  const { ok, data } = await api(`/api/herald/works/${workId}/chapters`, {
+    method: 'POST',
+    body: JSON.stringify({
+      number: parseInt(number),
+      title,
+      status,
+      is_premium: isPremium,
+      season_product_id: seasonProduct || null,
+      chapter_product_id: chapterProduct || null,
+      read_time_sec: parseInt(readTime)
+    })
+  });
+
+  if (!ok) { showToast(data.message || 'Erro ao criar capítulo.', 'error'); return; }
+
+  const chapterId = data.chapter.id;
+
+  // 2. faz upload das páginas
+  const formData = new FormData();
+  S.chapterPages.forEach(file => formData.append('pages', file));
+
+  showToast('Enviando páginas...', 'info');
+
+  const uploadRes = await fetch(`${API_BASE}/api/herald/chapters/${chapterId}/pages`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${Auth.token()}` },
+    body: formData
+  });
+
+  if (uploadRes.ok) {
+    showToast('Capítulo publicado com sucesso!', 'success');
+    // reset form
+    S.chapterPages = [];
+    document.getElementById('page-grid').innerHTML = '<div class="empty-grid" id="empty-grid-msg">Nenhuma página adicionada</div>';
+    updatePageCount();
+    document.getElementById('cap-number').value = '';
+    document.getElementById('cap-title').value = '';
+    await loadChapterList();
+  } else {
+    showToast('Capítulo criado mas falha no upload das páginas.', 'error');
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   UPLOAD DE PÁGINAS
+═══════════════════════════════════════════════════════════ */
+const MAX_SIZE = 5 * 1024 * 1024;
+
+document.getElementById('file-input').addEventListener('change', function(e) {
+  const files = Array.from(e.target.files);
+  let errors = 0;
+  files.forEach(file => {
+    if (file.size > MAX_SIZE) { errors++; return; }
+    file._id = Math.random().toString(36).slice(2);
+    S.chapterPages.push(file);
+    const reader = new FileReader();
+    reader.onload = ev => addPageThumb(ev.target.result, file._id);
+    reader.readAsDataURL(file);
+  });
+  if (errors) showToast(`${errors} arquivo(s) ignorado(s) — máx 5MB.`, 'error');
+  else if (files.length - errors > 0) showToast(`${files.length - errors} página(s) adicionada(s).`, 'success');
+  e.target.value = '';
+});
+
+const uploadZone = document.getElementById('upload-zone');
+if (uploadZone) {
+  uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+  uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+  uploadZone.addEventListener('drop', e => {
+    e.preventDefault();
+    uploadZone.classList.remove('drag-over');
+    const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+    if (files.length) {
+      const dt = new DataTransfer();
+      files.forEach(f => dt.items.add(f));
+      document.getElementById('file-input').files = dt.files;
+      document.getElementById('file-input').dispatchEvent(new Event('change'));
+    }
+  });
+}
+
+function addPageThumb(src, id) {
+  const emptyMsg = document.getElementById('empty-grid-msg');
+  if (emptyMsg) emptyMsg.remove();
+  const grid = document.getElementById('page-grid');
+  const div = document.createElement('div');
+  div.className = 'page-thumb';
+  div.dataset.id = id;
+  div.innerHTML = `<img src="${src}"><div class="page-num"></div><button class="page-del" onclick="removePage('${id}')">✕</button>`;
+  grid.appendChild(div);
+  updatePageNumbers();
+}
+
+window.removePage = function(id) {
+  S.chapterPages = S.chapterPages.filter(f => f._id !== id);
+  document.querySelector(`.page-thumb[data-id="${id}"]`)?.remove();
+  if (!S.chapterPages.length) {
+    document.getElementById('page-grid').innerHTML = '<div class="empty-grid" id="empty-grid-msg">Nenhuma página adicionada</div>';
+  }
+  updatePageNumbers();
+};
+
+function updatePageNumbers() {
+  document.querySelectorAll('.page-thumb').forEach((el, i) => {
+    el.querySelector('.page-num').textContent = i + 1;
+  });
+  updatePageCount();
+}
+
+function updatePageCount() {
+  const label = document.getElementById('page-count-label');
+  if (label) label.textContent = `${S.chapterPages.length} página${S.chapterPages.length !== 1 ? 's' : ''}`;
+}
+
+const capPremiumToggle = document.getElementById('cap-premium');
+if (capPremiumToggle) {
+  capPremiumToggle.addEventListener('change', function() {
+    document.getElementById('premium-options').style.display = this.checked ? 'block' : 'none';
+  });
+}
+
+new Sortable(document.getElementById('page-grid'), {
+  animation: 150,
+  ghostClass: 'sortable-ghost',
+  filter: '.empty-grid',
+  onEnd: evt => {
+    const moved = S.chapterPages.splice(evt.oldIndex, 1)[0];
+    S.chapterPages.splice(evt.newIndex, 0, moved);
+    updatePageNumbers();
+  }
+});
+
+/* ═══════════════════════════════════════════════════════════
+   COMENTÁRIOS
+═══════════════════════════════════════════════════════════ */
+async function loadComments() {
+  // busca comentários dos capítulos das obras do arauto
+  const container = document.getElementById('comments-list');
+  if (!container) return;
+
+  container.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted);">Carregando...</div>';
+
+  // pega primeiro capítulo publicado de cada obra
+  const allComments = [];
+  for (const ch of S.chapters.filter(c => c.status === 'published').slice(0, 5)) {
+    const { ok, data } = await api(`/api/chapters/${ch.id}/comments`);
+    if (ok) {
+      (data.comments || []).forEach(c => {
+        c.chapterTitle = `Cap. ${ch.number}`;
+        c.workTitle = ch.workTitle;
+        allComments.push(c);
+      });
+    }
+  }
+
+  if (!allComments.length) {
+    container.innerHTML = '<div style="padding:40px;text-align:center;color:var(--muted);">Nenhum comentário ainda.</div>';
+    return;
+  }
+
+  container.innerHTML = allComments.map(c => `
+    <div class="comment-card">
+      <div class="avatar" style="width:36px;height:36px;font-size:11px;flex-shrink:0;">${initials(c.user?.username)}</div>
+      <div style="flex:1;min-width:0;">
+        <div>
+          <span class="comment-meta">${c.user?.username || 'Usuário'}</span>
+          <span class="comment-time">${timeAgo(c.createdAt)}</span>
+          <span style="margin-left:8px;font-size:10px;color:var(--muted);font-family:var(--font-mono);">${c.workTitle} · ${c.chapterTitle}</span>
+        </div>
+        <div class="comment-text">${c.content}</div>
+        <div class="comment-actions">
+          <button class="comment-action-btn">🔥 ${c.likes}</button>
+          <button class="comment-action-btn" style="color:var(--red);" onclick="hideComment(${c.id})">Ocultar</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function hideComment(id) {
+  const { ok } = await api(`/admin/comments/${id}/status`, {
+    method: 'PATCH',
+    body: JSON.stringify({ status: 'hidden' })
+  });
+  if (ok) { showToast('Comentário ocultado.', 'info'); await loadComments(); }
+  else showToast('Erro ao ocultar comentário.', 'error');
+}
+
+/* ═══════════════════════════════════════════════════════════
+   NOTIFICAÇÕES
+═══════════════════════════════════════════════════════════ */
+const notifIcons = {
+  chapter_approved: '✅', chapter_rejected: '❌',
+  work_approved: '✅', work_rejected: '❌',
+  herald_approved: '🛡️', herald_rejected: '❌',
+  new_comment: '💬', new_reply: '💬',
+  new_follower: '👥', new_chapter: '📖', system: 'ℹ️'
+};
+
+async function loadNotifications() {
+  const { ok, data } = await api('/api/me/notifications');
+  if (!ok) return;
+
+  const notifications = data.notifications || [];
+  const unread = data.unread || 0;
+
+  const badge = document.getElementById('notif-badge');
+  if (badge) { badge.textContent = unread; badge.style.display = unread ? 'inline' : 'none'; }
+
+  const container = document.getElementById('notifications-list');
+  if (!container) return;
+
+  container.innerHTML = notifications.length ? notifications.map(n => `
+    <div class="notif-item ${n.read ? '' : 'unread'}" onclick="markNotifRead(${n.id})">
+      <div class="notif-dot ${n.read ? 'read' : ''}"></div>
+      <div style="flex:1;">
+        <div class="notif-title">${notifIcons[n.type] || '•'} ${n.title}</div>
+        <div class="notif-body">${n.body}</div>
+        <div class="notif-time">${timeAgo(n.createdAt)}</div>
+      </div>
+    </div>
+  `).join('') : '<div style="padding:40px;text-align:center;color:var(--muted);">Nenhuma notificação.</div>';
+}
+
+async function markNotifRead(id) {
+  await api(`/api/me/notifications/${id}/read`, { method: 'PATCH' });
+  loadNotifications();
+}
+
+async function markAllRead() {
+  await api('/api/me/notifications/read-all', { method: 'PATCH' });
+  showToast('Todas marcadas como lidas.', 'info');
+  loadNotifications();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FINANCEIRO (arauto)
+═══════════════════════════════════════════════════════════ */
+async function loadRevenue() {
+  const { ok, data } = await api('/api/herald/dashboard');
+  if (!ok) return;
+
+  const works = data.works || [];
+  const totalRevenue = works.reduce((acc, w) => acc + (w.total_revenue || 0), 0);
+  const heraldNet = totalRevenue * 0.9;
+  const platformFee = totalRevenue * 0.1;
+
+  const ids = {
+    'rev-total': fmtBRL(totalRevenue),
+    'rev-net':   fmtBRL(heraldNet),
+    'rev-fee':   fmtBRL(platformFee),
+    'rev-paid':  fmtBRL(0)
+  };
+  Object.entries(ids).forEach(([id, val]) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val;
+  });
+
+  const byWork = document.getElementById('revenue-by-work');
+  if (byWork && works.length) {
+    const max = Math.max(...works.map(w => w.total_revenue || 0), 1);
+    byWork.innerHTML = works.map(w => `
+      <div class="revenue-bar">
+        <div class="revenue-label">${w.title}</div>
+        <div class="revenue-track"><div class="revenue-fill" style="width:${((w.total_revenue || 0) / max * 100).toFixed(1)}%"></div></div>
+        <div class="revenue-value">${fmtBRL(w.total_revenue)}</div>
+      </div>
+    `).join('');
+  }
+
+  const history = document.getElementById('revenue-history');
+  if (history) {
+    history.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted);font-size:12px;">Histórico disponível em breve.</div>';
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PERFIL
+═══════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════
+   CANDIDATURA (usuário comum)
+═══════════════════════════════════════════════════════════ */
+async function loadHeraldApplication() {
+  const { ok, data } = await api('/api/herald/me');
+  const app = data?.application;
+
+  const container = document.getElementById('tab-herald-apply');
+  if (!container) return;
+
+  let statusHtml = '';
+  if (app) {
+    const statusMap = {
+      pending:  { color: 'var(--accent2)', icon: '⏳', text: 'Candidatura em análise. Aguarde a revisão do admin.' },
+      approved: { color: 'var(--green)',   icon: '✅', text: 'Candidatura aprovada! Recarregue a página para acessar o painel.' },
+      rejected: { color: 'var(--red)',     icon: '❌', text: `Candidatura não aprovada. ${app.admin_notes || ''} Você pode reenviar.` }
+    };
+    const s = statusMap[app.status] || statusMap.pending;
+    statusHtml = `<div style="padding:16px;border-radius:12px;border:1px solid ${s.color}33;background:${s.color}11;margin-bottom:20px;font-size:13px;color:${s.color};">${s.icon} ${s.text}</div>`;
+  }
+
+  container.innerHTML = `
+    <div class="section-header">
+      <div>
+        <div class="section-title">Tornar-se Arauto</div>
+        <div class="section-sub">Envie sua candidatura para publicar obras na plataforma</div>
+      </div>
+    </div>
+    ${statusHtml}
+    <div class="card" style="max-width:640px;">
+      <div class="field">
+        <label class="label">Por que quer ser um Arauto?</label>
+        <textarea class="input" id="apply-motivation" style="height:140px;" placeholder="Conte sua experiência com criação de mangás, sua história como autor, o que pretende publicar...">${app?.motivation || ''}</textarea>
+      </div>
+      <div class="field">
+        <label class="label">Portfólio / Redes sociais</label>
+        <input type="url" class="input" id="apply-portfolio" placeholder="https://..." value="${app?.portfolio_url || ''}">
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="submitHeraldApplication()">
+        ${app?.status === 'pending' ? 'Candidatura Enviada (Aguardando)' : app?.status === 'approved' ? 'Aprovado!' : 'Enviar Candidatura'}
+      </button>
+    </div>
+  `;
+}
+
+async function submitHeraldApplication() {
+  const motivation   = document.getElementById('apply-motivation')?.value.trim();
+  const portfolio_url = document.getElementById('apply-portfolio')?.value.trim();
+
+  if (!motivation) { showToast('Descreva sua motivação.', 'error'); return; }
+
+  const { ok, data } = await api('/api/herald/apply', {
+    method: 'POST',
+    body: JSON.stringify({ motivation, portfolio_url })
+  });
+
+  if (ok) {
+    showToast(data.message || 'Candidatura enviada!', 'success');
+    loadHeraldApplication();
+  } else {
+    showToast(data.message || 'Erro ao enviar candidatura.', 'error');
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   UTILS
+═══════════════════════════════════════════════════════════ */
+function populateWorkSelects() {
+  const opts = S.works.map(w => `<option value="${w.id}">${w.title}</option>`).join('');
+  ['cap-work', 'filter-work-chapters', 'comment-filter-work'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = (id === 'cap-work' ? '<option value="">Selecionar...</option>' : '<option value="">Todas</option>') + opts;
+  });
+}
+
+function timeAgo(dateStr) {
+  if (!dateStr) return '';
+  const diff = Date.now() - new Date(dateStr).getTime();
+  const m = Math.floor(diff / 60000);
+  if (m < 1) return 'agora';
+  if (m < 60) return `${m}min atrás`;
+  const h = Math.floor(m / 60);
+  if (h < 24) return `${h}h atrás`;
+  const d = Math.floor(h / 24);
+  return `${d}d atrás`;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BRASAS
+═══════════════════════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('brasasCanvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [], w, h;
+  function resize() { w = canvas.width = innerWidth; h = canvas.height = innerHeight; }
+  window.addEventListener('resize', resize); resize();
+  class P {
+    constructor() { this.reset(true); }
+    reset(init) { this.x = Math.random()*w; this.y = init?Math.random()*h:h+10; this.r=0.6+Math.random()*1.4; this.speed=0.3+Math.random()*0.6; this.alpha=0.2+Math.random()*0.3; this.drift=(Math.random()-.5)*0.3; }
+    update() { this.y-=this.speed; this.x+=this.drift; if(this.y<-10)this.reset(); }
+    draw() { ctx.beginPath(); ctx.arc(this.x,this.y,this.r,0,Math.PI*2); ctx.fillStyle=`rgba(143,79,255,${this.alpha})`; ctx.fill(); }
+  }
+  for(let i=0;i<80;i++) particles.push(new P());
+  function loop() { ctx.clearRect(0,0,w,h); particles.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(loop); }
+  loop();
+})();
+
+/* ═══════════════════════════════════════════════════════════
+   MOBILE MORE DRAWER
+═══════════════════════════════════════════════════════════ */
+function openMobileMore() {
+  document.getElementById('mobile-more-drawer').style.display = 'block';
+  document.getElementById('mobile-more-overlay').style.display = 'block';
+}
+function closeMobileMore() {
+  document.getElementById('mobile-more-drawer').style.display = 'none';
+  document.getElementById('mobile-more-overlay').style.display = 'none';
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SIDEBAR DRAWER
+═══════════════════════════════════════════════════════════ */
+function openDrawer() {
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('drawer-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeDrawer() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('drawer-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function toggleDrawer() {
+  document.getElementById('sidebar').classList.contains('open') ? closeDrawer() : openDrawer();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  boot();
+  switchAdminSection('moderation');
+});
+</script>
+</body>
+</html>
