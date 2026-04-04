@@ -310,7 +310,7 @@ body {
 </div>
 
 <main>
-    <section id="hero-display" class="relative h-[75vh] w-full flex items-end overflow-hidden border-b border-nh-border/20">
+    <section id="hero-display" class="relative h-[75vh] w-full flex items-end overflow-hidden border-b border-nh-border/20" style="padding-top:64px;min-height:420px;">
         </section>
 
     <section class="sticky top-16 z-40 glass border-b border-nh-border/10">
@@ -394,7 +394,7 @@ body {
 
 <div id="modal" class="fixed inset-0 z-[150] hidden opacity-0 transition-opacity duration-300">
     <div class="absolute inset-0 bg-black/90 backdrop-blur-md" onclick="closeModal()"></div>
-    <div class="absolute bottom-0 md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 w-full md:max-w-2xl glass md:rounded-[3rem] rounded-t-[3rem] overflow-hidden transform translate-y-full md:translate-y-0 transition-transform duration-500" id="modal-content">
+    <div class="absolute bottom-0 md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 w-full md:max-w-2xl glass md:rounded-[3rem] rounded-t-[3rem] overflow-y-auto transform translate-y-full md:translate-y-0 transition-transform duration-500" id="modal-content" style="max-height:85vh;">
         </div>
 </div>
 
@@ -507,9 +507,9 @@ function renderHero() {
         <div class="relative z-10 p-8 md:p-20 max-w-4xl fade-up">
             <span class="px-4 py-1 rounded-full border border-nh-accent/30 bg-nh-accent/10 text-nh-accent text-[10px] font-black uppercase tracking-[0.3em]">Em Destaque</span>
             <h1 class="text-6xl md:text-8xl font-display text-grad mt-6 leading-none uppercase">${work.title}</h1>
-            <p class="text-white/60 mt-6 text-lg max-w-xl italic leading-relaxed">"${work.synopsis || ''}"</p>
+            <p class="text-white/60 mt-6 text-lg max-w-xl italic leading-relaxed">"${(work.synopsis||'').length > 200 ? work.synopsis.slice(0,200)+'...' : (work.synopsis||'')}"</p>
             <div class="mt-10 flex flex-wrap gap-4">
-                <button onclick="location.href='leitor.html?slug=${work.slug}'" class="px-12 py-5 rounded-2xl grad-nh text-black font-black uppercase tracking-widest text-xs shadow-glow transition hover:scale-105 active:scale-95">Iniciar Leitura</button>
+                <button onclick="location.href='mangá.html?slug=${work.slug}'" class="px-12 py-5 rounded-2xl grad-nh text-black font-black uppercase tracking-widest text-xs shadow-glow transition hover:scale-105 active:scale-95">Iniciar Leitura</button>
                 <button onclick="openModal('${work.slug}')" class="px-12 py-5 rounded-2xl glass text-white font-black uppercase tracking-widest text-xs transition hover:bg-white/10">Ficha Técnica</button>
             </div>
         </div>
@@ -570,19 +570,19 @@ async function openModal(slug) {
     const img = w.banner_url || w.cover_url || '';
 
     UI.modalContent.innerHTML = `
-        <div class="h-64 relative bg-cover bg-center" style="background-image: url('${img}')">
+        <div class="h-40 sm:h-64 relative bg-cover bg-center flex-shrink-0" style="background-image: url('${img}')">
             <div class="absolute inset-0 bg-gradient-to-t from-nh-dark to-transparent"></div>
-            <button onclick="closeModal()" class="absolute top-6 right-6 h-12 w-12 rounded-full glass flex items-center justify-center text-xl transition hover:rotate-90">✕</button>
+            <button onclick="closeModal()" class="absolute top-4 right-4 h-10 w-10 rounded-full glass flex items-center justify-center text-lg transition hover:rotate-90">✕</button>
         </div>
-        <div class="p-10 -mt-12 relative z-10">
-            <div class="flex flex-wrap gap-2 mb-6">
-                ${tags.map(t => `<span class="px-4 py-1.5 rounded-full glass text-[9px] font-black uppercase text-nh-gold border-nh-gold/20">${t}</span>`).join('')}
+        <div class="p-5 sm:p-10 -mt-8 relative z-10">
+            <div class="flex flex-wrap gap-2 mb-4">
+                ${tags.map(t => `<span class="px-3 py-1 rounded-full glass text-[9px] font-black uppercase text-nh-gold border-nh-gold/20">${t}</span>`).join('')}
             </div>
-            <h2 class="font-display text-4xl text-grad uppercase mb-6">${w.title}</h2>
-            <p class="text-white/60 leading-relaxed mb-10 text-lg italic">"${w.synopsis || ''}"</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <button onclick="location.href='leitor.html?slug=${w.slug}'" class="py-5 rounded-2xl grad-nh text-black font-black uppercase tracking-widest text-xs shadow-glow transition hover:scale-[1.02]">Começar Leitura</button>
-                <button onclick="favWork('${w.slug}', ${w.id})" class="py-5 rounded-2xl glass text-white font-black uppercase tracking-widest text-xs transition hover:bg-white/10">Salvar na Lista</button>
+            <h2 class="font-display text-2xl sm:text-4xl text-grad uppercase mb-4">${w.title}</h2>
+            <p class="text-white/60 leading-relaxed mb-6 text-sm sm:text-lg italic">"${(w.synopsis||'').length > 200 ? w.synopsis.slice(0,200)+'...' : (w.synopsis||'')}"</p>
+            <div class="grid grid-cols-1 gap-3">
+                <button onclick="location.href='mangá.html?slug=${w.slug}'" class="py-4 rounded-2xl grad-nh text-black font-black uppercase tracking-widest text-xs shadow-glow transition hover:scale-[1.02]">Começar Leitura</button>
+                <button onclick="favWork('${w.slug}', ${w.id})" class="py-4 rounded-2xl glass text-white font-black uppercase tracking-widest text-xs transition hover:bg-white/10">Salvar na Lista</button>
             </div>
         </div>
     `;
