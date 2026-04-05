@@ -1272,7 +1272,7 @@ async function loadGoals() {
 
 /* ═══ NEWSLETTER ═══ */
 async function loadNewsletter() {
-  const {ok,data} = await api('/api/email/newsletter/subscribers');
+  const {ok,data} = await api('/admin/newsletter');
   const tb=document.getElementById('tb-newsletter');
   const count=document.getElementById('nl-count');
   if(!ok||!tb) return;
