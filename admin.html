@@ -265,6 +265,7 @@ textarea.input{resize:vertical;min-height:80px}
 
   <span class="nav-section">Conteúdo</span>
   <button class="nav-item" onclick="goTab('works')" id="nav-works"><span class="ni">📚</span>Obras <span class="nav-badge" id="badge-works" style="display:none">0</span></button>
+  <button class="nav-item" onclick="goTab('chapters')" id="nav-chapters"><span class="ni">📄</span>Capítulos <span class="nav-badge" id="badge-chapters" style="display:none">0</span></button>
   <button class="nav-item" onclick="goTab('heralds')" id="nav-heralds"><span class="ni">🛡️</span>Arautos <span class="nav-badge" id="badge-heralds" style="display:none">0</span></button>
   <button class="nav-item" onclick="goTab('comments')" id="nav-comments"><span class="ni">💬</span>Comentários</button>
 
@@ -337,6 +338,24 @@ textarea.input{resize:vertical;min-height:80px}
       </div>
     </div>
     <div id="works-list"></div>
+  </div>
+
+  <!-- CAPÍTULOS -->
+  <div id="tab-chapters" class="tab">
+    <div class="section-header">
+      <div><div class="section-title">Capítulos</div><div class="section-sub">Aprovar e gerenciar capítulos enviados pelos arautos</div></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <select class="input btn-sm" id="chapters-filter" onchange="loadAdminChapters()" style="width:auto">
+          <option value="pending">Aguardando</option>
+          <option value="published">Publicados</option>
+          <option value="rejected">Rejeitados</option>
+          <option value="draft">Rascunhos</option>
+          <option value="">Todos</option>
+        </select>
+        <button class="btn btn-ghost btn-sm" onclick="loadAdminChapters()">↻</button>
+      </div>
+    </div>
+    <div id="chapters-list"></div>
   </div>
 
   <!-- ARAUTOS -->
@@ -424,15 +443,84 @@ textarea.input{resize:vertical;min-height:80px}
   <!-- NEWSLETTER -->
   <div id="tab-newsletter" class="tab">
     <div class="section-header">
-      <div><div class="section-title">Newsletter</div><div class="section-sub">Lista de inscritos</div></div>
+      <div><div class="section-title">Newsletter</div><div class="section-sub">Inscritos e envio de novidades</div></div>
       <button class="btn btn-ghost btn-sm" onclick="loadNewsletter()">↻</button>
     </div>
-    <div id="newsletter-stats" style="margin-bottom:16px;"></div>
-    <div class="overflow-x">
-      <table class="tbl">
-        <thead><tr><th>Nome</th><th>Email</th><th>Origem</th><th>Data</th></tr></thead>
-        <tbody id="tb-newsletter"><tr><td colspan="4" style="text-align:center;color:var(--muted);padding:20px">Carregando...</td></tr></tbody>
-      </table>
+
+    <!-- KPI + ENVIO -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;" class="grid-1col-mobile">
+
+      <!-- Stats -->
+      <div class="card">
+        <div style="font-size:13px;font-weight:700;margin-bottom:14px;">📊 Inscritos</div>
+        <div id="newsletter-stats">
+          <div class="kpi"><div class="kpi-label">Total Ativos</div><div class="kpi-value" id="nl-count">—</div></div>
+        </div>
+      </div>
+
+      <!-- Composer -->
+      <div class="card">
+        <div style="font-size:13px;font-weight:700;margin-bottom:14px;">📣 Enviar Newsletter</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div>
+            <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Assunto do e-mail *</label>
+            <input class="input" id="nl-subject" placeholder="Ex: Novo capítulo disponível!">
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Título interno (no e-mail) *</label>
+            <input class="input" id="nl-title" placeholder="Ex: Capítulo 3 chegou ao universo">
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Saudação personalizada</label>
+            <input class="input" id="nl-greeting" placeholder="Ex: Olá, Arauto! (deixe vazio para padrão)">
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Corpo do e-mail * (aceita \n para quebra de linha)</label>
+            <textarea class="input" id="nl-body" rows="4" placeholder="Escreva a mensagem principal aqui..." style="resize:vertical;font-family:inherit;"></textarea>
+          </div>
+          <div>
+            <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">URL da imagem de capa (opcional)</label>
+            <input class="input" id="nl-image" placeholder="https://noheroes.com.br/assets/imagem.jpg">
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <div>
+              <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">URL do botão (opcional)</label>
+              <input class="input" id="nl-cta-url" placeholder="https://noheroes.com.br/...">
+            </div>
+            <div>
+              <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Texto do botão</label>
+              <input class="input" id="nl-cta-label" placeholder="Ver agora">
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:4px;">
+            <button class="btn btn-ghost btn-sm" onclick="previewNewsletter()" style="flex:1;">👁 Pré-visualizar</button>
+            <button class="btn btn-primary btn-sm" onclick="sendNewsletter()" id="nl-send-btn" style="flex:1;">📣 Enviar para todos</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Preview Modal -->
+    <div id="nl-preview-modal" class="modal-backdrop" style="display:none;">
+      <div class="modal-box" style="max-width:640px;max-height:80vh;overflow-y:auto;">
+        <div class="modal-title">Pré-visualização do E-mail</div>
+        <div id="nl-preview-content" style="background:#07060a;border-radius:12px;padding:16px;"></div>
+        <div class="modal-footer" style="margin-top:16px;">
+          <button class="btn btn-ghost" onclick="document.getElementById('nl-preview-modal').style.display='none'">Fechar</button>
+          <button class="btn btn-primary" onclick="document.getElementById('nl-preview-modal').style.display='none';sendNewsletter()">Confirmar Envio</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lista de inscritos -->
+    <div class="card">
+      <div style="font-size:13px;font-weight:700;margin-bottom:14px;">👥 Lista de Inscritos</div>
+      <div class="overflow-x">
+        <table class="tbl">
+          <thead><tr><th>Nome</th><th>Email</th><th>Origem</th><th>Data</th><th>Ações</th></tr></thead>
+          <tbody id="tb-newsletter"><tr><td colspan="5" style="text-align:center;color:var(--muted);padding:20px">Carregando...</td></tr></tbody>
+        </table>
+      </div>
     </div>
   </div>
 
@@ -641,7 +729,7 @@ function goTab(id) {
 
   // lazy load
   const loaders = {
-    dashboard:loadDashboard, works:loadAdminWorks, heralds:loadAdminHeralds,
+    dashboard:loadDashboard, works:loadAdminWorks, chapters:loadAdminChapters, heralds:loadAdminHeralds,
     comments:loadAdminComments, users:loadAdminUsers, shop:loadShop,
     goals:loadGoals, newsletter:loadNewsletter, revenue:loadRevenue, logs:loadLogs
   };
@@ -700,29 +788,30 @@ async function loadDashboard() {
   document.getElementById('dash-updated').textContent=new Date().toLocaleTimeString('pt-BR');
 
   const [{ok:ok1,data:sd},{ok:ok2,data:od},{ok:ok3,data:wd},{ok:ok4,data:ha}] = await Promise.all([
-    api('/admin/stats'),
+    api('/admin/stats?_='+Date.now()),
     api('/admin/orders'),
     api('/admin/works?status=pending'),
-    api('/api/herald/admin/heralds?status=pending')
+    api('/admin/heralds?status=pending')
   ]);
 
   if(ok1) {
     document.getElementById('kpi-users').textContent=fmtNum(sd.users);
     document.getElementById('kpi-orders').textContent=fmtNum(sd.orders);
     document.getElementById('kpi-revenue').textContent=fmtBRL(sd.totalRealSales||sd.total_sales||0);
+    // arautos ativos vem do /admin/stats
+    document.getElementById('kpi-heralds').textContent=fmtNum(sd.heralds||0);
   }
 
-  // works count
+  // works pendentes
   if(ok3) {
     const pw = wd.total||wd.works?.length||0;
     document.getElementById('kpi-pending').textContent=pw;
     if(pw>0){ document.getElementById('badge-works').textContent=pw; document.getElementById('badge-works').style.display='inline'; }
   }
 
-  // heralds count
+  // candidaturas pendentes — só o badge lateral
   if(ok4) {
     const ph = ha.applications?.length||0;
-    document.getElementById('kpi-heralds').textContent=ph;
     if(ph>0){ document.getElementById('badge-heralds').textContent=ph; document.getElementById('badge-heralds').style.display='inline'; }
   }
 
@@ -762,7 +851,7 @@ async function loadDashboard() {
 
 /* ═══ OBRAS ═══ */
 async function loadAdminWorks() {
-  const status=document.getElementById('works-filter')?.value||'pending';
+  const status=document.getElementById('works-filter')?.value??'';
   const {ok,data}=await api(`/admin/works${status?`?status=${status}`:''}`);
   const container=document.getElementById('works-list');
   if(!container) return;
@@ -813,10 +902,73 @@ async function toggleFeatured(id, featured) {
   if(ok){ toast(featured?'Obra em destaque!':'Destaque removido.','success'); loadAdminWorks(); }
 }
 
+/* ═══ CAPÍTULOS ═══ */
+async function loadAdminChapters() {
+  const status=document.getElementById('chapters-filter')?.value??'';
+  // busca todas as obras e depois os capítulos de cada uma
+  const {ok:wok, data:wdata}=await api('/admin/works');
+  const container=document.getElementById('chapters-list');
+  if(!container) return;
+  if(!wok){ container.innerHTML='<div style="text-align:center;padding:32px;color:var(--muted);">Erro ao carregar.</div>'; return; }
+
+  const works=wdata.works||[];
+  const allChapters=[];
+
+  await Promise.all(works.map(async w => {
+    const {ok,data}=await api(`/admin/chapters?work_id=${w.id}${status?`&status=${status}`:''}`);
+    if(ok)(data.chapters||[]).forEach(c=>{ c.workTitle=w.title; c.workId=w.id; allChapters.push(c); });
+  }));
+
+  // badge de pendentes
+  const pending=allChapters.filter(c=>c.status==='pending').length;
+  const badge=document.getElementById('badge-chapters');
+  if(badge){ badge.textContent=pending; badge.style.display=pending?'inline':'none'; }
+
+  if(!allChapters.length){
+    container.innerHTML='<div style="text-align:center;padding:32px;color:var(--muted);">Nenhum capítulo encontrado.</div>';
+    return;
+  }
+
+  allChapters.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+
+  container.innerHTML=allChapters.map(ch=>`
+    <div class="mod-item">
+      <div class="mod-thumb" style="display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:var(--accent);font-family:var(--fm);">C${String(ch.number).padStart(2,'0')}</div>
+      <div class="mod-info">
+        <div class="mod-title">${ch.title}</div>
+        <div class="mod-sub">${ch.workTitle} · ${ch.total_pages||0} páginas · ${fmtDate(ch.createdAt)}</div>
+        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+          ${statusBadge(ch.status)}
+          ${ch.is_premium?'<span class="badge" style="background:rgba(217,181,90,0.15);color:var(--gold);border-color:rgba(217,181,90,0.3);">Premium</span>':''}
+        </div>
+        ${ch.admin_notes?`<div style="margin-top:6px;font-size:11px;color:var(--red);font-family:var(--fm)">Nota: ${ch.admin_notes}</div>`:''}
+      </div>
+      <div class="mod-actions">
+        ${ch.status==='pending'?`
+          <button class="btn btn-green btn-sm" onclick="moderateChapter(${ch.id},'published')">✓ Aprovar</button>
+          <button class="btn btn-danger btn-sm" onclick="openRejectModal(${ch.id},'chapter')">✕ Rejeitar</button>
+        `:''}
+        ${ch.status==='published'?`
+          <button class="btn btn-danger btn-sm" onclick="moderateChapter(${ch.id},'rejected')">Rejeitar</button>
+        `:''}
+        ${ch.status==='rejected'||ch.status==='draft'?`
+          <button class="btn btn-green btn-sm" onclick="moderateChapter(${ch.id},'published')">✓ Publicar</button>
+        `:''}
+      </div>
+    </div>
+  `).join('');
+}
+
+async function moderateChapter(id, status, notes='') {
+  const {ok}=await api(`/admin/chapters/${id}/status`,{method:'PATCH',body:JSON.stringify({status,admin_notes:notes})});
+  if(ok){ toast(status==='published'?'Capítulo publicado!':'Capítulo atualizado.',status==='published'?'success':'info'); loadAdminChapters(); }
+  else toast('Erro ao moderar capítulo.','error');
+}
+
 /* ═══ ARAUTOS ═══ */
 async function loadAdminHeralds() {
-  const status=document.getElementById('heralds-filter')?.value||'pending';
-  const {ok,data}=await api(`/api/herald/admin/heralds${status?`?status=${status}`:''}`);
+  const status=document.getElementById('heralds-filter')?.value??'';
+  const {ok,data}=await api(`/admin/heralds${status?`?status=${status}`:''}`);
   const container=document.getElementById('heralds-list');
   if(!container) return;
 
@@ -847,7 +999,7 @@ async function loadAdminHeralds() {
 }
 
 async function moderateHerald(id, status, notes='') {
-  const {ok}=await api(`/api/herald/admin/heralds/${id}`,{method:'PATCH',body:JSON.stringify({status,admin_notes:notes})});
+  const {ok}=await api(`/admin/heralds/${id}`,{method:'PATCH',body:JSON.stringify({status,admin_notes:notes})});
   if(ok){ toast(status==='approved'?'Arauto aprovado!':'Candidatura rejeitada.',status==='approved'?'success':'error'); loadAdminHeralds(); }
   else toast('Erro ao processar candidatura.','error');
 }
@@ -861,13 +1013,14 @@ function openRejectModal(id, type) {
     closeModal('reject-modal');
     if(type==='work') moderateWork(id,'suspended',notes);
     else if(type==='herald') moderateHerald(id,'rejected',notes);
+    else if(type==='chapter') moderateChapter(id,'rejected',notes);
   };
   openModal('reject-modal');
 }
 
 /* ═══ COMENTÁRIOS ═══ */
 async function loadAdminComments() {
-  const status=document.getElementById('comments-filter')?.value||'reported';
+  const status=document.getElementById('comments-filter')?.value??'';
   // busca comentários de capítulos publicados
   const container=document.getElementById('comments-list');
   if(!container) return;
@@ -1119,22 +1272,96 @@ async function loadGoals() {
 
 /* ═══ NEWSLETTER ═══ */
 async function loadNewsletter() {
-  const {ok,data} = await api('/admin/newsletter');
+  const {ok,data} = await api('/api/email/newsletter/subscribers');
   const tb=document.getElementById('tb-newsletter');
-  const stats=document.getElementById('newsletter-stats');
+  const count=document.getElementById('nl-count');
   if(!ok||!tb) return;
 
-  const subs=data.subscribers||data.data||[];
-  if(stats) stats.innerHTML=`<div class="kpi" style="display:inline-block;min-width:160px"><div class="kpi-label">Total de Inscritos</div><div class="kpi-value">${fmtNum(subs.length)}</div></div>`;
+  const subs=data.subscribers||[];
+  if(count) count.textContent=fmtNum(subs.length);
 
-  if(!subs.length){ tb.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:20px">Nenhum inscrito ainda.</td></tr>'; return; }
+  if(!subs.length){ tb.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:20px">Nenhum inscrito ainda.</td></tr>'; return; }
   tb.innerHTML=subs.map(s=>`
     <tr>
       <td style="font-weight:600">${s.name||'—'}</td>
       <td style="font-family:var(--fm);font-size:11px">${s.email}</td>
       <td style="color:var(--muted);font-size:11px">${s.source||'—'}</td>
       <td style="color:var(--muted);font-size:11px">${fmtDate(s.createdAt)}</td>
+      <td><button class="btn btn-danger btn-sm" onclick="removeSubscriber(${s.id})">Remover</button></td>
     </tr>`).join('');
+}
+
+async function removeSubscriber(id) {
+  if(!confirm('Remover este inscrito?')) return;
+  const {ok}=await api(`/api/email/newsletter/subscribers/${id}`,{method:'DELETE'});
+  if(ok){ toast('Inscrito removido.','info'); loadNewsletter(); }
+  else toast('Erro ao remover.','error');
+}
+
+function previewNewsletter() {
+  const subject = document.getElementById('nl-subject').value.trim();
+  const title   = document.getElementById('nl-title').value.trim();
+  const greeting= document.getElementById('nl-greeting').value.trim();
+  const body    = document.getElementById('nl-body').value.trim();
+  const image   = document.getElementById('nl-image').value.trim();
+  const ctaUrl  = document.getElementById('nl-cta-url').value.trim();
+  const ctaLabel= document.getElementById('nl-cta-label').value.trim() || 'Ver agora';
+
+  if(!subject||!title||!body){ toast('Preencha assunto, título e corpo.','error'); return; }
+
+  const preview = document.getElementById('nl-preview-content');
+  preview.innerHTML = `
+    <div style="font-family:Arial,sans-serif;background:#0c0a10;border:1px solid rgba(143,79,255,0.2);border-radius:12px;overflow:hidden;max-width:560px;margin:0 auto;">
+      <div style="padding:24px;text-align:center;border-bottom:1px solid rgba(255,255,255,0.06);background:linear-gradient(135deg,rgba(143,79,255,0.08),rgba(217,181,90,0.04));">
+        <div style="font-size:20px;font-weight:700;color:#c4a3ff;">NoHeroes</div>
+        <div style="font-size:10px;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:0.2em;margin-top:2px;">Newsletter</div>
+      </div>
+      ${image ? `<img src="${image}" style="width:100%;max-height:200px;object-fit:cover;">` : ''}
+      <div style="padding:28px 24px;">
+        <div style="font-size:18px;font-weight:700;color:#c4a3ff;margin-bottom:8px;">${title}</div>
+        <div style="width:32px;height:2px;background:linear-gradient(90deg,#8f4fff,#d9b55a);margin-bottom:16px;border-radius:99px;"></div>
+        ${greeting ? `<p style="font-size:13px;color:rgba(255,255,255,0.6);margin:0 0 12px;">${greeting}</p>` : ''}
+        <p style="font-size:13px;color:rgba(255,255,255,0.55);white-space:pre-line;margin:0 0 20px;">${body}</p>
+        ${ctaUrl ? `<a href="${ctaUrl}" style="display:inline-block;padding:12px 28px;border-radius:999px;background:linear-gradient(135deg,#8f4fff,#d9b55a);color:#000;font-weight:700;font-size:13px;text-decoration:none;">${ctaLabel}</a>` : ''}
+      </div>
+      <div style="padding:16px;border-top:1px solid rgba(255,255,255,0.06);text-align:center;background:rgba(0,0,0,0.3);">
+        <p style="margin:0;font-size:10px;color:rgba(255,255,255,0.2);">© ${new Date().getFullYear()} NoHeroes · noheroes.com.br</p>
+      </div>
+    </div>
+    <div style="margin-top:12px;padding:10px 14px;background:rgba(255,255,255,0.03);border-radius:8px;border-left:3px solid rgba(217,181,90,0.5);">
+      <span style="font-size:11px;color:var(--muted);">Assunto do e-mail: </span>
+      <span style="font-size:11px;color:#fff;font-weight:600;">${subject}</span>
+    </div>
+  `;
+  document.getElementById('nl-preview-modal').style.display='flex';
+}
+
+async function sendNewsletter() {
+  const subject = document.getElementById('nl-subject').value.trim();
+  const title   = document.getElementById('nl-title').value.trim();
+  const greeting= document.getElementById('nl-greeting').value.trim();
+  const body    = document.getElementById('nl-body').value.trim();
+  const image   = document.getElementById('nl-image').value.trim();
+  const ctaUrl  = document.getElementById('nl-cta-url').value.trim();
+  const ctaLabel= document.getElementById('nl-cta-label').value.trim() || 'Ver agora';
+
+  if(!subject||!title||!body){ toast('Preencha assunto, título e corpo.','error'); return; }
+
+  const btn=document.getElementById('nl-send-btn');
+  const count=document.getElementById('nl-count').textContent;
+  if(!confirm(`Enviar newsletter para ${count} inscritos ativos? Esta ação não pode ser desfeita.`)) return;
+
+  if(btn){ btn.textContent='⏳ Enviando...'; btn.disabled=true; }
+
+  const {ok,data}=await api('/api/email/newsletter/send',{
+    method:'POST',
+    body:JSON.stringify({subject,title,greeting,body,imageUrl:image,ctaUrl,ctaLabel})
+  });
+
+  if(btn){ btn.textContent='📣 Enviar para todos'; btn.disabled=false; }
+
+  if(ok) toast(`✅ Enviado para ${data.sent} inscritos${data.failed>0?` (${data.failed} falhas)`:''}.`,'success');
+  else toast('Erro ao enviar newsletter.','error');
 }
 
 /* ═══ FINANCEIRO ═══ */
