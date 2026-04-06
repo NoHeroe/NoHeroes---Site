@@ -1,1324 +1,497 @@
 <!DOCTYPE html>
-<html lang="pt-br">  
-<head>  
-  <meta charset="UTF-8">  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-  <title>NoHeroes | Sobre</title>  
-  <script src="https://cdn.tailwindcss.com"></script>  
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">  
-  <style>  
-    body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #e5e5e5; }  
-    h1, h2, .cinzel {  
-  font-family: 'Cinzel Decorative', serif;  
-}  
-    .text-shadow-md { text-shadow: 0 0 10px rgba(143,79,255,0.4); }  
-    .overlay { position:absolute; inset:0; background:rgba(0,0,0,0.5); }  
-    .drop-shadow-glow { filter: drop-shadow(0 0 10px #8f4fff) drop-shadow(0 0 20px #8f4fff); }  
-    html { scroll-behavior: smooth; }  
-    /* Modal e drawer */  
-    .hidden { display: none; }  
-    /* Ajustes para o topo fixo */  
-    
-.gradiente-noheroes {
-  background: linear-gradient(to bottom right, #8f4fff 20%, #facc15 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
-  text-shadow: 0 0 8px rgba(143, 79, 255, 0.4);
-}
-.barra-degrade {
-  background: linear-gradient(to right, #8f4fff, #facc15);
-  box-shadow: 0 0 6px #8f4fff88, 0 0 10px #facc1588;
-}
-.glow-interno-left {
-  box-shadow: inset 8px 0 18px rgba(143, 79, 255, 0.5);
-  border-left: 1px solid rgba(143, 79, 255, 0.15);
-}
-#brasasCanvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;
-  pointer-events: none;
-}
-@keyframes marquee {
-    0% { transform: translateX(0%); }
-    100% { transform: translateX(-100%); }
-  }
-  .animate-marquee {
-    display: inline-block;
-    min-width: 200%;
-    animation: marquee 110s linear infinite;
-  }
-/* Balão roxo -> degradê roxo para dourado, opacidade vidro */
-.balao-resposta {
-  background: linear-gradient(to bottom right, rgba(128, 0, 128, 0.6), rgba(250, 204, 21, 0.6));
-  backdrop-filter: blur(8px) saturate(180%);
-  -webkit-backdrop-filter: blur(8px) saturate(180%);
-  border-radius: 20px 20px 20px 0; /* canto inferior esquerdo com “setinha” */
-}
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>NoHeroes · Sobre</title>
+<meta name="description" content="Conheça o universo NoHeroes — plataforma multimídia de dark fantasy com mangás, livros, app e muito mais.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={theme:{extend:{colors:{nh:{bg:'#07060a',dark:'#0c0a10',accent:'#8f4fff',gold:'#d9b55a'}},fontFamily:{display:['Cinzel Decorative','serif'],sans:['Inter','sans-serif']}}}}</script>
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;line-height:1.6;overflow-x:hidden}
+#brasasCanvas{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-1;pointer-events:none}
 
-.balao-pergunta {
-  background: linear-gradient(to bottom right, rgba(152, 251, 152, 0.6), rgba(135, 206, 250, 0.6));
-  color: #1e293b; /* letra escura, legível em fundo claro */
-  backdrop-filter: blur(8px) saturate(180%);
-  -webkit-backdrop-filter: blur(8px) saturate(180%);
-  border-radius: 20px 20px 0 20px;
-}
-.balao-flutuante {
-  animation: flutuar 3s ease-in-out infinite alternate;
-}
+/* GLOBALS */
+.text-grad{background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.grad-nh{background:linear-gradient(135deg,#8f4fff,#d9b55a)}
+.cinzel{font-family:'Cinzel Decorative',serif}
+.divider{width:40px;height:2px;background:linear-gradient(90deg,#8f4fff,#d9b55a);border-radius:99px;margin:0 auto}
+.section-label{font-size:11px;font-weight:700;color:rgba(143,79,255,0.7);text-transform:uppercase;letter-spacing:0.2em;margin-bottom:12px}
 
-.balao-flutuante:nth-child(1) { animation-delay: 0s; }
-.balao-flutuante:nth-child(2) { animation-delay: 0.3s; }
-.balao-flutuante:nth-child(3) { animation-delay: 0.6s; }
-.balao-flutuante:nth-child(4) { animation-delay: 0.9s; }
-.balao-flutuante:nth-child(5) { animation-delay: 1.2s; }
-.balao-flutuante:nth-child(6) { animation-delay: 1.5s; }
-.balao-flutuante:nth-child(7) { animation-delay: 1.8s; }
+/* DRAWER */
+#drawer{position:fixed;top:0;right:0;width:288px;height:100%;background:rgba(5,5,7,0.97);backdrop-filter:blur(20px);border-left:1px solid rgba(143,79,255,0.2);box-shadow:-10px 0 30px rgba(0,0,0,0.9);z-index:100;transform:translateX(100%);transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);overflow-y:auto}
+#drawerOverlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:90;display:none;opacity:0;transition:opacity 0.3s}
+.drawer-item{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;margin-bottom:6px;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid transparent;text-decoration:none;color:#e5e5e5;transition:all 0.3s}
+.drawer-item:hover{background:rgba(143,79,255,0.08);border-color:rgba(143,79,255,0.3);transform:translateX(-4px)}
+.drawer-tag{font-size:9px;font-family:'Cinzel Decorative',serif;text-transform:uppercase;letter-spacing:1px;color:#8f4fff;opacity:0.7}
 
-@keyframes flutuar {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-6px); }
-}
-#navBtn {
-  position: fixed;
-  top: 0.70rem;
-  left: 1rem;
-  z-index: 60;
-  background: linear-gradient(135deg, #8f4fff, #facc15);
-  color: #000;
-  width: 40px;
-  height: 40px;
-  border-radius: 9999px;
-  font-weight: bold;
-  font-size: 1.3rem;
-  box-shadow: 0 0 10px rgba(143, 79, 255, 0.6);
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-#navBtn:hover {
-  background: linear-gradient(135deg, #a855f7, #fbbf24);
-  box-shadow: 0 0 12px rgba(250, 204, 21, 0.7);
-}
+/* CARDS */
+.glass-card{background:#0c0a10;border:1px solid rgba(143,79,255,0.15);border-radius:16px;padding:24px;transition:all 0.3s}
+.glass-card:hover{border-color:rgba(143,79,255,0.35);transform:translateY(-3px)}
+.badge-future{display:inline-block;font-size:10px;padding:3px 10px;border-radius:99px;background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.3);color:#fbbf24;margin-top:8px}
 
-/* Modal geral */
-#navModal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(4px);
-  display: none;
-  z-index: 100;
-}
+/* MARQUEE */
+.marquee-wrap{overflow:hidden;white-space:nowrap;border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.3);padding:10px 0}
+.marquee-inner{display:inline-block;animation:marquee 80s linear infinite}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-#navModalContent {
-  background: #0a0a0a;
-  max-height: 80vh; /* 🔥 Compactar modal */
-  overflow-y: auto;
-  width: 90%;
-  max-width: 320px;
-  margin: 4rem auto;
-  border-radius: 1rem;
-  padding: 1rem;
-  box-shadow: 0 0 20px rgba(143, 79, 255, 0.3);
-  position: relative;
-}
+/* BALÕES */
+.balao-resp{background:linear-gradient(135deg,rgba(143,79,255,0.25),rgba(217,181,90,0.15));border:1px solid rgba(143,79,255,0.2);border-radius:18px 18px 18px 4px;padding:14px 18px;max-width:80%}
+.balao-ask{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:18px 18px 4px 18px;padding:14px 18px;max-width:80%}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.float{animation:float 3s ease-in-out infinite}
+.float-2{animation:float 3.5s ease-in-out infinite 0.3s}
+.float-3{animation:float 4s ease-in-out infinite 0.6s}
 
-/* Botões internos compactos e elegantes */
-#navModalContent button {
-  display: block;
-  width: 100%;
-  margin: 0.3rem 0;
-  padding: 0.6rem;
-  background: #1a1a1a;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  font-size: 0.85rem;
-  font-weight: bold;
-  text-align: center;
-  transition: background 0.3s ease;
-  background-color: #1a1a1a;
-  border: 1px solid #333;
-}
+/* TIMELINE */
+.timeline-scroll{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:16px;padding:0 20px 16px;scrollbar-width:none}
+.timeline-scroll::-webkit-scrollbar{display:none}
+.tl-box{flex:0 0 auto;width:280px;background:#0c0a10;border:1px solid rgba(143,79,255,0.2);border-radius:14px;padding:20px;scroll-snap-align:start;transition:transform 0.2s}
+.tl-box:hover{transform:scale(1.02)}
+.tl-year{font-family:'Cinzel Decorative',serif;font-size:13px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.tl-now{border-color:rgba(143,79,255,0.5);box-shadow:0 0 20px rgba(143,79,255,0.1)}
 
-/* Degradê estilo NoHeroes no texto dos botões */
-#navModalContent button span {
-  background: linear-gradient(135deg, #8f4fff, #facc15);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
-}
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal.visible{opacity:1;transform:none}
 
-/* Hover discreto */
-#navModalContent button:hover {
-  background: #2e2e2e;
-}
-@keyframes glowFlare {
-  0%, 100% {
-    opacity: 0.4;
-    filter: blur(1px);
-  }
-  50% {
-    opacity: 0.9;
-    filter: blur(3px);
-  }
-}
+/* STATS */
+.stat-item{text-align:center;padding:20px 16px}
+.stat-num{font-size:32px;font-weight:800;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 
-.barra-gradiente-2 {
-  width: 100%;
-  height: 6px;
-  background: linear-gradient(to right, #a855f7, #facc15);
-  border-radius: 9999px;
-  margin: 2rem 0;
-  position: relative;
-  z-index: 5;
+/* MOBILE */
+@media(max-width:768px){
+  .hero-grid{grid-template-columns:1fr!important}
+  .projects-grid{grid-template-columns:1fr 1fr!important}
+  .team-grid{grid-template-columns:1fr!important}
+  .stats-grid{grid-template-columns:1fr 1fr!important}
+  .press-btns{flex-direction:column!important}
 }
- .timeline-section {
-  background: #0a0a0a;
-  padding: 4rem 1rem;
-  color: #e5e5e5;
-  font-family: 'Inter', sans-serif;
+@media(max-width:480px){
+  .projects-grid{grid-template-columns:1fr!important}
+  .stats-grid{grid-template-columns:1fr 1fr!important}
 }
-
-.timeline-title {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 2rem;
-  text-align: center;
-  text-transform: uppercase;
-  background: linear-gradient(to right, #a855f7, #facc15);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 8px rgba(168, 85, 247, 0.3);
-  margin-bottom: 3rem;
-  letter-spacing: 1px;
-}
-
-.timeline-container {
-  display: flex;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  gap: 1.5rem;
-  padding: 0 1rem;
-}
-
-.timeline-box {
-  flex: 0 0 auto;
-  min-width: 300px;
-  max-width: 320px;
-  background: rgba(20, 20, 30, 0.85);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(168, 85, 247, 0.3);
-  border-radius: 1rem;
-  padding: 1.5rem;
-  scroll-snap-align: start;
-  box-shadow: 0 0 20px rgba(168, 85, 247, 0.1);
-  transition: transform none;
-}
-
-.timeline-box:hover {
-  transform: scale(1.03);
-}
-
-.timeline-year {
-  font-size: 1.125rem;
-  font-family: 'Cinzel Decorative', serif;
-  text-transform: uppercase;
-  background: linear-gradient(to right, #a855f7, #facc15);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 0.75rem;
-  letter-spacing: 1px;
-}
-
-.timeline-content {
-  font-size: 0.875rem;
-  color: #e2e8f0;
-  line-height: 1.6;
-  text-align: justify;
-}
-
-.timeline-divider {
-  height: 1px;
-  background: linear-gradient(to right, #a855f7, #facc15);
-  margin: 3rem auto 2rem;
-  width: 80%;
-  opacity: 0.6;
-}
-dialog::backdrop {
-  background: rgba(0, 0, 0, 0.7);
-}
-
-dialog {
-  border: none !important;
-  outline: none !important;
-  background: transparent !important;
-}
-details summary {
-  cursor: pointer;
-  font-weight: 600;
-  color: #a78bfa; /* roxo suave */
-  padding: 4px 0;
-}
-details[open] summary {
-  color: #fff;
-}
-details p {
-  margin-top: 4px;
-  padding-left: 1rem;
-  color: #ccc;
-}
-.barra-gradiente-2{
-  width: 3px;
-  border-radius: 999px;
-  background: linear-gradient(
-    to bottom,
-    rgba(124,58,237,.0),
-    rgba(124,58,237,.85),
-    rgba(194,149,70,.85),
-    rgba(194,149,70,.0)
-  );
-  filter: drop-shadow(0 0 10px rgba(124,58,237,.35));
-  opacity: .9;
-}
-
 </style>
+</head>
+<body>
+<canvas id="brasasCanvas"></canvas>
+<div id="drawerOverlay" onclick="closeDrawer()"></div>
 
-</head>  
-<body class="leading-relaxed">   
-
-<!-- Botão flutuante de navegação -->
-<button id="navBtn">?</button>
-
-<!-- Modal de navegação -->
-<div id="navModal">
-  <div id="navModalContent">
-    <span id="closeNavModal" class="absolute top-3 right-4 text-xl text-purple-400 hover:text-yellow-400 cursor-pointer">✕</span>
-    <h3 class="text-lg font-bold text-purple-400 mb-4">Navegar</h3>
-    
-    <!-- Existentes -->
-    <button onclick="goToSection('oque-e-noheroes')">O que é NoHeroes</button>
-    <button onclick="goToSection('muito-alem')">Muito além de uma história</button>
-    <button onclick="goToSection('como-funciona-mvv')">Como funciona</button>
-    <button onclick="goToSection('depoimentos')">Depoimentos</button>
-    <button onclick="goToSection('para-quem')">Para quem?</button>
-    <button onclick="goToSection('faq-section')">FAQ</button>
-    <button onclick="goToSection('timeline-section')">História e linha do tempo</button>
-    <button onclick="goToSection('criador')">Sobre o Criador</button>
-    <button onclick="goToSection('press-kit')">Press Kit / Mídia</button>
+<!-- DRAWER -->
+<div id="drawer">
+  <button onclick="closeDrawer()" style="position:absolute;top:20px;right:20px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
+  <div style="padding:32px 24px;margin-top:20px;">
+    <h1 style="font-family:'Cinzel Decorative',serif;font-size:20px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:0 0 4px;">NoHeroes</h1>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:28px;"><span style="height:1px;width:32px;background:linear-gradient(90deg,#8f4fff,#d9b55a);display:block;"></span><span style="font-size:10px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.3em;">Universo Sombrio</span></div>
+    <nav style="display:flex;flex-direction:column;">
+      <a href="index.html" class="drawer-item"><div style="display:flex;align-items:center;gap:12px;"><svg width="18" height="18" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span style="font-size:14px;font-weight:700;">Início</span></div><span class="drawer-tag">Portal</span></a>
+      <a href="leitor.html" class="drawer-item"><div style="display:flex;align-items:center;gap:12px;"><svg width="18" height="18" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg><span style="font-size:14px;font-weight:700;">Biblioteca</span></div><span class="drawer-tag">Crônicas</span></a>
+      <a href="store.html" class="drawer-item"><div style="display:flex;align-items:center;gap:12px;"><svg width="18" height="18" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M16 11V7a4 4 0 00-8 0v4M5 11h14l1 9H4l1-9z"/></svg><span style="font-size:14px;font-weight:700;">Loja</span></div><span class="drawer-tag">Mercado</span></a>
+      <a href="profile.html" class="drawer-item"><div style="display:flex;align-items:center;gap:12px;"><svg width="18" height="18" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg><span style="font-size:14px;font-weight:700;">Perfil</span></div><span class="drawer-tag">Avatar</span></a>
+      <a href="sobre.html" class="drawer-item" style="border-color:rgba(143,79,255,0.3);background:rgba(143,79,255,0.06);"><div style="display:flex;align-items:center;gap:12px;"><svg width="18" height="18" fill="none" stroke="#c4a3ff" stroke-width="1.5" viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span style="font-size:14px;font-weight:700;color:#c4a3ff;">Sobre</span></div><span class="drawer-tag" style="color:#c4a3ff;">Atual</span></a>
+      <a href="apoiar.html" class="drawer-item"><div style="display:flex;align-items:center;gap:12px;"><svg width="18" height="18" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg><span style="font-size:14px;font-weight:700;">Apoiar</span></div><span class="drawer-tag">Aliados</span></a>
+      <a href="suporte.html" class="drawer-item"><div style="display:flex;align-items:center;gap:12px;"><svg width="18" height="18" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/></svg><span style="font-size:14px;font-weight:700;">Suporte</span></div><span class="drawer-tag">Ajuda</span></a>
+    </nav>
+    <div style="margin-top:32px;text-align:center;"><p style="font-size:8px;text-transform:uppercase;letter-spacing:0.5em;color:rgba(255,255,255,0.15);">Sem heróis. Apenas você.</p></div>
   </div>
 </div>
 
- <!-- HEADER LIMPO COM DRAWER --> 
-<header class="fixed top-0 left-0 w-full h-14 bg-[#0a0a0a] border-b border-[#2e2e2e] z-50">
-  <!-- Botão hambúrguer mágico -->
-<button id="hamburgerBtn" 
-  class="absolute top-3 right-4 text-3xl text-white hover:text-[#a855f7] transition z-[60]">
-  ☰
-</button>
-
-  <!-- Logo centralizada e VAZANDO para baixo -->
-  <div class="absolute left-1/2 top-full transform -translate-x-1/2 -translate-y-1/2 z-30">
-    <a href="index.html">
-      <img src="assets/images/noheroes logo.png" alt="NoHeroes" class="h-32 drop-shadow-glow" />
+<!-- HEADER -->
+<header style="position:fixed;top:0;left:0;right:0;z-index:60;height:64px;background:rgba(7,6,10,0.9);border-bottom:1px solid rgba(255,255,255,0.06);backdrop-filter:blur(12px);display:flex;align-items:center;">
+  <div style="max-width:1200px;margin:0 auto;width:100%;padding:0 20px;display:flex;align-items:center;justify-content:space-between;">
+    <a href="/" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+      <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#8f4fff,#d9b55a);box-shadow:0 0 16px rgba(143,79,255,0.3);flex-shrink:0;"></div>
+      <span style="font-family:'Cinzel Decorative',serif;font-size:18px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">NoHeroes</span>
     </a>
+    <button onclick="openDrawer()" style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
   </div>
 </header>
 
-<div class="fixed top-14 left-0 w-full h-1 barra-degrade z-40"></div>
+<main style="padding-top:64px;">
 
-<!-- Drawer -->
-<div id="drawer" class="fixed top-0 right-0 w-72 h-full bg-black text-white transform transition-transform duration-300 z-50 glow-interno-left" style="transform: translateX(100%)">
+<!-- ═══ 1. HERO ═══ -->
+<section id="oque-e-noheroes" style="padding:60px 20px 48px;max-width:1100px;margin:0 auto;">
+  <div class="hero-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;">
 
-<!-- Dentro do drawer, no topo -->
-<button onclick="toggleDrawer()" class="absolute top-4 right-4 text-3xl text-[#a855f7] hover:text-purple-400 z-50">
-  ✕
-</button>
-  <!-- Conteúdo do drawer -->
-  <div class="p-6 flex flex-col gap-4">
-    <h1 class="text-3xl font-bold gradiente-noheroes cinzel">NOHEROES</h1>
-    <p class="text-gray-400 text-sm">Universo Sombrio</p>
-    <nav class="mt-4 flex flex-col gap-3 text-sm">
-
-  <a href="index.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
-    <div class="flex items-center gap-2">
-      <!-- Ícone: Home -->
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l9-9 9 9M4 10v10h5v-6h6v6h5V10" />
-      </svg>
-      <span class="text-white">Início</span>
-    </div>
-    <span class="text-xs text-purple-400 cinzel">Portal</span>
-  </a>
-
-  <a href="sobre.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
-    <div class="flex items-center gap-2">
-      <!-- Ícone: User -->
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A7 7 0 0112 15a7 7 0 016.879 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-      </svg>
-      <span class="text-white">Sobre</span>
-    </div>
-    <span class="text-xs text-purple-400 cinzel">Entidade</span>
-  </a>
-
-  <a href="store.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
-    <div class="flex items-center gap-2">
-      <!-- Ícone: Shopping Bag -->
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 11h14l1 9H4l1-9z" />
-      </svg>
-      <span class="text-white">Loja</span>
-    </div>
-    <span class="text-xs text-purple-400 cinzel">Cartel Velado</span>
-  </a>
-
-  <a href="profile.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
-    <div class="flex items-center gap-2">
-      <!-- Ícone: Sparkle (Star-like) -->
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12l1.5 4.5L11 13l4.5 3.5L18 12l-2.5-4.5L13 11 7.5 7.5z" />
-      </svg>
-      <span class="text-white">Perfil</span>
-    </div>
-    <span class="text-xs text-purple-400 cinzel">Avatar</span>
-  </a>
-
-  <a href="oraculum.html" class="flex items-center justify-between p-3 rounded-lg hover:bg-[#1c1c1c] transition">
-    <div class="flex items-center gap-2">
-      <!-- Ícone: Question Circle -->
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M12 14a4 4 0 10-4-4 1 1 0 001 1h.01a1 1 0 001-1 2 2 0 112 2 2 2 0 01-2 2z" />
-      </svg>
-      <span class="text-white">Oráculo</span>
-    </div>
-    <span class="text-xs text-purple-400 cinzel">Sabedoria</span>
-  </a>
-
-</nav>
-  </div>
-</div>
-
-<!-- Overlay para clicar fora e fechar -->
-<div id="drawerOverlay" class="fixed inset-0 bg-black bg-opacity-60 hidden z-30"></div>
-
-<main>
-
-<section id="oque-e-noheroes" class="relative py-20 px-4">
-  <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-    <!-- Bloco visual: headline e manifesto resumido -->
-    <div class="space-y-6 glass p-6 rounded-xl border border-gray-700 backdrop-blur-md reveal-fade">
-      <h2 class="text-4xl md:text-5xl font-bold gradiente-noheroes cinzel text-center"> O que é NoHeroes?</h2>
-      <p class="text-base text-gray-400">
-        Muito mais que uma marca: um <span class="gradiente-noheroes">portal vivo</span>.
-      </p>
-      <p class="text-sm text-gray-300 leading-relaxed">
-        Uma plataforma multimídia de impacto — onde histórias, conhecimento e transformação se entrelaçam.  
-        Aqui, você não é apenas um Espectador. Você evolui.
-      </p>
-      <blockquote class="italic gradiente-noheroes border-l-4 border-purple-500 pl-4">
-        “Você lê, assiste e interage. Aprende. Cresce. E com o tempo… Você também Cria."
-      </blockquote>
-    </div>
-
-    <!-- Bloco secundário: conceito de sistema vivo e interconexão -->
-    <div class="space-y-4 glass p-6 rounded-xl border border-gray-700 backdrop-blur-md reveal-fade">
-      <h3 class="text-xl font-semibold gradiente-noheroes text-center">Sistema Vivo Digital</h3>
-      <ul class="list-disc list-inside text-sm text-gray-300 space-y-1 text-left">
-        <li>Integração de todas as modalidades da vida.</li>
-        <li>A vida como sistema interligado e entrelaçado.</li>
-        <li>Combate à desordem causada por isolar o que está conectado.</li>
-        <li>Criatividade, aprendizado e evolução unidos.</li>
-      </ul>
-      <p class="text-xs text-gray-400 italic">
-        Tudo o que criamos — de mangás a ferramentas — te impulsiona para fora da inércia. Aqui a Ascenção é real.
-      </p>
-    </div>
-  </div>
-</section>
-
-<div class="w-full overflow-hidden whitespace-nowrap border-t border-b border-gray-700 py-2 bg-[#0a0a0a]">
-  <div class="inline-block animate-marquee">
-    <span class="mx-8 text-sm text-gray-400 italic">“Ainda que eu ande pelo vale da sombra da morte, não temerei mal algum, porque tu estás comigo.” (Salmos 23:4)</span>
-    <span class="mx-8 text-sm text-gray-400 italic">“O Deus de toda graça, que os chamou para sua glória eterna, os restaurará, confirmará, fortalecerá e os colocará sobre firmes alicerces.” (1 Pedro 5:10)</span>
-    <span class="mx-8 text-sm text-gray-400 italic">“Não temas, porque eu sou contigo; não te assombres, porque eu sou teu Deus; eu te fortaleço e te ajudo.” (Isaías 41:10)</span>
-    <span class="mx-8 text-sm text-gray-400 italic">“Pois Deus não nos deu espírito de covardia, mas de poder, de amor e de equilíbrio.” (2 Timóteo 1:7)</span>
-    <span class="mx-8 text-sm text-gray-400 italic">“Porque eis que as trevas cobrem a terra, e a escuridão os povos; mas sobre ti resplandece o Senhor.” (Isaías 60:2)</span>
-    <span class="mx-8 text-sm text-gray-400 italic">“Quando passares pelas águas, eu estarei contigo; e quando pelos rios, eles não te submergirão.” (Isaías 43:2)</span>
-    <span class="mx-8 text-sm text-gray-400 italic">“Não fui eu que lhe ordenei? Seja forte e corajoso! Não se apavore nem desanime, pois o Senhor, o seu Deus, estará com você por onde você andar.” (Josué 1:9)</span>
-    <span class="mx-8 text-sm text-gray-400 italic">“Bendito seja o Senhor, minha rocha, que adestra as minhas mãos para a batalha e os meus dedos para a guerra.” (Salmos 144:1)</span>
-  </div>
-</div>
-
-<section id="muito-alem" class="py-20 px-4 relative bg-transparent">
-  <div class="max-w-6xl mx-auto text-center mb-12">
-    <h2 class="text-4xl md:text-5xl font-bold cinzel text-center gradiente-noheroes">✨ Muito além de uma história</h2>
-    <p class="mt-4 text-sm text-gray-400">Ecossistema interconectado, onde criamos, contamos histórias e te ajudamos a evoluir de verdade.</p>
-  </div>
-
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-    <!-- CARD 1: Estúdio de Animação -->
-    <div class="glass rounded-xl p-6 border border-gray-700 backdrop-blur-md hover:scale-105 transition duration-300 reveal-fade" style="background: rgba(26, 13, 30, 0.3);">
-      <div class="w-24 h-24 mx-auto mb-4 rounded-xl overflow-hidden border-2 border-gradient-to-br from-purple-700 to-[#800040]">
-        <img src="assets/images/placeholder-animacao.jpg" alt="Estúdio de Animação" class="w-full h-full object-cover" />
+    <!-- Bloco principal -->
+    <div style="background:#0c0a10;border:1px solid rgba(143,79,255,0.2);border-radius:18px;padding:32px;" class="reveal">
+      <div class="section-label">O Universo</div>
+      <h2 class="cinzel text-grad" style="font-size:clamp(22px,3.5vw,36px);margin:0 0 16px;line-height:1.2;">O que é NoHeroes?</h2>
+      <div style="width:40px;height:2px;background:linear-gradient(90deg,#8f4fff,#d9b55a);border-radius:99px;margin-bottom:20px;"></div>
+      <p style="color:rgba(255,255,255,0.6);font-size:15px;margin:0 0 16px;">Muito mais que uma marca: um <span class="text-grad" style="font-weight:700;">portal vivo</span>.</p>
+      <p style="color:rgba(255,255,255,0.5);font-size:14px;line-height:1.75;margin:0 0 20px;">Uma plataforma multimídia de impacto — onde histórias, conhecimento e transformação se entrelaçam. Aqui, você não é apenas um espectador. Você evolui.</p>
+      <blockquote style="border-left:3px solid rgba(143,79,255,0.5);padding-left:16px;font-style:italic;color:rgba(255,255,255,0.4);font-size:13px;margin:0 0 24px;">"Você lê, assiste e interage. Aprende. Cresce. E com o tempo… Você também Cria."</blockquote>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;">
+        <a href="leitor.html" style="padding:10px 22px;border-radius:10px;background:linear-gradient(135deg,#8f4fff,#d9b55a);color:#000;font-weight:700;font-size:13px;text-decoration:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline;vertical-align:middle;margin-right:6px;"><defs><linearGradient id="cta1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#0a0a0a"/><stop offset="100%" style="stop-color:#1a1a1a"/></linearGradient></defs><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke="rgba(0,0,0,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Começar a leitura</a>
+        <a href="apoiar.html" style="padding:10px 22px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);font-size:13px;font-weight:600;text-decoration:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline;vertical-align:middle;margin-right:6px;"><defs><linearGradient id="cta2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" stroke="url(#cta2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Apoiar o projeto</a>
       </div>
-      <h3 class="text-lg font-semibold gradiente-noheroes text-center">Estúdio de Animação</h3>
-      <p class="mt-2 text-sm text-gray-400 text-left">
-        Produção completa de animes e clipes com estética refinada, identidade autoral e conexão com o universo NoHeroes.
-      </p>
-      <p class="mt-2 text-xs text-gray-500 italic text-left">Experiência sensorial em áudio e imagem — atmosfera única.</p>
     </div>
 
-    <!-- CARD 2: Editora Alternativa -->
-    <div class="glass rounded-xl p-6 border border-gray-700 backdrop-blur-md hover:scale-105 transition duration-300 reveal-fade" style="background: rgba(26, 13, 30, 0.3);">
-      <div class="w-24 h-24 mx-auto mb-4 rounded-xl overflow-hidden border-2 border-gradient-to-br from-purple-700 to-[#800040]">
-        <img src="assets/images/placeholder-editora.jpg" alt="Editora Alternativa" class="w-full h-full object-cover" />
-      </div>
-      <h3 class="text-lg font-semibold gradiente-noheroes text-center">Editora Alternativa</h3>
-      <p class="mt-2 text-sm text-gray-400 text-left">
-        Parceiria direta com editoras. Livros e eBooks com identidade forte onde lazer e educação se fundem com filosofia e intospecção.
-      </p>
-      <p class="mt-2 text-xs text-gray-500 italic text-left">Textos que ensinam e transformam enquanto entretêm.</p>
-    </div>
-
-    <!-- CARD 3: App Gamificado -->
-    <div class="glass rounded-xl p-6 border border-gray-700 backdrop-blur-md hover:scale-105 transition duration-300 reveal-fade" style="background: rgba(26, 13, 30, 0.3);">
-      <div class="w-24 h-24 mx-auto mb-4 rounded-xl overflow-hidden border-2 border-gradient-to-br from-purple-700 to-[#800040]">
-        <img src="assets/images/placeholder-app.jpg" alt="App Gamificado" class="w-full h-full object-cover" />
-      </div>
-      <h3 class="text-lg font-semibold gradiente-noheroes text-center">App Gamificado</h3>
-      <p class="mt-2 text-sm text-gray-400 text-left">
-        XP, metas, modos e rituais - ajudando você a transformar sua vida real em uma jornada imersiva e significativa.- Todo Universo NoHeroes interage com o sistema.
-      </p>
-    </div>
-
-    <!-- CARD 4: Rede de Criadores -->
-    <div class="glass rounded-xl p-6 border border-gray-700 backdrop-blur-md hover:scale-105 transition duration-300 reveal-fade" style="background: rgba(26, 13, 30, 0.3);">
-      <div class="w-24 h-24 mx-auto mb-4 rounded-xl overflow-hidden border-2 border-gradient-to-br from-purple-700 to-[#800040]">
-        <img src="assets/images/placeholder-criadores.jpg" alt="Rede de Criadores" class="w-full h-full object-cover" />
-      </div>
-      <h3 class="text-lg font-semibold gradiente-noheroes text-center">Rede de Criadores</h3>
-      <p class="mt-2 text-sm text-gray-400 text-left">
-        Conexão entre tutores e aprendizes, permitindo ensinar, criar, crescer e construir novos mundos juntos.
-      </p>
-    </div>
-
-    <!-- CARD 5: Narrativa Multiplataforma -->
-    <div class="glass rounded-xl p-6 border border-gray-700 backdrop-blur-md hover:scale-105 transition duration-300 reveal-fade" style="background: rgba(26, 13, 30, 0.3);">
-      <div class="w-24 h-24 mx-auto mb-4 rounded-xl overflow-hidden border-2 border-gradient-to-br from-purple-700 to-[#800040]">
-        <img src="assets/images/placeholder-narrativa.jpg" alt="Narrativa Multiplataforma" class="w-full h-full object-cover" />
-      </div>
-      <h3 class="text-lg font-semibold gradiente-noheroes text-center">Narrativa Multiplataforma</h3>
-      <p class="mt-2 text-sm text-gray-400 text-left">
-        ROAR, Chrysalis, Echoes, FREQ — histórias que se entrelaçam e expandem o universo NoHeroes.
-      </p>
-    </div>
-
-    <!-- CARD 6: RPG Online -->
-    <div class="glass rounded-xl p-6 border border-gray-700 backdrop-blur-md hover:scale-105 transition duration-300 reveal-fade" style="background: rgba(26, 13, 30, 0.3);">
-      <div class="w-24 h-24 mx-auto mb-4 rounded-xl overflow-hidden border-2 border-gradient-to-br from-purple-700 to-[#800040]">
-        <img src="assets/images/placeholder-rpg.jpg" alt="RPG Online" class="w-full h-full object-cover" />
-      </div>
-      <h3 class="text-lg font-semibold gradiente-noheroes text-center">RPG Online Open World</h3>
-      <p class="mt-2 text-sm text-gray-400 text-left">
-        Um mundo aberto medieval estilo anime inspirado em D&D e GTA, Com a narrativa do universo de NoHeroes — liberdade total, jogabilidade avançada e planos para imersão estilo Sword Art Online.
-      </p>
-    </div>
-  </div>
-</section>
-
-<section id="como-funciona-mvv" class="py-20 px-4 text-gray-300 relative">
-  <div class="max-w-7xl mx-auto relative">
-    <!-- Barra central (desktop) -->
-    <div class="hidden md:block barra-gradiente-2 absolute top-2 bottom-2 left-1/2 -translate-x-1/2 z-0"></div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start relative z-10">
-      <!-- Bloco: Como Funciona -->
-      <div>
-        <h2 class="text-4xl md:text-5xl font-bold cinzel gradiente-noheroes mb-4 text-center md:text-left">
-          Como funciona?
-        </h2>
-        <p class="text-sm text-gray-400 leading-relaxed mb-8 text-center md:text-left">
-          Cada leitura, ação e conquista no NoHeroes conecta sua evolução no universo, na plataforma e na vida real — tudo faz parte do mesmo ecossistema vivo.
-        </p>
-
-        <div class="space-y-4">
-          <div class="flex items-start gap-4 p-4 rounded-lg border border-gray-700 backdrop-blur-md hover:scale-[1.02] transition duration-300">
-            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-700 to-yellow-500 flex items-center justify-center text-2xl">📖</div>
-            <div>
-              <h3 class="font-semibold gradiente-noheroes text-sm">Conteúdo vivo</h3>
-              <p class="text-xs text-gray-400">Mangás, livros e animes que desbloqueiam aprendizado e XP real.</p>
-            </div>
-          </div>
-
-          <div class="flex items-start gap-4 p-4 rounded-lg border border-gray-700 backdrop-blur-md hover:scale-[1.02] transition duration-300">
-            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-700 to-yellow-500 flex items-center justify-center text-2xl">🎯</div>
-            <div>
-              <h3 class="font-semibold gradiente-noheroes text-sm">Missões reais</h3>
-              <p class="text-xs text-gray-400">Desafios aplicáveis à vida real, com progresso rastreável no app.</p>
-            </div>
-          </div>
-
-          <div class="flex items-start gap-4 p-4 rounded-lg border border-gray-700 backdrop-blur-md hover:scale-[1.02] transition duration-300">
-            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-700 to-yellow-500 flex items-center justify-center text-2xl">🕸️</div>
-            <div>
-              <h3 class="font-semibold gradiente-noheroes text-sm">Ecossistema integrado</h3>
-              <p class="text-xs text-gray-400">Tudo o que você faz alimenta sua jornada no app, portal e comunidade.</p>
-            </div>
-          </div>
+    <!-- Sistema vivo -->
+    <div style="background:#0c0a10;border:1px solid rgba(143,79,255,0.15);border-radius:18px;padding:32px;" class="reveal">
+      <div class="section-label">Sistema Vivo</div>
+      <h3 class="text-grad cinzel" style="font-size:18px;margin:0 0 16px;">Ecossistema Interconectado</h3>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;align-items:start;gap:12px;padding:12px;background:rgba(143,79,255,0.05);border-radius:10px;border:1px solid rgba(143,79,255,0.1);">
+          <span style="font-size:20px;flex-shrink:0;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs><linearGradient id="nhg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs>
+  <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke="url(#nhg)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg></span>
+          <div><div style="font-size:13px;font-weight:700;color:#c4a3ff;margin-bottom:2px;">Mangás & Histórias</div><div style="font-size:12px;color:rgba(255,255,255,0.4);">Universo NoHeroes em quadros e narrativas.</div></div>
         </div>
-      </div>
-
-      <!-- Bloco: Missão Visão Valores -->
-      <div>
-        <h2 class="text-4xl md:text-5xl font-bold cinzel gradiente-noheroes mb-4 text-center md:text-left">
-          MVV
-        </h2>
-
-        <div class="space-y-4">
-          <div class="p-4 rounded-lg border border-gray-700 backdrop-blur-md bg-gradient-to-br from-[#1a1a2e] to-[#0a0a0a]">
-            <h3 class="font-semibold text-purple-400 mb-1">Missão</h3>
-            <p class="text-xs text-gray-400 leading-relaxed">
-              Mostrar que viver não é trabalhar. A vida é feita para ser sentida e vivida de forma plural e criativa. NoHeroes ajuda cada pessoa a explorar seu potencial completo — sem fórmulas prontas, sem pressões, sem a ilusão de que sucesso é se tornar máquina.
-            </p>
-          </div>
-
-          <div class="p-4 rounded-lg border border-gray-700 backdrop-blur-md bg-gradient-to-br from-[#1a1a2e] to-[#0a0a0a]">
-            <h3 class="font-semibold text-purple-400 mb-1">Visão</h3>
-            <p class="text-xs text-gray-400 leading-relaxed">
-              Trazer mundos da imaginação para o mundo real. Tornar sonhos e ideias em experiências concretas. Ser um universo vivo onde arte, fantasia e evolução pessoal se encontram para inspirar, ensinar e transformar.
-            </p>
-          </div>
-
-          <div class="p-4 rounded-lg border border-gray-700 backdrop-blur-md bg-gradient-to-br from-[#1a1a2e] to-[#0a0a0a]">
-            <h3 class="font-semibold text-purple-400 mb-1">Valores</h3>
-            <p class="text-xs text-gray-400 leading-relaxed">
-              Seguimos a Cristo e cultivamos valores cristãos como bondade, verdade e serviço. Mesmo com estéticas sombrias, nossa mensagem é sempre clara: ensinar o bem e lembrar que até no escuro existe luz para quem busca propósito real.
-            </p>
-          </div>
+        <div style="display:flex;align-items:start;gap:12px;padding:12px;background:rgba(217,181,90,0.04);border-radius:10px;border:1px solid rgba(217,181,90,0.1);">
+          <span style="font-size:20px;flex-shrink:0;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs><linearGradient id="nhg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs>
+  <path d="M4 19.5A2.5 2.5 0 016.5 17H20M4 19.5A2.5 2.5 0 014 17V5a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2H6.5" stroke="url(#nhg)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg></span>
+          <div><div style="font-size:13px;font-weight:700;color:#f0d99a;margin-bottom:2px;">Livros & E-books</div><div style="font-size:12px;color:rgba(255,255,255,0.4);">ROAR, FREQ, Echoes — trilogia principal.</div></div>
+        </div>
+        <div style="display:flex;align-items:start;gap:12px;padding:12px;background:rgba(255,255,255,0.02);border-radius:10px;border:1px solid rgba(255,255,255,0.06);">
+          <span style="font-size:20px;flex-shrink:0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="hi3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm0-7a3 3 0 100-6 3 3 0 000 6zm0 0v4m0-14v4" stroke="url(#hi3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <div><div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.7);margin-bottom:2px;">Evolução Real</div><div style="font-size:12px;color:rgba(255,255,255,0.4);">Criatividade, aprendizado e propósito unidos.</div></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<div style="position: relative; z-index: 5;">
-  <div class="barra-gradiente-2"></div>
+<!-- ═══ STATS ═══ -->
+<section style="max-width:900px;margin:0 auto 48px;padding:0 20px;">
+  <div class="stats-grid" style="display:grid;grid-template-columns:repeat(4,1fr);background:#0c0a10;border:1px solid rgba(143,79,255,0.15);border-radius:16px;overflow:hidden;">
+    <div class="stat-item" style="border-right:1px solid rgba(255,255,255,0.06);">
+      <div class="stat-num">1</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.1em;">Livro publicado</div>
+    </div>
+    <div class="stat-item" style="border-right:1px solid rgba(255,255,255,0.06);">
+      <div class="stat-num">3</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.1em;">Mangás em prod.</div>
+    </div>
+    <div class="stat-item" style="border-right:1px solid rgba(255,255,255,0.06);">
+      <div class="stat-num">∞</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.1em;">Comunidade ativa</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">2025</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.1em;">Ano de fundação</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ MARQUEE VERSÍCULOS ═══ -->
+<div class="marquee-wrap" style="margin-bottom:60px;">
+  <div class="marquee-inner">
+    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"Ainda que eu ande pelo vale da sombra da morte, não temerei mal algum." (Salmos 23:4)</span>
+    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"O Deus de toda graça os restaurará, confirmará e fortalecerá." (1 Pedro 5:10)</span>
+    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"Não temas, porque eu sou contigo; não te assombres, porque eu sou teu Deus." (Isaías 41:10)</span>
+    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"Pois Deus não nos deu espírito de covardia, mas de poder, de amor e de equilíbrio." (2 Timóteo 1:7)</span>
+    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"Sobre ti resplandece o Senhor, e a sua glória sobre ti se manifesta." (Isaías 60:2)</span>
+    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"Quando passares pelas águas, eu estarei contigo." (Isaías 43:2)</span>
+    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"Seja forte e corajoso! O Senhor, o seu Deus, estará com você por onde você andar." (Josué 1:9)</span>
+    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"Bendito seja o Senhor, que adestra as minhas mãos para a batalha." (Salmos 144:1)</span>
+    <!-- duplicata para loop contínuo -->
+    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"Ainda que eu ande pelo vale da sombra da morte, não temerei mal algum." (Salmos 23:4)</span>
+    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"O Deus de toda graça os restaurará, confirmará e fortalecerá." (1 Pedro 5:10)</span>
+    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"Não temas, porque eu sou contigo; não te assombres, porque eu sou teu Deus." (Isaías 41:10)</span>
+    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"Pois Deus não nos deu espírito de covardia, mas de poder, de amor e de equilíbrio." (2 Timóteo 1:7)</span>
+    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"Sobre ti resplandece o Senhor, e a sua glória sobre ti se manifesta." (Isaías 60:2)</span>
+    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"Quando passares pelas águas, eu estarei contigo." (Isaías 43:2)</span>
+    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"Seja forte e corajoso! O Senhor, o seu Deus, estará com você por onde você andar." (Josué 1:9)</span>
+    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"Bendito seja o Senhor, que adestra as minhas mãos para a batalha." (Salmos 144:1)</span>
+  </div>
 </div>
 
-<section id="para-quem" class="py-20 px-4 text-gray-300">
-  <div class="max-w-xl mx-auto space-y-4">
+<!-- ═══ 2. MUITO ALÉM + PROJETOS ═══ -->
+<section id="muito-alem" style="padding:0 20px 64px;max-width:1100px;margin:0 auto;">
+  <div style="text-align:center;margin-bottom:40px;" class="reveal">
+    <div class="section-label" style="text-align:center;">Ecossistema</div>
+    <h2 class="cinzel text-grad" style="font-size:clamp(20px,3vw,32px);margin:0 0 12px;">Muito além de uma história</h2>
+    <p style="color:rgba(255,255,255,0.4);font-size:14px;max-width:500px;margin:0 auto;">Um universo multimídia onde criamos, contamos histórias e ajudamos você a evoluir de verdade.</p>
+  </div>
 
-    <!-- Mensagem pergunta -->
-    <div class="flex justify-end">
-  <div class="balao-pergunta p-4 text-black max-w-[80%] shadow-md balao-flutuante">
-    <p class="text-sm font-semibold">Para quem é a NoHeroes?</p>
-      </div>
+  <div class="projects-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+
+    <!-- Mangás -->
+    <div class="glass-card reveal">
+      <div style="width:72px;height:72px;border-radius:14px;background:rgba(143,79,255,0.1);border:1px solid rgba(143,79,255,0.2);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 16px;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs><linearGradient id="nhg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs>
+  <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke="url(#nhg)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg></div>
+      <h3 style="font-family:'Cinzel Decorative',serif;font-size:13px;text-align:center;margin:0 0 8px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Mangás NoHeroes</h3>
+      <p style="font-size:12px;color:rgba(255,255,255,0.45);text-align:center;line-height:1.6;margin:0 0 14px;">Capítulos originais no universo de Caelum — leia gratuitamente na plataforma.</p>
+      <div style="text-align:center;"><a href="leitor.html" style="font-size:12px;color:#c4a3ff;text-decoration:none;border:1px solid rgba(143,79,255,0.3);padding:6px 14px;border-radius:8px;">Ver Biblioteca →</a></div>
     </div>
 
-    <!-- Resposta 1 -->
-    <div class="flex justify-start">
-  <div class="balao-resposta p-4 text-gray-100 max-w-[80%] shadow-md balao-flutuante">
-    <p class="text-sm">Para quem carrega mundos dentro de si, mas nunca foi compreendido.</p>
-      </div>
+    <!-- Livros -->
+    <div class="glass-card reveal">
+      <div style="width:72px;height:72px;border-radius:14px;background:rgba(217,181,90,0.08);border:1px solid rgba(217,181,90,0.2);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 16px;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs><linearGradient id="nhg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs>
+  <path d="M4 19.5A2.5 2.5 0 016.5 17H20M4 19.5A2.5 2.5 0 014 17V5a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2H6.5" stroke="url(#nhg)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg></div>
+      <h3 style="font-family:'Cinzel Decorative',serif;font-size:13px;text-align:center;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:0 0 8px;">Editora Alternativa</h3>
+      <p style="font-size:12px;color:rgba(255,255,255,0.45);text-align:center;line-height:1.6;margin:0 0 14px;">ROAR, FREQ, Echoes — trilogia de dark fantasy onde lazer e filosofia se fundem.</p>
+      <div style="text-align:center;"><a href="store.html" style="font-size:12px;color:#f0d99a;text-decoration:none;border:1px solid rgba(217,181,90,0.3);padding:6px 14px;border-radius:8px;">Ver Loja →</a></div>
     </div>
 
-    <!-- Resposta 2 -->
-   <div class="flex justify-start">
-  <div class="balao-resposta p-4 text-gray-100 max-w-[80%] shadow-md balao-flutuante">
-    <p class="text-sm">Para quem rejeita as fórmulas prontas e busca caminhos novos.</p>
-      </div>
+    <!-- Rede de Criadores -->
+    <div class="glass-card reveal">
+      <div style="width:72px;height:72px;border-radius:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 16px;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs><linearGradient id="nhg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs>
+  <path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" stroke="url(#nhg)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg></div>
+      <h3 style="font-family:'Cinzel Decorative',serif;font-size:13px;text-align:center;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:0 0 8px;">Rede de Criadores</h3>
+      <p style="font-size:12px;color:rgba(255,255,255,0.45);text-align:center;line-height:1.6;margin:0 0 14px;">Arautos que publicam suas obras. Tutores e aprendizes construindo juntos.</p>
+      <div style="text-align:center;"><a href="autordash.html" style="font-size:12px;color:rgba(255,255,255,0.5);text-decoration:none;border:1px solid rgba(255,255,255,0.1);padding:6px 14px;border-radius:8px;">Seja um Arauto →</a></div>
     </div>
 
-    <!-- Contrarresposta -->
-    <div class="flex justify-end">
-  <div class="balao-pergunta p-4 text-black max-w-[80%] shadow-md balao-flutuante">
-    <p class="text-sm font-semibold">Só isso?</p>
-      </div>
+    <!-- App - futuro -->
+    <div class="glass-card reveal" style="border-color:rgba(251,191,36,0.15);">
+      <div style="width:72px;height:72px;border-radius:14px;background:rgba(251,191,36,0.06);border:1px solid rgba(251,191,36,0.15);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 16px;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs><linearGradient id="nhg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs>
+  <path d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" stroke="url(#nhg)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg></div>
+      <h3 style="font-family:'Cinzel Decorative',serif;font-size:13px;text-align:center;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:0 0 4px;">App Gamificado</h3>
+      <div class="badge-future" style="display:block;text-align:center;margin-bottom:8px;">Em desenvolvimento</div>
+      <p style="font-size:12px;color:rgba(255,255,255,0.35);text-align:center;line-height:1.6;">XP, missões e rituais — transforme sua vida real em uma jornada RPG.</p>
     </div>
 
-    <!-- Resposta 3 -->
-    <div class="flex justify-start">
-  <div class="balao-resposta p-4 text-gray-100 max-w-[80%] shadow-md balao-flutuante">
-    <p class="text-sm">Não… É também para quem deseja criar mas ainda não encontrou as ferramentas certas.</p>
-      </div>
+    <!-- Animação - futuro -->
+    <div class="glass-card reveal" style="border-color:rgba(251,191,36,0.15);">
+      <div style="width:72px;height:72px;border-radius:14px;background:rgba(251,191,36,0.06);border:1px solid rgba(251,191,36,0.15);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 16px;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs><linearGradient id="nhg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs>
+  <path d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" stroke="url(#nhg)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg></div>
+      <h3 style="font-family:'Cinzel Decorative',serif;font-size:13px;text-align:center;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:0 0 4px;">Estúdio de Animação</h3>
+      <div class="badge-future" style="display:block;text-align:center;margin-bottom:8px;">Projeto futuro</div>
+      <p style="font-size:12px;color:rgba(255,255,255,0.35);text-align:center;line-height:1.6;">Animes e clipes com identidade autoral no universo NoHeroes.</p>
     </div>
 
-    <!-- Resposta 4 -->
-    <div class="flex justify-start">
-  <div class="balao-resposta p-4 text-gray-100 max-w-[80%] shadow-md balao-flutuante">
-    <p class="text-sm">Para quem quer se libertar, mas precisa de impulso e sentido.</p>
-      </div>
-    </div>
-
-    <!-- Resposta final descontraída -->
-   <div class="flex justify-start">
-  <div class="balao-resposta p-4 text-gray-100 max-w-[80%] shadow-md balao-flutuante">
-    <p class="text-sm">Mas não é só isso… É para quem quer viver, não só existir.</p>
-      </div>
+    <!-- RPG -->
+    <div class="glass-card reveal" style="border-color:rgba(251,191,36,0.15);">
+      <div style="width:72px;height:72px;border-radius:14px;background:rgba(251,191,36,0.06);border:1px solid rgba(251,191,36,0.15);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 16px;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs><linearGradient id="nhg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs>
+  <path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5zM20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5zM3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14zM14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5zM15.5 19H14v-1.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5zM8.5 5H10v1.5C10 7.33 9.33 8 8.5 8S7 7.33 7 6.5 7.67 5 8.5 5z" stroke="url(#nhg)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg></div>
+      <h3 style="font-family:'Cinzel Decorative',serif;font-size:13px;text-align:center;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:0 0 4px;">RPG Online Open World</h3>
+      <div class="badge-future" style="display:block;text-align:center;margin-bottom:8px;">Visão de longo prazo</div>
+      <p style="font-size:12px;color:rgba(255,255,255,0.35);text-align:center;line-height:1.6;">MMORPG medieval inspirado em D&D com a narrativa do universo NoHeroes.</p>
     </div>
 
   </div>
 </section>
 
-<div style="position: relative; z-index: 5;">
-  <div class="barra-gradiente-2"></div>
-</div>
-
-<section id="depoimentos" class="py-20 px-4 via-gray-900 to-black text-center text-white">
-  <h2 class="text-4xl font-bold mb-4 gradiente-noheroes reveal-bottom">Vozes que Ecoam</h2>
-  <p class="text-gray-400 mb-8 max-w-xl mx-auto italic reveal-bottom">
-    Algumas mensagens não precisam ser editadas — só sentidas.
-  </p>
-
-  <div class="flex justify-center">
-    <div class="bg-black/40 border border-purple-700 rounded-xl shadow-xl p-4 backdrop-blur-sm max-w-sm w-full hover:scale-105 transition duration-300 reveal-fade">
-      <img src="assets/images/depoimento-01.jpg" alt="Depoimento real" class="rounded-lg w-full h-auto" />
-      <p class="mt-4 text-sm text-gray-400 leading-relaxed">
-        "A experiência NoHeroes mudou completamente minha perspectiva sobre arte e narrativa. Um universo vivo, visceral e inesquecível."
-      </p>
-    </div>
+<!-- ═══ 4. LINHA DO TEMPO ═══ -->
+<section id="timeline-section" style="padding:0 0 64px;">
+  <div style="text-align:center;margin-bottom:32px;padding:0 20px;" class="reveal">
+    <div class="section-label" style="text-align:center;">História</div>
+    <h2 class="cinzel text-grad" style="font-size:clamp(18px,2.5vw,28px);margin:0 0 8px;">Linha do Tempo</h2>
+    <p style="color:rgba(255,255,255,0.35);font-size:13px;">A jornada que nos trouxe até aqui — e o que está por vir.</p>
   </div>
-
-  <div class="mt-8">
-    <a href="/news.html" class="inline-block px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition">
-      Veja mais histórias e novidades
-    </a>
+  <div class="timeline-scroll">
+    <div class="tl-box"><div class="tl-year">2015</div><div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6;">Criação do projeto Dragon Spirit H, um mini RPG com dois protagonistas. Primeiro roteiro de anime.</div></div>
+    <div class="tl-box"><div class="tl-year">2016–2020</div><div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6;">Ideias amadurecem. Personagens e mundos evoluem no papel. Nasce o simbolismo da saga.</div></div>
+    <div class="tl-box"><div class="tl-year">2021</div><div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6;">Traumas na Alemanha moldam a essência emocional do universo NoHeroes. A ideia ganha identidade.</div></div>
+    <div class="tl-box"><div class="tl-year">2022–2023</div><div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6;">Retorno ao Brasil. Cura pessoal e nascimento dos primeiros rascunhos com o mundo de Caelum.</div></div>
+    <div class="tl-box"><div class="tl-year">2024</div><div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6;">Separação dos projetos. Quase abandono total. Gravidez da esposa reacende o sonho.</div></div>
+    <div class="tl-box"><div class="tl-year">Início 2025</div><div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6;">ROAR é escrito. Nasce a trilogia NoHeroes (ROAR, FREQ, Echoes). Surge o conceito de sistema vivo.</div></div>
+    <div class="tl-box"><div class="tl-year">Meados 2025</div><div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6;">Falha em projeto de animação reacende a garra. Aprende a programar. Cria o site e os primeiros produtos.</div></div>
+    <div class="tl-box"><div class="tl-year">Final 2025</div><div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6;">Site funcional. Livros, e-books, loja e comunidade em formação. Manifesto lançado. Busca por aliados.</div></div>
+    <div class="tl-box tl-now"><div class="tl-year">2026 — Agora</div><div style="font-size:13px;color:rgba(255,255,255,0.7);line-height:1.6;"><strong style="color:#c4a3ff;">Primeiro livro publicado.</strong> Mangás em produção com plataforma própria. Arautos publicando obras. Sistema de leitura, comentários e progresso ao vivo. Comunidade crescendo.</div></div>
+    <div class="tl-box" style="border-color:rgba(251,191,36,0.2);">
+      <div class="tl-year" style="color:#fbbf24;">Futuro próximo</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.45);line-height:1.6;">App gamificado. Estúdio de animação. Segundo livro. Expansão da rede de arautos. RPG open world em horizonte.</div>
+      <div style="margin-top:8px;"><span style="font-size:10px;color:#fbbf24;border:1px solid rgba(251,191,36,0.3);padding:2px 8px;border-radius:99px;">Em construção</span></div>
+    </div>
   </div>
 </section>
 
-<div class="w-full h-1 barra-degrade"></div>
-
-<!-- LINHA DO TEMPO NOHEROES -->
-<section id="timeline-section" class="timeline-section">
-  <h2 class="text-4xl md:text-5xl font-bold cinzel text-center timeline-title gradiente-noheroes">Linha do Tempo "Até Aqui"</h2>
-  <div class="timeline-container">
-    <div class="timeline-box">
-      <div class="timeline-year">2015</div>
-      <div class="timeline-content">Criação do projeto Dragon Spirit H, um mini RPG com dois protagonistas. Mais tarde virou roteiro de anime.</div>
+<!-- ═══ 5. POR TRÁS DAS SOMBRAS ═══ -->
+<section id="criador" style="padding:0 20px 64px;max-width:800px;margin:0 auto;">
+  <div style="text-align:center;margin-bottom:32px;" class="reveal">
+    <div class="section-label" style="text-align:center;">O Criador</div>
+    <h2 class="cinzel text-grad" style="font-size:clamp(18px,2.5vw,28px);margin:0;">Por trás das Sombras...</h2>
+  </div>
+  <div style="background:#0c0a10;border:1px solid rgba(143,79,255,0.2);border-radius:18px;padding:32px;display:flex;flex-wrap:wrap;gap:28px;align-items:center;" class="reveal">
+    <div style="text-align:center;flex-shrink:0;">
+      <img src="assets/images/foto-raul.jpg" alt="Raul Takagi" style="width:100px;height:100px;border-radius:50%;object-fit:cover;border:3px solid rgba(143,79,255,0.4);">
+      <div style="margin-top:10px;display:flex;justify-content:center;gap:12px;">
+        <a href="https://instagram.com/noheroe" aria-label="Instagram"><img src="assets/icons/instagram icon.png" alt="Instagram" style="width:20px;height:20px;opacity:0.6;transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.6"></a>
+        <a href="https://twitter.com/noheroe" aria-label="Twitter"><img src="assets/icons/icon-twitter.png" alt="Twitter" style="width:20px;height:20px;opacity:0.6;transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.6"></a>
+      </div>
     </div>
-    <div class="timeline-box">
-      <div class="timeline-year">2016–2020</div>
-      <div class="timeline-content">Ideias amadurecem. Personagens e mundos evoluem no papel. Nasce o simbolismo da saga.</div>
-    </div>
-    <div class="timeline-box">
-      <div class="timeline-year">2021</div>
-      <div class="timeline-content">Traumas na Alemanha moldam a essência emocional do universo NoHeroes. A ideia ganha identidade.</div>
-    </div>
-    <div class="timeline-box">
-      <div class="timeline-year">2022–2023</div>
-      <div class="timeline-content">Retorno ao Brasil. Cura pessoal e nascimento dos primeiros rascunhos com vitalismo e o mundo de Caelum.</div>
-    </div>
-    <div class="timeline-box">
-      <div class="timeline-year">2024</div>
-      <div class="timeline-content">Separação dos projetos. Dragon Spirit H e NoHeroes seguem caminhos distintos. Quase abandono total. Gravidez da esposa reacende o sonho.</div>
-    </div>
-    <div class="timeline-box">
-      <div class="timeline-year">Início de 2025</div>
-      <div class="timeline-content">ROAR é escrito. Nasce a trilogia NoHeroes (ROAR, FREQ, Echoes). Surge o conceito de sistema vivo.</div>
-    </div>
-    <div class="timeline-box">
-      <div class="timeline-year">Meados de 2025</div>
-      <div class="timeline-content">Falha em projeto de animação reacende garra. Aprende a programar. Cria o site e os primeiros produtos digitais.</div>
-    </div>
-    <div class="timeline-box">
-      <div class="timeline-year">Final de 2025</div>
-      <div class="timeline-content">Site funcional. Livros, eBooks, loja e comunidade em formação. Manifesto lançado. Começa a busca por aliados.</div>
+    <div style="flex:1;min-width:240px;">
+      <h3 style="font-family:'Cinzel Decorative',serif;font-size:16px;margin:0 0 4px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Raul Takagi S. Souza</h3>
+      <p style="font-size:12px;color:rgba(255,255,255,0.35);margin:0 0 14px;text-transform:uppercase;letter-spacing:0.1em;">Criador · Escritor · Artista Digital · Dev</p>
+      <p style="font-size:14px;color:rgba(255,255,255,0.55);line-height:1.7;margin:0 0 16px;">"...há um criador. Raul. Um escritor, artista digital e pai — que transforma angústias em arte e fantasia em realidade."</p>
+      <button onclick="abrirManifesto()" style="padding:8px 20px;border-radius:10px;border:1px solid rgba(143,79,255,0.4);background:rgba(143,79,255,0.08);color:#c4a3ff;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline;vertical-align:middle;margin-right:6px;"><defs><linearGradient id="mb1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke="url(#mb1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Ler Manifesto</button>
     </div>
   </div>
-
-  <div class="timeline-divider"></div>
-
 </section>
 
-<!-- 8. Sobre o Criador & Equipe -->
-<section id="criador" class="py-24 px-4 text-center text-white font-inter">
-  <div class="max-w-4xl mx-auto">
-
-   <!-- Título e descrição -->
-<h2 class="text-4xl md:text-5xl font-bold cinzel-decorative text-center gradiente-noheroes">Por trás das Sombras...</h2>
-<p class="text-lg italic text-gray-300 max-w-3xl mx-auto">
-  “...há um criador. Raul. Um escritor, artista digital e pai — que transforma angústias em arte e fantasia em realidade.”
-</p>
-
-<!-- Avatar (sem trigger) -->
-<img src="assets/images/foto-raul.jpg" alt="NoHeroes como entidade"
-  class="mx-auto mt-8 w-48 h-48 rounded-full border-4 border-purple-600 shadow-lg transition reveal-fade" />
-
-<!-- Redes sociais -->
-<div class="mt-6 flex justify-center space-x-6">
-  <a href="https://instagram.com/noheroe" aria-label="Instagram">
-    <img src="assets/icons/instagram icon.png" alt="Instagram" class="w-6 h-6" />
-  </a>
-  <a href="https://twitter.com/noheroe" aria-label="Twitter">
-    <img src="assets/icons/icon-twitter.png" alt="Twitter" class="w-6 h-6" />
-  </a>
-  <a href="mailto:eco.noheroes@gmail.com" aria-label="Email">
-    <img src="assets/icons/icon-email.png" alt="Email" class="w-6 h-6" />
-  </a>
-</div>
-
-<!-- Botão para abrir o modal manifesto -->
-<div class="text-center mt-6">
-  <button onclick="abrirModal()"
-    class="px-5 py-2 rounded-full border border-purple-600 text-sm gradiente-noheroes hover:bg-purple-900/20 transition">
-    Manifesto
-  </button>
-</div>
-
-<!-- Modal Sobre o Criador -->
-<dialog id="criadorModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 backdrop:bg-black/70">
-  <div class="bg-gradient-to-br from-purple-800 via-black to-red-900 p-6 sm:p-8 rounded-xl shadow-xl max-h-[90vh] w-full max-w-2xl overflow-y-auto relative font-playfair text-white">
-    <button onclick="fecharModal()" class="absolute top-4 right-4 text-white text-2xl font-bold">×</button>
-    <h2 class="text-3xl font-bold text-purple-300 mb-4">Sobre o Criador</h2>
-    <div class="text-base leading-relaxed text-gray-200 space-y-4">
+<!-- Modal Manifesto -->
+<div id="manifestoModal" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:linear-gradient(135deg,#0c0a10,#1a0d2e);border:1px solid rgba(143,79,255,0.3);border-radius:18px;padding:32px;max-width:600px;width:100%;max-height:85vh;overflow-y:auto;position:relative;">
+    <button onclick="fecharManifesto()" style="position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);font-size:14px;cursor:pointer;">✕</button>
+    <h2 class="cinzel text-grad" style="font-size:20px;margin:0 0 20px;">Manifesto</h2>
+    <div style="font-size:14px;color:rgba(255,255,255,0.65);line-height:1.8;display:flex;flex-direction:column;gap:14px;">
       <p>Eu nasci sem ter escolhido estar aqui. Cresci inserido num sistema que nunca pedi pra fazer parte — e que, mesmo prometendo segurança e justiça, só me cobra, explora e me prende.</p>
       <p>Quando algo dá errado, ninguém aparece pra me proteger. Se eu erro, sou punido. Se sou roubado, azar o meu. A lógica é simples: o sistema exige tudo, mas entrega quase nada.</p>
-      <p>Por isso eu criei a <strong class="gradiente-noheroes">NoHeroes</strong>. Não só como uma história. Mas como um grito. Um universo onde as leis são claras, o valor é real e quem constrói é quem decide.</p>
+      <p>Por isso eu criei a <strong style="color:#c4a3ff;">NoHeroes</strong>. Não só como uma história. Mas como um grito. Um universo onde as leis são claras, o valor é real e quem constrói é quem decide.</p>
       <p>Eu não quero depender de plataformas que me cobram taxas abusivas por algo que fiz sozinho. Não quero ser apenas mais um número alimentando engrenagens que nunca me deram nada.</p>
       <p>Eu ajudo quem anda comigo. Divido com os que precisam. Mas não aceito ser sugado por abutres. A liberdade, pra mim, não é um luxo. É necessidade.</p>
-      <p>Este projeto é minha forma de resistir. De viver do que eu acredito, com quem acredita junto. E se você também sente que o mundo tá do avesso — talvez <strong class="gradiente-noheroes">NoHeroes</strong> seja o seu lugar.</p>
+      <p>Este projeto é minha forma de resistir. De viver do que eu acredito, com quem acredita junto. E se você também sente que o mundo tá do avesso — talvez <strong style="color:#c4a3ff;">NoHeroes</strong> seja o seu lugar.</p>
     </div>
-    <div class="mt-6 text-center">
-      <button onclick="fecharModal()" class="px-6 py-3 rounded-md bg-gradient-to-l from-red-900 to-purple-700 hover:from-purple-700 hover:to-red-900 font-semibold transition">
-        Fechar Manifesto
-      </button>
-    </div>
+    <div style="text-align:center;margin-top:24px;"><button onclick="fecharManifesto()" style="padding:10px 28px;border-radius:10px;background:linear-gradient(135deg,#8f4fff,#d9b55a);border:none;color:#000;font-weight:700;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;">Fechar</button></div>
   </div>
-</dialog>
+</div>
 
-    <!-- Separador visual -->
-    <div class="timeline-divider"></div>
+<!-- ═══ 6. EQUIPE ═══ -->
+<section style="padding:0 20px 64px;max-width:800px;margin:0 auto;">
+  <div style="text-align:center;margin-bottom:32px;" class="reveal">
+    <div class="section-label" style="text-align:center;">Equipe</div>
+    <h2 class="cinzel text-grad" style="font-size:clamp(18px,2.5vw,28px);margin:0 0 8px;">Equipe & Colaboradores</h2>
+    <p style="color:rgba(255,255,255,0.35);font-size:13px;">O universo NoHeroes é construído com ajuda coletiva.</p>
+  </div>
+  <div class="team-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;">
 
-    <!-- Equipe (versão compacta) -->
-<h2 class="text-4xl md:text-5xl font-bold cinzel-decorative text-center gradiente-noheroes mb-12">Equipe & Colaboradores</h2>
-<p class="text-gray-400 mb-8 max-w-xl mx-auto text-sm italic">
-  O universo NoHeroes é construído com ajuda coletiva. Toda jornada merece aliados.
-</p>
-
-  <div class="grid gap-8 max-w-4xl mx-auto">
-
-    <!-- Card Raul -->
-    <div class="bg-[#0f0f15]/90 border border-purple-700 rounded-2xl p-6 backdrop-blur-md shadow-md text-center text-white">
-      <img src="assets/images/foto-raul.jpg" alt="Raul" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-2 border-purple-500">
-      <h3 class="gradiente-noheroes text-xl font-bold mb-1">Raul Takagi S. Souza</h3>
-      <p class="text-gray-300 text-sm">Criador, roteirista, artista digital & desenvolvedor</p>
+    <!-- Raul -->
+    <div style="background:#0c0a10;border:1px solid rgba(143,79,255,0.2);border-radius:14px;padding:24px;text-align:center;" class="reveal">
+      <img src="assets/images/foto-raul.jpg" alt="Raul" style="width:72px;height:72px;border-radius:50%;object-fit:cover;border:2px solid rgba(143,79,255,0.4);margin-bottom:12px;">
+      <h3 style="font-family:'Cinzel Decorative',serif;font-size:14px;font-weight:700;margin:0 0 4px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Raul Takagi S. Souza</h3>
+      <p style="font-size:12px;color:rgba(255,255,255,0.35);">Criador, roteirista, artista digital & desenvolvedor</p>
     </div>
 
-    <!-- Card ChatGPT -->
-    <div class="bg-[#0f0f15]/90 border border-purple-700 rounded-2xl p-6 backdrop-blur-md shadow-md text-center text-white">
-      <img src="icon-gpt.png" alt="ChatGPT" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-2 border-purple-500">
-      <h3 class="gradiente-noheroes text-xl font-bold mb-1">ChatGPT</h3>
-      <p class="text-gray-300 text-sm">Assistente de criação & co-pesquisa</p>
-    </div>
-
-    <!-- Card Outros -->
-    <div class="bg-[#1a1a1a]/80 border border-gray-600 rounded-2xl p-6 backdrop-blur-sm shadow-sm text-center text-white">
-      <h3 class="gradiente-noheroes text-xl font-bold mb-1">Outros Colaboradores</h3>
-      <p class="text-gray-400 text-sm">Editoras, artistas, aliados e parceiros da expansão do projeto</p>
+    <!-- Claude -->
+    <div style="background:#0c0a10;border:1px solid rgba(217,181,90,0.2);border-radius:14px;padding:24px;text-align:center;" class="reveal">
+      <img src="assets/images/claude-color.png" alt="Claude" style="width:72px;height:72px;border-radius:50%;object-fit:cover;border:2px solid rgba(217,181,90,0.4);margin:0 auto 12px;background:linear-gradient(135deg,#c96442,#e8956d);display:block;">
+      <h3 style="font-family:'Cinzel Decorative',serif;font-size:14px;font-weight:700;margin:0 0 4px;background:linear-gradient(135deg,#f0d99a,#c4a3ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Claude</h3>
+      <p style="font-size:12px;color:rgba(255,255,255,0.35);">Assistente de criação, co-desenvolvimento & pesquisa</p>
     </div>
 
   </div>
-
-  <!-- Botões -->
-  <div class="flex flex-col gap-4 items-center justify-center mt-10">
-    <a href="portifólio.html#contato" class="bg-gradient-to-r from-purple-500 to-yellow-400 text-black font-semibold px-6 py-3 rounded-xl shadow hover:scale-105 transition">
-      Indicar ou Tornar-se Colaborador
-    </a>
+  <div style="text-align:center;" class="reveal">
+    <a href="portifólio.html#contato" style="display:inline-block;padding:12px 28px;border-radius:12px;background:linear-gradient(135deg,#8f4fff,#d9b55a);color:#000;font-weight:700;font-size:13px;text-decoration:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline;vertical-align:middle;margin-right:6px;"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" stroke="rgba(0,0,0,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Indicar ou Tornar-se Colaborador</a>
   </div>
 </section>
 
-<section id="press-kit" class="py-16 text-center text-white relative">
-  <div class="max-w-4xl mx-auto px-4">
-    <h2 class="text-4xl md:text-5xl font-bold cinzel-decorative gradiente-noheroes mb-4">
-      Para a Imprensa e Parceiros
-    </h2>
+<!-- ═══ 7. PRESS KIT ═══ -->
+<section id="press-kit" style="padding:0 20px 80px;max-width:800px;margin:0 auto;">
+  <div style="text-align:center;margin-bottom:32px;" class="reveal">
+    <div class="section-label" style="text-align:center;">Imprensa</div>
+    <h2 class="cinzel text-grad" style="font-size:clamp(18px,2.5vw,28px);margin:0 0 8px;">Para a Imprensa e Parceiros</h2>
+    <p style="color:rgba(255,255,255,0.35);font-size:13px;max-width:480px;margin:0 auto;">Materiais oficiais do projeto NoHeroes para imprensa, colaboradores e parceiros.</p>
+  </div>
 
-    <p class="text-lg text-gray-300 italic max-w-2xl mx-auto mb-10">
-  Este espaço reúne os materiais oficiais do projeto NoHeroes destinados à imprensa,
-  colaboradores e parceiros. Aqui você encontra documentos institucionais, apresentações
-  estratégicas e ativos visuais para divulgação, análise ou colaboração profissional.
-</p>
-
-    <div class="bg-black/30 backdrop-blur-md border border-purple-600 rounded-xl p-6 md:p-10 shadow-md transition reveal-fade">
-      <h3 class="text-2xl font-semibold cinzel-decorative text-purple-400 mb-4">
-        Press & Media Kit — NoHeroes
-      </h3>
-
-      <ul class="text-left text-gray-300 space-y-2 text-base md:text-lg mb-8">
-  <li>
-    <strong class="gradiente-noheroes">Press Kit (PDF):</strong>
-    material institucional voltado à imprensa, com apresentação oficial do projeto,
-    contexto criativo, visão geral do universo e informações para divulgação editorial.
-  </li>
-  <li>
-    <strong class="gradiente-noheroes">Media Kit (PDF):</strong>
-    material direcionado a colaboradores e parceiros. Alem de diretrizes de uso visual da marca NoHeroes.
-  </li>
-  <li>
-    <strong class="gradiente-noheroes">Pacote Completo (ZIP):</strong>
-    inclui todos os arquivos organizados, a pasta de assets para uso profissional
-    e o pitch oficial do projeto para apresentações e propostas.
-  </li>
-  <li>
-    <strong class="gradiente-noheroes">GitHub:</strong>
-    acesso direto ao repositório oficial para download manual de arquivos,
-    versões atualizadas e organização técnica dos materiais.
-  </li>
-</ul>
-
-      <!-- Botões -->
-      <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-4">
-        <!-- ZIP completo -->
-        <a
-          href="/assets/press-media-kit-noheroes.zip"
-          class="px-6 py-3 rounded-md bg-gradient-to-r from-purple-700 to-yellow-500 font-bold text-white hover:opacity-90 transition"
-        >
-          📦 Baixar Press + Media Kit (ZIP)
-        </a>
-
-        <!-- Press Kit PDF -->
-        <a
-          href="/assets/press-kit-noheroes.pdf"
-          class="px-6 py-3 rounded-md border border-purple-500 text-purple-300 font-semibold hover:bg-purple-900/30 transition"
-        >
-          📄 Press Kit (PDF)
-        </a>
-
-        <!-- Media Kit PDF -->
-        <a
-          href="/assets/media-kit-noheroes.pdf"
-          class="px-6 py-3 rounded-md border border-purple-500 text-purple-300 font-semibold hover:bg-purple-900/30 transition"
-        >
-          🎨 Media Kit (PDF)
-        </a>
-
-        <!-- GitHub -->
-        <a
-          href="https://github.com/NoHeroe/press-midea-kit"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="px-6 py-3 rounded-md border border-gray-600 text-gray-300 font-semibold hover:bg-gray-800/40 transition"
-        >
-          🔗 Acessar pasta no GitHub
-        </a>
+  <div style="background:#0c0a10;border:1px solid rgba(143,79,255,0.2);border-radius:18px;padding:28px;" class="reveal">
+    <h3 class="text-grad cinzel" style="font-size:16px;margin:0 0 16px;">Press & Media Kit — NoHeroes</h3>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">
+      <div style="display:flex;gap:12px;align-items:start;padding:12px;background:rgba(255,255,255,0.02);border-radius:10px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><defs><linearGradient id="psa" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke="url(#psa)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><div style="margin-bottom:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline;vertical-align:middle;margin-right:6px;"><defs><linearGradient id="li1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke="url(#li1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><strong style="color:#c4a3ff;font-size:13px;">Press Kit (PDF)</strong></div><p style="font-size:12px;color:rgba(255,255,255,0.4);margin:2px 0 0;">Material institucional para a imprensa — apresentação oficial, contexto criativo e universo.</p></div>
       </div>
-
-      <!-- Contato -->
-      <div class="mt-8">
-        <a
-          href="mailto:contato@noheroes.com.br"
-          class="inline-block px-6 py-3 rounded-md border border-purple-500 text-purple-300 font-semibold hover:bg-purple-900/30 transition"
-        >
-          📩 contato@noheroes.com.br
-        </a>
+      <div style="display:flex;gap:12px;align-items:start;padding:12px;background:rgba(255,255,255,0.02);border-radius:10px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><defs><linearGradient id="psb" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke="url(#psb)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><div style="margin-bottom:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline;vertical-align:middle;margin-right:6px;"><defs><linearGradient id="li2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke="url(#li2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><strong style="color:#f0d99a;font-size:13px;">Media Kit (PDF)</strong></div><p style="font-size:12px;color:rgba(255,255,255,0.4);margin:2px 0 0;">Para colaboradores e parceiros — diretrizes de uso visual da marca NoHeroes.</p></div>
       </div>
+      <div style="display:flex;gap:12px;align-items:start;padding:12px;background:rgba(255,255,255,0.02);border-radius:10px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><defs><linearGradient id="psc" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs><path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2zM16 3H8" stroke="url(#psc)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><div style="margin-bottom:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline;vertical-align:middle;margin-right:6px;"><defs><linearGradient id="li3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs><path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2zM16 3H8M12 12v4m0 0l-2-2m2 2l2-2" stroke="url(#li3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><strong style="color:rgba(255,255,255,0.7);font-size:13px;">Pacote Completo (ZIP)</strong></div><p style="font-size:12px;color:rgba(255,255,255,0.4);margin:2px 0 0;">Todos os arquivos organizados, assets para uso profissional e pitch oficial.</p></div>
+      </div>
+    </div>
+    <div class="press-btns" style="display:flex;flex-wrap:wrap;gap:10px;">
+      <a href="/assets/press-media-kit-noheroes.zip" style="padding:10px 18px;border-radius:10px;background:linear-gradient(135deg,#8f4fff,#d9b55a);color:#000;font-weight:700;font-size:13px;text-decoration:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline;vertical-align:middle;margin-right:6px;"><defs><linearGradient id="pg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs><path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2zM16 3H8M12 12v4m0 0l-2-2m2 2l2-2" stroke="url(#pg1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Baixar Kit Completo (ZIP)</a>
+      <a href="/assets/press-kit-noheroes.pdf" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(143,79,255,0.3);color:#c4a3ff;font-size:13px;font-weight:600;text-decoration:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline;vertical-align:middle;margin-right:6px;"><defs><linearGradient id="pg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke="url(#pg2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Press Kit (PDF)</a>
+      <a href="/assets/media-kit-noheroes.pdf" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(217,181,90,0.3);color:#f0d99a;font-size:13px;font-weight:600;text-decoration:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline;vertical-align:middle;margin-right:6px;"><defs><linearGradient id="pg3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke="url(#pg3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Media Kit (PDF)</a>
+      <a href="https://github.com/NoHeroe/press-midea-kit" target="_blank" rel="noopener" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);font-size:13px;font-weight:600;text-decoration:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline;vertical-align:middle;margin-right:6px;"><defs><linearGradient id="pg4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" stroke="url(#pg4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>GitHub</a>
+      <a href="suporte.html" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.4);font-size:13px;font-weight:600;text-decoration:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline;vertical-align:middle;margin-right:6px;"><defs><linearGradient id="pg5" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="url(#pg5)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Contato</a>
     </div>
   </div>
 </section>
 
-<section id="faq-section" class="faq-section py-20 px-4 md:px-12 text-white font-inter">
-  <h2 class="text-4xl md:text-5xl font-bold cinzel text-center gradiente-noheroes mb-12">FAQ</h2>  
-  <div class="grid gap-8">
+</main>
 
-    <!-- COMPRAS E PRODUTOS -->
-    <div class="bg-[#121212] rounded-xl border border-purple-700/30">
-      <button class="w-full text-left p-5 font-bold text-lg gradiente-noheroes" onclick="toggleFaq(this)">
-        🛒 Compras e Produtos
-      </button>
-      <div class="faq-content hidden px-6 pb-6 space-y-4">
-        <details><summary>Onde vejo os produtos que comprei?</summary><p>É só acessar seu inventário! Estará tudo lá organizadamente.</p></details>
-        <details><summary>Como sei se a compra foi confirmada?</summary><p>Você receberá uma confirmação de pagamento via email, no site e poderá checar seu inventário em caso de dúvida.</p></details>
-        <details><summary>Fiz o pagamento mas não recebi nada. E agora?</summary><p>Entre em contato com o nosso suporte clicando "aqui".</p></details>
-        <details><summary>Qual o tempo de entrega dos produtos digitais?</summary><p>Assim que um pagamento é efetuado o produto é imediatamente liberado para uso.</p></details>
-        <details><summary>Posso comprar mais de um item ao mesmo tempo?</summary><p>Sim! O nosso carrinho foi feito exatamente com esse propósito!</p></details>
-        <details><summary>Como funciona o sistema de carrinho?</summary><p>Você pode adicionar e remover produtos. No final será somado o valor total e o valor da taxa. Os descontos serão feitos diretamente pelos cupons dentro do carrinho caso você tenha algum. E por fim você pode confirmar a compra escolhendo o método de pagamento onde você será redirecionado até o método escolhido.</p></details>
-        <details><summary>O que acontece se meu pagamento for recusado?</summary><p>No caso de recusa recomendamos testar outro meio de pagamento, ou checar com o seu banco ou conta. Caso o erro persista pode entrar em contato com a gente através do suporte ou enviando um ticket que está disponível no final da página da loja.</p></details>
-      </div>
-    </div>
-
-    <!-- MOEDA INTERNA E PAGAMENTOS -->
-    <div class="bg-[#121212] rounded-xl border border-purple-700/30">
-      <button class="w-full text-left p-5 font-bold text-lg gradiente-noheroes" onclick="toggleFaq(this)">
-        💰 Moeda Interna e Pagamentos
-      </button>
-      <div class="faq-content hidden px-6 pb-6 space-y-4">
-        <details><summary>Como ganho Moeda Interna?</summary><p>Você pode comprar ela com dinheiro real ou adquirir através de missões especiais do app & jogo do universo NoHeroes.</p></details>
-        <details><summary>Posso converter Moeda Interna em dinheiro?</summary><p>A princípio ainda não. Mas estamos trabalhando nisso!</p></details>
-        <details><summary>Posso doar Moeda Interna para outra pessoa?</summary><p>Ainda não estamos disponibilizando essa possibilidade, mas estamos trabalhando nessa opção!</p></details>
-        <details><summary>A moeda interna tem validade?</summary><p>Não. Ela não expira.</p></details>
-        <details><summary>É possível reembolsar compras feitas com Moeda Interna?</summary><p>Sim, mas com limites (Ler mais sobre).</p></details>
-        <details><summary>Quais métodos de pagamento vocês aceitam?</summary><p>Atualmente trabalhamos com cartões de crédito, débito, Pix e boleto via Mercado Pago ou PayPal.</p></details>
-        <details><summary>Tem taxas nos pagamentos?</summary><p>Sim, exceto via Moeda Interna.</p></details>
-      </div>
-    </div>
-
-<!-- CONTA E ACESSO -->
-    <div class="bg-[#121212] rounded-xl border border-purple-700/30">
-      <button class="w-full text-left p-5 font-bold text-lg gradiente-noheroes" onclick="toggleFaq(this)">
-        👤 Conta e Acesso
-      </button>
-      <div class="faq-content hidden px-6 pb-6 space-y-4">
-        <details><summary>Como crio minha conta?</summary><p>Você pode clicar em "perfil" no menu do topo direito e seguir as instruções para criar uma conta.</p></details>
-        <details><summary>Esqueci minha senha, e agora?</summary><p>Use a opção "Esqueci minha senha" na página de login ou entre em contato com o suporte.</p></details>
-        <details><summary>Posso alterar meu nome ou e-mail depois?</summary><p>Sim, pelo dashboard do seu perfil, com algumas limitações de tempo.</p></details>
-        <details><summary>Preciso estar logado para comprar?</summary><p>Sim. A loja só está disponível para contas logadas.</p></details>
-        <details><summary>Como deletar minha conta?</summary><p>No seu dashboard, selecione "Excluir conta". Essa ação é permanente.</p></details>
-        <details><summary>Me desloguei sem querer. Como volto?</summary><p>Basta acessar "perfil" no menu e fazer login novamente.</p></details>
-      </div>
-    </div>
-
-    <!-- BIBLIOTECA E ITENS ADQUIRIDOS -->
-    <div class="bg-[#121212] rounded-xl border border-purple-700/30">
-      <button class="w-full text-left p-5 font-bold text-lg gradiente-noheroes" onclick="toggleFaq(this)">
-        📚 Biblioteca e Itens Adquiridos
-      </button>
-      <div class="faq-content hidden px-6 pb-6 space-y-4">
-        <details><summary>Onde encontro meus e-books comprados?</summary><p>No seu inventário, na aba "ebooks".</p></details>
-        <details><summary>Posso fazer download dos meus produtos?</summary><p>Sim, se o produto estiver marcado como "liberado para download".</p></details>
-        <details><summary>Os produtos são meus para sempre?</summary><p>Sim, desde que sua conta esteja ativa.</p></details>
-        <details><summary>Posso acessar em outro dispositivo?</summary><p>Sim, é só fazer login normalmente.</p></details>
-        <details><summary>Perdi o acesso à minha conta. Perco os produtos?</summary><p>Sim, exceto se você recuperar a conta via suporte.</p></details>
-      </div>
-    </div>
-
-    <!-- NAVEGAÇÃO NO SITE -->
-    <div class="bg-[#121212] rounded-xl border border-purple-700/30">
-      <button class="w-full text-left p-5 font-bold text-lg gradiente-noheroes" onclick="toggleFaq(this)">
-        🌐 Navegação no Site
-      </button>
-      <div class="faq-content hidden px-6 pb-6 space-y-4">
-        <details><summary>Como funciona o menu de navegação?</summary><p>Use o menu “hambúrguer” no topo para navegar por todas as áreas principais.</p></details>
-        <details><summary>Como volto para o início?</summary><p>Abra o menu e clique em “Home” ou “Início”.</p></details>
-        <details><summary>Tem versão mobile?</summary><p>Sim! O site é 100% responsivo.</p></details>
-        <details><summary>O site é muito grande, por onde começo?</summary><p>Comece pela aba “Sobre” ou assista ao vídeo introdutório.</p></details>
-        <details><summary>Existe um resumo do universo?</summary><p>Sim, no vídeo introdutório e na aba “Sobre”.</p></details>
-      </div>
-    </div>
-<!-- LOJA E E-BOOKS -->
-    <div class="bg-[#121212] rounded-xl border border-purple-700/30">
-      <button class="w-full text-left p-5 font-bold text-lg gradiente-noheroes" onclick="toggleFaq(this)">
-        🛍️ Loja e E-books
-      </button>
-      <div class="faq-content hidden px-6 pb-6 space-y-4">
-        <details><summary>Quais tipos de produtos vendem?</summary><p>E-books, livros, mentorias, mangás, animes e mais.</p></details>
-        <details><summary>Os e-books têm DRM ou proteção?</summary><p>Sim. São vinculados ao usuário e rastreados.</p></details>
-        <details><summary>Posso ler offline?</summary><p>Sim, se o produto for liberado para download.</p></details>
-        <details><summary>Vocês vendem produtos físicos também?</summary><p>Não ainda, mas lançaremos versões físicas futuramente.</p></details>
-        <details><summary>Posso presentear alguém?</summary><p>Ainda não, mas planejamos implementar essa função.</p></details>
-      </div>
-    </div>
-
-    <!-- APP NO HEROES -->
-    <div class="bg-[#121212] rounded-xl border border-purple-700/30">
-      <button class="w-full text-left p-5 font-bold text-lg gradiente-noheroes" onclick="toggleFaq(this)">
-        📱 App NoHeroes
-      </button>
-      <div class="faq-content hidden px-6 pb-6 space-y-4">
-        <details><summary>O que vai ter no app?</summary><p>Um sistema de RPG de vida real com tarefas, missões e gamificação pessoal.</p></details>
-        <details><summary>Quando será lançado?</summary><p>A primeira versão está prevista para 2025.</p></details>
-        <details><summary>Vai funcionar com o site?</summary><p>Sim. O site e app são interligados, mas com funções exclusivas no app.</p></details>
-        <details><summary>Vai ter versão Android/iOS?</summary><p>Sim. Teremos versões para ambos os sistemas.</p></details>
-        <details><summary>Posso conectar minha conta?</summary><p>Sim. A conta do app, site e jogo é unificada.</p></details>
-      </div>
-    </div>
-
-    <!-- JOGO NO HEROES -->
-    <div class="bg-[#121212] rounded-xl border border-purple-700/30">
-      <button class="w-full text-left p-5 font-bold text-lg gradiente-noheroes" onclick="toggleFaq(this)">
-        🕹️ Jogo NoHeroes
-      </button>
-      <div class="faq-content hidden px-6 pb-6 space-y-4">
-        <details><summary>Que tipo de jogo será?</summary><p>Um MMORPG de mundo aberto com conexão ao mundo real. Estilo SAO.</p></details>
-        <details><summary>É gratuito ou pago?</summary><p>Gratuito, com possíveis requisitos técnicos mais altos.</p></details>
-        <details><summary>Já está disponível?</summary><p>Ainda não. Mas novidades virão em breve.</p></details>
-        <details><summary>Posso testar alguma demo?</summary><p>Somente testadores selecionados terão acesso às versões de teste.</p></details>
-        <details><summary>Vai ter integração com o app?</summary><p>Sim! A interação entre jogo, app e site é um dos pilares do projeto.</p></details>
-      </div>
-    </div>
-
-    <!-- MANGÁS E ANIMES -->
-    <div class="bg-[#121212] rounded-xl border border-purple-700/30">
-      <button class="w-full text-left p-5 font-bold text-lg gradiente-noheroes" onclick="toggleFaq(this)">
-        📖 Mangás e Animes
-      </button>
-      <div class="faq-content hidden px-6 pb-6 space-y-4">
-        <details><summary>Já tem mangá disponível?</summary><p>Verifique a aba "News" ou "Blog" para atualizações sobre os mangás.</p></details>
-        <details><summary>Onde leio o mangá comprado?</summary><p>No seu inventário, após o login.</p></details>
-        <details><summary>O anime vai lançar quando?</summary><p>As datas serão divulgadas na aba "News" assim que forem definidas.</p></details>
-        <details><summary>O anime será gratuito?</summary><p>Sim, com acesso via plataforma própria ou parceiros.</p></details>
-        <details><summary>É dublado ou legendado?</summary><p>Inicialmente em português, com planos para mais idiomas no futuro.</p></details>
-      </div>
-    </div>
-<!-- COMUNIDADE E APOIADORES -->
-    <div class="bg-[#121212] rounded-xl border border-purple-700/30">
-      <button class="w-full text-left p-5 font-bold text-lg gradiente-noheroes" onclick="toggleFaq(this)">
-        🤝 Comunidade e Apoiadores
-      </button>
-      <div class="faq-content hidden px-6 pb-6 space-y-4">
-        <details><summary>Como entrar para a comunidade?</summary><p>Pelo menu "Comunidade" — via Discord, WhatsApp ou grupo fechado.</p></details>
-        <details><summary>É paga?</summary><p>Somente o círculo interno. A comunidade principal é gratuita.</p></details>
-        <details><summary>Onde vejo atualizações?</summary><p>Na aba “News”, blog e redes sociais oficiais.</p></details>
-        <details><summary>Quero apoiar o projeto, como faço?</summary><p>Acesse a aba “Apoiar” ou entre em contato por e-mail.</p></details>
-        <details><summary>Tem algum grupo exclusivo?</summary><p>Sim! O círculo interno é um grupo premium para apoiadores ativos.</p></details>
-      </div>
-    </div>
-
-    <!-- COLABORAÇÃO E PARCERIAS -->
-    <div class="bg-[#121212] rounded-xl border border-purple-700/30">
-      <button class="w-full text-left p-5 font-bold text-lg gradiente-noheroes" onclick="toggleFaq(this)">
-        🎨 Colaboração e Parcerias
-      </button>
-      <div class="faq-content hidden px-6 pb-6 space-y-4">
-        <details><summary>Como posso colaborar?</summary><p>Acesse a aba “Apoiar” ou entre em contato direto por e-mail.</p></details>
-        <details><summary>Sou artista/roteirista/editor, posso ajudar?</summary><p>Sim. Basta preencher o formulário na aba "Apoiar".</p></details>
-        <details><summary>Tem algum formulário de recrutamento?</summary><p>Sim. Você pode acessá-lo clicando <a href="/apoiar.html#formulario">aqui</a>.</p></details>
-        <details><summary>Posso mandar portfólio?</summary><p>Inicialmente, preferimos o preenchimento do formulário antes do envio de portfólios.</p></details>
-        <details><summary>Vocês fazem parcerias com marcas?</summary><p>Sim! Desde que estejam alinhadas com os valores do projeto.</p></details>
-      </div>
-    </div>
-
-    <!-- SEGURANÇA E PRIVACIDADE -->
-    <div class="bg-[#121212] rounded-xl border border-purple-700/30">
-      <button class="w-full text-left p-5 font-bold text-lg gradiente-noheroes" onclick="toggleFaq(this)">
-        🔐 Segurança e Privacidade
-      </button>
-      <div class="faq-content hidden px-6 pb-6 space-y-4">
-        <details><summary>Meus dados estão seguros?</summary><p>Sim. Seguimos boas práticas de segurança e armazenamento criptografado.</p></details>
-        <details><summary>Quais informações vocês armazenam?</summary><p>Apenas os dados fornecidos por você. Veja mais nos <a href="/termos.html">termos de uso</a>.</p></details>
-        <details><summary>Vocês vendem meus dados?</summary><p>Jamais. Seus dados são utilizados apenas para funções essenciais.</p></details>
-        <details><summary>Tem como excluir meus dados?</summary><p>Sim. Isso é feito ao excluir sua conta. Entre em contato se precisar de suporte.</p></details>
-        <details><summary>Como funcionam os cookies?</summary><p>Usamos cookies básicos para melhorar sua experiência. Mais detalhes nos <a href="/privacidade.html">termos</a>.</p></details>
-      </div>
-    </div>
-
-    <!-- DOAÇÕES E SUPORTE -->
-    <div class="bg-[#121212] rounded-xl border border-purple-700/30">
-      <button class="w-full text-left p-5 font-bold text-lg gradiente-noheroes" onclick="toggleFaq(this)">
-        💸 Doações e Suporte
-      </button>
-      <div class="faq-content hidden px-6 pb-6 space-y-4">
-        <details><summary>Como posso doar para o projeto?</summary><p>Via página “Apoiar”, Pix, ou entrando em contato direto.</p></details>
-        <details><summary>Vocês aceitam Pix?</summary><p>Sim. Informações completas na aba “Apoiar”.</p></details>
-        <details><summary>Tem algum sistema de assinatura?</summary><p>Sim. O Círculo Interno oferece vantagens para apoiadores frequentes.</p></details>
-        <details><summary>Para onde vai o dinheiro das doações?</summary><p>Todo valor é investido em melhorias no projeto, equipe e infraestrutura.</p></details>
-        <details><summary>Como entro em contato com o suporte?</summary><p>Pelo botão “Ajuda” no site, via ticket ou e-mail.</p></details>
-      </div>
-    </div>
-
-    <!-- ERROS, BUGS E RELATOS -->
-    <div class="bg-[#121212] rounded-xl border border-purple-700/30">
-      <button class="w-full text-left p-5 font-bold text-lg gradiente-noheroes" onclick="toggleFaq(this)">
-        🐞 Erros, Bugs e Relatos
-      </button>
-      <div class="faq-content hidden px-6 pb-6 space-y-4">
-        <details><summary>Achei um bug no site. Onde reporto?</summary><p>Use o botão “Relatar erro” no final da página ou envie por e-mail.</p></details>
-        <details><summary>O botão não funcionou. E agora?</summary><p>Tente recarregar. Persistindo, relate ao suporte.</p></details>
-        <details><summary>Estou tendo erro no pagamento.</summary><p>Envie print do erro via suporte para analisarmos o mais rápido possível.</p></details>
-        <details><summary>A página não carrega no meu celular.</summary><p>Verifique sua internet ou teste outro navegador.</p></details>
-        <details><summary>As imagens estão estranhas. O que faço?</summary><p>Relate com print via e-mail ou ticket para correção.</p></details>
-      </div>
-    </div>
-
-    <!-- SOBRE O PROJETO -->
-    <div class="bg-[#121212] rounded-xl border border-purple-700/30">
-      <button class="w-full text-left p-5 font-bold text-lg gradiente-noheroes" onclick="toggleFaq(this)">
-        🌌 Sobre o Projeto e o Criador
-      </button>
-      <div class="faq-content hidden px-6 pb-6 space-y-4">
-        <details><summary>Quem criou o NoHeroes?</summary><p>Raul Takagi Sato Souza, criador e idealizador do universo.</p></details>
-        <details><summary>O projeto é só de um autor?</summary><p>Sim. Toda base foi construída por ele, incluindo o site, roteiros e visão do projeto.</p></details>
-        <details><summary>Qual a proposta principal?</summary><p>Liberar e iluminar o caminho de quem entrar nesse universo. Transformar vida em RPG real.</p></details>
-        <details><summary>Tem outros projetos futuros?</summary><p>Sim. Além do livro ROAR, virão FREQ, Echoes, o app, o jogo, e a expansão para mangás e animes.</p></details>
-      </div>
-    </div>
-
-    <!-- OUTRAS DÚVIDAS -->
-    <div class="bg-[#121212] rounded-xl border border-purple-700/30">
-      <button class="w-full text-left p-5 font-bold text-lg gradiente-noheroes" onclick="toggleFaq(this)">
-        ❓ Outras Dúvidas Frequentes
-      </button>
-      <div class="faq-content hidden px-6 pb-6 space-y-4">
-        <details><summary>O que é NoHeroes?</summary><p>É mais que um universo. É uma filosofia. Saiba mais <a href="/sobre.html">aqui</a>.</p></details>
-        <details><summary>Qual a ordem dos livros?</summary><p>1. ROAR, 2. FREQ, 3. Echoes.</p></details>
-        <details><summary>Preciso entender de anime para participar?</summary><p>Não! O universo é acessível e imersivo para todos os públicos.</p></details>
-        <details><summary>Tem suporte para outros idiomas?</summary><p>Atualmente, Português e Inglês.</p></details>
-        <details><summary>Como entro em contato direto?</summary><p>Via e-mail ou grupo da comunidade no WhatsApp.</p></details>
-      </div>
-    </div>
-
+<!-- FOOTER -->
+<footer style="background:#000;border-top:1px solid rgba(255,255,255,0.06);padding:48px 20px;text-align:center;">
+  <div style="font-family:'Cinzel Decorative',serif;font-size:18px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px;">NoHeroes</div>
+  <div style="width:40px;height:1px;background:linear-gradient(90deg,#8f4fff,#d9b55a);margin:0 auto 20px;"></div>
+  <p style="font-size:13px;color:rgba(255,255,255,0.3);font-style:italic;margin:0 0 6px;">Explore. Escolha. Caia. Evolua.</p>
+  <p style="font-size:12px;color:rgba(255,255,255,0.2);margin:0 0 20px;">Toda escolha tem um preço. Toda queda, uma razão.</p>
+  <div style="display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:20px;">
+    <a href="index.html" style="font-size:12px;color:rgba(255,255,255,0.3);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Início</a>
+    <a href="leitor.html" style="font-size:12px;color:rgba(255,255,255,0.3);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Biblioteca</a>
+    <a href="store.html" style="font-size:12px;color:rgba(255,255,255,0.3);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Loja</a>
+    <a href="apoiar.html" style="font-size:12px;color:rgba(255,255,255,0.3);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Apoiar</a>
+    <a href="suporte.html" style="font-size:12px;color:rgba(255,255,255,0.3);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Suporte</a>
+    <a href="termos.html" style="font-size:12px;color:rgba(255,255,255,0.3);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Termos</a>
+    <a href="linktree.html" style="font-size:12px;color:rgba(255,255,255,0.3);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Links</a>
   </div>
-</section>
-
-<footer class="py-8 text-center text-[#666] bg-[#000] border-t border-[#333] mt-0">
-  <a href="linktree.html" class="inline-block mb-4">
-    <img src="assets/images/linktree.png" alt="Linktree" class="h-10 mx-auto">
-  </a>
-  <p>Explore. Escolha. Caia. Evolua.</p>
-  <p class="mt-2">Toda escolha tem um preço. Toda queda, uma razão.</p>
-  <p class="text-xs mt-4">© 2025 NoHeroes. Todos os direitos reservados.</p>
+  <p style="font-size:11px;color:rgba(255,255,255,0.15);margin:0;">© <span id="footerYear"></span> NoHeroes. Todos os direitos reservados.</p>
 </footer>
-  </main>
 
-<canvas id="brasasCanvas"></canvas>
-
+<script src="assets/js/suporte-widget.js"></script>
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    // ========================
-    // Drawer funcional corrigido:
-    const hamburgerBtn = document.getElementById('hamburgerBtn');
-    const drawer = document.getElementById('drawer');
-    const overlay = document.getElementById('drawerOverlay');
+// ─── ANO ───
+document.getElementById('footerYear').textContent = new Date().getFullYear();
 
-    function openDrawer() {
-      drawer.style.transform = 'translateX(0)';
-      overlay.style.display = 'block';
-      hamburgerBtn.textContent = '✕';
-    }
-
-    function closeDrawer() {
-      drawer.style.transform = 'translateX(100%)';
-      overlay.style.display = 'none';
-      hamburgerBtn.textContent = '☰';
-    }
-
-    hamburgerBtn.addEventListener('click', () => {
-      if (drawer.style.transform === 'translateX(0)') {
-        closeDrawer();
-      } else {
-        openDrawer();
-      }
-    });
-
-    overlay.addEventListener('click', closeDrawer);
-
-    const drawerCloseBtn = drawer.querySelector('button[onclick="toggleDrawer()"]');
-    drawerCloseBtn.addEventListener('click', closeDrawer);
-
-    // ========================
-    // Brasas Canvas intacto:
-    const canvas = document.getElementById("brasasCanvas");
-    const ctx = canvas.getContext("2d");
-    let particles = [];
-    let w, h;
-
-    function resizeCanvas() {
-      const ratio = window.devicePixelRatio || 1;
-      w = canvas.width = window.innerWidth * ratio;
-      h = canvas.height = window.innerHeight * ratio;
-      canvas.style.width = window.innerWidth + "px";
-      canvas.style.height = window.innerHeight + "px";
-      ctx.setTransform(1, 0, 0, 1, 0, 0);
-      ctx.scale(ratio, ratio);
-    }
-
-    class Particle {
-      constructor() { this.reset(true); }
-      reset(initial = false) {
-        this.x = Math.random() * w;
-        this.y = initial ? Math.random() * h : h + Math.random() * 100;
-        this.size = 1 + Math.random() * 2.5;
-        this.speed = 0.2 + Math.random() * 0.5;
-        this.alpha = 0.4 + Math.random() * 0.3;
-        this.drift = (Math.random() - 0.5) * 0.5;
-      }
-      update() {
-        this.y -= this.speed;
-        this.x += this.drift;
-        if (this.y < -10 || this.x < -50 || this.x > w + 50) this.reset();
-      }
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`;
-        ctx.shadowColor = "#a855f7";
-        ctx.shadowBlur = 12;
-        ctx.fill();
-      }
-    }
-
-    function createParticles(count) {
-      particles = [];
-      for (let i = 0; i < count; i++) particles.push(new Particle());
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, w, h);
-      for (const p of particles) { p.update(); p.draw(); }
-      requestAnimationFrame(animate);
-    }
-
-    resizeCanvas();
-    createParticles(Math.floor(150 * (window.devicePixelRatio || 1)));
-    animate();
-
-    window.addEventListener("resize", resizeCanvas);
-
-    // ========================
-    // Scroll reveal puro e confiável sem observer:
-    const revealEls = document.querySelectorAll('.reveal-fade');
-
-    function checkReveal() {
-      const windowHeight = window.innerHeight;
-      revealEls.forEach(el => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top <= windowHeight - 100) { // 100px antes de entrar
-          el.classList.add('animate-fade-in-up');
-        }
-      });
-    }
-
-  // Abre o modal
-  document.getElementById("navBtn").addEventListener("click", () => {
-    document.getElementById("navModal").style.display = "block";
-  });
-
-  // Fecha ao clicar no ✕
-  document.getElementById("closeNavModal").addEventListener("click", () => {
-    document.getElementById("navModal").style.display = "none";
-  });
-
-  // Fecha ao clicar fora do conteúdo
-  document.getElementById("navModal").addEventListener("click", (e) => {
-    const content = document.getElementById("navModalContent");
-    if (!content.contains(e.target)) {
-      document.getElementById("navModal").style.display = "none";
-    }
-  });
-
-}); // ← Aqui fecha o DOMContentLoaded!
-
-// Agora a função está fora e visível para o HTML inline:
-function goToSection(id) {
-  const el = document.getElementById(id);
-  if (el) {
-    el.scrollIntoView({ behavior: "smooth" });
-    document.getElementById("navModal").style.display = "none";
-  }
+// ─── DRAWER ───
+function openDrawer() {
+  document.getElementById('drawer').style.transform = 'translateX(0)';
+  const ov = document.getElementById('drawerOverlay');
+  ov.style.display = 'block';
+  setTimeout(() => ov.style.opacity = '1', 10);
 }
-  function abrirModal() {
-    const modal = document.getElementById('criadorModal');
-    modal.classList.remove('hidden');
-    if (!modal.open) modal.showModal();
-    document.body.classList.add('modal-aberto');
-  }
+function closeDrawer() {
+  document.getElementById('drawer').style.transform = 'translateX(100%)';
+  const ov = document.getElementById('drawerOverlay');
+  ov.style.opacity = '0';
+  setTimeout(() => ov.style.display = 'none', 300);
+}
 
-  function fecharModal() {
-    const modal = document.getElementById('criadorModal');
-    if (modal.open) modal.close();
-    modal.classList.add('hidden');
-    document.body.classList.remove('modal-aberto');
-  }
-function toggleFaq(button) {
-    const content = button.nextElementSibling;
-    const allFaqs = document.querySelectorAll('.faq-content');
-    allFaqs.forEach(faq => { if (faq !== content) faq.classList.add('hidden'); });
-    content.classList.toggle('hidden');
-  }
+// ─── MANIFESTO MODAL ───
+function abrirManifesto() {
+  const m = document.getElementById('manifestoModal');
+  m.style.display = 'flex';
+}
+function fecharManifesto() {
+  document.getElementById('manifestoModal').style.display = 'none';
+}
+document.getElementById('manifestoModal').addEventListener('click', function(e) {
+  if (e.target === this) fecharManifesto();
+});
+
+// ─── SCROLL REVEAL ───
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.12 });
+revealEls.forEach(el => observer.observe(el));
+
+// ─── BRASAS ───
+const canvas = document.getElementById('brasasCanvas');
+const ctx = canvas.getContext('2d');
+let pts = [], W, H;
+function resizeC() {
+  const r = window.devicePixelRatio || 1;
+  W = canvas.width = window.innerWidth * r;
+  H = canvas.height = window.innerHeight * r;
+  canvas.style.width = window.innerWidth + 'px';
+  canvas.style.height = window.innerHeight + 'px';
+  ctx.scale(r, r);
+}
+window.addEventListener('resize', () => { ctx.setTransform(1,0,0,1,0,0); resizeC(); });
+resizeC();
+class P {
+  constructor() { this.r(true); }
+  r(i=false) { this.x=Math.random()*W; this.y=i?Math.random()*H:H+50; this.s=0.8+Math.random()*2.5; this.v=0.2+Math.random()*0.5; this.a=0.3+Math.random()*0.4; this.d=(Math.random()-.5)*.5; }
+  u(){this.y-=this.v;this.x+=this.d;if(this.y<-10)this.r();}
+  draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.s,0,Math.PI*2);ctx.fillStyle=`rgba(168,85,247,${this.a})`;ctx.shadowColor='#a855f7';ctx.shadowBlur=12;ctx.fill();}
+}
+for(let i=0;i<150;i++) pts.push(new P());
+(function loop(){ctx.clearRect(0,0,W,H);pts.forEach(p=>{p.u();p.draw()});requestAnimationFrame(loop)})();
 </script>
 </body>
 </html>
