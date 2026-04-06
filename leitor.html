@@ -81,10 +81,11 @@ body {
 
 /* --- COBERTURA DO TOPO (CORREÇÃO PEDIDA) --- */
 #hero-display {
-    background-color: #050507; /* Fundo sólido para cobrir o canvas no topo */
+    background-color: #050507;
     z-index: 10;
     position: relative;
     border-bottom: 1px solid rgba(143, 79, 255, 0.1);
+    overflow: hidden;
 }
 
 /* --- SKELETON LOADER --- */
@@ -504,13 +505,13 @@ function renderHero() {
     document.getElementById('hero-display').innerHTML = `
         ${img ? `<img src="${img}" class="absolute inset-0 w-full h-full object-cover opacity-40">` : ''}
         <div class="absolute inset-0 hero-mask"></div>
-        <div class="relative z-10 p-8 md:p-20 max-w-4xl fade-up">
+        <div class="relative z-10 p-5 md:p-20 w-full max-w-4xl fade-up">
             <span class="px-4 py-1 rounded-full border border-nh-accent/30 bg-nh-accent/10 text-nh-accent text-[10px] font-black uppercase tracking-[0.3em]">Em Destaque</span>
-            <h1 class="text-6xl md:text-8xl font-display text-grad mt-6 leading-none uppercase">${work.title}</h1>
-            <p class="text-white/60 mt-6 text-lg max-w-xl italic leading-relaxed">"${(work.synopsis||'').length > 200 ? work.synopsis.slice(0,200)+'...' : (work.synopsis||'')}"</p>
-            <div class="mt-10 flex flex-wrap gap-4">
-                <button onclick="location.href='mangá.html?slug=${work.slug}'" class="px-12 py-5 rounded-2xl grad-nh text-black font-black uppercase tracking-widest text-xs shadow-glow transition hover:scale-105 active:scale-95">Iniciar Leitura</button>
-                <button onclick="openModal('${work.slug}')" class="px-12 py-5 rounded-2xl glass text-white font-black uppercase tracking-widest text-xs transition hover:bg-white/10">Ficha Técnica</button>
+            <h1 class="text-4xl md:text-8xl font-display text-grad mt-4 leading-tight uppercase break-words">${work.title}</h1>
+            <p class="text-white/60 mt-4 text-sm md:text-lg max-w-xl italic leading-relaxed">"${(work.synopsis||'').length > 200 ? work.synopsis.slice(0,200)+'...' : (work.synopsis||'')}"</p>
+            <div class="mt-6 flex flex-wrap gap-3">
+                <button onclick="location.href='mangá.html?slug=${work.slug}'" class="px-8 py-4 rounded-2xl grad-nh text-black font-black uppercase tracking-widest text-xs shadow-glow transition hover:scale-105 active:scale-95">Iniciar Leitura</button>
+                <button onclick="openModal('${work.slug}')" class="px-8 py-4 rounded-2xl glass text-white font-black uppercase tracking-widest text-xs transition hover:bg-white/10">Ficha Técnica</button>
             </div>
         </div>
     `;

@@ -1090,8 +1090,8 @@ textarea.input { resize: vertical; min-height: 100px; }
     <!-- Lista capítulos existentes -->
     <div class="section-header">
       <div>
-        <div style="font-size:16px;font-weight:700;">Capítulos Publicados</div>
-        <div class="section-sub">Gerencie os capítulos existentes</div>
+        <div style="font-size:16px;font-weight:700;">Capítulos da Obra</div>
+        <div class="section-sub">Gerencie todos os capítulos — rascunhos, pendentes e publicados</div>
       </div>
       <select class="input" id="filter-work-chapters" style="width:auto;min-width:160px;" onchange="renderChapterList()">
         <option value="">Todas as obras</option>
@@ -1178,8 +1178,9 @@ textarea.input { resize: vertical; min-height: 100px; }
     </div>
   </div>
 
-<!-- ═══ TAB: CANDIDATURA (usuário comum) ═══ -->
-<div id="tab-herald-apply" class="tab main-content" style="display:none;"></div>
+  <!-- ═══ TAB: CANDIDATURA (usuário comum) ═══ -->
+  <div id="tab-herald-apply" class="tab"></div>
+
 </main>
 </div>
 
@@ -1188,44 +1189,65 @@ textarea.input { resize: vertical; min-height: 100px; }
   <div class="modal-box">
     <div class="modal-title" id="work-modal-title">Nova Obra</div>
 
-    <div style="display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start;">
-      <div class="cover-upload" id="cover-upload-btn">
-        <input type="file" accept="image/*" onchange="previewCover(this)">
-        <img id="cover-preview-img" style="display:none;">
-        <div id="cover-upload-placeholder" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px;">
-          <span style="font-size:24px;">🖼️</span>
-          <span style="font-size:10px;color:var(--muted);text-align:center;font-family:var(--font-mono);">Capa 2:3</span>
+    <!-- Capa + Banner -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+      <div>
+        <div class="label">Capa (2:3)</div>
+        <div class="cover-upload" id="cover-upload-btn" style="height:140px;" onclick="document.getElementById('cover-file-input').click()">
+          <input type="file" id="cover-file-input" accept="image/*" style="display:none" onchange="uploadCover(this)">
+          <img id="cover-preview-img" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+          <div id="cover-upload-placeholder" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px;">
+            <span style="font-size:24px;">🖼️</span>
+            <span style="font-size:10px;color:var(--muted);text-align:center;font-family:var(--font-mono);">Capa 2:3</span>
+          </div>
+          <div id="cover-upload-progress" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--accent);">Enviando...</div>
         </div>
       </div>
-
       <div>
-        <div class="field">
-          <label class="label">Título</label>
-          <input type="text" class="input" id="work-title" placeholder="Azuos: O Despertar">
+        <div class="label">Banner (Hero)</div>
+        <div class="cover-upload" id="banner-upload-btn" style="height:140px;" onclick="document.getElementById('banner-file-input').click()">
+          <input type="file" id="banner-file-input" accept="image/*" style="display:none" onchange="uploadBanner(this)">
+          <img id="banner-preview-img" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+          <div id="banner-upload-placeholder" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px;">
+            <span style="font-size:24px;">🌆</span>
+            <span style="font-size:10px;color:var(--muted);text-align:center;font-family:var(--font-mono);">Banner 16:6</span>
+          </div>
+          <div id="banner-upload-progress" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--accent);">Enviando...</div>
         </div>
-        <div class="field">
-          <label class="label">Categoria</label>
-          <select class="input" id="work-category">
-            <option>Dark Fantasy</option>
-            <option>Medieval</option>
-            <option>Ação</option>
-            <option>Terror</option>
-            <option>Mistério</option>
-            <option>Fantasia</option>
-            <option>Aventura</option>
-            <option>Romance</option>
-            <option>Sci-Fi</option>
-          </select>
-        </div>
-        <div class="field">
-          <label class="label">Classificação Etária</label>
-          <select class="input" id="work-rating">
-            <option value="free">Livre</option>
-            <option value="14">14+ Anos</option>
-            <option value="16">16+ Anos</option>
-            <option value="18">18+ (Seinen / Dark)</option>
-          </select>
-        </div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div class="field">
+        <label class="label">Título</label>
+        <input type="text" class="input" id="work-title" placeholder="Azuos: O Despertar">
+      </div>
+      <div class="field">
+        <label class="label">Categoria</label>
+        <select class="input" id="work-category">
+          <option>Dark Fantasy</option>
+          <option>Medieval</option>
+          <option>Ação</option>
+          <option>Terror</option>
+          <option>Mistério</option>
+          <option>Fantasia</option>
+          <option>Aventura</option>
+          <option>Romance</option>
+          <option>Sci-Fi</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="label">Classificação Etária</label>
+        <select class="input" id="work-rating">
+          <option value="free">Livre</option>
+          <option value="14">14+ Anos</option>
+          <option value="16">16+ Anos</option>
+          <option value="18">18+ (Seinen / Dark)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="label">Caps. gratuitos</label>
+        <input type="number" class="input" id="work-free-chapters" value="1" min="0" placeholder="1">
       </div>
     </div>
 
@@ -1246,7 +1268,77 @@ textarea.input { resize: vertical; min-height: 100px; }
 
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeModal('work-modal')">Cancelar</button>
-      <button class="btn btn-primary" onclick="saveWork()">Salvar Obra</button>
+      <button class="btn btn-primary" onclick="saveWork()" id="save-work-btn">Salvar Obra</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: EDITAR CAPÍTULO ═══ -->
+<div class="modal-backdrop" id="chapter-modal">
+  <div class="modal-box">
+    <div class="modal-title" id="chapter-modal-title">Editar Capítulo</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div class="field">
+        <label class="label">Nº do Capítulo</label>
+        <input type="number" class="input" id="edit-cap-number" min="1">
+      </div>
+      <div class="field">
+        <label class="label">Status</label>
+        <select class="input" id="edit-cap-status">
+          <option value="draft">Rascunho</option>
+          <option value="pending">Enviar pra Revisão</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Título</label>
+      <input type="text" class="input" id="edit-cap-title">
+    </div>
+
+    <div class="field">
+      <label class="label">Tempo de leitura</label>
+      <select class="input" id="edit-cap-readtime">
+        <option value="300">5 min</option>
+        <option value="600">10 min</option>
+        <option value="900">15 min</option>
+        <option value="1200">20 min</option>
+        <option value="1800">30 min</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <div class="toggle-wrap">
+        <div>
+          <div class="toggle-label">Capítulo Premium</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="edit-cap-premium">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <!-- Páginas existentes com reordenação -->
+    <div style="font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-mono);margin-bottom:12px;">Páginas Existentes <span style="color:var(--muted);font-weight:400;text-transform:none;">(arraste para reordenar)</span></div>
+    <div id="edit-existing-pages" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:6px;min-height:40px;margin-bottom:16px;"></div>
+    <button class="btn btn-ghost btn-sm" style="width:100%;margin-bottom:16px;" onclick="savePageOrder()" id="save-order-btn" style="display:none;">💾 Salvar Ordem das Páginas</button>
+
+    <!-- Upload de páginas adicionais -->
+    <div style="font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-mono);margin-bottom:12px;">Adicionar Páginas</div>
+    <div class="upload-zone" id="edit-upload-zone" style="padding:16px;">
+      <input type="file" id="edit-file-input" multiple accept="image/jpeg,image/png,image/webp">
+      <div class="upload-icon" style="font-size:24px;">📸</div>
+      <div class="upload-text" style="font-size:13px;">Solte imagens aqui para adicionar páginas</div>
+    </div>
+    <div id="edit-pages-list" style="margin-top:12px;display:grid;grid-template-columns:repeat(auto-fill,minmax(60px,1fr));gap:6px;"></div>
+
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('chapter-modal')">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveChapterEdit()" id="save-chapter-btn">Salvar</button>
     </div>
   </div>
 </div>
@@ -1281,11 +1373,16 @@ const Auth = {
 
 /* ─── STATE ─────────────────────────────────────────────── */
 const S = {
-  user: null,        // dados do usuário logado
-  works: [],         // obras do arauto
-  chapters: [],      // capítulos do arauto
-  chapterPages: [],  // páginas em edição
-  editWorkId: null   // obra sendo editada
+  user: null,
+  works: [],
+  chapters: [],
+  chapterPages: [],
+  editWorkId: null,
+  editChapterId: null,
+  editChapterPages: [],
+  editExistingPages: [],
+  coverUrl: null,
+  bannerUrl: null
 };
 
 /* ─── API ───────────────────────────────────────────────── */
@@ -1314,7 +1411,8 @@ function showToast(msg, type = 'success') {
 function switchTab(id) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.nav-item, .mobile-nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById(`tab-${id}`)?.classList.add('active');
+  const tab = document.getElementById(`tab-${id}`);
+  if (tab) { tab.style.display = ''; tab.classList.add('active'); }
   document.getElementById(`nav-${id}`)?.classList.add('active');
   document.getElementById(`mob-${id}`)?.classList.add('active');
   closeDrawer();
@@ -1388,27 +1486,27 @@ async function boot() {
 }
 
 /* ─── BOOT: ADMIN ───────────────────────────────────────── */
-function bootAdmin() {
+async function bootAdmin() {
   switchTab('dashboard');
   loadDashboard();
-  loadWorks();
+  await loadWorks();
+  populateWorkSelects();
   loadChapterList();
   loadComments();
   loadNotifications();
   loadRevenue();
-  populateWorkSelects();
 }
 
 /* ─── BOOT: ARAUTO ──────────────────────────────────────── */
-function bootHerald() {
+async function bootHerald() {
   switchTab('dashboard');
   loadDashboard();
-  loadWorks();
+  await loadWorks();
+  populateWorkSelects();
   loadChapterList();
   loadComments();
   loadNotifications();
   loadRevenue();
-  populateWorkSelects();
 }
 
 /* ─── BOOT: CANDIDATO (usuário comum) ───────────────────── */
@@ -1613,7 +1711,17 @@ function renderEngagement() {
 
 function openWorkModal(editId = null) {
   S.editWorkId = editId;
+  S.coverUrl = null;
+  S.bannerUrl = null;
   document.getElementById('work-modal-title').textContent = editId ? 'Editar Obra' : 'Nova Obra';
+
+  // reset imagens
+  const coverImg = document.getElementById('cover-preview-img');
+  const bannerImg = document.getElementById('banner-preview-img');
+  if (coverImg) { coverImg.style.display = 'none'; }
+  if (bannerImg) { bannerImg.style.display = 'none'; }
+  document.getElementById('cover-upload-placeholder').style.display = 'flex';
+  document.getElementById('banner-upload-placeholder').style.display = 'flex';
 
   if (editId) {
     const w = S.works.find(x => x.id === editId);
@@ -1624,11 +1732,26 @@ function openWorkModal(editId = null) {
       document.getElementById('work-synopsis').value = w.synopsis || '';
       document.getElementById('work-tags').value = Array.isArray(w.tags) ? w.tags.join(', ') : '';
       document.getElementById('work-season').value = w.season_label || '';
+      document.getElementById('work-free-chapters').value = w.free_chapters ?? 1;
+      // mostra imagens existentes
+      if (w.cover_url && coverImg) {
+        coverImg.src = w.cover_url;
+        coverImg.style.display = 'block';
+        document.getElementById('cover-upload-placeholder').style.display = 'none';
+        S.coverUrl = w.cover_url;
+      }
+      if (w.banner_url && bannerImg) {
+        bannerImg.src = w.banner_url;
+        bannerImg.style.display = 'block';
+        document.getElementById('banner-upload-placeholder').style.display = 'none';
+        S.bannerUrl = w.banner_url;
+      }
     }
   } else {
     ['work-title', 'work-synopsis', 'work-tags', 'work-season'].forEach(id => {
       document.getElementById(id).value = '';
     });
+    document.getElementById('work-free-chapters').value = '1';
   }
 
   openModal('work-modal');
@@ -1637,17 +1760,25 @@ function openWorkModal(editId = null) {
 function editWork(id) { openWorkModal(id); }
 
 async function saveWork() {
-  const title    = document.getElementById('work-title').value.trim();
-  const synopsis = document.getElementById('work-synopsis').value.trim();
-  const category = document.getElementById('work-category').value;
-  const age_rating = document.getElementById('work-rating').value;
-  const tagsRaw  = document.getElementById('work-tags').value;
+  const title       = document.getElementById('work-title').value.trim();
+  const synopsis    = document.getElementById('work-synopsis').value.trim();
+  const category    = document.getElementById('work-category').value;
+  const age_rating  = document.getElementById('work-rating').value;
+  const tagsRaw     = document.getElementById('work-tags').value;
   const season_label = document.getElementById('work-season').value.trim();
+  const free_chapters = parseInt(document.getElementById('work-free-chapters').value) || 1;
 
   if (!title) { showToast('Título obrigatório.', 'error'); return; }
 
   const tags = tagsRaw.split(',').map(t => t.trim()).filter(Boolean);
-  const payload = { title, synopsis, category, age_rating, tags, season_label };
+  const payload = {
+    title, synopsis, category, age_rating, tags, season_label, free_chapters,
+    ...(S.coverUrl ? { cover_url: S.coverUrl } : {}),
+    ...(S.bannerUrl ? { banner_url: S.bannerUrl } : {})
+  };
+
+  const btn = document.getElementById('save-work-btn');
+  if (btn) { btn.textContent = 'Salvando...'; btn.disabled = true; }
 
   let result;
   if (S.editWorkId) {
@@ -1662,13 +1793,15 @@ async function saveWork() {
     });
   }
 
+  if (btn) { btn.textContent = 'Salvar Obra'; btn.disabled = false; }
+
   if (result.ok) {
     showToast(S.editWorkId ? 'Obra atualizada!' : 'Obra enviada para revisão!', 'success');
     closeModal('work-modal');
     await loadWorks();
     populateWorkSelects();
   } else {
-    showToast(result.data.message || 'Erro ao salvar obra.', 'error');
+    showToast(result.data?.message || 'Erro ao salvar obra.', 'error');
   }
 }
 
@@ -1682,28 +1815,97 @@ function confirmDeleteWork(id) {
 }
 
 function previewCover(input) {
+  // mantido por compatibilidade — não usado mais
+}
+
+/* ─── UPLOAD DE CAPA ── */
+async function uploadCover(input) {
   const file = input.files[0]; if (!file) return;
+
+  // preview imediato
   const reader = new FileReader();
   reader.onload = e => {
     const img = document.getElementById('cover-preview-img');
     if (img) { img.src = e.target.result; img.style.display = 'block'; }
-    const ph = document.getElementById('cover-upload-placeholder');
-    if (ph) ph.style.display = 'none';
+    document.getElementById('cover-upload-placeholder').style.display = 'none';
   };
   reader.readAsDataURL(file);
+
+  // upload para R2
+  const prog = document.getElementById('cover-upload-progress');
+  if (prog) prog.style.display = 'flex';
+
+  try {
+    const formData = new FormData();
+    formData.append('image', file);
+    const res = await fetch(`${API_BASE}/api/herald/upload/cover`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${Auth.token()}` },
+      body: formData
+    });
+    const data = await res.json();
+    if (data.success) {
+      S.coverUrl = data.url;
+      showToast('Capa enviada!', 'success');
+    } else {
+      showToast('Erro ao enviar capa.', 'error');
+    }
+  } catch (e) {
+    showToast('Erro ao enviar capa.', 'error');
+  } finally {
+    if (prog) prog.style.display = 'none';
+  }
+}
+
+/* ─── UPLOAD DE BANNER ── */
+async function uploadBanner(input) {
+  const file = input.files[0]; if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = document.getElementById('banner-preview-img');
+    if (img) { img.src = e.target.result; img.style.display = 'block'; }
+    document.getElementById('banner-upload-placeholder').style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+
+  const prog = document.getElementById('banner-upload-progress');
+  if (prog) prog.style.display = 'flex';
+
+  try {
+    const formData = new FormData();
+    formData.append('image', file);
+    const res = await fetch(`${API_BASE}/api/herald/upload/banner`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${Auth.token()}` },
+      body: formData
+    });
+    const data = await res.json();
+    if (data.success) {
+      S.bannerUrl = data.url;
+      showToast('Banner enviado!', 'success');
+    } else {
+      showToast('Erro ao enviar banner.', 'error');
+    }
+  } catch (e) {
+    showToast('Erro ao enviar banner.', 'error');
+  } finally {
+    if (prog) prog.style.display = 'none';
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════
    CAPÍTULOS
 ═══════════════════════════════════════════════════════════ */
 async function loadChapterList() {
-  // carrega capítulos de todas as obras do arauto
+  // busca capítulos de todas as obras via rota do arauto (inclui draft/pending)
   const allChapters = [];
   for (const w of S.works) {
-    const { ok, data } = await api(`/api/works/${w.slug}/chapters`);
+    const { ok, data } = await api(`/api/herald/works/${w.id}/chapters`);
     if (ok) {
       (data.chapters || []).forEach(c => {
         c.workTitle = w.title;
+        c.workSlug = w.slug;
         c.workId = w.id;
         allChapters.push(c);
       });
@@ -1732,12 +1934,13 @@ function renderChapterList() {
       <div class="chapter-num">C${String(ch.number).padStart(2, '0')}</div>
       <div class="chapter-info">
         <div class="chapter-title">${ch.title}</div>
-        <div class="chapter-meta">${ch.workTitle} · ${fmtNum(ch.views)} views</div>
+        <div class="chapter-meta">${ch.workTitle} · ${fmtNum(ch.views || 0)} views · ${ch.total_pages || 0} páginas</div>
       </div>
       ${ch.is_premium ? '<span class="badge badge-premium">Premium</span>' : ''}
       <span class="badge badge-${ch.status}">${statusLabel(ch.status)}</span>
       <div class="chapter-actions">
-        <button class="btn btn-danger btn-sm btn-icon" title="Excluir" onclick="confirmDeleteChapter(${ch.id}, '${ch.title}')">🗑️</button>
+        <button class="btn btn-ghost btn-sm btn-icon" title="Editar" onclick="openChapterEdit(${ch.id})">✏️</button>
+        <button class="btn btn-danger btn-sm btn-icon" title="Excluir" onclick="confirmDeleteChapter(${ch.id}, '${ch.title.replace(/'/g,"\\'")}')">🗑️</button>
       </div>
     </div>
   `).join('');
@@ -1749,6 +1952,140 @@ function confirmDeleteChapter(id, title) {
     if (ok) { showToast('Capítulo excluído.', 'error'); await loadChapterList(); }
     else showToast('Erro ao excluir capítulo.', 'error');
   });
+}
+
+async function openChapterEdit(id) {
+  const ch = S.chapters.find(c => c.id === id);
+  if (!ch) return;
+
+  S.editChapterId = id;
+  S.editChapterPages = [];
+  S.editExistingPages = []; // páginas existentes no banco
+
+  document.getElementById('chapter-modal-title').textContent = `Editar — ${ch.title}`;
+  document.getElementById('edit-cap-number').value = ch.number || '';
+  document.getElementById('edit-cap-title').value = ch.title || '';
+  document.getElementById('edit-cap-status').value = ch.status || 'draft';
+  document.getElementById('edit-cap-readtime').value = ch.read_time_sec || 600;
+  document.getElementById('edit-cap-premium').checked = !!ch.is_premium;
+  document.getElementById('edit-pages-list').innerHTML = '';
+
+  // carrega páginas existentes
+  const existingEl = document.getElementById('edit-existing-pages');
+  existingEl.innerHTML = '<div style="color:var(--muted);font-size:11px;">Carregando...</div>';
+
+  const { ok, data } = await api(`/api/chapters/${id}`);
+  if (ok && data.chapter?.pages?.length) {
+    S.editExistingPages = [...data.chapter.pages].sort((a,b) => a.order - b.order);
+    renderExistingPages();
+    document.getElementById('save-order-btn').style.display = 'block';
+  } else {
+    existingEl.innerHTML = '<div style="color:var(--muted);font-size:11px;">Sem páginas ainda.</div>';
+    document.getElementById('save-order-btn').style.display = 'none';
+  }
+
+  openModal('chapter-modal');
+}
+
+function renderExistingPages() {
+  const el = document.getElementById('edit-existing-pages');
+  el.innerHTML = '';
+  S.editExistingPages.forEach((p, i) => {
+    const div = document.createElement('div');
+    div.dataset.pageId = p.id;
+    div.style.cssText = 'position:relative;aspect-ratio:2/3;border-radius:6px;overflow:hidden;border:1px solid var(--border2);cursor:grab;';
+    div.innerHTML = `
+      <img src="${p.image_url}" style="width:100%;height:100%;object-fit:cover;">
+      <div style="position:absolute;bottom:2px;left:0;right:0;text-align:center;font-size:9px;font-family:var(--font-mono);color:#fff;background:rgba(0,0,0,0.6);padding:2px;">${i+1}</div>
+      <button onclick="deleteExistingPage(${p.id})" style="position:absolute;top:2px;right:2px;width:16px;height:16px;border-radius:50%;background:rgba(239,68,68,0.8);border:none;color:#fff;font-size:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
+    `;
+    el.appendChild(div);
+  });
+
+  // inicializa Sortable nas páginas existentes
+  if (window._existingPagesSortable) window._existingPagesSortable.destroy();
+  window._existingPagesSortable = new Sortable(el, {
+    animation: 150,
+    ghostClass: 'sortable-ghost',
+    onEnd: () => {
+      // atualiza array na nova ordem
+      const newOrder = Array.from(el.children).map(c => parseInt(c.dataset.pageId));
+      S.editExistingPages = newOrder.map(pid => S.editExistingPages.find(p => p.id === pid)).filter(Boolean);
+      // atualiza numeração visual
+      el.querySelectorAll('div[data-page-id] div').forEach((num, i) => { num.textContent = i+1; });
+    }
+  });
+}
+
+async function savePageOrder() {
+  const btn = document.getElementById('save-order-btn');
+  if (btn) { btn.textContent = '⏳ Salvando...'; btn.disabled = true; }
+
+  const order = S.editExistingPages.map((p, i) => ({ id: p.id, order: i + 1 }));
+  const { ok } = await api(`/api/herald/chapters/${S.editChapterId}/pages/reorder`, {
+    method: 'PATCH',
+    body: JSON.stringify({ order })
+  });
+
+  if (btn) { btn.textContent = '💾 Salvar Ordem das Páginas'; btn.disabled = false; }
+  showToast(ok ? 'Ordem salva!' : 'Erro ao salvar ordem.', ok ? 'success' : 'error');
+}
+
+async function deleteExistingPage(pageId) {
+  const { ok } = await api(`/api/herald/pages/${pageId}`, { method: 'DELETE' });
+  if (ok) {
+    S.editExistingPages = S.editExistingPages.filter(p => p.id !== pageId);
+    renderExistingPages();
+    showToast('Página removida.', 'info');
+  } else {
+    showToast('Erro ao remover página.', 'error');
+  }
+}
+
+async function saveChapterEdit() {
+  const id = S.editChapterId;
+  if (!id) return;
+
+  const number    = document.getElementById('edit-cap-number').value;
+  const title     = document.getElementById('edit-cap-title').value.trim();
+  const status    = document.getElementById('edit-cap-status').value;
+  const readTime  = document.getElementById('edit-cap-readtime').value;
+  const isPremium = document.getElementById('edit-cap-premium').checked;
+
+  if (!title) { showToast('Título obrigatório.', 'error'); return; }
+
+  const btn = document.getElementById('save-chapter-btn');
+  if (btn) { btn.textContent = 'Salvando...'; btn.disabled = true; }
+
+  // 1. atualiza metadados
+  const { ok } = await api(`/api/herald/chapters/${id}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ number: parseInt(number), title, status, read_time_sec: parseInt(readTime), is_premium: isPremium })
+  });
+
+  // 2. upload de páginas adicionais sequencialmente
+  if (ok && S.editChapterPages?.length) {
+    showToast(`Enviando ${S.editChapterPages.length} páginas...`, 'info');
+    for (const file of S.editChapterPages) {
+      const formData = new FormData();
+      formData.append('pages', file);
+      await fetch(`${API_BASE}/api/herald/chapters/${id}/pages`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${Auth.token()}` },
+        body: formData
+      });
+    }
+  }
+
+  if (btn) { btn.textContent = 'Salvar'; btn.disabled = false; }
+
+  if (ok) {
+    showToast('Capítulo atualizado!', 'success');
+    closeModal('chapter-modal');
+    await loadChapterList();
+  } else {
+    showToast('Erro ao atualizar capítulo.', 'error');
+  }
 }
 
 async function publishChapter() {
@@ -1784,30 +2121,36 @@ async function publishChapter() {
 
   const chapterId = data.chapter.id;
 
-  // 2. faz upload das páginas
-  const formData = new FormData();
-  S.chapterPages.forEach(file => formData.append('pages', file));
+  // 2. faz upload das páginas sequencialmente (garante ordem)
+  showToast(`Enviando ${S.chapterPages.length} páginas...`, 'info');
 
-  showToast('Enviando páginas...', 'info');
-
-  const uploadRes = await fetch(`${API_BASE}/api/herald/chapters/${chapterId}/pages`, {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${Auth.token()}` },
-    body: formData
-  });
-
-  if (uploadRes.ok) {
-    showToast('Capítulo publicado com sucesso!', 'success');
-    // reset form
-    S.chapterPages = [];
-    document.getElementById('page-grid').innerHTML = '<div class="empty-grid" id="empty-grid-msg">Nenhuma página adicionada</div>';
-    updatePageCount();
-    document.getElementById('cap-number').value = '';
-    document.getElementById('cap-title').value = '';
-    await loadChapterList();
-  } else {
-    showToast('Capítulo criado mas falha no upload das páginas.', 'error');
+  let successCount = 0;
+  for (let i = 0; i < S.chapterPages.length; i++) {
+    const formData = new FormData();
+    formData.append('pages', S.chapterPages[i]);
+    try {
+      const uploadRes = await fetch(`${API_BASE}/api/herald/chapters/${chapterId}/pages`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${Auth.token()}` },
+        body: formData
+      });
+      if (uploadRes.ok) successCount++;
+    } catch(e) {}
   }
+
+  if (successCount === S.chapterPages.length) {
+    showToast('Capítulo publicado com sucesso!', 'success');
+  } else {
+    showToast(`${successCount}/${S.chapterPages.length} páginas enviadas.`, 'error');
+  }
+
+  // reset form
+  S.chapterPages = [];
+  document.getElementById('page-grid').innerHTML = '<div class="empty-grid" id="empty-grid-msg">Nenhuma página adicionada</div>';
+  updatePageCount();
+  document.getElementById('cap-number').value = '';
+  document.getElementById('cap-title').value = '';
+  await loadChapterList();
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -1828,6 +2171,27 @@ document.getElementById('file-input').addEventListener('change', function(e) {
   });
   if (errors) showToast(`${errors} arquivo(s) ignorado(s) — máx 5MB.`, 'error');
   else if (files.length - errors > 0) showToast(`${files.length - errors} página(s) adicionada(s).`, 'success');
+  e.target.value = '';
+});
+
+// Listener do input de páginas no modal de edição
+document.getElementById('edit-file-input').addEventListener('change', function(e) {
+  const files = Array.from(e.target.files);
+  const list = document.getElementById('edit-pages-list');
+  files.forEach(file => {
+    if (file.size > MAX_SIZE) return;
+    if (!S.editChapterPages) S.editChapterPages = [];
+    S.editChapterPages.push(file);
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const div = document.createElement('div');
+      div.style.cssText = 'aspect-ratio:2/3;border-radius:6px;overflow:hidden;border:1px solid var(--border2);';
+      div.innerHTML = `<img src="${ev.target.result}" style="width:100%;height:100%;object-fit:cover;">`;
+      list.appendChild(div);
+    };
+    reader.readAsDataURL(file);
+  });
+  if (files.length) showToast(`${files.length} página(s) prontas para upload.`, 'info');
   e.target.value = '';
 });
 
@@ -1903,22 +2267,25 @@ new Sortable(document.getElementById('page-grid'), {
    COMENTÁRIOS
 ═══════════════════════════════════════════════════════════ */
 async function loadComments() {
-  // busca comentários dos capítulos das obras do arauto
   const container = document.getElementById('comments-list');
   if (!container) return;
-
   container.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted);">Carregando...</div>';
 
-  // pega primeiro capítulo publicado de cada obra
+  // busca capítulos publicados de cada obra e depois os comentários
   const allComments = [];
-  for (const ch of S.chapters.filter(c => c.status === 'published').slice(0, 5)) {
-    const { ok, data } = await api(`/api/chapters/${ch.id}/comments`);
-    if (ok) {
-      (data.comments || []).forEach(c => {
-        c.chapterTitle = `Cap. ${ch.number}`;
-        c.workTitle = ch.workTitle;
-        allComments.push(c);
-      });
+  for (const w of S.works) {
+    const { ok: cok, data: cdata } = await api(`/api/herald/works/${w.id}/chapters`);
+    if (!cok) continue;
+    const published = (cdata.chapters || []).filter(c => c.status === 'published').slice(0, 3);
+    for (const ch of published) {
+      const { ok, data } = await api(`/api/chapters/${ch.id}/comments`);
+      if (ok) {
+        (data.comments || []).forEach(c => {
+          c.chapterTitle = `Cap. ${ch.number}`;
+          c.workTitle = w.title;
+          allComments.push(c);
+        });
+      }
     }
   }
 
@@ -2053,6 +2420,25 @@ async function loadHeraldApplication() {
   const { ok, data } = await api('/api/herald/me');
   const app = data?.application;
 
+  // Se aprovado, relê o usuário do banco e inicializa o painel
+  if (app?.status === 'approved') {
+    const { ok: uok, data: udata } = await api('/users/me');
+    if (uok) {
+      S.user = udata.user || udata;
+      renderUserUI();
+      // mostra todas as abas
+      ['dashboard','works','chapters','comments','revenue','notifications'].forEach(id => {
+        document.getElementById(`nav-${id}`)?.style.removeProperty('display');
+        document.getElementById(`mob-${id}`)?.style.removeProperty('display');
+      });
+      document.getElementById('nav-herald')?.style.setProperty('display', 'none', 'important');
+      document.getElementById('tab-herald-apply').classList.remove('active');
+      document.getElementById('tab-herald-apply').style.display = 'none';
+      bootHerald();
+      return;
+    }
+  }
+
   const container = document.getElementById('tab-herald-apply');
   if (!container) return;
 
@@ -2060,11 +2446,10 @@ async function loadHeraldApplication() {
   if (app) {
     const statusMap = {
       pending:  { color: 'var(--accent2)', icon: '⏳', text: 'Candidatura em análise. Aguarde a revisão do admin.' },
-      approved: { color: 'var(--green)',   icon: '✅', text: 'Candidatura aprovada! Recarregue a página para acessar o painel.' },
       rejected: { color: 'var(--red)',     icon: '❌', text: `Candidatura não aprovada. ${app.admin_notes || ''} Você pode reenviar.` }
     };
-    const s = statusMap[app.status] || statusMap.pending;
-    statusHtml = `<div style="padding:16px;border-radius:12px;border:1px solid ${s.color}33;background:${s.color}11;margin-bottom:20px;font-size:13px;color:${s.color};">${s.icon} ${s.text}</div>`;
+    const s = statusMap[app.status];
+    if (s) statusHtml = `<div style="padding:16px;border-radius:12px;border:1px solid ${s.color}33;background:${s.color}11;margin-bottom:20px;font-size:13px;color:${s.color};">${s.icon} ${s.text}</div>`;
   }
 
   container.innerHTML = `
@@ -2085,7 +2470,7 @@ async function loadHeraldApplication() {
         <input type="url" class="input" id="apply-portfolio" placeholder="https://..." value="${app?.portfolio_url || ''}">
       </div>
       <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="submitHeraldApplication()">
-        ${app?.status === 'pending' ? 'Candidatura Enviada (Aguardando)' : app?.status === 'approved' ? 'Aprovado!' : 'Enviar Candidatura'}
+        ${app?.status === 'pending' ? 'Candidatura Enviada (Aguardando)' : 'Enviar Candidatura'}
       </button>
     </div>
   `;

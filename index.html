@@ -701,6 +701,14 @@ backface-visibility: hidden;
                 </div>
                 <span class="drawer-tag">Mente</span>
             </a>
+
+            <a href="suporte.html" class="drawer-item" style="border-color:rgba(143,79,255,0.25);background:rgba(143,79,255,0.04);">
+                <div class="flex items-center gap-4">
+                    <svg class="w-5 h-5" fill="none" stroke="#c4a3ff" stroke-width="1.5" viewBox="0 0 24 24"><path d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                    <span class="text-sm font-bold tracking-wide" style="color:#c4a3ff;">Suporte</span>
+                </div>
+                <span class="drawer-tag" style="color:#c4a3ff;">Ajuda</span>
+            </a>
         </nav>
 
         <div class="mt-auto pt-10 text-center">
@@ -874,7 +882,23 @@ backface-visibility: hidden;
     </div>
   </div>
 
-  <button class="btn-noheroes" onclick="window.location.href='store.html'">Ver todos os Projetos</button>
+  <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:24px;">
+    <!-- Mercado -->
+    <a href="store.html" style="padding:12px 24px;border-radius:12px;background:linear-gradient(135deg,#8f4fff,#d9b55a);color:#000;text-decoration:none;text-align:center;min-width:140px;">
+      <div style="font-family:'Cinzel Decorative',serif;font-weight:700;font-size:14px;">Mercado</div>
+      <div style="font-size:10px;opacity:0.65;margin-top:2px;">livros, ebooks e mais</div>
+    </a>
+    <!-- Biblioteca -->
+    <a href="leitor.html" style="padding:12px 24px;border-radius:12px;border:1px solid rgba(143,79,255,0.4);background:rgba(143,79,255,0.08);color:#c4a3ff;text-decoration:none;text-align:center;min-width:140px;">
+      <div style="font-family:'Cinzel Decorative',serif;font-weight:700;font-size:14px;">Biblioteca</div>
+      <div style="font-size:10px;opacity:0.6;margin-top:2px;">mangás, quadrinhos e mais</div>
+    </a>
+    <!-- Em breve -->
+    <button disabled style="padding:12px 24px;border-radius:12px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);color:rgba(255,255,255,0.25);cursor:not-allowed;text-align:center;min-width:140px;">
+      <div style="font-family:'Cinzel Decorative',serif;font-size:14px;">Em Breve</div>
+      <div style="font-size:10px;opacity:0.5;margin-top:2px;">novas seções chegando</div>
+    </button>
+  </div>
 </section>
 
 <!-- 5. GAMIFICAÇÃO -->  
@@ -901,31 +925,28 @@ backface-visibility: hidden;
 
   <div class="flex justify-center mt-6">
   <div class="flex flex-col sm:flex-row items-center gap-3">
-    <!-- Botão ativo -->
-    <a href="noheroesapp.html"
-       class="px-6 py-3 rounded-full bg-gradient-to-r from-purple-600 to-yellow-400 text-black font-semibold shadow-lg hover:scale-105 transition-transform duration-300">
-      Baixar App
-    </a>
-
-    <!-- Botão desativado -->
-    <button disabled
-            class="px-6 py-3 rounded-full bg-gray-700/60 text-gray-400 font-semibold border border-gray-600 cursor-not-allowed">
+    <button disabled class="px-6 py-3 rounded-full bg-gray-700/60 text-gray-400 font-semibold border border-gray-600 cursor-not-allowed flex items-center gap-2">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+      Baixar App <span class="text-xs italic opacity-60">(em breve)</span>
+    </button>
+    <button disabled class="px-6 py-3 rounded-full bg-gray-700/60 text-gray-400 font-semibold border border-gray-600 cursor-not-allowed">
       Jogar Agora <span class="text-xs italic opacity-70">(em breve)</span>
     </button>
   </div>
 </div>
 </section>
 
- <!-- 6. APOIO VITALISTA -->  
-<section id="apoio" class="revela-top apoio-glass px-6 py-12 max-w-5xl mx-auto text-center reveal rounded-3xl border border-[#8f4fff]/20">
-  <h2 class="text-2xl md:text-3xl font-bold uppercase tracking-wide mb-8 gradiente-noheroes-calm cinzel">
-    Sua ajuda alimenta o mundo de Caelum
-  </h2>
-
-  <div class="flex flex-col md:flex-row justify-center gap-4">
-    <a href="apoiar.html" class="btn-apoio" data-text="Contribuir com Pix">Contribuir com Pix</a>
-    <a href="apoiar.html#outras" class="btn-apoio" data-text="Quero ajudar de outras formas">Quero ajudar de outras formas</a>
-    <a href="portifólio.html" class="btn-apoio" data-text="Quero apoio no meu projeto">Quero apoio no meu projeto</a>
+ <!-- 6. APOIO VITALISTA -->
+<section id="apoio" class="reveal-top px-4 py-10 max-w-3xl mx-auto">
+  <div style="background:rgba(12,10,16,0.9);border:1px solid rgba(143,79,255,0.2);border-radius:18px;padding:28px 24px;text-align:center;backdrop-filter:blur(8px);">
+    <div style="font-size:10px;font-weight:700;color:rgba(143,79,255,0.7);text-transform:uppercase;letter-spacing:0.2em;margin-bottom:10px;">Apoio Vitalista</div>
+    <h2 style="font-family:'Cinzel Decorative',serif;font-size:clamp(15px,3vw,20px);margin:0 0 8px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Sua ajuda alimenta o mundo de Caelum</h2>
+    <p style="font-size:12px;color:rgba(255,255,255,0.35);margin:0 0 20px;max-width:400px;margin-left:auto;margin-right:auto;">Cada contribuição sustenta o universo NoHeroes e acelera tudo que está sendo construído.</p>
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px;">
+      <a href="apoiar.html" style="padding:10px 20px;border-radius:10px;background:linear-gradient(135deg,#8f4fff,#d9b55a);color:#000;font-weight:700;font-size:13px;text-decoration:none;">Contribuir com Pix</a>
+      <a href="apoiar.html#outras" style="padding:10px 20px;border-radius:10px;border:1px solid rgba(143,79,255,0.3);color:#c4a3ff;font-size:13px;font-weight:600;text-decoration:none;">Outras formas</a>
+      <a href="portifólio.html" style="padding:10px 20px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);font-size:13px;font-weight:600;text-decoration:none;">Apoio no seu projeto</a>
+    </div>
   </div>
 </section>
 
@@ -947,114 +968,53 @@ backface-visibility: hidden;
   <div class="flex justify-center gap-6">
     <a href="https://discord.gg/Yyb8Ff66cd" class="hover:scale-110 transition" style="display:inline-block;">
       <img src="assets/icons/discord icon.png" alt="Discord" class="w-12" style="
-        filter: drop-shadow(0 0 5px #8f4fff) drop-shadow(0 0 10px #8f4fff);
-        animation: glowPulse 2s infinite alternate;
+        opacity: 0.85; transition: opacity 0.2s;
       "/>
     </a>
     <a href="https://chat.whatsapp.com/DSiquXUkKpj22JwmqoGD7T" class="hover:scale-110 transition" style="display:inline-block;">
       <img src="assets/icons/whatsapp icon.png" alt="WhatsApp" class="w-12" style="
-        filter: drop-shadow(0 0 5px #facc15) drop-shadow(0 0 10px #facc15);
-        animation: glowPulse 2s infinite alternate;
+        opacity: 0.85; transition: opacity 0.2s;
       "/>
     </a>
   </div>
-
-  <style>
-    @keyframes glowPulse {
-      0% { filter: drop-shadow(0 0 3px rgba(143,79,255,0.5)) drop-shadow(0 0 6px rgba(143,79,255,0.2)); }
-      100% { filter: drop-shadow(0 0 8px rgba(143,79,255,0.9)) drop-shadow(0 0 15px rgba(143,79,255,0.6)); }
-    }
-  </style>
 </section>
 
-<!-- oráculos -->
-<section id="oraculum" class="reveal-top py-5 px-6 max-w-5xl mx-auto text-center">
-  <h2 class="text-2xl md:text-3xl font-bold uppercase tracking-wide mb-8 gradiente-noheroes-calm cinzel">
-    Vozes além da névoa
-  </h2>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 
-    <!-- Oráculo 1 -->
-    <div class="glass p-4 rounded-xl h-full flex flex-col">
-     <!-- wrapper do ícone com borda em degradê -->
-<div class="mx-auto inline-flex w-fit rounded-2xl p-[2px]
-            bg-gradient-to-br from-[#8f4fff] to-[#facc15]">
-  <img src="assets/icons/oraculo-portal.png" alt="Oráculo do Portal"
-       class="block h-28 w-28 rounded-xl object-cover shrink-0">
-</div>
-      <p class="text-xs text-gray-400 mb-2 mt-4">O guardião virtual da NoHeroes:</p>
-      <h3 class="text-sm mb-4">Aqui você tira todas as dúvidas sobre a plataforma e o universo NoHeroes com nossa IA oficial.</h3>
-      <a href="oraculum.html#portal" class="btn-vozes mt-auto">
-        <span>✦ Consultar o Oráculo</span>
-      </a>
+<!-- CITAÇÃO DO CRIADOR -->
+<section id="sobre-criador" class="reveal-top py-16 px-6 max-w-4xl mx-auto">
+  <div style="background:#0c0a10;border:1px solid rgba(143,79,255,0.2);border-radius:18px;padding:32px 28px;display:flex;flex-wrap:wrap;gap:28px;align-items:center;">
+    <img src="assets/images/foto-raul.jpg" alt="Raul" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid rgba(143,79,255,0.4);flex-shrink:0;">
+    <div style="flex:1;min-width:220px;">
+      <div style="font-size:10px;font-weight:700;color:rgba(143,79,255,0.7);text-transform:uppercase;letter-spacing:0.2em;margin-bottom:8px;">A Origem de Tudo</div>
+      <p class="italic" style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.75;margin:0 0 16px;">"Após anos num projeto solitário, lutei sozinho contra dragões e demônios. Em duas noites, transformei tudo num portal para o universo NoHeroes."</p>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;">
+        <a href="sobre.html#criador" style="padding:8px 18px;border-radius:10px;border:1px solid rgba(143,79,255,0.35);color:#c4a3ff;font-size:12px;font-weight:600;text-decoration:none;font-family:'Cinzel Decorative',serif;">Sobre o Criador</a>
+        <a href="sobre.html" style="padding:8px 18px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);font-size:12px;font-weight:600;text-decoration:none;font-family:'Cinzel Decorative',serif;">Sobre o Projeto</a>
+      </div>
     </div>
-
-    <!-- Oráculo 2 -->
-    <div class="glass p-4 rounded-xl h-full flex flex-col">
-      <!-- wrapper do ícone com borda em degradê -->
-<div class="mx-auto inline-flex w-fit rounded-2xl p-[2px]
-            bg-gradient-to-br from-[#8f4fff] to-[#facc15]">
-  <img src="assets/icons/mentor.png" alt="mentor"
-       class="block h-28 w-28 rounded-xl object-cover shrink-0">
-</div>
-      <p class="text-xs text-gray-400 mb-2 mt-4">A voz viva da experiência:</p>
-      <h3 class="text-sm mb-4">Acesso a um mentor real que orienta sua jornada pessoal e ajuda a superar seus desafios.</h3>
-      <a href="EmBreve.html#mentor" class="btn-vozes mt-auto">
-        <span>✦ Falar com o Mentor</span>
-      </a>
-    </div>
-
-    <!-- Altar do Arauto -->
-    <div class="glass p-4 rounded-xl h-full flex flex-col relative">
-      <!-- wrapper do ícone com borda em degradê -->
-<div class="mx-auto inline-flex w-fit rounded-2xl p-[2px]
-            bg-gradient-to-br from-[#8f4fff] to-[#facc15]">
-  <img src="assets/icons/altar.png" alt="Altar do Arauto"
-       class="block h-28 w-28 rounded-xl object-cover shrink-0">
-</div>
-      <p class="text-xs text-gray-400 mb-2 mt-4">Escrituras e atualizações:</p>
-      <h3 class="text-sm mb-4">Descubra as últimas novidades, mudanças e registros importantes sobre NoHeroes.</h3>
-      <a href="news.html" class="btn-vozes mt-auto">
-        <span>✦ Altar do Arauto</span>
-      </a>
-      <span class="absolute top-0 right-0 w-3 h-3 bg-[#facc15] rounded-full animate-ping"></span>
-    </div>
-
-  </div>
-</section>
-
-<!-- 9. CITAÇÃO DO CRIADOR -->
-<section id="sobre-criador" class="reveal-top py-20 px-6 max-w-5xl mx-auto text-center glass rounded-2xl">
-  <h2 class="text-2xl md:text-3xl font-bold uppercase tracking-wide mb-6 gradiente-noheroes-calm cinzel">
-    A origem de tudo
-  </h2>
-
-  <p class="italic text-sm md:text-base opacity-80 max-w-2xl mx-auto mb-6 leading-relaxed">
-    "Após anos investindo arduamente em um projeto solitário… Após me desfazer do meu parceiro, lutei sozinho contra dragões e demônios para chegar até aqui. E ao passar de duas noites, transformei tudo em algo muito maior: um portal para o universo NoHeroes."
-  </p>
-
-  <div class="flex flex-col md:flex-row justify-center gap-4">
-    <a href="sobre.html#criador" 
-       class="btn-vozes"><span>
-      ✦ Sobre o Criador ✦</span>
-    </a>
-    <a href="sobre.html" 
-       class="btn-vozes">
-       <span>✦ Sobre o Projeto ✦</span>
-    </a>
   </div>
 </section>
 
   <div class="w-full h-1 barra-degrade"></div>
 
-<footer class="py-8 text-center text-[#666] bg-[#000] border-t border-[#333] mt-0">
+<footer style="background:#000;border-top:1px solid rgba(255,255,255,0.06);padding:48px 20px;text-align:center;">
   <a href="linktree.html" class="inline-block mb-4">
-    <img src="assets/images/linktree.png" alt="Linktree" class="h-10 mx-auto">
+    <img src="assets/images/linktree.png" alt="Linktree" style="height:32px;margin:0 auto;opacity:0.6;transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.6">
   </a>
-  <p>Explore. Escolha. Caia. Evolua.</p>
-  <p class="mt-2">Toda escolha tem um preço. Toda queda, uma razão.</p>
-  <p class="text-xs mt-4">© 2025 NoHeroes. Todos os direitos reservados.</p>
+  <div style="font-family:'Cinzel Decorative',serif;font-size:18px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px;">NoHeroes</div>
+  <div style="width:40px;height:1px;background:linear-gradient(90deg,#8f4fff,#d9b55a);margin:0 auto 16px;"></div>
+  <p style="font-size:13px;color:rgba(255,255,255,0.3);font-style:italic;margin:0 0 4px;">Explore. Escolha. Caia. Evolua.</p>
+  <p style="font-size:12px;color:rgba(255,255,255,0.2);margin:0 0 20px;">Toda escolha tem um preço. Toda queda, uma razão.</p>
+  <div style="display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:20px;">
+    <a href="sobre.html" style="font-size:11px;color:rgba(255,255,255,0.25);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Sobre</a>
+    <a href="leitor.html" style="font-size:11px;color:rgba(255,255,255,0.25);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Biblioteca</a>
+    <a href="store.html" style="font-size:11px;color:rgba(255,255,255,0.25);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Loja</a>
+    <a href="apoiar.html" style="font-size:11px;color:rgba(255,255,255,0.25);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Apoiar</a>
+    <a href="suporte.html" style="font-size:11px;color:rgba(255,255,255,0.25);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Suporte</a>
+    <a href="termos.html" style="font-size:11px;color:rgba(255,255,255,0.25);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Termos</a>
+  </div>
+  <p style="font-size:11px;color:rgba(255,255,255,0.15);margin:0;">© <span id="footerYear"></span> NoHeroes. Todos os direitos reservados.</p>
 </footer>
   </main>
 
@@ -1084,6 +1044,7 @@ backface-visibility: hidden;
 </div>
 
 <canvas id="brasasCanvas"></canvas>
+<script src="assets/js/suporte-widget.js"></script>
 <script src="assets/js/cookies.js"></script>
  <script>  
   // Scroll suave  
@@ -1093,9 +1054,10 @@ backface-visibility: hidden;
   };  
   
   // Placeholder do botão “Me Espelhar na Escuridão”  
-  document.getElementById('mirror-btn').addEventListener('click', () => {  
-    window.location.href = 'noheroesapp.html'; 
-  });  
+  document.getElementById('mirror-btn').addEventListener('click', () => {
+    window.location.href = 'noheroesapp.html';
+  });
+  document.getElementById('footerYear') && (document.getElementById('footerYear').textContent = new Date().getFullYear());  
 
   const hamburgerBtn = document.getElementById('hamburgerBtn');
 const drawer = document.getElementById('drawer');

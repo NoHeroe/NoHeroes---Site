@@ -1293,7 +1293,7 @@ async function loadNewsletter() {
 
 async function removeSubscriber(id) {
   if(!confirm('Remover este inscrito?')) return;
-  const {ok}=await api(`/api/email/newsletter/subscribers/${id}`,{method:'DELETE'});
+  const {ok}=await api(`/admin/newsletter/${id}`,{method:'DELETE'});
   if(ok){ toast('Inscrito removido.','info'); loadNewsletter(); }
   else toast('Erro ao remover.','error');
 }
@@ -1353,7 +1353,7 @@ async function sendNewsletter() {
 
   if(btn){ btn.textContent='⏳ Enviando...'; btn.disabled=true; }
 
-  const {ok,data}=await api('/api/email/newsletter/send',{
+  const {ok,data}=await api('/admin/newsletter/send',{
     method:'POST',
     body:JSON.stringify({subject,title,greeting,body,imageUrl:image,ctaUrl,ctaLabel})
   });
