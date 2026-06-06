@@ -229,7 +229,7 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
       <div class="buy-grid" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px;">
         <a class="btn-primary" href="store.html">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path fill="none" stroke="currentColor" stroke-width="2" d="M14 2v6h6"/></svg>
-          <span class="acda-price">PDF — R$ 47,97</span>
+          <span class="acda-price">PDF — R$ 14,97</span>
         </a>
         <a class="btn-ml" href="ML_URL_AQUI" target="_blank" rel="noopener">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 7V6a6 6 0 0112 0v1h2l-1.2 14.4A2 2 0 0116.8 23H7.2a2 2 0 01-2-1.6L4 7h2zm2 0h8V6a4 4 0 00-8 0v1z"/></svg>
@@ -691,7 +691,9 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
     const items = data.items || data.data || data.products || data || [];
     const produto = items.find(i => i.id === 7);
     if (!produto) return;
-    const preco = parseFloat(produto.price ?? produto.preco ?? produto.valor ?? 0);
+    // valor em DINHEIRO (R$): discountReal tem prioridade, depois priceReal.
+    // NÃO usar `price`/`priceCoins` (esses são o valor em coins).
+    const preco = parseFloat(produto.discountReal ?? produto.priceReal ?? 0);
     if (!preco) return;
     const fmt = preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     document.querySelectorAll('.acda-price').forEach(el => el.textContent = `PDF — ${fmt}`);
