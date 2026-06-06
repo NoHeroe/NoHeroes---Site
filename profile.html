@@ -6,6 +6,8 @@
   <title>Perfil | NoHeroes</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/css/noheroes-ui.css">
+  <script defer src="assets/js/noheroes-ui.js"></script>
   <style>
     :root{ --nh-bg:#0a0a0a; --nh-fg:#e5e5e5; --nh-card:#0f0f10; --nh-stroke:#2a2a2e; --nh-purple:#7c3aed; --nh-gold:#d4af37; }
     html,body{height:100%}
@@ -87,6 +89,61 @@
     @media (prefers-reduced-motion:reduce){#brasasCanvas{display:none}}
 
     /* adiciona isso no <style> do topo */
+/* ── NOTIFICAÇÕES ── */
+#notif-btn { position:relative; }
+#notif-badge {
+  position:absolute; top:-4px; right:-4px;
+  min-width:16px; height:16px; border-radius:99px;
+  background:#ef4444; color:#fff; font-size:9px; font-weight:800;
+  display:none; align-items:center; justify-content:center; padding:0 4px;
+  font-family:monospace;
+}
+#notif-badge.show { display:flex; }
+
+#notif-modal {
+  position:fixed; inset:0; z-index:200;
+  background:rgba(0,0,0,0.7); backdrop-filter:blur(8px);
+  display:none; align-items:flex-end; justify-content:center;
+  padding-bottom:0;
+}
+#notif-modal.open { display:flex; }
+#notif-panel {
+  width:100%; max-width:480px;
+  background:#0e0c16; border:1px solid rgba(143,79,255,0.2);
+  border-radius:20px 20px 0 0;
+  max-height:75vh; display:flex; flex-direction:column;
+  animation:slideUp .25s ease-out;
+}
+@keyframes slideUp { from{transform:translateY(100%);opacity:0} to{transform:translateY(0);opacity:1} }
+#notif-header {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:16px 18px 12px;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+#notif-header h3 { font-size:14px; font-weight:700; color:#e8e4f0; }
+#notif-list { overflow-y:auto; flex:1; padding:8px 0; }
+.notif-item {
+  display:flex; align-items:flex-start; gap:10px;
+  padding:12px 18px; cursor:pointer; transition:background .15s;
+  border-left:3px solid transparent;
+}
+.notif-item:hover { background:rgba(255,255,255,.03); }
+.notif-item.unread { border-left-color:#8f4fff; background:rgba(143,79,255,.04); }
+.notif-icon { font-size:18px; flex-shrink:0; margin-top:1px; }
+.notif-content { flex:1; min-width:0; }
+.notif-title { font-size:12px; font-weight:700; color:#e8e4f0; margin-bottom:2px; }
+.notif-body { font-size:11px; color:rgba(232,228,240,.5); line-height:1.4; }
+.notif-time { font-size:10px; color:rgba(232,228,240,.3); margin-top:3px; font-family:monospace; }
+.notif-dot { width:7px; height:7px; border-radius:50%; background:#8f4fff; flex-shrink:0; margin-top:5px; }
+#notif-footer {
+  padding:12px 18px;
+  border-top:1px solid rgba(255,255,255,.06);
+  display:flex; justify-content:space-between; gap:8px;
+}
+#notif-footer button { font-size:11px; font-weight:700; padding:7px 14px; border-radius:8px; cursor:pointer; border:none; }
+#notif-mark-all { background:rgba(143,79,255,.15); color:#c084fc; }
+#notif-close-btn { background:rgba(255,255,255,.06); color:rgba(232,228,240,.6); }
+
 #btnSelectFile, #avatarUrl, #btnSalvarAvatar {
   position: relative;
   z-index: 50;
@@ -249,6 +306,8 @@ dialog[open] .dialog-ctr {
   transform-origin: center top;
 }
 
+
+/* Drawer: agora em assets/css/noheroes-ui.css (componente <nh-drawer>) */
   </style>
 
   <!-- Gate: token normalizado -->
@@ -263,20 +322,23 @@ dialog[open] .dialog-ctr {
       }
       localStorage.setItem('NoHeroes_token', normalized);
       window.tokenJWT = normalized;
-      window.API_BASE = 'https://dev-flmw.onrender.com';
+      window.API_BASE = 'https://api.noheroes.com.br';
     })();
   </script>
 
 </head>
 <body class="min-h-screen flex flex-col">
+<!-- Menu lateral (componente compartilhado) -->
+<nh-drawer></nh-drawer>
 
-  <!-- Fundo -->
-  <canvas id="brasasCanvas" aria-hidden="true"></canvas>
+
+  <!-- Fundo (componente compartilhado) -->
+  <nh-background></nh-background>
 
   <!-- HEADER -->
     <header class="header flex items-center justify-between px-4 sm:px-6 py-4 border-b border-purple-800/50 sticky top-0 z-50">
     
-    <div class="w-16"></div> 
+    <button data-nh-drawer-toggle aria-label="Abrir menu" style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
 
     <div class="flex justify-center flex-1">
       <a href="index.html" class="flex items-center gap-2 hover:scale-105 transition-transform">
@@ -299,6 +361,21 @@ dialog[open] .dialog-ctr {
   </svg>
 </button>
       
+      <!-- SINO DE NOTIFICAÇÕES -->
+      <button id="notif-btn" onclick="openNotifModal()" class="group p-2 rounded-full hover:bg-white/5 transition-all duration-300" title="Notificações">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="bell-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#8f4fff"/>
+              <stop offset="100%" stop-color="#d9b55a"/>
+            </linearGradient>
+          </defs>
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="url(#bell-grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="url(#bell-grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span id="notif-badge">0</span>
+      </button>
+
       <button id="btnLogout" class="btn !p-2 sm:px-4 rounded-xl border border-red-500/20 text-red-400 hover:bg-red-500/10 hover:border-red-500/50 transition-all">
         <span class="hidden sm:inline font-semibold text-sm">Desconectar</span>
         <svg class="w-5 h-5 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
@@ -334,7 +411,7 @@ dialog[open] .dialog-ctr {
         <div class="text-center lg:text-left">
           <p class="text-amber-400/80 text-[10px] uppercase tracking-[0.2em] font-bold mb-1">Status: Arauto Ativo</p>
           <h1 id="miniNome" class="text-2xl font-bold text-white italic tracking-tight">—</h1>
-          <p id="userEmail" class="text-purple-300/40 text-xs italic">Aguardando login...</p>
+          <p id="userEmail" class="text-purple-300/40 text-xs italic"></p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3 items-end">
@@ -367,16 +444,11 @@ dialog[open] .dialog-ctr {
 
   <section class="space-y-4">
     <div class="flex items-center gap-4 border-b border-white/5 overflow-x-auto no-scrollbar">
-      <button class="pb-2 border-b-2 border-purple-500 text-purple-100 font-bold text-[11px] whitespace-nowrap uppercase italic">Lendo</button>
-      <button class="pb-2 border-b-2 border-transparent text-gray-500 hover:text-white font-bold text-[11px] whitespace-nowrap uppercase transition">Favoritos</button>
-      <button class="pb-2 border-b-2 border-transparent text-gray-500 hover:text-white font-bold text-[11px] whitespace-nowrap uppercase transition">Histórico</button>
+      <button class="pb-2 border-b-2 border-purple-500 text-purple-100 font-bold text-[11px] whitespace-nowrap uppercase italic" onclick="switchLibTab(this,'lendo')">Lendo</button>
+      <button class="pb-2 border-b-2 border-transparent text-gray-500 hover:text-white font-bold text-[11px] whitespace-nowrap uppercase transition" onclick="switchLibTab(this,'favoritos')">Favoritos</button>
+      <button class="pb-2 border-b-2 border-transparent text-gray-500 hover:text-white font-bold text-[11px] whitespace-nowrap uppercase transition" onclick="switchLibTab(this,'historico')">Histórico</button>
     </div>
-
-    <div id="mangaGrid" class="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-3">
-      <div class="animate-pulse bg-white/5 rounded-xl aspect-[3/4.5] border border-white/5"></div>
-      <div class="animate-pulse bg-white/5 rounded-xl aspect-[3/4.5] border border-white/5"></div>
-      <div class="animate-pulse bg-white/5 rounded-xl aspect-[3/4.5] border border-white/5"></div>
-    </div>
+    <div id="mangaGrid" class="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-3"></div>
   </section>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -822,7 +894,9 @@ function startLogoutTimer() {
         document.getElementById('miniNome').textContent = user.nome_completo || user.username || '—';
         document.getElementById('miniNivel').textContent = `Nível ${user.level ?? '—'}`;
         const avatarSrc = user.avatar || 'assets/images/linktree.png';
-        document.getElementById('miniAvatar').src = avatarSrc;
+        const avatarEl = document.getElementById('miniAvatar');
+        avatarEl.src = avatarSrc;
+        avatarEl.onerror = () => { avatarEl.src = 'assets/images/linktree.png'; };
 
         // Preenche modal (dados editáveis)
         document.getElementById('input-nomecompleto').value = user.nome_completo || '';
@@ -906,53 +980,7 @@ function startLogoutTimer() {
       }
     });
 
-    // ========= Brasas roxas =========
-    const canvas = document.getElementById("brasasCanvas");
-    const ctx = canvas.getContext("2d");
-    let particles = [], w, h;
-
-    function resizeCanvas() {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
-    }
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-
-    class Particle {
-      constructor() { this.reset(true); }
-      reset(initial = false) {
-        this.x = Math.random() * w;
-        this.y = initial ? Math.random() * h : h + Math.random() * 100;
-        this.size = 1 + Math.random() * 2.5;
-        this.speed = 0.2 + Math.random() * 0.5;
-        this.alpha = 0.4 + Math.random() * 0.3;
-        this.drift = (Math.random() - 0.5) * 0.5;
-      }
-      update() {
-        this.y -= this.speed;
-        this.x += this.drift;
-        if (this.y < -10 || this.x < -50 || this.x > w + 50) this.reset();
-      }
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`;
-        ctx.shadowColor = "#a855f7";
-        ctx.shadowBlur = 12;
-        ctx.fill();
-      }
-    }
-
-    function createParticles(n) {
-      for (let i = 0; i < n; i++) particles.push(new Particle());
-    }
-    function animate() {
-      ctx.clearRect(0, 0, w, h);
-      for (const p of particles) { p.update(); p.draw(); }
-      requestAnimationFrame(animate);
-    }
-    createParticles(150);
-    animate();
+    // Brasas: agora no componente compartilhado <nh-background> (noheroes-ui.js)
     // ========= Corrige clique no upload de avatar =========
 const avatarFile = document.getElementById('avatarFile');
 document.getElementById('btnSelectFile').addEventListener('click', () => avatarFile.click());
@@ -1080,6 +1108,205 @@ async function abrirDetalhes(orderId){
   }
 }
 
-  </script>
+  
+// Drawer: agora no componente compartilhado <nh-drawer> (gatilho via [data-nh-drawer-toggle])
+
+// ─── ABAS BIBLIOTECA ───
+async function switchLibTab(btn, tab){
+  document.querySelectorAll('[onclick^="switchLibTab"]').forEach(b=>{
+    b.classList.remove('border-purple-500','text-purple-100');
+    b.classList.add('border-transparent','text-gray-500');
+  });
+  btn.classList.remove('border-transparent','text-gray-500');
+  btn.classList.add('border-purple-500','text-purple-100');
+  await carregarBiblioteca(tab);
+}
+async function carregarBiblioteca(tab){
+  const grid=document.getElementById('mangaGrid');
+  grid.innerHTML='<div class="animate-pulse bg-white/5 rounded-xl aspect-[3/4.5] border border-white/5"></div><div class="animate-pulse bg-white/5 rounded-xl aspect-[3/4.5] border border-white/5"></div><div class="animate-pulse bg-white/5 rounded-xl aspect-[3/4.5] border border-white/5"></div>';
+  const ep={lendo:'/api/me/progress',favoritos:'/api/me/favorites',historico:'/api/me/progress'};
+  try{
+    const res=await api(ep[tab],{method:'GET'});
+    if(!res){grid.innerHTML=emptyState(tab);return;}
+    const json=await res.json();
+    const list=Array.isArray(json.data)?json.data:Array.isArray(json.works)?json.works:Array.isArray(json)?json:[];
+    if(!list.length){grid.innerHTML=emptyState(tab);return;}
+    grid.innerHTML=list.slice(0,12).map(w=>{
+      const o=w.Work||w.work||w;
+      const capa=o.cover_url||o.coverImage||o.cover||o.image||'';
+      const titulo=o.title||o.titulo||'—';
+      const href=o.id?`mangá.html?id=${o.id}`:'leitor.html';
+      return `<a href="${href}" class="group relative rounded-xl overflow-hidden aspect-[3/4.5] border border-white/5 hover:border-purple-500/50 transition block bg-black/40">${capa?`<img src="${capa}" alt="${titulo}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">`:`<div class="w-full h-full bg-gradient-to-br from-purple-900/40 to-black flex items-end p-2"><span class="text-[9px] text-white/60">${titulo}</span></div>`}<div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent p-2"><p class="text-[9px] text-white/80 font-semibold truncate">${titulo}</p></div></a>`;
+    }).join('');
+  }catch(e){grid.innerHTML=emptyState(tab);}
+}
+function emptyState(tab){
+  const m={lendo:'Nenhuma leitura em andamento.',favoritos:'Nenhum favorito ainda.',historico:'Histórico vazio.'};
+  return `<div class="col-span-3 text-center py-8 text-gray-500 text-xs">${m[tab]||'Nada aqui.'} <a href="leitor.html" class="text-purple-400 hover:underline">Explorar biblioteca →</a></div>`;
+}
+carregarBiblioteca('lendo');
+
+// ═══════════════════════════════════════════════
+// NOTIFICAÇÕES
+// ═══════════════════════════════════════════════
+const NOTIF_ICONS = {
+  chapter_approved:       '✅',
+  chapter_rejected:       '❌',
+  work_approved:          '📚',
+  work_rejected:          '📚',
+  herald_approved:        '🛡️',
+  herald_rejected:        '🛡️',
+  new_comment:            '💬',
+  new_reply:              '↩️',
+  new_follower:           '👤',
+  new_chapter:            '📖',
+  purchase_confirmed:     '🛒',
+  coins_received:         '🪙',
+  payout_ready:           '💸',
+  payout_paid:            '✅',
+  new_herald_application: '📬',
+  critical_error:         '💀',
+  system:                 '🔔',
+};
+
+function timeAgoNotif(dateStr) {
+  if (!dateStr) return '';
+  const diff = Date.now() - new Date(dateStr).getTime();
+  const m = Math.floor(diff / 60000);
+  if (m < 1) return 'agora';
+  if (m < 60) return `${m}min atrás`;
+  const h = Math.floor(m / 60);
+  if (h < 24) return `${h}h atrás`;
+  return `${Math.floor(h / 24)}d atrás`;
+}
+
+async function loadNotifications() {
+  const token = localStorage.getItem('NoHeroes_token') || '';
+  if (!token) return;
+  try {
+    const res = await fetch(`${window.API_BASE}/api/me/notifications?limit=30`, {
+      headers: { 'Authorization': token.startsWith('Bearer') ? token : `Bearer ${token}` }
+    });
+    if (!res.ok) return;
+    const data = await res.json();
+    const notifs = data.notifications || [];
+    const unread = data.unread || 0;
+
+    // Badge
+    const badge = document.getElementById('notif-badge');
+    if (badge) {
+      badge.textContent = unread > 9 ? '9+' : unread;
+      badge.classList.toggle('show', unread > 0);
+    }
+
+    // Contador no modal
+    const counter = document.getElementById('notif-unread-count');
+    if (counter) counter.textContent = unread > 0 ? `${unread} não lida${unread > 1 ? 's' : ''}` : 'Tudo lido';
+
+    // Lista
+    const list = document.getElementById('notif-list');
+    if (!list) return;
+
+    if (!notifs.length) {
+      list.innerHTML = '<div style="padding:40px;text-align:center;color:rgba(232,228,240,.3);font-size:12px;">Nenhuma notificação.</div>';
+      return;
+    }
+
+    list.innerHTML = notifs.map(n => `
+      <div class="notif-item ${n.read ? '' : 'unread'}" onclick="markNotifRead(${n.id}, this, '${n.link || ''}')">
+        <span class="notif-icon">${NOTIF_ICONS[n.type] || '🔔'}</span>
+        <div class="notif-content">
+          <div class="notif-title">${n.title}</div>
+          <div class="notif-body">${n.body}</div>
+          <div class="notif-time">${timeAgoNotif(n.createdAt)}</div>
+        </div>
+        ${!n.read ? '<div class="notif-dot"></div>' : ''}
+      </div>
+    `).join('');
+  } catch (err) {
+    console.error('Erro ao carregar notificações:', err);
+  }
+}
+
+async function markNotifRead(id, el, link) {
+  const token = localStorage.getItem('NoHeroes_token') || '';
+  try {
+    await fetch(`${window.API_BASE}/api/me/notifications/${id}/read`, {
+      method: 'PATCH',
+      headers: { 'Authorization': token.startsWith('Bearer') ? token : `Bearer ${token}` }
+    });
+    el.classList.remove('unread');
+    el.querySelector('.notif-dot')?.remove();
+    // atualiza badge
+    const badge = document.getElementById('notif-badge');
+    if (badge) {
+      const cur = parseInt(badge.textContent) || 0;
+      const next = Math.max(0, cur - 1);
+      badge.textContent = next > 9 ? '9+' : next;
+      badge.classList.toggle('show', next > 0);
+    }
+  } catch {}
+  if (link) { closeNotifModal(); window.location.href = link; }
+}
+
+async function markAllNotifsRead() {
+  const token = localStorage.getItem('NoHeroes_token') || '';
+  try {
+    await fetch(`${window.API_BASE}/api/me/notifications/read-all`, {
+      method: 'PATCH',
+      headers: { 'Authorization': token.startsWith('Bearer') ? token : `Bearer ${token}` }
+    });
+    document.querySelectorAll('.notif-item.unread').forEach(el => {
+      el.classList.remove('unread');
+      el.querySelector('.notif-dot')?.remove();
+    });
+    const badge = document.getElementById('notif-badge');
+    if (badge) { badge.textContent = '0'; badge.classList.remove('show'); }
+    const counter = document.getElementById('notif-unread-count');
+    if (counter) counter.textContent = 'Tudo lido';
+  } catch {}
+}
+
+function openNotifModal() {
+  document.getElementById('notif-modal').classList.add('open');
+  loadNotifications(); // atualiza ao abrir
+}
+
+function closeNotifModal() {
+  document.getElementById('notif-modal').classList.remove('open');
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeNotifModal();
+});
+
+// Carrega badge ao abrir a página
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(loadNotifications, 800); // aguarda login carregar
+});
+
+</script>
+<!-- Footer (componente compartilhado) -->
+<nh-footer></nh-footer>
+
+<!-- MODAL DE NOTIFICAÇÕES -->
+<div id="notif-modal" onclick="if(event.target===this)closeNotifModal()">
+  <div id="notif-panel">
+    <div id="notif-header">
+      <h3>🔔 Notificações</h3>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span id="notif-unread-count" style="font-size:10px;color:rgba(232,228,240,.4);font-family:monospace;"></span>
+      </div>
+    </div>
+    <div id="notif-list">
+      <div style="padding:32px;text-align:center;color:rgba(232,228,240,.3);font-size:12px;">Carregando...</div>
+    </div>
+    <div id="notif-footer">
+      <button id="notif-mark-all" onclick="markAllNotifsRead()">✓ Marcar todas como lidas</button>
+      <button id="notif-close-btn" onclick="closeNotifModal()">Fechar</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>

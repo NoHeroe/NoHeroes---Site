@@ -267,7 +267,12 @@ body {
 .sidebar-footer {
   margin-top: auto;
   padding-top: 20px;
+  padding-bottom: calc(80px + env(safe-area-inset-bottom));
   border-top: 1px solid var(--border2);
+}
+
+@media (min-width: 769px) {
+  .sidebar-footer { padding-bottom: 20px; }
 }
 
 .user-card {
@@ -797,6 +802,11 @@ textarea.input { resize: vertical; min-height: 100px; }
 /* ─── CANVAS ─── */
 #brasasCanvas { position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.5; }
 .main-content { position: relative; z-index: 1; }
+
+/* ─── HEADER NH REFINEMENTS ─── */
+.main-header a:hover span { opacity: .8; }
+#hdr-notif-btn:hover { background: rgba(143,79,255,0.1) !important; border-color: rgba(143,79,255,0.3) !important; }
+#mobile-avatar:hover { transform: scale(1.08); box-shadow: 0 0 12px rgba(143,79,255,.4); }
 </style>
 </head>
 <body>
@@ -810,10 +820,10 @@ textarea.input { resize: vertical; min-height: 100px; }
 <!-- ═══ SIDEBAR DRAWER ═══ -->
 <aside class="sidebar" id="sidebar">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;">
-    <div class="sidebar-logo" style="margin-bottom:0;">
+    <a href="index.html" class="sidebar-logo" style="margin-bottom:0;text-decoration:none;">
       <div class="logo-gem"></div>
       <span class="logo-text">NoHeroes</span>
-    </div>
+    </a>
     <button onclick="closeDrawer()" style="background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;padding:4px;line-height:1;">✕</button>
   </div>
 
@@ -843,30 +853,56 @@ textarea.input { resize: vertical; min-height: 100px; }
   </button>
 
   <div class="sidebar-footer">
-    <div class="user-card">
+    <div class="user-card" style="cursor:pointer;" onclick="location.href='profile.html'" title="Meu Perfil">
       <div class="avatar" id="sidebar-avatar">R</div>
-      <div>
-        <div class="user-name" id="sidebar-name">Raul Takagi</div>
-        <div class="user-role" id="sidebar-role">Admin · CEO</div>
+      <div style="flex:1;min-width:0;">
+        <div class="user-name" id="sidebar-name">—</div>
+        <div class="user-role" id="sidebar-role">Arauto</div>
       </div>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(232,228,240,.3)" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
     </div>
+    <button onclick="S.logout?S.logout():location.href='login.html'" style="margin-top:10px;width:100%;padding:10px;border-radius:10px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);color:rgba(239,68,68,0.7);font-family:var(--font-body);font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.05em;transition:all .2s;" onmouseover="this.style.background='rgba(239,68,68,0.15)'" onmouseout="this.style.background='rgba(239,68,68,0.08)'">
+      Sair da Conta
+    </button>
   </div>
 </aside>
 
-<!-- HEADER FIXO (todos os dispositivos) -->
-<header class="main-header">
-  <div style="display:flex;align-items:center;gap:14px;">
-    <button onclick="toggleDrawer()" style="background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:4px;" aria-label="Menu">
-      <span style="display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:0.3s;"></span>
-      <span style="display:block;width:16px;height:2px;background:var(--text);border-radius:2px;transition:0.3s;"></span>
-      <span style="display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:0.3s;"></span>
+<!-- HEADER PADRÃO NOHEROES -->
+<header class="main-header" style="display:flex;align-items:center;justify-content:space-between;padding:0 16px;">
+  <!-- Esquerda: hambúrguer + logo -->
+  <div style="display:flex;align-items:center;gap:12px;">
+    <button onclick="toggleDrawer()" style="width:36px;height:36px;border-radius:9px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);" aria-label="Menu">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
     </button>
-    <div style="display:flex;align-items:center;gap:8px;">
-      <div class="logo-gem" style="width:22px;height:22px;border-radius:5px;"></div>
-      <span class="logo-text" style="font-size:13px;">Santuário</span>
-    </div>
+    <a href="index.html" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+      <img src="assets/images/logo noheroes.png" alt="NoHeroes" style="height:26px;width:auto;" onerror="this.style.display='none'">
+      <span style="font-family:'Cinzel Decorative',serif;font-size:12px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:.05em;">Santuário</span>
+    </a>
   </div>
-  <div class="avatar" style="width:34px;height:34px;font-size:12px;" id="mobile-avatar">R</div>
+
+  <!-- Direita: notificações + avatar -->
+  <div style="display:flex;align-items:center;gap:8px;">
+    <!-- Sino de notificações -->
+    <button id="hdr-notif-btn" onclick="switchTab('notifications')" style="position:relative;width:36px;height:36px;border-radius:9px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);cursor:pointer;display:flex;align-items:center;justify-content:center;" title="Notificações">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+        <defs>
+          <linearGradient id="bell-hdr" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#8f4fff"/>
+            <stop offset="100%" stop-color="#d9b55a"/>
+          </linearGradient>
+        </defs>
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="url(#bell-hdr)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="url(#bell-hdr)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span id="hdr-notif-badge" style="display:none;position:absolute;top:-3px;right:-3px;min-width:15px;height:15px;border-radius:99px;background:#ef4444;color:#fff;font-size:9px;font-weight:800;align-items:center;justify-content:center;padding:0 3px;font-family:monospace;"></span>
+    </button>
+    <!-- Avatar do usuário -->
+    <div class="avatar" style="width:34px;height:34px;font-size:12px;cursor:pointer;" id="mobile-avatar" onclick="location.href='profile.html'" title="Meu Perfil">R</div>
+  </div>
 </header>
 
 <!-- NAV MOBILE (bottom) -->
@@ -1141,40 +1177,52 @@ textarea.input { resize: vertical; min-height: 100px; }
         <div class="section-title">Caixa Forte</div>
         <div class="section-sub">Receita, repasses e histórico financeiro</div>
       </div>
-      <button class="btn btn-ghost btn-sm">Solicitar Repasse</button>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <select class="input btn-sm" id="rev-period" style="width:auto;" onchange="loadRevenue()">
+          <!-- preenchido via JS com os últimos 6 meses -->
+        </select>
+        <button class="btn btn-ghost btn-sm" onclick="loadRevenue()">↻</button>
+      </div>
     </div>
 
+    <!-- KPIs -->
     <div class="kpi-grid" style="margin-bottom:24px;">
       <div class="kpi-card">
-        <div class="kpi-label">Receita Total</div>
+        <div class="kpi-label">Receita Bruta</div>
         <div class="kpi-value" id="rev-total" style="color:var(--accent2);">—</div>
-        <div class="kpi-sub">Bruto · Este mês</div>
+        <div class="kpi-sub">Vendas do período</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Seu Saldo (90%)</div>
+        <div class="kpi-label">Seu Repasse</div>
         <div class="kpi-value" id="rev-net" style="color:var(--green);">—</div>
-        <div class="kpi-sub">Disponível para repasse</div>
+        <div class="kpi-sub" id="rev-pct-sub">% do bruto</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Taxa Plataforma</div>
-        <div class="kpi-value" id="rev-fee" style="color:var(--muted);font-size:20px;">—</div>
-        <div class="kpi-sub">10% NoHeroes</div>
+        <div class="kpi-label">Pedidos</div>
+        <div class="kpi-value" id="rev-orders" style="font-size:28px;">—</div>
+        <div class="kpi-sub">No período</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Repassado</div>
-        <div class="kpi-value" id="rev-paid">R$ 0</div>
-        <div class="kpi-sub">Aguardando solicitação</div>
+        <div class="kpi-label">Status do Repasse</div>
+        <div id="rev-payout-badge" style="margin-top:8px;">—</div>
+        <div class="kpi-sub" id="rev-payout-sub">—</div>
       </div>
     </div>
 
+    <!-- Receita por item -->
     <div class="card" style="margin-bottom:20px;">
-      <div style="font-size:14px;font-weight:700;margin-bottom:16px;">Receita por Obra</div>
-      <div id="revenue-by-work"></div>
+      <div style="font-size:14px;font-weight:700;margin-bottom:16px;">Receita por Item</div>
+      <div id="revenue-by-item">
+        <div style="padding:24px;text-align:center;color:var(--muted);font-size:12px;">Carregando...</div>
+      </div>
     </div>
 
+    <!-- Histórico mensal -->
     <div class="card">
-      <div style="font-size:14px;font-weight:700;margin-bottom:16px;">Histórico de Transações</div>
-      <div id="revenue-history"></div>
+      <div style="font-size:14px;font-weight:700;margin-bottom:16px;">Histórico Mensal</div>
+      <div id="revenue-history">
+        <div style="padding:24px;text-align:center;color:var(--muted);font-size:12px;">Carregando...</div>
+      </div>
     </div>
   </div>
 
@@ -1362,7 +1410,7 @@ textarea.input { resize: vertical; min-height: 100px; }
    Roles: admin > herald > user (candidatura) > visitante
 ═══════════════════════════════════════════════════════════ */
 
-const API_BASE = 'https://dev-flmw.onrender.com';
+const API_BASE = 'https://api.noheroes.com.br';
 
 /* ─── AUTH ──────────────────────────────────────────────── */
 const Auth = {
@@ -1417,6 +1465,8 @@ function switchTab(id) {
   document.getElementById(`mob-${id}`)?.classList.add('active');
   closeDrawer();
   window.scrollTo(0, 0);
+  // carrega dados ao entrar na aba financeira
+  if (id === 'revenue') loadRevenue();
 }
 
 /* ─── MODALS ────────────────────────────────────────────── */
@@ -2342,6 +2392,12 @@ async function loadNotifications() {
 
   const badge = document.getElementById('notif-badge');
   if (badge) { badge.textContent = unread; badge.style.display = unread ? 'inline' : 'none'; }
+  // badge do header
+  const hdrBadge = document.getElementById('hdr-notif-badge');
+  if (hdrBadge) {
+    hdrBadge.textContent = unread > 9 ? '9+' : unread;
+    hdrBadge.style.display = unread > 0 ? 'flex' : 'none';
+  }
 
   const container = document.getElementById('notifications-list');
   if (!container) return;
@@ -2372,41 +2428,113 @@ async function markAllRead() {
 /* ═══════════════════════════════════════════════════════════
    FINANCEIRO (arauto)
 ═══════════════════════════════════════════════════════════ */
+// Preenche o select de períodos com os últimos 6 meses
+function buildPeriodSelect() {
+  const sel = document.getElementById('rev-period');
+  if (!sel || sel.options.length > 1) return;
+  const now = new Date();
+  for (let i = 0; i < 6; i++) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const val = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+    const label = d.toLocaleString('pt-BR', { month: 'long', year: 'numeric' });
+    const opt = document.createElement('option');
+    opt.value = val;
+    opt.textContent = label.charAt(0).toUpperCase() + label.slice(1);
+    if (i === 0) opt.selected = true;
+    sel.appendChild(opt);
+  }
+}
+
 async function loadRevenue() {
-  const { ok, data } = await api('/api/herald/dashboard');
-  if (!ok) return;
+  buildPeriodSelect();
+  const period = document.getElementById('rev-period')?.value || '';
 
-  const works = data.works || [];
-  const totalRevenue = works.reduce((acc, w) => acc + (w.total_revenue || 0), 0);
-  const heraldNet = totalRevenue * 0.9;
-  const platformFee = totalRevenue * 0.1;
+  // Carrega dados do período selecionado
+  const url = `/api/herald/finance${period ? `?period=${period}` : ''}`;
+  const { ok, data } = await api(url);
 
-  const ids = {
-    'rev-total': fmtBRL(totalRevenue),
-    'rev-net':   fmtBRL(heraldNet),
-    'rev-fee':   fmtBRL(platformFee),
-    'rev-paid':  fmtBRL(0)
-  };
-  Object.entries(ids).forEach(([id, val]) => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = val;
-  });
-
-  const byWork = document.getElementById('revenue-by-work');
-  if (byWork && works.length) {
-    const max = Math.max(...works.map(w => w.total_revenue || 0), 1);
-    byWork.innerHTML = works.map(w => `
-      <div class="revenue-bar">
-        <div class="revenue-label">${w.title}</div>
-        <div class="revenue-track"><div class="revenue-fill" style="width:${((w.total_revenue || 0) / max * 100).toFixed(1)}%"></div></div>
-        <div class="revenue-value">${fmtBRL(w.total_revenue)}</div>
-      </div>
-    `).join('');
+  if (!ok) {
+    document.getElementById('revenue-by-item').innerHTML =
+      '<div style="padding:24px;text-align:center;color:var(--muted);font-size:12px;">Erro ao carregar dados financeiros.</div>';
+    return;
   }
 
-  const history = document.getElementById('revenue-history');
-  if (history) {
-    history.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted);font-size:12px;">Histórico disponível em breve.</div>';
+  const summary = data.summary || {};
+  const byItem  = data.byItem  || [];
+  const payout  = data.payout  || null;
+
+  // KPIs
+  const setEl = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  setEl('rev-total',  fmtBRL(summary.grossRevenue  || 0));
+  setEl('rev-net',    fmtBRL(summary.heraldRevenue || 0));
+  setEl('rev-orders', fmtNum(summary.orders        || 0));
+
+  const pctEl = document.getElementById('rev-pct-sub');
+  if (pctEl) pctEl.textContent = summary.royaltyPct || '30% do bruto';
+
+  // Badge do repasse
+  const badgeEl = document.getElementById('rev-payout-badge');
+  const subEl   = document.getElementById('rev-payout-sub');
+  if (badgeEl) {
+    if (!payout) {
+      badgeEl.innerHTML = '<span class="badge badge-draft">Sem repasse</span>';
+      if (subEl) subEl.textContent = 'Gerado pelo admin ao fim do mês';
+    } else {
+      const colors = { pending: 'badge-pending', paid: 'badge-published', cancelled: 'badge-suspended' };
+      const labels = { pending: '⏳ Pendente', paid: '✅ Pago', cancelled: '❌ Cancelado' };
+      badgeEl.innerHTML = `<span class="badge ${colors[payout.status] || 'badge-draft'}">${labels[payout.status] || payout.status}</span>`;
+      if (subEl) subEl.textContent = payout.status === 'paid' && payout.paid_at
+        ? `Pago em ${new Date(payout.paid_at).toLocaleDateString('pt-BR')}`
+        : `${fmtBRL(payout.amount)} a receber`;
+    }
+  }
+
+  // Receita por item
+  const byItemEl = document.getElementById('revenue-by-item');
+  if (byItemEl) {
+    if (!byItem.length) {
+      byItemEl.innerHTML = '<div style="padding:24px;text-align:center;color:var(--muted);font-size:12px;">Nenhuma venda neste período.</div>';
+    } else {
+      const max = Math.max(...byItem.map(i => i.revenue || 0), 1);
+      byItemEl.innerHTML = byItem.map(i => `
+        <div class="revenue-bar" style="margin-bottom:12px;">
+          <div class="revenue-label" style="min-width:120px;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px;">${i.name}</div>
+          <div class="revenue-track" style="flex:1;height:6px;background:rgba(255,255,255,0.06);border-radius:99px;overflow:hidden;">
+            <div class="revenue-fill" style="height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:99px;width:${((i.revenue||0)/max*100).toFixed(1)}%;"></div>
+          </div>
+          <div class="revenue-value" style="font-size:11px;font-family:var(--font-mono);color:var(--accent2);min-width:60px;text-align:right;">${fmtBRL(i.revenue)} <span style="color:var(--muted);">(${i.units}u)</span></div>
+        </div>
+      `).join('');
+    }
+  }
+
+  // Histórico mensal
+  const histEl = document.getElementById('revenue-history');
+  if (histEl) {
+    const { ok: hok, data: hdata } = await api('/api/herald/finance/history');
+    if (hok && hdata.history?.length) {
+      histEl.innerHTML = `
+        <table style="width:100%;border-collapse:collapse;font-size:12px;">
+          <thead>
+            <tr style="border-bottom:1px solid var(--border2);">
+              <th style="text-align:left;padding:8px 10px;color:var(--muted);font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;font-weight:700;">Período</th>
+              <th style="text-align:right;padding:8px 10px;color:var(--muted);font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;font-weight:700;">Pedidos</th>
+              <th style="text-align:right;padding:8px 10px;color:var(--muted);font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;font-weight:700;">Seu Repasse</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${hdata.history.map(h => `
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.03);">
+                <td style="padding:10px;font-family:var(--font-mono);">${h.period}</td>
+                <td style="padding:10px;text-align:right;color:var(--muted);">${fmtNum(h.orders)}</td>
+                <td style="padding:10px;text-align:right;color:var(--accent2);font-weight:700;">${fmtBRL(h.heraldRevenue)}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>`;
+    } else {
+      histEl.innerHTML = '<div style="padding:24px;text-align:center;color:var(--muted);font-size:12px;">Nenhum histórico disponível.</div>';
+    }
   }
 }
 

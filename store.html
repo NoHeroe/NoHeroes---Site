@@ -2,373 +2,203 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>NoHeroes | Loja PRO</title>  <!-- Fonts -->  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <!-- Tailwind CDN -->
+  <title>NoHeroes | Loja</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/css/noheroes-ui.css">
+  <script defer src="assets/js/noheroes-ui.js"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          colors: {
-            roxo: '#a855f7',
-            dourado: '#facc15',
-            cinza: '#1f1f1f',
-            fundo: '#0a0a0a',
-            claro: '#f4f4f4'
-          },
-          boxShadow: {
-            glow: '0 0 20px rgba(168,85,247,.35)'
-          },
-          fontFamily: {
-            display: ['Cinzel Decorative', 'serif'],
-            body: ['Roboto', 'system-ui', 'sans-serif']
-          }
+          colors: { roxo:'#a855f7', dourado:'#facc15', cinza:'#1f1f1f', fundo:'#0a0a0a', claro:'#f4f4f4' },
+          boxShadow: { glow:'0 0 20px rgba(168,85,247,.35)' },
+          fontFamily: { display:['Cinzel Decorative','serif'], body:['Roboto','system-ui','sans-serif'] }
         }
       }
     }
   </script>
   <style>
-    html, body {height: 100%;}
-    body { font-family: 'Roboto', system-ui, -apple-system, Segoe UI, sans-serif; background:#0a0a0a; color:#f4f4f4; }
-    /* Canvas brasas atrás de tudo */
-    #brasasCanvas{ position:fixed; inset:0; width:100vw; height:100vh; z-index:-2; pointer-events:none; }
-    /* Overlay sutil para melhorar contraste */
-    /* Scrollbar discreta */
-    ::-webkit-scrollbar{ width:10px; height:10px; }
-    ::-webkit-scrollbar-thumb{ background:#2a2a2a; border-radius:10px; }
-    ::-webkit-scrollbar-track{ background:transparent; }
-    /* Badge "EM BREVE" */
-    .badge-embreve { position:absolute; top:.5rem; left:.5rem; background:#a855f7; color:#000; font-weight:700; font-size:.75rem; padding:.2rem .45rem; border-radius:.35rem; }
-.gradiente-noheroes {
-  background: linear-gradient(270deg,#8f4fff,#a855f7,#facc15,#8f4fff);
-  background-size: 600% 600%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  animation: fluidPulse 8s ease-in-out infinite;
-}
-@keyframes fluidPulse {
-  0%,100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-.cinzel {
-  font-family: 'Cinzel Decorative', serif;
-}
-.gradiente-svg {
-  filter: drop-shadow(0 0 6px #a855f7);
-  transition: transform .25s ease, filter .25s ease;
-}
-.gradiente-svg:hover {
-  transform: scale(1.1);
-  filter: drop-shadow(0 0 12px #facc15);
-}
-@keyframes fluidPulse {
-  0%,100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-/* Modal refinado */
-#infoModal {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-}
-#infoModal.active {
-  display: flex;
-  animation: fadeIn 0.2s ease-in-out;
-}
-#infoModal .modal-content {
-  position: relative;
-  width: 100%;
-  max-width: 420px;
-  max-height: 90vh;
-  overflow-y: auto;
-  background: rgba(24, 24, 27, 0.95);
-  border: 1px solid rgba(168, 85, 247, 0.4);
-  border-radius: 1rem;
-  box-shadow: 0 0 15px rgba(168, 85, 247, 0.25);
-  backdrop-filter: blur(10px);
-  padding: 1rem;
-}
-#infoModal img {
-  width: 100%;
-  max-height: 50vh;
-  object-fit: contain;
-  border-radius: 0.75rem;
-  margin-bottom: 0.75rem;
-}
-#btnCloseInfo {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  border: 1px solid rgba(168,85,247,0.4);
-  background: rgba(0,0,0,0.5);
-  border-radius: 0.5rem;
-  color: #f4f4f4;
-  font-size: 1rem;
-  width: 2rem;
-  height: 2rem;
-}
-@keyframes fadeIn {
-  from {opacity: 0;}
-  to {opacity: 1;}
-}
-/* ===== Loading (Produtos) ===== */
-.nh-eq{
-  --w: 48px;
-  --h: 40px;
-  width: var(--w);
-  height: var(--h);
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 4px;
-  align-items: end;
-  padding: 6px;
-  border-radius: 14px;
-  border: 1px solid rgba(168,85,247,.35);
-  background: rgba(255,255,255,.04);
-  box-shadow: 0 0 18px rgba(168,85,247,.18);
-}
+    html,body{height:100%}
+    body{font-family:'Roboto',system-ui,-apple-system,Segoe UI,sans-serif;background:#0a0a0a;color:#f4f4f4}
+    #brasasCanvas{position:fixed;inset:0;width:100vw;height:100vh;z-index:-2;pointer-events:none}
+    ::-webkit-scrollbar{width:6px;height:6px}
+    ::-webkit-scrollbar-thumb{background:#2a2a2a;border-radius:10px}
+    ::-webkit-scrollbar-track{background:transparent}
+    .badge-embreve{position:absolute;top:.4rem;left:.4rem;background:#a855f7;color:#000;font-weight:700;font-size:.65rem;padding:.15rem .35rem;border-radius:.3rem;z-index:2}
+    .gradiente-noheroes{background:linear-gradient(270deg,#8f4fff,#a855f7,#facc15,#8f4fff);background-size:600% 600%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:fluidPulse 8s ease-in-out infinite}
+    .cinzel{font-family:'Cinzel Decorative',serif}
+    .gradiente-svg{filter:drop-shadow(0 0 6px #a855f7);transition:transform .25s ease,filter .25s ease}
+    .gradiente-svg:hover{transform:scale(1.1);filter:drop-shadow(0 0 12px #facc15)}
+    @keyframes fluidPulse{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
 
-.nh-eq span{
-  display:block;
-  width:100%;
-  height:20%;
-  border-radius: 6px;
-  background: linear-gradient(180deg, rgba(250,204,21,.95), rgba(168,85,247,.95));
-  opacity: .9;
-  animation: nhEq 1.05s ease-in-out infinite;
-  transform-origin: bottom;
-}
+    /* Drawer: agora em assets/css/noheroes-ui.css (componente <nh-drawer>) */
 
-/* delays (pra parecer onda sonora real) */
-.nh-eq span:nth-child(1){animation-delay:-0.10s}
-.nh-eq span:nth-child(2){animation-delay:-0.30s}
-.nh-eq span:nth-child(3){animation-delay:-0.55s}
-.nh-eq span:nth-child(4){animation-delay:-0.25s}
-.nh-eq span:nth-child(5){animation-delay:-0.45s}
-.nh-eq span:nth-child(6){animation-delay:-0.15s}
-.nh-eq span:nth-child(7){animation-delay:-0.35s}
-.nh-eq span:nth-child(8){animation-delay:-0.60s}
-.nh-eq span:nth-child(9){animation-delay:-0.20s}
-.nh-eq span:nth-child(10){animation-delay:-0.50s}
-.nh-eq span:nth-child(11){animation-delay:-0.12s}
-.nh-eq span:nth-child(12){animation-delay:-0.32s}
-.nh-eq span:nth-child(13){animation-delay:-0.58s}
-.nh-eq span:nth-child(14){animation-delay:-0.22s}
-.nh-eq span:nth-child(15){animation-delay:-0.48s}
+    /* ── BARRA DE FILTRO HORIZONTAL ── */
+    #filterBar{position:sticky;top:56px;z-index:30;background:rgba(10,10,10,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(168,85,247,0.12);overflow-x:auto;white-space:nowrap;scrollbar-width:none;padding:0 16px}
+    #filterBar::-webkit-scrollbar{display:none}
+    .filter-pill{display:inline-flex;align-items:center;height:36px;padding:0 14px;border-radius:99px;border:1px solid rgba(168,85,247,0.25);font-size:12px;font-weight:600;color:rgba(255,255,255,0.6);background:transparent;cursor:pointer;transition:all .2s;margin:8px 4px 8px 0;white-space:nowrap}
+    .filter-pill:hover{border-color:rgba(168,85,247,0.5);color:#fff}
+    .filter-pill.active{background:rgba(168,85,247,0.15);border-color:#a855f7;color:#c084fc}
 
-@keyframes nhEq{
-  0%,100%{ transform: scaleY(.25); filter: brightness(.95); }
-  50%{    transform: scaleY(1.20); filter: brightness(1.15); }
-}
+    /* ── GRID POR CATEGORIA ── */
+    .nh-cat-section{margin-bottom:8px}
+    .nh-cat-title{font-family:'Cinzel Decorative',serif;font-size:13px;color:rgba(255,255,255,0.5);letter-spacing:.1em;text-transform:uppercase;padding:20px 0 10px;display:flex;align-items:center;gap:8px}
+    .nh-cat-count{font-size:10px;background:rgba(168,85,247,0.15);border:1px solid rgba(168,85,247,0.3);border-radius:99px;padding:1px 7px;color:#a855f7;font-family:'Roboto',sans-serif;letter-spacing:0}
+    .nh-cat-sep{height:1px;background:linear-gradient(to right,transparent,rgba(168,85,247,0.35),rgba(250,204,21,0.2),transparent);margin:8px 0 4px}
 
-/* Dots animados no texto */
-.nh-dots{
-  display:inline-block;
-  width: 18px;
-  text-align:left;
-}
-.nh-dots::after{
-  content: "";
-  display:inline-block;
-  animation: nhDots 1.2s steps(4, end) infinite;
-}
-@keyframes nhDots{
-  0%{content:""}
-  25%{content:"."}
-  50%{content:".."}
-  75%{content:"..."}
-  100%{content:""}
-}
+    /* Scroll horizontal da categoria */
+    .nh-scroll-row{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    @media(min-width:640px){.nh-scroll-row{grid-template-columns:repeat(3,1fr)}}
+    @media(min-width:1024px){.nh-scroll-row{grid-template-columns:repeat(4,1fr)}}
 
-/* Skeleton básico */
-.nh-skel{
-  background: linear-gradient(90deg, rgba(255,255,255,.04), rgba(255,255,255,.10), rgba(255,255,255,.04));
-  background-size: 200% 100%;
-  animation: nhSkel 1.1s ease-in-out infinite;
-  border: 1px solid rgba(168,85,247,.18);
-}
-@keyframes nhSkel{
-  0%{background-position: 0% 0%}
-  100%{background-position: 200% 0%}
-}
+    /* ── CARD COMPACTO ── */
+    .nh-card{position:relative;border-radius:14px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);backdrop-filter:blur(4px);overflow:hidden;transition:box-shadow .2s,transform .2s;cursor:default}
+    .nh-card:hover{box-shadow:0 0 18px rgba(168,85,247,.3);transform:translateY(-2px)}
+    .nh-card img{width:100%;aspect-ratio:2/3;object-fit:cover;display:block}
+    .nh-card-body{padding:8px 10px 10px}
+    .nh-card-name{font-size:12px;font-weight:700;color:#f4f4f4;line-height:1.3;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .nh-card-rarity{font-size:10px;color:rgba(168,85,247,0.85);margin-bottom:4px}
+    .nh-card-price{font-size:11px;color:#facc15;font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+    .nh-card-btn{width:100%;padding:6px 0;border-radius:8px;font-size:11px;font-weight:700;background:#a855f7;color:#000;border:none;cursor:pointer;transition:opacity .15s}
+    .nh-card-btn:hover{opacity:.88}
+    .nh-card-btn:disabled{background:#333;color:#666;cursor:not-allowed}
+    .nh-card-info{position:absolute;top:6px;right:6px;width:26px;height:26px;border-radius:7px;border:1px solid rgba(168,85,247,0.4);background:rgba(0,0,0,0.55);color:#fff;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2}
 
-/* Respeita acessibilidade: reduzir animação */
-@media (prefers-reduced-motion: reduce){
-  .nh-eq span, .nh-skel, .nh-dots::after { animation: none !important; }
-}
+    /* ── MODAL INFO ── */
+    #infoModal{display:none;align-items:center;justify-content:center;padding:1rem}
+    #infoModal.active{display:flex;animation:fadeIn 0.2s ease-in-out}
+    #infoModal .modal-content{position:relative;width:100%;max-width:420px;max-height:90vh;overflow-y:auto;background:rgba(24,24,27,0.95);border:1px solid rgba(168,85,247,0.4);border-radius:1rem;box-shadow:0 0 15px rgba(168,85,247,0.25);backdrop-filter:blur(10px);padding:1rem}
+    #infoModal img{width:100%;max-height:50vh;object-fit:contain;border-radius:.75rem;margin-bottom:.75rem}
+    #btnCloseInfo{position:absolute;top:.5rem;right:.5rem;border:1px solid rgba(168,85,247,0.4);background:rgba(0,0,0,0.5);border-radius:.5rem;color:#f4f4f4;font-size:1rem;width:2rem;height:2rem}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+    /* ── LOADING ── */
+    .nh-eq{--w:48px;--h:40px;width:var(--w);height:var(--h);display:grid;grid-template-columns:repeat(5,1fr);gap:4px;align-items:end;padding:6px;border-radius:14px;border:1px solid rgba(168,85,247,.35);background:rgba(255,255,255,.04);box-shadow:0 0 18px rgba(168,85,247,.18)}
+    .nh-eq span{display:block;width:100%;height:20%;border-radius:6px;background:linear-gradient(180deg,rgba(250,204,21,.95),rgba(168,85,247,.95));opacity:.9;animation:nhEq 1.05s ease-in-out infinite;transform-origin:bottom}
+    .nh-eq span:nth-child(1){animation-delay:-0.10s}.nh-eq span:nth-child(2){animation-delay:-0.30s}.nh-eq span:nth-child(3){animation-delay:-0.55s}.nh-eq span:nth-child(4){animation-delay:-0.25s}.nh-eq span:nth-child(5){animation-delay:-0.45s}.nh-eq span:nth-child(6){animation-delay:-0.15s}.nh-eq span:nth-child(7){animation-delay:-0.35s}.nh-eq span:nth-child(8){animation-delay:-0.60s}.nh-eq span:nth-child(9){animation-delay:-0.20s}.nh-eq span:nth-child(10){animation-delay:-0.50s}.nh-eq span:nth-child(11){animation-delay:-0.12s}.nh-eq span:nth-child(12){animation-delay:-0.32s}.nh-eq span:nth-child(13){animation-delay:-0.58s}.nh-eq span:nth-child(14){animation-delay:-0.22s}.nh-eq span:nth-child(15){animation-delay:-0.48s}
+    @keyframes nhEq{0%,100%{transform:scaleY(.25);filter:brightness(.95)}50%{transform:scaleY(1.20);filter:brightness(1.15)}}
+    .nh-dots{display:inline-block;width:18px;text-align:left}
+    .nh-dots::after{content:"";display:inline-block;animation:nhDots 1.2s steps(4,end) infinite}
+    @keyframes nhDots{0%{content:""}25%{content:"."}50%{content:".."}75%{content:"..."}100%{content:""}}
+    .nh-skel{background:linear-gradient(90deg,rgba(255,255,255,.04),rgba(255,255,255,.10),rgba(255,255,255,.04));background-size:200% 100%;animation:nhSkel 1.1s ease-in-out infinite;border:1px solid rgba(168,85,247,.18)}
+    @keyframes nhSkel{0%{background-position:0% 0%}100%{background-position:200% 0%}}
+    @media(prefers-reduced-motion:reduce){.nh-eq span,.nh-skel,.nh-dots::after{animation:none!important}}
   </style>
 </head>
 <body class="min-h-screen">
-  <canvas id="brasasCanvas"></canvas>
-    <!-- HEADER -->  <header class="fixed top-0 left-0 right-0 z-40 backdrop-blur bg-black/40 border-b border-roxo/40">
-    <div class="mx-auto max-w-7xl px-4 py-3 flex items-center gap-4">
-      <div class="flex items-center gap-3">
-        <img src="assets/images/logo noheroes.png" alt="NoHeroes" class="h-8 w-auto drop-shadow"/>
-        <span class="hidden sm:block cinzel gradiente-noheroes text-lg font-bold tracking-wide">
-  NoHeroes • Store
-</span>
-      </div><!-- Filtros (desktop) -->
-  <nav class="hidden md:flex items-center gap-2 mx-auto" id="filtersNav">
-    <!-- Botões gerados via JS -->
-  </nav>
+<!-- Fundo + menu lateral (componentes compartilhados) -->
+<nh-background></nh-background>
+<nh-drawer></nh-drawer>
 
-  <div class="ml-auto flex items-center gap-3">
-    <!-- Toggle filtros no mobile -->
-<!-- Perfil -->
-<button onclick="location.href='profile.html'" 
-        class="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-roxo/40 text-sm hover:bg-white/5">
-  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/>
-  </svg>
-  Perfil
-</button>
-
-    <button id="btnOpenFiltersMobile" class="md:hidden inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-roxo/40 text-sm hover:bg-white/5">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M3 6h18v2H3V6zm3 5h12v2H6v-2zm3 5h6v2H9v-2z"/></svg>
-      Categorias
-    </button>
-
+<!-- HEADER PADRÃO NH -->
+<header style="position:fixed;top:0;left:0;right:0;z-index:60;height:56px;background:rgba(10,10,10,0.92);border-bottom:1px solid rgba(255,255,255,0.06);backdrop-filter:blur(12px);display:flex;align-items:center;padding:0 16px;justify-content:space-between;">
+  <a href="index.html" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+    <img src="assets/images/logo noheroes.png" alt="NoHeroes" style="height:28px;width:auto;" onerror="this.style.display='none'">
+    <span style="font-family:'Cinzel Decorative',serif;font-size:13px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">NoHeroes • Store</span>
+  </a>
+  <div style="display:flex;align-items:center;gap:10px;">
     <!-- COINS HUD -->
-<div class="flex items-center gap-2 ml-3">
-  <span class="gold flex items-center gap-1 font-bold text-dourado">
-    <svg class="coin" viewBox="0 0 24 24" width="18" height="18">
-      <circle cx="12" cy="12" r="9" fill="currentColor" opacity="0.18"/>
-      <circle cx="12" cy="12" r="7.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
-      <path d="M12 7.5v9M8.5 12h7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-    </svg>
-    <span id="gold">0</span>
-  </span>
-</div>
-
+    <div style="display:flex;align-items:center;gap:5px;background:rgba(250,204,21,0.08);border:1px solid rgba(250,204,21,0.2);border-radius:20px;padding:4px 10px;">
+      <svg viewBox="0 0 24 24" width="14" height="14" style="color:#facc15;fill:currentColor;flex-shrink:0">
+        <circle cx="12" cy="12" r="9" opacity="0.18"/><circle cx="12" cy="12" r="7.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v9M8.5 12h7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <span id="gold" style="font-size:12px;font-weight:700;color:#facc15;">0</span>
+    </div>
     <!-- Carrinho -->
-    <button id="btnCart" class="relative inline-flex items-center justify-center h-10 w-10 rounded-xl border border-roxo/40 hover:bg-white/5">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 gradiente-svg" viewBox="0 0 24 24">
-  <defs>
-    <linearGradient id="gradCart" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#8f4fff">
-        <animate attributeName="stop-color" values="#8f4fff;#a855f7;#facc15;#8f4fff" dur="6s" repeatCount="indefinite" />
-      </stop>
-      <stop offset="100%" stop-color="#facc15">
-        <animate attributeName="stop-color" values="#facc15;#a855f7;#8f4fff;#facc15" dur="6s" repeatCount="indefinite" />
-      </stop>
-    </linearGradient>
-  </defs>
-  <path fill="url(#gradCart)" d="M7 4h-2l-1 2h2l3.6 7.59-1.35 2.45A1.99 1.99 0 0 0 10 19h9v-2h-8.42c-.14 0-.25-.11-.25-.25l.03-.12L11.1 14h5.45c.75 0 1.41-.41 1.75-1.03L21 7H6.21l-.94-2zM7 20c-1.1 0-1.99.9-1.99 2S5.9 24 7 24s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2S15.9 24 17 24s2-.9 2-2-.9-2-2-2z"/>
-</svg>
-      <span id="cartBadge" class="absolute -top-1 -right-1 text-[11px] bg-red-600 text-white rounded-full px-1.5 py-0.5">0</span>
+    <button id="btnCart" style="position:relative;width:36px;height:36px;border-radius:10px;border:1px solid rgba(168,85,247,0.4);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+      <svg xmlns="http://www.w3.org/2000/svg" style="width:18px;height:18px;" viewBox="0 0 24 24">
+        <defs><linearGradient id="gradCart" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#8f4fff"><animate attributeName="stop-color" values="#8f4fff;#a855f7;#facc15;#8f4fff" dur="6s" repeatCount="indefinite"/></stop><stop offset="100%" stop-color="#facc15"><animate attributeName="stop-color" values="#facc15;#a855f7;#8f4fff;#facc15" dur="6s" repeatCount="indefinite"/></stop></linearGradient></defs>
+        <path fill="url(#gradCart)" d="M7 4h-2l-1 2h2l3.6 7.59-1.35 2.45A1.99 1.99 0 0 0 10 19h9v-2h-8.42c-.14 0-.25-.11-.25-.25l.03-.12L11.1 14h5.45c.75 0 1.41-.41 1.75-1.03L21 7H6.21l-.94-2zM7 20c-1.1 0-1.99.9-1.99 2S5.9 24 7 24s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2S15.9 24 17 24s2-.9 2-2-.9-2-2-2z"/>
+      </svg>
+      <span id="cartBadge" style="position:absolute;top:-4px;right:-4px;font-size:10px;background:#dc2626;color:#fff;border-radius:99px;padding:1px 5px;min-width:16px;text-align:center;">0</span>
+    </button>
+    <!-- Menu NH -->
+    <button data-nh-drawer-toggle aria-label="Abrir menu" style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
   </div>
-</div>
+</header>
+<div style="height:56px;"></div>
 
-<!-- Filtros Mobile Drawer -->
-<div id="filtersDrawer" class="md:hidden hidden border-t border-roxo/30 bg-black/60 backdrop-blur">
-  <div class="max-w-7xl mx-auto px-4 py-3" id="filtersMobile">
-    <!-- Gerado via JS -->
+<!-- BARRA DE FILTRO HORIZONTAL -->
+<div id="filterBar">
+  <div id="filterPills" style="display:inline-flex;align-items:center;gap:0;">
+    <!-- gerado via JS -->
   </div>
 </div>
 
-  </header>
-
-<div class="h-[70px] md:h-[80px]"></div>
-
-  <!-- CONTEÚDO PRINCIPAL -->  <main class="mx-auto max-w-7xl px-4 py-6">
-    <!-- Título / descrição curta -->
-    <section class="mb-6">
-      <h1 class="cinzel gradiente-noheroes text-2xl sm:text-3xl md:text-4xl font-bold tracking-wide drop-shadow text-center leading-tight">
-  Explore o Universo<br class="hidden sm:block" /> NoHeroes
-</h1>
-      <p class="text-sm md:text-base text-white/70 mt-1 max-w-2xl">Cartel Velado — um portal entre mundos.
-Produtos do universo NoHeroes, organizados por categoria. Explore, filtre e adicione ao carrinho com facilidade. Tudo o que você vê, veio de algum lugar... e quer voltar.</p>
-    </section>
-
-<!-- Filtros (fallback se JS ainda não carregou) -->
-<noscript>
-  <p class="text-dourado">Ative o JavaScript para filtrar os produtos.</p>
-</noscript>
-
-<!-- LOADING OVERLAY (Produtos) -->
+<!-- LOADING OVERLAY -->
 <div id="productsLoading" class="fixed inset-0 z-50 hidden">
   <div class="absolute inset-0 bg-black/75 backdrop-blur-sm"></div>
-
   <div class="relative h-full w-full flex items-center justify-center px-6">
     <div class="w-full max-w-md rounded-2xl border border-roxo/30 bg-black/50 backdrop-blur-xl shadow-[0_0_40px_rgba(168,85,247,.18)] p-6">
       <div class="flex items-center gap-4">
-        <!-- Equalizer -->
-        <div class="nh-eq" aria-hidden="true">
-          <span></span><span></span><span></span><span></span><span></span>
-          <span></span><span></span><span></span><span></span><span></span>
-          <span></span><span></span><span></span><span></span><span></span>
-        </div>
-
+        <div class="nh-eq" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
         <div class="flex-1 text-left">
-          <p class="cinzel gradiente-noheroes text-lg font-bold leading-tight">
-            Carregando produtos<span class="nh-dots"></span>
-          </p>
-          <p class="text-xs text-white/60 mt-1">
-            Sincronizando com o Cartel Velado.
-          </p>
+          <p class="cinzel gradiente-noheroes text-lg font-bold leading-tight">Carregando produtos<span class="nh-dots"></span></p>
+          <p class="text-xs text-white/60 mt-1">Sincronizando com o Cartel Velado.</p>
         </div>
       </div>
-
-      <!-- skeletonzinho opcional (fica bonito) -->
       <div class="mt-5 grid grid-cols-3 gap-3 opacity-80">
-        <div class="nh-skel h-16 rounded-xl"></div>
-        <div class="nh-skel h-16 rounded-xl"></div>
-        <div class="nh-skel h-16 rounded-xl"></div>
+        <div class="nh-skel h-16 rounded-xl"></div><div class="nh-skel h-16 rounded-xl"></div><div class="nh-skel h-16 rounded-xl"></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- GRID DE PRODUTOS -->
-<section>
-  <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-    <!-- Cards gerados via JS -->
+<!-- CONTEÚDO PRINCIPAL -->
+<main style="max-width:900px;margin:0 auto;padding:16px 12px 48px;">
+  <section style="margin-bottom:20px;text-align:center;">
+    <h1 class="cinzel gradiente-noheroes" style="font-size:clamp(1.3rem,4vw,2.2rem);font-weight:700;letter-spacing:.03em;line-height:1.2;">Explore o Universo<br>NoHeroes</h1>
+    <p style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:6px;max-width:500px;margin-inline:auto;">Cartel Velado — um portal entre mundos. Explore, filtre e adicione ao carrinho.</p>
+  </section>
+
+  <noscript><p class="text-dourado">Ative o JavaScript para filtrar os produtos.</p></noscript>
+
+  <!-- GRID POR CATEGORIA -->
+  <section>
+    <div id="productsGrid"></div>
+    <div id="emptyState" class="hidden text-center py-16 text-white/60">Nenhum produto encontrado para este filtro.</div>
+  </section>
+</main>
+
+<!-- DRAWER DO CARRINHO -->
+<aside id="cartDrawer" class="fixed top-0 right-0 h-full w-[92vw] sm:w-[400px] translate-x-full transition-transform duration-300 ease-in-out bg-zinc-900/95 backdrop-blur border-l border-roxo/40 z-50 flex flex-col" style="z-index:180;">
+  <div class="p-4 border-b border-roxo/30 flex items-center justify-between">
+    <h3 class="cinzel text-base text-roxo">Seu carrinho</h3>
+    <button id="btnCloseCart" class="h-9 w-9 rounded-xl border border-roxo/40 hover:bg-white/5 text-sm">✕</button>
   </div>
-  <!-- Estado vazio -->
-  <div id="emptyState" class="hidden text-center py-16 text-white/60">Nenhum produto encontrado para este filtro.</div>
-</section>
-
-  </main>  
-
-<!-- DRAWER DO CARRINHO -->  <aside id="cartDrawer" class="fixed top-0 right-0 h-full w-[92vw] sm:w-[420px] translate-x-full transition-transform duration-300 ease-in-out bg-zinc-900/90 backdrop-blur border-l border-roxo/40 z-50 flex flex-col">
-    <div class="p-4 border-b border-roxo/30 flex items-center justify-between">
-      <h3 class="font-display text-lg text-roxo">Seu carrinho</h3>
-      <button id="btnCloseCart" class="h-10 w-10 rounded-xl border border-roxo/40 hover:bg-white/5">✕</button>
-    </div><div id="cartItems" class="p-4 flex-1 overflow-y-auto space-y-3">
-  <!-- Itens -->
-</div>
-
-<div class="p-4 border-t border-roxo/30 space-y-3">
-  <div class="flex items-center justify-between text-sm">
-    <span class="text-white/70">Subtotal</span>
-    <span id="cartSubtotal" class="font-semibold">R$ 0,00</span>
+  <div id="cartItems" class="p-4 flex-1 overflow-y-auto space-y-3"></div>
+  <div class="p-4 border-t border-roxo/30 space-y-3">
+    <!-- Aviso coin_pack -->
+    <div id="coinPackWarning" class="hidden text-xs text-yellow-400/80 bg-yellow-400/5 border border-yellow-400/20 rounded-lg px-3 py-2">
+      🪙 Pacotes de coins só podem ser comprados com Mercado Pago.
+    </div>
+    <div class="flex items-center justify-between text-sm">
+      <span class="text-white/70">Subtotal R$</span>
+      <span id="cartSubtotal" class="font-semibold">R$ 0,00</span>
+    </div>
+    <div class="flex items-center justify-between text-sm">
+      <span class="text-white/70">Subtotal coins</span>
+      <span id="cartCoinsSubtotal" class="font-semibold">0 ✪</span>
+    </div>
+    <label class="block text-sm text-white/80">Método de pagamento</label>
+    <select id="paymentMethod" class="w-full bg-black/40 border border-roxo/40 rounded-xl px-3 py-2 text-sm">
+      <option value="">Selecione...</option>
+      <option value="mercadopago">Mercado Pago</option>
+      <option value="moeda">Moeda Interna</option>
+    </select>
+    <div class="flex items-center justify-between text-sm">
+      <span class="text-white/70">Total</span>
+      <span id="cartTotalWithFee" class="font-semibold text-roxo">R$ 0,00</span>
+    </div>
+    <button id="btnCheckout" class="w-full mt-1 bg-roxo text-black font-bold rounded-xl px-4 py-3 hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed">Pagar agora</button>
   </div>
-  <!-- NOVO: subtotal em moedas -->
-  <div class="flex items-center justify-between text-sm">
-    <span class="text-white/70">Subtotal em moedas</span>
-    <span id="cartCoinsSubtotal" class="font-semibold">0 ✪</span>
-  </div>
+</aside>
 
-  <label class="block text-sm text-white/80">Método de pagamento</label>
-  <select id="paymentMethod" class="w-full bg-black/40 border border-roxo/40 rounded-xl px-3 py-2">
-    <option value="">Selecione...</option>
-    <option value="mercadopago">Mercado Pago</option>
-    <option value="moeda">Moeda Interna</option>
-  </select>
-
-  <div class="flex items-center justify-between text-sm">
-    <span class="text-white/70">Total</span>
-    <span id="cartTotalWithFee" class="font-semibold text-roxo">R$ 0,00</span>
-  </div>
-
-  <button id="btnCheckout" class="w-full mt-1 bg-roxo text-black font-bold rounded-xl px-4 py-3 hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed">Pagar agora</button>
-</div>
-
-  </aside>  <!-- MODAL INFO DO PRODUTO -->  <div id="infoModal" class="fixed inset-0 z-50">
+<!-- MODAL INFO -->
+<div id="infoModal" class="fixed inset-0 z-50" style="z-index:170;">
   <div class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
   <div class="modal-content relative mx-auto">
     <button id="btnCloseInfo">✕</button>
@@ -379,29 +209,15 @@ Produtos do universo NoHeroes, organizados por categoria. Explore, filtre e adic
   </div>
 </div>
 
-<footer class="bg-black border-t border-[#333] text-center text-[#666] mt-12">
-  <div class="py-6 flex flex-col items-center space-y-2">
-    <div class="flex gap-4 text-sm">
-      <a href="suporte.html" class="hover:text-roxo transition">Suporte</a>
-      <span class="text-[#333]">|</span>
-      <a href="index.html" class="hover:text-roxo transition">Início</a>
-      <span class="text-[#333]">|</span>
-      <a href="sobre.html#faq-section" class="hover:text-roxo transition">FAQ</a>
-    </div><div class="flex gap-4 text-xs">
-  <a href="termos.html" class="hover:text-roxo transition">Termos de Uso e Privacidade</a>
-</div>
+<!-- Footer (componente compartilhado) -->
+<nh-footer></nh-footer>
 
-  </div>  <div class="py-8 border-t border-[#222]">
-    <a href="linktree.html" class="inline-block mb-4">
-      <img src="assets/images/linktree.png" alt="Linktree" class="h-10 mx-auto">
-    </a>
-    <p>Explore. Escolha. Caia. Evolua.</p>
-    <p class="mt-2">Toda escolha tem um preço. Toda queda, uma razão.</p>
-    <p class="text-xs mt-4">© 2025 NoHeroes. Todos os direitos reservados.</p>
-  </div>
-</footer>
 <script src="assets/js/cookies.js"></script>
 <script>
+// Drawer: agora no componente compartilhado <nh-drawer> (gatilho via [data-nh-drawer-toggle])
+</script>
+<script>
+
 // ==========================
 // NoHeroes Store PRO - Script Revisado
 // ==========================
@@ -474,7 +290,7 @@ function resolveImageUrl(u){
   if (u.startsWith('noheroes.com.br')) return `https://${u}`;
 
   // uploads servidos pela API
-  if (u.startsWith('/uploads')) return `https://dev-flmw.onrender.com${u}`;
+  if (u.startsWith('/uploads')) return `https://api.noheroes.com.br${u}`;
 
   // caminho absoluto no front (ex: /assets/images/...)
   if (u.startsWith('/')) return u;
@@ -501,7 +317,7 @@ async function carregarPerfilLoja() {
   if (!jwt) return;
 
   try {
-    const res = await fetch('https://dev-flmw.onrender.com/user/profile', {
+    const res = await fetch('https://api.noheroes.com.br/user/profile', {
       headers: {
         'Authorization': `Bearer ${jwt}`,
         'Content-Type': 'application/json'
@@ -619,40 +435,24 @@ function updateTotalWithFee(){
 // Layout: Filtros
 // ==========================
 function buildFilters(){
-  const containerDesktop = qs('#filtersNav');
-  const containerMobile  = qs('#filtersMobile');
-  containerDesktop.innerHTML = '';
-  containerMobile.innerHTML  = '';
-
+  const pills = qs('#filterPills');
+  if (!pills) return;
+  pills.innerHTML = '';
   const all = ['todas', ...state.categories];
-
-  const mkBtn = (cat) => {
-    const active = state.activeCategory === cat;
-    const base = 'px-3 py-2 rounded-xl border text-sm transition hover:bg-white/5';
-    const cls  = active ? `${base} border-roxo bg-white/5 text-roxo` : `${base} border-roxo/30 text-white/80`;
+  all.forEach(cat => {
     const btn = document.createElement('button');
-    btn.className = cls;
+    btn.className = 'filter-pill' + (state.activeCategory === cat ? ' active' : '');
     btn.textContent = cat === 'todas' ? 'Todas' : cat;
     btn.addEventListener('click', () => { state.activeCategory = cat; applyFilter(); highlightFilters(); });
-    return btn;
-  };
-
-  all.forEach(cat => {
-    containerDesktop.appendChild(mkBtn(cat));
-    containerMobile.appendChild(mkBtn(cat));
+    pills.appendChild(btn);
   });
-
-  highlightFilters();
-  closeDrawerOnFilter();
-
 }
 
 function highlightFilters(){
-  const isActive = (btn) => (btn.textContent.toLowerCase() === (state.activeCategory==='todas'?'todas':state.activeCategory.toLowerCase()));
-  qsa('#filtersNav button, #filtersMobile button').forEach(btn => {
-    const base = 'px-3 py-2 rounded-xl border text-sm transition hover:bg-white/5';
-    if (isActive(btn)) btn.className = `${base} border-roxo bg-white/5 text-roxo`;
-    else btn.className = `${base} border-roxo/30 text-white/80`;
+  qsa('#filterPills .filter-pill').forEach(btn => {
+    const cat = btn.textContent.toLowerCase();
+    const active = state.activeCategory === 'todas' ? cat === 'todas' : cat === state.activeCategory.toLowerCase();
+    btn.classList.toggle('active', active);
   });
 }
 
@@ -671,7 +471,7 @@ function normalizeCat(cat){
 // ==========================
 // Render: Produtos
 // ==========================
-function productCard(p){
+function productCard(p, compact=false){
   const rawImg = (p.imageUrl || p.image_url || p.image || '').trim();
   const imgSrc = resolveImageUrl(rawImg);
   const physicalUrl = getPhysicalUrl(p);
@@ -690,41 +490,77 @@ function productCard(p){
     </a>
   ` : '';
 
+  const isCoinPack = String(p.type||'').toLowerCase() === 'coin_pack';
+  const coinBadge = isCoinPack ? '<span style="position:absolute;top:6px;left:6px;background:rgba(250,204,21,0.9);color:#000;font-size:9px;font-weight:800;padding:2px 6px;border-radius:4px;z-index:2;">COINS</span>' : '';
+
+  const addBtn = (() => {
+    const jwt = getJwt();
+    if (!jwt) return `<button disabled class="nh-card-btn" style="background:#333;color:#666;" title="Faça login">Login necessário</button>`;
+    if (emBreve) return `<button disabled class="nh-card-btn" style="background:#333;color:#666;">Em breve</button>`;
+    return `<button class="nh-card-btn add-btn" data-id="${escapeAttr(p.id)}">+ Carrinho</button>`;
+  })();
+
   return `
-  <article class="relative group rounded-2xl border border-white/10 bg-white/5 backdrop-blur hover:shadow-glow transition overflow-hidden">
+  <article class="nh-card">
     ${emBreve?'<span class="badge-embreve">EM BREVE</span>':''}
-    <button class="absolute top-2 right-2 z-10 h-9 w-9 rounded-lg border border-roxo/40 bg-black/40 hover:bg-black/60 info-btn" data-id="${escapeAttr(p.id)}" data-name="${escapeAttr(p.name)}" data-img="${escapeAttr(imgSrc)}" data-desc="${escapeAttr(p.description||'Sem descrição.')}" title="Detalhes">i</button>
-    <img src="${imgSrc}" alt="${escapeAttr(p.name)}" class="w-full aspect-[2/3] object-cover"/>
-    <div class="p-3">
-      <h3 class="font-display text-base text-white leading-snug">${p.name}</h3>
-      ${p.rarity?`<p class="text-xs text-roxo/90 mt-0.5">${p.rarity}</p>`:''}
-      ${preco}
-     ${(() => {
-  const jwt = getJwt();
-  if (!jwt) {
-    return `<button disabled class="mt-3 w-full bg-zinc-700 text-zinc-400 font-bold rounded-xl px-3 py-2 cursor-not-allowed" title="Faça login para comprar">Login necessário</button>`;
-  }
-  return `<button class="mt-3 w-full bg-roxo text-black font-bold rounded-xl px-3 py-2 add-btn ${btnDisabled}" data-id="${escapeAttr(p.id)}">${emBreve?'EM BREVE':'Adicionar ao carrinho'}</button>`;
-})()}
-    ${btnPhysical}
+    ${coinBadge}
+    <button class="nh-card-info info-btn" data-id="${escapeAttr(p.id)}" data-name="${escapeAttr(p.name)}" data-img="${escapeAttr(imgSrc)}" data-desc="${escapeAttr(p.description||'Sem descrição.')}" title="Detalhes">i</button>
+    <img src="${imgSrc}" alt="${escapeAttr(p.name)}"/>
+    <div class="nh-card-body">
+      <div class="nh-card-name">${p.name}</div>
+      ${p.rarity?`<div class="nh-card-rarity">${p.rarity}</div>`:''}
+      <div class="nh-card-price">${precoReal||precoCoin?(precoReal||'')+((precoReal&&precoCoin)?' / ':'')+( precoCoin||''):'<span style="color:rgba(255,255,255,0.4);font-size:10px;">Gratuito</span>'}</div>
+      ${addBtn}
+      ${btnPhysical}
     </div>
   </article>`;
 }
 
 function renderProducts(){
   const grid = qs('#productsGrid');
-  grid.innerHTML = state.filtered.map(productCard).join('');
-  qs('#emptyState').classList.toggle('hidden', state.filtered.length>0);
+  const empty = qs('#emptyState');
 
+  if (!state.filtered.length) {
+    grid.innerHTML = '';
+    empty.classList.remove('hidden');
+    return;
+  }
+  empty.classList.add('hidden');
+
+  // Agrupa por categoria
+  const byCategory = {};
+  state.filtered.forEach(p => {
+    const cat = normalizeCat(p.category) || 'Outros';
+    if (!byCategory[cat]) byCategory[cat] = [];
+    byCategory[cat].push(p);
+  });
+
+  // Renderiza seções por categoria
+  const cats = Object.keys(byCategory).sort((a,b)=>a.localeCompare(b));
+
+  grid.innerHTML = cats.map((cat, ci) => {
+    const prods = byCategory[cat];
+    const cards = prods.map(p => productCard(p, true)).join('');
+    const sep = ci < cats.length - 1
+      ? '<div class="nh-cat-sep"></div>'
+      : '';
+    return `
+      <div class="nh-cat-section">
+        <h2 class="nh-cat-title">${cat} <span class="nh-cat-count">${prods.length}</span></h2>
+        <div class="nh-scroll-row">${cards}</div>
+      </div>
+      ${sep}`;
+  }).join('');
+
+  // Eventos info-btn e add-btn
   qsa('.info-btn', grid).forEach(btn => btn.addEventListener('click', () => {
-  const id   = btn.getAttribute('data-id');
-  const name = btn.getAttribute('data-name');
-  const img  = btn.getAttribute('data-img');
-  const desc = btn.getAttribute('data-desc');
-
-  const product = state.filtered.find(p => String(p.id) === String(id));
-  openInfo({name, img, desc, product});
-}));
+    const id   = btn.getAttribute('data-id');
+    const name = btn.getAttribute('data-name');
+    const img  = btn.getAttribute('data-img');
+    const desc = btn.getAttribute('data-desc');
+    const product = state.filtered.find(p => String(p.id) === String(id));
+    openInfo({name, img, desc, product});
+  }));
 
   qsa('.add-btn', grid).forEach(btn => btn.addEventListener('click', () => {
     if (btn.textContent.trim().toLowerCase() === 'em breve') return;
@@ -733,7 +569,6 @@ function renderProducts(){
     if (prod) addToCart(prod);
   }));
 
-  // fallback das imagens do grid
   qsa('#productsGrid img').forEach(img => bindImgFallback(img));
 }
 
@@ -826,6 +661,7 @@ function addToCart(p){
   else state.cart.push({
   id: p.id,
   name: p.name,
+  type: p.type || '',
   imageUrl: resolveImageUrl(p.imageUrl || p.image_url || p.image || ''),
   priceReal: Number(p.priceReal || p.price || 0),
   priceCoins: Number(p.priceCoins || 0),
@@ -878,6 +714,19 @@ function renderCart(){
   // fallback das imagens do carrinho (sempre)
   qsa('#cartItems img').forEach(img => bindImgFallback(img));
 
+  // Oculta "Moeda Interna" se há coin_pack no carrinho
+  const hasCoinPack = state.cart.some(i => i.type === 'coin_pack');
+  const methodSel = qs('#paymentMethod');
+  const moedaOpt = methodSel ? methodSel.querySelector('option[value="moeda"]') : null;
+  const coinWarning = qs('#coinPackWarning');
+  if (moedaOpt) moedaOpt.disabled = hasCoinPack;
+  if (hasCoinPack) {
+    if (methodSel && methodSel.value === 'moeda') methodSel.value = 'mercadopago';
+    if (coinWarning) coinWarning.classList.remove('hidden');
+  } else {
+    if (coinWarning) coinWarning.classList.add('hidden');
+  }
+
   // Totais
   qs('#cartSubtotal').textContent = fmtBRL(cartSubtotal());
   updateTotalWithFee();
@@ -907,6 +756,7 @@ if (!jwt) {
       const itensComTaxa = state.cart.map(i => ({
   id: i.id,
   title: i.name,
+  description: i.description || i.name || 'Produto NoHeroes',
   quantity: i.quantity,
   unit_price: Number(i.priceReal), // sem taxa embutida
   category_id: 'store'
@@ -926,7 +776,7 @@ if (!jwt) {
   email: userEmail,
   nome_completo: userName
 };
-      const resp = await fetch('https://dev-flmw.onrender.com/checkout/create-preference', {
+      const resp = await fetch('https://api.noheroes.com.br/checkout/create-preference', {
         method:'POST',
         headers:{ 'Content-Type':'application/json', ...(jwt?{ 'Authorization':`Bearer ${jwt}` }: {}) },
         body: JSON.stringify(body)
@@ -955,7 +805,7 @@ if (!jwt) {
   totalWithFee
   };
 
-    const resp = await fetch('https://dev-flmw.onrender.com/coins/purchase-cart', {
+    const resp = await fetch('https://api.noheroes.com.br/coins/purchase-cart', {
       method:'POST',
       headers:{ 'Content-Type':'application/json', ...(jwt?{ 'Authorization':`Bearer ${jwt}` }: {}) },
       body: JSON.stringify(body)
@@ -999,7 +849,7 @@ async function loadProducts(){
   showProductsLoading();
 
   try{
-    const res = await fetch('https://dev-flmw.onrender.com/shop');
+    const res = await fetch('https://api.noheroes.com.br/shop');
     handleAuthError(res);
     if (!res.ok) throw new Error('Falha ao carregar produtos.');
 
@@ -1044,66 +894,18 @@ function escapeAttr(s=''){
   return String(s).replace(/[`"'\\]/g, ch=>({"`":"\\`","\"":"&quot;","'":"&#39;","\\":"\\\\"}[ch]||ch)); 
 }
 
-// ==========================
-// Animação brasas
-// ==========================
-const canvas = document.getElementById("brasasCanvas");
-const ctx = canvas.getContext("2d");
-let particles = [], w, h;
-
-function resizeCanvas() {
-  w = canvas.width = window.innerWidth;
-  h = canvas.height = window.innerHeight;
-}
-window.addEventListener("resize", resizeCanvas);
-resizeCanvas();
-
-class Particle {
-  constructor() { this.reset(true); }
-  reset(initial = false) {
-    this.x = Math.random() * w;
-    this.y = initial ? Math.random() * h : h + Math.random() * 100;
-    this.size = 1 + Math.random() * 2.5;
-    this.speed = 0.2 + Math.random() * 0.5;
-    this.alpha = 0.4 + Math.random() * 0.3;
-    this.drift = (Math.random() - 0.5) * 0.5;
-  }
-  update() {
-    this.y -= this.speed;
-    this.x += this.drift;
-    if (this.y < -10 || this.x < -50 || this.x > w + 50) this.reset();
-  }
-  draw() {
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`;
-    ctx.shadowColor = "#a855f7";
-    ctx.shadowBlur = 12;
-    ctx.fill();
-  }
-}
-function createParticles(n) { for (let i = 0; i < n; i++) particles.push(new Particle()); }
-function animate() { ctx.clearRect(0, 0, w, h); for (const p of particles) { p.update(); p.draw(); } requestAnimationFrame(animate); }
-createParticles(150); animate();
+// Brasas: agora no componente compartilhado <nh-background> (noheroes-ui.js)
 
 // Fechar drawer ao clicar em um filtro (mobile)
-function closeDrawerOnFilter() {
-  qsa('#filtersMobile button').forEach(btn => {
-    btn.addEventListener('click', () => {
-      qs('#filtersDrawer').classList.add('hidden');
-    });
-  });
-}
+function closeDrawerOnFilter() {}
 
 // ==========================
 // Eventos de UI
 // ==========================
 document.addEventListener('DOMContentLoaded', () => {
-carregarPerfilLoja();
+  carregarPerfilLoja();
   qs('#btnCart').addEventListener('click', ()=> toggleCart());
   qs('#btnCloseCart').addEventListener('click', ()=> toggleCart(false));
-  const fm = qs('#filtersDrawer');
-  qs('#btnOpenFiltersMobile').addEventListener('click', ()=> fm.classList.toggle('hidden'));
   qs('#btnCloseInfo').addEventListener('click', closeInfo);
   qs('#infoModal').addEventListener('click', (e)=>{ if (e.target.id==='infoModal') closeInfo(); });
   qs('#paymentMethod').addEventListener('change', updateTotalWithFee);
@@ -1111,15 +913,8 @@ carregarPerfilLoja();
   loadCart(); renderCart(); loadProducts();
 });
 // Fechar drawer tocando fora (mobile)
-document.addEventListener('click', e => {
-  const drawer = qs('#filtersDrawer');
-  const btn = qs('#btnOpenFiltersMobile');
 
-  // Se clicou fora do drawer e não foi o botão que abre
-  if (!drawer.contains(e.target) && !btn.contains(e.target)) {
-  drawer.classList.add('hidden');
-}
-});
+
 </script>
 </body>
 </html>

@@ -3,6 +3,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NoHeroes | Portal</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/css/noheroes-ui.css">
+  <script defer src="assets/js/noheroes-ui.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root{ --nh-bg:#0a0a0a; --nh-ink:#e5e5e5; --nh-ink-dim:#bfbfe0; --nh-accent1:#8f4fff; --nh-accent2:#facc15; --nh-border:rgba(255,255,255,.10); }
@@ -37,9 +39,83 @@
     /* Ícones sociais/communities (SVG links) */
     .icon-btn{display:inline-flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:12px;border:1px solid var(--nh-border);background:rgba(255,255,255,.06);backdrop-filter:blur(8px);transition:transform .15s ease,filter .15s ease}
     .icon-btn:hover{transform:translateY(-2px);filter:brightness(1.06)}
+
+    /* DRAWER NH */
+    #nh-drawer{position:fixed;top:0;right:0;width:280px;height:100%;background:rgba(5,5,7,0.97);backdrop-filter:blur(20px);border-left:1px solid rgba(143,79,255,0.2);box-shadow:-10px 0 30px rgba(0,0,0,0.9);z-index:100;transform:translateX(100%);transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);overflow-y:auto}
+    #nh-drawer-ov{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:90;display:none;opacity:0;transition:opacity 0.3s}
+    .nh-di{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;margin-bottom:5px;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid transparent;text-decoration:none;color:#e5e5e5;transition:all 0.3s}
+    .nh-di:hover{background:rgba(143,79,255,0.08);border-color:rgba(143,79,255,0.3)}
+    .nh-dt{font-size:9px;font-family:'Cinzel Decorative',serif;text-transform:uppercase;letter-spacing:1px;color:#8f4fff;opacity:0.7}
+    /* MODAL OUTROS PROJETOS */
+    #outros-modal{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.88);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:20px}
+    #outros-modal.open{display:flex}
   </style>
 </head>
 <body class="text-center py-12 px-4">
+
+<!-- DRAWER -->
+<div id="nh-drawer-ov" onclick="nhClose()"></div>
+<div id="nh-drawer">
+  <button onclick="nhClose()" style="position:absolute;top:18px;right:16px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
+  <div style="padding:28px 20px;margin-top:18px;">
+    <h2 style="font-family:'Cinzel Decorative',serif;font-size:18px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:0 0 4px;">NoHeroes</h2>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:22px;"><span style="height:1px;width:28px;background:linear-gradient(90deg,#8f4fff,#d9b55a);display:block;"></span><span style="font-size:10px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.3em;">Universo Sombrio</span></div>
+    <nav style="display:flex;flex-direction:column;">
+      <a href="index.html" class="nh-di"><div style="display:flex;align-items:center;gap:11px;"><svg width="17" height="17" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span style="font-size:13px;font-weight:700;">Início</span></div><span class="nh-dt">Portal</span></a>
+      <a href="leitor.html" class="nh-di"><div style="display:flex;align-items:center;gap:11px;"><svg width="17" height="17" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg><span style="font-size:13px;font-weight:700;">Biblioteca</span></div><span class="nh-dt">Crônicas</span></a>
+      <a href="store.html" class="nh-di"><div style="display:flex;align-items:center;gap:11px;"><svg width="17" height="17" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M16 11V7a4 4 0 00-8 0v4M5 11h14l1 9H4l1-9z"/></svg><span style="font-size:13px;font-weight:700;">Loja</span></div><span class="nh-dt">Mercado</span></a>
+      <a href="sobre.html" class="nh-di"><div style="display:flex;align-items:center;gap:11px;"><svg width="17" height="17" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span style="font-size:13px;font-weight:700;">Sobre</span></div><span class="nh-dt">Entidade</span></a>
+      <a href="suporte.html" class="nh-di"><div style="display:flex;align-items:center;gap:11px;"><svg width="17" height="17" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/></svg><span style="font-size:13px;font-weight:700;">Suporte</span></div><span class="nh-dt">Ajuda</span></a>
+      <a href="portifólio.html" class="nh-di"><div style="display:flex;align-items:center;gap:11px;"><svg width="17" height="17" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg><span style="font-size:13px;font-weight:700;">Portfólio</span></div><span class="nh-dt">Trabalhos</span></a>
+    </nav>
+    <div style="margin-top:24px;text-align:center;"><p style="font-size:8px;text-transform:uppercase;letter-spacing:0.5em;color:rgba(255,255,255,0.15);">Sem heróis. Apenas você.</p></div>
+  </div>
+</div>
+
+<!-- MODAL OUTROS PROJETOS -->
+<div id="outros-modal" onclick="if(event.target===this)fecharOutros()">
+  <div style="background:#0c0a10;border:1px solid rgba(143,79,255,0.3);border-radius:16px;padding:24px;max-width:340px;width:100%;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+      <h3 style="font-family:'Cinzel Decorative',serif;font-size:15px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:0;">Outros projetos</h3>
+      <button onclick="fecharOutros()" style="width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);font-size:14px;cursor:pointer;">✕</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <!-- Manual da Ancestralidade — azul celestial -->
+      <a href="https://manualancestralidade.com.br" target="_blank" rel="noopener"
+         style="display:block;padding:12px 16px;border-radius:10px;text-decoration:none;font-weight:700;font-size:13px;text-align:center;transition:filter .2s,transform .2s;
+                background:linear-gradient(135deg,#1e3a5f,#2e6da4,#87ceeb,#2e6da4,#1e3a5f);background-size:300% 300%;animation:fluidPulse 6s ease-in-out infinite;color:#fff;border:1px solid rgba(135,206,235,0.3);box-shadow:0 6px 20px rgba(46,109,164,0.3);"
+         onmouseover="this.style.filter='brightness(1.1)';this.style.transform='translateY(-1px)'"
+         onmouseout="this.style.filter='';this.style.transform=''">
+        ✦ Manual da Ancestralidade
+      </a>
+      <!-- Pousada Cantos da Mata — bege/marrom gourmet -->
+      <a href="https://cantosdomata.com.br" target="_blank" rel="noopener"
+         style="display:block;padding:12px 16px;border-radius:10px;text-decoration:none;font-weight:700;font-size:13px;text-align:center;transition:filter .2s,transform .2s;
+                background:linear-gradient(135deg,#3b2314,#7a4f35,#c9a87c,#7a4f35,#3b2314);background-size:300% 300%;animation:fluidPulse 7s ease-in-out infinite;color:#f5ead8;border:1px solid rgba(201,168,124,0.35);box-shadow:0 6px 20px rgba(122,79,53,0.35);"
+         onmouseover="this.style.filter='brightness(1.1)';this.style.transform='translateY(-1px)'"
+         onmouseout="this.style.filter='';this.style.transform=''">
+        ✦ Pousada Cantos da Mata
+      </a>
+      <!-- Em breve -->
+      <div style="display:block;padding:12px 16px;border-radius:10px;font-weight:700;font-size:13px;text-align:center;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);color:rgba(255,255,255,0.25);">
+        ✦ Em breve...
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- HEADER NH -->
+<header style="position:fixed;top:0;left:0;right:0;z-index:60;height:56px;background:rgba(10,10,10,0.9);border-bottom:1px solid rgba(255,255,255,0.06);backdrop-filter:blur(12px);display:flex;align-items:center;padding:0 16px;justify-content:space-between;">
+  <a href="index.html" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+    <div style="width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,#8f4fff,#d9b55a);flex-shrink:0;"></div>
+    <span style="font-family:'Cinzel Decorative',serif;font-size:14px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">NoHeroes</span>
+  </a>
+  <button onclick="nhOpen()" style="width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+</header>
+<div style="height:56px;"></div>
   <!-- TOPO: LOGO + slogan (inalterado) -->
   <div class="mb-6">
     <img src="assets/images/noheroes logo.png" alt="Logotipo do NoHeroes" class="mx-auto w-32 glow-logo">
@@ -85,8 +161,22 @@
     <a href="store.html" class="btn-ghost">Loja</a>
     <!-- 5: Apoio Vitalista (abaixo do portfólio, mantendo ordem solicitada) -->
     <a href="apoiar.html" class="btn-ghost">Apoio Vitalista</a>
-    <!-- 6: Novidades (ex-Blog) -->
-    <a href="news.html" class="btn-ghost">Novidades</a>
+    <!-- 6: Biblioteca (Mangás) -->
+    <div class="flex items-stretch gap-3 max-w-sm mx-auto">
+      <a href="leitor.html" class="btn-ghost w-full flex items-center gap-4 group transition-transform duration-200 ease-out hover:scale-[1.03]">
+        <span class="h-20 aspect-[2/3] rounded-xl overflow-hidden flex-shrink-0 border border-white/25 bg-white/5 shadow-[0_0_18px_rgba(143,79,255,.35)] transition-transform duration-200 ease-out group-hover:scale-125">
+          <img src="assets/images/ACDA.jpg" alt="Mangás NoHeroes" class="w-full h-full object-cover" loading="lazy" onerror="this.parentElement.style.display='none';" />
+        </span>
+        <span class="leading-tight text-left flex-1">
+          Biblioteca<br><span style="font-size:11px;color:rgba(255,255,255,0.4);font-weight:400;">Mangás</span>
+        </span>
+      </a>
+    </div>
+
+    <!-- 7: Outros projetos -->
+    <button onclick="abrirOutros()" class="btn-ghost" style="background:linear-gradient(135deg,rgba(143,79,255,0.12),rgba(217,181,90,0.08));border-color:rgba(143,79,255,0.25);color:rgba(200,180,255,0.85);width:100%;">
+      Outros projetos da NoHeroes ↗
+    </button>
   </div> 
 
  <!-- SOCIAL + COMUNIDADES: painel único glass -->  <section class="max-w-md mx-auto mt-8 panel p-5">
@@ -125,10 +215,7 @@
       <a href="https://pixabay.com/music//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=297898" target="_blank" style="color: #c084fc;">Pixabay</a>
     </p>
   </div>
-  <audio id="bg-music" src="noheroes_bg_ambience.mp3" autoplay loop></audio>  <!-- Footer (inalterado) -->  <footer class="mt-16 text-gray-500 text-sm">
-    <p>&copy; 2025 NoHeroes. Todos os direitos reservados.</p>
-    <p class="italic mt-2">Explore. Escolha. Caia. Evolua.</p>
-  </footer>  <!-- BACKGROUND CANVAS + LOBOS (mantidos como no original) --><canvas id="brasasCanvas"></canvas> <img src="lobo_freq_esquerda.png" alt="Lobo FREQ" class="lobo lobo-esquerda"> <img src="lobo_roar_direita.png" alt="Lobo ROAR" class="lobo lobo-direita">
+  <audio id="bg-music" src="noheroes_bg_ambience.mp3" autoplay loop></audio>  <!-- Footer (inalterado) -->  <nh-footer></nh-footer>  <!-- BACKGROUND CANVAS + LOBOS (mantidos como no original) --><nh-background></nh-background> <img src="lobo_freq_esquerda.png" alt="Lobo FREQ" class="lobo lobo-esquerda"> <img src="lobo_roar_direita.png" alt="Lobo ROAR" class="lobo lobo-direita">
 
   <style>
     /* ====== Estilos originais preservados (brasas + lobos) ====== */
@@ -154,15 +241,22 @@
     });
   </script> <script src="assets/js/cookies.js"></script>
  <script>
-    // Brasas (inalterado do original)
-    const canvas = document.getElementById("brasasCanvas");
-    const ctx = canvas.getContext("2d");
-    let particles = []; let w, h;
-    function resizeCanvas(){ w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
-    window.addEventListener("resize", resizeCanvas); resizeCanvas();
-    class Particle{ constructor(){ this.reset(true); } reset(initial=false){ this.x=Math.random()*w; this.y= initial? Math.random()*h : h+Math.random()*100; this.size=1+Math.random()*2.5; this.speed=0.2+Math.random()*0.5; this.alpha=0.4+Math.random()*0.3; this.drift=(Math.random()-0.5)*0.5; } update(){ this.y-=this.speed; this.x+=this.drift; if(this.y<-10||this.x<-50||this.x>w+50) this.reset(); } draw(){ ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fillStyle=`rgba(168, 85, 247, ${this.alpha})`; ctx.shadowColor="#a855f7"; ctx.shadowBlur=12; ctx.fill(); } }
-    function createParticles(n){ for(let i=0;i<n;i++) particles.push(new Particle()); }
-    function animate(){ ctx.clearRect(0,0,w,h); for(const p of particles){ p.update(); p.draw(); } requestAnimationFrame(animate); }
-    createParticles(150); animate();
-  </script></body>
+    // Brasas: agora no componente compartilhado <nh-background> (noheroes-ui.js)
+  
+    // DRAWER NH
+    function nhOpen(){
+      document.getElementById('nh-drawer').style.transform='translateX(0)';
+      const ov=document.getElementById('nh-drawer-ov');
+      ov.style.display='block';setTimeout(()=>ov.style.opacity='1',10);
+    }
+    function nhClose(){
+      document.getElementById('nh-drawer').style.transform='translateX(100%)';
+      const ov=document.getElementById('nh-drawer-ov');
+      ov.style.opacity='0';setTimeout(()=>ov.style.display='none',300);
+    }
+    // MODAL OUTROS PROJETOS
+    function abrirOutros(){ document.getElementById('outros-modal').classList.add('open'); }
+    function fecharOutros(){ document.getElementById('outros-modal').classList.remove('open'); }
+    document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ nhClose(); fecharOutros(); } });
+</script></body>
 </html>

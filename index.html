@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  
   <title>NoHeroes | Home</title>  
   <script src="https://cdn.tailwindcss.com"></script>  
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">  
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/noheroes-ui.css">
   <style>  
     body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #e5e5e5; }  
     h1, h2, .cinzel {  
@@ -31,19 +32,7 @@
   background: linear-gradient(to right, #8f4fff, #facc15);
   box-shadow: 0 0 6px #8f4fff88, 0 0 10px #facc1588;
 }
-.glow-interno-left {
-  box-shadow: inset 8px 0 18px rgba(143, 79, 255, 0.5);
-  border-left: 1px solid rgba(143, 79, 255, 0.15);
-}
-#brasasCanvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;
-  pointer-events: none;
-}
+/* (#brasasCanvas e estilos do drawer agora vivem em assets/css/noheroes-ui.css) */
 @keyframes fluidPulse {
   0%, 100% {
     background-position: 0% 50%;
@@ -66,11 +55,11 @@
   font-family: 'Cinzel Decorative', serif;
   border-radius: 9999px;
   padding: 0.75rem 1.5rem;
-  transition: all 0.3s ease;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
 }
 .btn-líquido-pulsante:hover {
-  transform: scale(1.1);
+  transform: scale(1.06);
   box-shadow: 0 0 30px #facc15dd, 0 0 40px #8f4fffcc;
 }
 
@@ -89,13 +78,15 @@
 }
 .invisivel {
   opacity: 0;
-  transform: translateY(-50px);
-  transition: opacity 1.2s ease, transform 1.2s ease;
+  transform: translateY(-32px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
   will-change: opacity, transform;
 }
 
 .slide-top {
-  transform: translateY(-50px);
+  transform: translateY(-32px);
 }
 
 .entrou {
@@ -280,12 +271,12 @@
   font-family: 'Cinzel Decorative', serif;
   border-radius: 9999px;
   padding: 0.75rem 1.5rem;
-  transition: all 0.3s ease;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
   border: 1px solid #8f4fff;
 }
 .btn-líquido-pulsante-escuro:hover {
-  transform: scale(1.1);
+  transform: scale(1.06);
   box-shadow: 0 0 30px #8f4fffcc, 0 0 40px #000000cc;
 }
 .btn-líquido-pulsante-escuro.glitchando {
@@ -377,7 +368,7 @@
   margin-left: 0.35rem;
 }
 #carousel-container {
-  perspective: 1000px;
+  perspective: 1200px;
   width: 100%;
   height: 420px;
   position: relative;
@@ -465,7 +456,6 @@ backface-visibility: hidden;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-fill-color: transparent;
 }
 
 /* Botões refinados */
@@ -495,7 +485,6 @@ backface-visibility: hidden;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-fill-color: transparent;
   pointer-events: none;
 }
 
@@ -559,167 +548,14 @@ backface-visibility: hidden;
     min-width: 200%;
     animation: marquee 70s linear infinite;
   }
-/* --- DRAWER PREMIUM REFINEMENT --- */
-#drawer {
-    background: rgba(5, 5, 7, 0.95);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-left: 1px solid rgba(143, 79, 255, 0.2);
-    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.9);
-}
-
-.drawer-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem;
-    margin-bottom: 0.5rem;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid transparent;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.drawer-item:hover {
-    background: rgba(143, 79, 255, 0.08);
-    border-color: rgba(143, 79, 255, 0.3);
-    transform: translateX(-5px);
-}
-
-.drawer-item svg {
-    filter: drop-shadow(0 0 5px rgba(217, 181, 90, 0.3));
-    transition: transform 0.3s ease;
-}
-
-.drawer-item:hover svg {
-    transform: scale(1.1);
-    filter: drop-shadow(0 0 8px rgba(143, 79, 255, 0.6));
-}
-
-.drawer-tag {
-    font-size: 9px;
-    font-family: 'Cinzel Decorative', serif;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #8f4fff;
-    opacity: 0.7;
-}
-
-/* Scrollbar interna do drawer */
-#drawer::-webkit-scrollbar {
-    width: 3px;
-}
-#drawer::-webkit-scrollbar-thumb {
-    background: linear-gradient(#8f4fff, #d9b55a);
-    border-radius: 10px;
-}
-
+/* Estilos do drawer e reduced-motion agora em assets/css/noheroes-ui.css */
 </style>
 
 </head>  
 <body class="leading-relaxed">   
 
- <!-- HEADER LIMPO COM DRAWER --> 
-<header class="fixed top-0 left-0 w-full h-14 bg-[#0a0a0a] border-b border-[#2e2e2e] z-50">
-  <!-- Botão hambúrguer mágico -->
-<button id="hamburgerBtn" 
-  class="absolute top-3 right-4 text-3xl text-white hover:text-[#a855f7] transition z-[60]">
-  ☰
-</button>
-
-  <!-- Logo centralizada e VAZANDO para baixo -->
-  <div class="absolute left-1/2 top-full transform -translate-x-1/2 -translate-y-1/2 z-30">
-    <a href="index.html">
-      <img src="assets/images/noheroes logo.png" alt="NoHeroes" class="h-32 drop-shadow-glow" />
-    </a>
-  </div>
-</header>
-
-<div class="fixed top-14 left-0 w-full h-1 barra-degrade z-40"></div>
-
-<!-- Drawer -->
-<div id="drawer" class="fixed top-0 right-0 w-72 h-full text-white transform transition-transform duration-500 z-[100] overflow-y-auto" style="transform: translateX(100%)">
-    
-    <button onclick="toggleDrawer()" class="absolute top-6 right-6 h-10 w-10 flex items-center justify-center rounded-full glass hover:bg-white/10 transition group">
-        <span class="text-xl group-hover:rotate-90 transition-transform duration-300">✕</span>
-    </button>
-
-    <div class="p-8 mt-12 flex flex-col h-full">
-        <header class="mb-10">
-            <h1 class="text-3xl font-black gradiente-noheroes cinzel tracking-tighter">NOHEROES</h1>
-            <div class="flex items-center gap-2 mt-1">
-                <span class="h-[1px] w-8 barra-degrade"></span>
-                <p class="text-white/30 text-[10px] uppercase font-black tracking-[0.3em]">Universo Sombrio</p>
-            </div>
-        </header>
-
-        <nav class="flex flex-col">
-            <a href="index.html" class="drawer-item">
-                <div class="flex items-center gap-4">
-                    <svg class="w-5 h-5" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-                    <span class="text-sm font-bold tracking-wide">Início</span>
-                </div>
-                <span class="drawer-tag">Portal</span>
-            </a>
-
-            <a href="leitor.html" class="drawer-item">
-                <div class="flex items-center gap-4">
-                    <svg class="w-5 h-5" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-                    <span class="text-sm font-bold tracking-wide">Mangás</span>
-                </div>
-                <span class="drawer-tag">Crônicas</span>
-            </a>
-
-            <a href="sobre.html" class="drawer-item">
-                <div class="flex items-center gap-4">
-                    <svg class="w-5 h-5" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    <span class="text-sm font-bold tracking-wide">Sobre</span>
-                </div>
-                <span class="drawer-tag">Entidade</span>
-            </a>
-
-            <a href="store.html" class="drawer-item">
-                <div class="flex items-center gap-4">
-                    <svg class="w-5 h-5" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M16 11V7a4 4 0 00-8 0v4M5 11h14l1 9H4l1-9z"/></svg>
-                    <span class="text-sm font-bold tracking-wide">Loja</span>
-                </div>
-                <span class="drawer-tag">Mercado</span>
-            </a>
-
-            <a href="profile.html" class="drawer-item">
-                <div class="flex items-center gap-4">
-                    <svg class="w-5 h-5" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                    <span class="text-sm font-bold tracking-wide">Perfil</span>
-                </div>
-                <span class="drawer-tag">Avatar</span>
-            </a>
-
-            <a href="oraculum.html" class="drawer-item">
-                <div class="flex items-center gap-4">
-                    <svg class="w-5 h-5" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
-                    <span class="text-sm font-bold tracking-wide">Oráculo</span>
-                </div>
-                <span class="drawer-tag">Mente</span>
-            </a>
-
-            <a href="suporte.html" class="drawer-item" style="border-color:rgba(143,79,255,0.25);background:rgba(143,79,255,0.04);">
-                <div class="flex items-center gap-4">
-                    <svg class="w-5 h-5" fill="none" stroke="#c4a3ff" stroke-width="1.5" viewBox="0 0 24 24"><path d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-                    <span class="text-sm font-bold tracking-wide" style="color:#c4a3ff;">Suporte</span>
-                </div>
-                <span class="drawer-tag" style="color:#c4a3ff;">Ajuda</span>
-            </a>
-        </nav>
-
-        <div class="mt-auto pt-10 text-center">
-            <p class="text-[8px] uppercase tracking-[0.5em] text-white/20">Sem heróis. Apenas você.</p>
-        </div>
-    </div>
-</div>
-
-
-<!-- Overlay para clicar fora e fechar -->
-<div id="drawerOverlay" class="fixed inset-0 bg-black bg-opacity-60 hidden z-30"></div>
+<!-- Header + drawer + overlay (componente compartilhado) -->
+<nh-header></nh-header>
 
     <!-- Main --> 
    <main class="pt-8">  
@@ -873,8 +709,8 @@ backface-visibility: hidden;
   </p>
 
   <div class="relative h-64 overflow-hidden">
-    <div class="absolute inset-0 flex items-center justify-center animate-carousel gap-6">
-       <div id="carousel-container" class="relative h-[280px] perspective-[1200px] mx-auto">
+    <div class="absolute inset-0 flex items-center justify-center gap-6">
+       <div id="carousel-container" class="relative h-[280px] mx-auto">
     <div id="carousel-inner" class="absolute w-full h-full flex items-center justify-center">
       <!-- Os .glass-card serão inseridos aqui -->
     </div>
@@ -902,7 +738,7 @@ backface-visibility: hidden;
 </section>
 
 <!-- 5. GAMIFICAÇÃO -->  
-<section id="sistema" class="reveal-top py-16 px-6 max-w-5xl mx-auto text-center reveal">
+<section id="sistema" class="reveal-top py-16 px-6 max-w-5xl mx-auto text-center">
   <h2 class="text-3xl md:text-4xl font-black gradiente-noheroes leading-tight mb-12 tracking-wide uppercase">
   Um sistema.<br>Dois universos.<br>Um jogador.<br>Duas decisões.
 </h2>
@@ -934,6 +770,7 @@ backface-visibility: hidden;
     </button>
   </div>
 </div>
+  </div>
 </section>
 
  <!-- 6. APOIO VITALISTA -->
@@ -951,7 +788,7 @@ backface-visibility: hidden;
 </section>
 
 <!-- 7. COMUNIDADE -->
-<section id="comunidade" class="reveal-top py-16 px-8 max-w-4xl mx-auto text-center reveal" style="
+<section id="comunidade" class="reveal-top py-16 px-8 max-w-4xl mx-auto text-center" style="
   background: rgba(0,0,0,0);
 ">
   <h2 class="text-2xl md:text-3xl font-bold uppercase tracking-wide mb-8 gradiente-noheroes-calm cinzel">
@@ -996,26 +833,8 @@ backface-visibility: hidden;
   </div>
 </section>
 
-  <div class="w-full h-1 barra-degrade"></div>
-
-<footer style="background:#000;border-top:1px solid rgba(255,255,255,0.06);padding:48px 20px;text-align:center;">
-  <a href="linktree.html" class="inline-block mb-4">
-    <img src="assets/images/linktree.png" alt="Linktree" style="height:32px;margin:0 auto;opacity:0.6;transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.6">
-  </a>
-  <div style="font-family:'Cinzel Decorative',serif;font-size:18px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px;">NoHeroes</div>
-  <div style="width:40px;height:1px;background:linear-gradient(90deg,#8f4fff,#d9b55a);margin:0 auto 16px;"></div>
-  <p style="font-size:13px;color:rgba(255,255,255,0.3);font-style:italic;margin:0 0 4px;">Explore. Escolha. Caia. Evolua.</p>
-  <p style="font-size:12px;color:rgba(255,255,255,0.2);margin:0 0 20px;">Toda escolha tem um preço. Toda queda, uma razão.</p>
-  <div style="display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:20px;">
-    <a href="sobre.html" style="font-size:11px;color:rgba(255,255,255,0.25);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Sobre</a>
-    <a href="leitor.html" style="font-size:11px;color:rgba(255,255,255,0.25);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Biblioteca</a>
-    <a href="store.html" style="font-size:11px;color:rgba(255,255,255,0.25);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Loja</a>
-    <a href="apoiar.html" style="font-size:11px;color:rgba(255,255,255,0.25);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Apoiar</a>
-    <a href="suporte.html" style="font-size:11px;color:rgba(255,255,255,0.25);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Suporte</a>
-    <a href="termos.html" style="font-size:11px;color:rgba(255,255,255,0.25);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Termos</a>
-  </div>
-  <p style="font-size:11px;color:rgba(255,255,255,0.15);margin:0;">© <span id="footerYear"></span> NoHeroes. Todos os direitos reservados.</p>
-</footer>
+<!-- Footer (componente compartilhado) -->
+<nh-footer></nh-footer>
   </main>
 
 <div id="modal-sistema">
@@ -1043,7 +862,9 @@ backface-visibility: hidden;
   </div>
 </div>
 
-<canvas id="brasasCanvas"></canvas>
+<!-- Fundo animado (componente compartilhado) -->
+<nh-background></nh-background>
+<script defer src="assets/js/noheroes-ui.js"></script>
 <script src="assets/js/suporte-widget.js"></script>
 <script src="assets/js/cookies.js"></script>
  <script>  
@@ -1059,112 +880,44 @@ backface-visibility: hidden;
   });
   document.getElementById('footerYear') && (document.getElementById('footerYear').textContent = new Date().getFullYear());  
 
-  const hamburgerBtn = document.getElementById('hamburgerBtn');
-const drawer = document.getElementById('drawer');
-const overlay = document.getElementById('drawerOverlay');
+  // O header/drawer e o fundo de brasas agora são componentes
+  // compartilhados (<nh-header>, <nh-background>) — ver assets/js/noheroes-ui.js.
+  // Aqui fica só o que é específico desta página.
 
-let isDrawerOpen = false;
-
-function toggleDrawer() {
-  isDrawerOpen = !isDrawerOpen;
-
-  // Transições certas: abre e fecha para a direita
-  drawer.style.transform = isDrawerOpen ? 'translateX(0)' : 'translateX(100%)';
-
-  overlay.style.display = isDrawerOpen ? 'block' : 'none';
-  hamburgerBtn.textContent = isDrawerOpen ? '✕' : '☰';
-}
-
-hamburgerBtn.addEventListener('click', toggleDrawer);
-overlay.addEventListener('click', toggleDrawer);
-
-  const canvas = document.getElementById("brasasCanvas");
-const ctx = canvas.getContext("2d");
-let particles = [];
-let w, h;
-
-function resizeCanvas() {
-  const ratio = window.devicePixelRatio || 1;
-  w = canvas.width = window.innerWidth * ratio;
-  h = canvas.height = window.innerHeight * ratio;
-  canvas.style.width = window.innerWidth + "px";
-  canvas.style.height = window.innerHeight + "px";
-  ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset transform
-  ctx.scale(ratio, ratio);
-}
-
-class Particle {
-  constructor() {
-    this.reset(true);
-  }
-
-  reset(initial = false) {
-    this.x = Math.random() * w;
-    this.y = initial ? Math.random() * h : h + Math.random() * 100;
-    this.size = 1 + Math.random() * 2.5;
-    this.speed = 0.2 + Math.random() * 0.5;
-    this.alpha = 0.4 + Math.random() * 0.3;
-    this.drift = (Math.random() - 0.5) * 0.5;
-  }
-
-  update() {
-    this.y -= this.speed;
-    this.x += this.drift;
-    if (this.y < -10 || this.x < -50 || this.x > w + 50) this.reset();
-  }
-
-  draw() {
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`;
-    ctx.shadowColor = "#a855f7";
-    ctx.shadowBlur = 12;
-    ctx.fill();
-  }
-}
-
-function createParticles(count) {
-  particles = [];
-  for (let i = 0; i < count; i++) {
-    particles.push(new Particle());
-  }
-}
-
-function animate() {
-  ctx.clearRect(0, 0, w, h);
-  for (const p of particles) {
-    p.update();
-    p.draw();
-  }
-  requestAnimationFrame(animate);
-}
-
-window.addEventListener("load", () => {
-  resizeCanvas();         // evita flicker inicial
-  const ratio = window.devicePixelRatio || 1;
-createParticles(Math.floor(150 * ratio));   // ou qualquer quantidade desejada
-  animate();              // inicia animação suave
-});
-
-window.addEventListener("resize", resizeCanvas);
+  // Movimento reduzido (usado também pelo reveal abaixo).
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function revelarDeCima(selector) {
   const elementos = document.querySelectorAll(selector);
+
+  // Sem animação para quem pediu movimento reduzido: mostra tudo de imediato.
+  if (prefersReducedMotion) {
+    elementos.forEach((el) => el.classList.add('entrou'));
+    return;
+  }
 
   const observer = new IntersectionObserver((entradas) => {
     entradas.forEach((entrada) => {
       if (entrada.isIntersecting) {
         entrada.target.classList.add('entrou');
-      } else {
-        entrada.target.classList.remove('entrou'); // ← anima de novo se voltar
+        observer.unobserve(entrada.target); // anima UMA vez só → fim do lag ao rolar
       }
     });
   }, {
-    threshold: 0.6 // só anima quando ~30% do bloco entra de fato
+    threshold: 0.15,                 // dispara assim que o bloco começa a aparecer
+    rootMargin: '0px 0px -10% 0px'   // antecipa um pouco a entrada, sensação mais fluida
   });
 
   elementos.forEach((el) => {
     el.classList.add('invisivel', 'slide-top');
+    // Stagger leve só entre cards agrupados (ex.: os 4 da grade) — cascata elegante.
+    // Seções inteiras revelam sozinhas conforme a rolagem, então ficam sem atraso.
+    const irmaos = el.parentElement
+      ? Array.prototype.filter.call(el.parentElement.children, (c) => c.matches(selector))
+      : [el];
+    const ehGrupo = el.tagName !== 'SECTION' && irmaos.length > 1;
+    const indice = ehGrupo ? irmaos.indexOf(el) : 0;
+    el.style.setProperty('--reveal-delay', (Math.min(indice, 3) * 90) + 'ms');
     observer.observe(el);
   });
 }

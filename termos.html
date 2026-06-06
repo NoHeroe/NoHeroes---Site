@@ -1,456 +1,655 @@
-<!DOCTYPE html><html lang="pt-BR" class="scroll-smooth">
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NoHeroes — Termos de Uso, Privacidade e Segurança</title>
-  <meta name="description" content="Termos de Uso, Política de Privacidade e Segurança da NoHeroes para acesso a livros, imagens, ebooks, mangás, animes, apps, jogos, lore, design e loja digital."/>
-  <meta name="robots" content="noindex, noarchive" />
-  <link rel="icon" href="/favicon.ico" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    :target { scroll-margin-top: 7rem; }
-  </style>
-  <!-- JSON-LD opcional (SEO/estrutura) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "NoHeroes — Termos de Uso, Privacidade e Segurança",
-    "primaryImageOfPage": "/favicon.ico",
-    "about": [{"@type":"CreativeWork","name":"TermsOfService"},{"@type":"CreativeWork","name":"PrivacyPolicy"}]
-  }
-  </script>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>NoHeroes — Termos de Uso, Privacidade & Segurança</title>
+<meta name="description" content="Termos de Uso, Política de Privacidade, Segurança e demais documentos oficiais da NoHeroes."/>
+<meta name="robots" content="noindex,noarchive"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="assets/css/noheroes-ui.css">
+<script defer src="assets/js/noheroes-ui.js"></script>
+<style>
+:root{--nh-purple:#8f4fff;--nh-gold:#d9b55a}
+*{box-sizing:border-box}
+body{font-family:'Inter',system-ui,Arial,sans-serif;background:#07060a;color:#e5e5e5;overflow-x:hidden}
+.cinzel{font-family:'Cinzel Decorative',serif}
+.text-grad{background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* DRAWER */
+/* Drawer: agora em assets/css/noheroes-ui.css (componente <nh-drawer>) */
+
+/* PROSE */
+.prose h2{font-size:1.25rem;font-weight:700;color:#c4a3ff;margin:2rem 0 .75rem;padding-bottom:.4rem;border-bottom:1px solid rgba(143,79,255,0.2)}
+.prose h3{font-size:1rem;font-weight:600;color:rgba(255,255,255,0.8);margin:1.25rem 0 .5rem}
+.prose p{font-size:.9rem;color:rgba(255,255,255,0.65);line-height:1.75;margin:.5rem 0}
+.prose ul,.prose ol{font-size:.88rem;color:rgba(255,255,255,0.6);line-height:1.7;padding-left:1.4rem;margin:.5rem 0}
+.prose li{margin:.3rem 0}
+.prose a{color:#c4a3ff;text-decoration:underline;text-underline-offset:3px}
+.prose strong{color:rgba(255,255,255,0.85);font-weight:600}
+.prose table{width:100%;border-collapse:collapse;font-size:.85rem;margin:1rem 0}
+.prose th{background:rgba(143,79,255,0.1);color:#c4a3ff;padding:10px 12px;text-align:left;border:1px solid rgba(143,79,255,0.2);font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em}
+.prose td{padding:9px 12px;border:1px solid rgba(255,255,255,0.07);color:rgba(255,255,255,0.6);vertical-align:top}
+.prose tr:nth-child(even) td{background:rgba(255,255,255,0.02)}
+.doc-section{padding:1.5rem;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:14px;margin-bottom:1rem;scroll-margin-top:5rem}
+.doc-section:target{border-color:rgba(143,79,255,0.35);background:rgba(143,79,255,0.03)}
+
+/* TOC */
+.toc-link{display:block;padding:.35rem .6rem;border-radius:.5rem;font-size:.8rem;color:rgba(255,255,255,0.5);text-decoration:none;transition:all .15s;border-left:2px solid transparent}
+.toc-link:hover{color:#c4a3ff;background:rgba(143,79,255,0.06)}
+.toc-link.active{color:#c4a3ff;border-left-color:#8f4fff;background:rgba(143,79,255,0.08)}
+
+/* FAQ */
+.faq-item{border-bottom:1px solid rgba(255,255,255,0.06)}
+.faq-item:last-child{border-bottom:none}
+.faq-item summary{cursor:pointer;list-style:none;padding:.85rem 1rem;display:flex;justify-content:space-between;align-items:center;font-size:.88rem;font-weight:600;color:rgba(255,255,255,0.8)}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{content:'›';font-size:1.1rem;color:rgba(143,79,255,0.6);transition:transform .2s;flex-shrink:0}
+.faq-item[open] summary::after{transform:rotate(90deg)}
+.faq-item .answer{padding:.5rem 1rem 1rem;font-size:.85rem;color:rgba(255,255,255,0.55);line-height:1.7}
+
+/* BACK TO TOP */
+#toTop{position:fixed;bottom:90px;right:20px;z-index:80;width:40px;height:40px;border-radius:50%;background:rgba(143,79,255,0.2);border:1px solid rgba(143,79,255,0.4);color:#c4a3ff;font-size:18px;cursor:pointer;display:none;align-items:center;justify-content:center;transition:all .2s}
+#toTop:hover{background:rgba(143,79,255,0.35)}
+
+/* SEARCH HL */
+mark{background:rgba(143,79,255,0.3);color:#fff;border-radius:2px;padding:0 2px}
+
+/* COOKIE BANNER */
+#cookieBanner{position:fixed;inset-x:0;bottom:0;z-index:50;border-top:1px solid rgba(255,255,255,0.08);background:rgba(10,9,14,0.97);backdrop-filter:blur(10px)}
+
+:target{scroll-margin-top:5rem}
+@media(max-width:1024px){#sidebar{display:none}}
+@media print{#sidebar,header,#cookieBanner,#toTop,#printBtn,button{display:none!important}.doc-section{break-inside:avoid;border:none!important;background:none!important}body{background:#fff!important;color:#000!important}.prose h2,.prose h3,.prose a,.prose strong{color:#000!important;-webkit-text-fill-color:#000!important}}
+</style>
 </head>
-<body class="min-h-screen bg-neutral-950 text-neutral-100 antialiased">
-  <!-- Header -->
-  <header class="sticky top-0 z-40 backdrop-blur bg-neutral-950/80 border-b border-neutral-800">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center gap-4">
-      <a href="/" class="inline-flex items-center gap-2 font-semibold text-neutral-100 hover:text-white">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4 2.5 7-7-4.5L5 20l2.5-7L2 9h7z"/></svg>
-        <span>NoHeroes</span>
-      </a>
-      <div class="ml-auto flex items-center gap-2 text-sm text-neutral-400">
-        <span id="lastUpdatedLabel">Última atualização:</span>
-        <time id="lastUpdated" class="text-neutral-200 font-medium">19 de outubro de 2025</time>
-      </div>
+<body>
+
+<!-- Fundo + menu lateral (componentes compartilhados) -->
+<nh-background></nh-background>
+<nh-drawer></nh-drawer>
+
+<!-- HEADER -->
+<header style="position:sticky;top:0;z-index:40;background:rgba(7,6,10,0.9);border-bottom:1px solid rgba(255,255,255,0.06);backdrop-filter:blur(12px);">
+  <div style="max-width:1200px;margin:0 auto;padding:0 20px;height:64px;display:flex;align-items:center;justify-content:space-between;">
+    <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+      <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#8f4fff,#d9b55a);flex-shrink:0;"></div>
+      <span class="cinzel" style="font-size:17px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">NoHeroes</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span style="font-size:12px;color:rgba(255,255,255,0.35);">Última atualização: <time id="lastUpdated" style="color:rgba(255,255,255,0.6);font-weight:600;">Abril de 2026</time></span>
+      <button id="printBtn" onclick="window.print()" style="padding:7px 14px;border-radius:8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);font-size:12px;cursor:pointer;font-family:'Inter',sans-serif;">Imprimir / PDF</button>
+      <button data-nh-drawer-toggle aria-label="Abrir menu" style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
     </div>
-  </header>  <!-- Hero -->  <section class="border-b border-neutral-800 bg-gradient-to-b from-neutral-900/50 to-neutral-950">
-    <div class="max-w-6xl mx-auto px-4 py-10">
-      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-        <div>
-          <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">Termos de Uso, Privacidade & Segurança</h1>
-          <p class="mt-2 text-neutral-300 max-w-2xl">Documento oficial da NoHeroes sobre o uso dos serviços e o tratamento de dados pessoais conforme a LGPD (Lei nº 13.709/2018).</p>
-        </div>
-        <div class="flex items-center gap-3">
-          <a href="#contato" class="px-4 py-2 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-sm">Dúvidas? Fale conosco</a>
-          <button id="printBtn" class="px-4 py-2 rounded-xl bg-neutral-100 text-neutral-900 text-sm font-semibold hover:bg-white">Imprimir / Salvar PDF</button>
-        </div>
-      </div>
-    </div>
-  </section>  <!-- Main -->  <main class="max-w-6xl mx-auto px-4 py-10 grid grid-cols-1 lg:grid-cols-[260px,1fr] gap-8">
-    <!-- Sidebar / TOC + Busca -->
-    <aside class="lg:sticky lg:top-24 h-fit border border-neutral-800 rounded-2xl p-4 bg-neutral-900/40">
-      <div class="flex items-center gap-2 mb-3">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
-        <span class="text-sm text-neutral-300">Navegação</span>
-      </div>
-      <nav id="toc" class="space-y-1 text-sm"></nav>
-      <div class="mt-4 pt-4 border-t border-neutral-800">
-        <label class="text-xs text-neutral-400">Pesquisar neste documento</label>
-        <div class="mt-1 relative">
-          <input id="searchInput" type="search" placeholder="Buscar palavras-chave" class="w-full rounded-lg bg-neutral-800/70 border border-neutral-700 px-3 py-2 text-sm placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-purple-500">
-          <div id="searchCount" class="absolute right-2 top-1/2 -translate-y-1/2 text-[11px] text-neutral-400"></div>
-        </div>
-      </div>
-    </aside><!-- Content -->
-<article class="prose prose-invert max-w-none">
-  <!-- 1. Aceitação -->
-  <section id="aceitacao" class="doc-section">
-    <h2>1. Aceitação dos Termos</h2>
-    <p>Ao usar os serviços da NoHeroes, você declara ter lido, compreendido e aceitado integralmente estes Termos e a Política de Privacidade. Em cadastros e compras, poderá ser solicitado aceite explícito via checkbox.</p>
-  </section>
-
-  <!-- 2. Introdução -->
-  <section id="introducao" class="doc-section">
-    <h2>2. Introdução</h2>
-    <p>A NoHeroes oferece um ecossistema de conteúdos e experiências — incluindo livros, imagens, ebooks, mangás, animes, aplicativos, jogos, lore, design e elementos visuais — além de uma loja digital e, futuramente, uma loja para produtos físicos. Estes Termos regulam o uso de todos esses serviços.</p>
-  </section>
-
-  <!-- 3. Definições -->
-  <section id="definicoes" class="doc-section">
-    <h2>3. Definições</h2>
-    <ul>
-      <li><strong>NoHeroes</strong> (ou "nós"): pessoa jurídica responsável pelos serviços.</li>
-      <li><strong>Usuário</strong> (ou "você"): pessoa que acessa ou utiliza os serviços.</li>
-      <li><strong>Serviços</strong>: site, aplicativos, APIs, conteúdos e lojas.</li>
-      <li><strong>Conteúdos</strong>: textos, imagens, vídeos, áudios, softwares, jogos, design, lore e demais ativos.</li>
-      <li><strong>Dados Pessoais</strong>: informações de pessoa natural identificada ou identificável, nos termos da LGPD.</li>
-    </ul>
-  </section>
-
-  <!-- 4. Escopo/Conta -->
-  <section id="escopo" class="doc-section">
-    <h2>4. Escopo, Elegibilidade e Conta</h2>
-    <ul>
-      <li>Algumas funcionalidades podem exigir a criação de conta. Você é responsável por suas credenciais e por atividades realizadas em sua conta.</li>
-      <li>Serviços destinados a maiores de 13 anos; menores de 18 devem utilizar com supervisão de responsável.</li>
-      <li>Navegação pode ocorrer sem login; ações como <strong>adicionar ao carrinho</strong> e <strong>comprar</strong> podem exigir autenticação.</li>
-    </ul>
-  </section>
-
-  <!-- 5. Propriedade Intelectual -->
-  <section id="propriedade" class="doc-section">
-    <h2>5. Conteúdos e Propriedade Intelectual</h2>
-    <p>Salvo indicação em contrário, os Conteúdos são de titularidade da NoHeroes e/ou licenciados, protegidos por direitos autorais, marcas e demais normas aplicáveis. É <strong>vedado</strong> copiar, reproduzir, distribuir, vender, publicar, modificar ou criar obras derivadas sem autorização expressa.</p>
-    <p>Uso <strong>pessoal e não comercial</strong> conforme a licença exibida na compra/download. Marcas, logotipos, identidade visual e universo “NoHeroes” são marcas registradas (ou em processo). Fanarts e obras derivadas somente conforme diretrizes oficiais.</p>
-  </section>
-
-  <!-- 6. Uso Permitido/Proibido -->
-  <section id="uso" class="doc-section">
-    <h2>6. Uso Permitido e Proibido</h2>
-    <ul>
-      <li>Proibido: engenharia reversa, scraping automatizado agressivo, ataques, distribuição não autorizada, uso ilícito, violação de direitos de terceiros.</li>
-      <li>Permitido: navegação, aquisição e fruição de conteúdos conforme licenças aplicáveis; uso de APIs conforme termos específicos quando oferecidas.</li>
-      <li>Podemos moderar conteúdos gerados por usuários, removendo materiais que violem estes Termos, direitos de terceiros ou a lei.</li>
-    </ul>
-  </section>
-
-  <!-- 7. Compras/Pagamentos/Reembolsos -->
-  <section id="compras" class="doc-section">
-    <h2>7. Compras, Pagamentos e Reembolsos</h2>
-    <ul>
-      <li>Para compras, podemos solicitar <strong>nome, e-mail, endereço, telefone e CPF</strong> quando necessário ao processamento.</li>
-      <li>Pagamentos são processados por <strong>instituições de pagamento</strong> (ex.: Mercado Pago). A NoHeroes <strong>não armazena</strong> dados sensíveis de cartão (número, validade, CVV).</li>
-      <li>Preços, promoções e disponibilidade podem mudar; prevalece o preço exibido no checkout.</li>
-      <li>Produtos digitais: a entrega é realizada após a confirmação do pagamento (ex.: link de download/chave). Em caso de problemas, contate o suporte.</li>
-      <li><strong>Reembolso</strong>: até <strong>7 dias corridos</strong> da compra online, quando aplicável (CDC art. 49). Procedimentos e elegibilidade via <a href="#contato">Contato</a>.</li>
-    </ul>
-  </section>
-
-  <!-- 8. Licenças Digitais -->
-  <section id="licencas" class="doc-section">
-    <h2>8. Licenças de Conteúdo Digital</h2>
-    <p>A aquisição concede licença limitada, revogável, não exclusiva e intransferível para uso pessoal. Restrições específicas podem incluir número de dispositivos, proibição de redistribuição e DRM.</p>
-  </section>
-
-  <!-- 9. Privacidade/LGPD -->
-  <section id="dados" class="doc-section">
-    <h2>9. Privacidade e Proteção de Dados (LGPD)</h2>
-    <h3>9.1. Quais dados coletamos</h3>
-    <ul>
-      <li><strong>Cadastro/Compra (quando necessário)</strong>: nome, e-mail, endereço, telefone, CPF; dados de entrega (para físicos, no futuro).</li>
-      <li><strong>Transacionais</strong>: identificadores de pedido, itens adquiridos, valores, status do pagamento.</li>
-      <li><strong>Técnicos essenciais</strong>: IP, data/hora, user agent, logs para segurança/prevenção a fraudes.</li>
-      <li><strong>Comunicações</strong>: mensagens de suporte e preferências de contato.</li>
-    </ul>
-    <h3>9.2. Bases legais e finalidades</h3>
-    <ul>
-      <li><strong>Execução de contrato</strong>: processar pedidos, entregar serviços, suporte.</li>
-      <li><strong>Obrigação legal</strong>: registros fiscais/contábeis.</li>
-      <li><strong>Legítimo interesse</strong>: melhorar experiência e segurança (com possibilidade de oposição quando aplicável).</li>
-      <li><strong>Consentimento</strong>: comunicações de marketing (quando oferecidas) e funcionalidades opcionais.</li>
-    </ul>
-    <h3>9.3. Compartilhamento</h3>
-    <p>Compartilhamos <strong>apenas o necessário</strong> com <strong>instituições de pagamento</strong> para processar transações. Não vendemos dados e não compartilhamos com terceiros para fins próprios.</p>
-    <h3>9.4. Transferência internacional</h3>
-    <p>Dados podem ser processados fora do Brasil por provedores de infraestrutura (ex.: nuvem/CDN), com salvaguardas adequadas.</p>
-    <h3>9.5. Retenção</h3>
-    <p>Guardamos dados pelo tempo necessário às finalidades e prazos legais. Após esse período, eliminamos ou anonimizamos de forma segura.</p>
-    <h3>9.6. Direitos do titular</h3>
-    <ul>
-      <li>Confirmação do tratamento e acesso aos dados; correção; anonimização/bloqueio/eliminação do desnecessário; portabilidade; informação sobre compartilhamento; oposição; revogação de consentimento.</li>
-    </ul>
-    <p>Para exercer seus direitos, consulte <a href="#contato">Contato</a>.</p>
-  </section>
-
-  <!-- 10. Cookies -->
-  <section id="cookies" class="doc-section">
-    <h2>10. Cookies e Tecnologias Semelhantes</h2>
-    <p>Usamos <strong>cookies essenciais</strong> (sessão, autenticação, carrinho). <strong>Não usamos</strong> cookies de marketing no momento. Se viermos a utilizar análise/marketing, exibiremos aviso e opção de controle.</p>
-    <ul>
-      <li><strong>Essenciais</strong>: manter login, lembrar carrinho; duração típica: sessão a 12 meses.</li>
-      <li><strong>Preferências</strong> (se ativado): idioma/tema.</li>
-      <li><strong>Medição</strong> (se ativado): análise de uso, com IP mascarado quando possível.</li>
-    </ul>
-  </section>
-
-  <!-- 11. Segurança -->
-  <section id="seguranca" class="doc-section">
-    <h2>11. Segurança da Informação</h2>
-    <ul>
-      <li>Criptografia TLS em trânsito; armazenamento mínimo; segregação de dados; acesso por necessidade.</li>
-      <li>Logs e monitoramento; políticas de backup/recuperação.</li>
-      <li><strong>Nunca</strong> solicitamos senha por e-mail ou canais externos.</li>
-      <li>Em incidentes relevantes, notificaremos usuários e a ANPD em até <strong>2 dias úteis</strong>.</li>
-      <li>Autenticação em dois fatores poderá ser oferecida.</li>
-    </ul>
-  </section>
-
-  <!-- 12. UGC -->
-  <section id="ugc" class="doc-section">
-    <h2>12. Conteúdo de Usuários e Moderação</h2>
-    <p>Onde houver comentários/avaliações, você concede à NoHeroes licença para exibir seu conteúdo nos Serviços. Podemos remover materiais que violem estes Termos, direitos de terceiros ou a lei. Opiniões publicadas por usuários são de responsabilidade dos próprios autores.</p>
-  </section>
-
-  <!-- 13. Alterações/Vigência -->
-  <section id="versoes" class="doc-section">
-    <h2>13. Alterações, Vigência e Histórico</h2>
-    <p>Podemos atualizar este documento; a data de <em>Última atualização</em> será ajustada. Mudanças relevantes podem ser comunicadas pelos canais cadastrados.</p>
-    <p><strong>Versão 1.0 — Vigente desde 19/10/2025.</strong> Versões anteriores são arquivadas internamente.</p>
-  </section>
-
-  <!-- 14. Conflitos/Foro -->
-  <section id="disputas" class="doc-section">
-    <h2>14. Solução de Conflitos e Foro</h2>
-    <p>Antes de qualquer ação judicial, busque solução amigável via suporte. Aplica-se a legislação brasileira; foro eleito: Comarca de Cuiabá/MT, salvo disposição legal em contrário.</p>
-  </section>
-
-  <!-- 15. Contato/DPO -->
-  <section id="contato" class="doc-section">
-    <h2>15. Contato e Encarregado (DPO)</h2>
-    <p>
-      <strong>Razão social:</strong> <em>Preencher no rodapé</em><br/>
-      <strong>CNPJ:</strong> <em>Preencher no rodapé</em><br/>
-      <strong>E-mail de suporte:</strong> <a href="mailto:suporte@noheroes.app">suporte@noheroes.app</a><br/>
-      <strong>Encarregado (DPO):</strong> <a href="mailto:dpo@noheroes.app">dpo@noheroes.app</a><br/>
-      <strong>Prazo de resposta:</strong> até 7 dias úteis.
-    </p>
-  </section>
-
-  <!-- 16. Denúncias/DMCA -->
-  <section id="denuncias" class="doc-section">
-    <h2>16. Denúncias e Remoção de Conteúdo (DMCA)</h2>
-    <p>Para alegações de violação de direitos autorais, envie e-mail com assunto “DMCA” para suporte@noheroes.app contendo identificação da obra, URL do material e comprovação de titularidade.</p>
-  </section>
-
-  <!-- 17. FAQ -->
-  <section id="faq" class="doc-section">
-    <h2>17. Perguntas Frequentes</h2>
-    <div class="divide-y divide-neutral-800 border border-neutral-800 rounded-xl overflow-hidden">
-      <details class="group">
-        <summary class="cursor-pointer list-none px-4 py-3 bg-neutral-900/60 hover:bg-neutral-900 flex items-center justify-between"><span>Quais dados são compartilhados com terceiros?</span><span class="transition group-open:rotate-180">▾</span></summary>
-        <div class="px-4 py-3 text-neutral-300">Somente o necessário para processar pagamentos com a instituição de pagamento. Não vendemos dados.</div>
-      </details>
-      <details class="group">
-        <summary class="cursor-pointer list-none px-4 py-3 bg-neutral-900/60 hover:bg-neutral-900 flex items-center justify-between"><span>Guardam dados de cartão?</span><span class="transition group-open:rotate-180">▾</span></summary>
-        <div class="px-4 py-3 text-neutral-300">Não. Dados sensíveis de pagamento são processados exclusivamente pelo intermediador (ex.: Mercado Pago).</div>
-      </details>
-      <details class="group">
-        <summary class="cursor-pointer list-none px-4 py-3 bg-neutral-900/60 hover:bg-neutral-900 flex items-center justify-between"><span>Qual o prazo de reembolso?</span><span class="transition group-open:rotate-180">▾</span></summary>
-        <div class="px-4 py-3 text-neutral-300">Até 7 dias corridos após a compra online, quando aplicável, conforme CDC art. 49.</div>
-      </details>
-    </div>
-  </section>
-
-  <!-- Voltar ao topo -->
-  <div class="mt-10">
-    <button id="toTop" class="hidden fixed bottom-6 right-6 rounded-full p-3 bg-neutral-100 text-neutral-900 shadow-xl hover:bg-white" aria-label="Voltar ao topo">↑</button>
   </div>
-</article>
+</header>
 
-  </main>  <!-- Cookie banner essencial (discreto) -->  <div id="cookieBanner" class="hidden fixed inset-x-0 bottom-0 z-50 border-t border-neutral-800 bg-neutral-900/95 backdrop-blur px-4 py-3">
-    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between text-sm">
-      <p class="text-neutral-300">Usamos apenas cookies <strong>essenciais</strong> para funcionamento (sessão, carrinho). <a href="#cookies" class="underline">Saiba mais</a>.</p>
-      <div class="flex gap-2">
-        <button id="acceptCookies" class="px-3 py-2 rounded-lg bg-neutral-100 text-neutral-900 font-medium">OK</button>
+<!-- HERO -->
+<section style="border-bottom:1px solid rgba(255,255,255,0.06);background:linear-gradient(180deg,rgba(143,79,255,0.06),transparent);padding:36px 20px;">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div class="cinzel text-grad" style="font-size:11px;text-transform:uppercase;letter-spacing:.2em;margin-bottom:10px;">Documento Oficial</div>
+    <h1 style="font-size:clamp(22px,3.5vw,36px);font-weight:800;margin:0 0 10px;">Termos de Uso, Privacidade & Segurança</h1>
+    <p style="font-size:14px;color:rgba(255,255,255,0.5);max-width:680px;line-height:1.7;margin:0 0 20px;">Documento oficial da NoHeroes sobre o uso dos serviços e o tratamento de dados pessoais conforme a <strong style="color:rgba(255,255,255,0.7);">LGPD (Lei nº 13.709/2018)</strong>. Cobre loja, conteúdo digital, mangás, livros, e-books, plataforma, prestação de serviços e programa de arautos.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;">
+      <a href="#contato" style="padding:9px 18px;border-radius:10px;background:rgba(143,79,255,0.1);border:1px solid rgba(143,79,255,0.3);color:#c4a3ff;font-size:13px;font-weight:600;text-decoration:none;">Dúvidas? Fale conosco</a>
+      <button id="downloadBtn" onclick="window.print()" style="padding:9px 18px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;">Baixar PDF</button>
+      <span style="display:flex;align-items:center;padding:9px 14px;border-radius:10px;background:rgba(74,222,128,0.06);border:1px solid rgba(74,222,128,0.2);color:#4ade80;font-size:12px;font-weight:600;" id="acceptedBadge"></span>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN GRID -->
+<main style="max-width:1200px;margin:0 auto;padding:28px 20px;display:grid;grid-template-columns:240px 1fr;gap:24px;align-items:start;" id="mainGrid">
+
+  <!-- SIDEBAR TOC -->
+  <aside id="sidebar" style="position:sticky;top:80px;max-height:calc(100vh - 100px);overflow-y:auto;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:16px;">
+    <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:.15em;margin-bottom:10px;">Navegação</div>
+    <nav id="toc" style="display:flex;flex-direction:column;gap:2px;"></nav>
+    <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.06);">
+      <label style="font-size:11px;color:rgba(255,255,255,0.35);">Pesquisar no documento</label>
+      <div style="position:relative;margin-top:6px;">
+        <input id="searchInput" type="search" placeholder="Palavra-chave..." style="width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:8px 36px 8px 10px;font-size:12px;color:#e5e5e5;outline:none;font-family:'Inter',sans-serif;">
+        <span id="searchCount" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:10px;color:rgba(255,255,255,0.3);"></span>
       </div>
     </div>
-  </div>  <!-- Footer -->  <footer class="border-t border-neutral-800">
-    <div class="max-w-6xl mx-auto px-4 py-8 text-xs text-neutral-400 flex flex-col gap-4">
-      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-        <p>© <span id="year"></span> NoHeroes. Todos os direitos reservados.</p>
-        <div class="flex items-center gap-3">
-          <button id="downloadBtn" class="px-3 py-2 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-neutral-200">Baixar PDF</button>
-          <span class="text-neutral-500">Versão <span id="docVersion">1.0</span></span>
-        </div>
+    <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.06);font-size:11px;color:rgba(255,255,255,0.3);">
+      Versão <strong id="docVersion" style="color:rgba(255,255,255,0.5);">2.0</strong> · Abril/2026
+    </div>
+  </aside>
+
+  <!-- CONTENT -->
+  <article class="prose">
+
+    <!-- 1 -->
+    <section id="aceitacao" class="doc-section">
+      <h2>1. Aceitação dos Termos</h2>
+      <p>Ao acessar, navegar ou usar qualquer serviço da NoHeroes — incluindo o site, loja digital, plataforma de leitura, aplicativos e serviços de comunicação — você declara ter lido, compreendido e aceito integralmente estes Termos e a Política de Privacidade aqui contida.</p>
+      <p>Em ações como criação de conta, realização de compras, acesso a conteúdo exclusivo ou candidatura ao Programa de Arautos, poderá ser solicitado aceite explícito via <em>checkbox</em>, com registro de data, hora e versão do documento aceito (<strong>aceite rastreável via backend</strong>).</p>
+      <p>Se você não concorda com estes Termos, não utilize nossos serviços.</p>
+    </section>
+
+    <!-- 2 -->
+    <section id="introducao" class="doc-section">
+      <h2>2. Introdução e Escopo</h2>
+      <p>A <strong>NoHeroes</strong> é um ecossistema multimídia que compreende:</p>
+      <ul>
+        <li><strong>Plataforma web</strong> — site oficial, loja digital, sistema de leitura de mangás e e-books, inventário de usuário;</li>
+        <li><strong>Conteúdo digital</strong> — livros, e-books, mangás, quadrinhos, capítulos, artes digitais e lore;</li>
+        <li><strong>Programa de Arautos</strong> — criadores que publicam obras originais na plataforma;</li>
+        <li><strong>Loja e pagamentos</strong> — venda de produtos digitais com processamento via Mercado Pago;</li>
+        <li><strong>Moeda interna (Coins)</strong> — sistema de pontos e recompensas dentro da plataforma;</li>
+        <li><strong>Prestação de serviços</strong> — web design, desenvolvimento, arte digital, roteiro e consultoria;</li>
+        <li><strong>Comunicações</strong> — newsletter, suporte e notificações;</li>
+        <li><strong>Futuro</strong> — app gamificado, estúdio de animação e RPG online.</li>
+      </ul>
+      <p>Estes Termos regulam o uso de todos os serviços acima, na versão atual e em futuras expansões.</p>
+    </section>
+
+    <!-- 3 -->
+    <section id="definicoes" class="doc-section">
+      <h2>3. Definições</h2>
+      <table>
+        <tr><th>Termo</th><th>Definição</th></tr>
+        <tr><td><strong>NoHeroes</strong></td><td>Pessoa jurídica responsável pelos serviços, seus representantes e equipe.</td></tr>
+        <tr><td><strong>Usuário</strong></td><td>Pessoa natural que acessa ou utiliza qualquer serviço da NoHeroes.</td></tr>
+        <tr><td><strong>Arauto</strong></td><td>Criador aprovado que publica obras originais na plataforma mediante candidatura.</td></tr>
+        <tr><td><strong>Serviços</strong></td><td>Site, APIs, loja, plataforma de leitura, app, newsletter e demais produtos.</td></tr>
+        <tr><td><strong>Conteúdo Digital</strong></td><td>Livros, e-books, mangás, capítulos, artes, áudios, roteiros e demais ativos digitais.</td></tr>
+        <tr><td><strong>Coins</strong></td><td>Moeda interna da plataforma, sem valor monetário real, não conversível em dinheiro.</td></tr>
+        <tr><td><strong>Dados Pessoais</strong></td><td>Informações de pessoa natural identificada ou identificável (LGPD, art. 5º, I).</td></tr>
+        <tr><td><strong>Obra</strong></td><td>Produção criativa publicada por Arauto na plataforma.</td></tr>
+        <tr><td><strong>Inventário</strong></td><td>Área pessoal do Usuário onde ficam armazenados produtos adquiridos.</td></tr>
+      </table>
+    </section>
+
+    <!-- 4 -->
+    <section id="conta" class="doc-section">
+      <h2>4. Conta de Usuário</h2>
+      <h3>4.1. Criação e Elegibilidade</h3>
+      <ul>
+        <li>Serviços destinados a maiores de <strong>13 anos</strong>. Menores de 18 devem ter autorização e supervisão de responsável legal.</li>
+        <li>Uma pessoa, uma conta. Contas duplicadas podem ser encerradas.</li>
+        <li>Você é integralmente responsável por todas as atividades realizadas com suas credenciais.</li>
+      </ul>
+      <h3>4.2. Segurança da Conta</h3>
+      <ul>
+        <li>Mantenha sua senha segura e não a compartilhe. A NoHeroes <strong>nunca</strong> solicitará sua senha por e-mail, chat ou qualquer canal externo.</li>
+        <li>Em caso de acesso não autorizado suspeito, notifique imediatamente o suporte.</li>
+        <li>Tokens de autenticação (JWT) têm validade limitada e são invalidados no logout.</li>
+      </ul>
+      <h3>4.3. Encerramento de Conta</h3>
+      <ul>
+        <li>Você pode solicitar exclusão da conta pelo painel de perfil. A exclusão é permanente e remove dados pessoais, salvo obrigações legais de retenção.</li>
+        <li>A NoHeroes pode suspender ou encerrar contas que violem estes Termos, sem reembolso de valores já processados.</li>
+      </ul>
+    </section>
+
+    <!-- 5 -->
+    <section id="propriedade" class="doc-section">
+      <h2>5. Propriedade Intelectual</h2>
+      <h3>5.1. Conteúdo da NoHeroes</h3>
+      <p>Salvo indicação em contrário, todos os Conteúdos — universo NoHeroes, personagens, lore, identidade visual, marca, código-fonte, design — são de titularidade da NoHeroes e/ou licenciados, protegidos por direitos autorais (Lei nº 9.610/98) e demais normas aplicáveis.</p>
+      <p>É <strong>vedado</strong> copiar, reproduzir, distribuir, vender, publicar, sublicenciar, modificar ou criar obras derivadas sem autorização expressa e por escrito.</p>
+      <h3>5.2. Fanarts e Obras Derivadas</h3>
+      <p>Fanarts e criações inspiradas no universo NoHeroes são permitidas para uso <strong>pessoal e não comercial</strong>, desde que: (a) identifiquem claramente a origem; (b) não sejam vendidas ou monetizadas; (c) não causem confusão sobre titularidade. Para uso comercial, solicite autorização via <a href="#contato">contato</a>.</p>
+      <h3>5.3. Conteúdo de Arautos</h3>
+      <p>Arautos retêm a titularidade de suas obras originais publicadas na plataforma e concedem à NoHeroes licença não exclusiva para exibição, divulgação e indexação enquanto a obra estiver publicada. Ver Seção 11 para detalhes.</p>
+    </section>
+
+    <!-- 6 -->
+    <section id="uso" class="doc-section">
+      <h2>6. Uso Permitido e Proibido</h2>
+      <h3>6.1. Permitido</h3>
+      <ul>
+        <li>Navegar, criar conta, adquirir e fruir Conteúdo conforme licenças aplicáveis;</li>
+        <li>Comentar e interagir com obras dentro das regras da comunidade;</li>
+        <li>Candidatar-se ao Programa de Arautos e publicar obras originais;</li>
+        <li>Contratar serviços da NoHeroes para projetos pessoais ou comerciais.</li>
+      </ul>
+      <h3>6.2. Proibido</h3>
+      <ul>
+        <li>Engenharia reversa, descompilação ou tentativa de acesso ao código-fonte;</li>
+        <li>Scraping automatizado agressivo, bots ou crawlers não autorizados;</li>
+        <li>Tentativas de invasão, SQL injection, XSS ou qualquer ataque à infraestrutura;</li>
+        <li>Distribuição não autorizada de Conteúdo adquirido ou protegido;</li>
+        <li>Uso para fins ilegais, difamatórios, discriminatórios ou que violem direitos de terceiros;</li>
+        <li>Criação de contas falsas, impersonação ou fraude;</li>
+        <li>Publicação de conteúdo que viole direitos autorais de terceiros na plataforma.</li>
+      </ul>
+    </section>
+
+    <!-- 7 -->
+    <section id="compras" class="doc-section">
+      <h2>7. Loja, Compras, Pagamentos e Reembolsos</h2>
+      <h3>7.1. Produtos e Preços</h3>
+      <ul>
+        <li>A loja comercializa produtos digitais: e-books, livros em PDF, mangás, capítulos premium e outros conteúdos.</li>
+        <li>Preços, promoções e disponibilidade podem mudar sem aviso prévio. Prevalece o preço exibido no momento do checkout.</li>
+        <li>Preços em Reais (BRL). Taxas de câmbio ou encargos bancários externos são de responsabilidade do Usuário.</li>
+      </ul>
+      <h3>7.2. Processamento de Pagamento</h3>
+      <ul>
+        <li>Pagamentos são processados pelo <strong>Mercado Pago</strong>. A NoHeroes <strong>não armazena</strong> dados sensíveis de cartão (número, validade, CVV).</li>
+        <li>Métodos aceitos: cartão de crédito/débito, Pix e boleto, conforme disponibilidade do intermediador.</li>
+        <li>Após confirmação do pagamento, o produto é liberado automaticamente no Inventário do Usuário.</li>
+      </ul>
+      <h3>7.3. Entrega de Produtos Digitais</h3>
+      <ul>
+        <li>Produtos digitais ficam disponíveis no <strong>Inventário</strong> da conta assim que o pagamento é confirmado.</li>
+        <li>E-books e PDFs podem ser baixados conforme disponibilidade na plataforma.</li>
+        <li>O acesso fica vinculado à conta — não é transferível a terceiros.</li>
+      </ul>
+      <h3>7.4. Reembolsos</h3>
+      <ul>
+        <li>O Usuário tem direito a reembolso em até <strong>7 dias corridos</strong> da compra, conforme o CDC (art. 49), para compras realizadas à distância.</li>
+        <li>Após o download ou acesso comprovado ao Conteúdo Digital, o reembolso pode ser negado a critério da NoHeroes, exceto em casos de falha técnica.</li>
+        <li>Solicitações via <a href="suporte.html">Suporte</a>, com comprovante de compra. Prazo de análise: até 5 dias úteis.</li>
+        <li>Compras com Coins: reembolso em Coins no mesmo valor. Compras com dinheiro real: reembolso via Mercado Pago.</li>
+      </ul>
+    </section>
+
+    <!-- 8 -->
+    <section id="licencas" class="doc-section">
+      <h2>8. Licenças de Conteúdo Digital</h2>
+      <p>A aquisição de Conteúdo Digital concede ao Usuário uma licença <strong>limitada, não exclusiva, intransferível e revogável</strong> para uso estritamente pessoal e não comercial.</p>
+      <h3>8.1. O que a licença permite</h3>
+      <ul>
+        <li>Leitura/fruição pessoal em dispositivos próprios;</li>
+        <li>Download (quando habilitado) para uso offline pessoal;</li>
+        <li>Compartilhamento de trechos curtos para fins informativos, com crédito à NoHeroes.</li>
+      </ul>
+      <h3>8.2. O que a licença proíbe</h3>
+      <ul>
+        <li>Redistribuição, venda, empréstimo ou transferência do arquivo;</li>
+        <li>Reprodução integral ou substancial em outros meios;</li>
+        <li>Uso comercial sem licença específica;</li>
+        <li>Remoção de marcas d'água, metadados ou identificadores de licença.</li>
+      </ul>
+      <h3>8.3. Acesso e Revogação</h3>
+      <p>O acesso ao Conteúdo Digital está condicionado à existência e boa situação da conta. Em caso de encerramento por violação dos Termos, o acesso poderá ser revogado sem reembolso.</p>
+    </section>
+
+    <!-- 9 -->
+    <section id="moeda" class="doc-section">
+      <h2>9. Moeda Interna (Coins)</h2>
+      <ul>
+        <li><strong>Coins</strong> são créditos virtuais internos, sem valor monetário real e sem cotação em moeda corrente.</li>
+        <li>Não são conversíveis em dinheiro real, exceto mediante programa específico e explicitamente anunciado.</li>
+        <li>Podem ser adquiridos com dinheiro real ou obtidos via missões, eventos e promoções da plataforma.</li>
+        <li>Coins não expiram, salvo encerramento da conta ou mudança de política comunicada com antecedência mínima de 30 dias.</li>
+        <li>Em caso de encerramento da conta por violação dos Termos, Coins não são reembolsados.</li>
+        <li>A NoHeroes pode ajustar o sistema de Coins — valor de compra, uso, mecânicas — mediante comunicação prévia.</li>
+      </ul>
+    </section>
+
+    <!-- 10 -->
+    <section id="manga" class="doc-section">
+      <h2>10. Plataforma de Leitura — Mangás e E-books</h2>
+      <h3>10.1. Acesso ao Conteúdo</h3>
+      <ul>
+        <li>Capítulos gratuitos: disponíveis sem login para navegação; login pode ser necessário para salvar progresso.</li>
+        <li>Capítulos premium: exigem conta e aquisição via loja ou Coins.</li>
+        <li>O progresso de leitura é salvo automaticamente em contas logadas.</li>
+      </ul>
+      <h3>10.2. Proteção do Conteúdo</h3>
+      <ul>
+        <li>Imagens e páginas de mangás são protegidas contra download direto e hotlinking.</li>
+        <li>Capturas de tela para uso pessoal são toleradas; divulgação em massa é vedada.</li>
+        <li>URLs de páginas são temporárias e protegidas por tokens com expiração.</li>
+      </ul>
+      <h3>10.3. Comentários e Interações</h3>
+      <ul>
+        <li>Usuários logados podem comentar em capítulos publicados. Comentários devem respeitar as regras de conduta.</li>
+        <li>A NoHeroes pode remover comentários ofensivos, com spam ou que violem direitos de terceiros.</li>
+        <li>Curtidas, favoritos e histórico de leitura ficam associados à conta do Usuário.</li>
+      </ul>
+    </section>
+
+    <!-- 11 -->
+    <section id="arautos" class="doc-section">
+      <h2>11. Programa de Arautos — Criadores</h2>
+      <h3>11.1. Candidatura e Aprovação</h3>
+      <ul>
+        <li>Qualquer usuário pode candidatar-se ao Programa de Arautos mediante formulário de candidatura.</li>
+        <li>A aprovação é feita pela equipe NoHeroes em até 72 horas úteis. A NoHeroes se reserva o direito de reprovar sem obrigação de justificativa.</li>
+        <li>O status de Arauto pode ser revogado em caso de violação destes Termos.</li>
+      </ul>
+      <h3>11.2. Publicação de Obras</h3>
+      <ul>
+        <li>Arautos podem criar obras e publicar capítulos, sujeitos a revisão e aprovação da NoHeroes antes de irem a público.</li>
+        <li>O prazo de revisão é de até 48 horas úteis por capítulo.</li>
+        <li>O Arauto é integralmente responsável pelo conteúdo publicado, incluindo direitos autorais de imagens e textos utilizados.</li>
+        <li>É vedada a publicação de conteúdo: pornográfico, violento sem contexto narrativo justificado, discriminatório, difamatório ou que viole direitos de terceiros.</li>
+      </ul>
+      <h3>11.3. Titularidade e Licença</h3>
+      <ul>
+        <li>O Arauto mantém a titularidade de suas obras originais.</li>
+        <li>Ao publicar, o Arauto concede à NoHeroes licença não exclusiva, gratuita e mundial para exibir, reproduzir e divulgar a obra na plataforma enquanto ela estiver publicada.</li>
+        <li>O Arauto pode solicitar a remoção de sua obra a qualquer momento. A remoção ocorre em até 5 dias úteis.</li>
+      </ul>
+      <h3>11.4. Monetização (Futuro)</h3>
+      <p>Mecanismos de repasse financeiro a Arautos serão regulados por adendo específico quando implementados, com definição de percentuais, prazos e condições.</p>
+    </section>
+
+    <!-- 12 -->
+    <section id="servicos" class="doc-section">
+      <h2>12. Prestação de Serviços</h2>
+      <p>A NoHeroes também oferece serviços sob demanda: web design, desenvolvimento full-stack, arte digital, roteiro, identidade visual, gestão de projetos e consultoria.</p>
+      <h3>12.1. Contratação</h3>
+      <ul>
+        <li>Serviços contratados mediante proposta formal, aceite explícito e, quando aplicável, contrato assinado.</li>
+        <li>Escopo, prazos e valores definidos caso a caso.</li>
+      </ul>
+      <h3>12.2. Propriedade do Resultado</h3>
+      <ul>
+        <li>O cliente adquire os direitos patrimoniais sobre o resultado final entregue, conforme especificado em contrato.</li>
+        <li>A NoHeroes pode referenciar o trabalho em portfólio, salvo cláusula de confidencialidade.</li>
+      </ul>
+      <h3>12.3. Pagamento e Cancelamento</h3>
+      <ul>
+        <li>Pagamento conforme proposta (entrada + parcelas ou valor único).</li>
+        <li>Cancelamento pelo cliente após início dos trabalhos: reembolso proporcional ao não executado.</li>
+        <li>Cancelamento pela NoHeroes por caso fortuito: reembolso total do valor não utilizado.</li>
+      </ul>
+    </section>
+
+    <!-- 13 -->
+    <section id="dados" class="doc-section">
+      <h2>13. Privacidade e Proteção de Dados (LGPD)</h2>
+      <h3>13.1. Dados Coletados</h3>
+      <table>
+        <tr><th>Categoria</th><th>Dados</th><th>Finalidade</th></tr>
+        <tr><td>Cadastro</td><td>Nome, e-mail, username, senha (hash)</td><td>Criar e autenticar conta</td></tr>
+        <tr><td>Compras</td><td>Nome, e-mail, CPF (quando necessário), endereço</td><td>Processar pedidos e emitir documentos fiscais</td></tr>
+        <tr><td>Transacionais</td><td>ID de pedido, itens, valores, status</td><td>Controle financeiro e suporte</td></tr>
+        <tr><td>Técnicos</td><td>IP, user agent, logs de acesso, data/hora</td><td>Segurança, prevenção a fraudes e erros</td></tr>
+        <tr><td>Progresso</td><td>Obras lidas, capítulos acessados, favoritos</td><td>Personalização e continuidade da experiência</td></tr>
+        <tr><td>Comunicações</td><td>E-mail para newsletter (opt-in)</td><td>Envio de novidades mediante consentimento</td></tr>
+        <tr><td>Arautos</td><td>Motivação, portfólio, histórico de obras</td><td>Candidatura e gestão do programa</td></tr>
+        <tr><td>Suporte</td><td>Mensagens enviadas ao suporte</td><td>Atendimento e histórico de tickets</td></tr>
+      </table>
+      <h3>13.2. Bases Legais</h3>
+      <ul>
+        <li><strong>Execução de contrato:</strong> processar pedidos, entregar serviços, autenticar usuários.</li>
+        <li><strong>Obrigação legal:</strong> registros fiscais, contábeis e cumprimento de decisões judiciais.</li>
+        <li><strong>Legítimo interesse:</strong> segurança da plataforma, prevenção a fraudes, melhoria dos serviços.</li>
+        <li><strong>Consentimento:</strong> newsletter e comunicações de marketing — sempre com opção de cancelamento.</li>
+      </ul>
+      <h3>13.3. Compartilhamento de Dados</h3>
+      <ul>
+        <li><strong>Mercado Pago:</strong> dados necessários ao processamento de pagamento.</li>
+        <li><strong>Resend (e-mail):</strong> endereço de e-mail para envio de comunicações transacionais e newsletter.</li>
+        <li><strong>Infraestrutura (Render, Neon, Cloudflare):</strong> dados de operação processados em ambiente seguro.</li>
+        <li>A NoHeroes <strong>não vende</strong> dados e não os compartilha com terceiros para fins próprios destes.</li>
+      </ul>
+      <h3>13.4. Transferência Internacional</h3>
+      <p>Dados podem ser processados fora do Brasil por provedores de infraestrutura (Render, Neon, Cloudflare R2), com adoção de salvaguardas adequadas conforme a LGPD.</p>
+      <h3>13.5. Retenção de Dados</h3>
+      <ul>
+        <li>Dados de conta: enquanto a conta estiver ativa + prazo legal aplicável após exclusão.</li>
+        <li>Dados financeiros: mínimo de 5 anos (legislação fiscal brasileira).</li>
+        <li>Logs de segurança: até 12 meses.</li>
+        <li>Newsletter: até o cancelamento da inscrição.</li>
+      </ul>
+      <h3>13.6. Direitos do Titular (LGPD, art. 18)</h3>
+      <ul>
+        <li><strong>Confirmação e acesso:</strong> saber quais dados temos sobre você.</li>
+        <li><strong>Correção:</strong> atualizar dados incompletos ou desatualizados.</li>
+        <li><strong>Anonimização/bloqueio/eliminação:</strong> dados desnecessários ou tratados em desconformidade.</li>
+        <li><strong>Portabilidade:</strong> receber seus dados em formato estruturado.</li>
+        <li><strong>Eliminação:</strong> dados tratados com consentimento, mediante solicitação.</li>
+        <li><strong>Oposição:</strong> opor-se ao tratamento baseado em legítimo interesse.</li>
+        <li><strong>Revogação de consentimento:</strong> cancelar o aceite dado anteriormente.</li>
+      </ul>
+      <p>Para exercer seus direitos: <a href="#contato">contato</a>. Prazo de resposta: até <strong>15 dias úteis</strong>.</p>
+    </section>
+
+    <!-- 14 -->
+    <section id="cookies" class="doc-section">
+      <h2>14. Cookies e Tecnologias Semelhantes</h2>
+      <table>
+        <tr><th>Tipo</th><th>Finalidade</th><th>Duração</th><th>Obrigatório</th></tr>
+        <tr><td>Essenciais de sessão</td><td>Manter login (JWT no localStorage)</td><td>Sessão / token</td><td>Sim</td></tr>
+        <tr><td>Preferências</td><td>Lembrar tema e configurações locais</td><td>12 meses</td><td>Não</td></tr>
+        <tr><td>Segurança</td><td>Prevenção CSRF, rate limiting</td><td>Sessão</td><td>Sim</td></tr>
+        <tr><td>Análise (futuro)</td><td>Medir uso da plataforma de forma agregada</td><td>Mediante aceite</td><td>Não</td></tr>
+      </table>
+      <p>Atualmente <strong>não utilizamos</strong> cookies de marketing ou rastreamento de terceiros. Se isso mudar, avisaremos e exibiremos controles de aceite explícito.</p>
+    </section>
+
+    <!-- 15 -->
+    <section id="seguranca" class="doc-section">
+      <h2>15. Segurança da Informação</h2>
+      <ul>
+        <li><strong>TLS em trânsito:</strong> toda comunicação entre cliente e servidor é criptografada.</li>
+        <li><strong>Senhas:</strong> armazenadas com hash bcrypt — nunca em texto plano.</li>
+        <li><strong>Tokens JWT:</strong> com expiração curta, rotação e invalidação no logout.</li>
+        <li><strong>Rate limiting:</strong> proteção contra força bruta em endpoints sensíveis.</li>
+        <li><strong>Logs:</strong> monitoramento de acessos e atividades suspeitas.</li>
+        <li><strong>Acesso mínimo:</strong> separação de ambientes e credenciais com privilégio mínimo.</li>
+        <li><strong>Backups:</strong> banco de dados com snapshots regulares no Neon.</li>
+        <li>A NoHeroes <strong>nunca</strong> solicita senha ou dados sensíveis por e-mail, WhatsApp ou qualquer canal externo.</li>
+        <li>Em caso de incidente de segurança relevante, notificaremos os Usuários afetados e a ANPD em até <strong>2 dias úteis</strong> da confirmação.</li>
+      </ul>
+    </section>
+
+    <!-- 16 -->
+    <section id="ugc" class="doc-section">
+      <h2>16. Conteúdo de Usuários e Moderação</h2>
+      <ul>
+        <li>Comentários, avaliações e outros conteúdos postados por Usuários são de responsabilidade exclusiva de seus autores.</li>
+        <li>Ao postar, o Usuário concede à NoHeroes licença para exibir o conteúdo na plataforma.</li>
+        <li>A NoHeroes pode remover, sem aviso prévio, conteúdo que viole estes Termos, a lei ou direitos de terceiros.</li>
+        <li>Reincidências podem resultar em suspensão ou encerramento de conta.</li>
+      </ul>
+    </section>
+
+    <!-- 17 -->
+    <section id="newsletter" class="doc-section">
+      <h2>17. Newsletter e Comunicações</h2>
+      <ul>
+        <li>A inscrição na newsletter é voluntária (opt-in) e pode ser cancelada a qualquer momento pelo link de descadastramento em cada e-mail.</li>
+        <li>O cancelamento é processado imediatamente. Pode ocorrer envio de até 1 comunicação após o cancelamento por razão técnica de fila.</li>
+        <li>Comunicações transacionais (confirmação de compra, suporte, alertas de segurança) são enviadas independentemente da inscrição na newsletter.</li>
+        <li>Não vendemos listas de e-mail nem compartilhamos endereços com terceiros para marketing.</li>
+      </ul>
+    </section>
+
+    <!-- 18 -->
+    <section id="versoes" class="doc-section">
+      <h2>18. Alterações e Histórico de Versões</h2>
+      <p>Podemos atualizar estes Termos a qualquer momento. A data de <em>Última atualização</em> refletirá a versão vigente. Mudanças relevantes serão comunicadas por e-mail cadastrado e/ou aviso em destaque no site com antecedência mínima de <strong>7 dias corridos</strong>.</p>
+      <p>O uso continuado dos serviços após a entrada em vigor das alterações constitui aceite das novas condições.</p>
+      <table>
+        <tr><th>Versão</th><th>Data</th><th>Mudanças principais</th></tr>
+        <tr><td>1.0</td><td>19/10/2025</td><td>Versão inicial — Termos base</td></tr>
+        <tr><td>2.0</td><td>Abril/2026</td><td>Expansão: Arautos, Moeda Interna, Mangás, Prestação de Serviços, Newsletter, tabelas LGPD</td></tr>
+      </table>
+    </section>
+
+    <!-- 19 -->
+    <section id="disputas" class="doc-section">
+      <h2>19. Solução de Conflitos e Foro</h2>
+      <p>Antes de qualquer ação judicial, busque solução amigável via <a href="suporte.html">Suporte</a>. Comprometo-nos a responder em até <strong>7 dias úteis</strong>.</p>
+      <p>Aplica-se exclusivamente a legislação brasileira. Foro eleito: <strong>Comarca de Cuiabá/MT</strong>, salvo disposição legal em contrário (ex.: normas de defesa do consumidor).</p>
+    </section>
+
+    <!-- 20 -->
+    <section id="contato" class="doc-section">
+      <h2>20. Contato, Suporte e Encarregado (DPO)</h2>
+      <ul>
+        <li><strong>Razão social:</strong> NoHeroes <em>(formalização jurídica em andamento)</em></li>
+        <li><strong>Responsável:</strong> Raul Takagi Sato Souza</li>
+        <li><strong>E-mail de suporte:</strong> <a href="/cdn-cgi/l/email-protection#7d1c191014133d131215180f12180e531e1210531f0f"><span class="__cf_email__" data-cfemail="1071747d797e507e7f7875627f75633e737f7d3e7262">[email&#160;protected]</span></a></li>
+        <li><strong>Encarregado de Dados (DPO):</strong> <a href="/cdn-cgi/l/email-protection#c2a3a6afabac82acadaaa7b0ada7b1eca1adafeca0b0"><span class="__cf_email__" data-cfemail="5233363f3b3c123c3d3a37203d37217c313d3f7c3020">[email&#160;protected]</span></a></li>
+        <li><strong>Cidade/UF:</strong> Cuiabá/MT — Brasil</li>
+        <li><strong>Prazo de resposta:</strong> até 7 dias úteis para suporte geral; até 15 dias úteis para solicitações LGPD.</li>
+      </ul>
+      <p>Para exercer direitos de titular de dados ou denúncias de violação, utilize o assunto <em>"LGPD — [tipo de solicitação]"</em> no e-mail.</p>
+    </section>
+
+    <!-- 21 -->
+    <section id="denuncias" class="doc-section">
+      <h2>21. Denúncias e Remoção de Conteúdo</h2>
+      <p>Para alegações de violação de direitos autorais, envie e-mail para <a href="/cdn-cgi/l/email-protection#157471787c7b557b7a7d70677a70663b767a783b7767"><span class="__cf_email__" data-cfemail="d5b4b1b8bcbb95bbbabdb0a7bab0a6fbb6bab8fbb7a7">[email&#160;protected]</span></a> com assunto <em>"DMCA/Direitos Autorais"</em>, contendo:</p>
+      <ul>
+        <li>Identificação da obra original e comprovação de titularidade;</li>
+        <li>URL exata do conteúdo infrator na plataforma;</li>
+        <li>Declaração de boa-fé e veracidade das informações.</li>
+      </ul>
+      <p>Prazo de análise: até 5 dias úteis. Conteúdo confirmadamente infrator será removido.</p>
+    </section>
+
+    <!-- 22 FAQ -->
+    <section id="faq" class="doc-section">
+      <h2>22. Perguntas Frequentes</h2>
+      <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);border-radius:12px;overflow:hidden;">
+        <details class="faq-item"><summary>Quais dados são compartilhados com terceiros?</summary><div class="answer">Apenas o necessário para processamento de pagamento (Mercado Pago) e envio de e-mails (Resend). Não vendemos dados.</div></details>
+        <details class="faq-item"><summary>A NoHeroes armazena dados do meu cartão?</summary><div class="answer">Não. Dados sensíveis de cartão (número, CVV, validade) são processados exclusivamente pelo Mercado Pago.</div></details>
+        <details class="faq-item"><summary>Qual o prazo de reembolso?</summary><div class="answer">Até 7 dias corridos da compra online, conforme CDC art. 49. Após download confirmado, pode ser negado a critério da NoHeroes salvo falha técnica.</div></details>
+        <details class="faq-item"><summary>Como cancelo a newsletter?</summary><div class="answer">Clique em "cancelar inscrição" em qualquer e-mail recebido. O cancelamento é imediato.</div></details>
+        <details class="faq-item"><summary>Posso solicitar a exclusão dos meus dados?</summary><div class="answer">Sim. Solicite via e-mail <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c4a5a0a9adaa84aaabaca1b6aba1b7eaa7aba9eaa6b6">[email&#160;protected]</a> com assunto "LGPD — Exclusão de Dados". Prazo: 15 dias úteis.</div></details>
+        <details class="faq-item"><summary>Como me torno um Arauto?</summary><div class="answer">Acesse o painel de arauto (autordash.html), preencha o formulário de candidatura. Nossa equipe avalia em até 72 horas.</div></details>
+        <details class="faq-item"><summary>Os Coins têm valor em dinheiro?</summary><div class="answer">Não. Coins são moeda virtual interna sem valor monetário real e não são conversíveis em dinheiro.</div></details>
+        <details class="faq-item"><summary>Meu acesso ao e-book expira?</summary><div class="answer">Não, desde que sua conta permaneça ativa. O acesso é permanente vinculado à conta.</div></details>
+        <details class="faq-item"><summary>Posso compartilhar meu login com outra pessoa?</summary><div class="answer">Não. Uma conta é de uso pessoal e intransferível. Contas compartilhadas podem ser suspensas.</div></details>
       </div>
-      <div class="border-t border-neutral-800 pt-4 text-neutral-400">
-        <!-- PREENCHER AO FINAL -->
-        <p><strong>Razão social:</strong> <em>Preencher aqui</em> · <strong>CNPJ:</strong> <em>Preencher aqui</em> · <strong>Endereço:</strong> <em>Preencher aqui</em> · <strong>Cidade/UF:</strong> <em>Cuiabá/MT (ou ajustar)</em></p>
+    </section>
+
+  </article>
+</main>
+
+<!-- COOKIE BANNER -->
+<div id="cookieBanner" style="display:none;position:fixed;inset-x:0;bottom:0;z-index:50;border-top:1px solid rgba(255,255,255,0.08);background:rgba(10,9,14,0.97);backdrop-filter:blur(10px);padding:14px 20px;">
+  <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;">
+    <p style="font-size:13px;color:rgba(255,255,255,0.6);margin:0;">Usamos apenas cookies <strong>essenciais</strong> para funcionamento (sessão, autenticação). <a href="#cookies" style="color:#c4a3ff;">Saiba mais</a>.</p>
+    <div style="display:flex;gap:8px;">
+      <button id="acceptCookies" style="padding:8px 18px;border-radius:8px;background:linear-gradient(135deg,#8f4fff,#d9b55a);color:#000;font-weight:700;font-size:13px;cursor:pointer;border:none;font-family:'Inter',sans-serif;">OK, entendi</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer style="border-top:1px solid rgba(255,255,255,0.06);background:#000;padding:40px 20px;margin-top:40px;">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px;margin-bottom:20px;">
+      <div>
+        <div class="cinzel" style="font-size:18px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px;">NoHeroes</div>
+        <p style="font-size:12px;color:rgba(255,255,255,0.3);margin:0;">Responsável: Raul Takagi Sato Souza · Cuiabá/MT · Brasil</p>
+        <p style="font-size:12px;color:rgba(255,255,255,0.3);margin:4px 0 0;">E-mail: <a href="/cdn-cgi/l/email-protection#93f2f7fefafdd3fdfcfbf6e1fcf6e0bdf0fcfebdf1e1" style="color:#c4a3ff;"><span class="__cf_email__" data-cfemail="2342474e4a4d634d4c4b46514c46500d404c4e0d4151">[email&#160;protected]</span></a></p>
+      </div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;">
+        <a href="index.html" style="font-size:12px;color:rgba(255,255,255,0.35);text-decoration:none;">Início</a>
+        <a href="suporte.html" style="font-size:12px;color:rgba(255,255,255,0.35);text-decoration:none;">Suporte</a>
+        <a href="store.html" style="font-size:12px;color:rgba(255,255,255,0.35);text-decoration:none;">Loja</a>
       </div>
     </div>
-    <button type="button"
-        onclick="window.NH_cookies && window.NH_cookies.openPreferences()"
-        class="text-xs text-gray-400 hover:text-gray-200">
-  Preferências de cookies
-</button>
-  </footer>  
-  <script src="assets/js/cookies.js"></script>
-  <script>
-    // Helper: data pt-BR
-    function formatDatePTBR(date){
-      return new Intl.DateTimeFormat('pt-BR',{day:'2-digit',month:'long',year:'numeric'}).format(date);
+    <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:16px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:center;">
+      <p style="font-size:11px;color:rgba(255,255,255,0.2);margin:0;">© <span id="year"></span> NoHeroes. Todos os direitos reservados. Versão <span id="docVersionFooter">2.0</span> — Abril/2026</p>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <button onclick="window.print()" style="padding:6px 14px;border-radius:7px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);font-size:11px;cursor:pointer;font-family:'Inter',sans-serif;">Baixar PDF</button>
+        <button onclick="window.NH_cookies&&window.NH_cookies.openPreferences()" style="padding:6px 14px;border-radius:7px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);color:rgba(255,255,255,0.35);font-size:11px;cursor:pointer;font-family:'Inter',sans-serif;">Cookies</button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- BACK TO TOP -->
+<button id="toTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Voltar ao topo">↑</button>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/js/cookies.js"></script>
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// Drawer: agora no componente compartilhado <nh-drawer> (gatilho via [data-nh-drawer-toggle])
+
+// ─── TOC DINÂMICO ───
+const toc = document.getElementById('toc');
+document.querySelectorAll('article .doc-section').forEach(sec=>{
+  const h2 = sec.querySelector('h2');
+  if(!h2) return;
+  const a = document.createElement('a');
+  a.href = '#'+sec.id;
+  a.textContent = h2.textContent;
+  a.className = 'toc-link';
+  toc.appendChild(a);
+});
+
+// highlight TOC ao scrollar
+const tocLinks = toc.querySelectorAll('.toc-link');
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      tocLinks.forEach(l=>l.classList.remove('active'));
+      const active = toc.querySelector(`a[href="#${e.target.id}"]`);
+      if(active) active.classList.add('active');
     }
+  });
+},{threshold:0.3,rootMargin:'-60px 0px -60% 0px'});
+document.querySelectorAll('.doc-section').forEach(s=>io.observe(s));
 
-    // Ano atual
-    document.getElementById('year').textContent = new Date().getFullYear();
+// ─── BUSCA ───
+const searchInput = document.getElementById('searchInput');
+const searchCount = document.getElementById('searchCount');
+let marks = [];
 
-    // Última atualização (fixa na primeira publicação — ajuste se necessário)
-    const lastUpdatedEl = document.getElementById('lastUpdated');
-    if (lastUpdatedEl && lastUpdatedEl.textContent.trim() === '19 de outubro de 2025') {
-      lastUpdatedEl.textContent = formatDatePTBR(new Date('2025-10-19'));
-    }
+searchInput.addEventListener('input', ()=>{
+  const q = searchInput.value.trim().toLowerCase();
+  // remove marks anteriores
+  marks.forEach(m=>{
+    const parent = m.parentNode;
+    parent.replaceChild(document.createTextNode(m.textContent), m);
+    parent.normalize();
+  });
+  marks = [];
+  searchCount.textContent = '';
+  if(q.length < 2) return;
 
-    // Imprimir / Salvar PDF
-    const printBtn = document.getElementById('printBtn');
-    const downloadBtn = document.getElementById('downloadBtn');
-    function doPrint(){ window.print(); }
-    printBtn?.addEventListener('click', doPrint);
-    downloadBtn?.addEventListener('click', doPrint);
-
-    // Voltar ao topo
-    const toTop = document.getElementById('toTop');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 600) toTop.classList.remove('hidden'); else toTop.classList.add('hidden');
+  let count = 0;
+  document.querySelectorAll('.prose p, .prose li, .prose td').forEach(el=>{
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    let n;
+    while(n=walker.nextNode()) nodes.push(n);
+    nodes.forEach(node=>{
+      const text = node.textContent;
+      const lc = text.toLowerCase();
+      let idx = lc.indexOf(q);
+      if(idx === -1) return;
+      const frag = document.createDocumentFragment();
+      let last = 0;
+      while(idx !== -1){
+        frag.appendChild(document.createTextNode(text.slice(last,idx)));
+        const mark = document.createElement('mark');
+        mark.textContent = text.slice(idx, idx+q.length);
+        frag.appendChild(mark);
+        marks.push(mark);
+        count++;
+        last = idx+q.length;
+        idx = lc.indexOf(q, last);
+      }
+      frag.appendChild(document.createTextNode(text.slice(last)));
+      node.parentNode.replaceChild(frag, node);
     });
-    toTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  });
+  searchCount.textContent = count > 0 ? count+' resultado'+(count!==1?'s':'') : 'Sem resultados';
+  if(marks.length > 0) marks[0].scrollIntoView({behavior:'smooth',block:'center'});
+});
 
-    // TOC dinâmico
-    const toc = document.getElementById('toc');
-    const sections = document.querySelectorAll('.doc-section > h2');
-    sections.forEach((h2) => {
-      const id = h2.parentElement.id; if(!id) return;
-      const a = document.createElement('a');
-      a.href = `#${id}`;
-      a.textContent = h2.textContent;
-      a.className = 'block rounded-lg px-3 py-2 text-neutral-300 hover:bg-neutral-800 hover:text-white';
-      toc.appendChild(a);
-    });
+// ─── BACK TO TOP ───
+const toTop = document.getElementById('toTop');
+window.addEventListener('scroll',()=>{
+  toTop.style.display = window.scrollY > 400 ? 'flex' : 'none';
+},{passive:true});
 
-    // Busca com highlight
-    const searchInput = document.getElementById('searchInput');
-    const searchCount = document.getElementById('searchCount');
-    const article = document.querySelector('article');
-
-    function clearHighlights(){
-      article.querySelectorAll('mark[data-hl]')?.forEach(m=>{ const t=document.createTextNode(m.textContent); m.replaceWith(t); });
-    }
-    function highlight(term){
-      clearHighlights();
-      if(!term){ searchCount.textContent=''; return; }
-      const re = new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi');
-      let count = 0;
-      article.querySelectorAll('p, li, summary, h2, h3')?.forEach(node=>{
-        node.childNodes.forEach(child=>{
-          if(child.nodeType===Node.TEXT_NODE){
-            const parts = child.textContent.split(re);
-            if(parts.length>1){
-              const frag = document.createDocumentFragment();
-              child.textContent.replace(re,(match)=>{
-                frag.append(parts.shift()??'');
-                const mark = document.createElement('mark');
-                mark.setAttribute('data-hl','');
-                mark.className = 'bg-yellow-400/30 text-yellow-200 rounded px-0.5';
-                mark.textContent = match; frag.appendChild(mark); count++;
-              });
-              frag.append(parts.join(''));
-              child.replaceWith(frag);
-            }
-          }
-        });
-      });
-      searchCount.textContent = count ? `${count} resultado(s)` : '0';
-    }
-    let searchTimer; searchInput?.addEventListener('input', (e)=>{
-      clearTimeout(searchTimer); searchTimer=setTimeout(()=>highlight(e.target.value.trim()), 200);
-    });
-
-    // Cópia de link de seção (#)
-    document.querySelectorAll('.doc-section > h2').forEach(h2=>{
-      h2.classList.add('group','flex','items-center','gap-2');
-      const link = document.createElement('button');
-      link.className = 'opacity-0 group-hover:opacity-100 transition text-xs text-neutral-400 hover:text-neutral-200';
-      link.textContent = '#'; link.title = 'Copiar link da seção';
-      link.addEventListener('click', ()=>{
-        const url = `${location.origin}${location.pathname}#${h2.parentElement.id}`;
-        navigator.clipboard.writeText(url);
-      });
-      h2.appendChild(link);
-    });
-
-    // Cookie banner (essenciais)
-    const cookieBanner = document.getElementById('cookieBanner');
-    const acceptCookies = document.getElementById('acceptCookies');
-    const COOKIE_KEY = 'nh_cookies_accepted_v1';
-    try{
-      if(!localStorage.getItem(COOKIE_KEY)) cookieBanner.classList.remove('hidden');
-      acceptCookies?.addEventListener('click', ()=>{ localStorage.setItem(COOKIE_KEY,'1'); cookieBanner.classList.add('hidden'); });
-    }catch(e){ /* storage indisponível */ }
-    
-// =============================================
-// ⚙️ INTEGRAÇÃO BACKEND — TERMOS / PRIVACIDADE
-// =============================================
-const API = window.location.hostname.includes('localhost')
-  ? 'http://localhost:3000'
-  : 'https://api.noheroes.com.br';
-
-// ---- Atualiza metadados da versão e PDFs ----
-(async () => {
-  try {
-    const res = await fetch(`${API}/termos/status`);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const j = await res.json();
-
-    // Atualiza versão e data
-    if (j.versao) document.getElementById('docVersion').textContent = j.versao;
-    if (j.ultima_atualizacao) {
-      const d = new Date(j.ultima_atualizacao);
-      document.getElementById('lastUpdated').textContent =
-        d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
-    }
-
-    // Atualiza botão de download se houver PDFs
-    const downloadBtn = document.getElementById('downloadBtn');
-    if (j.pdf_termos) {
-      downloadBtn.textContent = 'Baixar Termos (PDF)';
-      downloadBtn.addEventListener('click', () => window.open(j.pdf_termos, '_blank'));
-    } else {
-      downloadBtn.addEventListener('click', () => window.print());
-    }
-  } catch (e) {
-    console.warn('⚠️ Falha ao obter status dos termos:', e);
-  }
-})();
-
-// ---- Atualiza dados da empresa no rodapé ----
-(async () => {
-  try {
-    const res = await fetch(`${API}/empresa/info`);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const j = await res.json();
-
-    const rodape = document.querySelector('footer .border-t.pt-4');
-    if (rodape && j.razao_social) {
-      rodape.innerHTML = `
-        <p><strong>Razão social:</strong> ${j.razao_social || '-'} · 
-        <strong>CNPJ:</strong> ${j.cnpj || '(pendente)'} · 
-        <strong>Endereço:</strong> ${j.endereco || '(não informado)'} · 
-        <strong>Cidade/UF:</strong> ${j.cidade || 'Cuiabá/MT'}</p>
-        <p><strong>Email suporte:</strong> <a href="mailto:${j.email_suporte}" class="underline">${j.email_suporte}</a></p>`;
-    }
-  } catch (e) {
-    console.warn('⚠️ Falha ao obter info da empresa:', e);
-  }
-})();
-
-// ---- Registra aceite de termos (LGPD) ----
-async function registrarAceite() {
-  try {
-    const versao = document.getElementById('docVersion')?.textContent?.trim() || '1.0';
-    const payload = {
-      versao,
-      userAgent: navigator.userAgent,
-      data_aceite: new Date().toISOString()
-    };
-    await fetch(`${API}/termos/aceite`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-Client': 'noheroes-terms-v1' },
-      body: JSON.stringify(payload)
-    });
-    console.log('✅ Aceite registrado localmente.');
-  } catch (e) {
-    console.warn('⚠️ Falha ao registrar aceite:', e.message);
-  }
-}
-  </script></body>
-</html>
+// ─── ACEITE VIA BACKEND ───
+// Verifica se o usuário já aceitou estes termos
+(async()=>{
+  try{
+    const token=(localStorage.getItem('NoHeroes_token')||'').replace(/^Bearer\s+/i,'').trim();
+    if(!token) return;
+    const res=await fetch('https://api.noheroes.com.br/api/terms/status',{
+      headers:{Authorization:`Bear

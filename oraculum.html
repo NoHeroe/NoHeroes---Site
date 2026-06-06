@@ -40,10 +40,14 @@
     .icon{ width:1.05rem; height:1.05rem; opacity:.85 }
     @media (prefers-reduced-motion: reduce){ .btn-x{ transition:none } .btn-x::before{ display:none } }
   </style>
+  <link rel="stylesheet" href="assets/css/noheroes-ui.css">
 </head>
 <body class="h-full">
-  <!-- Background brasas -->
-  <canvas id="brasasCanvas" class="fixed inset-0 -z-10 opacity-[0.16] pointer-events-none"></canvas>  <!-- Modal de aviso (teste IA) -->  <div id="betaModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+  <!-- Acesso ao menu lateral (componente compartilhado) -->
+  <button data-nh-drawer-toggle aria-label="Abrir menu" class="fixed top-4 right-4 z-[80] h-10 w-10 flex items-center justify-center rounded-xl border border-white/15 bg-white/5 backdrop-blur text-xl leading-none hover:bg-white/10">☰</button>
+  <nh-drawer></nh-drawer>
+  <!-- Background brasas (componente compartilhado) -->
+  <nh-background></nh-background>  <!-- Modal de aviso (teste IA) -->  <div id="betaModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
     <div class="absolute inset-0 bg-black/60"></div>
     <div class="relative w-full max-w-md panel shadow-glow">
       <div class="p-5">
@@ -107,11 +111,14 @@
   <ul id="historyList" class="divide-y divide-white/10"></ul>
 </section>
 
-<footer class="mt-8 md:mt-10 text-xs text-[var(--nh-ink-dim)] flex items-center gap-2 pb-[env(safe-area-inset-bottom)]">
+<div class="mt-8 md:mt-10 text-xs text-[var(--nh-ink-dim)] flex items-center gap-2 pb-[env(safe-area-inset-bottom)]">
   <span class="kbd">Ctrl/⌘ + K</span> atalho para focar no campo
-</footer>
+</div>
 
-  </main>  <script>
+  </main>
+  <!-- Footer (componente compartilhado) -->
+  <nh-footer></nh-footer>
+  <script>
     // ====== Conteúdo base (expansível) ======
     const FAQ = [
       { q:'O que é a NoHeroes?', a:'NoHeroes é o estúdio/lar criativo que inclui o eBook <strong>Manual das Sombras</strong>, projetos autorais e a comunidade.', tags:['sobre','institucional'] },
@@ -264,15 +271,8 @@
     // Boot
     (function boot(){ renderSuggestions(); renderQuickResults(''); setAnswer(''); openBeta(); })();
 
-    // Brasas
-    (function initBrasas(){
-      const c = document.getElementById('brasasCanvas'); if(!c) return; const ctx = c.getContext('2d');
-      let w, h; const dpr = window.devicePixelRatio || 1; const N = matchMedia('(min-width: 768px)').matches ? 80 : 48;
-      const parts = Array.from({length: N}).map(() => ({ x: Math.random(), y: Math.random(), r: Math.random()*1.6+0.5, v: Math.random()*0.0006+0.00018 }));
-      function resize(){ w = c.width = innerWidth*dpr; h = c.height = innerHeight*dpr; }
-      addEventListener('resize', resize, { passive:true }); resize();
-      function step(){ ctx.clearRect(0,0,w,h); for(const p of parts){ p.y += p.v; if(p.y>1) p.y=0; const x=p.x*w, y=p.y*h; const g=ctx.createRadialGradient(x,y,0,x,y,p.r*16*dpr); g.addColorStop(0,'rgba(255,180,120,.12)'); g.addColorStop(1,'rgba(0,0,0,0)'); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,p.r*9*dpr,0,Math.PI*2); ctx.fill(); } requestAnimationFrame(step); }
-      if(!matchMedia('(prefers-reduced-motion: reduce)').matches) requestAnimationFrame(step);
-    })();
-  </script></body>
+    // Brasas: agora no componente compartilhado <nh-background> (noheroes-ui.js)
+  </script>
+  <script defer src="assets/js/noheroes-ui.js"></script>
+</body>
 </html>

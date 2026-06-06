@@ -98,8 +98,9 @@
   </section>
 </main>
 
-<footer class="py-10 text-center text-white/50 text-sm">
-  © <span id="year"></span> NoHeroes. Todos os direitos reservados.
+<footer style="padding:32px 20px;text-align:center;border-top:1px solid rgba(255,255,255,0.06);background:#000;">
+  <div style="font-family:'Cinzel Decorative',serif;font-size:16px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px;">NoHeroes</div>
+  <p style="font-size:11px;color:rgba(255,255,255,0.2);margin:0;">© <span id="year"></span> NoHeroes. Todos os direitos reservados.</p>
 </footer>
 
 <script>
@@ -175,11 +176,11 @@ form.addEventListener("submit",async e=>{
   if(!nome_completo||!username||!email||!password){errorEl.textContent="Preencha todos os campos obrigatórios.";errorEl.classList.remove("hidden");return;}
   if(password!==confirmPassword){errorEl.textContent="As senhas não coincidem.";errorEl.classList.remove("hidden");return;}
 
-  const payload={nome_completo,username,email,password,phone,birthdate,bio};
+  const payload={nome_completo,username,email,password,phone,birthdate,bio,termsAccepted:document.getElementById('terms').checked};
   submitBtn.disabled=true;btnSpin.classList.remove("hidden");btnText.textContent="Criando conta...";
 
   try{
-    const res = await fetch("https://dev-flmw.onrender.com/api/auth/register", {
+    const res = await fetch("https://api.noheroes.com.br/api/auth/register", {
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify(payload)

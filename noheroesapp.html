@@ -1,820 +1,635 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
   <title>NoHeroes | App</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/noheroes-ui.css">
+  <script defer src="assets/js/noheroes-ui.js"></script>
   <style>
     :root {
-      --nh-bg: #0a0a0a;
-      --nh-ink: #e5e5e5;
-      --nh-accent1: #8f4fff;
-      --nh-accent2: #facc15;
-      --nh-border: rgba(255, 255, 255, 0.1);
-      --nh-neon: #22ff66;
-      --nh-danger: #ef4444;
+      --bg: #06050a;
+      --surface: #0d0b14;
+      --surface2: #13101c;
+      --accent: #8f4fff;
+      --gold: #d9b55a;
+      --border: rgba(143,79,255,0.12);
+      --border2: rgba(255,255,255,0.06);
+      --text: #e8e4f0;
+      --muted: rgba(232,228,240,0.4);
+      --fd: 'Cinzel Decorative', serif;
+      --fb: 'Syne', sans-serif;
     }
 
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
-      font-family: Inter, system-ui, sans-serif;
-      background: var(--nh-bg);
-      color: var(--nh-ink);
-      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--fb);
       overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    h1, h2, .cinzel { font-family: 'Cinzel Decorative', serif; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 99px; }
 
-    .gradiente-noheroes {
-      background: linear-gradient(270deg, #8f4fff, #a855f7, #facc15, #8f4fff);
-      background-size: 600% 600%;
-      -webkit-background-clip: text;
-      color: transparent;
-      animation: pulse 8s ease-in-out infinite;
+    /* ── BRASAS ── */
+    #brasasCanvas { position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.6; }
+
+    /* ── GRAD TEXT ── */
+    .grad {
+      background: linear-gradient(135deg, #c4a3ff 0%, #f0d99a 100%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
-    @keyframes pulse { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
-
-    .panel {
-      background: rgba(255,255,255,.06);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--nh-border);
-      border-radius: 1rem;
+    .grad-anim {
+      background: linear-gradient(270deg, #8f4fff, #a855f7, #d9b55a, #8f4fff);
+      background-size: 400% 400%;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradFlow 8s ease-in-out infinite;
     }
+    @keyframes gradFlow { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
 
-    .btn-x {
-      background: linear-gradient(270deg,#8f4fff,#a855f7,#facc15,#8f4fff);
-      background-size: 600% 600%;
-      animation: pulse 6s ease-in-out infinite;
-      color: #000;
-      font-weight: 700;
-      border-radius: .9rem;
-      padding: 1rem 1.3rem;
-      box-shadow: 0 10px 30px rgba(143,79,255,.18);
-      border: 1px solid rgba(255,255,255,.08);
-      transition: transform .2s ease, filter .2s ease;
+    /* ── DRAWER NH ── */
+    #nh-ov {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(8px); z-index: 190;
+      display: none; opacity: 0; transition: opacity 0.3s;
     }
-    .btn-x:hover { transform: translateY(-2px); filter: brightness(1.05); }
+    #nh-drawer {
+      position: fixed; top: 0; right: 0;
+      width: 280px; height: 100%;
+      background: rgba(5,5,7,0.97);
+      backdrop-filter: blur(20px);
+      border-left: 1px solid rgba(143,79,255,0.2);
+      box-shadow: -10px 0 30px rgba(0,0,0,0.9);
+      z-index: 200;
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+      overflow-y: auto;
+    }
+    .nh-di {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 13px 16px; margin-bottom: 5px; border-radius: 12px;
+      background: rgba(255,255,255,0.02); border: 1px solid transparent;
+      text-decoration: none; color: #e5e5e5; transition: all 0.3s;
+    }
+    .nh-di:hover { background: rgba(143,79,255,0.08); border-color: rgba(143,79,255,0.3); }
+    .nh-di.active { background: rgba(143,79,255,0.12); border-color: rgba(143,79,255,0.35); color: #c4a3ff; }
+    .nh-dt { font-size: 9px; font-family: var(--fd); text-transform: uppercase; letter-spacing: 1px; color: #8f4fff; opacity: 0.7; }
 
-    .btn-support {
+    /* ── HEADER ── */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; height: 56px;
+      background: rgba(6,5,10,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 16px; z-index: 60;
+    }
+    .hdr-logo {
+      display: flex; align-items: center; gap: 8px;
+      text-decoration: none;
+    }
+    .hdr-gem {
+      width: 26px; height: 26px;
+      background: linear-gradient(135deg, var(--accent), var(--gold));
+      border-radius: 6px; transform: rotate(45deg); flex-shrink: 0;
+      box-shadow: 0 0 14px rgba(143,79,255,0.4);
+    }
+    .hdr-title {
+      font-family: var(--fd); font-size: 12px;
+      background: linear-gradient(135deg, #c4a3ff, #f0d99a);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      letter-spacing: 0.05em;
+    }
+    .hdr-btn {
+      width: 36px; height: 36px; border-radius: 9px;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.6); transition: all 0.2s;
+    }
+    .hdr-btn:hover { background: rgba(143,79,255,0.1); border-color: rgba(143,79,255,0.3); }
+
+    /* ── MAIN ── */
+    main { position: relative; z-index: 1; padding-top: 56px; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 85vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 60px 20px 40px; text-align: center;
       position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: .6rem;
-      border: 2px solid var(--nh-neon);
-      border-radius: 1rem;
-      padding: 1rem 1.2rem;
-      color: var(--nh-neon);
-      font-weight: 700;
-      transition: transform .15s ease;
     }
-    .btn-support::before {
-      content: "";
-      position: absolute;
-      inset: -6px;
-      border-radius: 1.2rem;
-      filter: blur(10px);
-      background: radial-gradient(closest-side, rgba(34,255,102,.45), transparent 60%);
-      animation: neonPulse 3s ease-in-out infinite;
+    .hero-bg-glow {
+      position: absolute; top: 20%; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(143,79,255,0.12) 0%, transparent 70%);
+      pointer-events: none;
     }
-    @keyframes neonPulse { 0%,100%{opacity:.5} 50%{opacity:1} }
-    .btn-support:hover { transform: translateY(-2px); }
+    .hero h1 {
+      font-family: var(--fd); font-size: clamp(1.8rem, 6vw, 3.2rem);
+      line-height: 1.15; margin-bottom: 16px;
+    }
+    .hero p {
+      font-size: clamp(13px, 2.5vw, 16px); color: var(--muted);
+      max-width: 500px; line-height: 1.7; margin-bottom: 36px;
+    }
 
-    .modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.65); /* escurece o fundo */
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 50;
-}
-.modal.show { display: flex; }
+    /* ── STORE BUTTONS ── */
+    .store-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-bottom: 16px; }
+    .store-btn {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 20px; border-radius: 14px;
+      border: 1px solid rgba(143,79,255,0.35);
+      background: rgba(143,79,255,0.06);
+      cursor: pointer; transition: all 0.2s;
+      position: relative; overflow: hidden;
+    }
+    .store-btn::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(143,79,255,0.1), transparent);
+      opacity: 0; transition: opacity 0.2s;
+    }
+    .store-btn:hover { border-color: rgba(143,79,255,0.6); transform: translateY(-2px); box-shadow: 0 0 20px rgba(143,79,255,0.2); }
+    .store-btn:hover::before { opacity: 1; }
+    .store-btn-label { text-align: left; }
+    .store-btn-sub { font-size: 9px; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; display: block; }
+    .store-btn-name { font-size: 14px; font-weight: 700; color: var(--text); display: block; }
 
-.modal-card {
-  background: rgba(20, 20, 35, 0.85); /* vidro escuro */
-  border: 1px solid rgba(168, 85, 247, 0.4); /* roxo translúcido */
-  box-shadow: 0 0 25px rgba(168, 85, 247, 0.3);
-  backdrop-filter: blur(14px);
-  border-radius: 1.1rem;
-  padding: 1.75rem 1.5rem;
-  max-width: 22rem;
-  width: 90%;
-  color: #e5e5ff;
-  text-align: center;
-  animation: modalFade 0.3s ease forwards;
-}
-@keyframes modalFade {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
+    /* ── BADGE EM BREVE ── */
+    .soon-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 12px; border-radius: 99px;
+      border: 1px solid rgba(217,181,90,0.3);
+      background: rgba(217,181,90,0.08);
+      font-size: 10px; font-weight: 700; color: var(--gold);
+      letter-spacing: 0.1em; text-transform: uppercase;
+    }
 
-    /* Base */
-.reveal { opacity: 0; transition: opacity 0.8s ease, transform 0.8s ease; }
-.reveal-left  { transform: translateX(-40px); }
-.reveal-right { transform: translateX(40px); }
-.reveal-down  { transform: translateY(30px); }
+    /* ── SECTION ── */
+    section { padding: 60px 20px; max-width: 900px; margin: 0 auto; }
+    .section-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 12px; display: block;
+    }
+    .section-title {
+      font-family: var(--fd); font-size: clamp(1.4rem, 4vw, 2rem);
+      margin-bottom: 16px; line-height: 1.2;
+    }
+    .section-sub { font-size: 14px; color: var(--muted); line-height: 1.7; max-width: 560px; }
 
-/* Quando entra */
-.reveal-in { opacity: 1; transform: translate(0,0); }
+    /* ── FEATURES GRID ── */
+    .features-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px; margin-top: 32px;
+    }
+    .feature-card {
+      background: var(--surface); border: 1px solid var(--border2);
+      border-radius: 16px; padding: 20px 16px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .feature-card:hover { border-color: rgba(143,79,255,0.3); transform: translateY(-2px); }
+    .feature-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: rgba(143,79,255,0.1); border: 1px solid rgba(143,79,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 12px;
+    }
+    .feature-title { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+    .feature-desc { font-size: 11px; color: var(--muted); line-height: 1.5; }
 
-    /* Brasas */
-    #brasasCanvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;
-  pointer-events: none;
-}
+    /* ── DIVIDER ── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(143,79,255,0.3), rgba(217,181,90,0.2), transparent);
+      margin: 0 20px;
+    }
 
-.btn-support-purple {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: .6rem;
-  border-radius: 1rem;
-  border: 2px solid #a855f7; /* roxo principal */
-  padding: 1rem 1.4rem;
-  color: #d8b4fe; /* lilás suave */
-  font-weight: 700;
-  letter-spacing: .3px;
-  transition: transform .15s ease, filter .3s ease;
-  background: rgba(255,255,255,.04);
-  box-shadow: 0 0 12px rgba(168,85,247,.25);
-}
-.btn-support-purple:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.15);
-  box-shadow: 0 0 18px rgba(168,85,247,.45);
-}
-.btn-support-purple::before {
-  content: "";
-  position: absolute;
-  inset: -6px;
-  border-radius: 1.4rem;
-  background: radial-gradient(circle, rgba(168,85,247,.35) 0%, transparent 60%);
-  filter: blur(10px);
-  animation: supportPulse 3s ease-in-out infinite;
-}
-@keyframes supportPulse {
-  0%,100% {opacity:.4; transform:scale(1);}
-  50% {opacity:.9; transform:scale(1.1);}
-}
-.store-badge {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid #a855f7;
-  border-radius: 12px;
-  padding: 0.4rem 0.8rem;
-  background: rgba(255,255,255,0.05);
-  box-shadow: 0 0 10px rgba(168,85,247,0.25);
-  transition: transform 0.15s ease, box-shadow 0.3s ease;
-}
-.store-badge:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 18px rgba(168,85,247,0.5);
-}
-:root{
-  --pill-w: 240px;   /* ajuste fino de largura desejada */
-  --pill-h: 64px;    /* ajuste fino de altura desejada  */
-}
+    /* ── RECRUIT ── */
+    .recruit-card {
+      background: var(--surface); border: 1px solid var(--border2);
+      border-radius: 20px; padding: 32px 24px; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .recruit-card::before {
+      content: ''; position: absolute; top: -60px; right: -60px;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(217,181,90,0.08), transparent 70%);
+      pointer-events: none;
+    }
+    .recruit-roles { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 20px 0; }
+    .role-pill {
+      padding: 5px 14px; border-radius: 99px;
+      border: 1px solid var(--border2);
+      background: var(--surface2);
+      font-size: 11px; font-weight: 700; color: var(--muted);
+    }
+    .role-pill.accent { border-color: rgba(143,79,255,0.3); color: #c4a3ff; background: rgba(143,79,255,0.08); }
 
-/* PILL verdadeira (capsule), com glow roxo */
-.store-pill{
-  width: var(--pill-w);
-  height: var(--pill-h);
-  border: 2px solid #a855f7;
-  border-radius: 9999px;      /* deixa oval contínuo */
-  overflow: hidden;           /* recorta qualquer sobra do badge */
-  padding: 0;                 /* SEM padding */
-  background: transparent;
-  box-shadow: 0 0 14px rgba(168,85,247,.35);
-  display: inline-flex;
-  align-items: stretch;
-  justify-content: stretch;
-  transition: transform .15s ease, box-shadow .3s ease;
-}
-.store-pill:hover{
-  transform: translateY(-2px);
-  box-shadow: 0 0 24px rgba(168,85,247,.55);
-}
+    /* ── BTN ── */
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 24px; border-radius: 12px; border: none; cursor: pointer;
+      background: linear-gradient(135deg, var(--accent), #6b2fff);
+      color: #fff; font-family: var(--fb); font-size: 12px;
+      font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+      text-decoration: none; transition: all 0.2s;
+      box-shadow: 0 0 20px rgba(143,79,255,0.3);
+    }
+    .btn-primary:hover { box-shadow: 0 0 30px rgba(143,79,255,0.5); transform: translateY(-1px); }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 24px; border-radius: 12px; cursor: pointer;
+      background: var(--surface2); color: var(--text);
+      border: 1px solid var(--border2); font-family: var(--fb);
+      font-size: 12px; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; text-decoration: none; transition: all 0.2s;
+    }
+    .btn-ghost:hover { border-color: rgba(143,79,255,0.4); color: var(--accent); }
 
-/* A IMAGEM PREENCHE 100% DA PILL */
-.store-pill > img{
-  width: 100%;
-  height: 100%;
-  display: block;
-  border-radius: inherit;     /* bordas da imagem seguem a cápsula */
-  object-fit: cover;          /* garante preenchimento total */
-}
+    /* ── FAQ ── */
+    .faq-item { background: var(--surface); border: 1px solid var(--border2); border-radius: 14px; margin-bottom: 8px; overflow: hidden; }
+    .faq-toggle { width: 100%; text-align: left; padding: 16px 20px; background: none; border: none; cursor: pointer; color: var(--text); font-family: var(--fb); font-size: 13px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .faq-toggle svg { flex-shrink: 0; transition: transform 0.3s; color: var(--accent); }
+    .faq-item.open .faq-toggle svg { transform: rotate(180deg); }
+    .faq-body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, opacity 0.3s ease; opacity: 0; }
+    .faq-item.open .faq-body { opacity: 1; }
+    .faq-body p { padding: 0 20px 16px; font-size: 13px; color: var(--muted); line-height: 1.7; }
 
-/* Responsivo: mantém proporção igual em telas pequenas */
-@media (max-width: 420px){
-  :root{ --pill-w: 220px; --pill-h: 56px; }
-}
-#demo-downloads .btn-x {
-  font-size: 0.9rem;
-  padding: 0.6rem 1rem;
-  border-radius: 0.6rem;
-  box-shadow: 0 0 12px rgba(143,79,255,0.25);
-}
-#demo-downloads .btn-x:hover {
-  filter: brightness(1.1);
-  transform: translateY(-2px);
-}
-section:nth-of-type(3) { /* ou id específico */
-  background: radial-gradient(circle at 30% 50%, rgba(168,85,247,0.15), transparent 70%);
-  animation: bgPulse 8s ease-in-out infinite;
-}
-@keyframes bgPulse {
-  0%,100% { background-size: 100% 100%; opacity:.9; }
-  50% { background-size: 120% 120%; opacity:1; }
-}
-/* Gradiente animado no estilo NoHeroes para destacar palavras */
-.gradiente-inline {
-  background: linear-gradient(270deg, #8f4fff, #a855f7, #facc15, #8f4fff);
-  background-size: 600% 600%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradFlow 8s ease-in-out infinite;
-  font-weight: 700;
-}
-@keyframes gradFlow {
-  0%,100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
+    /* ── FOOTER ── */
+    footer {
+      background: #000; border-top: 1px solid #1a1a1a;
+      padding: 32px 20px; text-align: center;
+      font-size: 12px; color: rgba(255,255,255,0.25);
+      position: relative; z-index: 1;
+    }
+    footer a { color: rgba(255,255,255,0.3); text-decoration: none; transition: color 0.2s; }
+    footer a:hover { color: var(--accent); }
+    .footer-links { display: flex; gap: 20px; justify-content: center; margin-bottom: 16px; flex-wrap: wrap; }
 
-.faq-item { transition: all .3s ease; }
-.faq-toggle span:last-child { transform: rotate(0); }
-.faq-item.open .faq-toggle span:last-child { transform: rotate(180deg); }
-.faq-content { transition: max-height .4s ease, opacity .3s ease; overflow: hidden; }
+    /* ── MODAL EM BREVE ── */
+    #modal-soon {
+      position: fixed; inset: 0; z-index: 300;
+      background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
+      display: none; align-items: center; justify-content: center; padding: 20px;
+    }
+    #modal-soon.open { display: flex; }
+    .modal-card {
+      background: var(--surface); border: 1px solid rgba(143,79,255,0.3);
+      border-radius: 20px; padding: 32px 24px; max-width: 360px; width: 100%;
+      text-align: center; animation: fadeUp 0.25s ease;
+      box-shadow: 0 0 40px rgba(143,79,255,0.2);
+    }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+    .modal-icon {
+      width: 56px; height: 56px; border-radius: 14px;
+      background: rgba(143,79,255,0.1); border: 1px solid rgba(143,79,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+    }
 
-#menu-fixed button span {
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; } }
 
-#menu-fixed {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  z-index: 9999;
-}
-
-@media (max-width: 480px) {
-  #menu-fixed {
-    top: clamp(0.6rem, 2vw, 1rem);
-    right: clamp(0.6rem, 2vw, 1rem);
-    transform: none;
-  }
-  #menu-btn {
-    width: 42px;
-    height: 42px;
-  }
-  #menu-drawer {
-    right: 0;
-    left: auto;
-    width: 11.5rem;
-    max-width: 90vw;
-  }
-}
-html, body {
-  width: 100%;
-  max-width: 100vw;
-  overflow-x: hidden !important;
-}
-#scroll-hint {
-  background: rgba(10,10,20,0.45);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(168,85,247,0.25);
-  padding: 0.5rem 1rem;
-  border-radius: 1rem;
-  transition: opacity .6s ease, transform .6s ease;
-  box-shadow: 0 0 12px rgba(168,85,247,.25);
-}
-#scroll-hint.hide {
-  opacity: 0;
-  transform: translate(-50%, 40px);
-  pointer-events: none;
-}
+    /* ── MOBILE ── */
+    @media (max-width: 640px) {
+      .features-grid { grid-template-columns: 1fr 1fr; }
+      .store-row { flex-direction: column; align-items: center; }
+      .store-btn { width: 100%; max-width: 280px; }
+    }
   </style>
 </head>
+<body>
 
-<body class="text-center">
-  <canvas id="brasasCanvas"></canvas>
-<!-- MENU HAMBÚRGUER FIXO -->
-<nav id="menu-fixed" class="fixed top-4 right-4 z-50">
-  <button id="menu-btn" class="w-11 h-11 rounded-xl border border-purple-500/40 bg-black/40 backdrop-blur-md flex flex-col justify-center items-center space-y-1 hover:bg-black/60 transition-all">
-    <span class="block w-6 h-[2px] bg-purple-400"></span>
-    <span class="block w-6 h-[2px] bg-purple-400"></span>
-    <span class="block w-6 h-[2px] bg-purple-400"></span>
-  </button>
+<!-- Fundo animado (componente compartilhado) -->
+<nh-background></nh-background>
 
-  <div id="menu-drawer" class="hidden absolute right-0 mt-3 w-48 panel p-4 text-left space-y-3 backdrop-blur-md">
-    <a href="#down" class="menu-link block text-sm text-gray-200 hover:text-purple-300">Download</a>
-    <a href="#dentro" class="menu-link block text-sm text-gray-200 hover:text-purple-300">Dentro do App</a>
-    <a href="#proposito" class="menu-link block text-sm text-gray-200 hover:text-purple-300">Propósito</a>
-    <a href="#download" class="menu-link block text-sm text-gray-200 hover:text-purple-300">Versões</a>
-    <a href="#faq" class="menu-link block text-sm text-gray-200 hover:text-purple-300">FAQ</a>
-  </div>
-</nav>
+<!-- OVERLAY DRAWER -->
+<div id="nh-ov" onclick="nhClose()"></div>
 
-  <!-- TOPO -->
-  <header class="pt-12 pb-6 px-4">
-    <img src="assets/images/noheroes logo.png" alt="Logo NoHeroes" class="mx-auto w-32 mb-4">
-    <h1 class="cinzel text-3xl md:text-5xl gradiente-noheroes">O universo NoHeroes. Agora em suas mãos.</h1>
-    <p class="mt-4 max-w-2xl mx-auto text-gray-300 italic">
-      O NoHeroes App é o seu Dojo digital. Administre seu personagem, leia, assista, evolua e viva o universo NoHeroes onde quiser!
-    </p>
-    <div id="down" class="mt-6">
-      <button id="btnDemo" class="btn-x">Baixar Versão Beta</button>
-    </div>
-  </header>
-
-<!-- INDICADOR DE SCROLL -->
-<div id="scroll-hint" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 
-text-sm text-gray-300 flex flex-col items-center gap-2 animate-bounce">
-  <span class="gradiente-inline text-base cinzel">Role para explorar ↓</span>
-  <div class="w-5 h-5 border-l-2 border-b-2 border-purple-400 rotate-[-45deg]"></div>
-</div>
-
-  <!-- DOWNLOAD -->
-  <section id="down1" class="pb-10 px-4">
-  <div class="max-w-xl mx-auto text-center panel p-6 reveal space-y-6">
-
-    <!-- BADGES -->
- <div class="flex flex-wrap justify-center gap-4">
-  <!-- App Store -->
-  <button data-opens="modalSoon" class="store-pill" aria-label="App Store">
-    <img src="assets/badges/appstore-badge.png" alt="" loading="lazy">
-  </button>
-
-  <!-- Google Play -->
-  <button data-opens="modalSoon" class="store-pill" aria-label="Google Play">
-    <img src="assets/badges/googleplay-badge.png" alt="" loading="lazy">
-  </button>
-</div>
-
-    <!-- SUPPORT -->
-    <a href="apoiar.html" class="btn-support-purple inline-flex items-center justify-center gap-2">
-      <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 5c-1.6-2.1-5-1.6-5 1.1c0 2.2 2.4 4 5 5.5c2.6-1.5 5-3.3 5-5.5c0-2.7-3.4-3.2-5-1.1Z"/>
-        <path d="M3 15.25a1.25 1.25 0 0 1 1.25-1.25H13c.83 0 1.5.67 1.5 1.5v.5h3a2 2 0 1 1 0 4H12l-2.6.5H6a3 3 0 0 1-3-3v-2.25Z"/>
-      </svg>
-      Support Us
+<!-- DRAWER -->
+<div id="nh-drawer">
+  <button onclick="nhClose()" style="position:absolute;top:18px;right:16px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
+  <div style="padding:28px 20px;margin-top:18px;">
+    <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;margin-bottom:6px;">
+      <div style="width:28px;height:28px;background:linear-gradient(135deg,#8f4fff,#d9b55a);border-radius:7px;transform:rotate(45deg);flex-shrink:0;box-shadow:0 0 16px rgba(143,79,255,0.4);"></div>
+      <span style="font-family:'Cinzel Decorative',serif;font-size:14px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">NoHeroes</span>
     </a>
-  </div>
-</section>
-
-  <!-- DENTRO DO APP -->
-<section id="dentro" class="px-4 py-10">
-  <div class="max-w-5xl mx-auto panel p-8 soft-shadow text-left reveal">
-    <h2 class="cinzel text-3xl mb-4 gradiente-noheroes text-center">Dentro do App NoHeroes</h2>
-    <p class="text-gray-200 leading-relaxed mb-6 text-center">
-      O NoHeroes App é mais que um complemento — é o <b>coração vivo do universo</b>.  
-      Cada função conecta você à jornada: missões, aliados, vitalismo e histórias que ecoam do jogo para o real.
-    </p>
-
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- 1 -->
-      <div class="panel p-4 reveal" data-dir="left">
-        <h3 class="font-semibold mb-1 gradiente-inline">Missões & Conquistas</h3>
-        <p class="text-sm text-gray-300">Ganhe XP, enfrente desafios diários enquanto organiza sua jornada.</p>
-      </div>
-
-      <!-- 2 -->
-      <div class="panel p-4 reveal" data-dir="right">
-        <h3 class="font-semibold mb-1 gradiente-inline">Guilda & Comunidade</h3>
-        <p class="text-sm text-gray-300">Junte-se a aventureiros, interaja, evolua e cresça em um ambiente mágico.</p>
-      </div>
-
-      <!-- 3 -->
-      <div class="panel p-4 reveal" data-dir="left">
-        <h3 class="font-semibold mb-1 gradiente-inline">Oráculo AI</h3>
-        <p class="text-sm text-gray-300">Uma entidade viva que guia, ensina e observa.  
-          Baseado em IA, responde dúvidas, dá conselhos e reage às suas decisões dentro do universo.</p>
-      </div>
-
-      <!-- 4 -->
-      <div class="panel p-4 reveal" data-dir="right">
-        <h3 class="font-semibold mb-1 gradiente-inline">Vitalismo</h3>
-        <p class="text-sm text-gray-300">Sistema de despertar único.  
-          A cada ação, energia vital é acumulada — até atingir o ponto de ruptura: o Despertar Vitalista.</p>
-      </div>
-
-      <!-- 5 -->
-      <div class="panel p-4 reveal" data-dir="left">
-        <h3 class="font-semibold mb-1 gradiente-inline">Personagem 3D</h3>
-        <p class="text-sm text-gray-300">Crie e visualize seu personagem em 3D.  
-          Cada equipamento, cor e relíquia refletem suas conquistas reais.</p>
-      </div>
-
-      <!-- 6 -->
-      <div class="panel p-4 reveal" data-dir="right">
-        <h3 class="font-semibold mb-1 gradiente-inline">Biblioteca & Leitura</h3>
-        <p class="text-sm text-gray-300">Leitor interno de eBooks, mangás e manuais sombrios.  
-          Seu progresso é salvo e transforma leitura em conquistas.</p>
-      </div>
-
-      <!-- 7 -->
-      <div class="panel p-4 reveal" data-dir="left">
-        <h3 class="font-semibold mb-1 gradiente-inline">Loja & Itens Sombrios</h3>
-        <p class="text-sm text-gray-300">Adquira itens raros, relíquias e artefatos permanentes.  
-          Os Itens Sombrios expandem seus atributos e contam histórias do universo.</p>
-      </div>
-
-      <!-- 8 -->
-      <div class="panel p-4 reveal" data-dir="right">
-        <h3 class="font-semibold mb-1 gradiente-inline">Eventos & Conquistas</h3>
-        <p class="text-sm text-gray-300">Participe de eventos temáticos, libere conquistas secretas  
-          e receba gemas que desbloqueiam caminhos de poder dentro do app.</p>
-      </div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:24px;"><span style="height:1px;width:28px;background:linear-gradient(90deg,#8f4fff,#d9b55a);display:block;"></span><span style="font-size:10px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.3em;">Menu</span></div>
+    <nav style="display:flex;flex-direction:column;gap:2px;">
+      <a href="index.html" class="nh-di">
+        <div style="display:flex;align-items:center;gap:11px;">
+          <svg width="16" height="16" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          <span style="font-size:13px;font-weight:700;">Início</span>
+        </div><span class="nh-dt">Portal</span>
+      </a>
+      <a href="leitor.html" class="nh-di">
+        <div style="display:flex;align-items:center;gap:11px;">
+          <svg width="16" height="16" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+          <span style="font-size:13px;font-weight:700;">Biblioteca</span>
+        </div><span class="nh-dt">Crônicas</span>
+      </a>
+      <a href="store.html" class="nh-di">
+        <div style="display:flex;align-items:center;gap:11px;">
+          <svg width="16" height="16" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M16 11V7a4 4 0 00-8 0v4M5 11h14l1 9H4l1-9z"/></svg>
+          <span style="font-size:13px;font-weight:700;">Loja</span>
+        </div><span class="nh-dt">Mercado</span>
+      </a>
+      <a href="noheroesapp.html" class="nh-di active">
+        <div style="display:flex;align-items:center;gap:11px;">
+          <svg width="16" height="16" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          <span style="font-size:13px;font-weight:700;">App</span>
+        </div><span class="nh-dt">Mobile</span>
+      </a>
+      <a href="apoiar.html" class="nh-di">
+        <div style="display:flex;align-items:center;gap:11px;">
+          <svg width="16" height="16" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <span style="font-size:13px;font-weight:700;">Apoiar</span>
+        </div><span class="nh-dt">Suporte</span>
+      </a>
+      <a href="profile.html" class="nh-di">
+        <div style="display:flex;align-items:center;gap:11px;">
+          <svg width="16" height="16" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span style="font-size:13px;font-weight:700;">Perfil</span>
+        </div><span class="nh-dt">Conta</span>
+      </a>
+    </nav>
+    <div style="margin-top:28px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.05);text-align:center;">
+      <p style="font-size:8px;text-transform:uppercase;letter-spacing:0.5em;color:rgba(255,255,255,0.15);">Sem heróis. Apenas você.</p>
     </div>
-  </div>
-</section>
-
-  <!-- PROPÓSITO DO SISTEMA -->
-<section id="proposito" class="px-4 py-16">
-  <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-6 items-center">
-
-    <!-- Mockup / Ilustração -->
-    <div class="panel p-4 reveal" data-dir="left">
-      <img src="assets/images/mockup-app.png" class="rounded-lg shadow-lg" alt="Interface do App NoHeroes">
-    </div>
-
-    <!-- Texto -->
-    <div class="panel p-6 text-left reveal" data-dir="right">
-      <h2 class="cinzel text-3xl mb-4 gradiente-noheroes">Propósito do Sistema NoHeroes</h2>
-
-      <p class="text-gray-200 leading-relaxed mb-4">
-        O NoHeroes App nasceu com um propósito simples e poderoso:  
-        <span class="gradiente-inline">transformar evolução pessoal em uma jornada divertida</span>. 
-        Aqui, crescer não é obrigação — é aventura.
-      </p>
-
-      <p class="text-gray-300 leading-relaxed mb-4">
-        Por meio da <span class="gradiente-inline">gamificação do dia a dia</span>, cada tarefa concluída rende XP,  
-        recompensas e progresso real.  
-        Você avança no jogo e na vida, um passo de cada vez — com energia, propósito e foco.
-      </p>
-
-      <p class="text-gray-300 leading-relaxed mb-4">
-        O app acompanha sua <span class="gradiente-inline">jornada individual</span>, sem receitas prontas.  
-        Cada usuário é único, com missões, ritmos e conquistas próprias.  
-        O sistema aprende com você e se molda à sua forma de evoluir.
-      </p>
-
-      <p class="text-gray-300 leading-relaxed mb-4">
-        Aqui, <span class="gradiente-inline">o personagem é você</span>.  
-        Tudo o que faz — conquistas, crescimento, hábitos e equilíbrio —  
-        é refletido visualmente em seu avatar, status e equipamentos dentro do app.
-      </p>
-
-      <p class="text-gray-400 italic">
-        Nosso objetivo é simples: unir o real e o imaginário.  
-        Tornar o crescimento pessoal uma experiência mágica, imersiva e contínua.
-      </p>
-    </div>
-
-  </div>
-</section>
-
-<!-- DOWNLOAD DEMO APP -->
-<section id="download" class="px-4 py-10">
-  <div class="max-w-2xl mx-auto panel p-6 text-left soft-shadow">
-    <h2 class="cinzel text-3xl mb-4 gradiente-noheroes text-center">Download App</h2>
-    <p class="text-gray-300 text-center mb-6 italic">Versões disponíveis e arquivadas</p>
-
-    <ul class="space-y-3">
-      <!-- BETA - disponível -->
-      <li class="flex justify-between items-center bg-black/40 border border-purple-500/40 rounded-lg p-3 hover:bg-black/60 transition">
-  <div>
-    <span class="text-green-400 font-semibold">NoHeroes App Demo v1.0.0.apk</span>
-    <p class="text-xs text-gray-400">Versão estável de testes (mais recente)</p>
-  </div>
-  <a 
-    href="https://github.com/NoHeroe/Release/releases/download/v1.0.0-demo/NoHeroes_App_Demo_v1.0.0.apk"
-    class="btn-x py-2 px-3 text-sm"
-    target="_blank"
-    rel="noopener"
-  >
-    Baixar
-  </a>
-</li>
-
-      <!-- 0.0.5 - indisponível -->
-      <li class="flex justify-between items-center bg-black/30 border border-gray-700/50 rounded-lg p-3 line-through text-gray-500">
-        <span>NoHeroes App demo v0.0.5.apk</span>
-        <span class="text-xs text-gray-500">Indisponível</span>
-      </li>
-
-      <!-- 0.0.4 - indisponível -->
-      <li class="flex justify-between items-center bg-black/30 border border-gray-700/50 rounded-lg p-3 line-through text-gray-500">
-        <span>NoHeroes App demo v0.0.4.apk</span>
-        <span class="text-xs text-gray-500">Indisponível</span>
-      </li>
-
-      <!-- 0.0.3 - indisponível -->
-      <li class="flex justify-between items-center bg-black/30 border border-gray-700/50 rounded-lg p-3 line-through text-gray-500">
-        <span>NoHeroes App demo v0.0.3.apk</span>
-        <span class="text-xs text-gray-500">Indisponível</span>
-      </li>
-
-      <!-- 0.0.2 - agora indisponível -->
-<li class="flex justify-between items-center bg-black/30 border border-gray-700/50 rounded-lg p-3 line-through text-gray-500">
-  <span>NoHeroes App demo v0.0.2.apk</span>
-  <span class="text-xs text-gray-500">Indisponível</span>
-</li>
-
-      <!-- 0.0.1 - indisponível -->
-      <li class="flex justify-between items-center bg-black/30 border border-gray-700/50 rounded-lg p-3 line-through text-gray-500">
-        <span>NoHeroes App demo v0.0.1.apk</span>
-        <span class="text-xs text-gray-500">Indisponível</span>
-      </li>
-    </ul>
-  </div>
-</section>
-
-  <!-- FAQ -->
-<div id="faq" class="mt-12">
-  <h3 class="cinzel text-2xl mb-6 gradiente-noheroes text-center">Perguntas Frequentes</h3>
-
-  <div class="space-y-3 max-w-3xl mx-auto">
-
-    <!-- 1 -->
-    <div class="faq-item panel overflow-hidden">
-      <button class="faq-toggle w-full text-left px-5 py-4 font-semibold flex justify-between items-center">
-        <span>O app é gratuito?</span>
-        <span class="text-purple-400 transition-transform duration-300">↓</span>
-      </button>
-      <div class="faq-content px-5 pb-4 text-gray-300 hidden">
-        Sim. O <span class="gradiente-inline">NoHeroes App</span> pode ser usado de forma gratuita.  
-        Todas as mecânicas principais — missões, evolução, diário e comunidade — estão disponíveis.  
-        A versão <span class="gradiente-inline">Pro</span> é opcional e vitalícia, focada em conforto, estética e narrativas extras.  
-        <br><br>
-        <i>“Free joga 100% do conteúdo base. Pro joga com estilo.”</i>
-      </div>
-    </div>
-
-    <!-- 2 -->
-    <div class="faq-item panel overflow-hidden">
-      <button class="faq-toggle w-full text-left px-5 py-4 font-semibold flex justify-between items-center">
-        <span>O que muda da versão Free para a versão Pro?</span>
-        <span class="text-purple-400 transition-transform duration-300">↓</span>
-      </button>
-      <div class="faq-content px-5 pb-4 text-gray-300 hidden">
-        A versão <span class="gradiente-inline">Pro</span> expande a experiência com funções de personalização e conveniência:
-        <ul class="list-disc ml-6 mt-2 space-y-1">
-          <li>Missões extras e individuais ilimitadas (Free possui limite de 5/dia).</li>
-          <li>Inventário expandido e histórico completo de progresso.</li>
-          <li>Auto-coleta de recompensas e notificações automáticas.</li>
-          <li>“Mapa do Tesouro” — dicas e segredos de lore exclusivas.</li>
-          <li>Missões narrativas e de <span class="gradiente-inline">Lore</span> exclusivas (sem vantagem mecânica).</li>
-          <li>Temas e efeitos visuais adicionais no app.</li>
-        </ul>
-        Valor estimado: <b>R$25–40</b> (pagamento único, vitalício).  
-        Futuramente poderá haver um passe sazonal apenas com cosméticos.
-      </div>
-    </div>
-
-    <!-- 3 -->
-    <div class="faq-item panel overflow-hidden">
-      <button class="faq-toggle w-full text-left px-5 py-4 font-semibold flex justify-between items-center">
-        <span>Como funciona o sistema de missões e XP?</span>
-        <span class="text-purple-400 transition-transform duration-300">↓</span>
-      </button>
-      <div class="faq-content px-5 pb-4 text-gray-300 hidden">
-        O sistema de missões é o núcleo da evolução.  
-        Existem <span class="gradiente-inline">diárias, sidequests e missões individuais</span>, todas com ranks (E a S).  
-        Cada missão gera XP, ouro e, às vezes, penalidades se falhar.  
-        Jogadores disciplinados ganham bônus de streak (até +50% após 10 dias seguidos).  
-        O equilíbrio soulslike faz com que cada conquista tenha peso real — pouca recompensa, muito valor.
-      </div>
-    </div>
-
-    <!-- 4 -->
-    <div class="faq-item panel overflow-hidden">
-      <button class="faq-toggle w-full text-left px-5 py-4 font-semibold flex justify-between items-center">
-        <span>O que é o Vitalismo dentro do app?</span>
-        <span class="text-purple-400 transition-transform duration-300">↓</span>
-      </button>
-      <div class="faq-content px-5 pb-4 text-gray-300 hidden">
-        O <span class="gradiente-inline">Vitalismo</span> é o sistema de energia e consciência do NoHeroes.  
-        Ele desperta após atingir metas especiais e simboliza o equilíbrio entre esforço e propósito.  
-        Jogadores vitalistas substituem o MP por energia vital, desbloqueiam habilidades únicas e missões internas focadas em crescimento pessoal e autocontrole.  
-        É a camada mais profunda do app — onde mecânica e filosofia se fundem.
-      </div>
-    </div>
-
-    <!-- 5 -->
-    <div class="faq-item panel overflow-hidden">
-      <button class="faq-toggle w-full text-left px-5 py-4 font-semibold flex justify-between items-center">
-        <span>O app coleta ou vende meus dados?</span>
-        <span class="text-purple-400 transition-transform duration-300">↓</span>
-      </button>
-      <div class="faq-content px-5 pb-4 text-gray-300 hidden">
-        Não. O app registra apenas informações essenciais para o progresso e sincronização.  
-        Todos os dados são armazenados de forma segura e pertencem exclusivamente ao usuário.  
-        Nenhum dado é vendido ou compartilhado.  
-        A filosofia é simples: <span class="gradiente-inline">crescimento sem exposição</span>.
-      </div>
-    </div>
-
-    <!-- 6 -->
-    <div class="faq-item panel overflow-hidden">
-      <button class="faq-toggle w-full text-left px-5 py-4 font-semibold flex justify-between items-center">
-        <span>O que o Oráculo AI faz?</span>
-        <span class="text-purple-400 transition-transform duration-300">↓</span>
-      </button>
-      <div class="faq-content px-5 pb-4 text-gray-300 hidden">
-        O <span class="gradiente-inline">Oráculo</span> é uma inteligência viva dentro do app.  
-        Ele responde dúvidas, propõe reflexões, ajuda a criar missões personalizadas e interpreta seus registros do diário.  
-        No modo Pro, ele se torna ainda mais interativo — acompanhando sua evolução e adaptando as respostas à sua jornada.
-      </div>
-    </div>
-
-    <!-- 7 -->
-    <div class="faq-item panel overflow-hidden">
-      <button class="faq-toggle w-full text-left px-5 py-4 font-semibold flex justify-between items-center">
-        <span>Existe diferença entre o app e o jogo NoHeroes?</span>
-        <span class="text-purple-400 transition-transform duration-300">↓</span>
-      </button>
-      <div class="faq-content px-5 pb-4 text-gray-300 hidden">
-        O jogo e o app são dois lados da mesma moeda.  
-        O app é o <span class="gradiente-inline">Dojo</span> — onde você treina, registra e evolui seu personagem.  
-        O jogo é o campo de batalha.  
-        Tudo que você faz no app influencia seu personagem no jogo, mantendo o conceito:  
-        <i>“Cresça fora, para despertar dentro.”</i>
-      </div>
-    </div>
-
   </div>
 </div>
 
-  <footer class="mt-10 mb-8 text-gray-500 text-sm">
-    <p>&copy; 2025 NoHeroes. Todos os direitos reservados.</p>
-    <p class="italic mt-2">Explore. Escolha. Caia. Evolua.</p>
-  </footer>
+<!-- HEADER -->
+<header>
+  <a href="index.html" class="hdr-logo">
+    <div class="hdr-gem"></div>
+    <span class="hdr-title">NoHeroes</span>
+  </a>
+  <div style="display:flex;align-items:center;gap:8px;">
+    <a href="apoiar.html" class="hdr-btn" title="Apoiar">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    </a>
+    <button class="hdr-btn" onclick="nhOpen()" aria-label="Menu">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</header>
 
-  <!-- MODAL -->
-  <div id="modalSoon" class="modal">
-    <div class="modal-card">
-      <h3 class="cinzel text-xl mb-1" style="color:var(--nh-danger)">Disponível em breve</h3>
-      <p class="text-gray-200 text-sm">A versão das lojas será liberada em breve.</p>
-      <div class="mt-4 flex justify-center">
-        <button data-close class="btn-x">Fechar</button>
-      </div>
+<main>
+
+  <!-- ═══ HERO ═══ -->
+  <div class="hero">
+    <div class="hero-bg-glow"></div>
+    <span class="soon-badge reveal" style="margin-bottom:20px;">
+      <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Em desenvolvimento
+    </span>
+    <h1 class="grad reveal">O universo NoHeroes.<br>Agora em suas mãos.</h1>
+    <p class="reveal">O NoHeroes App é o seu Dojo digital. Administre seu personagem, leia, evolua e viva o universo NoHeroes onde quiser.</p>
+
+    <!-- Botões das lojas -->
+    <div class="store-row reveal">
+      <!-- App Store -->
+      <button class="store-btn" onclick="openSoon()">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" style="color:#e8e4f0;">
+          <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+        </svg>
+        <div class="store-btn-label">
+          <span class="store-btn-sub">Baixar na</span>
+          <span class="store-btn-name">App Store</span>
+        </div>
+      </button>
+
+      <!-- Google Play -->
+      <button class="store-btn" onclick="openSoon()">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" style="color:#e8e4f0;">
+          <path d="m3.18 23.76 10.35-10.35-2.47-2.47L3.18 23.76zm14.3-9.61-2.62 1.51-2.77-2.77 2.77-2.77 2.64 1.53a1.33 1.33 0 0 1 0 2.5zm-14.3-12.91 7.88 7.88-2.47 2.47L3.18 1.24A1.3 1.3 0 0 1 3.18 1.24zm8.63 8.63 2.62-2.62-9.08-5.24 6.46 7.86z"/>
+        </svg>
+        <div class="store-btn-label">
+          <span class="store-btn-sub">Disponível no</span>
+          <span class="store-btn-name">Google Play</span>
+        </div>
+      </button>
     </div>
+
+    <p style="font-size:11px;color:var(--muted);margin-top:8px;" class="reveal">Lançamento previsto em breve — cadastre-se para ser notificado</p>
   </div>
 
-  <script>
-    // Scroll suave
-    document.getElementById('btnDemo').onclick = () =>
-      document.getElementById('download').scrollIntoView({behavior:'smooth'});
+  <div class="divider"></div>
 
-    // Modal
-    const modal = document.getElementById('modalSoon');
-    document.querySelectorAll('[data-opens="modalSoon"]').forEach(b => 
-      b.onclick = () => modal.classList.add('show'));
-    modal.onclick = e => { if (e.target === modal || e.target.hasAttribute('data-close')) modal.classList.remove('show'); };
+  <!-- ═══ FEATURES ═══ -->
+  <section>
+    <span class="section-label reveal">O que está chegando</span>
+    <h2 class="section-title grad-anim reveal">Dentro do App NoHeroes</h2>
+    <p class="section-sub reveal">Cada função conecta você à jornada: missões, vitalismo, histórias e evolução real dentro do universo.</p>
 
-    // Scroll Reveal com reset (anima toda vez que entra no viewport)
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    const el = entry.target;
-    if (entry.isIntersecting) {
-      el.classList.add('reveal-in');
-    } else {
-      // reseta quando sai da tela
-      el.classList.remove('reveal-in');
-    }
+    <div class="features-grid">
+      <!-- Missões -->
+      <div class="feature-card reveal">
+        <div class="feature-icon">
+          <svg width="20" height="20" fill="none" stroke="#8f4fff" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <div class="feature-title">Missões & XP</div>
+        <div class="feature-desc">Diárias, sidequests e missões individuais com ranks de E a S. Streak de até +50% de bônus.</div>
+      </div>
+
+      <!-- Guilda -->
+      <div class="feature-card reveal">
+        <div class="feature-icon">
+          <svg width="20" height="20" fill="none" stroke="#8f4fff" stroke-width="1.5" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="feature-title">Guilda & Comunidade</div>
+        <div class="feature-desc">Junte-se a aventureiros, interaja e evolua em um ambiente onde cada escolha tem peso.</div>
+      </div>
+
+      <!-- Oráculo -->
+      <div class="feature-card reveal">
+        <div class="feature-icon">
+          <svg width="20" height="20" fill="none" stroke="#8f4fff" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        </div>
+        <div class="feature-title">Oráculo AI</div>
+        <div class="feature-desc">Inteligência viva que guia, propõe reflexões e cria missões personalizadas à sua jornada.</div>
+      </div>
+
+      <!-- Vitalismo -->
+      <div class="feature-card reveal">
+        <div class="feature-icon">
+          <svg width="20" height="20" fill="none" stroke="#8f4fff" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <div class="feature-title">Vitalismo</div>
+        <div class="feature-desc">Sistema de despertar único. Energia vital acumulada até o ponto de ruptura — o Despertar.</div>
+      </div>
+
+      <!-- Personagem -->
+      <div class="feature-card reveal">
+        <div class="feature-icon">
+          <svg width="20" height="20" fill="none" stroke="#8f4fff" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div class="feature-title">Personagem 3D</div>
+        <div class="feature-desc">Crie seu personagem em 3D. Equipamentos e relíquias refletem suas conquistas reais.</div>
+      </div>
+
+      <!-- Biblioteca -->
+      <div class="feature-card reveal">
+        <div class="feature-icon">
+          <svg width="20" height="20" fill="none" stroke="#8f4fff" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        </div>
+        <div class="feature-title">Biblioteca & Leitura</div>
+        <div class="feature-desc">Leitor integrado de mangás, eBooks e manuais sombrios do universo NoHeroes.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══ RECRUTAMENTO ═══ -->
+  <section>
+    <span class="section-label reveal">Faça parte</span>
+    <h2 class="section-title reveal">Recrutando <span class="grad">Desenvolvedores</span></h2>
+    <div class="recruit-card reveal" style="margin-top:28px;">
+      <div style="width:52px;height:52px;border-radius:14px;background:rgba(217,181,90,0.1);border:1px solid rgba(217,181,90,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+        <svg width="24" height="24" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      </div>
+      <h3 style="font-family:var(--fd);font-size:18px;margin-bottom:10px;" class="grad">Construa o universo conosco</h3>
+      <p style="font-size:13px;color:var(--muted);line-height:1.7;max-width:480px;margin:0 auto 20px;">O NoHeroes App está em desenvolvimento ativo. Buscamos talentos apaixonados por tecnologia, design e universos sombrios que queiram deixar sua marca numa plataforma que está apenas começando.</p>
+
+      <div class="recruit-roles">
+        <span class="role-pill accent">React Native</span>
+        <span class="role-pill accent">Flutter</span>
+        <span class="role-pill accent">Node.js</span>
+        <span class="role-pill accent">UI / UX</span>
+        <span class="role-pill">Game Design</span>
+        <span class="role-pill">3D / Unity</span>
+        <span class="role-pill">IA / ML</span>
+        <span class="role-pill">QA Testing</span>
+      </div>
+
+      <a href="portifólio.html" class="btn-primary" style="margin-top:8px;">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        Ver Portfólio & Candidatar
+      </a>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ═══ FAQ ═══ -->
+  <section>
+    <span class="section-label reveal">Dúvidas</span>
+    <h2 class="section-title reveal">Perguntas <span class="grad">Frequentes</span></h2>
+
+    <div style="margin-top:24px;">
+      <div class="faq-item">
+        <button class="faq-toggle">
+          <span>Quando o app será lançado?</span>
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-body"><p>O app está em desenvolvimento ativo. O lançamento está previsto para breve — acompanhe nossas redes para ser notificado assim que disponível nas lojas.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-toggle">
+          <span>Como funciona o sistema de missões e XP?</span>
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-body"><p>Existem missões diárias, sidequests e individuais, todas com ranks de E a S. Cada missão gera XP e recompensas. Jogadores disciplinados ganham bônus de streak de até +50% após 10 dias consecutivos.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-toggle">
+          <span>O que é o Vitalismo dentro do app?</span>
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-body"><p>O Vitalismo é o sistema de energia e consciência do NoHeroes. Jogadores vitalistas desbloqueiam habilidades únicas e missões focadas em crescimento pessoal — onde mecânica e filosofia se fundem.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-toggle">
+          <span>O app coleta ou vende meus dados?</span>
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-body"><p>Não. O app registra apenas informações essenciais para progresso e sincronização. Nenhum dado é vendido ou compartilhado. A filosofia é simples: crescimento sem exposição.</p></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-toggle">
+          <span>Qual a diferença entre o app e o jogo NoHeroes?</span>
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-body"><p>O app é o Dojo — onde você treina, registra e evolui seu personagem. O jogo é o campo de batalha. Tudo que você faz no app influencia seu personagem no jogo: "Cresça fora, para despertar dentro."</p></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Footer (componente compartilhado) -->
+<nh-footer></nh-footer>
+
+<!-- MODAL EM BREVE -->
+<div id="modal-soon" onclick="if(event.target===this)closeSoon()">
+  <div class="modal-card">
+    <div class="modal-icon">
+      <svg width="26" height="26" fill="none" stroke="#8f4fff" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    </div>
+    <h3 style="font-family:var(--fd);font-size:16px;margin-bottom:8px;" class="grad">Em Breve</h3>
+    <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:20px;">O app NoHeroes está em desenvolvimento. Em breve disponível na App Store e Google Play.</p>
+    <button onclick="closeSoon()" class="btn-primary" style="width:100%;justify-content:center;">Entendido</button>
+  </div>
+</div>
+
+<script src="assets/js/cookies.js"></script>
+<script>
+// ── DRAWER ──
+function nhOpen(){
+  document.getElementById('nh-drawer').style.transform='translateX(0)';
+  const ov=document.getElementById('nh-ov');
+  ov.style.display='block'; setTimeout(()=>ov.style.opacity='1',10);
+  document.body.style.overflow='hidden';
+}
+function nhClose(){
+  document.getElementById('nh-drawer').style.transform='translateX(100%)';
+  const ov=document.getElementById('nh-ov');
+  ov.style.opacity='0'; setTimeout(()=>{ov.style.display='none';},300);
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){nhClose();closeSoon();} });
+
+// ── MODAL EM BREVE ──
+function openSoon(){
+  document.getElementById('modal-soon').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeSoon(){
+  document.getElementById('modal-soon').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+// ── FAQ ──
+document.querySelectorAll('.faq-toggle').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const item=btn.parentElement;
+    const body=item.querySelector('.faq-body');
+    const open=item.classList.toggle('open');
+    body.style.maxHeight=open?body.scrollHeight+'px':'0';
   });
-}, { threshold: 0.15 });
-
-// aplica direções automaticamente (ou usa data-dir)
-document.querySelectorAll('.reveal').forEach((el, i) => {
-  const dir = el.dataset.dir || (i % 2 === 0 ? 'left' : 'right');
-  el.classList.add(`reveal-${dir}`);
-  observer.observe(el);
 });
 
-  // Brasas (original do Portal NoHeroes)
-  const canvas = document.getElementById("brasasCanvas");
-  const ctx = canvas.getContext("2d");
-  let particles = [];
-  let w, h;
+// ── REVEAL ──
+const ro=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
 
-  function resizeCanvas() {
-    w = canvas.width = window.innerWidth;
-    h = canvas.height = window.innerHeight;
-  }
-
-  window.addEventListener("resize", resizeCanvas);
-  resizeCanvas();
-
-  class Particle {
-    constructor() { this.reset(true); }
-
-    reset(initial = false) {
-      this.x = Math.random() * w;
-      this.y = initial ? Math.random() * h : h + Math.random() * 100;
-      this.size = 1 + Math.random() * 2.5;
-      this.speed = 0.2 + Math.random() * 0.5;
-      this.alpha = 0.4 + Math.random() * 0.3;
-      this.drift = (Math.random() - 0.5) * 0.5;
-    }
-
-    update() {
-      this.y -= this.speed;
-      this.x += this.drift;
-      if (this.y < -10 || this.x < -50 || this.x > w + 50) this.reset();
-    }
-
-    draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`;
-      ctx.shadowColor = "#a855f7";
-      ctx.shadowBlur = 12;
-      ctx.fill();
-    }
-  }
-
-  function createParticles(n) {
-    for (let i = 0; i < n; i++) particles.push(new Particle());
-  }
-
-  function animate() {
-    ctx.clearRect(0, 0, w, h);
-    for (const p of particles) { p.update(); p.draw(); }
-    requestAnimationFrame(animate);
-  }
-
-  createParticles(150);
-  animate();
-
-// FAQ Acordeão
-document.querySelectorAll('.faq-toggle').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const item = btn.parentElement;
-    const content = item.querySelector('.faq-content');
-    const open = item.classList.toggle('open');
-    if (open) {
-      content.classList.remove('hidden');
-      content.style.maxHeight = content.scrollHeight + "px";
-      content.style.opacity = 1;
-    } else {
-      content.style.maxHeight = "0px";
-      content.style.opacity = 0;
-      setTimeout(() => content.classList.add('hidden'), 300);
-    }
-  });
-});
-// ===== MENU HAMBÚRGUER =====
-const menuBtn = document.getElementById('menu-btn');
-const menuDrawer = document.getElementById('menu-drawer');
-const menuNav = document.getElementById('menu-fixed');
-
-menuBtn.addEventListener('click', () => {
-  menuNav.classList.toggle('open');
-  menuDrawer.classList.toggle('hidden');
-});
-
-// fecha menu após clicar em um link
-document.querySelectorAll('.menu-link').forEach(link => {
-  link.addEventListener('click', e => {
-    e.preventDefault();
-    const target = document.querySelector(link.getAttribute('href'));
-    if (target) target.scrollIntoView({ behavior: 'smooth' });
-    menuNav.classList.remove('open');
-    menuDrawer.classList.add('hidden');
-  });
-});
-// ===== Fixo real no Android (viewport dinâmica) =====
-let lastY = window.scrollY;
-window.addEventListener('scroll', () => {
-  const nav = document.getElementById('menu-fixed');
-  if (!nav) return;
-  const currentY = window.scrollY;
-  // trava posição (evita "sumiço" ao scroll rápido)
-  nav.style.top = Math.max(8, 8 + currentY - lastY) + 'px';
-  lastY = currentY;
-}, { passive: true });
-
-// ===== Indicador de scroll (some após rolar) =====
-const scrollHint = document.getElementById('scroll-hint');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 80) {
-    scrollHint.classList.add('hide');
-  } else {
-    scrollHint.classList.remove('hide');
-  }
-}, { passive: true });
+// Brasas: agora no componente compartilhado <nh-background> (noheroes-ui.js)
 </script>
 </body>
 </html>

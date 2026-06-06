@@ -1,788 +1,755 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>NoHeroes — Portfólio</title>
-  <meta name="description" content="Portfólio da NoHeroes: Web design & programação, arte digital e escrita/roteiro. Solicite orçamento." />
-  <meta property="og:title" content="NoHeroes — Portfólio" />
-  <meta property="og:description" content="Web design & programação, arte digital e escrita/roteiro. Solicite orçamento." />
-  <meta property="og:type" content="website" />
-  <meta name="theme-color" content="#0a0a0b" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            base: { 900:'#0a0a0b', 800:'#0f0f12', 700:'#14141a', 600:'#1a1a22' },
-            accent:{ 500:'#b88cff', 600:'#a779ff', 700:'#8f5bff' },
-            gold:{ 400:'#f6d68e', 500:'#f1c663', 600:'#e6b74a' }
-          },
-          fontFamily:{ sans:['Inter','system-ui','ui-sans-serif','Arial'], display:['Cinzel Decorative','serif'] },
-          boxShadow:{ glow:'0 0 40px rgba(184,140,255,0.25), inset 0 0 30px rgba(241,198,99,0.10)' },
-          animation:{
-            'fade-up':'fadeUp .8s cubic-bezier(.2,.6,.2,1) both',
-            'fade-in':'fadeIn .6s ease-out both',
-            'shimmer':'shimmer 2.2s linear infinite'
-          },
-          keyframes:{
-            fadeUp:{ from:{ opacity:0, transform:'translateY(18px) scale(.98)' }, to:{ opacity:1, transform:'translateY(0) scale(1)' } },
-            fadeIn:{ from:{ opacity:0 }, to:{ opacity:1 } },
-            shimmer:{ '0%':{ backgroundPosition:'-500px 0' }, '100%':{ backgroundPosition:'500px 0' } }
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    :root{
-      --radius: 18px;
-      --glass: rgba(255,255,255,0.04);
-      --border: rgba(255,255,255,0.08);
-      --grad: linear-gradient(135deg, #8f5bff 0%, #b88cff 40%, #f1c663 100%);
-      --grad-soft: radial-gradient(60% 60% at 70% 30%, rgba(184,140,255,0.3) 0%, rgba(0,0,0,0) 60%), radial-gradient(40% 40% at 20% 80%, rgba(241,198,99,0.25) 0%, rgba(0,0,0,0) 60%);
-    }
-    .grad-text{ background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
-    .card{ background:var(--glass); border:1px solid var(--border); border-radius:var(--radius); backdrop-filter:blur(10px); box-shadow:0 10px 30px rgba(0,0,0,.35); }
-    .btn{ border-radius:999px; border:1px solid var(--border); padding:.7rem 1rem; background:rgba(255,255,255,0.05); display:inline-flex; align-items:center; gap:.6rem; white-space:nowrap; }
-    .btn[aria-pressed="true"]{ outline:2px solid rgba(184,140,255,.5); }
-    .btn:hover{ background:rgba(255,255,255,0.08); transform:translateY(-1px); }
-    .ph{ position:relative; overflow:hidden; background:#121218; border-radius:14px; }
-    .ph::after{ content:''; position:absolute; inset:0; background-image:linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.08), rgba(255,255,255,0)); background-size:500px 100%; animation:shimmer 2.2s linear infinite; }
-    .reveal{ opacity:0; transform:translateY(16px) scale(.98); }
-    .reveal.in{ opacity:1; transform:none; transition:opacity .6s ease, transform .6s cubic-bezier(.2,.6,.2,1); }
-    .badge{ display:inline-flex; align-items:center; gap:.4rem; font-size:.72rem; line-height:1; padding:.45rem .7rem; border-radius:999px; border:1px solid var(--border); background:rgba(255,255,255,.04); }
-    .list-compact li{ margin-top:.5rem; display:flex; gap:.6rem; }
-    .list-compact li::before{ content:"•"; color:#b88cff; margin-top:.1rem; }
-    @media (prefers-reduced-motion: reduce){ *{ animation:none!important; transition:none!important } }
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>Portfólio — Raul Takagi | NoHeroes</title>
+<meta name="description" content="Portfólio de Raul Takagi — CEO da NoHeroes, desenvolvedor, artista digital, escritor, gestor e muito mais."/>
+<meta property="og:title" content="Portfólio — Raul Takagi | NoHeroes"/>
+<meta property="og:type" content="website"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="assets/css/noheroes-ui.css">
+<script defer src="assets/js/noheroes-ui.js"></script>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;overflow-x:hidden;scroll-behavior:smooth}
+body{background:#07060a;color:#e5e5e5;font-family:'Inter',system-ui,Arial,sans-serif;line-height:1.6;min-height:100vh}
+#brasasCanvas{position:fixed;inset:0;z-index:-1;pointer-events:none}
 
-    /* --- Correção overflow e mobile robustness --- */
-    html, body{ width:100%; max-width:100%; overflow-x:hidden; }
-    header, main, footer{ max-width:100vw; overflow-x:clip; }
-    img, video, canvas, svg{ max-width:100%; height:auto; }
-    .card, .ph{ contain:layout paint; }
+/* GLOBALS */
+.cinzel{font-family:'Cinzel Decorative',serif}
+.text-grad{background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.grad-border{border:1px solid rgba(143,79,255,0.2)}
+.section-label{font-size:11px;font-weight:700;color:rgba(143,79,255,0.7);text-transform:uppercase;letter-spacing:0.2em;margin-bottom:10px}
 
-    /* Melhorias de layout no mobile para o header do bloco Vitrines */
-    .vitrines-head{ flex-wrap:wrap; }
-    .vitrines-title{ width:100%; }
-    .vitrines-actions{ width:100%; }
+/* DRAWER */
+/* Drawer: agora em assets/css/noheroes-ui.css (componente <nh-drawer>) */
 
-    @media (min-width: 768px){
-      .vitrines-title{ width:auto; }
-      .vitrines-actions{ width:auto; }
-    }
-/* ==== Fade-in cinematográfico ==== */
-:root{
-  --reveal-duration: 900ms;   /* 800–1200ms fica ótimo */
-  --reveal-delay: 0ms;        /* custom por elemento via inline style ou data-attr */
+/* CARDS */
+.card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:16px;backdrop-filter:blur(8px)}
+.card-hover{transition:all 0.25s}
+.card-hover:hover{border-color:rgba(143,79,255,0.35);transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,0.4)}
+
+/* SKILL CARDS */
+.skill-card{background:#0c0a10;border:1px solid rgba(143,79,255,0.12);border-radius:14px;padding:20px;transition:all 0.25s}
+.skill-card:hover{border-color:rgba(143,79,255,0.35);transform:translateY(-2px)}
+.skill-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;background:rgba(143,79,255,0.08);border:1px solid rgba(143,79,255,0.15)}
+
+/* LANG FLAGS */
+.flag{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:99px;font-size:11px;font-weight:600;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08)}
+
+/* TABS */
+.tab-btn{padding:8px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);color:rgba(255,255,255,0.5);transition:all 0.2s;font-family:'Inter',sans-serif;white-space:nowrap}
+.tab-btn.active{background:rgba(143,79,255,0.15);border-color:rgba(143,79,255,0.4);color:#c4a3ff}
+.tab-pane{display:none}.tab-pane.active{display:block}
+
+/* VITRINE CARDS */
+.vitrine-card{background:#0c0a10;border:1px solid rgba(255,255,255,0.07);border-radius:14px;overflow:hidden;transition:all 0.25s}
+.vitrine-card:hover{border-color:rgba(143,79,255,0.4);transform:translateY(-3px)}
+.vitrine-img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;transition:transform 0.4s ease}
+.vitrine-card:hover .vitrine-img{transform:scale(1.03)}
+
+/* FORM */
+.field-label{display:block;font-size:12px;font-weight:600;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px}
+.field-input{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 14px;color:#e5e5e5;font-size:14px;outline:none;transition:border-color 0.2s;font-family:'Inter',sans-serif;resize:vertical}
+.field-input:focus{border-color:rgba(143,79,255,0.5);background:rgba(143,79,255,0.03)}
+.field-input::placeholder{color:rgba(255,255,255,0.2)}
+select.field-input option{background:#0c0a10;color:#e5e5e5}
+
+/* CONTACT TYPE MODAL */
+#contactTypeModal{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.85);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:20px}
+#contactTypeModal.open{display:flex}
+.contact-type-card{background:#0c0a10;border:2px solid rgba(255,255,255,0.07);border-radius:14px;padding:20px;cursor:pointer;transition:all 0.2s;text-align:center}
+.contact-type-card:hover,.contact-type-card.selected{border-color:rgba(143,79,255,0.5);background:rgba(143,79,255,0.08)}
+.contact-type-card.selected{box-shadow:0 0 20px rgba(143,79,255,0.15)}
+
+/* COLLAGE */
+.collage-img{width:100%;height:100%;object-fit:cover;transition:opacity 0.4s ease}
+.collage-swap-out{opacity:0;transform:scale(0.98);transition:opacity 0.3s,transform 0.3s}
+.collage-swap-in{opacity:1;transform:scale(1);transition:opacity 0.4s,transform 0.4s}
+
+/* REVEAL */
+.reveal{opacity:1;transition:opacity .6s ease,transform .6s ease}
+.reveal.hidden{opacity:0;transform:translateY(16px)}
+.reveal.hidden.in{opacity:1;transform:none}
+
+/* SLIDER */
+#slide-img { transition: opacity .5s ease; }
+@media (max-width: 768px) {
+  /* hero grid: stack */
+  .hero-grid { grid-template-columns: 1fr !important; }
+  /* stats: 2 cols */
+  .stats-grid { grid-template-columns: 1fr 1fr !important; }
+  /* skills: 2 cols */
+  .skills-grid { grid-template-columns: 1fr 1fr !important; }
+  /* vitrine: 1 col */
+  .vitrine-grid { grid-template-columns: 1fr !important; }
+  /* form grid: 1 col */
+  .form-grid { grid-template-columns: 1fr !important; }
+  /* bio grid: stack */
+  .bio-grid { grid-template-columns: 1fr !important; }
+  /* slider menor no mobile */
+  #slider-wrap { aspect-ratio: 16/9 !important; }
+}
+@media (max-width: 480px) {
+  .skills-grid { grid-template-columns: 1fr !important; }
 }
 
-.reveal{
-  opacity: 0;
-  transform: translateY(18px) scale(.985);
-  filter: blur(6px);
-  will-change: opacity, transform, filter;
-}
+/* STAT */
+.stat-num{font-size:28px;font-weight:800;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 
-.reveal.in{
-  animation: cinematicReveal var(--reveal-duration) cubic-bezier(.22,.61,.36,1) var(--reveal-delay) both;
-}
+/* TIMELINE */
+.tl-item{position:relative;padding-left:24px;margin-bottom:20px}
+.tl-item::before{content:'';position:absolute;left:0;top:6px;width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,#8f4fff,#d9b55a)}
+.tl-item::after{content:'';position:absolute;left:3px;top:14px;bottom:-14px;width:2px;background:rgba(143,79,255,0.15)}
+.tl-item:last-child::after{display:none}
 
-@keyframes cinematicReveal{
-  0%{
-    opacity: 0;
-    transform: translateY(18px) scale(.985);
-    filter: blur(6px);
-  }
-  60%{
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(.8px);     /* ainda um “respiro” de nitidez */
-  }
-  100%{
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0);
-  }
-}
+/* BTNS */
+.btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:10px;background:linear-gradient(135deg,#8f4fff,#d9b55a);color:#000;font-weight:700;font-size:13px;text-decoration:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;transition:filter 0.2s,transform 0.2s}
+.btn-primary:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn-ghost{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 18px;border-radius:10px;border:1px solid rgba(143,79,255,0.3);color:#c4a3ff;font-weight:600;font-size:13px;text-decoration:none;background:rgba(143,79,255,0.06);cursor:pointer;font-family:'Inter',sans-serif;transition:background 0.2s}
+.btn-ghost:hover{background:rgba(143,79,255,0.14)}
 
-/* Reduz movimento quando o usuário prefere */
-@media (prefers-reduced-motion: reduce){
-  .reveal{ opacity:1; transform:none; filter:none; }
-  .reveal.in{ animation: none !important; }
-}
-/* crossfade/zoom suave sem brigar com suas reveals */
-.collage-img{
-  transition: opacity .6s ease, transform .8s cubic-bezier(.2,.6,.2,1), filter .6s ease;
-  will-change: opacity, transform, filter;
-}
-.collage-swap-out{ opacity:.0; transform: scale(1.03); filter: saturate(1.05); }
-.collage-swap-in{ opacity:1; transform: scale(1.0); filter: none; }
-@media (prefers-reduced-motion: reduce){
-  .collage-img{ transition: none !important; }
-}
+/* CONTACT BTN HEADER */
+.hdr-contact{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:10px;background:linear-gradient(135deg,rgba(143,79,255,0.2),rgba(217,181,90,0.1));border:1px solid rgba(143,79,255,0.35);color:#c4a3ff;font-weight:600;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s}
+.hdr-contact:hover{background:rgba(143,79,255,0.25)}
 
-
-@media (min-width:1024px){
-  /* HERO ocupa a linha toda */
-  #collageIntro [data-slot="hero"]{
-    grid-column: span 3 / span 3 !important;
-  }
-
-  /* container das miniaturas: sempre 3 colunas em linha */
-  #collageIntro > .grid > div{
-    grid-column: span 3 / span 3 !important;
-    display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
-    grid-template-rows: unset !important;
-  }
-
-  /* miniaturas se ajustam lado a lado */
-  #collageIntro [data-slot="a"],
-  #collageIntro [data-slot="b"],
-  #collageIntro [data-slot="c"]{
-    grid-column: span 1 / span 1 !important;
-    aspect-ratio: 4 / 3 !important;
-  }
+/* MOBILE */
+@media(max-width:768px){
+  .hero-grid{grid-template-columns:1fr!important}
+  .bio-grid{grid-template-columns:1fr!important}
+  .skills-grid{grid-template-columns:1fr 1fr!important}
+  .vitrine-grid{grid-template-columns:1fr 1fr!important}
+  .form-grid{grid-template-columns:1fr!important}
+  .stats-grid{grid-template-columns:1fr 1fr 1fr!important}
+  .contact-types{grid-template-columns:1fr!important}
 }
-  </style>
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"Person",
-    "name":"Raul",
-    "jobTitle":"Designer/Programador, Artista Digital, Escritor/Roteirista",
-    "url":"https://noheroes.com.br",
-    "sameAs":[]
-  }
-  </script>
+@media(max-width:480px){
+  .skills-grid{grid-template-columns:1fr!important}
+  .vitrine-grid{grid-template-columns:1fr!important}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
 </head>
-<body class="bg-base-900 text-zinc-200 antialiased selection:bg-accent-600/30">
-  <!-- Background -->
-  <div class="pointer-events-none fixed inset-0 -z-10" aria-hidden="true">
-    <div class="absolute inset-0" style="background:var(--grad-soft)"></div>
-    <div class="absolute inset-0 opacity-[0.15]" style="background-image:radial-gradient(1px 1px at 20px 20px, rgba(255,255,255,0.08) 1px, transparent 0); background-size:24px 24px;"></div>
-  </div>
+<body>
+<!-- Fundo + menu lateral (componentes compartilhados) -->
+<nh-background></nh-background>
+<nh-drawer></nh-drawer>
 
-  <!-- Header -->
-  <header class="sticky top-0 z-50 backdrop-blur border-b border-white/5 bg-base-900/70">
-    <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between" role="navigation" aria-label="Principal">
-      <a href="#intro" class="flex items-center gap-2 font-display text-xl">
-        <span class="w-6 h-6 rounded-full" style="background:var(--grad)"></span>
-        <span class="grad-text">NoHeroes</span>
-      </a>
-      <ul class="hidden md:flex items-center gap-6 text-sm">
-        <li><a class="hover:text-white/90" href="#intro">Início</a></li>
-        <li><a class="hover:text-white/90" href="#bio">Biografia</a></li>
-        <li><a class="hover:text-white/90" href="#vitrines">Vitrines</a></li>
-        <li><a class="hover:text-white/90" href="#proprios">Projetos</a></li>
-        <li><a class="hover:text-white/90" href="#contato">Contato</a></li>
-      </ul>
-      <div class="flex items-center gap-2">
-        <a href="#contato" class="btn" aria-label="Solicitar orçamento">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" stroke-width="1.5"/><path d="M7 10l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Contato
-        </a>
-        <button class="md:hidden btn" id="menuBtn" aria-label="Abrir menu" aria-controls="mobileMenu" aria-expanded="false">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+<!-- CONTACT TYPE MODAL -->
+<div id="contactTypeModal" onclick="if(event.target===this)closeContactModal()">
+  <div style="background:#0c0a10;border:1px solid rgba(143,79,255,0.3);border-radius:18px;padding:28px;max-width:480px;width:100%;">
+    <h3 class="cinzel text-grad" style="font-size:18px;margin:0 0 8px;">Como posso ajudar?</h3>
+    <p style="font-size:13px;color:rgba(255,255,255,0.4);margin:0 0 20px;">Selecione o tipo de contato para ser direcionado ao formulário correto.</p>
+    <div class="contact-types" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px;">
+      <div class="contact-type-card" onclick="selectContactType('Parceria')" id="ct-parceria">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="margin:0 auto 8px;display:block;"><defs><linearGradient id="ctg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" stroke="url(#ctg1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.8);">Parceria</div>
+        <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:3px;">Trabalho conjunto</div>
+      </div>
+      <div class="contact-type-card" onclick="selectContactType('Colaboração')" id="ct-colaboracao">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="margin:0 auto 8px;display:block;"><defs><linearGradient id="ctg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="url(#ctg2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.8);">Colaboração</div>
+        <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:3px;">Projeto criativo</div>
+      </div>
+      <div class="contact-type-card" onclick="selectContactType('Pedido de Serviço')" id="ct-servico">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="margin:0 auto 8px;display:block;"><defs><linearGradient id="ctg3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" stroke="url(#ctg3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.8);">Serviço</div>
+        <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:3px;">Orçamento</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;">
+      <button onclick="closeContactModal()" style="padding:9px 18px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.03);color:rgba(255,255,255,0.5);cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header style="position:sticky;top:0;z-index:50;background:rgba(7,6,10,0.9);border-bottom:1px solid rgba(255,255,255,0.06);backdrop-filter:blur(12px);">
+  <nav style="max-width:1200px;margin:0 auto;padding:0 20px;height:64px;display:flex;align-items:center;justify-content:space-between;">
+    <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+      <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#8f4fff,#d9b55a);box-shadow:0 0 16px rgba(143,79,255,0.3);flex-shrink:0;"></div>
+      <span class="cinzel" style="font-size:17px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">NoHeroes</span>
+    </a>
+    <div style="display:none;align-items:center;gap:24px;font-size:13px;" class="desk-nav" id="deskNav">
+      <a href="#intro" style="color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Início</a>
+      <a href="#bio" style="color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Bio</a>
+      <a href="#habilidades" style="color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Habilidades</a>
+      <a href="#vitrines" style="color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Vitrines</a>
+      <a href="#projetos" style="color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Projetos</a>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <button class="hdr-contact" onclick="openContactModal()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="hdrg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="url(#hdrg)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Contato
+      </button>
+      <button data-nh-drawer-toggle aria-label="Abrir menu" style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main style="max-width:1200px;margin:0 auto;padding:0 20px;">
+
+<!-- ═══ INTRO ═══ -->
+<section id="intro" style="padding:60px 0 56px;">
+  <div class="hero-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;">
+    <div class="reveal">
+      <div class="section-label">Portfólio</div>
+      <h1 class="cinzel text-grad" style="font-size:clamp(22px,3.5vw,40px);margin:0 0 16px;line-height:1.2;">Raul Takagi<br>Sato Souza</h1>
+      <p style="font-size:15px;color:rgba(255,255,255,0.55);line-height:1.75;margin:0 0 10px;">CEO da NoHeroes · Desenvolvedor Full-Stack · Artista Digital · Escritor · Gestor de Projetos</p>
+      <p style="font-size:14px;color:rgba(255,255,255,0.4);line-height:1.75;margin:0 0 24px;">Construo experiências digitais que unem <strong style="color:rgba(255,255,255,0.7);">design, código e narrativa</strong>. Do planejamento à execução — técnica, estética e estratégia para gerar impacto real.</p>
+
+      <!-- Flags de idiomas -->
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;">
+        <span class="flag">🇧🇷 Português <span style="color:rgba(255,255,255,0.35);font-size:9px;">Nativo</span></span>
+        <span class="flag">🇺🇸 English <span style="color:rgba(255,255,255,0.35);font-size:9px;">Fluente</span></span>
+        <span class="flag">🇩🇪 Deutsch <span style="color:rgba(255,255,255,0.35);font-size:9px;">Fluente</span></span>
+        <span class="flag">🇯🇵 日本語 <span style="color:rgba(255,255,255,0.35);font-size:9px;">Aprendendo</span></span>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:10px;">
+        <button class="btn-primary" onclick="openContactModal()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          Entrar em contato
         </button>
-      </div>
-    </nav>
-    <!-- Mobile menu -->
-    <div id="mobileMenu" class="hidden md:hidden border-t border-white/5 bg-base-900" role="dialog" aria-modal="true">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3 grid gap-3">
-        <a class="btn" href="#intro" data-close-menu>Início</a>
-        <a class="btn" href="#bio" data-close-menu>Biografia</a>
-        <a class="btn" href="#vitrines" data-close-menu>Vitrines</a>
-        <a class="btn" href="#proprios" data-close-menu>Projetos</a>
-        <a class="btn" href="#contato" data-close-menu>Contato</a>
+        <a href="#vitrines" class="btn-ghost">Ver trabalhos</a>
       </div>
     </div>
-  </header>
 
-  <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <!-- Intro -->
-    <section id="intro" class="pt-14 lg:pt-24 pb-14 lg:pb-24">
-      <div class="grid lg:grid-cols-12 gap-8 items-center">
-        <div class="lg:col-span-7 reveal">
-          <p class="text-xs uppercase tracking-[0.2em] text-zinc-400">Apresentação</p>
-          <h1 class="mt-3 font-display text-4xl sm:text-5xl leading-tight">
-            Construimos <span class="grad-text">experiências digitais</span> que unem <span class="grad-text">design, código e narrativa</span>.
-          </h1>
-          <p class="mt-5 text-zinc-300/90 leading-relaxed max-w-2xl">
-            Na NoHeroes, transformamos ideias em realidade.
-De sites a artes digitais, de gestão de projetos a obras criativas — unimos técnica, estética e estratégia para gerar impacto real.
-          </p>
-          <div class="mt-7 flex flex-wrap gap-3">
-            <a href="#vitrines" class="btn">Ver vitrines</a>
-            <a href="#contato" class="btn" aria-label="Entrar em contato">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 10v6a2 2 0 0 1-2 2H7l-4 3V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2z" stroke="currentColor" stroke-width="1.5"/></svg>
-              Contato rápido
-            </a>
-          </div>
-        </div>
-        <div id="collageIntro" class="lg:col-span-5 card p-4 sm:p-6 md:p-8 relative overflow-hidden reveal">
-  <div class="absolute -top-24 -right-24 w-64 h-64 rounded-full blur-3xl opacity-30" style="background:var(--grad)"></div>
-
-  <div class="grid grid-cols-3 gap-3">
-    <!-- HERO (maior) -->
-    <figure data-slot="hero" class="relative col-span-3 md:col-span-2 aspect-[4/3] overflow-hidden rounded-[14px]">
-      <img class="collage-img w-full h-full object-cover" alt="Imagem destaque" loading="lazy" decoding="async">
-    </figure>
-
-    <!-- COLUNA DAS PEQUENAS -->
-    <div class="col-span-3 md:col-span-1 grid grid-cols-3 md:grid-cols-1 md:grid-rows-3 gap-3">
-      <figure data-slot="a" class="relative col-span-1 aspect-[3/2] md:aspect-[1/1] overflow-hidden rounded-[14px]">
-        <img class="collage-img w-full h-full object-cover" alt="Imagem 1" loading="lazy" decoding="async">
-      </figure>
-      <figure data-slot="b" class="relative col-span-1 aspect-[3/2] md:aspect-[1/1] overflow-hidden rounded-[14px]">
-        <img class="collage-img w-full h-full object-cover" alt="Imagem 2" loading="lazy" decoding="async">
-      </figure>
-      <figure data-slot="c" class="relative col-span-1 aspect-[3/2] md:aspect-[1/1] overflow-hidden rounded-[14px]">
-        <img class="collage-img w-full h-full object-cover" alt="Imagem 3" loading="lazy" decoding="async">
-      </figure>
+    <!-- SLIDER -->
+    <div class="reveal" style="background:#0c0a10;border:1px solid rgba(143,79,255,0.15);border-radius:16px;padding:0;overflow:hidden;position:relative;">
+      <div id="slider-wrap" style="position:relative;width:100%;aspect-ratio:16/7;overflow:hidden;border-radius:16px 16px 0 0;">
+        <img id="slide-img" src="assets/images/port1.png" alt="Portfólio" style="width:100%;height:100%;object-fit:cover;display:block;transition:opacity .5s ease;">
+        <!-- Dots -->
+        <div id="slide-dots" style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:2;"></div>
+        <!-- Setas -->
+        <button onclick="slidePrev()" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.15);color:#fff;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;z-index:2;">‹</button>
+        <button onclick="slideNext()" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.15);color:#fff;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;z-index:2;">›</button>
+      </div>
+      <p style="padding:10px 16px;margin:0;font-size:11px;color:rgba(255,255,255,0.2);text-align:center;font-style:italic;">Explore. Escolha. Caia. Evolua.</p>
     </div>
   </div>
+</section>
 
-  <p class="mt-4 text-xs text-zinc-400">Explore.Escolha.Caia.Evolua.</p>
+<!-- ═══ STATS ═══ -->
+<div class="stats-grid reveal" style="display:grid;grid-template-columns:repeat(4,1fr);background:#0c0a10;border:1px solid rgba(143,79,255,0.12);border-radius:14px;margin-bottom:56px;overflow:hidden;">
+  <div style="padding:20px;text-align:center;border-right:1px solid rgba(255,255,255,0.06);"><div class="stat-num">5+</div><div style="font-size:11px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px;">Anos exp.</div></div>
+  <div style="padding:20px;text-align:center;border-right:1px solid rgba(255,255,255,0.06);"><div class="stat-num">25+</div><div style="font-size:11px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px;">Projetos</div></div>
+  <div style="padding:20px;text-align:center;border-right:1px solid rgba(255,255,255,0.06);"><div class="stat-num">4</div><div style="font-size:11px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px;">Idiomas</div></div>
+  <div style="padding:20px;text-align:center;"><div class="stat-num">∞</div><div style="font-size:11px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px;">Adaptável</div></div>
 </div>
-    </section>
 
-    <!-- Bio -->
-    <section id="bio" class="pb-20">
-      <div class="grid lg:grid-cols-12 gap-8 items-start">
-        <div class="lg:col-span-5 reveal">
-          <h2 class="font-display text-3xl grad-text">Biografia & atuação</h2>
-<p class="mt-4 text-zinc-300/90 leading-relaxed">
-  A <span class="font-semibold">NoHeroes</span> atua na interseção entre 
-  <span class="font-semibold">tecnologia, arte e narrativa</span>. 
-  Desenvolvemos sites e aplicativos (Node.js/Express, PostgreSQL, integrações de pagamentos), 
-  criamos identidades visuais e artes digitais, e elaboramos roteiros e universos criativos. 
-  Também ajudamos a transformar ideias em projetos concretos, do planejamento à execução.
-</p>
-<ul class="mt-6 space-y-3 text-sm text-zinc-300/90">
-  <li class="flex items-start gap-3">
-    <span class="mt-1 w-1.5 h-1.5 rounded-full" style="background:var(--grad)"></span>
-    Web design, UI/UX e front-end moderno.
-  </li>
-  <li class="flex items-start gap-3">
-    <span class="mt-1 w-1.5 h-1.5 rounded-full" style="background:var(--grad)"></span>
-    Back-end escalável, APIs e integrações (pagamentos, automações etc.).
-  </li>
-  <li class="flex items-start gap-3">
-    <span class="mt-1 w-1.5 h-1.5 rounded-full" style="background:var(--grad)"></span>
-    Gestão e acompanhamento de projetos — da ideia inicial ao produto final.
-  </li>
-  <li class="flex items-start gap-3">
-    <span class="mt-1 w-1.5 h-1.5 rounded-full" style="background:var(--grad)"></span>
-    Arte digital, concept design e branding.
-  </li>
-  <li class="flex items-start gap-3">
-    <span class="mt-1 w-1.5 h-1.5 rounded-full" style="background:var(--grad)"></span>
-    Escrita criativa, roteiros e construção de universos (worldbuilding).
-  </li>
-  <li class="flex items-start gap-3">
-    <span class="mt-1 w-1.5 h-1.5 rounded-full" style="background:var(--grad)"></span>
-    Apoio a escritores e roteiristas na finalização e publicação de obras.
-  </li>
-</ul>
-</div>
-        <div class="lg:col-span-7 grid md:grid-cols-3 gap-4">
-          <div class="card p-5 reveal">
-            <p class="text-sm text-zinc-400">Experiência</p>
-            <p class="mt-2 text-2xl font-semibold">5+ anos</p>
-            <p class="mt-2 text-sm text-zinc-400">Criação, código e narrativa</p>
-          </div>
-          <div class="card p-5 reveal">
-            <p class="text-sm text-zinc-400">Projetos</p>
-            <p class="mt-2 text-2xl font-semibold">25+</p>
-            <p class="mt-2 text-sm text-zinc-400">Sites, artes e roteiros</p>
-          </div>
-          <div class="card p-5 reveal">
-            <p class="text-sm text-zinc-400">Foco</p>
-            <p class="mt-2 text-2xl font-semibold">Qualidade</p>
-            <p class="mt-2 text-sm text-zinc-400">Entrega limpa e eficiente</p>
-          </div>
+<!-- ═══ BIO ═══ -->
+<section id="bio" style="padding:0 0 56px;">
+  <div class="bio-grid reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;">
+    <div>
+      <div class="section-label">Biografia & Atuação</div>
+      <h2 class="cinzel text-grad" style="font-size:clamp(18px,2.5vw,26px);margin:0 0 16px;">Quem é Raul?</h2>
+      <p style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.8;margin:0 0 16px;">Criador do universo NoHeroes — plataforma multimídia que desenvolvi integralmente: produto, arquitetura, código, arte e narrativa. Gosto de ambientes novos, aprender em movimento e de adaptar o que aprendo para criar soluções diferentes.</p>
+      <p style="font-size:14px;color:rgba(255,255,255,0.5);line-height:1.8;margin:0;">Fui bombeiro, trabalhei com turismo, sobrevivencialismo e hotelaria como gerente. Dei palestras em escolas. Hoje sou CEO, mangaká independente, instrutor e desenvolvedor — e ainda estou aprendendo japonês.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div class="tl-item">
+        <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:3px;">CEO & Fundador — NoHeroes</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.4);">Criou e desenvolveu todo o ecossistema sozinho: site, loja, app, backend, arte e lore.</div>
       </div>
-    </section>
+      <div class="tl-item">
+        <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:3px;">Desenvolvedor Full-Stack</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.4);">Node.js · Express · PostgreSQL · JWT · APIs de pagamento · Cloudflare · R2</div>
+      </div>
+      <div class="tl-item">
+        <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:3px;">Artista Digital & Mangaká</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.4);">Concept design, identidade visual, quadrinhos e narrativa visual.</div>
+      </div>
+      <div class="tl-item">
+        <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:3px;">Gerente de Hotel & Turismo</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.4);">Experiência com liderança de equipes, gestão operacional e atendimento multilíngue.</div>
+      </div>
+      <div class="tl-item">
+        <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:3px;">Palestrante & Instrutor</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.4);">Palestras em escolas, instrução em sobrevivencialismo e desenvolvimento de projetos.</div>
+      </div>
+      <div class="tl-item">
+        <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:3px;">Bombeiro & Socorrista</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.4);">Formação e atuação em situações de emergência, liderança sob pressão.</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <section id="vitrines" class="pb-24">
-  <div class="flex items-end justify-between gap-4 mb-6 vitrines-head">
-    <h2 class="font-display text-3xl grad-text vitrines-title">Vitrines</h2>
-    <div class="flex flex-wrap gap-2 text-xs vitrines-actions" role="tablist" aria-label="Categorias de vitrine">
-      <button class="btn" role="tab" aria-selected="true" aria-controls="tab-web" id="tab-web-btn" data-tab="web">Web design & Programação</button>
-      <button class="btn" role="tab" aria-selected="false" aria-controls="tab-arte" id="tab-arte-btn" data-tab="arte">Arte digital</button>
-      <button class="btn" role="tab" aria-selected="false" aria-controls="tab-escrita" id="tab-escrita-btn" data-tab="escrita">Escrita & Roteiro</button>
+<!-- ═══ HABILIDADES ═══ -->
+<section id="habilidades" style="padding:0 0 56px;">
+  <div style="text-align:center;margin-bottom:28px;" class="reveal">
+    <div class="section-label" style="text-align:center;">Competências</div>
+    <h2 class="cinzel text-grad" style="font-size:clamp(18px,2.5vw,26px);margin:0;">Habilidades & Especialidades</h2>
+  </div>
+  <div class="skills-grid reveal" style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;">
+
+    <div class="skill-card">
+      <div class="skill-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="sg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" stroke="url(#sg1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3 class="cinzel text-grad" style="font-size:12px;margin:0 0 6px;">Desenvolvimento Web</h3>
+      <p style="font-size:11px;color:rgba(255,255,255,0.45);line-height:1.6;margin:0;">Full-Stack · Node.js · Express · PostgreSQL · JWT · HTML/CSS · JS · Cloudflare</p>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="sg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="url(#sg2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3 class="cinzel text-grad" style="font-size:12px;margin:0 0 6px;">IA & Servidores</h3>
+      <p style="font-size:11px;color:rgba(255,255,255,0.45);line-height:1.6;margin:0;">Integração de IAs · LLMs · Automações · Infraestrutura cloud · Render · APIs</p>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="sg3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke="url(#sg3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3 class="cinzel text-grad" style="font-size:12px;margin:0 0 6px;">Arte Digital</h3>
+      <p style="font-size:11px;color:rgba(255,255,255,0.45);line-height:1.6;margin:0;">Concept design · Identidade visual · Mangá · UI/UX · Branding · Ilustração</p>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="sg4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="url(#sg4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3 class="cinzel text-grad" style="font-size:12px;margin:0 0 6px;">Escrita & Roteiro</h3>
+      <p style="font-size:11px;color:rgba(255,255,255,0.45);line-height:1.6;margin:0;">Ficção científica · Dark fantasy · Worldbuilding · Roteiros · Publicação independente</p>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="sg5" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" stroke="url(#sg5)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3 class="cinzel text-grad" style="font-size:12px;margin:0 0 6px;">Gestão & Liderança</h3>
+      <p style="font-size:11px;color:rgba(255,255,255,0.45);line-height:1.6;margin:0;">Gestão de equipes · Planejamento · Gerência hoteleira · Instrução · Palestras</p>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="sg6" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke="url(#sg6)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3 class="cinzel text-grad" style="font-size:12px;margin:0 0 6px;">Idiomas</h3>
+      <p style="font-size:11px;color:rgba(255,255,255,0.45);line-height:1.6;margin:0;">🇧🇷 Português nativo · 🇺🇸 Inglês fluente · 🇩🇪 Alemão fluente · 🇯🇵 Japonês em aprendizado</p>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="sg7" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke="url(#sg7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3 class="cinzel text-grad" style="font-size:12px;margin:0 0 6px;">Sobrevivencialismo</h3>
+      <p style="font-size:11px;color:rgba(255,255,255,0.45);line-height:1.6;margin:0;">Bombeiro · Primeiros socorros · Turismo · Instrução em campo · Tomada de decisão sob pressão</p>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="sg8" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" stroke="url(#sg8)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3 class="cinzel text-grad" style="font-size:12px;margin:0 0 6px;">Adaptabilidade</h3>
+      <p style="font-size:11px;color:rgba(255,255,255,0.45);line-height:1.6;margin:0;">Transições entre áreas distintas · Aprendizado acelerado · Ambientes novos e desafiadores</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ VITRINES ═══ -->
+<section id="vitrines" style="padding:0 0 56px;">
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px;" class="reveal">
+    <div>
+      <div class="section-label">Trabalhos</div>
+      <h2 class="cinzel text-grad" style="font-size:clamp(18px,2.5vw,26px);margin:0;">Vitrines</h2>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;">
+      <button class="tab-btn active" onclick="switchVitrine(this,'vt-web')">Web & Código</button>
+      <button class="tab-btn" onclick="switchVitrine(this,'vt-arte')">Arte Digital</button>
+      <button class="tab-btn" onclick="switchVitrine(this,'vt-escrita')">Escrita & Roteiro</button>
     </div>
   </div>
 
   <!-- WEB -->
-  <div id="tab-web" class="tab" role="tabpanel" tabindex="0" aria-labelledby="tab-web-btn">
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <article class="card overflow-hidden reveal">
-        <div class="relative aspect-[4/3]">
-          <img
-            src="assets/images/landing-manual.jpg"
-            alt="Landing Page do Produto X — UI/UX e integração de pagamentos"
-            class="absolute inset-0 h-full w-full object-cover"
-            loading="lazy" decoding="async" />
-        </div>
-        <div class="p-5">
-          <h3 class="font-semibold">Landing Page — Manual da Ancestralidade</h3>
-          <p class="mt-1 text-sm text-zinc-400">UI/UX, performance, integração de formulário para newsletter.</p>
+  <div id="vt-web" class="tab-pane active reveal">
+    <div class="vitrine-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+      <article class="vitrine-card">
+        <img src="assets/images/landing-manual.jpg" alt="Landing Page Manual da Ancestralidade" class="vitrine-img" loading="lazy">
+        <div style="padding:14px;">
+          <h3 style="font-size:14px;font-weight:700;margin:0 0 4px;">Landing Page — Manual da Ancestralidade</h3>
+          <p style="font-size:12px;color:rgba(255,255,255,0.45);margin:0;">UI/UX, performance, integração de formulário e newsletter.</p>
         </div>
       </article>
-
-      <article class="card overflow-hidden reveal">
-        <div class="relative aspect-[4/3]">
-          <img
-            src="assets/images/dashboard.jpg"
-            alt="Dashboard Analytics — visual limpo, gráficos e filtros"
-            class="absolute inset-0 h-full w-full object-cover"
-            loading="lazy" decoding="async" />
+      <article class="vitrine-card">
+        <img src="assets/images/dashboard.jpg" alt="Dashboard Analytics" class="vitrine-img" loading="lazy">
+        <div style="padding:14px;">
+          <h3 style="font-size:14px;font-weight:700;margin:0 0 4px;">Dashboard — Analytics</h3>
+          <p style="font-size:12px;color:rgba(255,255,255,0.45);margin:0;">Visual limpo, gráficos interativos e filtros dinâmicos.</p>
         </div>
-        <div class="p-5">
-          <h3 class="font-semibold">Dashboard — Analytics</h3>
-          <p class="mt-1 text-sm text-zinc-400">Visual limpo, gráficos e filtros.</p>
+      </article>
+      <article class="vitrine-card" style="border-color:rgba(143,79,255,0.2);">
+        <div style="aspect-ratio:4/3;background:rgba(143,79,255,0.05);display:flex;align-items:center;justify-content:center;">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="vg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" stroke="url(#vg1)" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div style="padding:14px;">
+          <h3 style="font-size:14px;font-weight:700;margin:0 0 4px;">NoHeroes — Ecossistema Completo</h3>
+          <p style="font-size:12px;color:rgba(255,255,255,0.45);margin:0;">Loja, API, autenticação, pagamentos, admin, leitor de mangás.</p>
         </div>
       </article>
     </div>
   </div>
 
   <!-- ARTE -->
-  <div id="tab-arte" class="tab hidden" role="tabpanel" tabindex="-1" aria-labelledby="tab-arte-btn">
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <article class="card overflow-hidden reveal">
-        <div class="relative aspect-[3/4]">
-          <img
-            src="assets/images/concept.jpg"
-            alt="Concept de personagem — estética NoHeroes"
-            class="absolute inset-0 h-full w-full object-cover"
-            loading="lazy" decoding="async" />
-        </div>
-        <div class="p-5">
-          <h3 class="font-semibold">Concept — Personagem</h3>
-          <p class="mt-1 text-sm text-zinc-400">Estudo de personagem, estética NoHeroes.</p>
+  <div id="vt-arte" class="tab-pane reveal">
+    <div class="vitrine-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+      <article class="vitrine-card">
+        <img src="assets/images/arte1.jpg" alt="Personagem ACDA" class="vitrine-img" style="aspect-ratio:3/4;" loading="lazy">
+        <div style="padding:14px;">
+          <h3 style="font-size:14px;font-weight:700;margin:0 0 4px;">Character Design — ACDA</h3>
+          <p style="font-size:12px;color:rgba(255,255,255,0.45);margin:0;">Concept art dos personagens principais do universo NoHeroes.</p>
         </div>
       </article>
-
-      <article class="card overflow-hidden reveal">
-        <div class="relative aspect-[16/9]">
-          <img
-            src="assets/images/cena-ambiente.jpg"
-            alt="Cena de ambiente — luz, cor e composição cinematográfica"
-            class="absolute inset-0 h-full w-full object-cover"
-            loading="lazy" decoding="async" />
-        </div>
-        <div class="p-5">
-          <h3 class="font-semibold">Cena — Ambiente</h3>
-          <p class="mt-1 text-sm text-zinc-400">Luz, cor e composição cinematográfica.</p>
+      <article class="vitrine-card">
+        <img src="assets/images/arte2.jpg" alt="Capa ACDA" class="vitrine-img" style="aspect-ratio:3/4;" loading="lazy">
+        <div style="padding:14px;">
+          <h3 style="font-size:14px;font-weight:700;margin:0 0 4px;">Capa — As Cinzas do Amanhã</h3>
+          <p style="font-size:12px;color:rgba(255,255,255,0.45);margin:0;">Design de capa do primeiro livro da saga ACDA.</p>
         </div>
       </article>
-
-      <article class="card overflow-hidden reveal">
-        <div class="relative aspect-[1/1]">
-          <img
-            src="assets/images/poster.jpg"
-            alt="Pôster de série — branding e impacto visual"
-            class="absolute inset-0 h-full w-full object-cover"
-            loading="lazy" decoding="async" />
-        </div>
-        <div class="p-5">
-          <h3 class="font-semibold">Poster — Exclusivo</h3>
-          <p class="mt-1 text-sm text-zinc-400"> Arte para colecionador |Formato: Poster.</p>
+      <article class="vitrine-card">
+        <img src="assets/images/arte3.jpg" alt="Branding NoHeroes" class="vitrine-img" loading="lazy">
+        <div style="padding:14px;">
+          <h3 style="font-size:14px;font-weight:700;margin:0 0 4px;">Branding — NoHeroes</h3>
+          <p style="font-size:12px;color:rgba(255,255,255,0.45);margin:0;">Identidade visual completa, paleta e sistema de design.</p>
         </div>
       </article>
     </div>
   </div>
 
   <!-- ESCRITA -->
-  <div id="tab-escrita" class="tab hidden" role="tabpanel" tabindex="-1" aria-labelledby="tab-escrita-btn">
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <article class="card overflow-hidden reveal">
-        <div class="relative aspect-[21/9]">
-          <img
-            src="assets/images/roteiro1.jpg"
-            alt="Roteiro de curta — estrutura, ritmo e diálogo natural"
-            class="absolute inset-0 h-full w-full object-cover"
-            loading="lazy" decoding="async" />
-        </div>
-        <div class="p-5">
-          <h3 class="font-semibold">Roteiro — Curta</h3>
-          <p class="mt-1 text-sm text-zinc-400">Estrutura, ritmo e diálogo natural.</p>
+  <div id="vt-escrita" class="tab-pane reveal">
+    <div class="vitrine-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+      <article class="vitrine-card">
+        <img src="assets/images/ACDA.jpg" alt="ACDA Livro" class="vitrine-img" style="aspect-ratio:3/4;" loading="lazy">
+        <div style="padding:14px;">
+          <h3 style="font-size:14px;font-weight:700;margin:0 0 4px;">ACDA — As Cinzas do Amanhã</h3>
+          <p style="font-size:12px;color:rgba(255,255,255,0.45);margin:0;">Romance de dark fantasy. Primeiro volume da saga — 402 páginas.</p>
         </div>
       </article>
-
-      <article class="card overflow-hidden reveal">
-        <div class="relative aspect-[4/3]">
-          <img
-            src="assets/images/capitulonh1.jpg"
-            alt="Capítulo NoHeroes — worldbuilding e imersão sensorial"
-            class="absolute inset-0 h-full w-full object-cover"
-            loading="lazy" decoding="async" />
+      <article class="vitrine-card">
+        <img src="assets/images/conectado.png" alt="Tudo Está Conectado" class="vitrine-img" style="aspect-ratio:3/4;" loading="lazy">
+        <div style="padding:14px;">
+          <h3 style="font-size:14px;font-weight:700;margin:0 0 4px;">Tudo Está Conectado</h3>
+          <p style="font-size:12px;color:rgba(255,255,255,0.45);margin:0;">E-book sobre crescimento pessoal e sistema vivo. Vol. I da trilogia.</p>
         </div>
-        <div class="p-5">
-          <h3 class="font-semibold">Capítulo — NoHeroes</h3>
-          <p class="mt-1 text-sm text-zinc-400">Worldbuilding e imersão sensorial.</p>
+      </article>
+      <article class="vitrine-card" style="border-color:rgba(143,79,255,0.15);">
+        <div style="aspect-ratio:4/3;background:rgba(143,79,255,0.04);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;padding:20px;">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="vg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke="url(#vg2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span style="font-size:11px;color:rgba(255,255,255,0.3);text-align:center;">Worldbuilding — Caelum, clãs, criaturas e política</span>
+        </div>
+        <div style="padding:14px;">
+          <h3 style="font-size:14px;font-weight:700;margin:0 0 4px;">Universo NoHeroes — Lore Completo</h3>
+          <p style="font-size:12px;color:rgba(255,255,255,0.45);margin:0;">Worldbuilding denso: nações, sistemas de magia, personagens e história.</p>
         </div>
       </article>
     </div>
   </div>
 </section>
 
-    <!-- Projetos Próprios -->
-    <section id="proprios" class="pb-28">
-      <div class="flex items-end justify-between gap-4 mb-6 flex-wrap">
-        <h2 class="font-display text-3xl grad-text w-full md:w-auto">Projetos Próprios</h2>
-        <div class="flex flex-wrap gap-2 text-xs w-full md:w-auto">
-          <span class="badge">Transmídia</span>
-          <span class="badge">App + Web</span>
-          <span class="badge">IP Original</span>
-        </div>
-      </div>
-
-        <article class="lg:col-span-7 card p-6 sm:p-8">
-          <h3 class="text-2xl font-semibold">NoHeroes — Universo de Fantasia</h3>
-          <p class="mt-3 text-zinc-300/90">
-            IP autoral dark-fantasy em expansão: livro, app gamificado, loja digital e futuro game.
-            Responsável por identidade visual, produto, arquitetura web e narrativa.
-          </p>
-
-          <div class="mt-5 grid sm:grid-cols-2 gap-4">
-            <div>
-              <h4 class="text-sm text-zinc-400">Pilares</h4>
-              <ul class="mt-2 text-sm text-zinc-300/90 list-compact">
-                <li>Site oficial + loja (Node/Express, PostgreSQL, JWT, Mercado Pago)</li>
-                <li>App (MVP) com quests, inventário e moeda interna</li>
-                <li>Roteiro/lore originais (universo, clãs, criaturas, política)</li>
-              </ul>
-            </div>
-            <div>
-              <h4 class="text-sm text-zinc-400">Destaques</h4>
-              <ul class="mt-2 text-sm text-zinc-300/90 list-compact">
-                <li>Design dark moderno (gradiente roxo-dourado, “brasas”)</li>
-                <li>Arquitetura pronta para transmedia (web, app, game)</li>
-                <li>Sistema de doações e metas transparentes</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="mt-6 flex flex-wrap gap-3">
-            <a class="btn" href="https://noheroes.com.br" target="_blank" rel="noopener">🌌 Site</a>
-            <a class="btn" href="https://noheroes.com.br/store.html" target="_blank" rel="noopener">🛒 Loja</a>
-            <a class="btn" href="noheroesapp.html" aria-disabled="false">📱 App</a>
-            <a class="btn" href="acda.html" aria-disabled="false">📜 Livro </a>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- CTA / Contato -->
-    <section id="contato" class="pb-28">
-      <div class="card p-6 md:p-10 reveal">
-        <div class="grid lg:grid-cols-2 gap-10 items-start">
+<!-- ═══ PROJETOS ═══ -->
+<section id="projetos" style="padding:0 0 56px;">
+  <div style="margin-bottom:20px;" class="reveal">
+    <div class="section-label">Projetos Próprios</div>
+    <h2 class="cinzel text-grad" style="font-size:clamp(18px,2.5vw,26px);margin:0;">Trabalhos Autorais</h2>
+  </div>
+  <div class="card reveal" style="padding:28px;">
+    <div style="display:flex;align-items:start;gap:20px;flex-wrap:wrap;">
+      <div style="width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,#8f4fff,#d9b55a);flex-shrink:0;box-shadow:0 0 20px rgba(143,79,255,0.3);"></div>
+      <div style="flex:1;min-width:260px;">
+        <h3 style="font-size:20px;font-weight:700;margin:0 0 6px;">NoHeroes — Universo de Fantasia</h3>
+        <p style="font-size:13px;color:rgba(255,255,255,0.5);margin:0 0 16px;">IP autoral dark-fantasy em expansão: livro, mangás, app gamificado, loja digital e ecossistema completo. Desenvolvido integralmente — identidade visual, produto, arquitetura web e narrativa.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;" class="two-col">
           <div>
-            <h2 class="font-display text-3xl grad-text">Vamos trabalhar juntos</h2>
-            <p class="mt-3 text-zinc-300/90">Descreva seu projeto, intenção e/ou ideia. Receba Orçamentos e respostas para Parceirias, Colab's e muito mais.</p>
-            <div class="mt-6 grid sm:grid-cols-2 gap-3">
-              <a class="btn" href="mailto:contato@noheroes.com.br">✉️ contato@noheroes.com.br</a>
-              <a class="btn" href="https://wa.me/5565993240270" target="_blank" rel="noopener">💬 WhatsApp</a>
-              
+            <h4 style="font-size:12px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.1em;margin:0 0 8px;">Pilares</h4>
+            <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;color:rgba(255,255,255,0.55);">
+              <div>• Site + loja (Node/Express, PostgreSQL, JWT, MP)</div>
+              <div>• Leitor de mangás com sistema de capítulos</div>
+              <div>• Admin completo com gestão de conteúdo</div>
+              <div>• Roteiro/lore originais — universo, clãs, criaturas</div>
             </div>
           </div>
-          <form id="formPortfolio" class="space-y-4" aria-label="Formulário de contato">
-            <div class="grid sm:grid-cols-2 gap-4">
-              <label class="grid gap-2">
-                <span class="text-sm text-zinc-400">Seu nome</span>
-                <input class="w-full bg-transparent border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent-600/40" placeholder="Nome completo" required />
-              </label>
-              <label class="grid gap-2">
-                <span class="text-sm text-zinc-400">E-mail</span>
-                <input type="email" class="w-full bg-transparent border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent-600/40" placeholder="voce@email.com" required />
-              </label>
+          <div>
+            <h4 style="font-size:12px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.1em;margin:0 0 8px;">Destaques</h4>
+            <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;color:rgba(255,255,255,0.55);">
+              <div>• Design dark moderno — gradiente roxo-dourado</div>
+              <div>• Arquitetura pronta para transmedia</div>
+              <div>• Sistema de doações e metas transparentes</div>
+              <div>• Newsletter, arautos e upload de obras</div>
             </div>
-            <label class="grid gap-2">
-              <span class="text-sm text-zinc-400">Assunto</span>
-              <input class="w-full bg-transparent border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent-600/40" placeholder="Ex.: Site para minha marca" required />
-            </label>
-            <label class="grid gap-2">
-              <span class="text-sm text-zinc-400">Mensagem</span>
-              <textarea rows="5" class="w-full bg-transparent border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent-600/40" placeholder="Descreva prazos, referências e escopo" required></textarea>
-            </label>
-            <div class="flex items-center justify-between">
-              <label class="inline-flex items-center gap-2 text-xs text-zinc-400">
-                <input type="checkbox" required class="accent-purple-500" />
-                Autorizo contato por e-mail/WhatsApp.
-              </label>
-              <button class="btn" type="submit">Enviar</button>
-            </div>
-          </form>
+          </div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;">
+          <a href="https://noheroes.com.br" target="_blank" rel="noopener" class="btn-ghost" style="font-size:12px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+            Site
+          </a>
+          <a href="store.html" class="btn-ghost" style="font-size:12px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 11V7a4 4 0 00-8 0v4M5 11h14l1 9H4l1-9z"/></svg>
+            Loja
+          </a>
+          <a href="acda.html" class="btn-ghost" style="font-size:12px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            Livro ACDA
+          </a>
         </div>
       </div>
-    </section>
-  </main>
-
-  <footer class="border-t border-white/5 py-10 text-center text-sm text-zinc-500">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <p>© <span id="year"></span> Raul. Todos os direitos reservados.</p>
     </div>
-  </footer>
-<script src="assets/js/cookies.js"></script>
-  <script>
-    // Util: select
-    const $ = (sel, root=document) => root.querySelector(sel);
-    const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+  </div>
+</section>
 
-    // Ano atual
-    $('#year').textContent = new Date().getFullYear();
+<!-- ═══ CONTATO ═══ -->
+<section id="contato" style="padding:0 0 80px;">
+  <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:32px;align-items:start;" class="hero-grid reveal">
+    <div>
+      <div class="section-label">Contato</div>
+      <h2 class="cinzel text-grad" style="font-size:clamp(18px,2.5vw,26px);margin:0 0 12px;">Vamos trabalhar juntos</h2>
+      <p style="font-size:14px;color:rgba(255,255,255,0.5);line-height:1.75;margin:0 0 24px;">Seja para uma parceria, colaboração criativa ou pedido de serviço — descreva sua ideia e entrarei em contato.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <a href="mailto:eco.noheroes@gmail.com" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);text-decoration:none;color:#e5e5e5;" onmouseover="this.style.borderColor='rgba(143,79,255,0.3)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="#c4a3ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:13px;">eco.noheroes@gmail.com</span></a>
+        <a href="https://wa.me/5565993240270" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);text-decoration:none;color:#e5e5e5;transition:all 0.2s;" onmouseover="this.style.borderColor='rgba(143,79,255,0.3)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="cg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" stroke="url(#cg2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span style="font-size:13px;">WhatsApp</span>
+        </a>
+      </div>
+    </div>
 
-    // Smooth scroll + fecha menu mobile ao navegar
-    $$('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click', e=>{
-        const href = a.getAttribute('href');
-        if(href && href.length > 1){
-          e.preventDefault();
-          const target = document.querySelector(href);
-          if(target){ target.scrollIntoView({behavior:'smooth', block:'start'}); }
-          if(a.hasAttribute('data-close-menu')) closeMobileMenu();
-        }
-      });
-    });
+    <!-- FORM -->
+    <div style="background:#0c0a10;border:1px solid rgba(143,79,255,0.2);border-radius:16px;padding:24px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+        <h3 class="cinzel text-grad" style="font-size:15px;margin:0;">Formulário de Contato</h3>
+        <div id="formTypeBadge" style="font-size:10px;padding:3px 10px;border-radius:99px;background:rgba(143,79,255,0.1);border:1px solid rgba(143,79,255,0.25);color:#c4a3ff;display:none;"></div>
+      </div>
+      <form id="formPortfolio" style="display:flex;flex-direction:column;gap:14px;">
+        <!-- Razão (preenchida pelo modal) -->
+        <div>
+          <label class="field-label">Tipo de contato *</label>
+          <select id="form-razao" class="field-input" required>
+            <option value="">Selecione...</option>
+            <option value="Parceria">Parceria</option>
+            <option value="Colaboração">Colaboração</option>
+            <option value="Pedido de Serviço">Pedido de Serviço</option>
+            <option value="Outro">Outro</option>
+          </select>
+        </div>
+        <div class="form-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+          <div>
+            <label class="field-label" for="form-nome">Nome *</label>
+            <input id="form-nome" class="field-input" placeholder="Seu nome" required>
+          </div>
+          <div>
+            <label class="field-label" for="form-email">E-mail *</label>
+            <input id="form-email" type="email" class="field-input" placeholder="voce@email.com" required>
+          </div>
+        </div>
+        <div>
+          <label class="field-label" for="form-assunto">Assunto *</label>
+          <input id="form-assunto" class="field-input" placeholder="Descreva brevemente" required>
+        </div>
+        <div>
+          <label class="field-label" for="form-mensagem">Mensagem *</label>
+          <textarea id="form-mensagem" class="field-input" rows="4" placeholder="Descreva seu projeto, prazo, orçamento, referências e escopo" required></textarea>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+          <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,0.4);cursor:pointer;">
+            <input id="form-consent" type="checkbox" required style="accent-color:#8f4fff;width:14px;height:14px;">
+            Autorizo contato por e-mail/WhatsApp.
+          </label>
+          <button class="btn-primary" type="submit" id="formSubmitBtn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+            Enviar
+          </button>
+        </div>
+        <div id="formMsg" style="display:none;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:600;"></div>
+      </form>
+    </div>
+  </div>
+</section>
 
-    // Mobile menu: abrir/fechar + clicar fora
-    const menuBtn = $('#menuBtn');
-    const mobileMenu = $('#mobileMenu');
-    const openMobileMenu = () => {
-      mobileMenu.classList.remove('hidden');
-      menuBtn.setAttribute('aria-expanded','true');
-      document.addEventListener('click', outsideMenuHandler, { capture:true });
-      document.addEventListener('keydown', escMenuHandler);
-    };
-    const closeMobileMenu = () => {
-      mobileMenu.classList.add('hidden');
-      menuBtn.setAttribute('aria-expanded','false');
-      document.removeEventListener('click', outsideMenuHandler, { capture:true });
-      document.removeEventListener('keydown', escMenuHandler);
-    };
-    const outsideMenuHandler = (ev) => {
-      if(!mobileMenu.contains(ev.target) && ev.target !== menuBtn) closeMobileMenu();
-    };
-    const escMenuHandler = (ev) => { if(ev.key === 'Escape') closeMobileMenu(); };
+</main>
 
-    if(menuBtn){
-      menuBtn.addEventListener('click', (e)=>{
-        const open = menuBtn.getAttribute('aria-expanded') === 'true';
-        open ? closeMobileMenu() : openMobileMenu();
-        e.stopPropagation();
-      });
-    }
+<!-- FOOTER -->
+<!-- Crédito do autor (específico do portfólio) -->
+<p style="text-align:center;font-size:11px;color:rgba(255,255,255,0.25);padding:14px 20px 0;margin:0;">Portfólio por <strong style="color:rgba(255,255,255,0.45);">Raul Takagi</strong></p>
+<!-- Footer (componente compartilhado) -->
+<nh-footer></nh-footer>
 
-    // Tabs acessíveis (click, teclado, ARIA)
-    const tabButtons = $$('.vitrines-actions [data-tab]');
-    const tabPanels = {
-      web: $('#tab-web'),
-      arte: $('#tab-arte'),
-      escrita: $('#tab-escrita')
-    };
+<script src="assets/js/suporte-widget.js"></script>
+<script>
+/* Ano do rodapé e drawer: agora nos componentes compartilhados (noheroes-ui.js) */
 
-    const activateTab = (key) => {
-      // botões
-      tabButtons.forEach(btn=>{
-        const isActive = btn.getAttribute('data-tab') === key;
-        btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
-        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-      });
-      // painéis
-      Object.entries(tabPanels).forEach(([k,el])=>{
-        if(k === key){
-          el.classList.remove('hidden');
-          el.setAttribute('tabindex','0');
-        } else {
-          el.classList.add('hidden');
-          el.setAttribute('tabindex','-1');
-        }
-      });
-    };
+// ─── CONTACT TYPE MODAL ───
+function openContactModal(){
+  document.getElementById('contactTypeModal').classList.add('open');
+}
+function closeContactModal(){
+  document.getElementById('contactTypeModal').classList.remove('open');
+}
+function selectContactType(type){
+  // visual feedback
+  ['ct-parceria','ct-colaboracao','ct-servico'].forEach(id=>document.getElementById(id).classList.remove('selected'));
+  const map={'Parceria':'ct-parceria','Colaboração':'ct-colaboracao','Pedido de Serviço':'ct-servico'};
+  if(map[type]) document.getElementById(map[type]).classList.add('selected');
 
-    tabButtons.forEach(btn=>{
-      btn.addEventListener('click', ()=> activateTab(btn.getAttribute('data-tab')));
-      btn.addEventListener('keydown', (e)=>{
-        const idx = tabButtons.indexOf(btn);
-        if(['ArrowRight','ArrowLeft','Home','End'].includes(e.key)){
-          e.preventDefault();
-          let next = idx;
-          if(e.key === 'ArrowRight') next = (idx + 1) % tabButtons.length;
-          if(e.key === 'ArrowLeft')  next = (idx - 1 + tabButtons.length) % tabButtons.length;
-          if(e.key === 'Home')       next = 0;
-          if(e.key === 'End')        next = tabButtons.length - 1;
-          tabButtons[next].focus();
-          activateTab(tabButtons[next].getAttribute('data-tab'));
-        }
-      });
-    });
-    activateTab('web');
-
-    // ==== Reveal cinematográfico com stagger e respeito a reduced motion ====
-if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  const sections = document.querySelectorAll('section, header, footer');
-
-  sections.forEach(section => {
-    const items = Array.from(section.querySelectorAll('.reveal'));
-    if (!items.length) return;
-
-    const io = new IntersectionObserver((entries, obs) => {
-      entries.forEach(e => {
-        if (!e.isIntersecting) return;
-
-        // define delays progressivos (stagger) por ordem visual
-        items.forEach((el, i) => {
-          if (el._animated) return;
-          el.style.setProperty('--reveal-delay', `${i * 70}ms`); // 50–100ms é ideal
-        });
-
-        items.forEach(el => { el.classList.add('in'); el._animated = true; });
-        obs.unobserve(e.target); // anima 1x por seção
-      });
-    }, { threshold: 0.14, rootMargin: '0px 0px -8% 0px' });
-
-    io.observe(section);
-  });
-} else {
-  document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+  // fecha modal, preenche form e scrolla
+  setTimeout(()=>{
+    closeContactModal();
+    document.getElementById('form-razao').value = type;
+    const badge = document.getElementById('formTypeBadge');
+    badge.textContent = type;
+    badge.style.display = 'inline-block';
+    document.getElementById('contato').scrollIntoView({behavior:'smooth',block:'start'});
+    setTimeout(()=>document.getElementById('form-nome').focus(), 600);
+  }, 200);
 }
 
-    // Hardening de layout: detecta elemento que estoura largura (debug opcional)
-    // (deixe comentado; use no DevTools se precisar)
-    // (() => {
-    //   const vw = document.documentElement.clientWidth;
-    //   let offender = null, max = vw;
-    //   document.querySelectorAll('body *').forEach(el => {
-    //     const rect = el.getBoundingClientRect();
-    //     const w = rect.right - rect.left;
-    //     if (w > max) { max = w; offender = el; }
-    //   });
-    //   if(max > vw + 2) console.warn('Elemento maior que viewport:', offender, max, '>', vw);
-    // })();
+// ─── VITRINES TABS ───
+function switchVitrine(btn, id){
+  document.querySelectorAll('[onclick^="switchVitrine"]').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
 
-(function initCollage(){
-  const root = document.getElementById('collageIntro');
-  if(!root) return;
-
-  const IMAGENS = [
-    { src: 'assets/images/port1.png', alt: 'Interface moderna em tela escura' },
-    { src: 'assets/images/port2.png', alt: 'Código em editor com luz roxa' },
-    { src: 'assets/images/port3.png', alt: 'Poster/arte digital com gradientes' },
-    { src: 'assets/images/port4.png', alt: 'Equipe trabalhando em mesa' },
-  ];
-  const INTERVALO_MS = 7000 + Math.floor(Math.random()*1500);
-
-  const slots = {
-    hero: root.querySelector('figure[data-slot="hero"] img'),
-    a:    root.querySelector('figure[data-slot="a"] img'),
-    b:    root.querySelector('figure[data-slot="b"] img'),
-    c:    root.querySelector('figure[data-slot="c"] img'),
-  };
-  if(!slots.hero || !slots.a || !slots.b || !slots.c) return;
-  if(IMAGENS.length < 4) return; // evita duplicações
-
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  IMAGENS.forEach(i => { const im = new Image(); im.src = i.src; });
-
-  let baseIndex = 0; // controla quem é o HERO
-  function ordemAtual(){
-    return [
-      baseIndex % IMAGENS.length,
-      (baseIndex + 1) % IMAGENS.length,
-      (baseIndex + 2) % IMAGENS.length,
-      (baseIndex + 3) % IMAGENS.length,
-    ];
-  }
-
-  function render(){
-    const current = ordemAtual();
-    const map = { hero: current[0], a: current[1], b: current[2], c: current[3] };
-
-    Object.entries(map).forEach(([key, idx])=>{
-      const el = slots[key];
-      const data = IMAGENS[idx];
-      if(!el) return;
-      if(el.getAttribute('src') !== data.src){
-        if(!prefersReduced){ el.classList.add('collage-swap-out'); }
-        setTimeout(()=>{
-          el.src = data.src;
-          el.alt = data.alt || '';
-          el.sizes = key === 'hero'
-            ? '(min-width: 768px) 66vw, 100vw'
-            : '(min-width: 768px) 32vw, 33vw';
-          if(!prefersReduced){
-            void el.offsetWidth;
-            el.classList.remove('collage-swap-out');
-            el.classList.add('collage-swap-in');
-            setTimeout(()=> el.classList.remove('collage-swap-in'), 700);
-          }
-        }, prefersReduced ? 0 : 140);
-      }
-    });
-  }
-
-  // primeiro render
-  render();
-
-  function step(){
-    baseIndex = (baseIndex + 1) % IMAGENS.length; // rotação sequencial
-    render();
-  }
-
-  let timer = setInterval(step, INTERVALO_MS);
-
-  document.addEventListener('visibilitychange', ()=>{
-    if(document.hidden){ clearInterval(timer); }
-    else { render(); timer = setInterval(step, INTERVALO_MS); }
-  }, { passive:true });
-})();
-const formPortfolio = document.getElementById("formPortfolio");
-
-formPortfolio.addEventListener("submit", async (e) => {
+// ─── FORM SUBMIT ───
+document.getElementById('formPortfolio').addEventListener('submit', async (e)=>{
   e.preventDefault();
+  const btn = document.getElementById('formSubmitBtn');
+  const msg = document.getElementById('formMsg');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
 
-  const nome = formPortfolio.querySelector('input[placeholder="Nome completo"]').value.trim();
-  const email = formPortfolio.querySelector('input[type="email"]').value.trim();
-  const assunto = formPortfolio.querySelector('input[placeholder="Ex.: Site para minha marca"]').value.trim();
-  const mensagem = formPortfolio.querySelector('textarea').value.trim();
-  const autorizo = formPortfolio.querySelector('input[type="checkbox"]').checked;
+  const payload = {
+    nome: document.getElementById('form-nome').value.trim(),
+    email: document.getElementById('form-email').value.trim(),
+    assunto: `[${document.getElementById('form-razao').value}] ${document.getElementById('form-assunto').value.trim()}`,
+    mensagem: document.getElementById('form-mensagem').value.trim(),
+  };
 
-  if (!nome || !email || !assunto || !mensagem || !autorizo) {
-    alert("Por favor, preencha todos os campos e autorize o contato.");
-    return;
-  }
-
-  const payload = { nome, email, assunto, mensagem };
-
-  try {
-    const res = await fetch("https://api.noheroes.com.br/api/email/portfolio", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+  try{
+    const res = await fetch('https://api.noheroes.com.br/api/email/portfolio',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(payload)
     });
-
-    if (!res.ok) throw new Error("Falha ao enviar mensagem");
-
-    const data = await res.json();
-    if (data.success) {
-      alert("✅ Sua mensagem foi enviada com sucesso! Entraremos em contato em breve.");
-      formPortfolio.reset();
-    } else {
-      alert("⚠️ Ocorreu um problema ao enviar. Tente novamente mais tarde.");
-    }
-  } catch (err) {
-    console.error(err);
-    alert("❌ Erro de conexão com o servidor.");
+    if(!res.ok) throw new Error('Erro '+res.status);
+    msg.style.display='block';
+    msg.style.background='rgba(74,222,128,0.1)';
+    msg.style.border='1px solid rgba(74,222,128,0.3)';
+    msg.style.color='#4ade80';
+    msg.textContent='✅ Mensagem enviada com sucesso! Retornarei em breve.';
+    e.target.reset();
+    document.getElementById('formTypeBadge').style.display='none';
+  }catch(err){
+    msg.style.display='block';
+    msg.style.background='rgba(248,113,113,0.1)';
+    msg.style.border='1px solid rgba(248,113,113,0.3)';
+    msg.style.color='#f87171';
+    msg.textContent='❌ Não foi possível enviar. Tente via WhatsApp ou e-mail.';
+  }finally{
+    btn.disabled=false;
+    btn.innerHTML='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg> Enviar';
   }
 });
+
+// ─── SLIDER ───
+(function(){
+  const IMGS=[
+    {src:'assets/images/port1.png',alt:'Interface moderna'},
+    {src:'assets/images/port2.png',alt:'Código em editor'},
+    {src:'assets/images/port3.png',alt:'Arte digital'},
+    {src:'assets/images/port4.png',alt:'Projeto em tela'},
+  ];
+  const img=document.getElementById('slide-img');
+  const dotsWrap=document.getElementById('slide-dots');
+  if(!img||!dotsWrap) return;
+
+  let cur=0, timer;
+
+  // Cria dots
+  IMGS.forEach((_,i)=>{
+    const d=document.createElement('div');
+    d.style.cssText=`width:6px;height:6px;border-radius:50%;background:${i===0?'#fff':'rgba(255,255,255,0.3)'};cursor:pointer;transition:background .3s;`;
+    d.onclick=()=>goTo(i);
+    dotsWrap.appendChild(d);
+  });
+
+  function updateDots(){
+    dotsWrap.querySelectorAll('div').forEach((d,i)=>{
+      d.style.background=i===cur?'#fff':'rgba(255,255,255,0.3)';
+      d.style.transform=i===cur?'scale(1.3)':'scale(1)';
+    });
+  }
+
+  function goTo(i){
+    cur=i;
+    img.style.opacity='0';
+    setTimeout(()=>{
+      img.src=IMGS[cur].src;
+      img.alt=IMGS[cur].alt;
+      img.style.opacity='1';
+    },250);
+    updateDots();
+    resetTimer();
+  }
+
+  function resetTimer(){
+    clearInterval(timer);
+    timer=setInterval(()=>goTo((cur+1)%IMGS.length),4500);
+  }
+
+  window.slideNext=()=>goTo((cur+1)%IMGS.length);
+  window.slidePrev=()=>goTo((cur-1+IMGS.length)%IMGS.length);
+
+  updateDots();
+  resetTimer();
+
+  document.addEventListener('visibilitychange',()=>{
+    if(document.hidden) clearInterval(timer);
+    else resetTimer();
+  },{passive:true});
+})();
+
+// ─── REVEAL ───
+try {
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach((e,i)=>{
+      if(e.isIntersecting){
+        setTimeout(()=>e.target.classList.add('in'),i*60);
+        obs.unobserve(e.target);
+      }
+    });
+  },{threshold:0.05,rootMargin:'0px 0px -4% 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+} catch(e) {
+  // fallback: mostra tudo se observer falhar
+  document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
+}
+
+// show desktop nav on md+
+if(window.innerWidth>=768) document.getElementById('deskNav').style.display='flex';
+window.addEventListener('resize',()=>{
+  document.getElementById('deskNav').style.display=window.innerWidth>=768?'flex':'none';
+});
+
+// Brasas: agora no componente compartilhado <nh-background> (noheroes-ui.js)
+
+// ─── NAV DESKTOP ───
+const deskNav=document.getElementById('deskNav');
+if(deskNav){
+  if(window.innerWidth>=768) deskNav.style.display='flex';
+  window.addEventListener('resize',()=>{deskNav.style.display=window.innerWidth>=768?'flex':'none';});
+}
+
 </script>
 </body>
 </html>

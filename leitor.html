@@ -8,6 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Cinzel+Decorative:wght@700;900&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="assets/css/noheroes-ui.css">
+    <script defer src="assets/js/noheroes-ui.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -36,7 +38,50 @@
     </script>
 
     <style>
-       /* --- FUNDAMENTOS & RESET --- */
+       /* --- AUTOR CARD --- */
+.author-card {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px;
+  background: rgba(143,79,255,0.06);
+  border: 1px solid rgba(143,79,255,0.15);
+  border-radius: 16px;
+  margin-bottom: 16px;
+}
+.author-avatar {
+  width: 44px; height: 44px; border-radius: 50%;
+  object-fit: cover; border: 2px solid rgba(143,79,255,0.4);
+  background: #0c0a12; flex-shrink: 0;
+}
+.author-info { flex: 1; min-width: 0; }
+.author-name { font-size: 13px; font-weight: 700; color: #e5e7eb; }
+.author-role { font-size: 10px; color: rgba(217,181,90,0.8); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+.btn-follow {
+  padding: 7px 14px; border-radius: 10px; font-size: 11px; font-weight: 800;
+  letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer;
+  border: 1px solid rgba(143,79,255,0.4); background: rgba(143,79,255,0.1);
+  color: #c084fc; transition: all .2s; flex-shrink: 0; white-space: nowrap;
+}
+.btn-follow.active { background: rgba(143,79,255,0.25); border-color: #8f4fff; color: #e9d5ff; }
+.btn-follow:hover { background: rgba(143,79,255,0.2); }
+.btn-fav-inline {
+  display: flex; align-items: center; gap: 6px;
+  padding: 14px; border-radius: 16px; font-size: 11px; font-weight: 800;
+  letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.6);
+  transition: all .2s; justify-content: center; flex: 1;
+}
+.btn-fav-inline.active { border-color: rgba(217,181,90,0.5); background: rgba(217,181,90,0.08); color: #d9b55a; }
+.btn-read-inline {
+  flex: 2; padding: 14px; border-radius: 16px;
+  background: linear-gradient(135deg,#8f4fff,#d9b55a);
+  color: #000; font-size: 11px; font-weight: 900;
+  letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;
+  border: none; transition: all .2s;
+}
+.btn-read-inline:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+/* --- FUNDAMENTOS & RESET --- */
 body { 
     background-color: #050507; 
     color: #e5e7eb; 
@@ -209,7 +254,8 @@ body {
 </head>
 <body class="font-sans antialiased overflow-x-hidden pb-24 sm:pb-0">
 
-<canvas id="brasasCanvas"></canvas>
+<!-- Fundo animado (componente compartilhado) -->
+<nh-background></nh-background>
 
 <div id="toast" class="fixed top-6 right-6 z-[200] px-6 py-3 rounded-2xl glass text-white text-sm font-bold opacity-0 translate-y-[-20px] transition-all duration-300 pointer-events-none"></div>
 
@@ -229,86 +275,15 @@ body {
                 </div>
             </div>
             
-            <button id="hamburgerBtn" class="text-2xl sm:text-3xl text-white hover:text-[#a855f7] transition z-[60]">
+            <button id="hamburgerBtn" data-nh-drawer-toggle aria-label="Abrir menu" class="text-2xl sm:text-3xl text-white hover:text-[#a855f7] transition z-[60]">
                 ☰
             </button>
         </div>
     </nav>
 </header>
 
-<div id="drawerOverlay" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[90] hidden transition-opacity duration-300 opacity-0"></div>
-
-<div id="drawer" class="fixed top-0 right-0 w-72 h-full text-white transform transition-transform duration-500 z-[100] overflow-y-auto" style="transform: translateX(100%)">
-    
-    <button onclick="toggleDrawer()" class="absolute top-6 right-6 h-10 w-10 flex items-center justify-center rounded-full glass hover:bg-white/10 transition group">
-        <span class="text-xl group-hover:rotate-90 transition-transform duration-300">✕</span>
-    </button>
-
-    <div class="p-8 mt-12 flex flex-col h-full">
-        <header class="mb-10">
-    <h1 class="text-3xl font-black gradiente-noheroes font-cinzel tracking-tighter uppercase">NoHeroes</h1>
-    
-    <div class="flex items-center gap-2 mt-1">
-        <span class="h-[1px] w-8 barra-degrade"></span>
-        <p class="text-white/30 text-[10px] uppercase font-black tracking-[0.3em]">Universo Sombrio</p>
-    </div>
-</header>
-
-        <nav class="flex flex-col">
-            <a href="index.html" class="drawer-item">
-                <div class="flex items-center gap-4">
-                    <svg class="w-5 h-5" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-                    <span class="text-sm font-bold tracking-wide">Início</span>
-                </div>
-                <span class="drawer-tag">Portal</span>
-            </a>
-
-            <a href="leitor.html" class="drawer-item">
-                <div class="flex items-center gap-4">
-                    <svg class="w-5 h-5" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-                    <span class="text-sm font-bold tracking-wide">Mangás</span>
-                </div>
-                <span class="drawer-tag">Crônicas</span>
-            </a>
-
-            <a href="sobre.html" class="drawer-item">
-                <div class="flex items-center gap-4">
-                    <svg class="w-5 h-5" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    <span class="text-sm font-bold tracking-wide">Sobre</span>
-                </div>
-                <span class="drawer-tag">Entidade</span>
-            </a>
-
-            <a href="store.html" class="drawer-item">
-                <div class="flex items-center gap-4">
-                    <svg class="w-5 h-5" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M16 11V7a4 4 0 00-8 0v4M5 11h14l1 9H4l1-9z"/></svg>
-                    <span class="text-sm font-bold tracking-wide">Loja</span>
-                </div>
-                <span class="drawer-tag">Mercado</span>
-            </a>
-
-            <a href="profile.html" class="drawer-item">
-                <div class="flex items-center gap-4">
-                    <svg class="w-5 h-5" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                    <span class="text-sm font-bold tracking-wide">Perfil</span>
-                </div>
-                <span class="drawer-tag">Avatar</span>
-            </a>
-
-            <a href="oraculum.html" class="drawer-item">
-                <div class="flex items-center gap-4">
-                    <svg class="w-5 h-5" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
-                    <span class="text-sm font-bold tracking-wide">Oráculo</span>
-                </div>
-                <span class="drawer-tag">Mente</span>
-            </a>
-        </nav>
-
-        <div class="mt-auto pt-10 text-center">
-            <p class="text-[8px] uppercase tracking-[0.5em] text-white/20">Sem heróis. Apenas você.</p>
-        </div>
-    </div>
-</div>
+<!-- Menu lateral (componente compartilhado) -->
+<nh-drawer></nh-drawer>
 
 <main>
     <section id="hero-display" class="relative h-[75vh] w-full flex items-end overflow-hidden border-b border-nh-border/20" style="padding-top:64px;min-height:420px;">
@@ -348,14 +323,8 @@ body {
     </section>
 </main>
 
-<footer class="py-8 text-center text-[#666] bg-[#000] border-t border-[#333] mt-0">
-  <a href="linktree.html" class="inline-block mb-4">
-    <img src="assets/images/linktree.png" alt="Linktree" class="h-10 mx-auto">
-  </a>
-  <p>Explore. Escolha. Caia. Evolua.</p>
-  <p class="mt-2">Toda escolha tem um preço. Toda queda, uma razão.</p>
-  <p class="text-xs mt-4">© 2025 NoHeroes. Todos os direitos reservados.</p>
-</footer>
+<!-- Footer (componente compartilhado) -->
+<nh-footer></nh-footer>
 <nav class="mobile-nav glass md:hidden">
     <svg width="0" height="0" class="absolute">
       <linearGradient id="nh-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -402,7 +371,7 @@ body {
 <script>
 /* NO HEROES - CORE ENGINE v3.0 — API Real */
 
-const API_BASE = 'https://dev-flmw.onrender.com';
+const API_BASE = 'https://api.noheroes.com.br';
 
 const STATE = {
     data: [],
@@ -413,8 +382,6 @@ const STATE = {
 };
 
 const UI = {
-    canvas: document.getElementById("brasasCanvas"),
-    ctx: document.getElementById("brasasCanvas").getContext("2d"),
     grid: document.getElementById('works-grid'),
     filterBar: document.getElementById('filter-bar'),
     searchInput: document.getElementById('search-input'),
@@ -423,36 +390,7 @@ const UI = {
     modalContent: document.getElementById('modal-content')
 };
 
-/* --- BRASAS --- */
-let particles = [], w, h;
-function initCanvas() {
-    w = UI.canvas.width = window.innerWidth;
-    h = UI.canvas.height = window.innerHeight;
-    particles = Array.from({ length: 120 }, () => new Particle());
-}
-class Particle {
-    constructor() { this.reset(true); }
-    reset(initial = false) {
-        this.x = Math.random() * w;
-        this.y = initial ? Math.random() * h : h + Math.random() * 100;
-        this.size = 0.8 + Math.random() * 1.5;
-        this.speed = 0.4 + Math.random() * 0.8;
-        this.alpha = 0.3 + Math.random() * 0.4;
-        this.drift = (Math.random() - 0.5) * 0.4;
-    }
-    update() { this.y -= this.speed; this.x += this.drift; if (this.y < -20) this.reset(); }
-    draw() {
-        UI.ctx.fillStyle = `rgba(143, 79, 255, ${this.alpha})`;
-        UI.ctx.beginPath();
-        UI.ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        UI.ctx.fill();
-    }
-}
-function animate() {
-    UI.ctx.clearRect(0, 0, w, h);
-    particles.forEach(p => { p.update(); p.draw(); });
-    requestAnimationFrame(animate);
-}
+/* Brasas: agora no componente compartilhado <nh-background> (noheroes-ui.js) */
 
 /* --- API --- */
 async function apiFetch(path) {
@@ -475,13 +413,10 @@ async function fetchWorks() {
     if (STATE.activeFilter !== 'Tudo') params.set('category', STATE.activeFilter);
     if (STATE.searchQuery) params.set('search', STATE.searchQuery);
 
-    const [worksData, featuredData] = await Promise.all([
-        apiFetch(`/api/works?${params.toString()}`),
-        apiFetch('/api/works/featured')
-    ]);
+    const worksData = await apiFetch(`/api/works?${params.toString()}`);
 
     STATE.data = worksData?.works || [];
-    STATE.featured = featuredData?.work || STATE.data[0] || null;
+    STATE.featured = STATE.data[0] || null; // usa primeira obra como destaque
     STATE.isLoading = false;
 }
 
@@ -561,45 +496,115 @@ async function openModal(slug) {
 
     const data = await apiFetch(`/api/works/${slug}`);
     const w = data?.work;
+    if (!w) { UI.modalContent.innerHTML = `<div class="p-10 text-center text-red-400">Erro ao carregar obra.</div>`; return; }
 
-    if (!w) {
-        UI.modalContent.innerHTML = `<div class="p-10 text-center text-red-400">Erro ao carregar obra.</div>`;
-        return;
+    // Busca status do usuário (like, fav, follow) — best effort
+    const token = localStorage.getItem('NoHeroes_token');
+    let userStatus = { liked: false, favorited: false, following: false };
+    if (token) {
+        try {
+            const sr = await fetch(`${API_BASE}/api/works/${w.id}/user-status`, {
+                headers: { Authorization: token.startsWith('Bearer') ? token : `Bearer ${token}` }
+            });
+            if (sr.ok) userStatus = await sr.json();
+        } catch {}
     }
 
     const tags = Array.isArray(w.tags) ? w.tags : [];
-    const img = w.banner_url || w.cover_url || '';
+    const img  = w.banner_url || w.cover_url || '';
+
+    // Card do autor
+    const authorName   = w.Author?.username || w.author_name || 'Arauto';
+    const authorAvatar = w.Author?.avatar   || w.author_avatar || '';
+    const authorBio    = (w.Author?.bio || '').slice(0, 80);
+
+    const authorCard = `
+      <div class="author-card">
+        <img class="author-avatar" src="${authorAvatar || 'assets/images/logo noheroes.png'}"
+             onerror="this.src='assets/images/logo noheroes.png'" alt="${authorName}">
+        <div class="author-info">
+          <div class="author-name">${authorName}</div>
+          <div class="author-role">Arauto NoHeroes</div>
+          ${authorBio ? `<div style="font-size:10px;color:rgba(255,255,255,.35);margin-top:2px;">${authorBio}</div>` : ''}
+        </div>
+        <button id="btn-follow-${w.id}"
+          class="btn-follow ${userStatus.following ? 'active' : ''}"
+          onclick="toggleFollow('${slug}', ${w.id})">
+          ${userStatus.following ? '✓ Seguindo' : '+ Seguir'}
+        </button>
+      </div>`;
 
     UI.modalContent.innerHTML = `
-        <div class="h-40 sm:h-64 relative bg-cover bg-center flex-shrink-0" style="background-image: url('${img}')">
+        <div class="h-40 sm:h-56 relative bg-cover bg-center flex-shrink-0" style="background-image:url('${img}')">
             <div class="absolute inset-0 bg-gradient-to-t from-nh-dark to-transparent"></div>
             <button onclick="closeModal()" class="absolute top-4 right-4 h-10 w-10 rounded-full glass flex items-center justify-center text-lg transition hover:rotate-90">✕</button>
         </div>
-        <div class="p-5 sm:p-10 -mt-8 relative z-10">
-            <div class="flex flex-wrap gap-2 mb-4">
-                ${tags.map(t => `<span class="px-3 py-1 rounded-full glass text-[9px] font-black uppercase text-nh-gold border-nh-gold/20">${t}</span>`).join('')}
+        <div class="p-5 sm:p-8 -mt-6 relative z-10">
+            <div class="flex flex-wrap gap-2 mb-3">
+                ${tags.map(t => `<span class="px-3 py-1 rounded-full glass text-[9px] font-black uppercase text-nh-gold">${t}</span>`).join('')}
             </div>
-            <h2 class="font-display text-2xl sm:text-4xl text-grad uppercase mb-4">${w.title}</h2>
-            <p class="text-white/60 leading-relaxed mb-6 text-sm sm:text-lg italic">"${(w.synopsis||'').length > 200 ? w.synopsis.slice(0,200)+'...' : (w.synopsis||'')}"</p>
-            <div class="grid grid-cols-1 gap-3">
-                <button onclick="location.href='mangá.html?slug=${w.slug}'" class="py-4 rounded-2xl grad-nh text-black font-black uppercase tracking-widest text-xs shadow-glow transition hover:scale-[1.02]">Começar Leitura</button>
-                <button onclick="favWork('${w.slug}', ${w.id})" class="py-4 rounded-2xl glass text-white font-black uppercase tracking-widest text-xs transition hover:bg-white/10">Salvar na Lista</button>
+            <h2 class="font-display text-xl sm:text-3xl text-grad uppercase mb-2">${w.title}</h2>
+            <p class="text-white/50 leading-relaxed mb-5 text-sm italic">"${(w.synopsis||'').length > 180 ? w.synopsis.slice(0,180)+'...' : (w.synopsis||'')}"</p>
+
+            <!-- Card do Autor -->
+            ${authorCard}
+
+            <!-- Ações -->
+            <div style="display:flex;gap:8px;margin-top:4px;">
+                <button class="btn-read-inline" onclick="location.href='mangá.html?slug=${w.slug}'">▶ Ler agora</button>
+                <button id="btn-fav-${w.id}"
+                  class="btn-fav-inline ${userStatus.favorited ? 'active' : ''}"
+                  onclick="favWork('${slug}', ${w.id})">
+                  ${userStatus.favorited ? '★ Salvo' : '☆ Salvar'}
+                </button>
+            </div>
+
+            <!-- Stats da obra -->
+            <div style="display:flex;gap:16px;margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.05);">
+              ${w.total_views ? `<span style="font-size:10px;color:rgba(255,255,255,.3);">👁 ${Number(w.total_views).toLocaleString('pt-BR')} views</span>` : ''}
+              ${w.total_followers ? `<span style="font-size:10px;color:rgba(255,255,255,.3);">👤 ${Number(w.total_followers).toLocaleString('pt-BR')} seguidores</span>` : ''}
+              ${w.total_likes ? `<span style="font-size:10px;color:rgba(255,255,255,.3);">♥ ${Number(w.total_likes).toLocaleString('pt-BR')} likes</span>` : ''}
             </div>
         </div>
     `;
+}
+
+/* --- SEGUIR OBRA --- */
+async function toggleFollow(slug, id) {
+    const token = localStorage.getItem('NoHeroes_token');
+    if (!token) { showToast('Faça login para seguir obras.'); return; }
+    try {
+        const res = await fetch(`${API_BASE}/api/works/${id}/follow`, {
+            method: 'POST',
+            headers: { Authorization: token.startsWith('Bearer') ? token : `Bearer ${token}` }
+        });
+        const data = await res.json();
+        const btn = document.getElementById(`btn-follow-${id}`);
+        if (btn) {
+            btn.classList.toggle('active', data.active);
+            btn.textContent = data.active ? '✓ Seguindo' : '+ Seguir';
+        }
+        showToast(data.active ? 'Seguindo esta obra!' : 'Deixou de seguir.');
+    } catch {
+        showToast('Erro ao seguir.');
+    }
 }
 
 /* --- FAVORITAR --- */
 async function favWork(slug, id) {
     const token = localStorage.getItem('NoHeroes_token');
     if (!token) { showToast('Faça login para favoritar.'); return; }
-
     try {
         const res = await fetch(`${API_BASE}/api/works/${id}/favorite`, {
             method: 'POST',
-            headers: { Authorization: token }
+            headers: { Authorization: token.startsWith('Bearer') ? token : `Bearer ${token}` }
         });
         const data = await res.json();
+        const btn = document.getElementById(`btn-fav-${id}`);
+        if (btn) {
+            btn.classList.toggle('active', data.active);
+            btn.textContent = data.active ? '★ Salvo' : '☆ Salvar';
+        }
         showToast(data.active ? 'Adicionado aos favoritos!' : 'Removido dos favoritos.');
     } catch {
         showToast('Erro ao favoritar.');
@@ -677,28 +682,10 @@ UI.searchInput.oninput = (e) => {
     }, 400);
 };
 
-window.addEventListener("resize", initCanvas);
-
-/* --- DRAWER --- */
-const hamburgerBtn = document.getElementById('hamburgerBtn');
-const drawer = document.getElementById('drawer');
-const overlay = document.getElementById('drawerOverlay');
-let isDrawerOpen = false;
-function toggleDrawer() {
-    isDrawerOpen = !isDrawerOpen;
-    drawer.style.transform = isDrawerOpen ? 'translateX(0)' : 'translateX(100%)';
-    overlay.classList.toggle('hidden', !isDrawerOpen);
-    if (isDrawerOpen) setTimeout(() => overlay.classList.remove('opacity-0'), 10);
-    else overlay.classList.add('opacity-0');
-    document.body.style.overflow = isDrawerOpen ? 'hidden' : '';
-}
-hamburgerBtn.addEventListener('click', toggleDrawer);
-overlay.addEventListener('click', toggleDrawer);
+/* Drawer: agora no componente compartilhado <nh-drawer> (gatilho via [data-nh-drawer-toggle]) */
 
 /* --- INIT --- */
 document.addEventListener('DOMContentLoaded', async () => {
-    initCanvas();
-    animate();
     renderFilters();
     await fetchWorks();
     renderHero();

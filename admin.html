@@ -168,10 +168,25 @@ textarea.input{resize:vertical;min-height:80px}
 .mod-actions{display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap}
 
 /* LOG ITEM */
-.log-item{display:flex;gap:10px;padding:10px 12px;background:var(--s2);border-radius:8px;margin-bottom:6px;align-items:flex-start;font-size:11px}
-.log-time{color:var(--muted);font-family:var(--fm);white-space:nowrap;flex-shrink:0}
-.log-type{font-weight:700;font-family:var(--fm)}
-.log-msg{color:rgba(232,228,240,.6);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.log-item{display:flex;gap:8px;padding:10px 12px;border-radius:8px;margin-bottom:5px;align-items:flex-start;font-size:11px;border-left:3px solid transparent;cursor:pointer;transition:background .15s}
+.log-item:hover{background:rgba(255,255,255,.03)}
+.log-item.lvl-critical{background:rgba(239,68,68,.07);border-left-color:#ef4444}
+.log-item.lvl-error{background:rgba(239,68,68,.04);border-left-color:rgba(239,68,68,.5)}
+.log-item.lvl-warn{background:rgba(250,204,21,.03);border-left-color:rgba(250,204,21,.4)}
+.log-item.lvl-info{background:var(--s2);border-left-color:rgba(143,79,255,.25)}
+.log-time{color:var(--muted);font-family:var(--fm);white-space:nowrap;flex-shrink:0;font-size:10px}
+.log-type{font-weight:700;font-family:var(--fm);flex-shrink:0}
+.log-msg{color:rgba(232,228,240,.7);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.log-badge{font-size:8px;font-weight:800;padding:1px 6px;border-radius:4px;text-transform:uppercase;letter-spacing:.06em;flex-shrink:0}
+.log-badge.critical{background:rgba(239,68,68,.2);color:#ef4444}
+.log-badge.error{background:rgba(239,68,68,.15);color:#f87171}
+.log-badge.warn{background:rgba(250,204,21,.15);color:#facc15}
+.log-badge.info{background:rgba(143,79,255,.15);color:#a78bfa}
+.log-meta{font-size:10px;color:var(--muted);margin-top:3px;font-family:var(--fm);white-space:pre-wrap;display:none}
+.log-item.expanded .log-meta{display:block}
+.log-search{width:100%;background:var(--s2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-size:12px;outline:none}
+.log-search:focus{border-color:rgba(143,79,255,.4)}
+.log-pagination{display:flex;align-items:center;gap:8px;justify-content:center;margin-top:16px;font-size:12px}
 
 /* NOTIF BADGE */
 .notif-item{display:flex;gap:12px;padding:12px;border-radius:10px;border:1px solid var(--border2);margin-bottom:8px;background:var(--s2)}
@@ -272,6 +287,7 @@ textarea.input{resize:vertical;min-height:80px}
   <span class="nav-section">Plataforma</span>
   <button class="nav-item" onclick="goTab('users')" id="nav-users"><span class="ni">👥</span>Usuários</button>
   <button class="nav-item" onclick="goTab('shop')" id="nav-shop"><span class="ni">🛒</span>Loja</button>
+  <button class="nav-item" onclick="goTab('finance')" id="nav-finance"><span class="ni">💰</span>Financeiro</button>
   <button class="nav-item" onclick="goTab('goals')" id="nav-goals"><span class="ni">🎯</span>Metas</button>
   <button class="nav-item" onclick="goTab('newsletter')" id="nav-newsletter"><span class="ni">📧</span>Newsletter</button>
 
@@ -416,7 +432,7 @@ textarea.input{resize:vertical;min-height:80px}
       <div class="search-row"><input class="input" id="product-search" placeholder="Buscar produto..." oninput="filterProducts()"></div>
       <div class="overflow-x">
         <table class="tbl">
-          <thead><tr><th>ID</th><th>Nome</th><th>Preço R$</th><th>Moedas</th><th>Estoque</th><th>Status</th><th>Ações</th></tr></thead>
+          <thead><tr><th>ID</th><th>Nome</th><th>Tipo</th><th>Preço R$</th><th>Coins</th><th>Concede</th><th>Estoque</th><th>Status</th><th>Ações</th></tr></thead>
           <tbody id="tb-products"><tr><td colspan="7" style="text-align:center;color:var(--muted);padding:20px">Carregando...</td></tr></tbody>
         </table>
       </div>
@@ -549,19 +565,31 @@ textarea.input{resize:vertical;min-height:80px}
   <!-- LOGS -->
   <div id="tab-logs" class="tab">
     <div class="section-header">
-      <div><div class="section-title">Logs do Sistema</div><div class="section-sub">Auditoria completa de eventos</div></div>
-      <div style="display:flex;gap:8px;">
-        <select class="input btn-sm" id="logs-filter" onchange="loadLogs()" style="width:auto">
-          <option value="">Todos</option>
-          <option value="error">Erros</option>
-          <option value="warn">Avisos</option>
-          <option value="info">Info</option>
-        </select>
-        <button class="btn btn-danger btn-sm" onclick="clearLogs()">Limpar</button>
+      <div><div class="section-title">Logs do Sistema</div><div class="section-sub">Auditoria inteligente · Clique em um log para expandir</div></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn btn-ghost btn-sm log-lvl-btn active" data-lvl="" onclick="setLogLevel(this,'')">Todos</button>
+        <button class="btn btn-ghost btn-sm log-lvl-btn" data-lvl="critical" onclick="setLogLevel(this,'critical')" style="color:#ef4444;border-color:rgba(239,68,68,.3)">💀 Crítico</button>
+        <button class="btn btn-ghost btn-sm log-lvl-btn" data-lvl="error" onclick="setLogLevel(this,'error')" style="color:#f87171;border-color:rgba(239,68,68,.2)">❌ Erro</button>
+        <button class="btn btn-ghost btn-sm log-lvl-btn" data-lvl="warn" onclick="setLogLevel(this,'warn')" style="color:#facc15;border-color:rgba(250,204,21,.2)">⚠️ Aviso</button>
+        <button class="btn btn-ghost btn-sm log-lvl-btn" data-lvl="info" onclick="setLogLevel(this,'info')">📘 Info</button>
         <button class="btn btn-ghost btn-sm" onclick="loadLogs()">↻</button>
+        <button class="btn btn-danger btn-sm" onclick="cleanupLogs()">🧹 Limpeza</button>
+        <button class="btn btn-ghost btn-sm" onclick="clearLogs()" style="color:var(--red);border-color:rgba(239,68,68,.3)">🗑 Limpar tudo</button>
       </div>
     </div>
+
+    <!-- Busca + stats -->
+    <div style="display:flex;gap:8px;margin-bottom:12px;align-items:center;">
+      <input class="log-search" id="log-search" placeholder="Buscar em logs (tipo, mensagem, usuário)..." oninput="filterLogsLocal()">
+      <div id="log-stats" style="font-size:11px;color:var(--muted);white-space:nowrap;font-family:var(--fm);">—</div>
+    </div>
+
     <div id="logs-list"></div>
+    <div class="log-pagination" id="logs-pagination" style="display:none;">
+      <button class="btn btn-ghost btn-sm" id="logs-prev" onclick="changePage(-1)">← Anterior</button>
+      <span id="logs-page-info" style="color:var(--muted)">Pág 1</span>
+      <button class="btn btn-ghost btn-sm" id="logs-next" onclick="changePage(1)">Próxima →</button>
+    </div>
   </div>
 
 </main>
@@ -573,11 +601,71 @@ textarea.input{resize:vertical;min-height:80px}
     <button class="mob-btn" onclick="goTab('works')" id="mob-works"><span class="mi">📚</span><span class="ml">Obras</span></button>
     <button class="mob-btn" onclick="goTab('users')" id="mob-users"><span class="mi">👥</span><span class="ml">Users</span></button>
     <button class="mob-btn" onclick="goTab('shop')" id="mob-shop"><span class="mi">🛒</span><span class="ml">Loja</span></button>
+    <button class="mob-btn" onclick="goTab('finance')" id="mob-finance"><span class="mi">💰</span><span class="ml">Financeiro</span></button>
     <button class="mob-btn" onclick="goTab('logs')" id="mob-logs"><span class="mi">🧾</span><span class="ml">Logs</span></button>
   </div>
 </nav>
 
 <!-- MODALS -->
+  <!-- ── FINANCEIRO ── -->
+  <div id="tab-finance" class="tab">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Financeiro</div>
+        <div class="section-sub">Receita consolidada · Repasses · Payouts</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <select class="input" id="fin-period" style="width:auto;" onchange="loadAdminFinance()">
+          <!-- preenchido via JS -->
+        </select>
+        <button class="btn btn-ghost btn-sm" onclick="loadAdminFinance()">↻</button>
+        <button class="btn btn-primary btn-sm" onclick="generatePayouts()">Gerar Repasses</button>
+      </div>
+    </div>
+
+    <!-- KPIs -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:24px;">
+      <div class="card"><div class="kpi-label">Receita Total</div><div class="kpi-value" id="fin-total" style="color:var(--gold);">—</div><div class="kpi-sub">No período</div></div>
+      <div class="card"><div class="kpi-label">Repasses Arautos</div><div class="kpi-value" id="fin-herald" style="color:var(--green);">—</div><div class="kpi-sub">30% das vendas</div></div>
+      <div class="card"><div class="kpi-label">Receita NoHeroes</div><div class="kpi-value" id="fin-net" style="color:var(--accent);">—</div><div class="kpi-sub">Líquido plataforma</div></div>
+      <div class="card"><div class="kpi-label">Pedidos</div><div class="kpi-value" id="fin-orders" style="font-size:28px;">—</div><div class="kpi-sub">Aprovados</div></div>
+    </div>
+
+    <!-- Por método -->
+    <div class="card" style="margin-bottom:20px;">
+      <div style="font-size:13px;font-weight:700;margin-bottom:14px;">Por Método de Pagamento</div>
+      <div class="overflow-x">
+        <table class="tbl">
+          <thead><tr><th>Método</th><th>Pedidos</th><th>Receita</th></tr></thead>
+          <tbody id="fin-by-method"><tr><td colspan="3" style="text-align:center;color:var(--muted);padding:20px">Carregando...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Payouts pendentes -->
+    <div class="card" style="margin-bottom:20px;">
+      <div style="font-size:13px;font-weight:700;margin-bottom:14px;">Repasses Pendentes</div>
+      <div class="overflow-x">
+        <table class="tbl">
+          <thead><tr><th>Arauto</th><th>Período</th><th>Valor</th><th>Status</th><th>Ação</th></tr></thead>
+          <tbody id="fin-payouts"><tr><td colspan="5" style="text-align:center;color:var(--muted);padding:20px">Carregando...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Por arauto -->
+    <div class="card">
+      <div style="font-size:13px;font-weight:700;margin-bottom:14px;">Receita por Arauto</div>
+      <div class="overflow-x">
+        <table class="tbl">
+          <thead><tr><th>Herald ID</th><th>Pedidos</th><th>Repasse</th></tr></thead>
+          <tbody id="fin-by-herald"><tr><td colspan="3" style="text-align:center;color:var(--muted);padding:20px">Carregando...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
 <div class="modal-backdrop" id="confirm-modal">
   <div class="modal-box" style="max-width:360px;">
     <div class="modal-title" style="-webkit-text-fill-color:var(--red);background:none;color:var(--red);">⚠️ Confirmar</div>
@@ -613,13 +701,57 @@ textarea.input{resize:vertical;min-height:80px}
 </div>
 
 <div class="modal-backdrop" id="product-modal">
-  <div class="modal-box">
+  <div class="modal-box" style="max-width:620px;">
     <div class="modal-title" id="product-modal-title">Novo Produto</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;" class="grid-2">
+
       <div class="field" style="grid-column:1/-1"><label class="label">Nome</label><input class="input" id="pm-name" placeholder="Nome do produto"></div>
-      <div class="field"><label class="label">Preço R$</label><input class="input" id="pm-price-real" type="number" step=".01"></div>
-      <div class="field"><label class="label">Preço Coins</label><input class="input" id="pm-price-coins" type="number"></div>
-      <div class="field"><label class="label">Estoque</label><input class="input" id="pm-stock" type="number"></div>
+
+      <!-- Tipo — controla campos dinâmicos -->
+      <div class="field" style="grid-column:1/-1">
+        <label class="label">Tipo de Produto</label>
+        <select class="input" id="pm-type" onchange="onProductTypeChange()">
+          <option value="item">Item (inventário)</option>
+          <option value="coin_pack">Pacote de Coins</option>
+          <option value="season_pass">Passe de Temporada</option>
+          <option value="chapter">Capítulo Premium</option>
+          <option value="ebook">E-book</option>
+          <option value="book">Livro (PDF)</option>
+        </select>
+      </div>
+
+      <div class="field"><label class="label">Preço R$</label><input class="input" id="pm-price-real" type="number" step=".01" min="0"></div>
+      <div class="field"><label class="label">Preço Coins</label><input class="input" id="pm-price-coins" type="number" min="0"></div>
+
+      <!-- Campos específicos por tipo -->
+      <div class="field" id="pm-coins-granted-field" style="display:none;grid-column:1/-1;background:rgba(143,79,255,.06);border:1px solid rgba(143,79,255,.2);border-radius:10px;padding:12px;">
+        <label class="label" style="color:var(--accent);">⚡ Coins Concedidos ao Comprar</label>
+        <input class="input" id="pm-coins-granted" type="number" min="1" placeholder="Ex: 500">
+        <div style="font-size:10px;color:var(--muted);margin-top:4px;">Quantidade de coins creditada automaticamente após pagamento.</div>
+      </div>
+
+      <div class="field" id="pm-entity-field" style="display:none;">
+        <label class="label" id="pm-entity-label">ID da Entidade</label>
+        <input class="input" id="pm-entity-id" type="number" placeholder="ID do capítulo / passe">
+        <div style="font-size:10px;color:var(--muted);margin-top:4px;" id="pm-entity-hint">ID do capítulo ou passe vinculado.</div>
+      </div>
+
+      <div class="field" id="pm-duration-field" style="display:none;">
+        <label class="label">Duração (dias)</label>
+        <input class="input" id="pm-duration" type="number" min="1" placeholder="Ex: 30">
+      </div>
+
+      <div class="field" id="pm-herald-field" style="display:none;">
+        <label class="label">ID do Arauto (heraldId)</label>
+        <input class="input" id="pm-herald-id" type="number" placeholder="User ID do criador">
+      </div>
+
+      <div class="field" id="pm-royalty-field" style="display:none;">
+        <label class="label">Royalty do Arauto (%)</label>
+        <input class="input" id="pm-royalty-pct" type="number" step=".01" min="0" max="1" placeholder="Ex: 0.30 = 30%">
+      </div>
+
+      <div class="field"><label class="label">Estoque (vazio = ilimitado)</label><input class="input" id="pm-stock" type="number" min="0"></div>
       <div class="field"><label class="label">Categoria</label><input class="input" id="pm-category" placeholder="ebook, passe, avatar..."></div>
       <div class="field"><label class="label">Raridade</label><input class="input" id="pm-rarity" placeholder="Comum, Épico, Lendário..."></div>
       <div class="field"><label class="label">URL da Imagem</label><input class="input" id="pm-image" placeholder="https://..."></div>
@@ -650,10 +782,10 @@ textarea.input{resize:vertical;min-height:80px}
 <script>
 /* ═══════════════════════════════════════════════════════════
    NOHEROES ADMIN — v2.0
-   API: https://dev-flmw.onrender.com
+   API: https://api.noheroes.com.br
 ═══════════════════════════════════════════════════════════ */
 
-const API_BASE = 'https://dev-flmw.onrender.com';
+const API_BASE = 'https://api.noheroes.com.br';
 
 /* ─── AUTH ── */
 const Auth = {
@@ -838,12 +970,17 @@ async function loadDashboard() {
   const {ok:lok,data:ld}=await api('/admin/logs');
   const ll=document.getElementById('recent-logs');
   if(lok && ld.data?.length) {
-    ll.innerHTML=ld.data.slice(0,8).map(l=>`
-      <div class="log-item">
+    const lvlColors={critical:'#ef4444',error:'#f87171',warn:'#facc15',info:'#a78bfa'};
+    // filtra só eventos de negócio (não http_access genérico)
+    const relevant = ld.data.filter(l => l.type !== 'http_access').slice(0,8);
+    ll.innerHTML = relevant.length ? relevant.map(l=>`
+      <div class="log-item lvl-${l.level||'info'}">
+        <span class="log-badge ${l.level||'info'}">${l.level||'info'}</span>
         <span class="log-time">${fmtDate(l.createdAt)}</span>
-        <span class="log-type" style="color:${l.level==='error'?'var(--red)':l.level==='warn'?'var(--yellow)':'var(--accent)'}">${l.type||'evento'}</span>
+        <span class="log-type" style="color:${lvlColors[l.level]||'var(--accent)'}">${l.type||'evento'}</span>
         <span class="log-msg">${l.message||''}</span>
-      </div>`).join('');
+      </div>`).join('')
+    : '<div style="color:var(--muted);font-size:12px;text-align:center;padding:16px">Nenhuma atividade relevante recente</div>';
   } else {
     ll.innerHTML='<div style="color:var(--muted);font-size:12px;text-align:center;padding:16px">Nenhuma atividade recente</div>';
   }
@@ -1133,6 +1270,7 @@ function showShopTab(tab) {
   document.getElementById('shop-tab-orders').style.borderColor=tab==='orders'?'rgba(143,79,255,.4)':'';
   document.getElementById('shop-tab-orders').style.color=tab==='orders'?'var(--accent)':'';
   if(tab==='products') loadProducts();
+  if(tab==='finance') { buildFinPeriodSelect(); loadAdminFinance(); }
   else loadOrders();
 }
 
@@ -1148,13 +1286,16 @@ async function loadProducts() {
 
 function renderProducts(prods) {
   const tb=document.getElementById('tb-products');
-  if(!prods.length){ tb.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:20px">Nenhum produto.</td></tr>'; return; }
+  if(!prods.length){ tb.innerHTML='<tr><td colspan="9" style="text-align:center;color:var(--muted);padding:20px">Nenhum produto.</td></tr>'; return; }
+  const typeLabel={'coin_pack':'🪙 Coins','season_pass':'🎫 Passe','chapter':'📖 Capítulo','ebook':'📕 E-book','book':'📗 Livro','item':'🎒 Item'};
   tb.innerHTML=prods.map(p=>`
     <tr>
       <td style="font-family:var(--fm);font-size:11px;color:var(--muted)">${p.id}</td>
       <td style="font-weight:700">${p.name}</td>
+      <td style="font-size:11px;font-family:var(--fm)">${typeLabel[p.type]||p.type||'—'}</td>
       <td style="color:var(--gold);font-family:var(--fm)">${fmtBRL(p.priceReal||p.price_real||0)}</td>
-      <td style="font-family:var(--fm)">${p.priceCoins||p.price_coins||0}</td>
+      <td style="font-family:var(--fm)">${p.priceCoins||p.price_coins||'—'}</td>
+      <td style="font-family:var(--fm);color:var(--accent)">${p.coinsGranted||p.coins_granted||'—'}</td>
       <td style="font-family:var(--fm)">${p.stock!=null?p.stock:'∞'}</td>
       <td>${statusBadge(p.isActive||p.is_active?'active':'inactive')}</td>
       <td style="display:flex;gap:4px;flex-wrap:wrap;">
@@ -1176,9 +1317,15 @@ function openProductModal(id=null) {
     const p=S.products.find(x=>x.id===id);
     if(p){
       document.getElementById('pm-name').value=p.name||'';
+      document.getElementById('pm-type').value=p.type||'item';
       document.getElementById('pm-price-real').value=p.priceReal||p.price_real||0;
       document.getElementById('pm-price-coins').value=p.priceCoins||p.price_coins||0;
-      document.getElementById('pm-stock').value=p.stock||0;
+      document.getElementById('pm-coins-granted').value=p.coinsGranted||p.coins_granted||'';
+      document.getElementById('pm-entity-id').value=p.entityId||p.entity_id||'';
+      document.getElementById('pm-duration').value=p.duration||'';
+      document.getElementById('pm-herald-id').value=p.heraldId||p.herald_id||'';
+      document.getElementById('pm-royalty-pct').value=p.royaltyPct||p.royalty_pct||'';
+      document.getElementById('pm-stock').value=p.stock||'';
       document.getElementById('pm-category').value=p.category||'';
       document.getElementById('pm-rarity').value=p.rarity||'';
       document.getElementById('pm-image').value=p.imageUrl||'';
@@ -1187,20 +1334,60 @@ function openProductModal(id=null) {
       document.getElementById('pm-consumable').checked=!!(p.isConsumable||p.is_consumable);
     }
   } else {
-    ['pm-name','pm-price-real','pm-price-coins','pm-stock','pm-category','pm-rarity','pm-image','pm-description'].forEach(id=>document.getElementById(id).value='');
+    ['pm-name','pm-price-real','pm-price-coins','pm-coins-granted','pm-entity-id','pm-duration','pm-herald-id','pm-royalty-pct','pm-stock','pm-category','pm-rarity','pm-image','pm-description'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('pm-type').value='item';
     document.getElementById('pm-active').checked=true;
     document.getElementById('pm-consumable').checked=false;
   }
+  onProductTypeChange();
   openModal('product-modal');
 }
 
+
+function onProductTypeChange() {
+  const type = document.getElementById('pm-type').value;
+  // Campos específicos por tipo
+  const show = (id, visible) => {
+    const el = document.getElementById(id);
+    if(el) el.style.display = visible ? '' : 'none';
+  };
+  show('pm-coins-granted-field', type === 'coin_pack');
+  show('pm-entity-field',   ['chapter','season_pass'].includes(type));
+  show('pm-duration-field', type === 'season_pass');
+  show('pm-herald-field',   ['chapter','season_pass','ebook','book'].includes(type));
+  show('pm-royalty-field',  ['chapter','season_pass','ebook','book'].includes(type));
+  // Atualiza label e hint do entityId
+  const labelEl = document.getElementById('pm-entity-label');
+  const hintEl  = document.getElementById('pm-entity-hint');
+  if(type === 'chapter')      { if(labelEl) labelEl.textContent='ID do Capítulo'; if(hintEl) hintEl.textContent='ID do Chapter no banco.'; }
+  if(type === 'season_pass')  { if(labelEl) labelEl.textContent='ID do Passe';    if(hintEl) hintEl.textContent='ID do SeasonPass vinculado.'; }
+}
 async function saveProduct() {
+  const type=document.getElementById('pm-type').value;
+  const coinsGrantedRaw=parseInt(document.getElementById('pm-coins-granted').value)||null;
+  const entityIdRaw=parseInt(document.getElementById('pm-entity-id').value)||null;
+  const durationRaw=parseInt(document.getElementById('pm-duration').value)||null;
+  const heraldIdRaw=parseInt(document.getElementById('pm-herald-id').value)||null;
+  const royaltyRaw=parseFloat(document.getElementById('pm-royalty-pct').value)||null;
+  const stockRaw=document.getElementById('pm-stock').value;
+
+  if(type==='coin_pack' && !coinsGrantedRaw){
+    toast('Informe a quantidade de coins concedida.','error'); return;
+  }
+
   const payload={
     name:document.getElementById('pm-name').value.trim(),
+    type,
     priceReal:parseFloat(document.getElementById('pm-price-real').value)||0,
+    price:parseFloat(document.getElementById('pm-price-real').value)||0,
     priceCoins:parseInt(document.getElementById('pm-price-coins').value)||0,
-    stock:parseInt(document.getElementById('pm-stock').value)||0,
-    category:document.getElementById('pm-category').value.trim(),
+    coinsGranted:coinsGrantedRaw,
+    entityId:entityIdRaw,
+    duration:durationRaw,
+    heraldId:heraldIdRaw,
+    royaltyPct:royaltyRaw,
+    stock:stockRaw!==''?parseInt(stockRaw):null,
+    category:document.getElementById('pm-category').value.trim()||type,
     rarity:document.getElementById('pm-rarity').value.trim(),
     imageUrl:document.getElementById('pm-image').value.trim(),
     description:document.getElementById('pm-description').value.trim(),
@@ -1271,6 +1458,112 @@ async function loadGoals() {
 }
 
 /* ═══ NEWSLETTER ═══ */
+
+
+// ============================================================
+// FINANCEIRO — Admin
+// ============================================================
+function buildFinPeriodSelect() {
+  const sel = document.getElementById('fin-period');
+  if (!sel || sel.options.length > 1) return;
+  const now = new Date();
+  for (let i = 0; i < 6; i++) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const val = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+    const label = d.toLocaleString('pt-BR', { month: 'long', year: 'numeric' });
+    const opt = document.createElement('option');
+    opt.value = val; opt.textContent = label.charAt(0).toUpperCase() + label.slice(1);
+    if (i === 0) opt.selected = true;
+    sel.appendChild(opt);
+  }
+}
+
+async function loadAdminFinance() {
+  buildFinPeriodSelect();
+  const period = document.getElementById('fin-period')?.value || '';
+  const url = `/admin/finance${period ? `?period=${period}` : ''}`;
+  const { ok, data } = await api(url);
+  if (!ok) { toast('Erro ao carregar dados financeiros.', 'error'); return; }
+
+  const s = data.summary || {};
+  const setEl = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  setEl('fin-total',  fmtBRL(s.totalRevenue || 0));
+  setEl('fin-herald', fmtBRL(s.totalHerald  || 0));
+  setEl('fin-net',    fmtBRL(s.noHeroesNet  || 0));
+  setEl('fin-orders', s.orders || 0);
+
+  // Por método
+  const tb = document.getElementById('fin-by-method');
+  if (tb) {
+    const rows = (data.byMethod || []);
+    tb.innerHTML = rows.length
+      ? rows.map(r => `<tr><td>${r.method}</td><td>${r.orders}</td><td style="color:var(--gold)">${fmtBRL(r.revenue)}</td></tr>`).join('')
+      : '<tr><td colspan="3" style="text-align:center;color:var(--muted);padding:16px">Nenhum dado.</td></tr>';
+  }
+
+  // Por arauto
+  const th = document.getElementById('fin-by-herald');
+  if (th) {
+    const rows = (data.byHerald || []);
+    th.innerHTML = rows.length
+      ? rows.map(r => `<tr><td style="font-family:var(--fm)">#${r.heraldId}</td><td>${r.orders}</td><td style="color:var(--green)">${fmtBRL(r.heraldRevenue)}</td></tr>`).join('')
+      : '<tr><td colspan="3" style="text-align:center;color:var(--muted);padding:16px">Nenhum arauto com receita.</td></tr>';
+  }
+
+  // Payouts
+  await loadPayouts();
+}
+
+async function loadPayouts() {
+  const { ok, data } = await api('/admin/finance/payouts?status=pending');
+  const tb = document.getElementById('fin-payouts');
+  if (!tb) return;
+  const rows = data?.data || [];
+  tb.innerHTML = rows.length
+    ? rows.map(r => `
+      <tr>
+        <td>${r.Herald?.username || '#' + r.herald_id}</td>
+        <td style="font-family:var(--fm)">${r.period}</td>
+        <td style="color:var(--gold);font-weight:700">${fmtBRL(r.amount)}</td>
+        <td>${statusBadge('pending')}</td>
+        <td>
+          <button class="btn btn-primary btn-sm" onclick="markPayoutPaid(${r.id}, '${r.Herald?.username || r.herald_id}', '${fmtBRL(r.amount)}')">
+            Marcar Pago
+          </button>
+        </td>
+      </tr>`).join('')
+    : '<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:20px">Nenhum repasse pendente.</td></tr>';
+}
+
+async function generatePayouts() {
+  const period = document.getElementById('fin-period')?.value || '';
+  if (!period) { toast('Selecione um período.', 'error'); return; }
+  confirm_(`Gerar repasses para ${period}?`, async () => {
+    const { ok, data } = await api('/admin/finance/generate-payouts', {
+      method: 'POST',
+      body: JSON.stringify({ period })
+    });
+    if (ok) {
+      toast(data.message || 'Repasses gerados!', 'success');
+      await loadPayouts();
+    } else {
+      toast(data.message || 'Erro ao gerar repasses.', 'error');
+    }
+  });
+}
+
+async function markPayoutPaid(id, herald, amount) {
+  confirm_(`Confirmar pagamento de ${amount} para ${herald}?`, async () => {
+    const { ok, data } = await api(`/admin/finance/payouts/${id}/pay`, { method: 'PATCH' });
+    if (ok) {
+      toast('Payout marcado como pago!', 'success');
+      await loadPayouts();
+    } else {
+      toast(data.message || 'Erro ao marcar payout.', 'error');
+    }
+  });
+}
+
 async function loadNewsletter() {
   const {ok,data} = await api('/admin/newsletter');
   const tb=document.getElementById('tb-newsletter');
@@ -1402,29 +1695,121 @@ async function loadRevenue() {
 }
 
 /* ═══ LOGS ═══ */
-async function loadLogs() {
-  const level=document.getElementById('logs-filter')?.value||'';
-  const {ok,data}=await api(`/admin/logs${level?`?level=${level}`:''}`);
-  const container=document.getElementById('logs-list');
-  if(!container) return;
-  if(!ok){ container.innerHTML='<div style="color:var(--muted);text-align:center;padding:32px">Erro ao carregar logs.</div>'; return; }
-  const logs=data.data||[];
-  if(!logs.length){ container.innerHTML='<div style="color:var(--muted);text-align:center;padding:32px">Nenhum log encontrado.</div>'; return; }
+// ─── Estado da aba de logs ───
+const LogState = { level:'', page:1, perPage:50, all:[], filtered:[] };
 
-  const colors={error:'var(--red)',warn:'var(--yellow)',info:'var(--accent)',critical:'var(--red)'};
-  container.innerHTML=logs.map(l=>`
-    <div class="log-item">
-      <span class="log-time">${fmtDate(l.createdAt)}</span>
-      <span class="log-type" style="color:${colors[l.level]||'var(--accent)'}">${l.type||'log'}</span>
-      <span style="font-size:9px;padding:1px 6px;border-radius:4px;background:${colors[l.level]||'var(--accent)'}22;color:${colors[l.level]||'var(--accent)'};">${(l.level||'info').toUpperCase()}</span>
-      ${l.scope?`<span style="font-size:10px;color:var(--muted)">[${l.scope}]</span>`:''}
-      <span class="log-msg">${l.message||''}</span>
-    </div>`).join('');
+function setLogLevel(btn, lvl) {
+  LogState.level = lvl;
+  LogState.page  = 1;
+  document.querySelectorAll('.log-lvl-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  loadLogs();
+}
+
+function changePage(delta) {
+  const total = Math.ceil(LogState.filtered.length / LogState.perPage);
+  LogState.page = Math.max(1, Math.min(total, LogState.page + delta));
+  renderLogPage();
+}
+
+function filterLogsLocal() {
+  const q = (document.getElementById('log-search')?.value || '').toLowerCase();
+  LogState.filtered = q
+    ? LogState.all.filter(l =>
+        (l.type||'').toLowerCase().includes(q) ||
+        (l.message||'').toLowerCase().includes(q) ||
+        String(l.user_id||'').includes(q) ||
+        (l.scope||'').toLowerCase().includes(q)
+      )
+    : [...LogState.all];
+  LogState.page = 1;
+  renderLogPage();
+}
+
+function renderLogPage() {
+  const container = document.getElementById('logs-list');
+  if (!container) return;
+
+  const { filtered, page, perPage } = LogState;
+  const total = Math.ceil(filtered.length / perPage);
+  const slice = filtered.slice((page-1)*perPage, page*perPage);
+
+  // Stats
+  const stats = document.getElementById('log-stats');
+  if (stats) stats.textContent = `${filtered.length} eventos · pág ${page}/${Math.max(1,total)}`;
+
+  // Paginação
+  const pg = document.getElementById('logs-pagination');
+  const pi = document.getElementById('logs-page-info');
+  if (pg) pg.style.display = total > 1 ? 'flex' : 'none';
+  if (pi) pi.textContent = `Pág ${page} / ${total}`;
+  if (document.getElementById('logs-prev')) document.getElementById('logs-prev').disabled = page <= 1;
+  if (document.getElementById('logs-next')) document.getElementById('logs-next').disabled = page >= total;
+
+  if (!slice.length) {
+    container.innerHTML = '<div style="color:var(--muted);text-align:center;padding:32px">Nenhum log encontrado.</div>';
+    return;
+  }
+
+  const lvlColors = { critical:'#ef4444', error:'#f87171', warn:'#facc15', info:'#a78bfa' };
+  const icons = { critical:'💀', error:'❌', warn:'⚠️', info:'📘' };
+
+  container.innerHTML = slice.map((l,i) => {
+    const hasExtra = l.extra && Object.keys(l.extra).length;
+    const ip = l.ip ? `<span style="font-size:9px;color:var(--muted);font-family:var(--fm);">${l.ip}</span>` : '';
+    const userId = l.user_id ? `<span style="font-size:9px;color:var(--muted);">user:${l.user_id}</span>` : '';
+    const scope = l.scope ? `<span style="font-size:9px;color:var(--muted);font-family:var(--fm);">[${l.scope}]</span>` : '';
+    const meta = hasExtra ? `<div class="log-meta">${JSON.stringify(l.extra, null, 2)}</div>` : '';
+    return `
+    <div class="log-item lvl-${l.level||'info'}" onclick="toggleLogExpand(this)" title="${hasExtra?'Clique para ver detalhes':''}">
+      <span style="font-size:14px;flex-shrink:0">${icons[l.level]||'📘'}</span>
+      <span class="log-badge ${l.level||'info'}">${(l.level||'info').toUpperCase()}</span>
+      <span class="log-time">${fmtDate(l.time||l.createdAt)}</span>
+      <span class="log-type" style="color:${lvlColors[l.level]||'var(--accent)'};">${l.type||'log'}</span>
+      ${scope}
+      <span class="log-msg" style="flex:1;">${l.message||''}</span>
+      ${userId}${ip}
+      ${hasExtra?'<span style="font-size:9px;color:var(--muted);">▼</span>':''}
+      ${meta}
+    </div>`;
+  }).join('');
+}
+
+function toggleLogExpand(el) {
+  el.classList.toggle('expanded');
+}
+
+async function loadLogs() {
+  const lvl = LogState.level;
+  const container = document.getElementById('logs-list');
+  if (!container) return;
+  container.innerHTML = '<div style="color:var(--muted);text-align:center;padding:32px">Carregando...</div>';
+
+  const {ok,data} = await api(`/admin/logs${lvl?`?level=${lvl}`:''}`);
+  if (!ok) { container.innerHTML = '<div style="color:var(--muted);text-align:center;padding:32px">Erro ao carregar logs.</div>'; return; }
+
+  LogState.all = data.data || [];
+  LogState.filtered = [...LogState.all];
+  LogState.page = 1;
+
+  // Limpa busca ao recarregar
+  const searchEl = document.getElementById('log-search');
+  if (searchEl) searchEl.value = '';
+
+  renderLogPage();
+}
+
+async function cleanupLogs() {
+  confirm_('Remover logs antigos automaticamente? (info > 7d, warn > 30d, erros > 90d)', async () => {
+    const {ok,data} = await api('/admin/logs/cleanup', {method:'POST'});
+    if(ok){ toast(`🧹 ${data.removed||0} logs antigos removidos.`,'info'); loadLogs(); }
+    else toast('Erro na limpeza.','error');
+  });
 }
 
 async function clearLogs() {
-  confirm_('Limpar todos os logs do sistema? Esta ação não pode ser desfeita.',async()=>{
-    const {ok}=await api('/admin/logs',{method:'DELETE'});
+  confirm_('⚠️ Limpar TODOS os logs do sistema? Esta ação não pode ser desfeita.', async () => {
+    const {ok} = await api('/admin/logs/clear', {method:'POST'});
     if(ok){ toast('Logs limpos.','info'); loadLogs(); }
     else toast('Erro ao limpar logs.','error');
   });

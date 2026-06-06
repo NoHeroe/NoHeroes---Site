@@ -1,0 +1,114 @@
+/* ============================================================
+   NoHeroes — UI compartilhada (header + drawer, fundo, footer)
+   Importada por todas as páginas para um padrão único.
+   Requer: Tailwind (CDN) + fontes Google (Cinzel Decorative / Inter)
+   carregadas no <head> da página.
+   ============================================================ */
+
+/* Os custom elements ocupam o fluxo como blocos */
+nh-header, nh-background, nh-footer { display: block; }
+
+/* ---------- Tokens / utilitários usados pelos componentes ---------- */
+.cinzel { font-family: 'Cinzel Decorative', serif; }
+
+.barra-degrade {
+  background: linear-gradient(to right, #8f4fff, #facc15);
+  box-shadow: 0 0 6px #8f4fff88, 0 0 10px #facc1588;
+}
+
+.drop-shadow-glow {
+  filter: drop-shadow(0 0 10px #8f4fff) drop-shadow(0 0 20px #8f4fff);
+}
+
+.gradiente-noheroes {
+  background: linear-gradient(to bottom right, #8f4fff 20%, #facc15 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 8px rgba(143, 79, 255, 0.4);
+}
+
+.glass {
+  background: rgba(28, 28, 28, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  transition: backdrop-filter 0.5s ease, background 0.5s ease;
+}
+
+/* ---------- Fundo animado (brasas) ---------- */
+#brasasCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ---------- Drawer premium ---------- */
+#drawer {
+  background: rgba(5, 5, 7, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-left: 1px solid rgba(143, 79, 255, 0.2);
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.9);
+}
+
+.drawer-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.drawer-item:hover {
+  background: rgba(143, 79, 255, 0.08);
+  border-color: rgba(143, 79, 255, 0.3);
+  transform: translateX(-5px);
+}
+
+.drawer-item svg {
+  filter: drop-shadow(0 0 5px rgba(217, 181, 90, 0.3));
+  transition: transform 0.3s ease;
+}
+
+.drawer-item:hover svg {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 8px rgba(143, 79, 255, 0.6));
+}
+
+.drawer-tag {
+  font-size: 9px;
+  font-family: 'Cinzel Decorative', serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #8f4fff;
+  opacity: 0.7;
+}
+
+#drawer::-webkit-scrollbar { width: 3px; }
+#drawer::-webkit-scrollbar-thumb {
+  background: linear-gradient(#8f4fff, #d9b55a);
+  border-radius: 10px;
+}
+
+/* ---------- Acessibilidade: respeita "movimento reduzido" do SO ----------
+   Vale para TODAS as páginas que importam este arquivo. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  html { scroll-behavior: auto; }
+}
