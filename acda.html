@@ -685,7 +685,7 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
 // ─── PREÇO ACDA via backend ───
 (async () => {
   try {
-    const res = await fetch('https://dev-flmw.onrender.com/shop');
+    const res = await fetch('https://api.noheroes.com.br/shop');
     if (!res.ok) return;
     const data = await res.json();
     const items = data.items || data.data || data.products || data || [];
