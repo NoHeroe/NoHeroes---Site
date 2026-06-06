@@ -201,7 +201,8 @@ ${DRAWER_HTML}`;
       const sctx = sprite.getContext("2d");
       const halo = sctx.createRadialGradient(SPRITE / 2, SPRITE / 2, 0, SPRITE / 2, SPRITE / 2, SPRITE / 2);
       halo.addColorStop(0,    "rgba(168, 85, 247, 1)");
-      halo.addColorStop(0.35, "rgba(168, 85, 247, 0.55)");
+      halo.addColorStop(0.3,  "rgba(168, 85, 247, 0.7)");
+      halo.addColorStop(0.6,  "rgba(168, 85, 247, 0.12)");
       halo.addColorStop(1,    "rgba(168, 85, 247, 0)");
       sctx.fillStyle = halo;
       sctx.beginPath();
@@ -224,9 +225,9 @@ ${DRAWER_HTML}`;
         reset(initial) {
           this.x = Math.random() * w;
           this.y = initial ? Math.random() * h : h + Math.random() * 100;
-          this.size = 8 + Math.random() * 14;
+          this.size = 5 + Math.random() * 9;
           this.speed = 0.2 + Math.random() * 0.5;
-          this.alpha = 0.4 + Math.random() * 0.3;
+          this.alpha = 0.32 + Math.random() * 0.28;
           this.drift = (Math.random() - 0.5) * 0.5;
         }
         update() {
