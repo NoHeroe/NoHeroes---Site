@@ -71,8 +71,8 @@
         <input type="tel" id="phone" class="input">
       </label>
       <label class="grid gap-2">
-        <span class="hint">Data de nascimento (opcional)</span>
-        <input type="date" id="birthdate" class="input">
+        <span class="hint">Data de nascimento (obrigatório — 16+)</span>
+        <input type="date" id="birthdate" class="input" required>
       </label>
       <label class="grid gap-2">
         <span class="hint">Sobre você (opcional)</span>
@@ -81,7 +81,7 @@
 
       <label class="flex items-start gap-3 text-sm text-white/70 select-none">
         <input id="terms" type="checkbox" class="accent-purple-500" required>
-        <span>Concordo com os <a href="termos.html" target="_blank" class="underline hover:no-underline">Termos</a> e a <a href="termos.html" target="_blank" class="underline hover:no-underline">Privacidade</a>.</span>
+        <span>Concordo com os <a href="termos.html" target="_blank" class="underline hover:no-underline">Termos</a> e a <a href="privacidade.html" target="_blank" class="underline hover:no-underline">Privacidade</a>.</span>
       </label>
 
       <button id="submitBtn" type="submit" class="btn btn-primary w-full mt-3">
@@ -173,7 +173,9 @@ form.addEventListener("submit",async e=>{
   const birthdate=document.getElementById("birthdate").value;
   const bio=document.getElementById("bio").value.trim();
 
-  if(!nome_completo||!username||!email||!password){errorEl.textContent="Preencha todos os campos obrigatórios.";errorEl.classList.remove("hidden");return;}
+  if(!nome_completo||!username||!email||!password||!birthdate){errorEl.textContent="Preencha todos os campos obrigatórios (incluindo a data de nascimento).";errorEl.classList.remove("hidden");return;}
+  // Age-gate 16+ (o servidor também valida — esta checagem é só feedback imediato)
+  {const _b=new Date(birthdate);const _n=new Date();let _i=_n.getFullYear()-_b.getFullYear();const _m=_n.getMonth()-_b.getMonth();if(_m<0||(_m===0&&_n.getDate()<_b.getDate()))_i--;if(_i<16){errorEl.textContent="É necessário ter ao menos 16 anos para criar uma conta.";errorEl.classList.remove("hidden");return;}}
   if(password!==confirmPassword){errorEl.textContent="As senhas não coincidem.";errorEl.classList.remove("hidden");return;}
 
   const payload={nome_completo,username,email,password,phone,birthdate,bio,termsAccepted:document.getElementById('terms').checked};

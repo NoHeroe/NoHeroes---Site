@@ -4,6 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NoHeroes | Inventário (Meus Produtos)</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
 /* =========================================
    NoHeroes — Inventário (Meus Produtos)
@@ -232,7 +233,7 @@ body{
 .main{
   max-width:1200px;
   margin:0 auto;
-  padding:150px 16px 24px;
+  padding:90px 16px 24px;
   display:flex;
   flex-direction:column;
   gap:18px;
@@ -961,6 +962,17 @@ document.addEventListener('DOMContentLoaded', ()=>{
   carregarPerfil();
   carregarInventario();
 });
+
+/* Ajusta o espaço entre o HUD e o conteúdo pra altura real do header
+   (evita vão grande demais ou pequeno demais quando o HUD quebra linha) */
+function syncHudGap(){
+  const hud = document.querySelector('.hud');
+  const main = document.querySelector('.main');
+  if (!hud || !main) return;
+  main.style.paddingTop = (hud.offsetHeight + 16) + 'px';
+}
+window.addEventListener('load', syncHudGap);
+window.addEventListener('resize', syncHudGap);
 
 /* Brasas: agora no componente compartilhado <nh-background> (noheroes-ui.js) */
 </script>

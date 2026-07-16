@@ -225,9 +225,9 @@ ${DRAWER_HTML}`;
         reset(initial) {
           this.x = Math.random() * w;
           this.y = initial ? Math.random() * h : h + Math.random() * 100;
-          this.size = 5 + Math.random() * 9;
+          this.size = 8 + Math.random() * 14;
           this.speed = 0.2 + Math.random() * 0.5;
-          this.alpha = 0.32 + Math.random() * 0.28;
+          this.alpha = 0.4 + Math.random() * 0.3;
           this.drift = (Math.random() - 0.5) * 0.5;
         }
         update() {
@@ -294,6 +294,8 @@ ${DRAWER_HTML}`;
     <a href="apoiar.html" style="font-size:11px;color:rgba(255,255,255,0.25);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Apoiar</a>
     <a href="suporte.html" style="font-size:11px;color:rgba(255,255,255,0.25);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Suporte</a>
     <a href="termos.html" style="font-size:11px;color:rgba(255,255,255,0.25);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Termos</a>
+    <a href="privacidade.html" style="font-size:11px;color:rgba(255,255,255,0.25);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Privacidade</a>
+    <a href="odds.html" style="font-size:11px;color:rgba(255,255,255,0.25);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Chances (Odds)</a>
   </div>
   <p style="font-size:11px;color:rgba(255,255,255,0.15);margin:0;">© <span id="footerYear"></span> NoHeroes. Todos os direitos reservados.</p>
 </footer>

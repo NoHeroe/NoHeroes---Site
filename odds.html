@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chances dos Pacotes (Odds) — NoHeroes</title>
+  <meta name="description" content="Transparência: as probabilidades reais de cada pacote de cartas do NoHeroes, direto do servidor.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root{ --grad: linear-gradient(135deg,#c4a3ff 0%,#f0d99a 100%); }
+    body{margin:0;background:#0a0a0a;color:#e5e5e5;font-family:Inter,system-ui,'Segoe UI',Roboto,sans-serif;line-height:1.6}
+    .wrap{max-width:860px;margin:0 auto;padding:64px 24px}
+    h1{font-family:"Cinzel Decorative",serif;font-size:clamp(22px,4vw,32px);margin:0 0 6px;
+       background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .sep{width:44px;height:1px;background:linear-gradient(90deg,#8f4fff,#d9b55a);margin:14px 0 22px}
+    p{color:#cfcbd8;font-size:14px}
+    a{color:#a78bfa}
+    .tbl-scroll{overflow-x:auto;border:1px solid rgba(255,255,255,.08);border-radius:14px;margin-top:18px}
+    table{width:100%;border-collapse:collapse;min-width:640px;font-size:13.5px}
+    th,td{padding:12px 14px;text-align:left;border-bottom:1px solid rgba(255,255,255,.06)}
+    th{background:rgba(143,79,255,.10);color:#d9c9ff;font-weight:600;white-space:nowrap}
+    tr:last-child td{border-bottom:0}
+    td{color:#d9d5e0}
+    .num{white-space:nowrap;font-variant-numeric:tabular-nums}
+    .off{color:#8b8695;font-style:italic}
+    .note{margin-top:18px;padding:14px 16px;border:1px solid rgba(217,181,90,.25);background:rgba(217,181,90,.06);
+          border-radius:12px;font-size:12.5px;color:#cbb98a}
+    #status{margin-top:22px;color:#9a94a6;font-size:14px}
+    .back{display:inline-block;margin-top:26px;font-size:13px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Chances dos Pacotes</h1>
+    <div class="sep"></div>
+    <p>Transparência antes da compra: estas são as probabilidades <strong>reais</strong> usadas pelo servidor
+    na abertura de cada pacote de cartas — os mesmos números do código, sem arredondar a seu favor.</p>
+
+    <div id="status">Carregando as chances…</div>
+    <div class="tbl-scroll" id="tblWrap" style="display:none">
+      <table>
+        <thead>
+          <tr>
+            <th>Pacote</th>
+            <th>Cartas</th>
+            <th>Raridade garantida</th>
+            <th>Chance de Elite<br><span style="font-weight:400;font-size:11px">por carta</span></th>
+            <th>Chance de Exclusiva<br><span style="font-weight:400;font-size:11px">por carta</span></th>
+            <th>Preço</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+
+    <div class="note" id="disclaimer" style="display:none"></div>
+    <div class="note">As chances valem <strong>por carta</strong> e são independentes entre si — abrir mais
+    pacotes não “acumula” garantia além da indicada. Valores exibidos direto do servidor
+    (<code>GET /api/packs/odds</code>).</div>
+
+    <a class="back" href="store.html">&larr; Voltar à Loja</a>
+  </div>
+
+<script>
+(async function(){
+  var API = window.API_BASE || 'https://api.noheroes.com.br';
+  var status = document.getElementById('status');
+  function pct(f){ var n = Number(f)*100; return (isFinite(n) ? n.toFixed(n < 1 ? 2 : 1).replace(/\.?0+$/,'') : '?') + '%'; }
+  function price(p){
+    if (!p) return '—';
+    var parts = [];
+    if (p.gold) parts.push(Number(p.gold).toLocaleString('pt-BR') + ' ouro');
+    if (p.gems) parts.push(Number(p.gems).toLocaleString('pt-BR') + ' gemas');
+    return parts.length ? parts.join(' · ') : '—';
+  }
+  function esc(s){ var d=document.createElement('div'); d.textContent = s==null?'':String(s); return d.innerHTML; }
+  try {
+    var r = await fetch(API + '/api/packs/odds');
+    var j = await r.json();
+    if (!r.ok || !j || !j.success || !Array.isArray(j.packs)) throw 0;
+    if (!j.packs.length){ status.textContent = 'Nenhum pacote disponível no momento.'; return; }
+    var tbody = document.getElementById('tbody');
+    tbody.innerHTML = j.packs.map(function(p){
+      return '<tr>' +
+        '<td><strong>' + esc(p.name || p.pack_type) + '</strong>' + (p.buyable ? '' : ' <span class="off">(fora de venda)</span>') + '</td>' +
+        '<td class="num">' + (p.cards ? (p.cards.min === p.cards.max ? p.cards.min : p.cards.min + '–' + p.cards.max) : '?') + '</td>' +
+        '<td>' + (p.guaranteed_rarity ? esc(p.guaranteed_rarity) : '—') + '</td>' +
+        '<td class="num">' + pct(p.elite_chance_per_card) + '</td>' +
+        '<td class="num">' + pct(p.exclusive_chance_per_card) + '</td>' +
+        '<td class="num">' + price(p.price) + '</td>' +
+      '</tr>';
+    }).join('');
+    if (j.disclaimer){ var d = document.getElementById('disclaimer'); d.textContent = j.disclaimer; d.style.display = 'block'; }
+    document.getElementById('tblWrap').style.display = 'block';
+    status.style.display = 'none';
+  } catch(_) {
+    status.textContent = 'Não foi possível carregar as chances agora. Tente novamente em instantes.';
+  }
+})();
+</script>
+</body>
+</html>

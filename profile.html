@@ -326,6 +326,10 @@ dialog[open] .dialog-ctr {
     })();
   </script>
 
+  <!-- Gate de COMPLIANCE (F2.8): script COMPARTILHADO — re-checa Termos + consentimento LGPD
+       ao abrir a página (data-auto). Fecha o furo do token antigo (sessão viva pula o login). -->
+  <script defer src="assets/js/compliance.js" data-auto="1"></script>
+
 </head>
 <body class="min-h-screen flex flex-col">
 <!-- Menu lateral (componente compartilhado) -->
@@ -619,6 +623,19 @@ dialog[open] .dialog-ctr {
             <span class="text-sm text-gray-300/90">Exibir perfil público</span>
           </label>
           <p class="text-xs text-gray-400">Permissões são locais por enquanto.</p>
+
+          <!-- Conta & Privacidade (compliance v1) -->
+          <div class="mt-4 pt-4 border-t border-purple-800/60 space-y-3">
+            <div class="flex flex-wrap gap-4 text-sm">
+              <a href="termos.html" target="_blank" rel="noopener" class="text-purple-300 hover:text-purple-200 underline">Termos de Uso</a>
+              <a href="privacidade.html" target="_blank" rel="noopener" class="text-purple-300 hover:text-purple-200 underline">Política de Privacidade</a>
+            </div>
+            <div class="rounded-xl border border-red-500/30 bg-red-500/5 p-4">
+              <h3 class="text-sm font-bold text-red-300 mb-1">Zona de perigo</h3>
+              <p class="text-xs text-gray-400 mb-3">Excluir sua conta é permanente. Seus dados pessoais são removidos (registros financeiros são retidos por obrigação legal, sem vínculo com você).</p>
+              <button id="btnDeleteAccount" type="button" class="btn" style="background:#7f1d1d;color:#fff">Excluir minha conta</button>
+            </div>
+          </div>
         </section>
       </div>
 
@@ -633,12 +650,27 @@ dialog[open] .dialog-ctr {
 <dialog id="logoutModal">
   <div class="dialog-ctr w-[min(94vw,520px)] p-6 ring-gradient">
     <h2 class="text-xl font-bold text-red-400 mb-2">Confirmar Logout?</h2>
-    <p class="mb-4">Você poderá sair em <span id="logoutTimer" class="font-mono text-red-300">5</span>s</p>
-    <div class="timer-bar mb-4"><div id="timerFill" class="timer-fill"></div></div>
+    <p id="logoutMsg" class="mb-4 text-sm text-gray-400">Tem certeza que deseja sair da sua conta?</p>
     <div class="flex justify-end gap-3">
       <button id="cancelLogout" class="btn btn-ghost" type="button">Cancelar</button>
-      <button id="confirmLogout" class="btn" style="background:#7f1d1d;color:#fff" disabled type="button">Logout</button>
+      <button id="confirmLogout" class="btn" style="background:#7f1d1d;color:#fff" type="button">Sair</button>
     </div>
+  </div>
+</dialog>
+
+  <!-- EXCLUIR CONTA (compliance — 2 passos) -->
+<dialog id="deleteAccountModal">
+  <div class="dialog-ctr w-[min(94vw,520px)] p-6 ring-gradient">
+    <h2 class="text-xl font-bold text-red-400 mb-2">Excluir conta permanentemente?</h2>
+    <p class="text-sm text-gray-300/85 mb-3">Esta ação é <strong>irreversível</strong>. Para confirmar, digite <strong>EXCLUIR</strong> abaixo.</p>
+    <input id="deleteConfirmInput" type="text" placeholder="Digite EXCLUIR" class="input mb-3" autocomplete="off"/>
+    <input id="deletePasswordInput" type="password" placeholder="Confirme com sua senha" class="input mb-1" autocomplete="current-password"/>
+    <p class="text-[11px] text-gray-400 mb-4">Usa login com Google? A exclusão pela web ainda não reautentica com Google — exclua pelo app.</p>
+    <div class="flex justify-end gap-3">
+      <button id="cancelDelete" class="btn btn-ghost" type="button">Cancelar</button>
+      <button id="confirmDelete" class="btn" style="background:#7f1d1d;color:#fff" disabled type="button">Excluir conta</button>
+    </div>
+    <p id="deleteError" class="text-xs text-red-400 mt-3 hidden"></p>
   </div>
 </dialog>
 
@@ -724,147 +756,90 @@ enableBackdropClose(logoutDlg);
 const btnLogout = document.getElementById('btnLogout');
 const btnCancelLogout = document.getElementById('cancelLogout');
 const btnConfirmLogout = document.getElementById('confirmLogout');
-const timerEl = document.getElementById('logoutTimer');
-const timerBar = document.getElementById('timerFill');
+const logoutMsg = document.getElementById('logoutMsg');
 
-let logoutTimerInterval = null;
+let logoutArmed = false;
+
+function resetLogoutConfirm() {
+  logoutArmed = false;
+  btnConfirmLogout.textContent = 'Sair';
+  logoutMsg.textContent = 'Tem certeza que deseja sair da sua conta?';
+}
 
 btnLogout.addEventListener('click', () => {
+  resetLogoutConfirm();
   logoutDlg.showModal();
-  // Corrige bug de Chrome que bloqueia setInterval logo após showModal
-  setTimeout(startLogoutTimer, 50);
 });
 
 btnCancelLogout.addEventListener('click', () => {
-  clearInterval(logoutTimerInterval);
+  resetLogoutConfirm();
   logoutDlg.close();
 });
 
 btnConfirmLogout.addEventListener('click', () => {
-  clearInterval(logoutTimerInterval);
+  if (!logoutArmed) {
+    // primeiro clique: pede confirmação de novo, sem timer
+    logoutArmed = true;
+    btnConfirmLogout.textContent = 'Clique novamente para confirmar';
+    logoutMsg.textContent = 'Essa ação vai encerrar sua sessão neste dispositivo.';
+    return;
+  }
+
+  // segundo clique: efetiva o logout
   btnConfirmLogout.disabled = true;
   btnConfirmLogout.textContent = 'Saindo...';
 
-  // Limpa dados locais e redireciona
   localStorage.removeItem('NoHeroes_token');
   localStorage.removeItem('NoHeroes_email');
   setTimeout(() => {
     logoutDlg.close();
     window.location.href = 'login.html';
-  }, 600);
+  }, 400);
 });
 
-function startLogoutTimer() {
-  clearInterval(logoutTimerInterval);
-  let elapsed = 0;
-  const total = 5; // segundos
-  btnConfirmLogout.disabled = true;
-  timerEl.textContent = total;
-  timerBar.style.width = '0%';
-
-  logoutTimerInterval = setInterval(() => {
-    elapsed++;
-    const remaining = total - elapsed;
-    timerEl.textContent = Math.max(0, remaining);
-    timerBar.style.width = `${(elapsed / total) * 100}%`;
-
-    if (remaining <= 0) {
-      clearInterval(logoutTimerInterval);
-      btnConfirmLogout.disabled = false;
-      timerBar.style.width = '100%';
-      btnConfirmLogout.focus();
+// ===== Excluir conta (compliance v1) — 2 passos: abrir modal + digitar EXCLUIR =====
+(function(){
+  const dlg = document.getElementById('deleteAccountModal');
+  const btnOpen = document.getElementById('btnDeleteAccount');
+  const input = document.getElementById('deleteConfirmInput');
+  const pwd = document.getElementById('deletePasswordInput');
+  const btnCancel = document.getElementById('cancelDelete');
+  const btnConfirm = document.getElementById('confirmDelete');
+  const errEl = document.getElementById('deleteError');
+  if (!dlg || !btnOpen) return;
+  if (typeof enableBackdropClose === 'function') enableBackdropClose(dlg);
+  const recheck = () => { btnConfirm.disabled = !(input.value.trim().toUpperCase() === 'EXCLUIR' && pwd.value.length > 0); };
+  btnOpen.addEventListener('click', () => { input.value=''; pwd.value=''; btnConfirm.disabled=true; errEl.classList.add('hidden'); dlg.showModal(); });
+  input.addEventListener('input', recheck);
+  pwd.addEventListener('input', recheck);
+  btnCancel.addEventListener('click', () => dlg.close());
+  btnConfirm.addEventListener('click', async () => {
+    btnConfirm.disabled = true; btnConfirm.textContent = 'Excluindo...';
+    try {
+      const res = await fetch(`${window.API_BASE}/account/delete`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + (localStorage.getItem('NoHeroes_token') || '') },
+        body: JSON.stringify({ password: pwd.value })
+      });
+      if (res.status === 401) throw new Error('Senha incorreta (ou reautenticação necessária).');
+      if (!res.ok) throw new Error('Falha ao excluir a conta (' + res.status + ').');
+      localStorage.removeItem('NoHeroes_token');
+      localStorage.removeItem('NoHeroes_email');
+      dlg.close();
+      window.location.href = 'login.html';
+    } catch (e) {
+      errEl.textContent = e.message || 'Erro ao excluir conta.';
+      errEl.classList.remove('hidden');
+      btnConfirm.disabled = false; btnConfirm.textContent = 'Excluir conta';
     }
-  }, 1000);
+  });
+})();
 
-  // fallback de segurança (garante liberação do botão após 6s)
-  setTimeout(() => {
-    if (btnConfirmLogout.disabled) {
-      btnConfirmLogout.disabled = false;
-      timerBar.style.width = '100%';
-    }
-  }, (total + 1) * 1000);
-}
     // ========= Locked modal =========
     const lockedDlg = document.getElementById('lockedModal');
     enableBackdropClose(lockedDlg);
     document.getElementById('openLocked').addEventListener('click', ()=>lockedDlg.showModal());
     document.getElementById('closeLocked').addEventListener('click', ()=>lockedDlg.close());
-
-  // Carrossel robusto: só usa imagens que realmente existem
-  (async function () {
-    const heroImg = document.getElementById('heroImg');
-    const dotsWrap = document.querySelector('.hero-dots');
-
-    // Tente estes caminhos (ajuste aqui se seus nomes forem outros)
-    const candidatePaths = [
-      '/assets/images/banner1.jpg',
-      '/assets/images/banner2.jpg',
-      '/assets/images/banner3.jpg',
-      '/assets/images/banner4.jpg',
-      '/assets/images/banner5.jpg',
-    ];
-
-    // testa se a imagem existe (onload/onerror)
-    function imgExists(url) {
-      return new Promise(resolve => {
-        const im = new Image();
-        im.onload = () => resolve(true);
-        im.onerror = () => resolve(false);
-        im.src = url + `?v=${Date.now()}`; // bust cache
-      });
-    }
-
-    // filtra apenas as que existem
-    const banners = [];
-    for (const url of candidatePaths) {
-      // eslint-disable-next-line no-await-in-loop
-      if (await imgExists(url)) banners.push(url);
-    }
-
-    if (banners.length === 0) {
-      console.warn('Nenhum banner encontrado. Verifique os arquivos em /assets/images/');
-      return;
-    }
-
-    // recria os dots de acordo com a quantidade real de banners
-    dotsWrap.innerHTML = '';
-    banners.forEach((_, i) => {
-      const b = document.createElement('button');
-      b.className = 'hero-dot';
-      b.dataset.idx = String(i);
-      b.setAttribute('aria-label', `Banner ${i + 1}`);
-      if (i === 0) b.setAttribute('aria-selected', 'true');
-      dotsWrap.appendChild(b);
-    });
-
-    const dots = Array.from(dotsWrap.querySelectorAll('.hero-dot'));
-    let idx = 0, heroTimer;
-
-    function updateHero(i) {
-      idx = i;
-      heroImg.style.opacity = .25;
-      setTimeout(() => {
-        heroImg.src = banners[idx];
-        heroImg.style.opacity = 1;
-      }, 120);
-      dots.forEach((d, di) => d.setAttribute('aria-selected', di === idx ? 'true' : 'false'));
-    }
-
-    function startLoop() {
-      clearInterval(heroTimer);
-      heroTimer = setInterval(() => updateHero((idx + 1) % banners.length), 5000);
-    }
-
-    dots.forEach(d => d.addEventListener('click', () => {
-      const i = Number(d.dataset.idx);
-      if (!Number.isNaN(i)) { updateHero(i); startLoop(); }
-    }));
-
-    // inicializa
-    heroImg.src = banners[0];
-    updateHero(0);
-    startLoop();
-  })();
 
     // ========= API helper =========
     async function api(path, opts={}){
@@ -893,10 +868,23 @@ function startLogoutTimer() {
         // Preenche bloco do meio
         document.getElementById('miniNome').textContent = user.nome_completo || user.username || '—';
         document.getElementById('miniNivel').textContent = `Nível ${user.level ?? '—'}`;
-        const avatarSrc = user.avatar || 'assets/images/linktree.png';
+        const R2_PUBLIC_BASE = 'https://pub-efeea1887cb740da8bb4185535dfeea9.r2.dev';
+        function fullAvatarUrl(raw) {
+          if (!raw) return '';
+          if (/^https?:\/\//i.test(raw) || raw.startsWith('data:image/')) return raw;
+          return `${R2_PUBLIC_BASE}/${String(raw).replace(/^\/+/, '')}`;
+        }
+
+        const avatarSrc = fullAvatarUrl(user.avatar) || 'assets/images/linktree.png';
         const avatarEl = document.getElementById('miniAvatar');
         avatarEl.src = avatarSrc;
         avatarEl.onerror = () => { avatarEl.src = 'assets/images/linktree.png'; };
+
+        // Mostra a URL completa do avatar atual (em vez do e-mail) e pré-preenche o campo de edição
+        const userEmailEl = document.getElementById('userEmail');
+        if (userEmailEl) userEmailEl.textContent = fullAvatarUrl(user.avatar) || 'Nenhum avatar definido';
+        const avatarUrlInput = document.getElementById('avatarUrl');
+        if (avatarUrlInput && user.avatar) avatarUrlInput.value = fullAvatarUrl(user.avatar);
 
         // Preenche modal (dados editáveis)
         document.getElementById('input-nomecompleto').value = user.nome_completo || '';
@@ -1135,7 +1123,7 @@ async function carregarBiblioteca(tab){
       const o=w.Work||w.work||w;
       const capa=o.cover_url||o.coverImage||o.cover||o.image||'';
       const titulo=o.title||o.titulo||'—';
-      const href=o.id?`mangá.html?id=${o.id}`:'leitor.html';
+      const href=o.slug?`mangá.html?slug=${o.slug}`:'leitor.html';
       return `<a href="${href}" class="group relative rounded-xl overflow-hidden aspect-[3/4.5] border border-white/5 hover:border-purple-500/50 transition block bg-black/40">${capa?`<img src="${capa}" alt="${titulo}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">`:`<div class="w-full h-full bg-gradient-to-br from-purple-900/40 to-black flex items-end p-2"><span class="text-[9px] text-white/60">${titulo}</span></div>`}<div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent p-2"><p class="text-[9px] text-white/80 font-semibold truncate">${titulo}</p></div></a>`;
     }).join('');
   }catch(e){grid.innerHTML=emptyState(tab);}

@@ -133,6 +133,7 @@
     <p style="font-size:11px;color:rgba(255,255,255,0.2);margin:0;">© <span id="year"></span> NoHeroes. Todos os direitos reservados.</p>
   </footer>
 
+<script src="assets/js/compliance.js"></script>
 <script>
 /* ===== Config ===== */
 window.API_BASE = "https://api.noheroes.com.br";
@@ -168,6 +169,9 @@ submitBtn=document.getElementById('submitBtn'),btnText=document.getElementById('
 btnSpin=document.getElementById('btnSpin'),togglePass=document.getElementById('togglePass');
 togglePass.addEventListener('click',()=>{const i=document.getElementById('password');const is=i.type==='password';i.type=is?'text':'password';togglePass.textContent=is?'Ocultar':'Mostrar';});
 
+// Gate de COMPLIANCE (F2.8): movido pro script COMPARTILHADO assets/js/compliance.js
+// (Termos + consentimento LGPD + fallback de data de nascimento). Incluído logo abaixo.
+
 form.addEventListener('submit',async e=>{
   e.preventDefault();
   errorEl.classList.add("hidden");errorEl.textContent="";
@@ -193,6 +197,8 @@ form.addEventListener('submit',async e=>{
       if(document.getElementById('remember').checked)
         localStorage.setItem("NoHeroes_email",email);
       else localStorage.removeItem("NoHeroes_email");
+      // Gate bloqueante (compliance.js): idade (needsBirthdate) → Termos → LGPD
+      await window.enforceCompliance("Bearer "+data.token, { termsOutdated: !!data.termsOutdated, needsBirthdate: !!data.needsBirthdate });
       window.location.href=isAdmin?"admin.html":"profile.html";
     }else{
       if(data?.message?.includes("Verifique seu e-mail")){
@@ -241,7 +247,8 @@ document.getElementById('year').textContent=new Date().getFullYear();
         localStorage.setItem('token', 'Bearer ' + data.token);
 
 
-        alert('Login com Google realizado com sucesso.');
+        // Gate bloqueante (compliance.js) — login Google não traz idade → needsBirthdate cobre o age-gate
+        await window.enforceCompliance('Bearer ' + data.token, { termsOutdated: !!data.termsOutdated, needsBirthdate: !!data.needsBirthdate });
         // redireciona para a loja ou dashboard
         window.location.href = 'profile.html'; // ajuste se quiser outra página
       })

@@ -101,6 +101,33 @@ mark{background:rgba(143,79,255,0.3);color:#fff;border-radius:2px;padding:0 2px}
   </div>
 </section>
 
+<!-- ABAS Termos | Privacidade (CEO 2026-07-09: UMA página com as duas abas; §13 = Privacidade) -->
+<style>
+  .doc-tabs{max-width:1200px;margin:18px auto 0;padding:0 20px;display:flex;gap:8px;}
+  .doc-tab{padding:10px 22px;border-radius:10px 10px 0 0;border:1px solid rgba(255,255,255,0.1);border-bottom:none;background:rgba(255,255,255,0.03);color:rgba(255,255,255,0.45);font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;letter-spacing:.04em;}
+  .doc-tab.active{background:linear-gradient(135deg,rgba(143,79,255,0.25),rgba(217,181,90,0.18));color:#fff;border-color:rgba(196,163,255,0.4);}
+  body.tab-privacidade .doc-section:not(#dados){display:none;}
+  body.tab-privacidade #toc a:not([href="#dados"]){display:none;}
+</style>
+<div class="doc-tabs">
+  <button class="doc-tab active" id="tabTermos" onclick="nhSetDocTab('termos')">Termos de Uso</button>
+  <button class="doc-tab" id="tabPriv" onclick="nhSetDocTab('privacidade')">Privacidade (LGPD)</button>
+</div>
+<script>
+  function nhSetDocTab(t){
+    document.body.classList.toggle('tab-privacidade', t==='privacidade');
+    document.getElementById('tabTermos').classList.toggle('active', t!=='privacidade');
+    document.getElementById('tabPriv').classList.toggle('active', t==='privacidade');
+    try{ var u=new URL(location); u.searchParams.set('tab',t); history.replaceState(null,'',u); }catch(e){}
+    if(t==='privacidade'){ var s=document.getElementById('dados'); if(s) s.scrollIntoView({block:'start'}); }
+    else window.scrollTo(0,0);
+  }
+  // Deep-links: ?tab=privacidade OU âncoras #privacidade/#dados abrem direto na aba certa.
+  (function(){
+    var q=new URLSearchParams(location.search), h=location.hash;
+    if(q.get('tab')==='privacidade' || h==='#privacidade' || h==='#dados') nhSetDocTab('privacidade');
+  })();
+</script>
 <!-- MAIN GRID -->
 <main style="max-width:1200px;margin:0 auto;padding:28px 20px;display:grid;grid-template-columns:240px 1fr;gap:24px;align-items:start;" id="mainGrid">
 
@@ -116,7 +143,7 @@ mark{background:rgba(143,79,255,0.3);color:#fff;border-radius:2px;padding:0 2px}
       </div>
     </div>
     <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.06);font-size:11px;color:rgba(255,255,255,0.3);">
-      Versão <strong id="docVersion" style="color:rgba(255,255,255,0.5);">2.0</strong> · Abril/2026
+      Versão <strong id="docVersion" style="color:rgba(255,255,255,0.5);">2.1</strong> · Julho/2026
     </div>
   </aside>
 
@@ -170,7 +197,7 @@ mark{background:rgba(143,79,255,0.3);color:#fff;border-radius:2px;padding:0 2px}
       <h2>4. Conta de Usuário</h2>
       <h3>4.1. Criação e Elegibilidade</h3>
       <ul>
-        <li>Serviços destinados a maiores de <strong>13 anos</strong>. Menores de 18 devem ter autorização e supervisão de responsável legal.</li>
+        <li>Serviços destinados a maiores de <strong>16 anos</strong> — a idade mínima é verificada no cadastro (data de nascimento) e contas de menores de 16 não são criadas. Entre 16 e 18 anos, o uso deve contar com autorização e supervisão de responsável legal.</li>
         <li>Uma pessoa, uma conta. Contas duplicadas podem ser encerradas.</li>
         <li>Você é integralmente responsável por todas as atividades realizadas com suas credenciais.</li>
       </ul>
@@ -358,7 +385,8 @@ mark{background:rgba(143,79,255,0.3);color:#fff;border-radius:2px;padding:0 2px}
 
     <!-- 13 -->
     <section id="dados" class="doc-section">
-      <h2>13. Privacidade e Proteção de Dados (LGPD)</h2>
+      <!-- Âncora #privacidade (F2.8): privacidade.html aponta pra cá — Política de Privacidade vive no §13 -->
+      <h2 id="privacidade">13. Privacidade e Proteção de Dados (LGPD)</h2>
       <h3>13.1. Dados Coletados</h3>
       <table>
         <tr><th>Categoria</th><th>Dados</th><th>Finalidade</th></tr>
@@ -370,23 +398,28 @@ mark{background:rgba(143,79,255,0.3);color:#fff;border-radius:2px;padding:0 2px}
         <tr><td>Comunicações</td><td>E-mail para newsletter (opt-in)</td><td>Envio de novidades mediante consentimento</td></tr>
         <tr><td>Arautos</td><td>Motivação, portfólio, histórico de obras</td><td>Candidatura e gestão do programa</td></tr>
         <tr><td>Suporte</td><td>Mensagens enviadas ao suporte</td><td>Atendimento e histórico de tickets</td></tr>
+        <tr><td>Jornada (Aplicativo)</td><td>Hábitos, treinos, metas, diário, missões e progresso no app</td><td>Funcionamento do app, personalização e interação com os guias de IA — mediante consentimento específico (ver 13.2 e 13.7)</td></tr>
       </table>
+      <p style="font-size:13px;color:rgba(255,255,255,0.55);margin-top:8px;">Alguns dados da <em>Jornada</em> (hábitos, treinos e diário) podem revelar informações sobre saúde e bem-estar. Por isso, são tratados como <strong>dados sensíveis</strong> e coletados apenas com o seu <strong>consentimento específico e destacado</strong> (art. 11 da LGPD), revogável a qualquer momento.</p>
       <h3>13.2. Bases Legais</h3>
       <ul>
         <li><strong>Execução de contrato:</strong> processar pedidos, entregar serviços, autenticar usuários.</li>
         <li><strong>Obrigação legal:</strong> registros fiscais, contábeis e cumprimento de decisões judiciais.</li>
         <li><strong>Legítimo interesse:</strong> segurança da plataforma, prevenção a fraudes, melhoria dos serviços.</li>
         <li><strong>Consentimento:</strong> newsletter e comunicações de marketing — sempre com opção de cancelamento.</li>
+        <li><strong>Consentimento (dados sensíveis — art. 11, LGPD):</strong> tratamento dos dados de hábitos, treinos e diário do aplicativo, inclusive o seu processamento por inteligência artificial para personalização (ver 13.7). Consentimento específico, destacado e revogável a qualquer momento pelo app.</li>
       </ul>
       <h3>13.3. Compartilhamento de Dados</h3>
       <ul>
         <li><strong>Mercado Pago:</strong> dados necessários ao processamento de pagamento.</li>
         <li><strong>Resend (e-mail):</strong> endereço de e-mail para envio de comunicações transacionais e newsletter.</li>
-        <li><strong>Infraestrutura (Render, Neon, Cloudflare):</strong> dados de operação processados em ambiente seguro.</li>
+        <li><strong>Cloudflare (R2/CDN):</strong> armazenamento e entrega de imagens, obras e arquivos, e backups criptografados do banco de dados.</li>
+        <li><strong>Groq, LLC (inteligência artificial):</strong> texto das interações com os recursos de IA (guias/NPCs, Oráculo e assistente administrativo), de forma <strong>pseudonimizada</strong> — sem nome, e-mail ou identificador de conta —, apenas para gerar as respostas. Detalhes em 13.7.</li>
+        <li><strong>Infraestrutura própria:</strong> servidores e banco de dados administrados diretamente pela NoHeroes, em ambiente seguro (não utilizamos mais provedores de banco/hospedagem de terceiros para esse núcleo).</li>
         <li>A NoHeroes <strong>não vende</strong> dados e não os compartilha com terceiros para fins próprios destes.</li>
       </ul>
       <h3>13.4. Transferência Internacional</h3>
-      <p>Dados podem ser processados fora do Brasil por provedores de infraestrutura (Render, Neon, Cloudflare R2), com adoção de salvaguardas adequadas conforme a LGPD.</p>
+      <p>Alguns dados podem ser processados fora do Brasil por provedores específicos — <strong>Cloudflare</strong> (armazenamento/CDN) e <strong>Groq, LLC</strong> (inteligência artificial, Estados Unidos) —, com adoção de salvaguardas adequadas conforme a LGPD. O núcleo de aplicação e banco de dados é operado em infraestrutura própria.</p>
       <h3>13.5. Retenção de Dados</h3>
       <ul>
         <li>Dados de conta: enquanto a conta estiver ativa + prazo legal aplicável após exclusão.</li>
@@ -405,6 +438,14 @@ mark{background:rgba(143,79,255,0.3);color:#fff;border-radius:2px;padding:0 2px}
         <li><strong>Revogação de consentimento:</strong> cancelar o aceite dado anteriormente.</li>
       </ul>
       <p>Para exercer seus direitos: <a href="#contato">contato</a>. Prazo de resposta: até <strong>15 dias úteis</strong>.</p>
+      <h3>13.7. Inteligência Artificial</h3>
+      <p>Alguns recursos do NoHeroes usam inteligência artificial: os <strong>guias/personagens (NPCs)</strong> e o <strong>Oráculo</strong>, no site e no aplicativo, e um <strong>assistente administrativo</strong> de uso interno. Esse processamento é realizado por <strong>Groq, LLC</strong> (Estados Unidos), provedor de infraestrutura de IA em nuvem.</p>
+      <ul>
+        <li><strong>Pseudonimização:</strong> os dados enviados à IA <strong>não incluem</strong> seu nome, e-mail ou identificador de conta — apenas o texto necessário à interação.</li>
+        <li><strong>Sem treinamento:</strong> conforme os termos do provedor, os dados enviados <strong>não são utilizados para treinar modelos</strong> de IA.</li>
+        <li><strong>Base legal e consentimento:</strong> o processamento por IA de dados de hábitos, treinos e diário do aplicativo (dados sensíveis) depende do seu <strong>consentimento específico</strong> (art. 11 da LGPD), solicitado no app e revogável a qualquer momento — sem prejuízo do uso das demais funções.</li>
+        <li><strong>Limitações:</strong> as respostas da IA podem conter imprecisões e <strong>não substituem</strong> orientação profissional (médica, física, jurídica ou financeira).</li>
+      </ul>
     </section>
 
     <!-- 14 -->
@@ -430,7 +471,7 @@ mark{background:rgba(143,79,255,0.3);color:#fff;border-radius:2px;padding:0 2px}
         <li><strong>Rate limiting:</strong> proteção contra força bruta em endpoints sensíveis.</li>
         <li><strong>Logs:</strong> monitoramento de acessos e atividades suspeitas.</li>
         <li><strong>Acesso mínimo:</strong> separação de ambientes e credenciais com privilégio mínimo.</li>
-        <li><strong>Backups:</strong> banco de dados com snapshots regulares no Neon.</li>
+        <li><strong>Backups:</strong> snapshots regulares do banco de dados, criptografados e armazenados em nuvem (Cloudflare R2).</li>
         <li>A NoHeroes <strong>nunca</strong> solicita senha ou dados sensíveis por e-mail, WhatsApp ou qualquer canal externo.</li>
         <li>Em caso de incidente de segurança relevante, notificaremos os Usuários afetados e a ANPD em até <strong>2 dias úteis</strong> da confirmação.</li>
       </ul>
@@ -467,6 +508,7 @@ mark{background:rgba(143,79,255,0.3);color:#fff;border-radius:2px;padding:0 2px}
         <tr><th>Versão</th><th>Data</th><th>Mudanças principais</th></tr>
         <tr><td>1.0</td><td>19/10/2025</td><td>Versão inicial — Termos base</td></tr>
         <tr><td>2.0</td><td>Abril/2026</td><td>Expansão: Arautos, Moeda Interna, Mangás, Prestação de Serviços, Newsletter, tabelas LGPD</td></tr>
+        <tr><td>2.1</td><td>Julho/2026</td><td>Inteligência Artificial (Groq) — NPCs, Oráculo e assistente admin (§13.7); dados sensíveis da Jornada do app e base de consentimento (§13.1/13.2); atualização de sub-processadores e transferência internacional (§13.3/13.4); idade mínima 16 anos (§4.1); backups em infraestrutura própria + Cloudflare R2 (§15)</td></tr>
       </table>
     </section>
 
@@ -646,10 +688,26 @@ window.addEventListener('scroll',()=>{
 },{passive:true});
 
 // ─── ACEITE VIA BACKEND ───
-// Verifica se o usuário já aceitou estes termos
+// Verifica se o usuário já aceitou estes termos. (O arquivo estava TRUNCADO aqui —
+// fim abrupto no meio da string — matando TODO o script do rodapé: TOC, busca, ano.
+// Reconstruído 2026-07-09. O re-aceite bloqueante em si é papel do compliance.js no login.)
 (async()=>{
   try{
     const token=(localStorage.getItem('NoHeroes_token')||'').replace(/^Bearer\s+/i,'').trim();
     if(!token) return;
     const res=await fetch('https://api.noheroes.com.br/api/terms/status',{
-      headers:{Authorization:`Bear
+      headers:{Authorization:`Bearer ${token}`}
+    });
+    if(!res.ok) return;
+    const data=await res.json().catch(()=>null);
+    // Informativo: marca a versão aceita no rodapé/aside quando o backend informa.
+    const v=data&&(data.accepted_version||data.version);
+    if(v){
+      const el=document.getElementById('docVersion');
+      if(el) el.title='Você aceitou a versão '+v;
+    }
+  }catch(e){/* silencioso — página é pública */}
+})();
+</script>
+</body>
+</html>
