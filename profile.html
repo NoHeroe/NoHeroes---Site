@@ -201,15 +201,15 @@ dialog .dialog-ctr {
 /* ===== ESTOURO DE LARGURA POR TEXTO SEM QUEBRA (correção 2026-07-28) =====
    Sintoma: no celular o perfil aparecia cortado à direita, com o conteúdo maior
    que a tela e SEM como rolar até ele.
-   Causa: #userEmail exibe a URL COMPLETA do avatar (decisão do carregarDashboard).
-   Uma URL do R2 tem ~100 caracteres sem espaço nenhum, então a largura MÍNIMA do
-   parágrafo vira a URL inteira. O ancestral `.flex-1` é um item de flex e itens de
-   flex nascem com `min-width:auto`, que se recusa a encolher abaixo do conteúdo —
-   o estouro sobe a cadeia e levava o <main> a 445px numa tela de 375px. O
-   `overflow-x:hidden` do body então CORTAVA o excedente, escondendo o defeito em
-   vez de mostrá-lo (por isso não aparecia ao estreitar a janela no desktop).
-   Correção na causa, não no sintoma: (1) texto que carrega URL pode quebrar em
-   qualquer ponto; (2) itens de flex podem encolher. */
+   Gatilho original: #userEmail exibia a URL COMPLETA do avatar (~100 caracteres
+   sem um espaço). A largura MÍNIMA do parágrafo virava a URL inteira; o ancestral
+   `.flex-1` é item de flex e itens de flex nascem com `min-width:auto`, recusando
+   encolher — o estouro subia a cadeia e levava o <main> a 445px numa tela de 375px.
+   O `overflow-x:hidden` do body então CORTAVA o excedente, escondendo o defeito em
+   vez de expor (por isso não reproduzia estreitando a janela no desktop).
+   Aquele gatilho foi removido na origem (o campo voltou a mostrar o e-mail), mas
+   estas regras FICAM: e-mail longo, nome longo ou qualquer string sem espaço têm
+   o mesmo poder de estourar a linha. Corrige a classe do problema, não um caso. */
 #userEmail,
 #miniNome {
   overflow-wrap: anywhere;
@@ -902,9 +902,14 @@ btnConfirmLogout.addEventListener('click', () => {
         avatarEl.src = avatarSrc;
         avatarEl.onerror = () => { avatarEl.src = 'assets/images/linktree.png'; };
 
-        // Mostra a URL completa do avatar atual (em vez do e-mail) e pré-preenche o campo de edição
+        // #userEmail volta a mostrar o E-MAIL (CEO 2026-07-28).
+        // Antes exibia a URL completa do avatar. Era intencional ("em vez do e-mail"), mas
+        // errado por três motivos: (1) o elemento se chama userEmail e passou a mentir sobre
+        // o próprio conteúdo; (2) a MESMA URL já aparece logo abaixo no campo #avatarUrl, então
+        // era informação duplicada na tela; (3) uma URL crua de storage é saída de depuração,
+        // não informação para o jogador — e foi ela que estourava o layout no celular.
         const userEmailEl = document.getElementById('userEmail');
-        if (userEmailEl) userEmailEl.textContent = fullAvatarUrl(user.avatar) || 'Nenhum avatar definido';
+        if (userEmailEl) userEmailEl.textContent = user.email || '';
         const avatarUrlInput = document.getElementById('avatarUrl');
         if (avatarUrlInput && user.avatar) avatarUrlInput.value = fullAvatarUrl(user.avatar);
 
