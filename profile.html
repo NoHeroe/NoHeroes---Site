@@ -198,6 +198,28 @@ dialog .dialog-ctr {
   box-sizing: border-box;
 }
 
+/* ===== ESTOURO DE LARGURA POR TEXTO SEM QUEBRA (correção 2026-07-28) =====
+   Sintoma: no celular o perfil aparecia cortado à direita, com o conteúdo maior
+   que a tela e SEM como rolar até ele.
+   Causa: #userEmail exibe a URL COMPLETA do avatar (decisão do carregarDashboard).
+   Uma URL do R2 tem ~100 caracteres sem espaço nenhum, então a largura MÍNIMA do
+   parágrafo vira a URL inteira. O ancestral `.flex-1` é um item de flex e itens de
+   flex nascem com `min-width:auto`, que se recusa a encolher abaixo do conteúdo —
+   o estouro sobe a cadeia e levava o <main> a 445px numa tela de 375px. O
+   `overflow-x:hidden` do body então CORTAVA o excedente, escondendo o defeito em
+   vez de mostrá-lo (por isso não aparecia ao estreitar a janela no desktop).
+   Correção na causa, não no sintoma: (1) texto que carrega URL pode quebrar em
+   qualquer ponto; (2) itens de flex podem encolher. */
+#userEmail,
+#miniNome {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+#heroSection .flex-1,
+#heroSection .flex > * {
+  min-width: 0;
+}
+
 /* ===== MOBILE ===== */
 @media (max-width: 640px) {
   dialog {
