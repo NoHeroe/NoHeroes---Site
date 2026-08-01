@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>NoHeroes • Obra</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="assets/css/noheroes-ui.css">
+<script defer src="assets/js/noheroes-ui.js"></script>
+<script>
+  tailwind.config = {
+    theme: { extend: {
+      colors:{ nh:{ bg:'#07060a', dark:'#0c0a10', accent:'#8f4fff', gold:'#d9b55a', card:'rgba(255,255,255,0.04)', border:'rgba(255,255,255,0.08)' } },
+      boxShadow:{ glow:'0 0 30px rgba(143,79,255,0.2)'},
+      fontFamily:{ display:['Cinzel Decorative','serif'], sans:['Inter','sans-serif']}
+    } }
+  }
+</script>
+<style>
+body{background:#07060a;}
+.grad-nh{background:linear-gradient(135deg,#8f4fff 0%,#d9b55a 100%)}
+.text-grad{background:linear-gradient(135deg,#c4a3ff 0%,#f0d99a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.glass-card{background:rgba(12,10,16,0.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(143,79,255,0.15);}
+.skeleton{background:linear-gradient(90deg,#0c0a12 25%,#16121f 50%,#0c0a12 75%);background-size:200% 100%;animation:shimmer 1.5s infinite linear;border-radius:1rem;}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* Badges */
+.badge-pill{display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border-radius:999px;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;}
+.badge-fmt-manga{background:rgba(217,181,90,.14);border:1px solid rgba(217,181,90,.45);color:#f0d99a;}
+.badge-fmt-novel{background:rgba(143,79,255,.16);border:1px solid rgba(143,79,255,.5);color:#cdb0ff;}
+.badge-ongoing{background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.4);color:#4ade80;}
+.badge-completed{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.75);}
+.badge-hiatus{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.4);color:#fbbf24;}
+.badge-age{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.6);}
+.badge-age-18{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.4);color:#f87171;}
+.tag-chip{padding:3px 10px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#d9b55a;white-space:nowrap;}
+
+/* Botões */
+.btn-main{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 22px;border-radius:14px;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.1em;cursor:pointer;border:none;transition:all .2s;background:linear-gradient(135deg,#8f4fff,#d9b55a);color:#000;text-decoration:none;}
+.btn-main:hover{filter:brightness(1.1);}
+.btn-side{display:flex;align-items:center;justify-content:center;gap:6px;padding:14px 18px;border-radius:14px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;cursor:pointer;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:rgba(255,255,255,.65);transition:all .2s;}
+.btn-side:hover{background:rgba(143,79,255,.12);border-color:rgba(143,79,255,.35);}
+.btn-side.active-follow{background:rgba(143,79,255,.2);border-color:#8f4fff;color:#e9d5ff;}
+.btn-side.active-fav{background:rgba(217,181,90,.12);border-color:rgba(217,181,90,.5);color:#f0d99a;}
+.btn-retry{padding:10px 22px;border-radius:12px;border:1px solid rgba(143,79,255,.4);background:rgba(143,79,255,.12);color:#c4a3ff;font-size:12px;font-weight:800;cursor:pointer;text-transform:uppercase;letter-spacing:.08em;}
+.btn-retry:hover{background:rgba(143,79,255,.2);}
+
+/* Lista de capítulos */
+.ch-row{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px 14px;border-radius:14px;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.025);transition:all .2s;cursor:pointer;font-family:inherit;color:inherit;}
+.ch-row:hover{border-color:rgba(143,79,255,.35);background:rgba(143,79,255,.06);}
+.ch-row.locked{opacity:.55;cursor:not-allowed;}
+.ch-row.locked:hover{border-color:rgba(255,255,255,.07);background:rgba(255,255,255,.025);}
+.ch-row.last-read{border-color:rgba(143,79,255,.5);background:rgba(143,79,255,.08);}
+.ch-num{width:42px;height:42px;flex-shrink:0;display:grid;place-items:center;border-radius:10px;background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.08);font-weight:800;font-size:12px;color:#8f4fff;font-family:monospace;}
+</style>
+</head>
+<body class="min-h-screen bg-nh-bg text-white/90 font-sans antialiased overflow-x-hidden">
+
+<!-- Fundo + menu lateral (componentes compartilhados) -->
+<nh-background></nh-background>
+<nh-drawer></nh-drawer>
+
+<div id="toast" class="fixed top-20 left-1/2 -translate-x-1/2 z-[200] px-5 py-3 rounded-2xl text-white text-sm font-bold opacity-0 transition-all duration-300 pointer-events-none" style="background:rgba(12,10,16,.92);border:1px solid rgba(143,79,255,.4);backdrop-filter:blur(10px);max-width:90vw;text-align:center;"></div>
+
+<!-- HEADER -->
+<header class="fixed top-0 inset-x-0 z-[60] h-16 border-b border-nh-border bg-black/60 backdrop-blur-md flex items-center">
+  <nav class="mx-auto max-w-7xl w-full px-4 flex items-center gap-3">
+    <a href="index.html" class="flex items-center gap-2.5">
+      <div class="h-8 w-8 rounded-lg grad-nh shadow-glow flex-shrink-0"></div>
+      <span class="font-display text-xl tracking-tight gradiente-noheroes">NoHeroes</span>
+    </a>
+    <div class="ml-auto flex items-center gap-2">
+      <a href="leitor.html" class="text-[10px] uppercase tracking-widest px-3 py-1.5 rounded-full border border-nh-border font-bold text-white/50 hover:text-white hover:border-nh-accent/40 transition">← Biblioteca</a>
+      <button id="hamburgerBtn" data-nh-drawer-toggle aria-label="Abrir menu" class="h-9 w-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 transition text-white/70 hover:text-nh-accent">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main class="mx-auto max-w-5xl pt-16 pb-24 relative z-10">
+
+  <!-- ESTADO: CARREGANDO -->
+  <div id="state-loading" class="px-4 pt-6 space-y-5">
+    <div class="skeleton h-44 sm:h-64 w-full"></div>
+    <div class="flex gap-5">
+      <div class="skeleton w-32 sm:w-44 aspect-[2/3] flex-shrink-0"></div>
+      <div class="flex-1 space-y-3 pt-2">
+        <div class="skeleton h-7 w-3/4"></div>
+        <div class="skeleton h-4 w-1/2"></div>
+        <div class="skeleton h-4 w-2/3"></div>
+      </div>
+    </div>
+    <div class="skeleton h-14 w-full"></div>
+    <div class="skeleton h-14 w-full"></div>
+    <div class="skeleton h-14 w-full"></div>
+  </div>
+
+  <!-- ESTADO: ERRO -->
+  <div id="state-error" class="hidden px-4 pt-24 text-center">
+    <div class="glass-card rounded-2xl p-10 max-w-md mx-auto">
+      <div class="text-4xl mb-4">⚠️</div>
+      <h2 class="font-display text-xl text-grad mb-3">Falha ao carregar a obra</h2>
+      <p id="error-detail" class="text-white/50 text-sm mb-6">Não foi possível falar com o servidor.</p>
+      <button class="btn-retry" onclick="boot()">Tentar de novo</button>
+    </div>
+  </div>
+
+  <!-- ESTADO: NÃO ENCONTRADA -->
+  <div id="state-notfound" class="hidden px-4 pt-24 text-center">
+    <div class="glass-card rounded-2xl p-10 max-w-md mx-auto">
+      <div class="text-4xl mb-4">📕</div>
+      <h2 class="font-display text-xl text-grad mb-3">Obra não encontrada</h2>
+      <p id="notfound-detail" class="text-white/50 text-sm mb-6">Esta obra não existe ou não está mais disponível.</p>
+      <a href="leitor.html" class="btn-retry inline-block" style="text-decoration:none;">Voltar à Biblioteca</a>
+    </div>
+  </div>
+
+  <!-- OBRA -->
+  <div id="work-view" class="hidden">
+
+    <!-- Banner -->
+    <div id="work-banner" class="relative h-44 sm:h-64 overflow-hidden" style="background:linear-gradient(135deg,#1b1030 0%,#0c0a12 55%,#241a06 100%);">
+      <img id="banner-img" class="absolute inset-0 w-full h-full object-cover opacity-60" style="display:none;" alt="">
+      <div class="absolute inset-0" style="background:linear-gradient(to top,#07060a 5%,rgba(7,6,10,0.55) 50%,transparent 100%);"></div>
+    </div>
+
+    <!-- Cabeçalho da obra -->
+    <section class="px-4 -mt-20 sm:-mt-24 relative z-10">
+      <div class="flex flex-col sm:flex-row gap-5">
+        <img id="work-cover" class="w-32 sm:w-44 aspect-[2/3] object-cover rounded-2xl border border-nh-accent/30 shadow-glow flex-shrink-0 bg-nh-dark" style="display:none;" alt="">
+        <div id="work-cover-fallback" class="w-32 sm:w-44 aspect-[2/3] rounded-2xl border border-nh-accent/30 flex-shrink-0 bg-nh-dark grid place-items-center text-white/20 text-3xl" style="display:none;">📖</div>
+
+        <div class="flex-1 min-w-0 sm:pt-16">
+          <div id="badges-row" class="flex flex-wrap gap-2 mb-3"></div>
+          <h1 id="work-title" class="font-display text-2xl sm:text-4xl text-grad leading-tight break-words"></h1>
+
+          <!-- Autor -->
+          <div class="flex items-center gap-3 mt-4">
+            <img id="author-avatar" class="h-9 w-9 rounded-full object-cover border-2 border-nh-accent/40 bg-nh-dark" style="display:none;" alt="">
+            <div id="author-avatar-fallback" class="h-9 w-9 rounded-full grad-nh grid place-items-center font-bold text-black text-xs" style="display:none;"></div>
+            <div class="min-w-0">
+              <div id="author-name" class="text-sm font-bold text-white/90 truncate"></div>
+              <div class="text-[10px] uppercase tracking-widest font-bold" style="color:rgba(217,181,90,.8);">Arauto NoHeroes</div>
+            </div>
+          </div>
+
+          <div id="tags-row" class="flex flex-wrap gap-2 mt-4"></div>
+        </div>
+      </div>
+
+      <!-- Sinopse -->
+      <div class="glass-card rounded-2xl p-5 mt-6">
+        <h2 class="text-[10px] uppercase tracking-[0.2em] font-black text-nh-accent mb-3">Sinopse</h2>
+        <p id="work-synopsis" class="text-white/70 text-sm leading-relaxed whitespace-pre-line"></p>
+        <div id="work-meta" class="mt-4 pt-3 border-t border-white/5 text-xs text-white/40 flex flex-wrap gap-x-4 gap-y-1"></div>
+      </div>
+
+      <!-- Ações -->
+      <div class="flex flex-col sm:flex-row gap-3 mt-5">
+        <a id="btn-read" class="btn-main flex-1" href="#" style="display:none;">▶ Começar a ler</a>
+        <button id="btn-follow" class="btn-side sm:w-auto w-full">+ Seguir</button>
+        <button id="btn-fav" class="btn-side sm:w-auto w-full">☆ Favoritar</button>
+      </div>
+    </section>
+
+    <!-- Capítulos -->
+    <section class="px-4 mt-8">
+      <div class="glass-card rounded-2xl p-4 sm:p-5">
+        <header class="flex items-center justify-between gap-3 mb-4 pb-3 border-b border-white/5">
+          <div class="min-w-0">
+            <h2 class="font-display text-lg text-grad">Capítulos</h2>
+            <p id="chapters-sub" class="text-[11px] text-white/40 mt-0.5"></p>
+          </div>
+          <button id="sort-toggle" class="btn-side" style="padding:8px 14px;font-size:10px;" title="Alternar ordem dos capítulos">↑ Crescente</button>
+        </header>
+        <p id="progress-note" class="hidden text-[11px] text-amber-300/80 mb-3">Não foi possível carregar seu progresso de leitura — as marcações de lido podem não aparecer.</p>
+        <div id="chapters-list" class="space-y-2"></div>
+        <div id="chapters-empty" class="hidden text-center py-10 text-white/40 text-sm border border-white/5 rounded-xl">Nenhum capítulo publicado ainda.</div>
+        <div id="chapters-error" class="hidden text-center py-10 border border-white/5 rounded-xl">
+          <p class="text-white/50 text-sm mb-4">Não foi possível carregar os capítulos.</p>
+          <button class="btn-retry" onclick="loadChapters()">Tentar de novo</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<!-- Footer (componente compartilhado) -->
+<nh-footer></nh-footer>
+
+<script>
+const API_BASE = 'https://api.noheroes.com.br';
+const $ = (q) => document.querySelector(q);
+
+const TokenStorage = {
+  get: () => (localStorage.getItem('NoHeroes_token') || '').replace(/^Bearer\s+/i, '').trim(),
+  clear: () => localStorage.removeItem('NoHeroes_token')
+};
+
+const state = {
+  slug: null,
+  work: null,
+  chapters: [],
+  read: new Map(),      // chapterId -> { progress, readAt }
+  lastReadCh: null,
+  sortAsc: true,
+  following: false,
+  favorited: false
+};
+
+/* ─── HELPERS ── */
+function esc(s) {
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function fmtDate(d) {
+  if (!d) return '—';
+  const t = new Date(d);
+  return isNaN(t.getTime()) ? '—' : t.toLocaleDateString('pt-BR');
+}
+
+let toastTimer;
+function showToast(msg) {
+  const el = $('#toast');
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.remove('opacity-0');
+  el.classList.add('opacity-100');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { el.classList.remove('opacity-100'); el.classList.add('opacity-0'); }, 3000);
+}
+
+async function api(path, opts = {}) {
+  const token = TokenStorage.get();
+  const headers = { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) };
+  const r = await fetch(`${API_BASE}${path}`, { ...opts, headers });
+  if (r.status === 401) TokenStorage.clear();
+  const data = await r.json().catch(() => ({}));
+  return { ok: r.ok, status: r.status, data };
+}
+
+function setState(name) {
+  ['state-loading', 'state-error', 'state-notfound', 'work-view'].forEach(id => {
+    $(`#${id}`).classList.toggle('hidden', id !== name);
+  });
+}
+
+/* ─── ACESSO ── */
+function isLocked(ch) {
+  const free = state.work?.free_chapters ?? 1;
+  return ch.number > free && !!ch.is_premium;
+}
+
+function readEntry(chId) { return state.read.get(chId) || null; }
+function isRead(r) { return !!r && (!!(r.readAt || r.read_at) || (r.progress || 0) >= 0.92); }
+
+/* ─── BADGES ── */
+function buildBadges(w) {
+  const parts = [];
+  if (w.format === 'manga')      parts.push('<span class="badge-pill badge-fmt-manga">Mangá</span>');
+  else if (w.format === 'novel') parts.push('<span class="badge-pill badge-fmt-novel">Novel</span>');
+  // formato desconhecido → sem badge (nunca chutar)
+
+  const serial = { ongoing: ['badge-ongoing','Em andamento'], completed: ['badge-completed','Concluída'], hiatus: ['badge-hiatus','Hiato'] }[w.serial_status];
+  if (serial) parts.push(`<span class="badge-pill ${serial[0]}">${serial[1]}</span>`);
+
+  if (w.age_rating) {
+    const label = w.age_rating === 'free' ? 'Livre' : `${esc(w.age_rating)}+`;
+    const cls = String(w.age_rating) === '18' ? 'badge-age-18' : 'badge-age';
+    parts.push(`<span class="badge-pill ${cls}">${label}</span>`);
+  }
+  return parts.join('');
+}
+
+/* ─── RENDER: OBRA ── */
+function renderWork() {
+  const w = state.work;
+  document.title = `NoHeroes • ${w.title || 'Obra'}`;
+
+  // banner
+  const bannerImg = $('#banner-img');
+  if (w.banner_url) {
+    bannerImg.src = w.banner_url;
+    bannerImg.alt = `Banner de ${w.title || 'obra'}`;
+    bannerImg.style.display = 'block';
+    bannerImg.onerror = () => { bannerImg.style.display = 'none'; };
+  }
+
+  // capa
+  const cover = $('#work-cover');
+  const coverFb = $('#work-cover-fallback');
+  if (w.cover_url) {
+    cover.src = w.cover_url;
+    cover.alt = w.title || 'Capa da obra';
+    cover.style.display = 'block';
+    cover.onerror = () => { cover.style.display = 'none'; coverFb.style.display = 'grid'; };
+  } else {
+    coverFb.style.display = 'grid';
+  }
+
+  $('#work-title').textContent = w.title || '—';
+  $('#badges-row').innerHTML = buildBadges(w);
+
+  // autor (só nome + avatar, sem link)
+  // Alias REAL da API é minúsculo (models/index.js: as 'author'); desconhecido = '—' (nunca chutar nome).
+  const authorName = w.author?.username || w.Author?.username || w.author_name || '—';
+  $('#author-name').textContent = authorName;
+  const av = $('#author-avatar');
+  const avFb = $('#author-avatar-fallback');
+  const avatarUrl = w.author?.avatar || w.Author?.avatar || w.author_avatar || '';
+  if (avatarUrl) {
+    av.src = avatarUrl;
+    av.alt = authorName;
+    av.style.display = 'block';
+    av.onerror = () => { av.style.display = 'none'; avFb.style.display = 'grid'; avFb.textContent = (authorName[0] || '?').toUpperCase(); };
+  } else {
+    avFb.style.display = 'grid';
+    avFb.textContent = (authorName[0] || '?').toUpperCase();
+  }
+
+  // tags
+  const tags = Array.isArray(w.tags) ? w.tags : [];
+  $('#tags-row').innerHTML = tags.map(t => `<span class="tag-chip">${esc(t)}</span>`).join('');
+
+  $('#work-synopsis').textContent = w.synopsis || '—';
+}
+
+function renderMeta() {
+  const bits = [];
+  bits.push(`<span>📚 ${state.chapters.length} capítulo${state.chapters.length === 1 ? '' : 's'}</span>`);
+  const dates = state.chapters.map(c => new Date(c.published_at || 0).getTime()).filter(t => t > 0);
+  if (dates.length) bits.push(`<span>🕘 Atualizado em ${fmtDate(new Date(Math.max(...dates)))}</span>`);
+  if (state.work?.season_label) bits.push(`<span>🏷 ${esc(state.work.season_label)}</span>`);
+  $('#work-meta').innerHTML = bits.join('');
+}
+
+/* ─── RENDER: CAPÍTULOS ── */
+function renderChapters() {
+  const list = $('#chapters-list');
+  const chapters = [...state.chapters].sort((a, b) => state.sortAsc ? a.number - b.number : b.number - a.number);
+
+  $('#chapters-sub').textContent = chapters.length
+    ? `${chapters.length} capítulo${chapters.length === 1 ? '' : 's'} publicado${chapters.length === 1 ? '' : 's'}`
+    : '';
+
+  if (!chapters.length) {
+    list.innerHTML = '';
+    $('#chapters-empty').classList.remove('hidden');
+    return;
+  }
+  $('#chapters-empty').classList.add('hidden');
+
+  list.innerHTML = chapters.map(ch => {
+    const locked = isLocked(ch);
+    const r = readEntry(ch.id);
+    const read = isRead(r);
+    const isLast = state.lastReadCh && state.lastReadCh.id === ch.id;
+    const icon = locked ? '🔒' : (read ? '✅' : '📖');
+    const rowCls = ['ch-row', locked ? 'locked' : '', isLast ? 'last-read' : ''].filter(Boolean).join(' ');
+    const nav = locked ? '' : `onclick="openChapter(${ch.id})"`;
+    return `
+      <button type="button" class="${rowCls}" ${nav} ${locked ? 'aria-disabled="true"' : ''}>
+        <div class="ch-num">C${String(ch.number).padStart(2, '0')}</div>
+        <div class="flex-1 min-w-0">
+          <div class="truncate text-sm font-bold ${read ? 'text-white/40' : 'text-white/90'}">${esc(ch.title || `Capítulo ${ch.number}`)}</div>
+          <div class="text-[11px] text-white/40 mt-0.5">
+            ${fmtDate(ch.published_at)}${isLast ? ' · <span style="color:#c4a3ff;font-weight:800;">Último lido</span>' : ''}
+          </div>
+        </div>
+        <span class="text-lg flex-shrink-0">${icon}</span>
+      </button>`;
+  }).join('');
+}
+
+function openChapter(id) {
+  location.href = `leitor-obra.html?slug=${encodeURIComponent(state.slug)}&chapter=${id}`;
+}
+
+/* ─── BOTÃO LER / CONTINUAR ── */
+function renderReadButton() {
+  const btn = $('#btn-read');
+  if (!state.chapters.length) { btn.style.display = 'none'; return; }
+
+  // continuar = capítulo com progresso e read_at mais recente
+  let best = null;
+  for (const ch of state.chapters) {
+    const r = readEntry(ch.id);
+    if (!r) continue;
+    if (!((r.progress || 0) > 0 || r.readAt || r.read_at)) continue;
+    const t = new Date(r.readAt || r.read_at || 0).getTime() || 0;
+    if (!best || t > best.t) best = { ch, t };
+  }
+  state.lastReadCh = best?.ch || null;
+
+  if (best) {
+    btn.textContent = `▶ Continuar — Cap. ${best.ch.number}`;
+    btn.href = `leitor-obra.html?slug=${encodeURIComponent(state.slug)}&chapter=${best.ch.id}`;
+  } else {
+    const first = [...state.chapters].sort((a, b) => a.number - b.number)[0];
+    btn.textContent = '▶ Começar a ler';
+    btn.href = `leitor-obra.html?slug=${encodeURIComponent(state.slug)}&chapter=${first.id}`;
+  }
+  btn.style.display = 'flex';
+}
+
+/* ─── SEGUIR / FAVORITAR ── */
+function renderSocialButtons() {
+  const bf = $('#btn-follow');
+  bf.classList.toggle('active-follow', state.following);
+  bf.textContent = state.following ? '✓ Seguindo' : '+ Seguir';
+  const bv = $('#btn-fav');
+  bv.classList.toggle('active-fav', state.favorited);
+  bv.textContent = state.favorited ? '★ Favoritado' : '☆ Favoritar';
+}
+
+async function toggleFollow() {
+  if (!TokenStorage.get()) { showToast('Faça login para seguir obras.'); return; }
+  if (!state.work) return;
+  try {
+    const { ok, data } = await api(`/api/works/${state.work.id}/follow`, { method: 'POST' });
+    if (!ok) { showToast('Erro ao seguir — tente de novo.'); return; }
+    state.following = !!data.active;
+    renderSocialButtons();
+    showToast(state.following ? 'Seguindo esta obra!' : 'Deixou de seguir.');
+  } catch (e) {
+    showToast('Sem conexão com o servidor — tente de novo.');
+  }
+}
+
+async function toggleFavorite() {
+  if (!TokenStorage.get()) { showToast('Faça login para favoritar.'); return; }
+  if (!state.work) return;
+  try {
+    const { ok, data } = await api(`/api/works/${state.work.id}/favorite`, { method: 'POST' });
+    if (!ok) { showToast('Erro ao favoritar — tente de novo.'); return; }
+    state.favorited = !!data.active;
+    renderSocialButtons();
+    showToast(state.favorited ? 'Adicionado aos favoritos!' : 'Removido dos favoritos.');
+  } catch (e) {
+    showToast('Sem conexão com o servidor — tente de novo.');
+  }
+}
+
+async function loadUserStatus() {
+  if (!TokenStorage.get() || !state.work) return;
+  try {
+    const { ok, data } = await api(`/api/works/${state.work.id}/user-status`);
+    if (ok) {
+      state.following = !!data.following;
+      state.favorited = !!data.favorited;
+      renderSocialButtons();
+    }
+  } catch (e) { /* estado social é acessório — mantém padrão deslogado */ }
+}
+
+/* ─── PROGRESSO DE LEITURA ── */
+async function loadReadProgress() {
+  if (!TokenStorage.get()) return;
+  try {
+    const { ok, data } = await api('/api/me/chapters');
+    if (!ok) throw new Error('progress');
+    state.read = new Map((data.chapters || []).map(r => [r.chapterId ?? r.chapter_id, r]));
+  } catch (e) {
+    $('#progress-note').classList.remove('hidden');
+  }
+}
+
+/* ─── CAPÍTULOS (fetch) ── */
+async function loadChapters() {
+  $('#chapters-error').classList.add('hidden');
+  // 1 request cobre quase tudo: GET /api/works/:slug já traz os capítulos publicados
+  if (Array.isArray(state.work?.chapters)) {
+    state.chapters = state.work.chapters;
+  } else {
+    try {
+      const { ok, data } = await api(`/api/works/${encodeURIComponent(state.slug)}/chapters`);
+      if (!ok) throw new Error('chapters');
+      state.chapters = data.chapters || [];
+    } catch (e) {
+      state.chapters = [];
+      $('#chapters-list').innerHTML = '';
+      $('#chapters-empty').classList.add('hidden');
+      $('#chapters-error').classList.remove('hidden');
+      $('#btn-read').style.display = 'none';
+      return;
+    }
+  }
+  renderMeta();
+  renderReadButton();
+  renderChapters();
+}
+
+/* ─── BOOT ── */
+async function boot() {
+  setState('state-loading');
+  state.slug = new URLSearchParams(location.search).get('slug');
+
+  if (!state.slug) {
+    $('#notfound-detail').textContent = 'Nenhuma obra foi especificada no endereço.';
+    setState('state-notfound');
+    return;
+  }
+
+  let res;
+  try {
+    res = await api(`/api/works/${encodeURIComponent(state.slug)}`);
+  } catch (e) {
+    $('#error-detail').textContent = 'Não foi possível falar com o servidor. Verifique sua conexão.';
+    setState('state-error');
+    return;
+  }
+
+  if (res.status === 404 || (res.ok && !res.data?.work)) {
+    setState('state-notfound');
+    return;
+  }
+  if (!res.ok) {
+    $('#error-detail').textContent = `O servidor respondeu com erro (${res.status}).`;
+    setState('state-error');
+    return;
+  }
+
+  state.work = res.data.work;
+  renderWork();
+  setState('work-view');
+
+  await loadReadProgress();
+  await loadChapters();
+  loadUserStatus();
+}
+
+/* ─── INIT ── */
+document.addEventListener('DOMContentLoaded', () => {
+  $('#btn-follow').addEventListener('click', toggleFollow);
+  $('#btn-fav').addEventListener('click', toggleFavorite);
+  $('#sort-toggle').addEventListener('click', () => {
+    state.sortAsc = !state.sortAsc;
+    $('#sort-toggle').textContent = state.sortAsc ? '↑ Crescente' : '↓ Decrescente';
+    renderChapters();
+  });
+  boot();
+});
+</script>
+</body>
+</html>

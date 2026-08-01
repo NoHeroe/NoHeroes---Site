@@ -1150,7 +1150,7 @@ async function carregarBiblioteca(tab){
       const o=w.Work||w.work||w;
       const capa=o.cover_url||o.coverImage||o.cover||o.image||'';
       const titulo=o.title||o.titulo||'—';
-      const href=o.slug?`mangá.html?slug=${o.slug}`:'leitor.html';
+      const href=o.slug?`leitor-obra.html?slug=${o.slug}`:'leitor.html';
       return `<a href="${href}" class="group relative rounded-xl overflow-hidden aspect-[3/4.5] border border-white/5 hover:border-purple-500/50 transition block bg-black/40">${capa?`<img src="${capa}" alt="${titulo}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">`:`<div class="w-full h-full bg-gradient-to-br from-purple-900/40 to-black flex items-end p-2"><span class="text-[9px] text-white/60">${titulo}</span></div>`}<div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent p-2"><p class="text-[9px] text-white/80 font-semibold truncate">${titulo}</p></div></a>`;
     }).join('');
   }catch(e){grid.innerHTML=emptyState(tab);}

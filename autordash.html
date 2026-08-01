@@ -531,6 +531,8 @@ textarea.input { resize: vertical; min-height: 100px; }
 .badge-published { background: rgba(34,197,94,0.1); color: var(--green); border: 1px solid rgba(34,197,94,0.25); }
 .badge-suspended { background: rgba(239,68,68,0.1); color: var(--red); border: 1px solid rgba(239,68,68,0.25); }
 .badge-premium { background: rgba(143,79,255,0.12); color: #c4a3ff; border: 1px solid rgba(143,79,255,0.3); }
+.badge-manga { background: rgba(217,181,90,0.12); color: var(--accent2); border: 1px solid rgba(217,181,90,0.3); }
+.badge-novel { background: rgba(143,79,255,0.12); color: #c4a3ff; border: 1px solid rgba(143,79,255,0.3); }
 
 /* ─── WORKS TABLE ─── */
 .works-table { width: 100%; border-collapse: collapse; }
@@ -1088,35 +1090,43 @@ textarea.input { resize: vertical; min-height: 100px; }
           </div>
         </div>
 
-        <div class="field">
-          <label class="label">Capítulos gratuitos desta obra</label>
-          <input type="number" class="input" id="cap-free-count" placeholder="Ex: 3 (primeiros 3 são grátis)" min="0">
-        </div>
-
         <button class="btn btn-primary" style="width:100%;margin-top:8px;justify-content:center;" onclick="publishChapter()">
           Publicar Capítulo
         </button>
       </div>
 
-      <!-- Upload de Páginas -->
+      <!-- Upload de Páginas (mangá) OU Conteúdo (novel) -->
       <div>
-        <div class="card" style="margin-bottom:16px;">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-            <span style="font-size:13px;font-weight:700;">Páginas</span>
-            <span id="page-count-label" style="font-size:12px;color:var(--accent);font-family:var(--font-mono);font-weight:700;">0 páginas</span>
+        <div id="cap-pages-panel">
+          <div class="card" style="margin-bottom:16px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+              <span style="font-size:13px;font-weight:700;">Páginas</span>
+              <span id="page-count-label" style="font-size:12px;color:var(--accent);font-family:var(--font-mono);font-weight:700;">0 páginas</span>
+            </div>
+
+            <div class="upload-zone" id="upload-zone">
+              <input type="file" id="file-input" multiple accept="image/jpeg,image/png,image/webp">
+              <div class="upload-icon">📸</div>
+              <div class="upload-text">Solte as imagens aqui</div>
+              <div class="upload-sub">JPG · PNG · WEBP · Máx 5MB/arquivo</div>
+              <div class="upload-sub" style="margin-top:4px;color:rgba(143,79,255,0.6);">Convertidas para WebP automaticamente</div>
+            </div>
           </div>
 
-          <div class="upload-zone" id="upload-zone">
-            <input type="file" id="file-input" multiple accept="image/jpeg,image/png,image/webp">
-            <div class="upload-icon">📸</div>
-            <div class="upload-text">Solte as imagens aqui</div>
-            <div class="upload-sub">JPG · PNG · WEBP · Máx 5MB/arquivo</div>
-            <div class="upload-sub" style="margin-top:4px;color:rgba(143,79,255,0.6);">Convertidas para WebP automaticamente</div>
+          <div id="page-grid" class="page-grid">
+            <div class="empty-grid" id="empty-grid-msg">Nenhuma página adicionada</div>
           </div>
         </div>
 
-        <div id="page-grid" class="page-grid">
-          <div class="empty-grid" id="empty-grid-msg">Nenhuma página adicionada</div>
+        <div id="cap-content-panel" style="display:none;">
+          <div class="card">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+              <span style="font-size:13px;font-weight:700;">Conteúdo do Capítulo</span>
+              <span id="cap-content-count" style="font-size:12px;color:var(--accent);font-family:var(--font-mono);font-weight:700;">0 caracteres</span>
+            </div>
+            <textarea class="input" id="cap-content" style="min-height:320px;font-family:var(--font-body);font-size:14px;line-height:1.7;" placeholder="Escreva o capítulo aqui. Separe parágrafos com uma linha em branco."></textarea>
+            <div style="font-size:11px;color:var(--muted);margin-top:8px;font-family:var(--font-mono);">Novel — texto puro; parágrafos separados por linha em branco.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -1285,6 +1295,24 @@ textarea.input { resize: vertical; min-height: 100px; }
         </select>
       </div>
       <div class="field">
+        <label class="label">Formato</label>
+        <select class="input" id="work-format">
+          <option value="" disabled hidden>—</option>
+          <option value="manga" selected>Mangá</option>
+          <option value="novel">Novel</option>
+        </select>
+        <div id="work-format-hint" style="display:none;font-size:10px;color:var(--accent2);margin-top:6px;line-height:1.5;"></div>
+      </div>
+      <div class="field">
+        <label class="label">Status da Série</label>
+        <select class="input" id="work-serial-status">
+          <option value="" disabled hidden>—</option>
+          <option value="ongoing" selected>Em andamento</option>
+          <option value="completed">Concluída</option>
+          <option value="hiatus">Hiato</option>
+        </select>
+      </div>
+      <div class="field">
         <label class="label">Classificação Etária</label>
         <select class="input" id="work-rating">
           <option value="free">Livre</option>
@@ -1370,19 +1398,32 @@ textarea.input { resize: vertical; min-height: 100px; }
 
     <div class="sep"></div>
 
-    <!-- Páginas existentes com reordenação -->
-    <div style="font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-mono);margin-bottom:12px;">Páginas Existentes <span style="color:var(--muted);font-weight:400;text-transform:none;">(arraste para reordenar)</span></div>
-    <div id="edit-existing-pages" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:6px;min-height:40px;margin-bottom:16px;"></div>
-    <button class="btn btn-ghost btn-sm" style="width:100%;margin-bottom:16px;" onclick="savePageOrder()" id="save-order-btn" style="display:none;">💾 Salvar Ordem das Páginas</button>
+    <!-- Seção MANGÁ: páginas existentes + upload -->
+    <div id="edit-pages-section">
+      <!-- Páginas existentes com reordenação -->
+      <div style="font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-mono);margin-bottom:12px;">Páginas Existentes <span style="color:var(--muted);font-weight:400;text-transform:none;">(arraste para reordenar)</span></div>
+      <div id="edit-existing-pages" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:6px;min-height:40px;margin-bottom:16px;"></div>
+      <button class="btn btn-ghost btn-sm" style="width:100%;margin-bottom:16px;" onclick="savePageOrder()" id="save-order-btn" style="display:none;">💾 Salvar Ordem das Páginas</button>
 
-    <!-- Upload de páginas adicionais -->
-    <div style="font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-mono);margin-bottom:12px;">Adicionar Páginas</div>
-    <div class="upload-zone" id="edit-upload-zone" style="padding:16px;">
-      <input type="file" id="edit-file-input" multiple accept="image/jpeg,image/png,image/webp">
-      <div class="upload-icon" style="font-size:24px;">📸</div>
-      <div class="upload-text" style="font-size:13px;">Solte imagens aqui para adicionar páginas</div>
+      <!-- Upload de páginas adicionais -->
+      <div style="font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-mono);margin-bottom:12px;">Adicionar Páginas</div>
+      <div class="upload-zone" id="edit-upload-zone" style="padding:16px;">
+        <input type="file" id="edit-file-input" multiple accept="image/jpeg,image/png,image/webp">
+        <div class="upload-icon" style="font-size:24px;">📸</div>
+        <div class="upload-text" style="font-size:13px;">Solte imagens aqui para adicionar páginas</div>
+      </div>
+      <div id="edit-pages-list" style="margin-top:12px;display:grid;grid-template-columns:repeat(auto-fill,minmax(60px,1fr));gap:6px;"></div>
     </div>
-    <div id="edit-pages-list" style="margin-top:12px;display:grid;grid-template-columns:repeat(auto-fill,minmax(60px,1fr));gap:6px;"></div>
+
+    <!-- Seção NOVEL: conteúdo em texto -->
+    <div id="edit-content-section" style="display:none;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <div style="font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-mono);">Conteúdo do Capítulo</div>
+        <span id="edit-cap-content-count" style="font-size:11px;color:var(--muted);font-family:var(--font-mono);">0 caracteres</span>
+      </div>
+      <textarea class="input" id="edit-cap-content" style="min-height:320px;font-family:var(--font-body);font-size:14px;line-height:1.7;" placeholder="Escreva o capítulo aqui. Separe parágrafos com uma linha em branco."></textarea>
+      <div id="edit-content-load-error" style="display:none;font-size:11px;color:var(--red);margin-top:8px;">Não foi possível carregar o conteúdo atual — salvar agora pode sobrescrever com o campo vazio.</div>
+    </div>
 
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeModal('chapter-modal')">Cancelar</button>
@@ -1492,6 +1533,37 @@ function openConfirm(msg, onConfirm) {
 /* ─── HELPERS ───────────────────────────────────────────── */
 function statusLabel(s) {
   return { draft: 'Rascunho', pending: 'Revisão', published: 'Publicado', suspended: 'Suspenso', rejected: 'Rejeitado' }[s] || s;
+}
+
+/* Badge de formato — desconhecido = sem badge (nunca chutar) */
+function formatBadge(w) {
+  if (w?.format === 'manga') return '<span class="badge badge-manga">Mangá</span>';
+  if (w?.format === 'novel') return '<span class="badge badge-novel">Novel</span>';
+  return '';
+}
+
+/* Mensagens dos erros de contrato do backend (formato/conteúdo) */
+function chapterErrorMsg(data, fallback) {
+  const map = {
+    format_locked: 'O formato está travado — a obra já tem capítulos. Alteração só via suporte.',
+    work_is_manga: 'Esta obra é um MANGÁ — envie páginas (imagens), não texto.',
+    work_is_novel: 'Esta obra é uma NOVEL — envie texto, não páginas.',
+    content_required: 'Capítulo de novel fora do rascunho precisa de conteúdo.'
+  };
+  return map[data?.error] || data?.message || data?.error || fallback;
+}
+
+/* Quantos capítulos a obra tem? Retorna número ou null (desconhecido).
+   Ordem: shape do GET /api/herald/works → capítulos já carregados no dash → busca no servidor. */
+async function resolveWorkChapterCount(w) {
+  if (Array.isArray(w.chapters)) return w.chapters.length;
+  if (typeof w.chapters_count === 'number') return w.chapters_count;
+  if (typeof w.total_chapters === 'number') return w.total_chapters;
+  if (S.chapters.some(c => c.workId === w.id)) return S.chapters.filter(c => c.workId === w.id).length;
+  // último recurso: pergunta ao servidor
+  const { ok, data } = await api(`/api/herald/works/${w.id}/chapters`);
+  if (ok) return (data.chapters || []).length;
+  return null;
 }
 
 function fmtNum(n) { return Number(n || 0).toLocaleString('pt-BR'); }
@@ -1618,7 +1690,7 @@ async function loadDashboard() {
           ${w.cover_url ? `<img src="${w.cover_url}" style="width:100%;height:100%;object-fit:cover;">` : '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:16px;">📖</div>'}
         </div>
         <div style="flex:1;min-width:0;">
-          <div style="font-size:13px;font-weight:700;">${w.title}</div>
+          <div style="font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">${w.title} ${formatBadge(w)}</div>
           <div style="font-size:11px;color:var(--muted);font-family:var(--font-mono);margin-top:2px;">${w.category || '—'}</div>
           <div class="progress-bar" style="margin-top:8px;">
             <div class="progress-fill" style="width:${Math.min(100, (w.total_views / 10000 * 100)).toFixed(0)}%"></div>
@@ -1680,7 +1752,7 @@ function renderWorks() {
         ${S.works.map(w => `
           <tr>
             <td>
-              <div style="font-weight:700;font-size:13px;">${w.title}</div>
+              <div style="font-weight:700;font-size:13px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">${w.title} ${formatBadge(w)}</div>
               <div style="font-size:11px;color:var(--muted);font-family:var(--font-mono);">${w.category || '—'} · ${w.season_label || 'T1'}</div>
             </td>
             <td><span class="badge badge-${w.status}">${statusLabel(w.status)}</span></td>
@@ -1720,7 +1792,7 @@ function renderEngagement() {
             ${w.cover_url ? `<img src="${w.cover_url}" style="width:100%;height:100%;object-fit:cover;">` : '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:14px;">📖</div>'}
           </div>
           <div style="flex:1;min-width:0;">
-            <div style="font-size:13px;font-weight:700;">${w.title}</div>
+            <div style="font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">${w.title} ${formatBadge(w)}</div>
             <div style="font-size:10px;color:var(--muted);font-family:var(--font-mono);margin-top:2px;">${w.category || '—'} · <span class="badge badge-${w.status}" style="font-size:9px;">${statusLabel(w.status)}</span></div>
           </div>
         </div>
@@ -1773,6 +1845,13 @@ function openWorkModal(editId = null) {
   document.getElementById('cover-upload-placeholder').style.display = 'flex';
   document.getElementById('banner-upload-placeholder').style.display = 'flex';
 
+  // reset formato / status da série
+  const formatSel = document.getElementById('work-format');
+  const serialSel = document.getElementById('work-serial-status');
+  const formatHint = document.getElementById('work-format-hint');
+  formatSel.disabled = false;
+  formatHint.style.display = 'none';
+
   if (editId) {
     const w = S.works.find(x => x.id === editId);
     if (w) {
@@ -1783,6 +1862,29 @@ function openWorkModal(editId = null) {
       document.getElementById('work-tags').value = Array.isArray(w.tags) ? w.tags.join(', ') : '';
       document.getElementById('work-season').value = w.season_label || '';
       document.getElementById('work-free-chapters').value = w.free_chapters ?? 1;
+      // formato/status vindos do servidor; vazio = desconhecido → "—"
+      formatSel.value = w.format || '';
+      serialSel.value = w.serial_status || '';
+
+      // formato só é editável se a obra NÃO tem capítulos.
+      // Enquanto não confirmar (desconhecido = bloqueado), o select fica travado.
+      formatSel.disabled = true;
+      formatHint.textContent = 'Verificando capítulos da obra...';
+      formatHint.style.display = 'block';
+      resolveWorkChapterCount(w).then(count => {
+        if (S.editWorkId !== editId) return; // o modal já mudou de obra
+        if (count === 0) {
+          formatSel.disabled = false;
+          formatHint.style.display = 'none';
+        } else if (count === null) {
+          formatSel.disabled = true;
+          formatHint.textContent = 'Não foi possível verificar os capítulos — formato bloqueado por segurança.';
+        } else {
+          formatSel.disabled = true;
+          formatHint.textContent = 'Formato travado — a obra já tem capítulos (caso de suporte).';
+        }
+      });
+
       // mostra imagens existentes
       if (w.cover_url && coverImg) {
         coverImg.src = w.cover_url;
@@ -1802,6 +1904,8 @@ function openWorkModal(editId = null) {
       document.getElementById(id).value = '';
     });
     document.getElementById('work-free-chapters').value = '1';
+    formatSel.value = 'manga';       // default Nova Obra
+    serialSel.value = 'ongoing';     // default Nova Obra
   }
 
   openModal('work-modal');
@@ -1817,12 +1921,19 @@ async function saveWork() {
   const tagsRaw     = document.getElementById('work-tags').value;
   const season_label = document.getElementById('work-season').value.trim();
   const free_chapters = parseInt(document.getElementById('work-free-chapters').value) || 1;
+  const formatSel   = document.getElementById('work-format');
+  // select travado (obra com capítulos / não verificado) → NÃO envia format no PATCH
+  const format      = formatSel.disabled ? '' : formatSel.value;
+  const serial_status = document.getElementById('work-serial-status').value;
 
   if (!title) { showToast('Título obrigatório.', 'error'); return; }
+  if (!S.editWorkId && !format) { showToast('Escolha o formato da obra.', 'error'); return; }
 
   const tags = tagsRaw.split(',').map(t => t.trim()).filter(Boolean);
   const payload = {
     title, synopsis, category, age_rating, tags, season_label, free_chapters,
+    ...(format ? { format } : {}),
+    ...(serial_status ? { serial_status } : {}),
     ...(S.coverUrl ? { cover_url: S.coverUrl } : {}),
     ...(S.bannerUrl ? { banner_url: S.bannerUrl } : {})
   };
@@ -1850,8 +1961,10 @@ async function saveWork() {
     closeModal('work-modal');
     await loadWorks();
     populateWorkSelects();
+  } else if (result.data?.error === 'format_locked') {
+    showToast('O formato não pode mudar: a obra já tem capítulos. Abra um caso com o suporte.', 'error');
   } else {
-    showToast(result.data?.message || 'Erro ao salvar obra.', 'error');
+    showToast(result.data?.message || result.data?.error || 'Erro ao salvar obra.', 'error');
   }
 }
 
@@ -1979,12 +2092,15 @@ function renderChapterList() {
     return;
   }
 
-  container.innerHTML = filtered.map(ch => `
+  container.innerHTML = filtered.map(ch => {
+    const w = S.works.find(x => x.id === ch.workId);
+    const isNovel = w?.format === 'novel';
+    return `
     <div class="chapter-item">
       <div class="chapter-num">C${String(ch.number).padStart(2, '0')}</div>
       <div class="chapter-info">
         <div class="chapter-title">${ch.title}</div>
-        <div class="chapter-meta">${ch.workTitle} · ${fmtNum(ch.views || 0)} views · ${ch.total_pages || 0} páginas</div>
+        <div class="chapter-meta">${ch.workTitle} · ${fmtNum(ch.views || 0)} views · ${isNovel ? 'texto (novel)' : `${ch.total_pages || 0} páginas`}</div>
       </div>
       ${ch.is_premium ? '<span class="badge badge-premium">Premium</span>' : ''}
       <span class="badge badge-${ch.status}">${statusLabel(ch.status)}</span>
@@ -1993,7 +2109,7 @@ function renderChapterList() {
         <button class="btn btn-danger btn-sm btn-icon" title="Excluir" onclick="confirmDeleteChapter(${ch.id}, '${ch.title.replace(/'/g,"\\'")}')">🗑️</button>
       </div>
     </div>
-  `).join('');
+  `;}).join('');
 }
 
 function confirmDeleteChapter(id, title) {
@@ -2012,6 +2128,17 @@ async function openChapterEdit(id) {
   S.editChapterPages = [];
   S.editExistingPages = []; // páginas existentes no banco
 
+  // formato da obra decide a seção: páginas (mangá) × texto (novel)
+  const work = S.works.find(w => w.id === ch.workId);
+  const isNovel = work?.format === 'novel';
+  S.editChapterIsNovel = isNovel;
+  document.getElementById('edit-pages-section').style.display = isNovel ? 'none' : '';
+  document.getElementById('edit-content-section').style.display = isNovel ? '' : 'none';
+  document.getElementById('edit-content-load-error').style.display = 'none';
+  const contentTa = document.getElementById('edit-cap-content');
+  contentTa.value = '';
+  updateEditContentCount();
+
   document.getElementById('chapter-modal-title').textContent = `Editar — ${ch.title}`;
   document.getElementById('edit-cap-number').value = ch.number || '';
   document.getElementById('edit-cap-title').value = ch.title || '';
@@ -2020,7 +2147,22 @@ async function openChapterEdit(id) {
   document.getElementById('edit-cap-premium').checked = !!ch.is_premium;
   document.getElementById('edit-pages-list').innerHTML = '';
 
-  // carrega páginas existentes
+  openModal('chapter-modal');
+
+  if (isNovel) {
+    // carrega o conteúdo atual do capítulo
+    const { ok, data } = await api(`/api/chapters/${id}`);
+    if (ok) {
+      contentTa.value = data.chapter?.content || '';
+      updateEditContentCount();
+    } else {
+      document.getElementById('edit-content-load-error').style.display = 'block';
+      showToast('Não foi possível carregar o conteúdo atual do capítulo.', 'error');
+    }
+    return;
+  }
+
+  // carrega páginas existentes (mangá)
   const existingEl = document.getElementById('edit-existing-pages');
   existingEl.innerHTML = '<div style="color:var(--muted);font-size:11px;">Carregando...</div>';
 
@@ -2030,11 +2172,11 @@ async function openChapterEdit(id) {
     renderExistingPages();
     document.getElementById('save-order-btn').style.display = 'block';
   } else {
-    existingEl.innerHTML = '<div style="color:var(--muted);font-size:11px;">Sem páginas ainda.</div>';
+    existingEl.innerHTML = ok
+      ? '<div style="color:var(--muted);font-size:11px;">Sem páginas ainda.</div>'
+      : '<div style="color:var(--red);font-size:11px;">Falha ao carregar as páginas.</div>';
     document.getElementById('save-order-btn').style.display = 'none';
   }
-
-  openModal('chapter-modal');
 }
 
 function renderExistingPages() {
@@ -2101,40 +2243,56 @@ async function saveChapterEdit() {
   const status    = document.getElementById('edit-cap-status').value;
   const readTime  = document.getElementById('edit-cap-readtime').value;
   const isPremium = document.getElementById('edit-cap-premium').checked;
+  const isNovel   = !!S.editChapterIsNovel;
+  const content   = isNovel ? document.getElementById('edit-cap-content').value : null;
 
   if (!title) { showToast('Título obrigatório.', 'error'); return; }
+  if (isNovel && status !== 'draft' && !content.trim()) {
+    showToast('Capítulo de novel fora do rascunho precisa de conteúdo.', 'error');
+    return;
+  }
 
   const btn = document.getElementById('save-chapter-btn');
   if (btn) { btn.textContent = 'Salvando...'; btn.disabled = true; }
 
-  // 1. atualiza metadados
-  const { ok } = await api(`/api/herald/chapters/${id}`, {
+  // 1. atualiza metadados (+ content quando a obra é novel)
+  const { ok, data } = await api(`/api/herald/chapters/${id}`, {
     method: 'PATCH',
-    body: JSON.stringify({ number: parseInt(number), title, status, read_time_sec: parseInt(readTime), is_premium: isPremium })
+    body: JSON.stringify({
+      number: parseInt(number), title, status, read_time_sec: parseInt(readTime), is_premium: isPremium,
+      ...(isNovel ? { content } : {})
+    })
   });
 
-  // 2. upload de páginas adicionais sequencialmente
-  if (ok && S.editChapterPages?.length) {
+  // 2. upload de páginas adicionais sequencialmente (só mangá)
+  let pagesFailed = 0;
+  if (ok && !isNovel && S.editChapterPages?.length) {
     showToast(`Enviando ${S.editChapterPages.length} páginas...`, 'info');
     for (const file of S.editChapterPages) {
       const formData = new FormData();
       formData.append('pages', file);
-      await fetch(`${API_BASE}/api/herald/chapters/${id}/pages`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${Auth.token()}` },
-        body: formData
-      });
+      try {
+        const up = await fetch(`${API_BASE}/api/herald/chapters/${id}/pages`, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${Auth.token()}` },
+          body: formData
+        });
+        if (!up.ok) pagesFailed++;
+      } catch (e) { pagesFailed++; }
     }
   }
 
   if (btn) { btn.textContent = 'Salvar'; btn.disabled = false; }
 
-  if (ok) {
+  if (ok && !pagesFailed) {
     showToast('Capítulo atualizado!', 'success');
     closeModal('chapter-modal');
     await loadChapterList();
+  } else if (ok) {
+    showToast(`Capítulo atualizado, mas ${pagesFailed} página(s) falharam no envio.`, 'error');
+    await loadChapterList();
   } else {
-    showToast('Erro ao atualizar capítulo.', 'error');
+    showToast(chapterErrorMsg(data, 'Erro ao atualizar capítulo.'), 'error');
   }
 }
 
@@ -2147,13 +2305,19 @@ async function publishChapter() {
   const seasonProduct  = document.getElementById('cap-season-product').value.trim();
   const chapterProduct = document.getElementById('cap-chapter-product').value.trim();
   const readTime = document.getElementById('cap-readtime').value;
+  const isNovel = selectedCapWorkFormat() === 'novel';
+  const content = isNovel ? document.getElementById('cap-content').value : '';
 
   if (!workId) { showToast('Selecione uma obra.', 'error'); return; }
   if (!number)  { showToast('Informe o número do capítulo.', 'error'); return; }
   if (!title)   { showToast('Informe o título do capítulo.', 'error'); return; }
-  if (!S.chapterPages.length) { showToast('Adicione pelo menos uma página.', 'error'); return; }
+  if (isNovel) {
+    if (!content.trim()) { showToast('Escreva o conteúdo do capítulo (novel).', 'error'); return; }
+  } else {
+    if (!S.chapterPages.length) { showToast('Adicione pelo menos uma página.', 'error'); return; }
+  }
 
-  // 1. cria o capítulo
+  // 1. cria o capítulo (novel envia o content junto; mangá segue com upload de páginas)
   const { ok, data } = await api(`/api/herald/works/${workId}/chapters`, {
     method: 'POST',
     body: JSON.stringify({
@@ -2163,45 +2327,86 @@ async function publishChapter() {
       is_premium: isPremium,
       season_product_id: seasonProduct || null,
       chapter_product_id: chapterProduct || null,
-      read_time_sec: parseInt(readTime)
+      read_time_sec: parseInt(readTime),
+      ...(isNovel ? { content } : {})
     })
   });
 
-  if (!ok) { showToast(data.message || 'Erro ao criar capítulo.', 'error'); return; }
+  if (!ok) { showToast(chapterErrorMsg(data, 'Erro ao criar capítulo.'), 'error'); return; }
 
-  const chapterId = data.chapter.id;
-
-  // 2. faz upload das páginas sequencialmente (garante ordem)
-  showToast(`Enviando ${S.chapterPages.length} páginas...`, 'info');
-
-  let successCount = 0;
-  for (let i = 0; i < S.chapterPages.length; i++) {
-    const formData = new FormData();
-    formData.append('pages', S.chapterPages[i]);
-    try {
-      const uploadRes = await fetch(`${API_BASE}/api/herald/chapters/${chapterId}/pages`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${Auth.token()}` },
-        body: formData
-      });
-      if (uploadRes.ok) successCount++;
-    } catch(e) {}
-  }
-
-  if (successCount === S.chapterPages.length) {
+  if (isNovel) {
+    // novel: sem upload de páginas — o servidor já confirmou o capítulo com o texto
     showToast('Capítulo publicado com sucesso!', 'success');
+    document.getElementById('cap-content').value = '';
+    updateCapContentCount();
   } else {
-    showToast(`${successCount}/${S.chapterPages.length} páginas enviadas.`, 'error');
+    const chapterId = data.chapter.id;
+
+    // 2. faz upload das páginas sequencialmente (garante ordem)
+    showToast(`Enviando ${S.chapterPages.length} páginas...`, 'info');
+
+    let successCount = 0;
+    for (let i = 0; i < S.chapterPages.length; i++) {
+      const formData = new FormData();
+      formData.append('pages', S.chapterPages[i]);
+      try {
+        const uploadRes = await fetch(`${API_BASE}/api/herald/chapters/${chapterId}/pages`, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${Auth.token()}` },
+          body: formData
+        });
+        if (uploadRes.ok) successCount++;
+      } catch(e) {}
+    }
+
+    if (successCount === S.chapterPages.length) {
+      showToast('Capítulo publicado com sucesso!', 'success');
+    } else {
+      showToast(`${successCount}/${S.chapterPages.length} páginas enviadas.`, 'error');
+    }
+
+    S.chapterPages = [];
+    document.getElementById('page-grid').innerHTML = '<div class="empty-grid" id="empty-grid-msg">Nenhuma página adicionada</div>';
+    updatePageCount();
   }
 
   // reset form
-  S.chapterPages = [];
-  document.getElementById('page-grid').innerHTML = '<div class="empty-grid" id="empty-grid-msg">Nenhuma página adicionada</div>';
-  updatePageCount();
   document.getElementById('cap-number').value = '';
   document.getElementById('cap-title').value = '';
   await loadChapterList();
 }
+
+/* ─── FORMATO DA OBRA NO FORM DE CAPÍTULO ── */
+function selectedCapWorkFormat() {
+  const workId = document.getElementById('cap-work')?.value;
+  if (!workId) return '';
+  const w = S.works.find(x => String(x.id) === String(workId));
+  return w?.format || ''; // vazio = desconhecido (mantém o fluxo de páginas atual)
+}
+
+function updateChapterFormMode() {
+  const isNovel = selectedCapWorkFormat() === 'novel';
+  const pagesPanel = document.getElementById('cap-pages-panel');
+  const contentPanel = document.getElementById('cap-content-panel');
+  if (pagesPanel) pagesPanel.style.display = isNovel ? 'none' : '';
+  if (contentPanel) contentPanel.style.display = isNovel ? '' : 'none';
+}
+
+function updateCapContentCount() {
+  const ta = document.getElementById('cap-content');
+  const label = document.getElementById('cap-content-count');
+  if (ta && label) label.textContent = `${ta.value.length} caracteres`;
+}
+
+function updateEditContentCount() {
+  const ta = document.getElementById('edit-cap-content');
+  const label = document.getElementById('edit-cap-content-count');
+  if (ta && label) label.textContent = `${ta.value.length} caracteres`;
+}
+
+document.getElementById('cap-work').addEventListener('change', updateChapterFormMode);
+document.getElementById('cap-content').addEventListener('input', updateCapContentCount);
+document.getElementById('edit-cap-content').addEventListener('input', updateEditContentCount);
 
 /* ═══════════════════════════════════════════════════════════
    UPLOAD DE PÁGINAS
@@ -2627,11 +2832,13 @@ async function submitHeraldApplication() {
    UTILS
 ═══════════════════════════════════════════════════════════ */
 function populateWorkSelects() {
-  const opts = S.works.map(w => `<option value="${w.id}">${w.title}</option>`).join('');
+  const opts = S.works.map(w => `<option value="${w.id}">${w.title}${w.format === 'novel' ? ' (Novel)' : w.format === 'manga' ? ' (Mangá)' : ''}</option>`).join('');
   ['cap-work', 'filter-work-chapters', 'comment-filter-work'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.innerHTML = (id === 'cap-work' ? '<option value="">Selecionar...</option>' : '<option value="">Todas</option>') + opts;
   });
+  // o select volta pro vazio → garante o painel padrão (páginas)
+  updateChapterFormMode();
 }
 
 function timeAgo(dateStr) {

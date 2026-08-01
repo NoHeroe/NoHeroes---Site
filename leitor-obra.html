@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>NoHeroes • Leitor</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="assets/css/noheroes-ui.css">
+<script defer src="assets/js/noheroes-ui.js"></script>
+<script>
+  tailwind.config = {
+    theme: { extend: {
+      colors:{ nh:{ bg:'#07060a', dark:'#0c0a10', accent:'#8f4fff', gold:'#d9b55a', card:'rgba(255,255,255,0.04)', border:'rgba(255,255,255,0.08)' } },
+      boxShadow:{ glow:'0 0 30px rgba(143,79,255,0.2)'},
+      fontFamily:{ display:['Cinzel Decorative','serif'], sans:['Inter','sans-serif']}
+    } }
+  }
+</script>
+<style>
+.mobile-paddings { padding-left:1rem;padding-right:1rem; }
+@media(min-width:640px){.mobile-paddings{padding-left:0;padding-right:0}}
+#brasasCanvas{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-1;pointer-events:none}
+.glass-nh{background:rgba(7,6,10,0.8)!important;backdrop-filter:blur(12px) saturate(150%);-webkit-backdrop-filter:blur(12px) saturate(150%);border-bottom:1px solid rgba(143,79,255,0.2)}
+.page-fade{animation:imgReveal 0.8s cubic-bezier(0.4,0,0.2,1) forwards}
+@keyframes imgReveal{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* Bottom Nav */
+#bottomNav{position:fixed;bottom:0;left:0;right:0;z-index:50;background:rgba(7,6,10,0.95);border-top:1px solid rgba(143,79,255,0.2);backdrop-filter:blur(12px);padding:8px 16px;display:flex;align-items:center;gap:8px;transform:translateY(100%);transition:transform 0.35s cubic-bezier(0.4,0,0.2,1)}
+#bottomNav.visible{transform:translateY(0)}
+.btn-nav{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);font-size:11px;font-weight:700;color:rgba(255,255,255,0.6);cursor:pointer;transition:all 0.2s;-webkit-tap-highlight-color:transparent}
+.btn-nav:active{transform:scale(0.95)}
+.btn-nav.active,.btn-nav:hover{background:rgba(143,79,255,0.15);border-color:rgba(143,79,255,0.4);color:#c4a3ff}
+.btn-nav-like.liked{background:rgba(239,68,68,0.15);border-color:rgba(239,68,68,0.4);color:#fca5a5}
+.btn-nav-fav.faved{background:rgba(217,181,90,0.15);border-color:rgba(217,181,90,0.4);color:#fde68a}
+
+/* Drawer */
+#drawer{background:rgba(5,5,7,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-left:1px solid rgba(143,79,255,0.2);box-shadow:-10px 0 30px rgba(0,0,0,0.9)}
+.drawer-item{display:flex;align-items:center;justify-content:space-between;padding:1rem;margin-bottom:0.5rem;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid transparent;transition:all 0.3s cubic-bezier(0.4,0,0.2,1)}
+.drawer-item:hover{background:rgba(143,79,255,0.08);border-color:rgba(143,79,255,0.3);transform:translateX(-5px)}
+.drawer-tag{font-size:9px;font-family:'Cinzel Decorative',serif;text-transform:uppercase;letter-spacing:1px;color:#8f4fff;opacity:0.7}
+#drawer::-webkit-scrollbar{width:3px}
+#drawer::-webkit-scrollbar-thumb{background:linear-gradient(#8f4fff,#d9b55a);border-radius:10px}
+.gradiente-noheroes{background:linear-gradient(135deg,#8f4fff 0%,#d9b55a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:inline-block}
+.barra-degrade{background:linear-gradient(90deg,#8f4fff,#d9b55a);display:block}
+
+/* Login modal */
+#loginModal{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px);display:none;place-items:center}
+#loginModal.show{display:grid}
+
+/* User badge colors */
+.badge-visitor{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.1);color:rgba(255,255,255,0.4)}
+.badge-user{background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.3);color:#4ade80}
+.badge-herald{background:rgba(143,79,255,0.1);border-color:rgba(143,79,255,0.3);color:#c084fc}
+.badge-admin{background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.3);color:#f87171}
+
+/* ─── PROTEÇÃO DE IMAGENS ── */
+#pages img {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  pointer-events: none;
+  -webkit-user-drag: none;
+  draggable: false;
+}
+#pages figure {
+  position: relative;
+  overflow: hidden;
+}
+/* Overlay invisível que bloqueia interação sem afetar visual */
+#pages figure::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  -webkit-tap-highlight-color: transparent;
+}
+.ring-progress .ind{stroke:#8f4fff;stroke-linecap:round;transform:rotate(-90deg);transform-origin:50% 50%;transition:stroke-dashoffset 0.6s ease}
+
+/* ─── TEXTO DE NOVEL ── */
+.novel-text{max-width:70ch;margin:0 auto;padding:28px 18px 48px;font-size:var(--novel-fs,18px);line-height:1.85;color:rgba(255,255,255,0.87);}
+.novel-text p{margin:0 0 1.15em;}
+.btn-font{padding:6px 10px;border-radius:9px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.7);font-size:12px;font-weight:800;cursor:pointer;transition:all 0.2s;-webkit-tap-highlight-color:transparent;}
+.btn-font:hover{background:rgba(143,79,255,0.15);border-color:rgba(143,79,255,0.4);color:#c4a3ff}
+.btn-font:disabled{opacity:0.35;cursor:not-allowed}
+
+/* ─── UTILITÁRIOS GLOBAIS ── */
+.grad-nh{background:linear-gradient(135deg,#8f4fff 0%,#d9b55a 100%)}
+.text-grad{background:linear-gradient(135deg,#c4a3ff 0%,#f0d99a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nh-input{width:100%;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:10px 16px;color:rgba(255,255,255,0.8);font-size:13px;outline:none;transition:border-color 0.2s}
+.nh-input:focus{border-color:rgba(143,79,255,0.5)}
+.nh-btn-secondary{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:8px 16px;color:rgba(255,255,255,0.6);font-size:11px;font-weight:700;cursor:pointer;transition:all 0.2s}
+.shadow-glow{box-shadow:0 0 30px rgba(143,79,255,0.2)}
+</style>
+</head>
+<body class="min-h-screen bg-nh-bg text-white/90 font-sans antialiased">
+
+<!-- Fundo + menu lateral (componentes compartilhados) -->
+<nh-background></nh-background>
+<nh-drawer></nh-drawer>
+
+<!-- LOGIN MODAL -->
+<div id="loginModal" style="position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:16px;">
+  <div style="background:#0c0a10;border:1px solid rgba(143,79,255,0.3);border-radius:20px;padding:32px;max-width:360px;width:100%;text-align:center;box-shadow:0 0 40px rgba(143,79,255,0.2);">
+    <div style="width:56px;height:56px;margin:0 auto 16px;border-radius:50%;background:linear-gradient(135deg,#8f4fff,#d9b55a);display:flex;align-items:center;justify-content:center;font-size:24px;">🔐</div>
+    <h3 style="font-family:'Cinzel Decorative',serif;font-size:18px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px;">Acesso Restrito</h3>
+    <p style="color:rgba(255,255,255,0.5);font-size:13px;line-height:1.6;margin-bottom:24px;">Faça login para comentar e interagir com a comunidade NoHeroes.</p>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <button onclick="location.href='login.html'" style="padding:12px;border-radius:12px;background:linear-gradient(135deg,#8f4fff,#d9b55a);color:#000;font-weight:700;font-size:14px;border:none;cursor:pointer;">Entrar</button>
+      <button onclick="document.getElementById('loginModal').style.display='none'" style="padding:12px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);font-weight:600;font-size:13px;cursor:pointer;">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="fixed top-0 inset-x-0 z-[60] h-16 border-b border-nh-border bg-black/60 backdrop-blur-md flex items-center">
+  <nav class="mx-auto max-w-7xl w-full px-4 flex items-center gap-3">
+    <a href="/" class="flex items-center gap-2.5">
+      <div class="h-8 w-8 rounded-lg grad-nh shadow-glow flex-shrink-0"></div>
+      <span class="font-display text-xl tracking-tight gradiente-noheroes">NoHeroes</span>
+    </a>
+    <div class="ml-auto flex items-center gap-2">
+      <span id="userStatus" class="badge-visitor text-[10px] uppercase tracking-widest px-3 py-1.5 rounded-full border font-bold">Visitante</span>
+      <button id="hamburgerBtn" data-nh-drawer-toggle aria-label="Abrir menu" class="h-9 w-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 transition text-white/70 hover:text-nh-accent">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main class="mx-auto max-w-7xl px-4 pt-20 pb-32 grid gap-6 mobile-paddings relative z-10">
+
+  <!-- LEITOR -->
+  <article class="rounded-2xl bg-nh-dark border border-nh-border shadow-xl overflow-hidden relative">
+    <header class="flex items-center justify-between px-4 py-3 border-b border-nh-border bg-nh-dark/95 backdrop-blur-sm">
+      <div class="min-w-0 flex-1">
+        <a id="backToWork" href="leitor.html" class="text-[11px] font-bold text-nh-accent/80 hover:text-nh-accent transition">← Voltar para a obra</a>
+        <h1 id="workTitle" class="truncate font-display text-xl text-grad">NoHeroes</h1>
+        <p id="chapterBreadcrumb" class="text-xs text-white/50 truncate mt-0.5">—</p>
+      </div>
+      <div id="readerActions" class="flex items-center gap-2 ml-3">
+        <div id="fontControls" style="display:none;align-items:center;gap:6px;">
+          <button id="fontMinus" class="btn-font" title="Diminuir fonte" aria-label="Diminuir tamanho da fonte">A−</button>
+          <button id="fontPlus" class="btn-font" title="Aumentar fonte" aria-label="Aumentar tamanho da fonte">A+</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- NAV TOPO -->
+    <div style="display:flex;gap:8px;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.3);">
+      <button onclick="changeChapter(-1)" style="flex:1;padding:8px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.6);font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg> Capítulo Anterior
+      </button>
+      <button onclick="changeChapter(1)" style="flex:1;padding:8px;border-radius:10px;background:linear-gradient(135deg,rgba(143,79,255,0.15),rgba(217,181,90,0.1));border:1px solid rgba(143,79,255,0.3);color:#c4a3ff;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
+        Próximo Capítulo <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+
+    <div id="readerContainer" class="bg-black/40 min-h-[60vh] relative">
+      <div id="pages" class="mx-auto max-w-[800px] px-2 sm:px-4 pt-2 pb-4 grid gap-1.5">
+        <div id="readerPlaceholder" class="py-20 flex flex-col items-center gap-4 text-center">
+          <div class="w-12 h-12 border-4 border-nh-accent border-t-transparent rounded-full animate-spin"></div>
+          <p class="text-sm text-white/60 font-semibold tracking-wide">Carregando obra...</p>
+        </div>
+      </div>
+      <div id="paywall" class="hidden absolute inset-0 grid place-items-center bg-nh-bg/80 backdrop-blur-xl z-20">
+        <div class="p-8 rounded-2xl border border-nh-accent/30 bg-nh-dark max-w-sm text-center shadow-glow">
+          <div class="w-16 h-16 mx-auto mb-4 rounded-full grad-nh grid place-items-center text-black text-3xl font-bold">🔒</div>
+          <h3 class="font-display text-2xl mb-2 text-grad">Acesso Bloqueado</h3>
+          <p class="text-white/80 text-sm leading-relaxed">Este capítulo pertence aos realms privados.</p>
+          <div class="mt-6 flex flex-col gap-3 justify-center">
+            <a id="paywallBuySeason" class="py-3 px-6 rounded-xl grad-nh text-black font-bold text-sm" target="_blank">Adquirir Passe da Temporada</a>
+            <a id="paywallBuyCh" class="py-3 px-6 rounded-xl bg-white/5 border border-white/10 text-white/60 text-sm" target="_blank">Apenas este capítulo</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NAV FUNDO -->
+    <div style="display:flex;gap:8px;padding:10px 12px;border-top:1px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.3);">
+      <button onclick="changeChapter(-1)" style="flex:1;padding:8px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.6);font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg> Capítulo Anterior
+      </button>
+      <button onclick="changeChapter(1)" style="flex:1;padding:8px;border-radius:10px;background:linear-gradient(135deg,rgba(143,79,255,0.15),rgba(217,181,90,0.1));border:1px solid rgba(143,79,255,0.3);color:#c4a3ff;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
+        Próximo Capítulo <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+
+    <!-- VOLTAR PARA A OBRA (fim do capítulo) -->
+    <div style="display:flex;justify-content:center;padding:14px;border-top:1px solid rgba(255,255,255,0.04);background:rgba(0,0,0,0.2);">
+      <a id="backToWorkBottom" href="leitor.html" class="nh-btn-secondary" style="text-decoration:none;">← Voltar para a obra</a>
+    </div>
+  </article>
+
+  <!-- CAPÍTULOS -->
+  <section class="rounded-2xl bg-nh-dark border border-nh-border p-4 shadow-xl">
+    <header class="flex items-center justify-between mb-4 pb-2 border-b border-nh-border">
+      <div class="flex items-center gap-2">
+        <h2 class="font-display text-lg text-grad">Capítulos</h2>
+        <span id="seasonBadge" class="text-xs px-2.5 py-1 rounded-full bg-nh-card border border-nh-border font-medium">T1</span>
+      </div>
+      <label class="flex items-center gap-1.5 text-xs text-white/50 cursor-pointer">
+        <input id="onlyUnread" type="checkbox" class="accent-nh-accent h-4 w-4 rounded" onchange="renderChapters()"> Não lidos
+      </label>
+    </header>
+    <div id="chapterList" class="space-y-2">
+      <div class="h-16 rounded-xl bg-nh-card animate-pulse border border-nh-border"></div>
+      <div class="h-16 rounded-xl bg-nh-card animate-pulse border border-nh-border"></div>
+    </div>
+  </section>
+
+  <!-- COMENTÁRIOS -->
+  <section class="rounded-2xl bg-nh-dark border border-nh-border p-4 shadow-xl mb-10">
+    <div class="flex items-center justify-between mb-6 pb-2 border-b border-nh-border">
+      <h2 class="font-display text-lg text-grad">Discussão <span id="commentCount" class="text-sm font-sans text-white/40 ml-1">(0)</span></h2>
+      <button onclick="refreshComments()" class="text-white/30 hover:text-white/60 text-xs transition">↻ Atualizar</button>
+    </div>
+    <div class="flex gap-3 mb-6 bg-nh-card p-4 rounded-xl border border-nh-border">
+      <div id="commentAvatar" class="h-9 w-9 rounded-full grad-nh shrink-0 flex items-center justify-center font-bold text-black text-xs">?</div>
+      <div class="flex-1 space-y-3">
+        <textarea id="mainCommentInput" class="w-full bg-transparent border-none outline-none resize-none text-sm text-white/80 placeholder-white/20 min-h-[52px]" placeholder="O que você achou deste capítulo?"></textarea>
+        <div class="flex justify-end border-t border-nh-border pt-3">
+          <button onclick="postComment()" class="px-5 py-2 rounded-lg grad-nh text-black font-bold text-xs hover:scale-105 active:scale-95 transition">Comentar</button>
+        </div>
+      </div>
+    </div>
+    <div id="commentsList" class="space-y-6">
+      <div class="text-center py-8 text-white/30 text-sm">Selecione um capítulo para ver os comentários.</div>
+    </div>
+  </section>
+
+</main>
+
+<!-- MODAL CAPÍTULOS -->
+<div id="chapterModal" style="position:fixed;inset:0;z-index:150;display:none;align-items:flex-end;justify-content:center;">
+  <div onclick="closeChapterModal()" style="position:absolute;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);"></div>
+  <div id="chapterModalBox" style="position:relative;width:100%;max-width:600px;background:#0c0a10;border:1px solid rgba(143,79,255,0.2);border-radius:24px 24px 0 0;max-height:72vh;display:flex;flex-direction:column;transform:translateY(100%);transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);">
+    <div style="padding:12px 20px 10px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0;">
+      <div>
+        <div style="font-family:'Cinzel Decorative',serif;font-size:13px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Capítulos</div>
+        <div id="chapterModalSub" style="font-size:10px;color:rgba(255,255,255,0.3);margin-top:2px;"></div>
+      </div>
+      <button onclick="closeChapterModal()" style="width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.5);font-size:13px;cursor:pointer;">✕</button>
+    </div>
+    <div id="chapterModalList" style="overflow-y:auto;padding:10px 12px 32px;display:flex;flex-direction:column;gap:6px;"></div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div id="bottomNav">
+  <button id="btnPrev" class="btn-nav" onclick="changeChapter(-1)">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+    Ant.
+  </button>
+  <button class="btn-nav btn-nav-like" id="btnLike" onclick="toggleLike()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+    Curtir
+  </button>
+  <button class="btn-nav btn-nav-fav" id="btnFav" onclick="toggleFavorite()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+    Salvar
+  </button>
+  <button class="btn-nav" onclick="scrollToChapters()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+    Caps
+  </button>
+  <button id="btnNext" class="btn-nav" onclick="changeChapter(1)">
+    Próx.
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+  </button>
+</div>
+
+<!-- Footer (componente compartilhado) -->
+<nh-footer></nh-footer>
+
+<script>
+const API_BASE = 'https://api.noheroes.com.br';
+const $ = (q) => document.querySelector(q);
+const $$ = (q) => Array.from(document.querySelectorAll(q));
+const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
+
+const TokenStorage = {
+  get: () => (localStorage.getItem('NoHeroes_token') || '').replace(/^Bearer\s+/i, '').trim(),
+  clear: () => localStorage.removeItem('NoHeroes_token')
+};
+
+const state = {
+  me: null,
+  slug: null,
+  pendingChapter: null,
+  currentWork: null,
+  chapters: [],
+  read: new Map(),
+  currentChapter: null,
+  liked: false,
+  faved: false
+};
+
+/* ─── API ── */
+async function api(path, opts = {}) {
+  const token = TokenStorage.get();
+  const headers = { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) };
+  const r = await fetch(`${API_BASE}${path}`, { ...opts, headers });
+  if (r.status === 401) TokenStorage.clear();
+  if (!r.ok) throw new Error(`API ${r.status}`);
+  return r.json();
+}
+
+function escHtml(s) {
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* Drawer: componente compartilhado <nh-drawer> (gatilho via [data-nh-drawer-toggle]) */
+
+/* ─── BOTTOM NAV (aparece ao scrollar para cima) ── */
+let lastScrollY = 0;
+window.addEventListener('scroll', () => {
+  const nav = $('#bottomNav');
+  const y = window.scrollY;
+  if (y < 100) { nav.classList.remove('visible'); }
+  else if (y < lastScrollY) { nav.classList.add('visible'); }
+  else { nav.classList.remove('visible'); }
+  lastScrollY = y;
+}, { passive: true });
+
+/* ─── ACESSO ── */
+function hasAccess(ch) {
+  if (!ch) return false;
+  const freeChapters = state.currentWork?.free_chapters ?? 1;
+  if (ch.number <= freeChapters) return true;
+  if (!ch.is_premium) return true;
+  return false;
+}
+
+/* ─── USER STATUS ── */
+function renderUserBadge() {
+  const el = $('#userStatus');
+  if (!el) return;
+  if (!state.me) {
+    el.className = 'badge-visitor text-[10px] uppercase tracking-widest px-3 py-1.5 rounded-full border font-bold';
+    el.textContent = 'Visitante';
+    return;
+  }
+  if (state.me.is_admin) {
+    el.className = 'badge-admin text-[10px] uppercase tracking-widest px-3 py-1.5 rounded-full border font-bold';
+    el.textContent = 'Admin';
+  } else if (state.me.is_herald) {
+    el.className = 'badge-herald text-[10px] uppercase tracking-widest px-3 py-1.5 rounded-full border font-bold';
+    el.textContent = 'Arauto';
+  } else {
+    el.className = 'badge-user text-[10px] uppercase tracking-widest px-3 py-1.5 rounded-full border font-bold';
+    el.textContent = 'Desperto';
+  }
+  // atualiza avatar comentário
+  const av = $('#commentAvatar');
+  if (av) av.textContent = (state.me.username || '?')[0].toUpperCase();
+}
+
+/* ─── TEMPLATES ── */
+const Templates = {
+  chapterItem: (ch, locked, read, progress) => {
+    const isNovel = state.currentWork?.format === 'novel';
+    const metaBits = [ch.read_time_sec ? Math.round(ch.read_time_sec/60)+' min' : '—'];
+    if (!isNovel) metaBits.push(`${ch.total_pages||0} pág`);
+    return `
+    <button class="group w-full rounded-xl p-4 text-left border ${locked ? 'border-nh-border bg-black/20 opacity-50 cursor-not-allowed' : 'border-nh-border bg-nh-card hover:bg-white/5 hover:border-nh-accent/30'} transition active:scale-[0.98]" onclick="${locked ? '' : `loadChapterById(${ch.id})`}">
+      <div class="flex items-center gap-4">
+        <div class="h-11 w-11 flex-shrink-0 grid place-items-center rounded-lg bg-black/50 border border-white/10 font-bold text-nh-accent tracking-tighter shadow-inner text-sm">C${String(ch.number).padStart(2,'0')}</div>
+        <div class="min-w-0 flex-1">
+          <div class="truncate ${read ? 'text-white/40 line-through' : 'text-grad font-bold'} text-base tracking-tight">${escHtml(ch.title)}</div>
+          <div class="text-xs text-white/50 mt-1">${metaBits.join(' · ')}</div>
+        </div>
+        <div class="ring-progress flex-shrink-0">
+          <svg width="32" height="32">
+            <circle class="track" cx="16" cy="16" r="14" stroke-width="3" fill="none"></circle>
+            <circle class="ind" cx="16" cy="16" r="14" stroke-width="3" fill="none" stroke-dasharray="${2*Math.PI*14}" stroke-dashoffset="${(1-progress)*2*Math.PI*14}"></circle>
+          </svg>
+        </div>
+        <div class="text-xl flex-shrink-0">${locked ? '🔒' : (read ? '✅' : '📖')}</div>
+      </div>
+    </button>`;
+  },
+
+  mangaPage: (src, idx, chapterTitle) => `
+    <figure class="rounded-lg overflow-hidden bg-nh-card border border-nh-border/40 animate-pulse transition-all duration-300" style="position:relative;">
+      <img src="${src}" alt="Página ${idx+1} — ${escHtml(chapterTitle)}" loading="lazy" decoding="async" draggable="false" oncontextmenu="return false" class="w-full h-auto block opacity-0 transition-opacity duration-500" onload="this.parentElement.classList.remove('animate-pulse');this.classList.remove('opacity-0')" style="-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;pointer-events:none;">
+    </figure>`,
+
+  comment: (c) => `
+    <div class="flex gap-3">
+      <div class="h-9 w-9 rounded-full bg-nh-card border border-nh-border shrink-0 grid place-items-center text-[10px] font-bold">${(c.user?.username||'?')[0].toUpperCase()}</div>
+      <div class="flex-1">
+        <div class="flex items-center gap-2 mb-1">
+          <span class="font-bold text-sm text-white">${c.user?.username||'—'}</span>
+          <span class="text-[10px] text-white/30">${timeAgo(c.createdAt)}</span>
+        </div>
+        <p class="text-sm text-white/70 leading-relaxed mb-2">${c.content}</p>
+        <div class="flex items-center gap-4">
+          <button onclick="likeComment(${c.id},this)" class="flex items-center gap-1 text-[10px] font-bold uppercase text-white/40 hover:text-nh-accent transition">🔥 ${c.likes||0}</button>
+          <button onclick="replyTo(${c.id})" class="text-[10px] font-bold uppercase text-white/40 hover:text-white transition">Responder</button>
+        </div>
+        ${c.replies?.length ? `<div class="mt-3 ml-4 pl-4 border-l-2 border-nh-border space-y-3">${c.replies.map(r=>`<div class="flex gap-3"><div class="h-7 w-7 rounded-full bg-nh-card border border-nh-border shrink-0 grid place-items-center text-[9px] font-bold">${(r.user?.username||'?')[0].toUpperCase()}</div><div><span class="font-bold text-xs text-white/80">${r.user?.username||'—'}</span> <span class="text-[10px] text-white/30">${timeAgo(r.createdAt)}</span><p class="text-xs text-white/60 mt-1">${r.content}</p></div></div>`).join('')}</div>` : ''}
+      </div>
+    </div>`
+};
+
+function timeAgo(d) {
+  if (!d) return '';
+  const diff = Date.now() - new Date(d).getTime();
+  const m = Math.floor(diff/60000);
+  if (m < 1) return 'agora';
+  if (m < 60) return `${m}min`;
+  const h = Math.floor(m/60);
+  if (h < 24) return `${h}h`;
+  return `${Math.floor(h/24)}d`;
+}
+
+/* ─── LINKS DE VOLTA PARA A OBRA ── */
+function updateBackLinks() {
+  const href = state.slug ? `obra.html?slug=${encodeURIComponent(state.slug)}` : 'leitor.html';
+  const label = state.slug ? '← Voltar para a obra' : '← Biblioteca';
+  ['#backToWork', '#backToWorkBottom'].forEach(sel => {
+    const el = $(sel);
+    if (el) { el.href = href; el.textContent = label; }
+  });
+}
+
+/* ─── RENDER ── */
+function renderChapters() {
+  const el = $('#chapterList');
+  if (!el) return;
+  el.innerHTML = '';
+  const onlyUr = $('#onlyUnread')?.checked || false;
+  const filtered = state.chapters
+    .filter(c => !onlyUr || !state.read.get(c.id)?.readAt)
+    .sort((a, b) => a.number - b.number);
+  if (!filtered.length) { el.innerHTML = '<p class="text-sm text-center py-8 text-white/40 border border-nh-border rounded-xl">Nenhum capítulo disponível.</p>'; return; }
+  filtered.forEach(ch => {
+    const locked = !hasAccess(ch);
+    const r = state.read.get(ch.id);
+    const read = !!r?.readAt;
+    const progress = r ? (r.progress||0) : 0;
+    el.insertAdjacentHTML('beforeend', Templates.chapterItem(ch, locked, read, progress));
+  });
+}
+
+function updateReaderUI(ch) {
+  const gate = $('#paywall');
+  if ($('#workTitle')) $('#workTitle').textContent = state.currentWork?.title || 'NoHeroes';
+  if ($('#chapterBreadcrumb')) $('#chapterBreadcrumb').textContent = ch ? `${state.currentWork?.title} • Cap. ${ch.number} — ${ch.title}` : '—';
+  if ($('#seasonBadge')) $('#seasonBadge').textContent = state.currentWork?.season_label || 'T1';
+  if (gate) hasAccess(ch) ? gate.classList.add('hidden') : gate.classList.remove('hidden');
+}
+
+function renderPages(ch) {
+  const pagesEl = $('#pages');
+  if (!pagesEl) return;
+  pagesEl.innerHTML = '';
+  const pages = (ch.pages || []).slice().sort((a,b) => (a.order||0) - (b.order||0));
+  if (!pages.length && !hasAccess(ch)) {
+    pagesEl.innerHTML = '<div class="py-20 text-center text-white/40">Capítulo premium — adquira o passe.</div>'; return;
+  }
+  if (!pages.length) {
+    pagesEl.innerHTML = '<div class="py-20 text-center text-white/40 text-sm">Este capítulo ainda não tem páginas.<br><span class="text-white/20 text-xs">O arauto precisa fazer o upload.</span></div>'; return;
+  }
+  pages.forEach((p, idx) => pagesEl.insertAdjacentHTML('beforeend', Templates.mangaPage(p.image_url, idx, ch.title || `Capítulo ${ch.number}`)));
+}
+
+/* ─── RENDERER DE TEXTO (NOVEL) ── */
+function renderNovel(ch) {
+  const pagesEl = $('#pages');
+  if (!pagesEl) return;
+  const paras = ch.content.trim()
+    .split(/\n{2,}/)
+    .map(p => `<p>${escHtml(p.trim()).replace(/\n/g, '<br>')}</p>`)
+    .join('');
+  pagesEl.innerHTML = `<div class="novel-text">${paras}</div>`;
+}
+
+/* ─── TAMANHO DA FONTE (novel) ── */
+const FS_KEY = 'nh_reader_fontsize';
+const FS_MIN = 16, FS_MAX = 24, FS_DEFAULT = 18;
+
+function getFontSize() {
+  const v = parseInt(localStorage.getItem(FS_KEY), 10);
+  return clamp(isNaN(v) ? FS_DEFAULT : v, FS_MIN, FS_MAX);
+}
+
+function setFontSize(v) {
+  v = clamp(v, FS_MIN, FS_MAX);
+  localStorage.setItem(FS_KEY, String(v));
+  document.documentElement.style.setProperty('--novel-fs', v + 'px');
+  const minus = $('#fontMinus'), plus = $('#fontPlus');
+  if (minus) minus.disabled = v <= FS_MIN;
+  if (plus) plus.disabled = v >= FS_MAX;
+}
+
+function toggleFontControls(show) {
+  const el = $('#fontControls');
+  if (el) el.style.display = show ? 'flex' : 'none';
+}
+
+/* ─── LIKE / FAVORITO ── */
+async function toggleLike() {
+  if (!state.me) { $('#loginModal').classList.add('show'); return; }
+  if (!state.currentWork) return;
+  try {
+    await api(`/api/works/${state.currentWork.id}/like`, { method: 'POST' });
+    state.liked = !state.liked;
+    const btn = $('#btnLike');
+    if (btn) btn.classList.toggle('liked', state.liked);
+  } catch(e) {}
+}
+
+async function toggleFavorite() {
+  if (!state.me) { $('#loginModal').classList.add('show'); return; }
+  if (!state.currentWork) return;
+  try {
+    await api(`/api/works/${state.currentWork.id}/favorite`, { method: 'POST' });
+    state.faved = !state.faved;
+    const btn = $('#btnFav');
+    if (btn) btn.classList.toggle('faved', state.faved);
+  } catch(e) {}
+}
+
+async function loadUserStatus() {
+  if (!state.currentWork || !state.me) return;
+  try {
+    const data = await api(`/api/works/${state.currentWork.id}/user-status`);
+    state.liked = data.liked || false;
+    state.faved = data.favorited || false;
+    $('#btnLike')?.classList.toggle('liked', state.liked);
+    $('#btnFav')?.classList.toggle('faved', state.faved);
+  } catch(e) {}
+}
+
+/* ─── COMENTÁRIOS ── */
+async function loadComments() {
+  if (!state.currentChapter) return;
+  try {
+    const data = await api(`/api/chapters/${state.currentChapter.id}/comments`);
+    const comments = data.comments || [];
+    $('#commentCount').textContent = `(${data.total||0})`;
+    const list = $('#commentsList');
+    if (!list) return;
+    if (!comments.length) { list.innerHTML = '<div class="text-center py-8 text-white/30 text-sm">Seja o primeiro a comentar!</div>'; return; }
+    list.innerHTML = comments.map(c => Templates.comment(c)).join('');
+  } catch(e) {
+    $('#commentsList').innerHTML = '<div class="text-center py-6 text-white/20 text-sm">Erro ao carregar comentários.</div>';
+  }
+}
+
+function refreshComments() { loadComments(); }
+
+async function postComment() {
+  if (!state.me) { $('#loginModal').classList.add('show'); return; }
+  if (!state.currentChapter) return;
+  const input = $('#mainCommentInput');
+  const content = input?.value.trim();
+  if (!content) return;
+  try {
+    await api(`/api/chapters/${state.currentChapter.id}/comments`, {
+      method: 'POST',
+      body: JSON.stringify({ content })
+    });
+    input.value = '';
+    await loadComments();
+  } catch(e) {}
+}
+
+async function likeComment(id, btn) {
+  if (!state.me) { $('#loginModal').classList.add('show'); return; }
+  try {
+    const data = await api(`/api/comments/${id}/like`, { method: 'POST' });
+    // atualiza contador no botão
+    const cur = parseInt(btn.textContent.replace(/\D/g,'')) || 0;
+    btn.textContent = `🔥 ${data.active ? cur+1 : Math.max(0,cur-1)}`;
+    btn.classList.toggle('text-nh-accent', data.active);
+  } catch(e) {}
+}
+
+function replyTo(id) {
+  if (!state.me) { $('#loginModal').classList.add('show'); return; }
+  // por ora foca no campo principal
+  $('#mainCommentInput')?.focus();
+}
+
+/* ─── PROGRESSO ── */
+function restoreScroll(ch) {
+  const r = state.read.get(ch.id);
+  if (!r?.scrollY) return;
+  setTimeout(() => window.scrollTo({ top: r.scrollY, behavior: 'instant' }), 150);
+}
+
+async function saveProgress(id, p, mark, y) {
+  if (!TokenStorage.get()) return;
+  try {
+    await api(`/api/me/chapters/${id}/progress`, { method: 'POST', body: JSON.stringify({ progress: clamp(p,0,1), read: !!mark, scrollY: y|0 }) });
+    const cur = state.read.get(id) || {};
+    state.read.set(id, { progress: clamp(p,0,1), readAt: mark ? new Date().toISOString() : cur.readAt||null, scrollY: y|0 });
+    renderChapters();
+  } catch(e) {}
+}
+
+/* ─── CAPÍTULO ── */
+async function loadChapter(ch) {
+  state.currentChapter = ch;
+  const placeholder = $('#readerPlaceholder');
+  if (placeholder) placeholder.remove();
+  updateReaderUI(ch);
+  if (!hasAccess(ch)) { renderPages(ch); toggleFontControls(false); return; }
+
+  const pagesEl = $('#pages');
+  if (pagesEl) pagesEl.innerHTML = '<div class="py-16 flex justify-center"><div class="w-10 h-10 border-4 border-nh-accent border-t-transparent rounded-full animate-spin"></div></div>';
+
+  let chapterData = null;
+  try {
+    const data = await api(`/api/chapters/${ch.id}`);
+    chapterData = data.chapter || {};
+  } catch(e) {
+    if (pagesEl) pagesEl.innerHTML = `<div class="py-16 text-center text-white/50 text-sm">Falha ao carregar o capítulo.<br><button class="nh-btn-secondary" style="margin-top:14px;" onclick="loadChapterById(${ch.id})">Tentar de novo</button></div>`;
+    toggleFontControls(false);
+    return;
+  }
+
+  ch.pages = chapterData.pages || [];
+  ch.content = typeof chapterData.content === 'string' ? chapterData.content : '';
+
+  if (ch.content.trim()) {
+    // capítulo de NOVEL — renderiza texto
+    renderNovel(ch);
+    setFontSize(getFontSize());
+    toggleFontControls(true);
+  } else {
+    // capítulo de MANGÁ — renderiza páginas
+    renderPages(ch);
+    toggleFontControls(false);
+  }
+
+  restoreScroll(ch);
+  renderChapters();
+  loadComments();
+  const rc = $('#readerContainer');
+  if (rc) rc.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function loadChapterById(id) {
+  const ch = state.chapters.find(c => c.id === id);
+  if (ch) loadChapter(ch);
+}
+
+function changeChapter(dir) {
+  if (!state.currentChapter) return;
+  const i = state.chapters.findIndex(c => c.id === state.currentChapter.id);
+  const next = state.chapters[i + dir];
+  if (next) loadChapter(next);
+  else alert(dir > 0 ? 'Fim dos capítulos!' : 'Este é o primeiro capítulo.');
+}
+
+function scrollToChapters() { openChapterModal(); }
+
+function openChapterModal() {
+  const modal = $('#chapterModal');
+  const box = $('#chapterModalBox');
+  const sub = $('#chapterModalSub');
+  const list = $('#chapterModalList');
+  if (!modal) return;
+  if (sub) sub.textContent = state.currentWork?.title || '';
+  if (list) {
+    if (!state.chapters.length) {
+      list.innerHTML = '<div style="text-align:center;padding:32px;color:rgba(255,255,255,0.3);font-size:13px;">Nenhum capítulo disponível.</div>';
+    } else {
+      const isNovel = state.currentWork?.format === 'novel';
+      list.innerHTML = state.chapters.map(ch => {
+        const locked = !hasAccess(ch);
+        const read = !!state.read.get(ch.id)?.readAt;
+        const active = state.currentChapter?.id === ch.id;
+        const metaBits = [];
+        if (!isNovel) metaBits.push(`${ch.total_pages||0} pág`);
+        if (ch.read_time_sec) metaBits.push(Math.round(ch.read_time_sec/60)+'min');
+        return `<button onclick="loadChapterById(${ch.id});closeChapterModal()" style="width:100%;text-align:left;padding:10px 12px;border-radius:10px;border:1px solid ${active?'rgba(143,79,255,0.5)':'rgba(255,255,255,0.06)'};background:${active?'rgba(143,79,255,0.1)':'rgba(255,255,255,0.02)'};cursor:${locked?'not-allowed':'pointer'};opacity:${locked?'0.5':'1'};display:flex;align-items:center;gap:10px;">
+          <div style="width:34px;height:34px;border-radius:8px;background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#8f4fff;flex-shrink:0;font-family:monospace;">C${String(ch.number).padStart(2,'0')}</div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:12px;font-weight:700;color:${read?'rgba(255,255,255,0.35)':'#fff'};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;${read?'text-decoration:line-through;':''}">${escHtml(ch.title)}</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.3);margin-top:1px;">${metaBits.join(' · ') || '—'}</div>
+          </div>
+          <span style="font-size:14px;">${locked?'🔒':read?'✅':active?'📖':''}</span>
+        </button>`;
+      }).join('');
+    }
+  }
+  modal.style.display = 'flex';
+  setTimeout(() => { if (box) box.style.transform = 'translateY(0)'; }, 10);
+}
+
+function closeChapterModal() {
+  const box = $('#chapterModalBox');
+  const modal = $('#chapterModal');
+  if (box) box.style.transform = 'translateY(100%)';
+  setTimeout(() => { if (modal) modal.style.display = 'none'; }, 350);
+}
+
+/* ─── OBRA ── */
+function retryLoad() { selectWork(state.slug, state.pendingChapter); }
+
+async function selectWork(slug, chapterId = null) {
+  state.slug = slug;
+  state.pendingChapter = chapterId;
+  updateBackLinks();
+
+  try {
+    const data = await api(`/api/works/${encodeURIComponent(slug)}`);
+    state.currentWork = data.work || null;
+  } catch(e) {
+    state.currentWork = null;
+  }
+  if (!state.currentWork) {
+    $('#readerPlaceholder')?.remove();
+    $('#pages').innerHTML = '<div class="py-16 text-center text-white/50 text-sm">Falha ao carregar a obra.<br><button class="nh-btn-secondary" style="margin-top:14px;" onclick="retryLoad()">Tentar de novo</button></div>';
+    return;
+  }
+  if ($('#seasonBadge')) $('#seasonBadge').textContent = state.currentWork.season_label || 'T1';
+  const cl = $('#chapterList');
+  if (cl) cl.innerHTML = '<div class="h-16 rounded-xl bg-nh-card animate-pulse border border-nh-border"></div>';
+  try {
+    const data = await api(`/api/works/${encodeURIComponent(slug)}/chapters`);
+    state.chapters = data.chapters || [];
+  } catch(e) { state.chapters = []; }
+  renderChapters();
+  await loadUserStatus();
+
+  // ?chapter=<id> abre direto o capítulo pedido
+  if (chapterId) {
+    const target = state.chapters.find(c => String(c.id) === String(chapterId));
+    if (target) { loadChapter(target); return; }
+    $('#readerPlaceholder')?.remove();
+    $('#pages').innerHTML = '<div class="py-16 text-center text-white/50 text-sm">Capítulo não encontrado nesta obra.<br><span class="text-white/25 text-xs">Escolha um capítulo na lista abaixo.</span></div>';
+    updateReaderUI(null);
+    return;
+  }
+
+  const contCh = state.chapters.find(c => (state.read.get(c.id)?.progress||0) > 0);
+  const firstOp = contCh || state.chapters.find(c => hasAccess(c)) || state.chapters[0];
+  if (firstOp) loadChapter(firstOp);
+}
+
+/* ─── BOOTSTRAP ── */
+async function bootstrap() {
+  if (TokenStorage.get()) {
+    try {
+      const [meData, readData] = await Promise.all([api('/users/me'), api('/api/me/chapters')]);
+      state.me = meData.user || meData;
+      state.read = new Map((readData.chapters || []).map(r => [r.chapterId, r]));
+    } catch(e) { state.me = null; }
+  }
+  renderUserBadge();
+  const params = new URLSearchParams(location.search);
+  const urlSlug = params.get('slug');
+  const urlChapter = params.get('chapter');
+  if (urlSlug) {
+    selectWork(urlSlug, urlChapter);
+  } else {
+    $('#readerPlaceholder')?.remove();
+    $('#pages').innerHTML = '<div class="py-16 text-center text-white/50 text-sm">Nenhuma obra selecionada.<br><a href="leitor.html" class="nh-btn-secondary" style="display:inline-block;margin-top:14px;text-decoration:none;">Ir para a Biblioteca</a></div>';
+    updateBackLinks();
+  }
+}
+
+/* ─── SCROLL PROGRESS ── */
+let ticking = false, lastRep = 0;
+window.addEventListener('scroll', () => {
+  if (!state.currentChapter || ticking) return;
+  ticking = true;
+  const doc = document.documentElement;
+  const maxScroll = doc.scrollHeight - innerHeight;
+  const y = scrollY;
+  const p = maxScroll > 0 ? (y/maxScroll) : 0;
+  const now = Date.now();
+  if (now - lastRep > 2500 && p > 0.05) { saveProgress(state.currentChapter.id, p, p>=0.92, y|0); lastRep=now; }
+  ticking = false;
+}, { passive:true });
+
+/* ─── INIT ── */
+document.addEventListener('DOMContentLoaded', () => {
+  // Controles de fonte (novel)
+  setFontSize(getFontSize());
+  $('#fontMinus')?.addEventListener('click', () => setFontSize(getFontSize() - 1));
+  $('#fontPlus')?.addEventListener('click', () => setFontSize(getFontSize() + 1));
+
+  // Proteção de conteúdo — bloqueia salvar/copiar imagens e texto
+  document.addEventListener('contextmenu', e => {
+    if (e.target.closest('#pages')) e.preventDefault();
+  });
+  document.addEventListener('dragstart', e => {
+    if (e.target.closest('#pages')) e.preventDefault();
+  });
+  document.addEventListener('selectstart', e => {
+    if (e.target.closest('#pages')) e.preventDefault();
+  });
+  // toque longo no mobile
+  let touchTimer;
+  document.addEventListener('touchstart', e => {
+    if (e.target.closest('#pages')) {
+      touchTimer = setTimeout(() => e.preventDefault(), 400);
+    }
+  }, { passive: false });
+  document.addEventListener('touchend', () => clearTimeout(touchTimer));
+  document.addEventListener('touchmove', () => clearTimeout(touchTimer));
+
+  bootstrap();
+});
+
+/* Brasas: componente compartilhado <nh-background> (noheroes-ui.js) */
+</script>
+</body>
+</html>

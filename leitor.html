@@ -38,48 +38,15 @@
     </script>
 
     <style>
-       /* --- AUTOR CARD --- */
-.author-card {
-  display: flex; align-items: center; gap: 12px;
-  padding: 14px 16px;
-  background: rgba(143,79,255,0.06);
-  border: 1px solid rgba(143,79,255,0.15);
-  border-radius: 16px;
-  margin-bottom: 16px;
+/* --- BADGE DE FORMATO (canto da capa) --- */
+.fmt-badge {
+  position: absolute; top: 14px; left: 14px; z-index: 10;
+  padding: 3px 10px; border-radius: 999px;
+  font-size: 9px; font-weight: 900; letter-spacing: 0.15em; text-transform: uppercase;
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
 }
-.author-avatar {
-  width: 44px; height: 44px; border-radius: 50%;
-  object-fit: cover; border: 2px solid rgba(143,79,255,0.4);
-  background: #0c0a12; flex-shrink: 0;
-}
-.author-info { flex: 1; min-width: 0; }
-.author-name { font-size: 13px; font-weight: 700; color: #e5e7eb; }
-.author-role { font-size: 10px; color: rgba(217,181,90,0.8); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
-.btn-follow {
-  padding: 7px 14px; border-radius: 10px; font-size: 11px; font-weight: 800;
-  letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer;
-  border: 1px solid rgba(143,79,255,0.4); background: rgba(143,79,255,0.1);
-  color: #c084fc; transition: all .2s; flex-shrink: 0; white-space: nowrap;
-}
-.btn-follow.active { background: rgba(143,79,255,0.25); border-color: #8f4fff; color: #e9d5ff; }
-.btn-follow:hover { background: rgba(143,79,255,0.2); }
-.btn-fav-inline {
-  display: flex; align-items: center; gap: 6px;
-  padding: 14px; border-radius: 16px; font-size: 11px; font-weight: 800;
-  letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer;
-  border: 1px solid rgba(255,255,255,0.08);
-  background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.6);
-  transition: all .2s; justify-content: center; flex: 1;
-}
-.btn-fav-inline.active { border-color: rgba(217,181,90,0.5); background: rgba(217,181,90,0.08); color: #d9b55a; }
-.btn-read-inline {
-  flex: 2; padding: 14px; border-radius: 16px;
-  background: linear-gradient(135deg,#8f4fff,#d9b55a);
-  color: #000; font-size: 11px; font-weight: 900;
-  letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;
-  border: none; transition: all .2s;
-}
-.btn-read-inline:hover { filter: brightness(1.1); transform: translateY(-1px); }
+.fmt-manga { background: rgba(217,181,90,0.2); border: 1px solid rgba(217,181,90,0.5); color: #f0d99a; }
+.fmt-novel { background: rgba(143,79,255,0.22); border: 1px solid rgba(143,79,255,0.55); color: #cdb0ff; }
 
 /* --- FUNDAMENTOS & RESET --- */
 body { 
@@ -257,8 +224,6 @@ body {
 <!-- Fundo animado (componente compartilhado) -->
 <nh-background></nh-background>
 
-<div id="toast" class="fixed top-6 right-6 z-[200] px-6 py-3 rounded-2xl glass text-white text-sm font-bold opacity-0 translate-y-[-20px] transition-all duration-300 pointer-events-none"></div>
-
 <header class="fixed top-0 inset-x-0 z-50 glass h-16 border-b border-nh-border/30">
     <nav class="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
         <div class="flex items-center gap-3 cursor-pointer" onclick="resetHub()">
@@ -317,7 +282,7 @@ body {
                     <h2 class="font-display text-4xl text-grad leading-tight mb-4 uppercase">Torne-se um Arauto</h2>
                     <p class="text-white/50 text-lg max-w-md">Sua história merece o padrão NoHeroes. Junte-se a nós.</p>
                 </div>
-                <button onclick="location.href='nomangaka.html'" class="px-12 py-5 rounded-2xl grad-nh text-black font-black uppercase tracking-widest text-xs hover:scale-105 active:scale-95 transition shadow-glow">Propor Obra</button>
+                <button onclick="location.href='autordash.html'" class="px-12 py-5 rounded-2xl grad-nh text-black font-black uppercase tracking-widest text-xs hover:scale-105 active:scale-95 transition shadow-glow">Propor Obra</button>
             </div>
         </div>
     </section>
@@ -385,7 +350,6 @@ const UI = {
     grid: document.getElementById('works-grid'),
     filterBar: document.getElementById('filter-bar'),
     searchInput: document.getElementById('search-input'),
-    toast: document.getElementById('toast'),
     modal: document.getElementById('modal'),
     modalContent: document.getElementById('modal-content')
 };
@@ -445,8 +409,7 @@ function renderHero() {
             <h1 class="text-4xl md:text-8xl font-display text-grad mt-4 leading-tight uppercase break-words">${work.title}</h1>
             <p class="text-white/60 mt-4 text-sm md:text-lg max-w-xl italic leading-relaxed">"${(work.synopsis||'').length > 200 ? work.synopsis.slice(0,200)+'...' : (work.synopsis||'')}"</p>
             <div class="mt-6 flex flex-wrap gap-3">
-                <button onclick="location.href='mangá.html?slug=${work.slug}'" class="px-8 py-4 rounded-2xl grad-nh text-black font-black uppercase tracking-widest text-xs shadow-glow transition hover:scale-105 active:scale-95">Iniciar Leitura</button>
-                <button onclick="openModal('${work.slug}')" class="px-8 py-4 rounded-2xl glass text-white font-black uppercase tracking-widest text-xs transition hover:bg-white/10">Ficha Técnica</button>
+                <button onclick="location.href='obra.html?slug=${work.slug}'" class="px-8 py-4 rounded-2xl grad-nh text-black font-black uppercase tracking-widest text-xs shadow-glow transition hover:scale-105 active:scale-95">Ler agora</button>
             </div>
         </div>
     `;
@@ -471,12 +434,18 @@ function renderGrid() {
     }
 
     UI.grid.innerHTML = STATE.data.map(w => {
-        const tags = Array.isArray(w.tags) ? w.tags : [];
         const thumb = w.cover_url || 'https://via.placeholder.com/400x600/0c0a12/8f4fff?text=NoHeroes';
+        // badge de formato: só quando o servidor informa (desconhecido = sem badge)
+        const fmtBadge = w.format === 'manga'
+            ? '<span class="fmt-badge fmt-manga">Mangá</span>'
+            : w.format === 'novel'
+                ? '<span class="fmt-badge fmt-novel">Novel</span>'
+                : '';
         return `
-        <article class="group relative cursor-pointer fade-up" onclick="openModal('${w.slug}')">
-            <div class="aspect-[3/4.5] rounded-[2rem] overflow-hidden border border-white/5 group-hover:border-nh-accent/50 transition-all duration-500 shadow-2xl">
-                <img src="${thumb}" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" onerror="this.src='https://via.placeholder.com/400x600/0c0a12/8f4fff?text=NoHeroes'">
+        <article class="group relative cursor-pointer fade-up" onclick="location.href='obra.html?slug=${w.slug}'">
+            <div class="aspect-[3/4.5] rounded-[2rem] overflow-hidden border border-white/5 group-hover:border-nh-accent/50 transition-all duration-500 shadow-2xl relative">
+                ${fmtBadge}
+                <img src="${thumb}" alt="${w.title}" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" onerror="this.src='https://via.placeholder.com/400x600/0c0a12/8f4fff?text=NoHeroes'">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-80"></div>
                 <div class="absolute bottom-6 left-6 right-6">
                     <p class="text-[9px] font-black text-nh-accent uppercase tracking-[0.2em] mb-2">${w.category || ''}</p>
@@ -487,129 +456,8 @@ function renderGrid() {
     }).join('');
 }
 
-/* --- MODAL: FICHA TÉCNICA --- */
-async function openModal(slug) {
-    UI.modal.classList.remove('hidden');
-    UI.modalContent.innerHTML = `<div class="p-10 text-center text-white/40">Carregando...</div>`;
-    setTimeout(() => { UI.modal.classList.add('opacity-100'); UI.modalContent.classList.remove('translate-y-full'); }, 10);
-    document.body.style.overflow = 'hidden';
-
-    const data = await apiFetch(`/api/works/${slug}`);
-    const w = data?.work;
-    if (!w) { UI.modalContent.innerHTML = `<div class="p-10 text-center text-red-400">Erro ao carregar obra.</div>`; return; }
-
-    // Busca status do usuário (like, fav, follow) — best effort
-    const token = localStorage.getItem('NoHeroes_token');
-    let userStatus = { liked: false, favorited: false, following: false };
-    if (token) {
-        try {
-            const sr = await fetch(`${API_BASE}/api/works/${w.id}/user-status`, {
-                headers: { Authorization: token.startsWith('Bearer') ? token : `Bearer ${token}` }
-            });
-            if (sr.ok) userStatus = await sr.json();
-        } catch {}
-    }
-
-    const tags = Array.isArray(w.tags) ? w.tags : [];
-    const img  = w.banner_url || w.cover_url || '';
-
-    // Card do autor
-    const authorName   = w.Author?.username || w.author_name || 'Arauto';
-    const authorAvatar = w.Author?.avatar   || w.author_avatar || '';
-    const authorBio    = (w.Author?.bio || '').slice(0, 80);
-
-    const authorCard = `
-      <div class="author-card">
-        <img class="author-avatar" src="${authorAvatar || 'assets/images/logo noheroes.png'}"
-             onerror="this.src='assets/images/logo noheroes.png'" alt="${authorName}">
-        <div class="author-info">
-          <div class="author-name">${authorName}</div>
-          <div class="author-role">Arauto NoHeroes</div>
-          ${authorBio ? `<div style="font-size:10px;color:rgba(255,255,255,.35);margin-top:2px;">${authorBio}</div>` : ''}
-        </div>
-        <button id="btn-follow-${w.id}"
-          class="btn-follow ${userStatus.following ? 'active' : ''}"
-          onclick="toggleFollow('${slug}', ${w.id})">
-          ${userStatus.following ? '✓ Seguindo' : '+ Seguir'}
-        </button>
-      </div>`;
-
-    UI.modalContent.innerHTML = `
-        <div class="h-40 sm:h-56 relative bg-cover bg-center flex-shrink-0" style="background-image:url('${img}')">
-            <div class="absolute inset-0 bg-gradient-to-t from-nh-dark to-transparent"></div>
-            <button onclick="closeModal()" class="absolute top-4 right-4 h-10 w-10 rounded-full glass flex items-center justify-center text-lg transition hover:rotate-90">✕</button>
-        </div>
-        <div class="p-5 sm:p-8 -mt-6 relative z-10">
-            <div class="flex flex-wrap gap-2 mb-3">
-                ${tags.map(t => `<span class="px-3 py-1 rounded-full glass text-[9px] font-black uppercase text-nh-gold">${t}</span>`).join('')}
-            </div>
-            <h2 class="font-display text-xl sm:text-3xl text-grad uppercase mb-2">${w.title}</h2>
-            <p class="text-white/50 leading-relaxed mb-5 text-sm italic">"${(w.synopsis||'').length > 180 ? w.synopsis.slice(0,180)+'...' : (w.synopsis||'')}"</p>
-
-            <!-- Card do Autor -->
-            ${authorCard}
-
-            <!-- Ações -->
-            <div style="display:flex;gap:8px;margin-top:4px;">
-                <button class="btn-read-inline" onclick="location.href='mangá.html?slug=${w.slug}'">▶ Ler agora</button>
-                <button id="btn-fav-${w.id}"
-                  class="btn-fav-inline ${userStatus.favorited ? 'active' : ''}"
-                  onclick="favWork('${slug}', ${w.id})">
-                  ${userStatus.favorited ? '★ Salvo' : '☆ Salvar'}
-                </button>
-            </div>
-
-            <!-- Stats da obra -->
-            <div style="display:flex;gap:16px;margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.05);">
-              ${w.total_views ? `<span style="font-size:10px;color:rgba(255,255,255,.3);">👁 ${Number(w.total_views).toLocaleString('pt-BR')} views</span>` : ''}
-              ${w.total_followers ? `<span style="font-size:10px;color:rgba(255,255,255,.3);">👤 ${Number(w.total_followers).toLocaleString('pt-BR')} seguidores</span>` : ''}
-              ${w.total_likes ? `<span style="font-size:10px;color:rgba(255,255,255,.3);">♥ ${Number(w.total_likes).toLocaleString('pt-BR')} likes</span>` : ''}
-            </div>
-        </div>
-    `;
-}
-
-/* --- SEGUIR OBRA --- */
-async function toggleFollow(slug, id) {
-    const token = localStorage.getItem('NoHeroes_token');
-    if (!token) { showToast('Faça login para seguir obras.'); return; }
-    try {
-        const res = await fetch(`${API_BASE}/api/works/${id}/follow`, {
-            method: 'POST',
-            headers: { Authorization: token.startsWith('Bearer') ? token : `Bearer ${token}` }
-        });
-        const data = await res.json();
-        const btn = document.getElementById(`btn-follow-${id}`);
-        if (btn) {
-            btn.classList.toggle('active', data.active);
-            btn.textContent = data.active ? '✓ Seguindo' : '+ Seguir';
-        }
-        showToast(data.active ? 'Seguindo esta obra!' : 'Deixou de seguir.');
-    } catch {
-        showToast('Erro ao seguir.');
-    }
-}
-
-/* --- FAVORITAR --- */
-async function favWork(slug, id) {
-    const token = localStorage.getItem('NoHeroes_token');
-    if (!token) { showToast('Faça login para favoritar.'); return; }
-    try {
-        const res = await fetch(`${API_BASE}/api/works/${id}/favorite`, {
-            method: 'POST',
-            headers: { Authorization: token.startsWith('Bearer') ? token : `Bearer ${token}` }
-        });
-        const data = await res.json();
-        const btn = document.getElementById(`btn-fav-${id}`);
-        if (btn) {
-            btn.classList.toggle('active', data.active);
-            btn.textContent = data.active ? '★ Salvo' : '☆ Salvar';
-        }
-        showToast(data.active ? 'Adicionado aos favoritos!' : 'Removido dos favoritos.');
-    } catch {
-        showToast('Erro ao favoritar.');
-    }
-}
+/* Ficha técnica: agora é a página obra.html (o modal antigo foi removido).
+   O #modal continua existindo apenas para o modal da Comunidade. */
 
 function closeModal() {
     UI.modal.classList.remove('opacity-100');
@@ -632,7 +480,7 @@ function focusSearch() {
 }
 
 function openFeatured() {
-    if (STATE.featured) openModal(STATE.featured.slug);
+    if (STATE.featured) location.href = `obra.html?slug=${STATE.featured.slug}`;
 }
 
 function openCommunityModal() {
