@@ -1164,6 +1164,13 @@ carregarBiblioteca('lendo');
 // ═══════════════════════════════════════════════
 // NOTIFICAÇÕES
 // ═══════════════════════════════════════════════
+// XSS armazenado (varredura v1, LOTE 1, CEO 2026-08-02): o CORPO da notificação
+// é texto CRU de outro usuário — routes/comments.js:72 grava
+// `body: content.trim().slice(0, 100)` SEM passar nem pelo mask de palavrão.
+// Como a lista entra por innerHTML, escapar aqui é a única barreira.
+function escHtml(s) {
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
 const NOTIF_ICONS = {
   chapter_approved:       '✅',
   chapter_rejected:       '❌',
@@ -1231,8 +1238,8 @@ async function loadNotifications() {
       <div class="notif-item ${n.read ? '' : 'unread'}" onclick="markNotifRead(${n.id}, this, '${n.link || ''}')">
         <span class="notif-icon">${NOTIF_ICONS[n.type] || '🔔'}</span>
         <div class="notif-content">
-          <div class="notif-title">${n.title}</div>
-          <div class="notif-body">${n.body}</div>
+          <div class="notif-title">${escHtml(n.title)}</div>
+          <div class="notif-body">${escHtml(n.body)}</div>
           <div class="notif-time">${timeAgoNotif(n.createdAt)}</div>
         </div>
         ${!n.read ? '<div class="notif-dot"></div>' : ''}

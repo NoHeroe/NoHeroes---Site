@@ -388,18 +388,22 @@ const Templates = {
 
   comment: (c) => `
     <div class="flex gap-3">
-      <div class="h-9 w-9 rounded-full bg-nh-card border border-nh-border shrink-0 grid place-items-center text-[10px] font-bold">${(c.user?.username||'?')[0].toUpperCase()}</div>
+      <div class="h-9 w-9 rounded-full bg-nh-card border border-nh-border shrink-0 grid place-items-center text-[10px] font-bold">${escHtml((c.user?.username||'?')[0].toUpperCase())}</div>
       <div class="flex-1">
         <div class="flex items-center gap-2 mb-1">
-          <span class="font-bold text-sm text-white">${c.user?.username||'—'}</span>
+          <span class="font-bold text-sm text-white">${escHtml(c.user?.username||'—')}</span>
           <span class="text-[10px] text-white/30">${timeAgo(c.createdAt)}</span>
         </div>
-        <p class="text-sm text-white/70 leading-relaxed mb-2">${c.content}</p>
+        <!-- XSS armazenado (varredura v1, LOTE 1, CEO 2026-08-02): o conteúdo do
+             comentário é texto de OUTRO usuário e entra via innerHTML. O backend
+             só mascara palavrão (utils/moderation.mask), não escapa HTML → escapar
+             AQUI é a única barreira. Vale p/ comentário, resposta e nome de usuário. -->
+        <p class="text-sm text-white/70 leading-relaxed mb-2">${escHtml(c.content)}</p>
         <div class="flex items-center gap-4">
           <button onclick="likeComment(${c.id},this)" class="flex items-center gap-1 text-[10px] font-bold uppercase text-white/40 hover:text-nh-accent transition">🔥 ${c.likes||0}</button>
           <button onclick="replyTo(${c.id})" class="text-[10px] font-bold uppercase text-white/40 hover:text-white transition">Responder</button>
         </div>
-        ${c.replies?.length ? `<div class="mt-3 ml-4 pl-4 border-l-2 border-nh-border space-y-3">${c.replies.map(r=>`<div class="flex gap-3"><div class="h-7 w-7 rounded-full bg-nh-card border border-nh-border shrink-0 grid place-items-center text-[9px] font-bold">${(r.user?.username||'?')[0].toUpperCase()}</div><div><span class="font-bold text-xs text-white/80">${r.user?.username||'—'}</span> <span class="text-[10px] text-white/30">${timeAgo(r.createdAt)}</span><p class="text-xs text-white/60 mt-1">${r.content}</p></div></div>`).join('')}</div>` : ''}
+        ${c.replies?.length ? `<div class="mt-3 ml-4 pl-4 border-l-2 border-nh-border space-y-3">${c.replies.map(r=>`<div class="flex gap-3"><div class="h-7 w-7 rounded-full bg-nh-card border border-nh-border shrink-0 grid place-items-center text-[9px] font-bold">${escHtml((r.user?.username||'?')[0].toUpperCase())}</div><div><span class="font-bold text-xs text-white/80">${escHtml(r.user?.username||'—')}</span> <span class="text-[10px] text-white/30">${timeAgo(r.createdAt)}</span><p class="text-xs text-white/60 mt-1">${escHtml(r.content)}</p></div></div>`).join('')}</div>` : ''}
       </div>
     </div>`
 };

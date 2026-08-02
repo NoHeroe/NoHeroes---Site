@@ -805,6 +805,13 @@ const S = {
   rejectType: null
 };
 
+/* Escape de HTML — todo conteúdo de USUÁRIO renderizado por innerHTML passa aqui
+   (varredura v1, LOTE 1, CEO 2026-08-02). O backend não escapa: routes/comments.js
+   só mascara palavrão. Painel de admin é o alvo mais valioso de um XSS armazenado. */
+function escHtml(s) {
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
 /* ─── API ── */
 async function api(path, opts={}) {
   try {
@@ -1174,8 +1181,11 @@ async function loadAdminComments() {
     <div class="mod-item">
       <div class="avatar" style="width:36px;height:36px;font-size:11px;flex-shrink:0">${initials(c.user?.username)}</div>
       <div class="mod-info">
-        <div class="mod-title">${c.user?.username||'—'} <span style="color:var(--muted);font-size:11px;font-family:var(--fm)">${fmtDate(c.createdAt)}</span></div>
-        <div class="mod-body">${c.content}</div>
+        <!-- XSS armazenado com alvo ADMIN (varredura v1, LOTE 1, CEO 2026-08-02):
+             o painel de moderação renderiza o comentário do usuário via innerHTML.
+             É o pior alvo possível (sessão de admin), então escapa SEMPRE. -->
+        <div class="mod-title">${escHtml(c.user?.username||'—')} <span style="color:var(--muted);font-size:11px;font-family:var(--fm)">${fmtDate(c.createdAt)}</span></div>
+        <div class="mod-body">${escHtml(c.content)}</div>
         <div style="margin-top:6px">${statusBadge(c.status)}</div>
       </div>
       <div class="mod-actions">
