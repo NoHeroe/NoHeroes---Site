@@ -286,6 +286,7 @@ textarea.input{resize:vertical;min-height:80px}
 
   <span class="nav-section">Plataforma</span>
   <button class="nav-item" onclick="goTab('users')" id="nav-users"><span class="ni">👥</span>Usuários</button>
+  <button class="nav-item" onclick="goTab('players')" id="nav-players"><span class="ni">🎮</span>Jogadores</button>
   <button class="nav-item" onclick="goTab('shop')" id="nav-shop"><span class="ni">🛒</span>Loja</button>
   <button class="nav-item" onclick="goTab('finance')" id="nav-finance"><span class="ni">💰</span>Financeiro</button>
   <button class="nav-item" onclick="goTab('goals')" id="nav-goals"><span class="ni">🎯</span>Metas</button>
@@ -416,6 +417,28 @@ textarea.input{resize:vertical;min-height:80px}
         <tbody id="tb-users"><tr><td colspan="7" style="text-align:center;color:var(--muted);padding:20px">Carregando...</td></tr></tbody>
       </table>
     </div>
+  </div>
+
+  <!-- JOGADORES (app) — item 12 fase 1: SÓ CONSULTA -->
+  <div id="tab-players" class="tab">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Jogadores</div>
+        <div class="section-sub">Consulta do estado da conta no app — somente leitura</div>
+      </div>
+    </div>
+    <div class="search-row">
+      <input class="input" id="pl-q" placeholder="Buscar por email, username ou id…"
+             onkeydown="if(event.key==='Enter')buscarJogadores()">
+      <button class="btn btn-sm" onclick="buscarJogadores()">Buscar</button>
+    </div>
+    <div class="overflow-x">
+      <table class="tbl">
+        <thead><tr><th>Email</th><th>Username</th><th>Nv</th><th>Ouro</th><th>Gemas</th><th>Insíg.</th><th>Facção</th><th></th></tr></thead>
+        <tbody id="tb-players"><tr><td colspan="8" style="text-align:center;color:var(--muted);padding:20px">Digite um termo e busque.</td></tr></tbody>
+      </table>
+    </div>
+    <div id="pl-detalhe" style="margin-top:20px"></div>
   </div>
 
   <!-- LOJA -->
@@ -869,7 +892,7 @@ function goTab(id) {
   // lazy load
   const loaders = {
     dashboard:loadDashboard, works:loadAdminWorks, chapters:loadAdminChapters, heralds:loadAdminHeralds,
-    comments:loadAdminComments, users:loadAdminUsers, shop:loadShop,
+    comments:loadAdminComments, users:loadAdminUsers, shop:loadShop, players:initPlayers,
     goals:loadGoals, newsletter:loadNewsletter, revenue:loadRevenue, logs:loadLogs
   };
   if(loaders[id]) loaders[id]();
@@ -1847,6 +1870,144 @@ function logout() {
 
 /* ═══ INIT ═══ */
 document.addEventListener('DOMContentLoaded',boot);
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   JOGADORES (app) — item 12 fase 1, CEO 2026-08-04. SÓ CONSULTA.
+   "O que me destrava agora é enxergar as contas de fora do app."
+
+   Nenhuma função aqui muda estado. As ações (creditar/debitar moeda) entram na
+   fase 2; reset e exclusão só depois, com confirmação por digitação do email e
+   registro no razão de quem executou.
+
+   DADO HONESTO: o que o backend não souber vem como "—", nunca como 0 ou vazio
+   disfarçado de resposta. Quem lê a tela precisa distinguir "é zero" de "não sei".
+   ═══════════════════════════════════════════════════════════════════════════ */
+function plEsc(v){ return String(v==null?'':v).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function plNum(v){ return (v==null||v==='') ? '—' : Number(v).toLocaleString('pt-BR'); }
+function plData(ms){ if(!ms) return '—'; const d=new Date(Number(ms)); return isNaN(d)?'—':d.toLocaleString('pt-BR'); }
+
+async function plGet(url){
+  const r = await fetch(API_BASE + url, { headers: Auth.headers() });
+  if (r.status === 401 || r.status === 403) throw new Error('Sem permissão de administrador (403).');
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  return r.json();
+}
+
+function initPlayers(){ /* nada a carregar até haver busca — evita varrer a base à toa */ }
+
+async function buscarJogadores(){
+  const termo = (document.getElementById('pl-q').value||'').trim();
+  const tb = document.getElementById('tb-players');
+  document.getElementById('pl-detalhe').innerHTML = '';
+  if (termo.length < 2){ tb.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:20px">Mínimo 2 caracteres.</td></tr>'; return; }
+  tb.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:20px">Buscando…</td></tr>';
+  try{
+    const d = await plGet('/v1/admin/players?q=' + encodeURIComponent(termo));
+    if (!d.resultados || !d.resultados.length){ tb.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:20px">Nenhum jogador encontrado.</td></tr>'; return; }
+    tb.innerHTML = d.resultados.map(p => `<tr>
+      <td>${plEsc(p.email)}${p.is_admin?' <span class="nav-badge">admin</span>':''}${p.is_herald?' <span class="nav-badge">arauto</span>':''}</td>
+      <td>${plEsc(p.username)}</td><td>${plNum(p.level)}</td>
+      <td>${plNum(p.gold)}</td><td>${plNum(p.gems)}</td><td>${plNum(p.insignias)}</td>
+      <td>${plEsc(p.faction_type||'—')}</td>
+      <td><button class="btn btn-ghost btn-sm" onclick="abrirJogador('${plEsc(p.player_id)}')">Abrir</button></td>
+    </tr>`).join('');
+  }catch(e){ tb.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#e5484d;padding:20px">' + plEsc(e.message) + '</td></tr>'; }
+}
+
+async function abrirJogador(playerId){
+  const box = document.getElementById('pl-detalhe');
+  box.innerHTML = '<div style="color:var(--muted);padding:12px">Carregando ficha…</div>';
+  try{
+    // Em paralelo: a ficha é o que importa; as outras 4 podem falhar sem derrubar a tela.
+    const [ficha, inv, prog, razao, xp] = await Promise.all([
+      plGet('/v1/admin/players/' + playerId),
+      plGet('/v1/admin/players/' + playerId + '/inventory').catch(()=>null),
+      plGet('/v1/admin/players/' + playerId + '/progress').catch(()=>null),
+      plGet('/v1/players/' + playerId + '/economy-ledger?limit=100').catch(()=>null),
+      plGet('/v1/admin/players/' + playerId + '/xp-events?limit=100').catch(()=>null),
+    ]);
+    const f = ficha.ficha, c = f.contagens || {};
+    const linha = (k,v)=>`<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border2)"><span style="color:var(--muted)">${k}</span><span>${v}</span></div>`;
+
+    box.innerHTML = `
+      <div class="section-header"><div>
+        <div class="section-title">${plEsc(f.email)}</div>
+        <div class="section-sub">${plEsc(f.username)} · player ${plEsc(f.player_id)} · user ${plNum(f.user_id)}</div>
+      </div></div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px">
+        <div class="card"><div class="section-title" style="font-size:14px;margin-bottom:8px">Identidade</div>
+          ${linha('Admin', f.is_admin?'sim':'não')}${linha('Arauto', f.is_herald?'sim':'não')}
+          ${linha('Nascimento', f.birthdate?plEsc(f.birthdate):'—')}
+          ${linha('Criada em', f.created_at?new Date(f.created_at).toLocaleDateString('pt-BR'):'—')}
+          ${linha('Caelum', f.caelum? (plNum(f.caelum.caelum_day)+' / ano '+plNum(f.caelum.caelum_year)) : '—')}
+        </div>
+        <div class="card"><div class="section-title" style="font-size:14px;margin-bottom:8px">Progressão</div>
+          ${linha('Nível', plNum(f.level))}${linha('XP', plNum(f.xp)+' / '+plNum(f.xp_to_next))}
+          ${linha('Classe', plEsc(f.class_type||'—'))}${linha('Facção', plEsc(f.faction_type||'—'))}
+          ${linha('Guilda (rank)', plEsc(f.guild_rank||'—'))}${linha('Estilo', plEsc(f.play_style||'—'))}
+          ${linha('XP Caveira', plNum(f.skull_xp))}
+        </div>
+        <div class="card"><div class="section-title" style="font-size:14px;margin-bottom:8px">Moedas</div>
+          ${linha('Ouro', plNum(f.gold))}${linha('Gemas', plNum(f.gems))}${linha('Insígnias', plNum(f.insignias))}
+          ${linha('Ouro ganho (vida)', plNum(f.total_gold_earned_lifetime))}
+          ${linha('Gemas gastas (vida)', plNum(f.total_gems_spent))}
+          ${linha('Slots de inventário', plNum(f.inventory_slot_cap) + (f.inventory_locked?' (TRANCADO)':''))}
+        </div>
+        <div class="card"><div class="section-title" style="font-size:14px;margin-bottom:8px">Sombra &amp; Passe</div>
+          ${linha('Forma', plEsc(f.shadow_state||'—'))}${linha('Tipo', plEsc(f.shadow_type||'—'))}
+          ${linha('Corrupção', plNum(f.shadow_corruption))}
+          ${linha('Último eval', plEsc(f.shadow_last_eval_day||'—'))}
+          ${linha('Passe até', f.pass_until?plData(f.pass_until):'—')}
+          ${linha('XP da temporada', plNum(f.season_xp) + (f.pass_season?(' ('+plEsc(f.pass_season)+')'):''))}
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px"><div class="section-title" style="font-size:14px;margin-bottom:8px">Contagens</div>
+        <div style="display:flex;flex-wrap:wrap;gap:14px;color:var(--muted);font-size:13px">
+          <span>itens <b style="color:var(--text)">${plNum(c.itens)}</b></span>
+          <span>cartas <b style="color:var(--text)">${plNum(c.cartas)}</b></span>
+          <span>decks <b style="color:var(--text)">${plNum(c.decks)}</b></span>
+          <span>conquistas <b style="color:var(--text)">${plNum(c.conquistas)}</b></span>
+          <span>amigos <b style="color:var(--text)">${plNum(c.amigos)}</b></span>
+          <span>correio <b style="color:var(--text)">${plNum(c.correio)}</b></span>
+          <span>razão <b style="color:var(--text)">${plNum(c.linhas_razao)}</b></span>
+          <span>eventos XP <b style="color:var(--text)">${plNum(c.eventos_xp)}</b></span>
+        </div>
+      </div>
+
+      ${plTabela('Extrato da economia (razão)', razao && razao.linhas, ['created_at','currency','delta','balance_after','reason','ref'],
+        ['quando','moeda','delta','saldo depois','motivo','ref'], razao && razao.truncado)}
+      ${plTabela('Eventos de XP', xp && xp.eventos, ['created_at','amount_raw','amount_final','reason','level_before','level_after'],
+        ['quando','pedido','entrou','motivo','nv antes','nv depois'], xp && xp.truncado)}
+      ${plTabela('Inventário', inv && inv.itens, ['item_key','name','rarity','quantity','is_equipped'],
+        ['chave','nome','raridade','qtd','equipado'], inv && inv.truncado)}
+      ${plTabela('Missões recentes', prog && prog.progresso && prog.progresso.missoes,
+        ['mission_key','modality','rank','current_value','target_value','reward_claimed'],
+        ['missão','modalidade','rank','progresso','meta','paga'], false)}
+    `;
+    box.scrollIntoView({behavior:'smooth', block:'start'});
+  }catch(e){ box.innerHTML = '<div style="color:#e5484d;padding:12px">' + plEsc(e.message) + '</div>'; }
+}
+
+/** Tabela genérica. `dados` nulo = a consulta FALHOU — e a tela diz isso, em vez de
+ *  mostrar "nenhum registro", que faria erro parecer conta vazia. */
+function plTabela(titulo, dados, campos, cabecalhos, truncado){
+  let corpo;
+  if (dados == null) corpo = '<tr><td colspan="'+campos.length+'" style="text-align:center;color:#e5484d;padding:14px">não foi possível carregar</td></tr>';
+  else if (!dados.length) corpo = '<tr><td colspan="'+campos.length+'" style="text-align:center;color:var(--muted);padding:14px">nenhum registro</td></tr>';
+  else corpo = dados.map(r => '<tr>' + campos.map(k => {
+      let v = r[k];
+      if (k === 'created_at') v = plData(v);
+      else if (typeof v === 'boolean') v = v ? 'sim' : 'não';
+      else if (v == null || v === '') v = '—';
+      return '<td>' + plEsc(v) + '</td>';
+    }).join('') + '</tr>').join('');
+  return '<div class="card" style="margin-top:16px"><div class="section-title" style="font-size:14px;margin-bottom:8px">' + plEsc(titulo)
+    + (truncado ? ' <span class="nav-badge">truncado</span>' : '') + '</div><div class="overflow-x"><table class="tbl"><thead><tr>'
+    + cabecalhos.map(h=>'<th>'+plEsc(h)+'</th>').join('') + '</tr></thead><tbody>' + corpo + '</tbody></table></div></div>';
+}
+
 </script>
 </body>
 </html>
