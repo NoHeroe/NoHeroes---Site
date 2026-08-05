@@ -78,6 +78,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);overflow-x:hid
 .nav-badge{margin-left:auto;background:var(--red);color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:99px;font-family:var(--fm)}
 
 .sidebar-footer{margin-top:auto;padding-top:16px;border-top:1px solid var(--border2)}
+.sb-mobile-actions{display:none}
 .user-pill{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;background:var(--s2);border:1px solid var(--border2)}
 .avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--gold));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:#000;flex-shrink:0}
 .user-name{font-size:13px;font-weight:700}
@@ -213,7 +214,27 @@ textarea.input{resize:vertical;min-height:80px}
 
 /* MOBILE RESPONSIVE */
 @media(max-width:640px){
-  .main{padding-bottom:80px}
+  /* ── ITEM 13 (CEO 2026-08-04): "HUD duplicado no mobile e enquadramento ruim" ──
+     Medido a 360/390/430 AUTENTICADO e com as abas populadas (sessao simulada por
+     fixtures locais; o HTML e o de producao): os 6 itens da barra inferior apontam para
+     os MESMOS destinos de 6 itens da gaveta — a navegacao inteira estava em duplicata.
+     A gaveta tem os 14 destinos, a barra so 6; fica a gaveta (nenhum destino se perde) e
+     sai a duplicata. Isso ainda devolve ~140px de altura util (60px da barra + 80px de
+     padding que existiam so para reserva-la), que era metade do "enquadramento ruim".
+     A outra metade eram os alvos de toque do topo: medidos em 35 / 35 / 24 / 22px. */
+  .mob-nav{display:none}
+  .main{padding-bottom:24px}
+  .topbar{padding:0 12px}
+  .topbar-right{gap:6px}
+  .topbar .btn-sm{min-height:44px;padding:0 10px}
+  .ham-btn{min-width:44px;min-height:44px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .close-btn{min-width:44px;min-height:44px}
+  /* A barra de topo e FIXA: o que estoura dela nao entra em scrollWidth, entao nenhuma
+     medicao de vazamento horizontal pegava isso — so a captura pegou. Os 3 botoes vao
+     para a gaveta no mobile e o topo fica so com menu + marca. */
+  .topbar-right{display:none}
+  .sb-mobile-actions{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+  .sb-mobile-actions .btn{min-height:44px;justify-content:flex-start}
   .kpi-grid{grid-template-columns:1fr 1fr}
   .section-header{flex-direction:column;align-items:flex-start}
   .section-header .btn{width:100%;justify-content:center}
@@ -297,6 +318,14 @@ textarea.input{resize:vertical;min-height:80px}
   <button class="nav-item" onclick="goTab('logs')" id="nav-logs"><span class="ni">🧾</span>Logs</button>
 
   <div class="sidebar-footer">
+    <!-- ITEM 13: no mobile a barra de topo nao cabia com estes 3 botoes (medido: o
+         "Arautos" era cortado na borda a 390px). Eles vem para a gaveta, que ja e a
+         navegacao unica do mobile — nenhum destino se perde. -->
+    <div class="sb-mobile-actions">
+      <button class="btn btn-ghost" onclick="location.href='autordash.html'">🛡️ Painel do Arauto</button>
+      <button class="btn btn-ghost" onclick="location.href='index.html'">🌐 Ver o site</button>
+      <button class="btn btn-ghost" onclick="logout()">Sair</button>
+    </div>
     <div class="user-pill">
       <div class="avatar" id="sb-avatar">A</div>
       <div>
