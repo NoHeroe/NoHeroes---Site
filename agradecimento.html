@@ -69,6 +69,14 @@ if(status==='success'){
 ------------------------------------------------------ */
 document.getElementById("btnLoja").onclick = () => {
   try {
+    // P0 #18 (varredura v1): estas TRES chaves nunca existiram. A loja persiste o carrinho
+    // em "noheroes_cart" (store.html:356) e o recarrega no loadCart (store.html:374); no
+    // fluxo Mercado Pago ela NAO limpa antes de redirecionar (store.html:788-790 so faz
+    // toggleCart+assign). Resultado: depois de pagar de verdade, o usuario voltava com os
+    // MESMOS itens no carrinho e o badge cheio — nada indicando que ja tinham sido pagos.
+    // Segunda cobranca em dinheiro real, sem nenhuma guarda no caminho.
+    localStorage.removeItem("noheroes_cart");
+    // As antigas ficam por higiene (contas que passaram por versoes anteriores).
     localStorage.removeItem("cart");
     localStorage.removeItem("cartItems");
     localStorage.removeItem("nh_cart");
