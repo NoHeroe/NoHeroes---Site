@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<title>Portfólio — Raul Takagi | NoHeroes</title>
-<meta name="description" content="Portfólio de Raul Takagi — CEO da NoHeroes, desenvolvedor, artista digital, escritor, gestor e muito mais."/>
-<meta property="og:title" content="Portfólio — Raul Takagi | NoHeroes"/>
+<title>Tattoo &amp; Portfólio — Raul Takagi | NoHeroes</title>
+<meta name="description" content="Tattoo & Portfólio de Raul Takagi — tatuador, desenvolvedor full-stack, artista digital, escritor e CEO da NoHeroes. Sites, arte, escrita e tatuagem."/>
+<meta property="og:title" content="Tattoo & Portfólio — Raul Takagi | NoHeroes"/>
 <meta property="og:type" content="website"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
@@ -22,9 +22,7 @@ body{background:#07060a;color:#e5e5e5;font-family:'Inter',system-ui,Arial,sans-s
 .text-grad{background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .grad-border{border:1px solid rgba(143,79,255,0.2)}
 .section-label{font-size:11px;font-weight:700;color:rgba(143,79,255,0.7);text-transform:uppercase;letter-spacing:0.2em;margin-bottom:10px}
-
-/* DRAWER */
-/* Drawer: agora em assets/css/noheroes-ui.css (componente <nh-drawer>) */
+section[id]{scroll-margin-top:120px}
 
 /* CARDS */
 .card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:16px;backdrop-filter:blur(8px)}
@@ -39,16 +37,57 @@ body{background:#07060a;color:#e5e5e5;font-family:'Inter',system-ui,Arial,sans-s
 /* LANG FLAGS */
 .flag{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:99px;font-size:11px;font-weight:600;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08)}
 
+/* LANG SWITCH */
+.lang-btn{padding:3px 8px;font-size:11px;font-weight:700;border-radius:6px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.6);cursor:pointer;transition:all .2s ease;font-family:'Inter',sans-serif;}
+.lang-btn.active{background:linear-gradient(135deg,#8f4fff,#d9b55a);color:#000;border-color:transparent;box-shadow:0 0 10px rgba(143,79,255,0.4);}
+
+/* CATEGORY NAV (topo) */
+.catnav{position:sticky;top:64px;z-index:45;background:rgba(7,6,10,0.92);border-bottom:1px solid rgba(255,255,255,0.06);backdrop-filter:blur(12px);}
+.catnav-inner{max-width:1200px;margin:0 auto;display:flex;gap:8px;padding:10px 16px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;}
+.catnav-inner::-webkit-scrollbar{display:none}
+.cat-link{flex:0 0 auto;display:inline-flex;align-items:center;gap:7px;padding:8px 15px;border-radius:99px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);color:rgba(255,255,255,0.6);transition:all .2s;white-space:nowrap;font-family:'Inter',sans-serif;text-decoration:none;}
+.cat-link:hover{color:#fff;border-color:rgba(143,79,255,0.4)}
+.cat-link.active{background:rgba(143,79,255,0.16);border-color:rgba(143,79,255,0.45);color:#c4a3ff}
+@media(min-width:768px){.catnav-inner{justify-content:center}}
+
 /* TABS */
 .tab-btn{padding:8px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);color:rgba(255,255,255,0.5);transition:all 0.2s;font-family:'Inter',sans-serif;white-space:nowrap}
 .tab-btn.active{background:rgba(143,79,255,0.15);border-color:rgba(143,79,255,0.4);color:#c4a3ff}
 .tab-pane{display:none}.tab-pane.active{display:block}
 
 /* VITRINE CARDS */
-.vitrine-card{background:#0c0a10;border:1px solid rgba(255,255,255,0.07);border-radius:14px;overflow:hidden;transition:all 0.25s}
+.vitrine-card{background:#0c0a10;border:1px solid rgba(255,255,255,0.07);border-radius:14px;overflow:hidden;transition:all 0.25s;display:flex;flex-direction:column}
 .vitrine-card:hover{border-color:rgba(143,79,255,0.4);transform:translateY(-3px)}
-.vitrine-img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;transition:transform 0.4s ease}
+.vitrine-img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;transition:transform 0.4s ease;background:#0c0a10}
 .vitrine-card:hover .vitrine-img{transform:scale(1.03)}
+
+/* SITE LINK CARDS */
+.site-card{position:relative;display:block;border-radius:16px;overflow:hidden;text-decoration:none;border:1px solid rgba(255,255,255,0.08);background:#0c0a10;transition:transform .25s,border-color .25s}
+.site-card:hover{transform:translateY(-4px);border-color:rgba(143,79,255,0.4)}
+.site-thumb{height:150px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.site-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.site-card:hover .site-thumb img{transform:scale(1.05)}
+.site-body{padding:16px}
+.site-visit{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#c4a3ff;margin-top:10px}
+
+/* TATTOO CARDS */
+.tattoo-card{background:#0c0a10;border:1px solid rgba(255,255,255,0.07);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:all .25s}
+.tattoo-card:hover{border-color:rgba(143,79,255,0.4);transform:translateY(-3px)}
+.tattoo-ph{aspect-ratio:3/4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:repeating-linear-gradient(45deg,rgba(143,79,255,0.04),rgba(143,79,255,0.04) 12px,rgba(143,79,255,0.07) 12px,rgba(143,79,255,0.07) 24px);color:rgba(255,255,255,0.35);text-align:center;padding:16px}
+.tattoo-meta{display:grid;grid-template-columns:auto 1fr;gap:5px 12px;font-size:12px;margin-top:10px}
+.tattoo-meta dt{color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:.06em;font-size:10px;font-weight:700;align-self:center}
+.tattoo-meta dd{margin:0;color:rgba(255,255,255,0.7)}
+.badge-model{display:inline-block;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#f0d99a;background:rgba(217,181,90,0.12);border:1px solid rgba(217,181,90,0.3);border-radius:99px;padding:3px 9px}
+/* TATTOO GALLERY (masonry) */
+.tattoo-gallery{column-count:4;column-gap:14px}
+@media(max-width:1024px){.tattoo-gallery{column-count:3}}
+@media(max-width:640px){.tattoo-gallery{column-count:2}}
+.tg-item{break-inside:avoid;margin:0 0 14px;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);background:#0c0a10;transition:transform .25s,border-color .25s}
+.tg-item:hover{transform:translateY(-3px);border-color:rgba(143,79,255,0.4)}
+.tg-item img{width:100%;display:block}
+.tg-cap{padding:9px 11px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.tg-style{font-size:12px;font-weight:700;color:rgba(255,255,255,0.85)}
+.tg-loc{font-size:10px;color:rgba(196,163,255,0.72);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
 
 /* FORM */
 .field-label{display:block;font-size:12px;font-weight:600;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px}
@@ -60,60 +99,54 @@ select.field-input option{background:#0c0a10;color:#e5e5e5}
 /* CONTACT TYPE MODAL */
 #contactTypeModal{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.85);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:20px}
 #contactTypeModal.open{display:flex}
-.contact-type-card{background:#0c0a10;border:2px solid rgba(255,255,255,0.07);border-radius:14px;padding:20px;cursor:pointer;transition:all 0.2s;text-align:center}
+.contact-type-card{background:#0c0a10;border:2px solid rgba(255,255,255,0.07);border-radius:14px;padding:18px 14px;cursor:pointer;transition:all 0.2s;text-align:center}
 .contact-type-card:hover,.contact-type-card.selected{border-color:rgba(143,79,255,0.5);background:rgba(143,79,255,0.08)}
 .contact-type-card.selected{box-shadow:0 0 20px rgba(143,79,255,0.15)}
 
-/* COLLAGE */
-.collage-img{width:100%;height:100%;object-fit:cover;transition:opacity 0.4s ease}
-.collage-swap-out{opacity:0;transform:scale(0.98);transition:opacity 0.3s,transform 0.3s}
-.collage-swap-in{opacity:1;transform:scale(1);transition:opacity 0.4s,transform 0.4s}
+/* CTA BLOCK */
+.cta-block{margin-top:20px;background:linear-gradient(135deg,rgba(143,79,255,0.1),rgba(217,181,90,0.06));border:1px solid rgba(143,79,255,0.25);border-radius:14px;padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.cta-text{font-size:14px;font-weight:600;color:rgba(255,255,255,0.85);flex:1;min-width:200px}
+.cta-actions{display:flex;gap:10px;flex-wrap:wrap}
 
 /* REVEAL */
 .reveal{opacity:1;transition:opacity .6s ease,transform .6s ease}
-.reveal.hidden{opacity:0;transform:translateY(16px)}
-.reveal.hidden.in{opacity:1;transform:none}
-
-/* SLIDER */
-#slide-img { transition: opacity .5s ease; }
-@media (max-width: 768px) {
-  /* hero grid: stack */
-  .hero-grid { grid-template-columns: 1fr !important; }
-  /* stats: 2 cols */
-  .stats-grid { grid-template-columns: 1fr 1fr !important; }
-  /* skills: 2 cols */
-  .skills-grid { grid-template-columns: 1fr 1fr !important; }
-  /* vitrine: 1 col */
-  .vitrine-grid { grid-template-columns: 1fr !important; }
-  /* form grid: 1 col */
-  .form-grid { grid-template-columns: 1fr !important; }
-  /* bio grid: stack */
-  .bio-grid { grid-template-columns: 1fr !important; }
-  /* slider menor no mobile */
-  #slider-wrap { aspect-ratio: 16/9 !important; }
-}
-@media (max-width: 480px) {
-  .skills-grid { grid-template-columns: 1fr !important; }
-}
 
 /* STAT */
 .stat-num{font-size:28px;font-weight:800;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-
-/* TIMELINE */
-.tl-item{position:relative;padding-left:24px;margin-bottom:20px}
-.tl-item::before{content:'';position:absolute;left:0;top:6px;width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,#8f4fff,#d9b55a)}
-.tl-item::after{content:'';position:absolute;left:3px;top:14px;bottom:-14px;width:2px;background:rgba(143,79,255,0.15)}
-.tl-item:last-child::after{display:none}
 
 /* BTNS */
 .btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:10px;background:linear-gradient(135deg,#8f4fff,#d9b55a);color:#000;font-weight:700;font-size:13px;text-decoration:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;transition:filter 0.2s,transform 0.2s}
 .btn-primary:hover{filter:brightness(1.1);transform:translateY(-1px)}
 .btn-ghost{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 18px;border-radius:10px;border:1px solid rgba(143,79,255,0.3);color:#c4a3ff;font-weight:600;font-size:13px;text-decoration:none;background:rgba(143,79,255,0.06);cursor:pointer;font-family:'Inter',sans-serif;transition:background 0.2s}
 .btn-ghost:hover{background:rgba(143,79,255,0.14)}
+.btn-wa{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:10px;background:linear-gradient(135deg,#25D366,#128C7E);color:#04140b;font-weight:700;font-size:13px;text-decoration:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;transition:filter 0.2s,transform 0.2s}
+.btn-wa:hover{filter:brightness(1.08);transform:translateY(-1px)}
 
 /* CONTACT BTN HEADER */
 .hdr-contact{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:10px;background:linear-gradient(135deg,rgba(143,79,255,0.2),rgba(217,181,90,0.1));border:1px solid rgba(143,79,255,0.35);color:#c4a3ff;font-weight:600;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s}
 .hdr-contact:hover{background:rgba(143,79,255,0.25)}
+
+/* PORTRAIT */
+.portrait-wrap{border:1px solid rgba(143,79,255,0.2);border-radius:16px;overflow:hidden;background:#0c0a10;box-shadow:0 20px 60px rgba(0,0,0,0.5)}
+.portrait-wrap img{width:100%;height:100%;object-fit:cover;display:block;aspect-ratio:4/5}
+
+/* FLOATING WHATSAPP + SUPPORT */
+#nh-fab-stack{position:fixed;bottom:22px;right:20px;z-index:9999;display:flex;flex-direction:column;align-items:center;gap:14px}
+#nh-fab-wa{position:relative;width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#25D366,#128C7E);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(37,211,102,0.5);transition:transform .2s,box-shadow .2s;text-decoration:none}
+#nh-fab-wa:hover{transform:scale(1.08);box-shadow:0 8px 30px rgba(37,211,102,0.7)}
+#nh-fab-wa .fab-label{position:absolute;right:72px;top:50%;transform:translateY(-50%) translateX(6px);background:rgba(12,10,16,0.95);border:1px solid rgba(37,211,102,0.35);color:#8ff0b5;font-size:12px;font-weight:700;white-space:nowrap;padding:7px 12px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
+#nh-fab-wa:hover .fab-label{opacity:1;transform:translateY(-50%) translateX(0)}
+#nh-fab-sup-wrap{display:flex;flex-direction:column;align-items:center;gap:3px}
+#nh-fab-sup{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#8f4fff,#d9b55a);display:flex;align-items:center;justify-content:center;color:#000;font-size:17px;font-weight:800;text-decoration:none;box-shadow:0 4px 16px rgba(143,79,255,0.45);animation:supPulse 2.4s ease-in-out infinite}
+#nh-fab-sup:hover{filter:brightness(1.08)}
+#nh-fab-sup-sub{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(196,163,255,0.75)}
+@keyframes supPulse{0%,100%{box-shadow:0 4px 16px rgba(143,79,255,0.4);transform:scale(1)}50%{box-shadow:0 4px 22px rgba(143,79,255,0.75);transform:scale(1.06)}}
+@media(max-width:480px){
+  #nh-fab-stack{bottom:16px;right:14px;gap:10px}
+  #nh-fab-wa{width:54px;height:54px}
+  #nh-fab-wa .fab-label{display:none}
+  #nh-fab-sup{width:36px;height:36px;font-size:15px}
+}
 
 /* MOBILE */
 @media(max-width:768px){
@@ -121,13 +154,16 @@ select.field-input option{background:#0c0a10;color:#e5e5e5}
   .bio-grid{grid-template-columns:1fr!important}
   .skills-grid{grid-template-columns:1fr 1fr!important}
   .vitrine-grid{grid-template-columns:1fr 1fr!important}
+  .site-grid{grid-template-columns:1fr!important}
   .form-grid{grid-template-columns:1fr!important}
-  .stats-grid{grid-template-columns:1fr 1fr 1fr!important}
-  .contact-types{grid-template-columns:1fr!important}
+  .stats-grid{grid-template-columns:1fr 1fr!important}
+  .contact-types{grid-template-columns:1fr 1fr!important}
+  #slider-wrap{aspect-ratio:16/9!important}
 }
 @media(max-width:480px){
   .skills-grid{grid-template-columns:1fr!important}
   .vitrine-grid{grid-template-columns:1fr!important}
+  .contact-types{grid-template-columns:1fr!important}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -139,28 +175,33 @@ select.field-input option{background:#0c0a10;color:#e5e5e5}
 
 <!-- CONTACT TYPE MODAL -->
 <div id="contactTypeModal" onclick="if(event.target===this)closeContactModal()">
-  <div style="background:#0c0a10;border:1px solid rgba(143,79,255,0.3);border-radius:18px;padding:28px;max-width:480px;width:100%;">
-    <h3 class="cinzel text-grad" style="font-size:18px;margin:0 0 8px;">Como posso ajudar?</h3>
-    <p style="font-size:13px;color:rgba(255,255,255,0.4);margin:0 0 20px;">Selecione o tipo de contato para ser direcionado ao formulário correto.</p>
-    <div class="contact-types" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px;">
+  <div style="background:#0c0a10;border:1px solid rgba(143,79,255,0.3);border-radius:18px;padding:28px;max-width:520px;width:100%;">
+    <h3 class="cinzel text-grad" data-i18n="modal_title" style="font-size:18px;margin:0 0 8px;">Como posso ajudar?</h3>
+    <p data-i18n="modal_sub" style="font-size:13px;color:rgba(255,255,255,0.4);margin:0 0 20px;">Selecione o tipo de contato para ser direcionado ao formulário correto.</p>
+    <div class="contact-types" style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:20px;">
+      <div class="contact-type-card" onclick="selectContactType('Tatuagem')" id="ct-tatuagem">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="margin:0 auto 8px;display:block;"><defs><linearGradient id="ctg0" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M12 19l7-7a2.5 2.5 0 000-4l-3-3a2.5 2.5 0 00-4 0l-7 7M12 19l-4 1 1-4M12 19l-6.5-.5" stroke="url(#ctg0)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div data-i18n="ct_tattoo" style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.8);">Tatuagem</div>
+        <div data-i18n="ct_tattoo_sub" style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:3px;">Agendar tattoo</div>
+      </div>
       <div class="contact-type-card" onclick="selectContactType('Parceria')" id="ct-parceria">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="margin:0 auto 8px;display:block;"><defs><linearGradient id="ctg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" stroke="url(#ctg1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.8);">Parceria</div>
-        <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:3px;">Trabalho conjunto</div>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="margin:0 auto 8px;display:block;"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" stroke="url(#ctg0)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div data-i18n="ct_partner" style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.8);">Parceria</div>
+        <div data-i18n="ct_partner_sub" style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:3px;">Trabalho conjunto</div>
       </div>
       <div class="contact-type-card" onclick="selectContactType('Colaboração')" id="ct-colaboracao">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="margin:0 auto 8px;display:block;"><defs><linearGradient id="ctg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="url(#ctg2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.8);">Colaboração</div>
-        <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:3px;">Projeto criativo</div>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="margin:0 auto 8px;display:block;"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="url(#ctg0)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div data-i18n="ct_collab" style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.8);">Colaboração</div>
+        <div data-i18n="ct_collab_sub" style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:3px;">Projeto criativo</div>
       </div>
       <div class="contact-type-card" onclick="selectContactType('Pedido de Serviço')" id="ct-servico">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="margin:0 auto 8px;display:block;"><defs><linearGradient id="ctg3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" stroke="url(#ctg3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.8);">Serviço</div>
-        <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:3px;">Orçamento</div>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="margin:0 auto 8px;display:block;"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" stroke="url(#ctg0)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div data-i18n="ct_service" style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.8);">Serviço</div>
+        <div data-i18n="ct_service_sub" style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:3px;">Orçamento</div>
       </div>
     </div>
     <div style="display:flex;gap:10px;justify-content:flex-end;">
-      <button onclick="closeContactModal()" style="padding:9px 18px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.03);color:rgba(255,255,255,0.5);cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;">Cancelar</button>
+      <button onclick="closeContactModal()" data-i18n="modal_cancel" style="padding:9px 18px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.03);color:rgba(255,255,255,0.5);cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;">Cancelar</button>
     </div>
   </div>
 </div>
@@ -172,17 +213,15 @@ select.field-input option{background:#0c0a10;color:#e5e5e5}
       <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#8f4fff,#d9b55a);box-shadow:0 0 16px rgba(143,79,255,0.3);flex-shrink:0;"></div>
       <span class="cinzel" style="font-size:17px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">NoHeroes</span>
     </a>
-    <div style="display:none;align-items:center;gap:24px;font-size:13px;" class="desk-nav" id="deskNav">
-      <a href="#intro" style="color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Início</a>
-      <a href="#bio" style="color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Bio</a>
-      <a href="#habilidades" style="color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Habilidades</a>
-      <a href="#vitrines" style="color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Vitrines</a>
-      <a href="#projetos" style="color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Projetos</a>
-    </div>
     <div style="display:flex;align-items:center;gap:10px;">
+      <!-- SELETOR DE IDIOMA -->
+      <div style="display:flex;gap:4px;background:rgba(0,0,0,0.4);padding:3px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);">
+        <button id="lang-pt" onclick="switchLang('pt')" class="lang-btn active">PT</button>
+        <button id="lang-en" onclick="switchLang('en')" class="lang-btn">EN</button>
+      </div>
       <button class="hdr-contact" onclick="openContactModal()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="hdrg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="url(#hdrg)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Contato
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="url(#ctg0)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span data-i18n="hdr_contact">Contato</span>
       </button>
       <button data-nh-drawer-toggle aria-label="Abrir menu" style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -191,31 +230,60 @@ select.field-input option{background:#0c0a10;color:#e5e5e5}
   </nav>
 </header>
 
+<!-- CATEGORY NAV (barra de categorias no topo) -->
+<div class="catnav">
+  <div class="catnav-inner">
+    <a class="cat-link active" data-cat="vt-tattoo" onclick="goCat('vt-tattoo')">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7a2.5 2.5 0 000-4l-3-3a2.5 2.5 0 00-4 0l-7 7M12 19l-4 1 1-4M12 19l-6.5-.5"/></svg>
+      <span data-i18n="cat_tattoo">Tatuagem</span>
+    </a>
+    <a class="cat-link" data-cat="vt-sites" onclick="goCat('vt-sites')">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+      <span data-i18n="cat_sites">Sites</span>
+    </a>
+    <a class="cat-link" data-cat="vt-escrita" onclick="goCat('vt-escrita')">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      <span data-i18n="cat_writing">Escrita &amp; Roteiro</span>
+    </a>
+    <a class="cat-link" data-cat="vt-arte" onclick="goCat('vt-arte')">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+      <span data-i18n="cat_art">Arte Digital</span>
+    </a>
+    <a class="cat-link" onclick="openContactModal()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+      <span data-i18n="cat_contact">Contato</span>
+    </a>
+  </div>
+</div>
+
 <main style="max-width:1200px;margin:0 auto;padding:0 20px;">
 
 <!-- ═══ INTRO ═══ -->
 <section id="intro" style="padding:60px 0 56px;">
   <div class="hero-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;">
     <div class="reveal">
-      <div class="section-label">Portfólio</div>
+      <div class="section-label" data-i18n="hero_label">Tattoo &amp; Portfólio</div>
       <h1 class="cinzel text-grad" style="font-size:clamp(22px,3.5vw,40px);margin:0 0 16px;line-height:1.2;">Raul Takagi<br>Sato Souza</h1>
-      <p style="font-size:15px;color:rgba(255,255,255,0.55);line-height:1.75;margin:0 0 10px;">CEO da NoHeroes · Desenvolvedor Full-Stack · Artista Digital · Escritor · Gestor de Projetos</p>
-      <p style="font-size:14px;color:rgba(255,255,255,0.4);line-height:1.75;margin:0 0 24px;">Construo experiências digitais que unem <strong style="color:rgba(255,255,255,0.7);">design, código e narrativa</strong>. Do planejamento à execução — técnica, estética e estratégia para gerar impacto real.</p>
+      <p data-i18n="hero_roles" style="font-size:15px;color:rgba(255,255,255,0.55);line-height:1.75;margin:0 0 10px;">CEO da NoHeroes · Desenvolvedor Full-Stack · Artista Digital · Tatuador · Escritor · Gestor de Projetos</p>
+      <p data-i18n="hero_desc" style="font-size:14px;color:rgba(255,255,255,0.4);line-height:1.75;margin:0 0 24px;">Crio experiências que unem <strong style="color:rgba(255,255,255,0.7);">design, código, arte e pele</strong>. De sites e obras a tatuagens — técnica, estética e alma para gerar impacto real.</p>
 
       <!-- Flags de idiomas -->
       <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;">
-        <span class="flag">🇧🇷 Português <span style="color:rgba(255,255,255,0.35);font-size:9px;">Nativo</span></span>
-        <span class="flag">🇺🇸 English <span style="color:rgba(255,255,255,0.35);font-size:9px;">Fluente</span></span>
-        <span class="flag">🇩🇪 Deutsch <span style="color:rgba(255,255,255,0.35);font-size:9px;">Fluente</span></span>
-        <span class="flag">🇯🇵 日本語 <span style="color:rgba(255,255,255,0.35);font-size:9px;">Aprendendo</span></span>
+        <span class="flag">🇧🇷 Português <span data-i18n="lvl_native" style="color:rgba(255,255,255,0.35);font-size:9px;">Nativo</span></span>
+        <span class="flag">🇺🇸 English <span data-i18n="lvl_fluent" style="color:rgba(255,255,255,0.35);font-size:9px;">Fluente</span></span>
+        <span class="flag">🇩🇪 Deutsch <span data-i18n="lvl_fluent2" style="color:rgba(255,255,255,0.35);font-size:9px;">Fluente</span></span>
+        <span class="flag">🇯🇵 日本語 <span data-i18n="lvl_learning" style="color:rgba(255,255,255,0.35);font-size:9px;">Aprendendo</span></span>
       </div>
 
       <div style="display:flex;flex-wrap:wrap;gap:10px;">
         <button class="btn-primary" onclick="openContactModal()">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-          Entrar em contato
+          <span data-i18n="hero_cta_contact">Entrar em contato</span>
         </button>
-        <a href="#vitrines" class="btn-ghost">Ver trabalhos</a>
+        <a class="btn-wa" data-wa="wa_generic" target="_blank" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.548 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413"/></svg>
+          <span data-i18n="hero_cta_wa">Chamar no WhatsApp</span>
+        </a>
       </div>
     </div>
 
@@ -223,59 +291,35 @@ select.field-input option{background:#0c0a10;color:#e5e5e5}
     <div class="reveal" style="background:#0c0a10;border:1px solid rgba(143,79,255,0.15);border-radius:16px;padding:0;overflow:hidden;position:relative;">
       <div id="slider-wrap" style="position:relative;width:100%;aspect-ratio:16/7;overflow:hidden;border-radius:16px 16px 0 0;">
         <img id="slide-img" src="assets/images/port1.png" alt="Portfólio" style="width:100%;height:100%;object-fit:cover;display:block;transition:opacity .5s ease;">
-        <!-- Dots -->
         <div id="slide-dots" style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:2;"></div>
-        <!-- Setas -->
         <button onclick="slidePrev()" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.15);color:#fff;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;z-index:2;">‹</button>
         <button onclick="slideNext()" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.15);color:#fff;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;z-index:2;">›</button>
       </div>
-      <p style="padding:10px 16px;margin:0;font-size:11px;color:rgba(255,255,255,0.2);text-align:center;font-style:italic;">Explore. Escolha. Caia. Evolua.</p>
+      <p data-i18n="slider_caption" style="padding:10px 16px;margin:0;font-size:11px;color:rgba(255,255,255,0.2);text-align:center;font-style:italic;">Explore. Escolha. Caia. Evolua.</p>
     </div>
   </div>
 </section>
 
 <!-- ═══ STATS ═══ -->
 <div class="stats-grid reveal" style="display:grid;grid-template-columns:repeat(4,1fr);background:#0c0a10;border:1px solid rgba(143,79,255,0.12);border-radius:14px;margin-bottom:56px;overflow:hidden;">
-  <div style="padding:20px;text-align:center;border-right:1px solid rgba(255,255,255,0.06);"><div class="stat-num">5+</div><div style="font-size:11px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px;">Anos exp.</div></div>
-  <div style="padding:20px;text-align:center;border-right:1px solid rgba(255,255,255,0.06);"><div class="stat-num">25+</div><div style="font-size:11px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px;">Projetos</div></div>
-  <div style="padding:20px;text-align:center;border-right:1px solid rgba(255,255,255,0.06);"><div class="stat-num">4</div><div style="font-size:11px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px;">Idiomas</div></div>
-  <div style="padding:20px;text-align:center;"><div class="stat-num">∞</div><div style="font-size:11px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px;">Adaptável</div></div>
+  <div style="padding:20px;text-align:center;border-right:1px solid rgba(255,255,255,0.06);"><div class="stat-num">5+</div><div data-i18n="stat_years" style="font-size:11px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px;">Anos exp.</div></div>
+  <div style="padding:20px;text-align:center;border-right:1px solid rgba(255,255,255,0.06);"><div class="stat-num">25+</div><div data-i18n="stat_projects" style="font-size:11px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px;">Projetos</div></div>
+  <div style="padding:20px;text-align:center;border-right:1px solid rgba(255,255,255,0.06);"><div class="stat-num">4</div><div data-i18n="stat_languages" style="font-size:11px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px;">Idiomas</div></div>
+  <div style="padding:20px;text-align:center;"><div class="stat-num">∞</div><div data-i18n="stat_adapt" style="font-size:11px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px;">Adaptável</div></div>
 </div>
 
 <!-- ═══ BIO ═══ -->
 <section id="bio" style="padding:0 0 56px;">
-  <div class="bio-grid reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;">
+  <div class="bio-grid reveal" style="display:grid;grid-template-columns:1.3fr 1fr;gap:32px;align-items:center;">
     <div>
-      <div class="section-label">Biografia & Atuação</div>
-      <h2 class="cinzel text-grad" style="font-size:clamp(18px,2.5vw,26px);margin:0 0 16px;">Quem é Raul?</h2>
-      <p style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.8;margin:0 0 16px;">Criador do universo NoHeroes — plataforma multimídia que desenvolvi integralmente: produto, arquitetura, código, arte e narrativa. Gosto de ambientes novos, aprender em movimento e de adaptar o que aprendo para criar soluções diferentes.</p>
-      <p style="font-size:14px;color:rgba(255,255,255,0.5);line-height:1.8;margin:0;">Fui bombeiro, trabalhei com turismo, sobrevivencialismo e hotelaria como gerente. Dei palestras em escolas. Hoje sou CEO, mangaká independente, instrutor e desenvolvedor — e ainda estou aprendendo japonês.</p>
+      <div class="section-label" data-i18n="bio_label">Biografia & Atuação</div>
+      <h2 class="cinzel text-grad" data-i18n="bio_title" style="font-size:clamp(18px,2.5vw,26px);margin:0 0 16px;">Quem é Raul?</h2>
+      <p data-i18n="bio_p1" style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.8;margin:0 0 16px;">Criador do universo NoHeroes — plataforma multimídia que desenvolvi integralmente: produto, arquitetura, código, arte e narrativa. Gosto de ambientes novos, aprender em movimento e adaptar o que aprendo para criar soluções diferentes.</p>
+      <p data-i18n="bio_p2" style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.8;margin:0 0 16px;">Sou também <strong style="color:rgba(255,255,255,0.8);">tatuador</strong> — a pele é mais um suporte para minha arte — e tenho experiência prática em <strong style="color:rgba(255,255,255,0.8);">churrascaria e açougue</strong>, onde aprendi ritmo, precisão e lidar com gente sob pressão.</p>
+      <p data-i18n="bio_p3" style="font-size:14px;color:rgba(255,255,255,0.5);line-height:1.8;margin:0;">Fui bombeiro, trabalhei com turismo, sobrevivencialismo e hotelaria como gerente. Dei palestras em escolas. Hoje sou CEO, mangaká independente, tatuador, instrutor e desenvolvedor — e ainda estou aprendendo japonês.</p>
     </div>
-    <div style="display:flex;flex-direction:column;gap:12px;">
-      <div class="tl-item">
-        <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:3px;">CEO & Fundador — NoHeroes</div>
-        <div style="font-size:12px;color:rgba(255,255,255,0.4);">Criou e desenvolveu todo o ecossistema sozinho: site, loja, app, backend, arte e lore.</div>
-      </div>
-      <div class="tl-item">
-        <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:3px;">Desenvolvedor Full-Stack</div>
-        <div style="font-size:12px;color:rgba(255,255,255,0.4);">Node.js · Express · PostgreSQL · JWT · APIs de pagamento · Cloudflare · R2</div>
-      </div>
-      <div class="tl-item">
-        <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:3px;">Artista Digital & Mangaká</div>
-        <div style="font-size:12px;color:rgba(255,255,255,0.4);">Concept design, identidade visual, quadrinhos e narrativa visual.</div>
-      </div>
-      <div class="tl-item">
-        <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:3px;">Gerente de Hotel & Turismo</div>
-        <div style="font-size:12px;color:rgba(255,255,255,0.4);">Experiência com liderança de equipes, gestão operacional e atendimento multilíngue.</div>
-      </div>
-      <div class="tl-item">
-        <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:3px;">Palestrante & Instrutor</div>
-        <div style="font-size:12px;color:rgba(255,255,255,0.4);">Palestras em escolas, instrução em sobrevivencialismo e desenvolvimento de projetos.</div>
-      </div>
-      <div class="tl-item">
-        <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:3px;">Bombeiro & Socorrista</div>
-        <div style="font-size:12px;color:rgba(255,255,255,0.4);">Formação e atuação em situações de emergência, liderança sob pressão.</div>
-      </div>
+    <div class="portrait-wrap">
+      <img src="assets/images/foto-raul.jpg" alt="Raul Takagi" loading="lazy" onerror="this.closest('.portrait-wrap').style.display='none'">
     </div>
   </div>
 </section>
@@ -283,73 +327,57 @@ select.field-input option{background:#0c0a10;color:#e5e5e5}
 <!-- ═══ HABILIDADES ═══ -->
 <section id="habilidades" style="padding:0 0 56px;">
   <div style="text-align:center;margin-bottom:28px;" class="reveal">
-    <div class="section-label" style="text-align:center;">Competências</div>
-    <h2 class="cinzel text-grad" style="font-size:clamp(18px,2.5vw,26px);margin:0;">Habilidades & Especialidades</h2>
+    <div class="section-label" data-i18n="skills_label" style="text-align:center;">Competências</div>
+    <h2 class="cinzel text-grad" data-i18n="skills_title" style="font-size:clamp(18px,2.5vw,26px);margin:0;">Habilidades & Especialidades</h2>
   </div>
   <div class="skills-grid reveal" style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;">
 
     <div class="skill-card">
-      <div class="skill-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="sg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" stroke="url(#sg1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <h3 class="cinzel text-grad" style="font-size:12px;margin:0 0 6px;">Desenvolvimento Web</h3>
-      <p style="font-size:11px;color:rgba(255,255,255,0.45);line-height:1.6;margin:0;">Full-Stack · Node.js · Express · PostgreSQL · JWT · HTML/CSS · JS · Cloudflare</p>
+      <div class="skill-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" stroke="url(#ctg0)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h3 class="cinzel text-grad" data-i18n="sk1_t" style="font-size:12px;margin:0 0 6px;">Desenvolvimento Web</h3>
+      <p data-i18n="sk1_d" style="font-size:11px;color:rgba(255,255,255,0.45);line-height:1.6;margin:0;">Full-Stack · Node.js · Express · PostgreSQL · JWT · HTML/CSS · JS · Cloudflare</p>
     </div>
 
     <div class="skill-card">
-      <div class="skill-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="sg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="url(#sg2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <h3 class="cinzel text-grad" style="font-size:12px;margin:0 0 6px;">IA & Servidores</h3>
-      <p style="font-size:11px;color:rgba(255,255,255,0.45);line-height:1.6;margin:0;">Integração de IAs · LLMs · Automações · Infraestrutura cloud · Render · APIs</p>
+      <div class="skill-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="url(#ctg0)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h3 class="cinzel text-grad" data-i18n="sk2_t" style="font-size:12px;margin:0 0 6px;">IA & Servidores</h3>
+      <p data-i18n="sk2_d" style="font-size:11px;color:rgba(255,255,255,0.45);line-height:1.6;margin:0;">Integração de IAs · LLMs · Automações · Infraestrutura cloud · Render · APIs</p>
     </div>
 
     <div class="skill-card">
-      <div class="skill-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="sg3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke="url(#sg3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <h3 class="cinzel text-grad" style="font-size:12px;margin:0 0 6px;">Arte Digital</h3>
-      <p style="font-size:11px;color:rgba(255,255,255,0.45);line-height:1.6;margin:0;">Concept design · Identidade visual · Mangá · UI/UX · Branding · Ilustração</p>
+      <div class="skill-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke="url(#ctg0)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h3 class="cinzel text-grad" data-i18n="sk3_t" style="font-size:12px;margin:0 0 6px;">Arte Digital</h3>
+      <p data-i18n="sk3_d" style="font-size:11px;color:rgba(255,255,255,0.45);line-height:1.6;margin:0;">Concept design · Identidade visual · Logos · Mangá · UI/UX · Branding · Ilustração</p>
     </div>
 
     <div class="skill-card">
-      <div class="skill-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="sg4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="url(#sg4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <h3 class="cinzel text-grad" style="font-size:12px;margin:0 0 6px;">Escrita & Roteiro</h3>
-      <p style="font-size:11px;color:rgba(255,255,255,0.45);line-height:1.6;margin:0;">Ficção científica · Dark fantasy · Worldbuilding · Roteiros · Publicação independente</p>
+      <div class="skill-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 19l7-7a2.5 2.5 0 000-4l-3-3a2.5 2.5 0 00-4 0l-7 7M12 19l-4 1 1-4M12 19l-6.5-.5" stroke="url(#ctg0)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h3 class="cinzel text-grad" data-i18n="sk4_t" style="font-size:12px;margin:0 0 6px;">Tatuagem</h3>
+      <p data-i18n="sk4_d" style="font-size:11px;color:rgba(255,255,255,0.45);line-height:1.6;margin:0;">Arte na pele · Design autoral · Adaptação de estilos · Composição sob a anatomia</p>
     </div>
 
     <div class="skill-card">
-      <div class="skill-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="sg5" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" stroke="url(#sg5)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <h3 class="cinzel text-grad" style="font-size:12px;margin:0 0 6px;">Gestão & Liderança</h3>
-      <p style="font-size:11px;color:rgba(255,255,255,0.45);line-height:1.6;margin:0;">Gestão de equipes · Planejamento · Gerência hoteleira · Instrução · Palestras</p>
+      <div class="skill-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="url(#ctg0)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h3 class="cinzel text-grad" data-i18n="sk5_t" style="font-size:12px;margin:0 0 6px;">Escrita & Roteiro</h3>
+      <p data-i18n="sk5_d" style="font-size:11px;color:rgba(255,255,255,0.45);line-height:1.6;margin:0;">Ficção científica · Dark fantasy · Worldbuilding · Roteiros · Publicação independente</p>
     </div>
 
     <div class="skill-card">
-      <div class="skill-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="sg6" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke="url(#sg6)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <h3 class="cinzel text-grad" style="font-size:12px;margin:0 0 6px;">Idiomas</h3>
-      <p style="font-size:11px;color:rgba(255,255,255,0.45);line-height:1.6;margin:0;">🇧🇷 Português nativo · 🇺🇸 Inglês fluente · 🇩🇪 Alemão fluente · 🇯🇵 Japonês em aprendizado</p>
+      <div class="skill-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" stroke="url(#ctg0)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h3 class="cinzel text-grad" data-i18n="sk6_t" style="font-size:12px;margin:0 0 6px;">Gestão & Liderança</h3>
+      <p data-i18n="sk6_d" style="font-size:11px;color:rgba(255,255,255,0.45);line-height:1.6;margin:0;">Gestão de equipes · Planejamento · Gerência hoteleira · Instrução · Palestras</p>
     </div>
 
     <div class="skill-card">
-      <div class="skill-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="sg7" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke="url(#sg7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <h3 class="cinzel text-grad" style="font-size:12px;margin:0 0 6px;">Sobrevivencialismo</h3>
-      <p style="font-size:11px;color:rgba(255,255,255,0.45);line-height:1.6;margin:0;">Bombeiro · Primeiros socorros · Turismo · Instrução em campo · Tomada de decisão sob pressão</p>
+      <div class="skill-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke="url(#ctg0)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h3 class="cinzel text-grad" data-i18n="sk7_t" style="font-size:12px;margin:0 0 6px;">Idiomas</h3>
+      <p data-i18n="sk7_d" style="font-size:11px;color:rgba(255,255,255,0.45);line-height:1.6;margin:0;">🇧🇷 Português nativo · 🇺🇸 Inglês fluente · 🇩🇪 Alemão fluente · 🇯🇵 Japonês em aprendizado</p>
     </div>
 
     <div class="skill-card">
-      <div class="skill-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="sg8" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" stroke="url(#sg8)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <h3 class="cinzel text-grad" style="font-size:12px;margin:0 0 6px;">Adaptabilidade</h3>
-      <p style="font-size:11px;color:rgba(255,255,255,0.45);line-height:1.6;margin:0;">Transições entre áreas distintas · Aprendizado acelerado · Ambientes novos e desafiadores</p>
+      <div class="skill-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke="url(#ctg0)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h3 class="cinzel text-grad" data-i18n="sk8_t" style="font-size:12px;margin:0 0 6px;">Sobrevivencialismo</h3>
+      <p data-i18n="sk8_d" style="font-size:11px;color:rgba(255,255,255,0.45);line-height:1.6;margin:0;">Bombeiro · Primeiros socorros · Turismo · Instrução em campo · Decisão sob pressão</p>
     </div>
 
   </div>
@@ -359,99 +387,143 @@ select.field-input option{background:#0c0a10;color:#e5e5e5}
 <section id="vitrines" style="padding:0 0 56px;">
   <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px;" class="reveal">
     <div>
-      <div class="section-label">Trabalhos</div>
-      <h2 class="cinzel text-grad" style="font-size:clamp(18px,2.5vw,26px);margin:0;">Vitrines</h2>
+      <div class="section-label" data-i18n="vit_label">Trabalhos</div>
+      <h2 class="cinzel text-grad" data-i18n="vit_title" style="font-size:clamp(18px,2.5vw,26px);margin:0;">Vitrines</h2>
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:8px;">
-      <button class="tab-btn active" onclick="switchVitrine(this,'vt-web')">Web & Código</button>
-      <button class="tab-btn" onclick="switchVitrine(this,'vt-arte')">Arte Digital</button>
-      <button class="tab-btn" onclick="switchVitrine(this,'vt-escrita')">Escrita & Roteiro</button>
+      <button class="tab-btn active" data-tab="vt-tattoo" onclick="switchVitrine(this,'vt-tattoo')" data-i18n="tab_tattoo">Tatuagem</button>
+      <button class="tab-btn" data-tab="vt-sites" onclick="switchVitrine(this,'vt-sites')" data-i18n="tab_sites">Sites</button>
+      <button class="tab-btn" data-tab="vt-escrita" onclick="switchVitrine(this,'vt-escrita')" data-i18n="tab_writing">Escrita &amp; Roteiro</button>
+      <button class="tab-btn" data-tab="vt-arte" onclick="switchVitrine(this,'vt-arte')" data-i18n="tab_art">Arte Digital</button>
     </div>
   </div>
 
-  <!-- WEB -->
-  <div id="vt-web" class="tab-pane active reveal">
-    <div class="vitrine-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
-      <article class="vitrine-card">
-        <img src="assets/images/landing-manual.jpg" alt="Landing Page Manual da Ancestralidade" class="vitrine-img" loading="lazy">
-        <div style="padding:14px;">
-          <h3 style="font-size:14px;font-weight:700;margin:0 0 4px;">Landing Page — Manual da Ancestralidade</h3>
-          <p style="font-size:12px;color:rgba(255,255,255,0.45);margin:0;">UI/UX, performance, integração de formulário e newsletter.</p>
+  <!-- SITES -->
+  <div id="vt-sites" class="tab-pane reveal">
+    <p data-i18n="sites_intro" style="font-size:13px;color:rgba(255,255,255,0.45);margin:0 0 18px;max-width:640px;">Sites que desenvolvi e mantenho no ar. A melhor vitrine é o próprio site — clique e veja com os seus olhos.</p>
+    <div class="site-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;">
+      <a class="site-card" href="https://www.brazilwildjaguars.com" target="_blank" rel="noopener">
+        <div class="site-thumb" style="background:linear-gradient(135deg,#0d3b1e,#1e5e3a,#856404);"><span class="cinzel" style="font-size:20px;color:#f3e5ab;text-shadow:0 2px 12px rgba(0,0,0,.5);">Brazil Wild Nature</span></div>
+        <div class="site-body">
+          <h3 style="font-size:15px;font-weight:700;margin:0 0 4px;">Brazil Wild Jaguars</h3>
+          <p data-i18n="site_bwn" style="font-size:12px;color:rgba(255,255,255,0.45);margin:0;">Agência de ecoturismo e safári de onças no Pantanal. Site multilíngue (PT/EN/DE/ES).</p>
+          <span class="site-visit" data-i18n="site_visit">Visitar site ↗</span>
         </div>
-      </article>
-      <article class="vitrine-card">
-        <img src="assets/images/dashboard.jpg" alt="Dashboard Analytics" class="vitrine-img" loading="lazy">
-        <div style="padding:14px;">
-          <h3 style="font-size:14px;font-weight:700;margin:0 0 4px;">Dashboard — Analytics</h3>
-          <p style="font-size:12px;color:rgba(255,255,255,0.45);margin:0;">Visual limpo, gráficos interativos e filtros dinâmicos.</p>
+      </a>
+      <a class="site-card" href="https://noheroe.github.io/Ag-ncia-PCDM/" target="_blank" rel="noopener">
+        <div class="site-thumb" style="background:linear-gradient(135deg,#3b2314,#7a4f35,#c9a87c);"><img src="assets/images/arte3.jpg" alt="Cantos da Mata" loading="lazy" style="width:auto;height:78%;object-fit:contain;"></div>
+        <div class="site-body">
+          <h3 style="font-size:15px;font-weight:700;margin:0 0 4px;">Cantos da Mata</h3>
+          <p data-i18n="site_cdm" style="font-size:12px;color:rgba(255,255,255,0.45);margin:0;">Pousada na Chapada dos Guimarães — site institucional, identidade e reservas.</p>
+          <span class="site-visit" data-i18n="site_visit2">Visitar site ↗</span>
         </div>
-      </article>
-      <article class="vitrine-card" style="border-color:rgba(143,79,255,0.2);">
-        <div style="aspect-ratio:4/3;background:rgba(143,79,255,0.05);display:flex;align-items:center;justify-content:center;">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="vg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" stroke="url(#vg1)" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </a>
+      <a class="site-card" href="https://www.negacionistaeoateu.com.br/" target="_blank" rel="noopener">
+        <div class="site-thumb" style="background:#0c0a10;"><img src="assets/images/landing-manual.jpg" alt="Manual da Ancestralidade" loading="lazy"></div>
+        <div class="site-body">
+          <h3 style="font-size:15px;font-weight:700;margin:0 0 4px;">Manual da Ancestralidade</h3>
+          <p data-i18n="site_manual" style="font-size:12px;color:rgba(255,255,255,0.45);margin:0;">Landing page de livro — UI/UX, performance e integração de formulário/newsletter.</p>
+          <span class="site-visit" data-i18n="site_visit3">Visitar site ↗</span>
         </div>
-        <div style="padding:14px;">
-          <h3 style="font-size:14px;font-weight:700;margin:0 0 4px;">NoHeroes — Ecossistema Completo</h3>
-          <p style="font-size:12px;color:rgba(255,255,255,0.45);margin:0;">Loja, API, autenticação, pagamentos, admin, leitor de mangás.</p>
+      </a>
+      <a class="site-card" href="https://noheroes.com.br" target="_blank" rel="noopener">
+        <div class="site-thumb" style="background:linear-gradient(135deg,#1a1030,#2a1a4a);"><img src="assets/images/noheroes logo.png" alt="NoHeroes" loading="lazy" style="width:auto;height:70%;object-fit:contain;"></div>
+        <div class="site-body">
+          <h3 style="font-size:15px;font-weight:700;margin:0 0 4px;">NoHeroes.com.br</h3>
+          <p data-i18n="site_nh" style="font-size:12px;color:rgba(255,255,255,0.45);margin:0;">Ecossistema completo: site, loja, leitor de mangás, app, autenticação e pagamentos.</p>
+          <span class="site-visit" data-i18n="site_visit4">Visitar site ↗</span>
         </div>
-      </article>
+      </a>
     </div>
-  </div>
-
-  <!-- ARTE -->
-  <div id="vt-arte" class="tab-pane reveal">
-    <div class="vitrine-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
-      <article class="vitrine-card">
-        <img src="assets/images/arte1.jpg" alt="Personagem ACDA" class="vitrine-img" style="aspect-ratio:3/4;" loading="lazy">
-        <div style="padding:14px;">
-          <h3 style="font-size:14px;font-weight:700;margin:0 0 4px;">Character Design — ACDA</h3>
-          <p style="font-size:12px;color:rgba(255,255,255,0.45);margin:0;">Concept art dos personagens principais do universo NoHeroes.</p>
-        </div>
-      </article>
-      <article class="vitrine-card">
-        <img src="assets/images/arte2.jpg" alt="Capa ACDA" class="vitrine-img" style="aspect-ratio:3/4;" loading="lazy">
-        <div style="padding:14px;">
-          <h3 style="font-size:14px;font-weight:700;margin:0 0 4px;">Capa — As Cinzas do Amanhã</h3>
-          <p style="font-size:12px;color:rgba(255,255,255,0.45);margin:0;">Design de capa do primeiro livro da saga ACDA.</p>
-        </div>
-      </article>
-      <article class="vitrine-card">
-        <img src="assets/images/arte3.jpg" alt="Branding NoHeroes" class="vitrine-img" loading="lazy">
-        <div style="padding:14px;">
-          <h3 style="font-size:14px;font-weight:700;margin:0 0 4px;">Branding — NoHeroes</h3>
-          <p style="font-size:12px;color:rgba(255,255,255,0.45);margin:0;">Identidade visual completa, paleta e sistema de design.</p>
-        </div>
-      </article>
+    <div class="cta-block">
+      <div class="cta-text" data-i18n="cta_sites">Precisa de um site que converte e impressiona? Vamos tirar sua ideia do papel.</div>
+      <div class="cta-actions">
+        <a class="btn-wa" data-wa="wa_sites" target="_blank" rel="noopener"><span data-i18n="cta_wa">Chamar no WhatsApp</span></a>
+        <button class="btn-ghost" onclick="selectContactType('Pedido de Serviço')"><span data-i18n="cta_form">Pelo formulário</span></button>
+      </div>
     </div>
   </div>
 
   <!-- ESCRITA -->
   <div id="vt-escrita" class="tab-pane reveal">
+    <p data-i18n="writing_intro" style="font-size:13px;color:rgba(255,255,255,0.45);margin:0 0 18px;max-width:640px;">Livros, ebooks e uma webnovel em publicação. Cada obra com o link direto para você conferir.</p>
     <div class="vitrine-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
       <article class="vitrine-card">
-        <img src="assets/images/ACDA.jpg" alt="ACDA Livro" class="vitrine-img" style="aspect-ratio:3/4;" loading="lazy">
-        <div style="padding:14px;">
+        <img src="assets/images/ACDA.jpg" alt="ACDA" class="vitrine-img" style="aspect-ratio:3/4;" loading="lazy">
+        <div style="padding:14px;flex:1;display:flex;flex-direction:column;">
           <h3 style="font-size:14px;font-weight:700;margin:0 0 4px;">ACDA — As Cinzas do Amanhã</h3>
-          <p style="font-size:12px;color:rgba(255,255,255,0.45);margin:0;">Romance de dark fantasy. Primeiro volume da saga — 402 páginas.</p>
+          <p data-i18n="wr_acda" style="font-size:12px;color:rgba(255,255,255,0.45);margin:0 0 12px;flex:1;">Romance de dark fantasy. Primeiro volume da saga — o marco do universo NoHeroes.</p>
+          <a href="acda.html" class="btn-ghost" style="font-size:12px;"><span data-i18n="wr_read">Conhecer a obra</span></a>
+        </div>
+      </article>
+      <article class="vitrine-card">
+        <img src="assets/images/AnjoDevorador.jpg" alt="Webnovel" class="vitrine-img" style="aspect-ratio:3/4;" loading="lazy">
+        <div style="padding:14px;flex:1;display:flex;flex-direction:column;">
+          <h3 style="font-size:14px;font-weight:700;margin:0 0 4px;">Webnovel <span style="color:rgba(255,255,255,0.4);font-weight:400;font-size:12px;">(em publicação)</span></h3>
+          <p data-i18n="wr_webnovel" style="font-size:12px;color:rgba(255,255,255,0.45);margin:0 0 12px;flex:1;">A obra nova, publicada em capítulos na Webnovel — disponível em duas versões:</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <a href="http://wbnv.in/a/48k55PS" target="_blank" rel="noopener" class="btn-ghost" style="font-size:12px;padding:9px 0;">✦ PT</a>
+            <a href="http://wbnv.in/a/6fk6zss" target="_blank" rel="noopener" class="btn-ghost" style="font-size:12px;padding:9px 0;">✦ EN</a>
+          </div>
         </div>
       </article>
       <article class="vitrine-card">
         <img src="assets/images/conectado.png" alt="Tudo Está Conectado" class="vitrine-img" style="aspect-ratio:3/4;" loading="lazy">
-        <div style="padding:14px;">
-          <h3 style="font-size:14px;font-weight:700;margin:0 0 4px;">Tudo Está Conectado</h3>
-          <p style="font-size:12px;color:rgba(255,255,255,0.45);margin:0;">E-book sobre crescimento pessoal e sistema vivo. Vol. I da trilogia.</p>
+        <div style="padding:14px;flex:1;display:flex;flex-direction:column;">
+          <h3 style="font-size:14px;font-weight:700;margin:0 0 4px;">Trilogia — Tudo Está Conectado</h3>
+          <p data-i18n="wr_ebooks" style="font-size:12px;color:rgba(255,255,255,0.45);margin:0 0 12px;flex:1;">Ebooks de crescimento real: Tudo Está Conectado, Sistema Vivo e Manual das Sombras.</p>
+          <a href="ebooks.html" class="btn-ghost" style="font-size:12px;"><span data-i18n="wr_ebooks_btn">Ver ebooks</span></a>
         </div>
       </article>
-      <article class="vitrine-card" style="border-color:rgba(143,79,255,0.15);">
-        <div style="aspect-ratio:4/3;background:rgba(143,79,255,0.04);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;padding:20px;">
-          <svg width="36" height="36" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="vg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke="url(#vg2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span style="font-size:11px;color:rgba(255,255,255,0.3);text-align:center;">Worldbuilding — Caelum, clãs, criaturas e política</span>
-        </div>
-        <div style="padding:14px;">
-          <h3 style="font-size:14px;font-weight:700;margin:0 0 4px;">Universo NoHeroes — Lore Completo</h3>
-          <p style="font-size:12px;color:rgba(255,255,255,0.45);margin:0;">Worldbuilding denso: nações, sistemas de magia, personagens e história.</p>
-        </div>
+    </div>
+    <div class="cta-block">
+      <div class="cta-text" data-i18n="cta_writing">Quer um roteiro, uma obra sob medida ou ghostwriting? Vamos escrever juntos.</div>
+      <div class="cta-actions">
+        <a class="btn-wa" data-wa="wa_writing" target="_blank" rel="noopener"><span data-i18n="cta_wa2">Chamar no WhatsApp</span></a>
+        <button class="btn-ghost" onclick="selectContactType('Pedido de Serviço')"><span data-i18n="cta_form2">Pelo formulário</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARTE -->
+  <div id="vt-arte" class="tab-pane reveal">
+    <p data-i18n="art_intro" style="font-size:13px;color:rgba(255,255,255,0.45);margin:0 0 18px;max-width:640px;">Logos e identidade visual que criei para clientes.</p>
+
+    <div class="vitrine-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+      <article class="vitrine-card">
+        <img src="assets/images/arte1.jpg" alt="Dynamic Gym" class="vitrine-img" style="aspect-ratio:1/1;background:#000;" loading="lazy">
+        <div style="padding:14px;"><h3 style="font-size:14px;font-weight:700;margin:0 0 4px;">Dynamic Gym</h3><p data-i18n="art_dynamic" style="font-size:12px;color:rgba(255,255,255,0.45);margin:0;">Logo e identidade para academia — força e movimento.</p></div>
       </article>
+      <article class="vitrine-card">
+        <img src="assets/images/arte2.jpg" alt="Gilberto Zambianco Jr" class="vitrine-img" style="aspect-ratio:1/1;background:#000;" loading="lazy">
+        <div style="padding:14px;"><h3 style="font-size:14px;font-weight:700;margin:0 0 4px;">Gilberto Zambianco Jr</h3><p data-i18n="art_gilberto" style="font-size:12px;color:rgba(255,255,255,0.45);margin:0;">Marca pessoal — símbolo esotérico com gradiente vibrante.</p></div>
+      </article>
+      <article class="vitrine-card">
+        <img src="assets/images/arte3.jpg" alt="Cantos da Mata" class="vitrine-img" style="aspect-ratio:1/1;" loading="lazy">
+        <div style="padding:14px;"><h3 style="font-size:14px;font-weight:700;margin:0 0 4px;">Cantos da Mata</h3><p data-i18n="art_cantos" style="font-size:12px;color:rgba(255,255,255,0.45);margin:0;">Logo da pousada — natureza e aconchego da Chapada.</p></div>
+      </article>
+    </div>
+
+    <div class="cta-block">
+      <div class="cta-text" data-i18n="cta_art">Logo, identidade visual, capa ou ilustração? Dou vida à sua marca.</div>
+      <div class="cta-actions">
+        <a class="btn-wa" data-wa="wa_art" target="_blank" rel="noopener"><span data-i18n="cta_wa3">Chamar no WhatsApp</span></a>
+        <button class="btn-ghost" onclick="selectContactType('Pedido de Serviço')"><span data-i18n="cta_form3">Pelo formulário</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TATUAGEM -->
+  <div id="vt-tattoo" class="tab-pane active reveal">
+    <h3 style="font-size:16px;font-weight:700;margin:0 0 8px;" data-i18n="tattoo_head">Portfólio de Tatuagem</h3>
+    <p data-i18n="tattoo_intro" style="font-size:13px;color:rgba(255,255,255,0.45);margin:0 0 18px;max-width:660px;">Trabalhos reais na pele — cada peça com estilo e local. Tamanho e valor sob consulta.</p>
+    <div id="tattoo-gallery" class="tattoo-gallery"></div>
+    <div class="cta-block" style="background:linear-gradient(135deg,rgba(37,211,102,0.1),rgba(143,79,255,0.06));border-color:rgba(37,211,102,0.25);margin-top:24px;">
+      <div class="cta-text" data-i18n="cta_tattoo">Tem uma ideia na cabeça? Vamos transformá-la em arte na sua pele.</div>
+      <div class="cta-actions">
+        <a class="btn-wa" data-wa="wa_tattoo" target="_blank" rel="noopener"><span data-i18n="cta_wa4">Agendar no WhatsApp</span></a>
+        <button class="btn-ghost" onclick="selectContactType('Tatuagem')"><span data-i18n="cta_form4">Pelo formulário</span></button>
+      </div>
     </div>
   </div>
 </section>
@@ -459,48 +531,39 @@ select.field-input option{background:#0c0a10;color:#e5e5e5}
 <!-- ═══ PROJETOS ═══ -->
 <section id="projetos" style="padding:0 0 56px;">
   <div style="margin-bottom:20px;" class="reveal">
-    <div class="section-label">Projetos Próprios</div>
-    <h2 class="cinzel text-grad" style="font-size:clamp(18px,2.5vw,26px);margin:0;">Trabalhos Autorais</h2>
+    <div class="section-label" data-i18n="proj_label">Projetos Próprios</div>
+    <h2 class="cinzel text-grad" data-i18n="proj_title" style="font-size:clamp(18px,2.5vw,26px);margin:0;">Trabalhos Autorais</h2>
   </div>
   <div class="card reveal" style="padding:28px;">
     <div style="display:flex;align-items:start;gap:20px;flex-wrap:wrap;">
       <div style="width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,#8f4fff,#d9b55a);flex-shrink:0;box-shadow:0 0 20px rgba(143,79,255,0.3);"></div>
       <div style="flex:1;min-width:260px;">
         <h3 style="font-size:20px;font-weight:700;margin:0 0 6px;">NoHeroes — Universo de Fantasia</h3>
-        <p style="font-size:13px;color:rgba(255,255,255,0.5);margin:0 0 16px;">IP autoral dark-fantasy em expansão: livro, mangás, app gamificado, loja digital e ecossistema completo. Desenvolvido integralmente — identidade visual, produto, arquitetura web e narrativa.</p>
+        <p data-i18n="proj_desc" style="font-size:13px;color:rgba(255,255,255,0.5);margin:0 0 16px;">IP autoral dark-fantasy em expansão: livro, mangás, app gamificado, loja digital e ecossistema completo. Desenvolvido integralmente — identidade visual, produto, arquitetura web e narrativa.</p>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;" class="two-col">
           <div>
-            <h4 style="font-size:12px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.1em;margin:0 0 8px;">Pilares</h4>
+            <h4 data-i18n="proj_pillars" style="font-size:12px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.1em;margin:0 0 8px;">Pilares</h4>
             <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;color:rgba(255,255,255,0.55);">
-              <div>• Site + loja (Node/Express, PostgreSQL, JWT, MP)</div>
-              <div>• Leitor de mangás com sistema de capítulos</div>
-              <div>• Admin completo com gestão de conteúdo</div>
-              <div>• Roteiro/lore originais — universo, clãs, criaturas</div>
+              <div data-i18n="proj_p1">• Site + loja (Node/Express, PostgreSQL, JWT, MP)</div>
+              <div data-i18n="proj_p2">• Leitor de mangás com sistema de capítulos</div>
+              <div data-i18n="proj_p3">• Admin completo com gestão de conteúdo</div>
+              <div data-i18n="proj_p4">• Roteiro/lore originais — universo, clãs, criaturas</div>
             </div>
           </div>
           <div>
-            <h4 style="font-size:12px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.1em;margin:0 0 8px;">Destaques</h4>
+            <h4 data-i18n="proj_high" style="font-size:12px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.1em;margin:0 0 8px;">Destaques</h4>
             <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;color:rgba(255,255,255,0.55);">
-              <div>• Design dark moderno — gradiente roxo-dourado</div>
-              <div>• Arquitetura pronta para transmedia</div>
-              <div>• Sistema de doações e metas transparentes</div>
-              <div>• Newsletter, arautos e upload de obras</div>
+              <div data-i18n="proj_h1">• Design dark moderno — gradiente roxo-dourado</div>
+              <div data-i18n="proj_h2">• Arquitetura pronta para transmídia</div>
+              <div data-i18n="proj_h3">• Sistema de doações e metas transparentes</div>
+              <div data-i18n="proj_h4">• Newsletter, arautos e upload de obras</div>
             </div>
           </div>
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:10px;">
-          <a href="https://noheroes.com.br" target="_blank" rel="noopener" class="btn-ghost" style="font-size:12px;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
-            Site
-          </a>
-          <a href="store.html" class="btn-ghost" style="font-size:12px;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 11V7a4 4 0 00-8 0v4M5 11h14l1 9H4l1-9z"/></svg>
-            Loja
-          </a>
-          <a href="acda.html" class="btn-ghost" style="font-size:12px;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-            Livro ACDA
-          </a>
+          <a href="https://noheroes.com.br" target="_blank" rel="noopener" class="btn-ghost" style="font-size:12px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg><span data-i18n="proj_btn_site">Site</span></a>
+          <a href="store.html" class="btn-ghost" style="font-size:12px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 11V7a4 4 0 00-8 0v4M5 11h14l1 9H4l1-9z"/></svg><span data-i18n="proj_btn_store">Loja</span></a>
+          <a href="acda.html" class="btn-ghost" style="font-size:12px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg><span data-i18n="proj_btn_book">Livro ACDA</span></a>
         </div>
       </div>
     </div>
@@ -511,62 +574,62 @@ select.field-input option{background:#0c0a10;color:#e5e5e5}
 <section id="contato" style="padding:0 0 80px;">
   <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:32px;align-items:start;" class="hero-grid reveal">
     <div>
-      <div class="section-label">Contato</div>
-      <h2 class="cinzel text-grad" style="font-size:clamp(18px,2.5vw,26px);margin:0 0 12px;">Vamos trabalhar juntos</h2>
-      <p style="font-size:14px;color:rgba(255,255,255,0.5);line-height:1.75;margin:0 0 24px;">Seja para uma parceria, colaboração criativa ou pedido de serviço — descreva sua ideia e entrarei em contato.</p>
+      <div class="section-label" data-i18n="contact_label">Contato</div>
+      <h2 class="cinzel text-grad" data-i18n="contact_title" style="font-size:clamp(18px,2.5vw,26px);margin:0 0 12px;">Vamos trabalhar juntos</h2>
+      <p data-i18n="contact_sub" style="font-size:14px;color:rgba(255,255,255,0.5);line-height:1.75;margin:0 0 20px;">Site, arte, uma obra ou uma tatuagem — descreva sua ideia. Prefere conversar agora? Chame direto no WhatsApp.</p>
+      <a class="btn-wa" data-wa="wa_generic" target="_blank" rel="noopener" style="width:100%;margin-bottom:14px;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884"/></svg>
+        <span data-i18n="contact_wa_btn">WhatsApp: (65) 99324-0270</span>
+      </a>
       <div style="display:flex;flex-direction:column;gap:10px;">
         <a href="mailto:eco.noheroes@gmail.com" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);text-decoration:none;color:#e5e5e5;" onmouseover="this.style.borderColor='rgba(143,79,255,0.3)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="#c4a3ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:13px;">eco.noheroes@gmail.com</span></a>
-        <a href="https://wa.me/5565993240270" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);text-decoration:none;color:#e5e5e5;transition:all 0.2s;" onmouseover="this.style.borderColor='rgba(143,79,255,0.3)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="cg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" stroke="url(#cg2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span style="font-size:13px;">WhatsApp</span>
-        </a>
       </div>
     </div>
 
     <!-- FORM -->
     <div style="background:#0c0a10;border:1px solid rgba(143,79,255,0.2);border-radius:16px;padding:24px;">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
-        <h3 class="cinzel text-grad" style="font-size:15px;margin:0;">Formulário de Contato</h3>
+        <h3 class="cinzel text-grad" data-i18n="form_title" style="font-size:15px;margin:0;">Formulário de Contato</h3>
         <div id="formTypeBadge" style="font-size:10px;padding:3px 10px;border-radius:99px;background:rgba(143,79,255,0.1);border:1px solid rgba(143,79,255,0.25);color:#c4a3ff;display:none;"></div>
       </div>
       <form id="formPortfolio" style="display:flex;flex-direction:column;gap:14px;">
-        <!-- Razão (preenchida pelo modal) -->
         <div>
-          <label class="field-label">Tipo de contato *</label>
+          <label class="field-label" data-i18n="f_type">Tipo de contato *</label>
           <select id="form-razao" class="field-input" required>
-            <option value="">Selecione...</option>
-            <option value="Parceria">Parceria</option>
-            <option value="Colaboração">Colaboração</option>
-            <option value="Pedido de Serviço">Pedido de Serviço</option>
-            <option value="Outro">Outro</option>
+            <option value="" data-i18n="f_type_ph">Selecione...</option>
+            <option value="Tatuagem" data-i18n="f_type_tattoo">Tatuagem</option>
+            <option value="Parceria" data-i18n="f_type_partner">Parceria</option>
+            <option value="Colaboração" data-i18n="f_type_collab">Colaboração</option>
+            <option value="Pedido de Serviço" data-i18n="f_type_service">Pedido de Serviço</option>
+            <option value="Outro" data-i18n="f_type_other">Outro</option>
           </select>
         </div>
         <div class="form-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
           <div>
-            <label class="field-label" for="form-nome">Nome *</label>
-            <input id="form-nome" class="field-input" placeholder="Seu nome" required>
+            <label class="field-label" for="form-nome" data-i18n="f_name">Nome *</label>
+            <input id="form-nome" class="field-input" data-i18n-ph="f_name_ph" placeholder="Seu nome" required>
           </div>
           <div>
-            <label class="field-label" for="form-email">E-mail *</label>
-            <input id="form-email" type="email" class="field-input" placeholder="voce@email.com" required>
+            <label class="field-label" for="form-email" data-i18n="f_email">E-mail *</label>
+            <input id="form-email" type="email" class="field-input" data-i18n-ph="f_email_ph" placeholder="voce@email.com" required>
           </div>
         </div>
         <div>
-          <label class="field-label" for="form-assunto">Assunto *</label>
-          <input id="form-assunto" class="field-input" placeholder="Descreva brevemente" required>
+          <label class="field-label" for="form-assunto" data-i18n="f_subject">Assunto *</label>
+          <input id="form-assunto" class="field-input" data-i18n-ph="f_subject_ph" placeholder="Descreva brevemente" required>
         </div>
         <div>
-          <label class="field-label" for="form-mensagem">Mensagem *</label>
-          <textarea id="form-mensagem" class="field-input" rows="4" placeholder="Descreva seu projeto, prazo, orçamento, referências e escopo" required></textarea>
+          <label class="field-label" for="form-mensagem" data-i18n="f_msg">Mensagem *</label>
+          <textarea id="form-mensagem" class="field-input" rows="4" data-i18n-ph="f_msg_ph" placeholder="Descreva seu projeto, prazo, orçamento, referências e escopo" required></textarea>
         </div>
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
           <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,0.4);cursor:pointer;">
             <input id="form-consent" type="checkbox" required style="accent-color:#8f4fff;width:14px;height:14px;">
-            Autorizo contato por e-mail/WhatsApp.
+            <span data-i18n="f_consent">Autorizo contato por e-mail/WhatsApp.</span>
           </label>
           <button class="btn-primary" type="submit" id="formSubmitBtn">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
-            Enviar
+            <span data-i18n="f_send">Enviar</span>
           </button>
         </div>
         <div id="formMsg" style="display:none;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:600;"></div>
@@ -578,46 +641,56 @@ select.field-input option{background:#0c0a10;color:#e5e5e5}
 </main>
 
 <!-- FOOTER -->
-<!-- Crédito do autor (específico do portfólio) -->
-<p style="text-align:center;font-size:11px;color:rgba(255,255,255,0.25);padding:14px 20px 0;margin:0;">Portfólio por <strong style="color:rgba(255,255,255,0.45);">Raul Takagi</strong></p>
-<!-- Footer (componente compartilhado) -->
+<p style="text-align:center;font-size:11px;color:rgba(255,255,255,0.25);padding:14px 20px 0;margin:0;"><span data-i18n="foot_credit">Tattoo &amp; Portfólio por</span> <strong style="color:rgba(255,255,255,0.45);">Raul Takagi</strong></p>
 <nh-footer></nh-footer>
 
-<script src="assets/js/suporte-widget.js"></script>
+<!-- FLOATING WHATSAPP + SUPPORTE (só nesta página) -->
+<div id="nh-fab-stack">
+  <a id="nh-fab-wa" data-wa="wa_generic" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <span class="fab-label" data-i18n="fab_wa_label">Fale comigo no WhatsApp</span>
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.548 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413"/></svg>
+  </a>
+  <div id="nh-fab-sup-wrap">
+    <a id="nh-fab-sup" href="suporte.html" aria-label="Suporte" title="Suporte">?</a>
+    <span id="nh-fab-sup-sub" data-i18n="fab_sup_sub">Suporte</span>
+  </div>
+</div>
+
+<script src="assets/js/cookies.js"></script>
 <script>
-/* Ano do rodapé e drawer: agora nos componentes compartilhados (noheroes-ui.js) */
-
 // ─── CONTACT TYPE MODAL ───
-function openContactModal(){
-  document.getElementById('contactTypeModal').classList.add('open');
-}
-function closeContactModal(){
-  document.getElementById('contactTypeModal').classList.remove('open');
-}
+function openContactModal(){ document.getElementById('contactTypeModal').classList.add('open'); }
+function closeContactModal(){ document.getElementById('contactTypeModal').classList.remove('open'); }
 function selectContactType(type){
-  // visual feedback
-  ['ct-parceria','ct-colaboracao','ct-servico'].forEach(id=>document.getElementById(id).classList.remove('selected'));
-  const map={'Parceria':'ct-parceria','Colaboração':'ct-colaboracao','Pedido de Serviço':'ct-servico'};
+  ['ct-tatuagem','ct-parceria','ct-colaboracao','ct-servico'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.remove('selected');});
+  const map={'Tatuagem':'ct-tatuagem','Parceria':'ct-parceria','Colaboração':'ct-colaboracao','Pedido de Serviço':'ct-servico'};
   if(map[type]) document.getElementById(map[type]).classList.add('selected');
-
-  // fecha modal, preenche form e scrolla
+  openContactModal();
   setTimeout(()=>{
     closeContactModal();
     document.getElementById('form-razao').value = type;
     const badge = document.getElementById('formTypeBadge');
-    badge.textContent = type;
+    const lang = document.documentElement.lang === 'en' ? 'en' : 'pt';
+    badge.textContent = (translations[lang].types && translations[lang].types[type]) || type;
     badge.style.display = 'inline-block';
     document.getElementById('contato').scrollIntoView({behavior:'smooth',block:'start'});
     setTimeout(()=>document.getElementById('form-nome').focus(), 600);
   }, 200);
 }
 
-// ─── VITRINES TABS ───
+// ─── VITRINES TABS + CATEGORY NAV ───
 function switchVitrine(btn, id){
-  document.querySelectorAll('[onclick^="switchVitrine"]').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.cat-link[data-cat]').forEach(c=>c.classList.toggle('active', c.getAttribute('data-cat')===id));
+}
+function goCat(id){
+  const btn=document.querySelector('.tab-btn[data-tab="'+id+'"]');
+  if(btn) switchVitrine(btn,id);
+  const target=document.getElementById('vitrines');
+  if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
 // ─── FORM SUBMIT ───
@@ -625,28 +698,25 @@ document.getElementById('formPortfolio').addEventListener('submit', async (e)=>{
   e.preventDefault();
   const btn = document.getElementById('formSubmitBtn');
   const msg = document.getElementById('formMsg');
+  const lang = document.documentElement.lang === 'en' ? 'en' : 'pt';
   btn.disabled = true;
-  btn.textContent = 'Enviando...';
-
+  btn.textContent = lang==='en' ? 'Sending...' : 'Enviando...';
   const payload = {
     nome: document.getElementById('form-nome').value.trim(),
     email: document.getElementById('form-email').value.trim(),
     assunto: `[${document.getElementById('form-razao').value}] ${document.getElementById('form-assunto').value.trim()}`,
     mensagem: document.getElementById('form-mensagem').value.trim(),
   };
-
   try{
     const res = await fetch('https://api.noheroes.com.br/api/email/portfolio',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify(payload)
+      method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)
     });
     if(!res.ok) throw new Error('Erro '+res.status);
     msg.style.display='block';
     msg.style.background='rgba(74,222,128,0.1)';
     msg.style.border='1px solid rgba(74,222,128,0.3)';
     msg.style.color='#4ade80';
-    msg.textContent='✅ Mensagem enviada com sucesso! Retornarei em breve.';
+    msg.textContent = lang==='en' ? '✅ Message sent successfully! I will get back to you soon.' : '✅ Mensagem enviada com sucesso! Retornarei em breve.';
     e.target.reset();
     document.getElementById('formTypeBadge').style.display='none';
   }catch(err){
@@ -654,10 +724,11 @@ document.getElementById('formPortfolio').addEventListener('submit', async (e)=>{
     msg.style.background='rgba(248,113,113,0.1)';
     msg.style.border='1px solid rgba(248,113,113,0.3)';
     msg.style.color='#f87171';
-    msg.textContent='❌ Não foi possível enviar. Tente via WhatsApp ou e-mail.';
+    msg.textContent = lang==='en' ? '❌ Could not send. Try WhatsApp or email.' : '❌ Não foi possível enviar. Tente via WhatsApp ou e-mail.';
   }finally{
     btn.disabled=false;
-    btn.innerHTML='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg> Enviar';
+    const label = lang==='en' ? 'Send' : 'Enviar';
+    btn.innerHTML='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg> '+label;
   }
 });
 
@@ -672,84 +743,315 @@ document.getElementById('formPortfolio').addEventListener('submit', async (e)=>{
   const img=document.getElementById('slide-img');
   const dotsWrap=document.getElementById('slide-dots');
   if(!img||!dotsWrap) return;
-
   let cur=0, timer;
-
-  // Cria dots
   IMGS.forEach((_,i)=>{
     const d=document.createElement('div');
     d.style.cssText=`width:6px;height:6px;border-radius:50%;background:${i===0?'#fff':'rgba(255,255,255,0.3)'};cursor:pointer;transition:background .3s;`;
     d.onclick=()=>goTo(i);
     dotsWrap.appendChild(d);
   });
-
   function updateDots(){
     dotsWrap.querySelectorAll('div').forEach((d,i)=>{
       d.style.background=i===cur?'#fff':'rgba(255,255,255,0.3)';
       d.style.transform=i===cur?'scale(1.3)':'scale(1)';
     });
   }
-
   function goTo(i){
-    cur=i;
-    img.style.opacity='0';
-    setTimeout(()=>{
-      img.src=IMGS[cur].src;
-      img.alt=IMGS[cur].alt;
-      img.style.opacity='1';
-    },250);
-    updateDots();
-    resetTimer();
+    cur=i; img.style.opacity='0';
+    setTimeout(()=>{ img.src=IMGS[cur].src; img.alt=IMGS[cur].alt; img.style.opacity='1'; },250);
+    updateDots(); resetTimer();
   }
-
-  function resetTimer(){
-    clearInterval(timer);
-    timer=setInterval(()=>goTo((cur+1)%IMGS.length),4500);
-  }
-
+  function resetTimer(){ clearInterval(timer); timer=setInterval(()=>goTo((cur+1)%IMGS.length),4500); }
   window.slideNext=()=>goTo((cur+1)%IMGS.length);
   window.slidePrev=()=>goTo((cur-1+IMGS.length)%IMGS.length);
-
-  updateDots();
-  resetTimer();
-
-  document.addEventListener('visibilitychange',()=>{
-    if(document.hidden) clearInterval(timer);
-    else resetTimer();
-  },{passive:true});
+  updateDots(); resetTimer();
+  document.addEventListener('visibilitychange',()=>{ if(document.hidden) clearInterval(timer); else resetTimer(); },{passive:true});
 })();
 
 // ─── REVEAL ───
 try {
   const obs=new IntersectionObserver(entries=>{
-    entries.forEach((e,i)=>{
-      if(e.isIntersecting){
-        setTimeout(()=>e.target.classList.add('in'),i*60);
-        obs.unobserve(e.target);
-      }
-    });
+    entries.forEach((e,i)=>{ if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('in'),i*60); obs.unobserve(e.target); } });
   },{threshold:0.05,rootMargin:'0px 0px -4% 0px'});
   document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-} catch(e) {
-  // fallback: mostra tudo se observer falhar
-  document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
+} catch(e) { document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in')); }
+
+// ─── INTERNACIONALIZAÇÃO (PT / EN) ───
+const WA='https://wa.me/5565993240270?text=';
+const translations = {
+  pt: {
+    types:{'Tatuagem':'Tatuagem','Parceria':'Parceria','Colaboração':'Colaboração','Pedido de Serviço':'Serviço'},
+    wa_generic:'Olá Raul! Vim pelo seu portfólio e quero conversar.',
+    wa_sites:'Olá Raul! Quero um site como os do seu portfólio.',
+    wa_writing:'Olá Raul! Tenho interesse nos seus trabalhos de escrita/roteiro.',
+    wa_art:'Olá Raul! Quero encomendar uma arte/logo.',
+    wa_tattoo:'Olá Raul! Quero agendar uma tatuagem.',
+    hdr_contact:'Contato',
+    cat_sites:'Sites', cat_writing:'Escrita & Roteiro', cat_art:'Arte Digital', cat_tattoo:'Tatuagem', cat_contact:'Contato',
+    hero_label:'Tattoo & Portfólio',
+    hero_roles:'CEO da NoHeroes · Desenvolvedor Full-Stack · Artista Digital · Tatuador · Escritor · Gestor de Projetos',
+    hero_desc:'Crio experiências que unem <strong style="color:rgba(255,255,255,0.7);">design, código, arte e pele</strong>. De sites e obras a tatuagens — técnica, estética e alma para gerar impacto real.',
+    lvl_native:'Nativo', lvl_fluent:'Fluente', lvl_fluent2:'Fluente', lvl_learning:'Aprendendo',
+    hero_cta_contact:'Entrar em contato', hero_cta_wa:'Chamar no WhatsApp',
+    slider_caption:'Explore. Escolha. Caia. Evolua.',
+    stat_years:'Anos exp.', stat_projects:'Projetos', stat_languages:'Idiomas', stat_adapt:'Adaptável',
+    bio_label:'Biografia & Atuação', bio_title:'Quem é Raul?',
+    bio_p1:'Criador do universo NoHeroes — plataforma multimídia que desenvolvi integralmente: produto, arquitetura, código, arte e narrativa. Gosto de ambientes novos, aprender em movimento e adaptar o que aprendo para criar soluções diferentes.',
+    bio_p2:'Sou também <strong style="color:rgba(255,255,255,0.8);">tatuador</strong> — a pele é mais um suporte para minha arte — e tenho experiência prática em <strong style="color:rgba(255,255,255,0.8);">churrascaria e açougue</strong>, onde aprendi ritmo, precisão e lidar com gente sob pressão.',
+    bio_p3:'Fui bombeiro, trabalhei com turismo, sobrevivencialismo e hotelaria como gerente. Dei palestras em escolas. Hoje sou CEO, mangaká independente, tatuador, instrutor e desenvolvedor — e ainda estou aprendendo japonês.',
+    skills_label:'Competências', skills_title:'Habilidades & Especialidades',
+    sk1_t:'Desenvolvimento Web', sk1_d:'Full-Stack · Node.js · Express · PostgreSQL · JWT · HTML/CSS · JS · Cloudflare',
+    sk2_t:'IA & Servidores', sk2_d:'Integração de IAs · LLMs · Automações · Infraestrutura cloud · Render · APIs',
+    sk3_t:'Arte Digital', sk3_d:'Concept design · Identidade visual · Logos · Mangá · UI/UX · Branding · Ilustração',
+    sk4_t:'Tatuagem', sk4_d:'Arte na pele · Design autoral · Adaptação de estilos · Composição sob a anatomia',
+    sk5_t:'Escrita & Roteiro', sk5_d:'Ficção científica · Dark fantasy · Worldbuilding · Roteiros · Publicação independente',
+    sk6_t:'Gestão & Liderança', sk6_d:'Gestão de equipes · Planejamento · Gerência hoteleira · Instrução · Palestras',
+    sk7_t:'Idiomas', sk7_d:'🇧🇷 Português nativo · 🇺🇸 Inglês fluente · 🇩🇪 Alemão fluente · 🇯🇵 Japonês em aprendizado',
+    sk8_t:'Sobrevivencialismo', sk8_d:'Bombeiro · Primeiros socorros · Turismo · Instrução em campo · Decisão sob pressão',
+    vit_label:'Trabalhos', vit_title:'Vitrines',
+    tab_sites:'Sites', tab_writing:'Escrita & Roteiro', tab_art:'Arte Digital', tab_tattoo:'Tatuagem',
+    sites_intro:'Sites que desenvolvi e mantenho no ar. A melhor vitrine é o próprio site — clique e veja com os seus olhos.',
+    site_bwn:'Agência de ecoturismo e safári de onças no Pantanal. Site multilíngue (PT/EN/DE/ES).',
+    site_cdm:'Pousada na Chapada dos Guimarães — site institucional, identidade e reservas.',
+    site_manual:'Landing page de livro — UI/UX, performance e integração de formulário/newsletter.',
+    site_nh:'Ecossistema completo: site, loja, leitor de mangás, app, autenticação e pagamentos.',
+    site_visit:'Visitar site ↗', site_visit2:'Visitar site ↗', site_visit3:'Visitar site ↗', site_visit4:'Visitar site ↗',
+    cta_sites:'Precisa de um site que converte e impressiona? Vamos tirar sua ideia do papel.',
+    cta_wa:'Chamar no WhatsApp', cta_form:'Pelo formulário',
+    writing_intro:'Livros, ebooks e uma webnovel em publicação. Cada obra com o link direto para você conferir.',
+    wr_acda:'Romance de dark fantasy. Primeiro volume da saga — o marco do universo NoHeroes.',
+    wr_read:'Conhecer a obra',
+    wr_webnovel:'A obra nova, publicada em capítulos na Webnovel — disponível em duas versões:',
+    wr_ebooks:'Ebooks de crescimento real: Tudo Está Conectado, Sistema Vivo e Manual das Sombras.',
+    wr_ebooks_btn:'Ver ebooks',
+    cta_writing:'Quer um roteiro, uma obra sob medida ou ghostwriting? Vamos escrever juntos.',
+    cta_wa2:'Chamar no WhatsApp', cta_form2:'Pelo formulário',
+    art_intro:'Logos e identidade visual que criei para clientes.',
+    art_group_clients:'Logos & Identidade — Clientes', art_group_nh:'Concept Art — Universo NoHeroes',
+    art_dynamic:'Logo e identidade para academia — força e movimento.',
+    art_gilberto:'Marca pessoal — símbolo esotérico com gradiente vibrante.',
+    art_cantos:'Logo da pousada — natureza e aconchego da Chapada.',
+    cta_art:'Logo, identidade visual, capa ou ilustração? Dou vida à sua marca.',
+    cta_wa3:'Chamar no WhatsApp', cta_form3:'Pelo formulário',
+    tattoo_head:'Portfólio de Tatuagem', tattoo_wip:'Galeria em preparação',
+    tattoo_intro:'Trabalhos reais na pele — cada peça com estilo e local. Tamanho e valor sob consulta.',
+    tattoo_ph:'Foto da tatuagem', tattoo_ph2:'Foto da tatuagem', tattoo_ph3:'Foto da tatuagem',
+    tattoo_ex:'Título / peça', tattoo_ex2:'Título / peça', tattoo_ex3:'Título / peça',
+    tattoo_model:'Modelo', tattoo_model2:'Modelo', tattoo_model3:'Modelo',
+    tt_style:'Estilo', tt_size:'Tamanho', tt_place:'Local', tt_value:'Investimento',
+    tt_style2:'Estilo', tt_size2:'Tamanho', tt_place2:'Local', tt_value2:'Investimento',
+    tt_style3:'Estilo', tt_size3:'Tamanho', tt_place3:'Local', tt_value3:'Investimento',
+    cta_tattoo:'Tem uma ideia na cabeça? Vamos transformá-la em arte na sua pele.',
+    cta_wa4:'Agendar no WhatsApp', cta_form4:'Pelo formulário',
+    proj_label:'Projetos Próprios', proj_title:'Trabalhos Autorais',
+    proj_desc:'IP autoral dark-fantasy em expansão: livro, mangás, app gamificado, loja digital e ecossistema completo. Desenvolvido integralmente — identidade visual, produto, arquitetura web e narrativa.',
+    proj_pillars:'Pilares',
+    proj_p1:'• Site + loja (Node/Express, PostgreSQL, JWT, MP)', proj_p2:'• Leitor de mangás com sistema de capítulos', proj_p3:'• Admin completo com gestão de conteúdo', proj_p4:'• Roteiro/lore originais — universo, clãs, criaturas',
+    proj_high:'Destaques',
+    proj_h1:'• Design dark moderno — gradiente roxo-dourado', proj_h2:'• Arquitetura pronta para transmídia', proj_h3:'• Sistema de doações e metas transparentes', proj_h4:'• Newsletter, arautos e upload de obras',
+    proj_btn_site:'Site', proj_btn_store:'Loja', proj_btn_book:'Livro ACDA',
+    contact_label:'Contato', contact_title:'Vamos trabalhar juntos',
+    contact_sub:'Site, arte, uma obra ou uma tatuagem — descreva sua ideia. Prefere conversar agora? Chame direto no WhatsApp.',
+    contact_wa_btn:'WhatsApp: (65) 99324-0270',
+    form_title:'Formulário de Contato',
+    f_type:'Tipo de contato *', f_type_ph:'Selecione...', f_type_tattoo:'Tatuagem', f_type_partner:'Parceria', f_type_collab:'Colaboração', f_type_service:'Pedido de Serviço', f_type_other:'Outro',
+    f_name:'Nome *', f_name_ph:'Seu nome', f_email:'E-mail *', f_email_ph:'voce@email.com',
+    f_subject:'Assunto *', f_subject_ph:'Descreva brevemente',
+    f_msg:'Mensagem *', f_msg_ph:'Descreva seu projeto, prazo, orçamento, referências e escopo',
+    f_consent:'Autorizo contato por e-mail/WhatsApp.', f_send:'Enviar',
+    modal_title:'Como posso ajudar?', modal_sub:'Selecione o tipo de contato para ser direcionado ao formulário correto.',
+    ct_tattoo:'Tatuagem', ct_tattoo_sub:'Agendar tattoo', ct_partner:'Parceria', ct_partner_sub:'Trabalho conjunto', ct_collab:'Colaboração', ct_collab_sub:'Projeto criativo', ct_service:'Serviço', ct_service_sub:'Orçamento', modal_cancel:'Cancelar',
+    foot_credit:'Tattoo & Portfólio por',
+    fab_wa_label:'Fale comigo no WhatsApp', fab_sup_sub:'Suporte'
+  },
+  en: {
+    types:{'Tatuagem':'Tattoo','Parceria':'Partnership','Colaboração':'Collaboration','Pedido de Serviço':'Service'},
+    wa_generic:'Hi Raul! I came from your portfolio and I would like to talk.',
+    wa_sites:'Hi Raul! I want a website like the ones in your portfolio.',
+    wa_writing:'Hi Raul! I am interested in your writing / screenwriting work.',
+    wa_art:'Hi Raul! I would like to order artwork / a logo.',
+    wa_tattoo:'Hi Raul! I would like to book a tattoo.',
+    hdr_contact:'Contact',
+    cat_sites:'Websites', cat_writing:'Writing & Scripts', cat_art:'Digital Art', cat_tattoo:'Tattoo', cat_contact:'Contact',
+    hero_label:'Tattoo & Portfolio',
+    hero_roles:'NoHeroes CEO · Full-Stack Developer · Digital Artist · Tattoo Artist · Writer · Project Manager',
+    hero_desc:'I create experiences that blend <strong style="color:rgba(255,255,255,0.7);">design, code, art and skin</strong>. From websites and books to tattoos — craft, aesthetics and soul for real impact.',
+    lvl_native:'Native', lvl_fluent:'Fluent', lvl_fluent2:'Fluent', lvl_learning:'Learning',
+    hero_cta_contact:'Get in touch', hero_cta_wa:'Message on WhatsApp',
+    slider_caption:'Explore. Choose. Fall. Evolve.',
+    stat_years:'Years exp.', stat_projects:'Projects', stat_languages:'Languages', stat_adapt:'Adaptable',
+    bio_label:'Biography & Work', bio_title:'Who is Raul?',
+    bio_p1:'Creator of the NoHeroes universe — a multimedia platform I built entirely on my own: product, architecture, code, art and narrative. I love new environments, learning on the move and adapting what I learn into different solutions.',
+    bio_p2:'I am also a <strong style="color:rgba(255,255,255,0.8);">tattoo artist</strong> — skin is one more canvas for my art — and I have hands-on experience in <strong style="color:rgba(255,255,255,0.8);">steakhouse and butchery</strong> work, where I learned rhythm, precision and dealing with people under pressure.',
+    bio_p3:'I was a firefighter, worked in tourism, survivalism and hospitality as a manager. I gave talks in schools. Today I am a CEO, independent mangaka, tattoo artist, instructor and developer — and still learning Japanese.',
+    skills_label:'Competencies', skills_title:'Skills & Specialties',
+    sk1_t:'Web Development', sk1_d:'Full-Stack · Node.js · Express · PostgreSQL · JWT · HTML/CSS · JS · Cloudflare',
+    sk2_t:'AI & Servers', sk2_d:'AI integration · LLMs · Automation · Cloud infrastructure · Render · APIs',
+    sk3_t:'Digital Art', sk3_d:'Concept design · Visual identity · Logos · Manga · UI/UX · Branding · Illustration',
+    sk4_t:'Tattoo', sk4_d:'Art on skin · Original design · Style adaptation · Composition to the anatomy',
+    sk5_t:'Writing & Scripts', sk5_d:'Science fiction · Dark fantasy · Worldbuilding · Scripts · Independent publishing',
+    sk6_t:'Management & Leadership', sk6_d:'Team management · Planning · Hotel management · Instruction · Talks',
+    sk7_t:'Languages', sk7_d:'🇧🇷 Native Portuguese · 🇺🇸 Fluent English · 🇩🇪 Fluent German · 🇯🇵 Learning Japanese',
+    sk8_t:'Survivalism', sk8_d:'Firefighter · First aid · Tourism · Field instruction · Decision under pressure',
+    vit_label:'Work', vit_title:'Showcases',
+    tab_sites:'Websites', tab_writing:'Writing & Scripts', tab_art:'Digital Art', tab_tattoo:'Tattoo',
+    sites_intro:'Websites I built and keep online. The best showcase is the site itself — click and see it with your own eyes.',
+    site_bwn:'Ecotourism agency and jaguar safaris in the Pantanal. Multilingual site (PT/EN/DE/ES).',
+    site_cdm:'Inn in Chapada dos Guimarães — institutional site, identity and bookings.',
+    site_manual:'Book landing page — UI/UX, performance and form/newsletter integration.',
+    site_nh:'Full ecosystem: website, store, manga reader, app, authentication and payments.',
+    site_visit:'Visit site ↗', site_visit2:'Visit site ↗', site_visit3:'Visit site ↗', site_visit4:'Visit site ↗',
+    cta_sites:'Need a website that converts and impresses? Let us bring your idea to life.',
+    cta_wa:'Message on WhatsApp', cta_form:'Via the form',
+    writing_intro:'Books, ebooks and a web novel in progress. Each work with a direct link for you to check out.',
+    wr_acda:'A dark fantasy novel. First volume of the saga — the cornerstone of the NoHeroes universe.',
+    wr_read:'Discover the book',
+    wr_webnovel:'The new work, published in chapters on Webnovel — available in two versions:',
+    wr_ebooks:'Real-growth ebooks: Everything Is Connected, Living System and Manual of Shadows.',
+    wr_ebooks_btn:'View ebooks',
+    cta_writing:'Want a script, a custom book or ghostwriting? Let us write together.',
+    cta_wa2:'Message on WhatsApp', cta_form2:'Via the form',
+    art_intro:'Logos and visual identity I created for clients.',
+    art_group_clients:'Logos & Identity — Clients', art_group_nh:'Concept Art — NoHeroes Universe',
+    art_dynamic:'Logo and identity for a gym — strength and movement.',
+    art_gilberto:'Personal brand — esoteric symbol with a vibrant gradient.',
+    art_cantos:'Inn logo — nature and the warmth of Chapada.',
+    cta_art:'Logo, visual identity, cover or illustration? I bring your brand to life.',
+    cta_wa3:'Message on WhatsApp', cta_form3:'Via the form',
+    tattoo_head:'Tattoo Portfolio', tattoo_wip:'Gallery in preparation',
+    tattoo_intro:'Real work on skin — each piece with style and placement. Size and price on request.',
+    tattoo_ph:'Tattoo photo', tattoo_ph2:'Tattoo photo', tattoo_ph3:'Tattoo photo',
+    tattoo_ex:'Title / piece', tattoo_ex2:'Title / piece', tattoo_ex3:'Title / piece',
+    tattoo_model:'Template', tattoo_model2:'Template', tattoo_model3:'Template',
+    tt_style:'Style', tt_size:'Size', tt_place:'Placement', tt_value:'Investment',
+    tt_style2:'Style', tt_size2:'Size', tt_place2:'Placement', tt_value2:'Investment',
+    tt_style3:'Style', tt_size3:'Size', tt_place3:'Placement', tt_value3:'Investment',
+    cta_tattoo:'Got an idea in mind? Let us turn it into art on your skin.',
+    cta_wa4:'Book on WhatsApp', cta_form4:'Via the form',
+    proj_label:'Own Projects', proj_title:'Original Work',
+    proj_desc:'An original dark-fantasy IP in expansion: book, manga, gamified app, digital store and a full ecosystem. Built entirely — visual identity, product, web architecture and narrative.',
+    proj_pillars:'Pillars',
+    proj_p1:'• Website + store (Node/Express, PostgreSQL, JWT, MP)', proj_p2:'• Manga reader with a chapter system', proj_p3:'• Full admin with content management', proj_p4:'• Original script/lore — universe, clans, creatures',
+    proj_high:'Highlights',
+    proj_h1:'• Modern dark design — purple-gold gradient', proj_h2:'• Architecture ready for transmedia', proj_h3:'• Donation system and transparent goals', proj_h4:'• Newsletter, heralds and work uploads',
+    proj_btn_site:'Site', proj_btn_store:'Store', proj_btn_book:'ACDA Book',
+    contact_label:'Contact', contact_title:'Let us work together',
+    contact_sub:'A website, art, a book or a tattoo — describe your idea. Prefer to talk now? Message me directly on WhatsApp.',
+    contact_wa_btn:'WhatsApp: +55 (65) 99324-0270',
+    form_title:'Contact Form',
+    f_type:'Contact type *', f_type_ph:'Select...', f_type_tattoo:'Tattoo', f_type_partner:'Partnership', f_type_collab:'Collaboration', f_type_service:'Service request', f_type_other:'Other',
+    f_name:'Name *', f_name_ph:'Your name', f_email:'Email *', f_email_ph:'you@email.com',
+    f_subject:'Subject *', f_subject_ph:'Briefly describe',
+    f_msg:'Message *', f_msg_ph:'Describe your project, deadline, budget, references and scope',
+    f_consent:'I authorize contact by email/WhatsApp.', f_send:'Send',
+    modal_title:'How can I help?', modal_sub:'Select the type of contact to be directed to the right form.',
+    ct_tattoo:'Tattoo', ct_tattoo_sub:'Book a tattoo', ct_partner:'Partnership', ct_partner_sub:'Working together', ct_collab:'Collaboration', ct_collab_sub:'Creative project', ct_service:'Service', ct_service_sub:'Quote', modal_cancel:'Cancel',
+    foot_credit:'Tattoo & Portfolio by',
+    fab_wa_label:'Message me on WhatsApp', fab_sup_sub:'Support'
+  }
+};
+
+// Tradução das partes compartilhadas (drawer + footer)
+const chrome_pt2en = {
+  'Início':'Home','Mangás':'Manga','Sobre':'About','Loja':'Store','Perfil':'Profile','Oráculo':'Oracle','Suporte':'Support',
+  'Portal':'Portal','Crônicas':'Chronicles','Entidade':'Entity','Mercado':'Market','Avatar':'Avatar','Mente':'Mind','Ajuda':'Help',
+  'Universo Sombrio':'Dark Universe','Sem heróis. Apenas você.':'No heroes. Just you.',
+  'Biblioteca':'Library','Apoiar':'Donate','Termos':'Terms','Privacidade':'Privacy','Chances (Odds)':'Odds',
+  'Explore. Escolha. Caia. Evolua.':'Explore. Choose. Fall. Evolve.',
+  'Toda escolha tem um preço. Toda queda, uma razão.':'Every choice has a price. Every fall, a reason.',
+  'Todos os direitos reservados.':'All rights reserved.'
+};
+const chrome_en2pt = {}; for(const k in chrome_pt2en) chrome_en2pt[chrome_pt2en[k]] = k;
+function translateChrome(lang){
+  try{
+    const map = lang==='en' ? chrome_pt2en : chrome_en2pt;
+    const roots = [document.querySelector('nh-drawer'), document.querySelector('nh-footer')].filter(Boolean);
+    roots.forEach(root=>{
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+      let node;
+      while(node = walker.nextNode()){
+        let t = node.nodeValue;
+        for(const k in map){ if(t.includes(k)) t = t.split(k).join(map[k]); }
+        if(t !== node.nodeValue) node.nodeValue = t;
+      }
+    });
+  }catch(e){}
 }
 
-// show desktop nav on md+
-if(window.innerWidth>=768) document.getElementById('deskNav').style.display='flex';
-window.addEventListener('resize',()=>{
-  document.getElementById('deskNav').style.display=window.innerWidth>=768?'flex':'none';
+// ─── GALERIA DE TATUAGEM ───
+const TATTOOS = [
+  {img:'assets/images/tattoos/tattoo-01.jpg', style:{pt:'Dark fantasy',en:'Dark fantasy'}, loc:{pt:'Perna',en:'Leg'}},
+  {img:'assets/images/tattoos/tattoo-08.jpg', style:{pt:'Realismo dark',en:'Dark realism'}, loc:{pt:'Coxa',en:'Thigh'}},
+  {img:'assets/images/tattoos/tattoo-06.jpg', style:{pt:'Oriental',en:'Oriental'}, loc:{pt:'Costas',en:'Back'}},
+  {img:'assets/images/tattoos/tattoo-31.jpg', style:{pt:'Oriental',en:'Oriental'}, loc:{pt:'Braço',en:'Arm'}},
+  {img:'assets/images/tattoos/tattoo-26.jpg', style:{pt:'Floral',en:'Floral'}, loc:{pt:'Braço',en:'Arm'}},
+  {img:'assets/images/tattoos/tattoo-28.jpg', style:{pt:'Lettering',en:'Lettering'}, loc:{pt:'Pescoço',en:'Neck'}},
+  {img:'assets/images/tattoos/tattoo-23.jpg', style:{pt:'Anime',en:'Anime'}, loc:{pt:'Peito',en:'Chest'}},
+  {img:'assets/images/tattoos/tattoo-18.jpg', style:{pt:'Blackwork',en:'Blackwork'}, loc:{pt:'Braço',en:'Arm'}},
+  {img:'assets/images/tattoos/tattoo-12.jpg', style:{pt:'Cover-up',en:'Cover-up'}, loc:{pt:'Peito',en:'Chest'}},
+  {img:'assets/images/tattoos/tattoo-24.jpg', style:{pt:'New school',en:'New school'}, loc:{pt:'Peito',en:'Chest'}},
+  {img:'assets/images/tattoos/tattoo-16.jpg', style:{pt:'Blackwork',en:'Blackwork'}, loc:{pt:'Perna',en:'Leg'}},
+  {img:'assets/images/tattoos/tattoo-19.jpg', style:{pt:'Blackwork',en:'Blackwork'}, loc:{pt:'Costas',en:'Back'}},
+  {img:'assets/images/tattoos/tattoo-21.jpg', style:{pt:'Black & grey',en:'Black & grey'}, loc:{pt:'Clavícula',en:'Collarbone'}},
+  {img:'assets/images/tattoos/tattoo-09.jpg', style:{pt:'Blackwork',en:'Blackwork'}, loc:{pt:'Braço',en:'Arm'}},
+  {img:'assets/images/tattoos/tattoo-15.jpg', style:{pt:'Sketch',en:'Sketch'}, loc:{pt:'Braço',en:'Arm'}},
+  {img:'assets/images/tattoos/tattoo-03.jpg', style:{pt:'Old school',en:'Old school'}, loc:{pt:'Braço',en:'Arm'}},
+  {img:'assets/images/tattoos/tattoo-27.jpg', style:{pt:'Blackwork',en:'Blackwork'}, loc:{pt:'Pescoço',en:'Neck'}},
+  {img:'assets/images/tattoos/tattoo-25.jpg', style:{pt:'Black & grey',en:'Black & grey'}, loc:{pt:'Perna',en:'Leg'}},
+  {img:'assets/images/tattoos/tattoo-30.jpg', style:{pt:'Black & grey',en:'Black & grey'}, loc:{pt:'Antebraço',en:'Forearm'}},
+  {img:'assets/images/tattoos/tattoo-11.jpg', style:{pt:'Blackwork',en:'Blackwork'}, loc:{pt:'Antebraço',en:'Forearm'}},
+  {img:'assets/images/tattoos/tattoo-13.jpg', style:{pt:'Blackwork',en:'Blackwork'}, loc:{pt:'Antebraço',en:'Forearm'}},
+  {img:'assets/images/tattoos/tattoo-02.jpg', style:{pt:'Ornamental',en:'Ornamental'}, loc:{pt:'Braço',en:'Arm'}},
+  {img:'assets/images/tattoos/tattoo-04.jpg', style:{pt:'Fine line',en:'Fine line'}, loc:{pt:'Antebraço',en:'Forearm'}},
+  {img:'assets/images/tattoos/tattoo-05.jpg', style:{pt:'Fine line',en:'Fine line'}, loc:{pt:'Antebraço',en:'Forearm'}},
+  {img:'assets/images/tattoos/tattoo-29.jpg', style:{pt:'Fine line',en:'Fine line'}, loc:{pt:'Atrás da orelha',en:'Behind the ear'}},
+  {img:'assets/images/tattoos/tattoo-10.jpg', style:{pt:'Caligrafia',en:'Calligraphy'}, loc:{pt:'Perna',en:'Leg'}},
+  {img:'assets/images/tattoos/tattoo-07.jpg', style:{pt:'Kanji',en:'Kanji'}, loc:{pt:'Antebraço',en:'Forearm'}}
+];
+function renderTattoos(lang){
+  const el = document.getElementById('tattoo-gallery');
+  if(!el) return;
+  el.innerHTML = TATTOOS.map(function(t){
+    var s = t.style[lang] || t.style.pt;
+    var l = t.loc[lang] || t.loc.pt;
+    return '<figure class="tg-item"><img src="'+t.img+'" alt="Tatuagem — '+s+'" loading="lazy"><figcaption class="tg-cap"><span class="tg-style">'+s+'</span><span class="tg-loc">'+l+'</span></figcaption></figure>';
+  }).join('');
+}
+
+function applyLang(lang){
+  const dict = translations[lang] || translations.pt;
+  document.getElementById('lang-pt').classList.toggle('active', lang==='pt');
+  document.getElementById('lang-en').classList.toggle('active', lang==='en');
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.getAttribute('data-i18n');
+    if(dict[key] != null) el.innerHTML = dict[key];
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{
+    const key = el.getAttribute('data-i18n-ph');
+    if(dict[key] != null) el.setAttribute('placeholder', dict[key]);
+  });
+  document.querySelectorAll('[data-wa]').forEach(a=>{
+    const key = a.getAttribute('data-wa');
+    a.href = WA + encodeURIComponent(dict[key] || dict.wa_generic || '');
+  });
+  translateChrome(lang);
+  renderTattoos(lang);
+  document.documentElement.lang = lang==='pt' ? 'pt-BR' : 'en';
+  try{ localStorage.setItem('nh_lang', lang); }catch(e){}
+}
+function switchLang(lang){ applyLang(lang); }
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  // Tatuagem em destaque: sobe a seção de vitrines para logo após o hero
+  try{
+    const vit = document.getElementById('vitrines');
+    const intro = document.getElementById('intro');
+    if(vit && intro && intro.parentNode) intro.parentNode.insertBefore(vit, intro.nextSibling);
+  }catch(e){}
+  let saved = 'pt';
+  try{ saved = localStorage.getItem('nh_lang') || 'pt'; }catch(e){}
+  applyLang(saved);
 });
-
-// Brasas: agora no componente compartilhado <nh-background> (noheroes-ui.js)
-
-// ─── NAV DESKTOP ───
-const deskNav=document.getElementById('deskNav');
-if(deskNav){
-  if(window.innerWidth>=768) deskNav.style.display='flex';
-  window.addEventListener('resize',()=>{deskNav.style.display=window.innerWidth>=768?'flex':'none';});
-}
-
 </script>
 </body>
 </html>
