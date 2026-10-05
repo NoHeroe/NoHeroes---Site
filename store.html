@@ -395,15 +395,6 @@ function applyFilter(){
 
 const CATEGORY_MAP = { ebooks:'Ebooks', ebook:'Ebooks', mentorias:'Mentorias', mentoria:'Mentorias', extras:'Extras' };
 function normalizeCat(cat){
-// Produtos que não são vendidos no site: pacotes de moeda interna (coin_pack),
-// produtos do app (app_*) e as categorias App, Mangás e Animes.
-const CATEGORIAS_FORA = ['app', 'manga', 'mangá', 'mangás', 'animes', 'anime'];
-function isVendavelNoSite(p){
-  const type = String(p.type||'').toLowerCase();
-  const cat = String(p.category||'').toLowerCase().trim();
-  if (type === 'coin_pack' || type.startsWith('app_')) return false;
-  return !CATEGORIAS_FORA.includes(cat);
-}
   const key = String(cat||'').toLowerCase().trim();
   return CATEGORY_MAP[key] || (String(cat||'').charAt(0).toUpperCase() + String(cat||'').slice(1));
 }
@@ -598,7 +589,7 @@ function addToCart(p){
   name: p.name,
   type: p.type || '',
   imageUrl: resolveImageUrl(p.imageUrl || p.image_url || p.image || ''),
-  priceReal: Number(p.priceReal || p.price || 0),
+  priceReal: Number(p.discountReal ?? p.priceReal ?? 0),
   quantity: 1
 });
   saveCart();
@@ -748,7 +739,7 @@ async function loadProducts(){
     const json = await res.json();
     if (!json?.success) throw new Error('Resposta inválida.');
 
-    state.allProducts = (json.data||[]).filter(isVendavelNoSite).map(p => ({...p, category: normalizeCat(p.category)}));
+    state.allProducts = (json.data||[]).map(p => ({...p, category: normalizeCat(p.category)}));
   } catch (e){
     console.warn('Falha ao carregar produtos da API, usando fallback local.', e);
     state.allProducts = [

@@ -434,7 +434,7 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
     const items=data.items||data.data||data.products||data||[];
     const p=items.find(i=>i.id===2);
     if(!p)return;
-    const preco=parseFloat(p.price??p.preco??p.valor??0);
+    const preco=parseFloat(p.discountReal??p.priceReal??0);
     if(!preco)return;
     const fmt=preco.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
     document.getElementById('tec-price').textContent=`Ver na Loja — ${fmt}`;
