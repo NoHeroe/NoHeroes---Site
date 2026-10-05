@@ -435,7 +435,6 @@ dialog[open] .dialog-ctr {
 
       <div class="flex-1 w-full space-y-4">
         <div class="text-center lg:text-left">
-          <p class="text-amber-400/80 text-[10px] uppercase tracking-[0.2em] font-bold mb-1">Status: Arauto Ativo</p>
           <h1 id="miniNome" class="text-2xl font-bold text-white italic tracking-tight">—</h1>
           <p id="userEmail" class="text-purple-300/40 text-xs italic"></p>
         </div>
@@ -468,15 +467,6 @@ dialog[open] .dialog-ctr {
     </a>
   </div>
 
-  <section class="space-y-4">
-    <div class="flex items-center gap-4 border-b border-white/5 overflow-x-auto no-scrollbar">
-      <button class="pb-2 border-b-2 border-purple-500 text-purple-100 font-bold text-[11px] whitespace-nowrap uppercase italic" onclick="switchLibTab(this,'lendo')">Lendo</button>
-      <button class="pb-2 border-b-2 border-transparent text-gray-500 hover:text-white font-bold text-[11px] whitespace-nowrap uppercase transition" onclick="switchLibTab(this,'favoritos')">Favoritos</button>
-      <button class="pb-2 border-b-2 border-transparent text-gray-500 hover:text-white font-bold text-[11px] whitespace-nowrap uppercase transition" onclick="switchLibTab(this,'historico')">Histórico</button>
-    </div>
-    <div id="mangaGrid" class="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-3"></div>
-  </section>
-
   <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 
     <section class="space-y-6">
@@ -489,9 +479,6 @@ dialog[open] .dialog-ctr {
         <a href="store.html" class="card ring-gradient w-[140px] rounded-xl overflow-hidden shadow-md hover:brightness-110 transition shrink-0">
           <img src="assets/images/lojanoheroes.png" alt="Loja" class="w-full h-auto object-cover"/>
         </a>
-        <button id="openLocked" class="card w-[140px] rounded-xl overflow-hidden cursor-not-allowed opacity-60 shrink-0" type="button">
-          <img src="assets/images/mercadonegro.png" alt="Mercado Negro" class="w-full h-auto object-cover"/>
-        </button>
       </div>
 
       <div class="flex flex-col gap-2">
@@ -664,7 +651,7 @@ dialog[open] .dialog-ctr {
     <p class="text-sm text-gray-300/85 mb-3">Esta ação é <strong>irreversível</strong>. Para confirmar, digite <strong>EXCLUIR</strong> abaixo.</p>
     <input id="deleteConfirmInput" type="text" placeholder="Digite EXCLUIR" class="input mb-3" autocomplete="off"/>
     <input id="deletePasswordInput" type="password" placeholder="Confirme com sua senha" class="input mb-1" autocomplete="current-password"/>
-    <p class="text-[11px] text-gray-400 mb-4">Usa login com Google? A exclusão pela web ainda não reautentica com Google — exclua pelo app.</p>
+    <p class="text-[11px] text-gray-400 mb-4">Usa login com Google? A exclusão pela web ainda não reautentica com Google — abra um ticket no <a href="suporte.html" class="underline">suporte</a>.</p>
     <div class="flex justify-end gap-3">
       <button id="cancelDelete" class="btn btn-ghost" type="button">Cancelar</button>
       <button id="confirmDelete" class="btn" style="background:#7f1d1d;color:#fff" disabled type="button">Excluir conta</button>
@@ -672,17 +659,6 @@ dialog[open] .dialog-ctr {
     <p id="deleteError" class="text-xs text-red-400 mt-3 hidden"></p>
   </div>
 </dialog>
-
-  <!-- BLOQUEADO -->
-  <dialog id="lockedModal">
-    <form method="dialog" class="dialog-ctr w-[min(94vw,420px)] p-6 text-center ring-gradient">
-      <h2 class="text-xl font-bold text-purple-300 mb-4">Acesso Negado</h2>
-      <p class="text-sm text-gray-300/85">Você precisa subir de nível para acessar o Mercado Negro.</p>
-      <div class="mt-6">
-        <button id="closeLocked" class="btn btn-primary" type="button">Fechar</button>
-      </div>
-    </form>
-  </dialog>
 
   <!-- MODAL HISTÓRICO DE COMPRAS -->
 <dialog id="comprasModal">
@@ -834,12 +810,6 @@ btnConfirmLogout.addEventListener('click', () => {
   });
 })();
 
-    // ========= Locked modal =========
-    const lockedDlg = document.getElementById('lockedModal');
-    enableBackdropClose(lockedDlg);
-    document.getElementById('openLocked').addEventListener('click', ()=>lockedDlg.showModal());
-    document.getElementById('closeLocked').addEventListener('click', ()=>lockedDlg.close());
-
     // ========= API helper =========
     async function api(path, opts={}){
       const res = await fetch(`${window.API_BASE}${path}`, {
@@ -884,7 +854,7 @@ btnConfirmLogout.addEventListener('click', () => {
         // errado por três motivos: (1) o elemento se chama userEmail e passou a mentir sobre
         // o próprio conteúdo; (2) a MESMA URL já aparece logo abaixo no campo #avatarUrl, então
         // era informação duplicada na tela; (3) uma URL crua de storage é saída de depuração,
-        // não informação para o jogador — e foi ela que estourava o layout no celular.
+        // não informação para o usuário — e foi ela que estourava o layout no celular.
         const userEmailEl = document.getElementById('userEmail');
         if (userEmailEl) userEmailEl.textContent = user.email || '';
         const avatarUrlInput = document.getElementById('avatarUrl');
@@ -1103,41 +1073,6 @@ async function abrirDetalhes(orderId){
   
 // Drawer: agora no componente compartilhado <nh-drawer> (gatilho via [data-nh-drawer-toggle])
 
-// ─── ABAS BIBLIOTECA ───
-async function switchLibTab(btn, tab){
-  document.querySelectorAll('[onclick^="switchLibTab"]').forEach(b=>{
-    b.classList.remove('border-purple-500','text-purple-100');
-    b.classList.add('border-transparent','text-gray-500');
-  });
-  btn.classList.remove('border-transparent','text-gray-500');
-  btn.classList.add('border-purple-500','text-purple-100');
-  await carregarBiblioteca(tab);
-}
-async function carregarBiblioteca(tab){
-  const grid=document.getElementById('mangaGrid');
-  grid.innerHTML='<div class="animate-pulse bg-white/5 rounded-xl aspect-[3/4.5] border border-white/5"></div><div class="animate-pulse bg-white/5 rounded-xl aspect-[3/4.5] border border-white/5"></div><div class="animate-pulse bg-white/5 rounded-xl aspect-[3/4.5] border border-white/5"></div>';
-  const ep={lendo:'/api/me/progress',favoritos:'/api/me/favorites',historico:'/api/me/progress'};
-  try{
-    const res=await api(ep[tab],{method:'GET'});
-    if(!res){grid.innerHTML=emptyState(tab);return;}
-    const json=await res.json();
-    const list=Array.isArray(json.data)?json.data:Array.isArray(json.works)?json.works:Array.isArray(json)?json:[];
-    if(!list.length){grid.innerHTML=emptyState(tab);return;}
-    grid.innerHTML=list.slice(0,12).map(w=>{
-      const o=w.Work||w.work||w;
-      const capa=o.cover_url||o.coverImage||o.cover||o.image||'';
-      const titulo=o.title||o.titulo||'—';
-      const href=o.slug?`leitor-obra.html?slug=${o.slug}`:'leitor.html';
-      return `<a href="${href}" class="group relative rounded-xl overflow-hidden aspect-[3/4.5] border border-white/5 hover:border-purple-500/50 transition block bg-black/40">${capa?`<img src="${capa}" alt="${titulo}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">`:`<div class="w-full h-full bg-gradient-to-br from-purple-900/40 to-black flex items-end p-2"><span class="text-[9px] text-white/60">${titulo}</span></div>`}<div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent p-2"><p class="text-[9px] text-white/80 font-semibold truncate">${titulo}</p></div></a>`;
-    }).join('');
-  }catch(e){grid.innerHTML=emptyState(tab);}
-}
-function emptyState(tab){
-  const m={lendo:'Nenhuma leitura em andamento.',favoritos:'Nenhum favorito ainda.',historico:'Histórico vazio.'};
-  return `<div class="col-span-3 text-center py-8 text-gray-500 text-xs">${m[tab]||'Nada aqui.'} <a href="leitor.html" class="text-purple-400 hover:underline">Explorar biblioteca →</a></div>`;
-}
-carregarBiblioteca('lendo');
-
 // ═══════════════════════════════════════════════
 // NOTIFICAÇÕES
 // ═══════════════════════════════════════════════
@@ -1149,21 +1084,7 @@ function escHtml(s) {
   return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 const NOTIF_ICONS = {
-  chapter_approved:       '✅',
-  chapter_rejected:       '❌',
-  work_approved:          '📚',
-  work_rejected:          '📚',
-  herald_approved:        '🛡️',
-  herald_rejected:        '🛡️',
-  new_comment:            '💬',
-  new_reply:              '↩️',
-  new_follower:           '👤',
-  new_chapter:            '📖',
   purchase_confirmed:     '🛒',
-  coins_received:         '🪙',
-  payout_ready:           '💸',
-  payout_paid:            '✅',
-  new_herald_application: '📬',
   critical_error:         '💀',
   system:                 '🔔',
 };

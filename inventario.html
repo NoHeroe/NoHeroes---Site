@@ -105,27 +105,6 @@ body{
 .hp{background:var(--hp)} .mp{background:var(--mp)} .xp{background:var(--xp)}
 @media(min-width:1024px){.bar{width:180px}}
 
-.gold{
-  color: var(--gold);
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 800;
-  letter-spacing: .3px;
-}
-.gold .coin{
-  width: 18px;
-  height: 18px;
-  filter: drop-shadow(0 0 6px rgba(194,149,70,.35));
-}
-.gold::after{
-  content: " Coins";
-  margin-left: 2px;
-  font-weight: 700;
-  color: #e6e6e6;
-  opacity: .85;
-}
-
 /* =========================================
    Títulos e legendas (gradiente roxo -> dourado)
    ========================================= */
@@ -451,25 +430,6 @@ body.modal-open{ overflow:hidden; }
    <nh-background></nh-background>
    <nh-drawer></nh-drawer>
     <header class="hud" role="banner">
-    <div class="group">
-      <span class="badge">Nível: <span id="lv">3</span></span>
-      <div class="bar"><div class="fill xp" id="barXP" data-val="67%" style="width:67%"></div></div>
-    </div>
-    <div class="group">
-      <div class="bar"><div class="fill hp" id="barHP" data-val="100/100" style="width:100%"></div></div>
-      <div class="bar"><div class="fill mp" id="barMP" data-val="50/50" style="width:100%"></div></div>
-    </div>
-    <div class="group">
-  <span class="gold">
-    <!-- Ícone de moeda -->
-    <svg class="coin" viewBox="0 0 24 24" aria-hidden="true">
-      <circle cx="12" cy="12" r="9" fill="currentColor" opacity="0.18"/>
-      <circle cx="12" cy="12" r="7.5" fill="none" stroke="currentColor" stroke-width="1.5"/>
-      <path d="M12 7.5v9M8.5 12h7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-    </svg>
-    <span id="gold">0</span>
-  </span>
-</div>
     <div class="actions">
       <button data-nh-drawer-toggle aria-label="Abrir menu">☰ Menu</button>
       <button onclick="location.href='store.html'">⛩ Loja</button>
@@ -606,25 +566,6 @@ async function downloadDigitalItem(userItemId, fallbackName = 'download.pdf') {
     console.error('download:', e);
     alert(e.message || 'Erro ao baixar o arquivo.');
   }
-}
-
-/* ==========================
-   HUD
-========================== */
-async function carregarPerfil() {
-  try {
-    const res = await api('/user/profile');
-    const json = await res.json();
-    if (json?.success && json.user) {
-      const u = json.user;
-      document.getElementById('lv').textContent   = u.level ?? 1;
-      document.getElementById('gold').textContent = u.coins ?? 0;
-      const xpPct = u.xpPct ?? 0;
-      const barXP = document.getElementById('barXP');
-      barXP.style.width = `${xpPct}%`;
-      barXP.dataset.val = `${xpPct}%`;
-    }
-  } catch (e) { console.error('perfil:', e); }
 }
 
 /* ==========================
@@ -787,7 +728,7 @@ function makeQuickAction(item){
   const arquivo = item.arquivo ? resolveImageUrl(item.arquivo) : null;
   const cat = (item.category||'').toLowerCase();
 
-  // eBook: abre página de leitura/app com query
+  // eBook: abre a página do e-book com query
   if (cat === 'ebook' || cat === 'ebooks') {
     return `<a href="ebooks.html?open=${encodeURIComponent(id)}" rel="noopener">Ler</a>`;
   }
@@ -959,7 +900,6 @@ if(!localStorage.getItem('nh_inv_help_seen')){ openHelp(); localStorage.setItem(
    BOOT
 ========================== */
 document.addEventListener('DOMContentLoaded', ()=>{
-  carregarPerfil();
   carregarInventario();
 });
 

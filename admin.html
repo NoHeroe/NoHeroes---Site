@@ -298,28 +298,19 @@ textarea.input{resize:vertical;min-height:80px}
   <span class="nav-section">Visão Geral</span>
   <button class="nav-item active" onclick="goTab('dashboard')" id="nav-dashboard"><span class="ni">📊</span>Dashboard</button>
 
-  <span class="nav-section">Conteúdo</span>
-  <button class="nav-item" onclick="goTab('works')" id="nav-works"><span class="ni">📚</span>Obras <span class="nav-badge" id="badge-works" style="display:none">0</span></button>
-  <button class="nav-item" onclick="goTab('chapters')" id="nav-chapters"><span class="ni">📄</span>Capítulos <span class="nav-badge" id="badge-chapters" style="display:none">0</span></button>
-  <button class="nav-item" onclick="goTab('heralds')" id="nav-heralds"><span class="ni">🛡️</span>Arautos <span class="nav-badge" id="badge-heralds" style="display:none">0</span></button>
-  <button class="nav-item" onclick="goTab('comments')" id="nav-comments"><span class="ni">💬</span>Comentários</button>
-
   <span class="nav-section">Plataforma</span>
   <button class="nav-item" onclick="goTab('users')" id="nav-users"><span class="ni">👥</span>Usuários</button>
-  <button class="nav-item" onclick="goTab('players')" id="nav-players"><span class="ni">🎮</span>Jogadores</button>
   <button class="nav-item" onclick="goTab('shop')" id="nav-shop"><span class="ni">🛒</span>Loja</button>
   <button class="nav-item" onclick="goTab('finance')" id="nav-finance"><span class="ni">💰</span>Financeiro</button>
   <button class="nav-item" onclick="goTab('goals')" id="nav-goals"><span class="ni">🎯</span>Metas</button>
   <button class="nav-item" onclick="goTab('newsletter')" id="nav-newsletter"><span class="ni">📧</span>Newsletter</button>
 
   <span class="nav-section">Sistema</span>
-  <button class="nav-item" onclick="goTab('revenue')" id="nav-revenue"><span class="ni">💰</span>Financeiro</button>
   <button class="nav-item" onclick="goTab('logs')" id="nav-logs"><span class="ni">🧾</span>Logs</button>
 
   <div class="sidebar-footer">
-    <!-- ITEM 13: no mobile a barra de topo nao cabia com estes 3 botoes (medido: o
-         "Arautos" era cortado na borda a 390px). Eles vem para a gaveta, que ja e a
-         navegacao unica do mobile — nenhum destino se perde. -->
+    <!-- ITEM 13: no mobile a barra de topo nao cabia com estes botoes (medido a 390px).
+         Eles vem para a gaveta, que ja e a navegacao unica do mobile. -->
     <div class="sb-mobile-actions">
       <button class="btn btn-ghost" onclick="location.href='index.html'">🌐 Ver o site</button>
       <button class="btn btn-ghost" onclick="logout()">Sair</button>
@@ -349,11 +340,8 @@ textarea.input{resize:vertical;min-height:80px}
 
     <div class="kpi-grid">
       <div class="kpi"><div class="kpi-label">Usuários</div><div class="kpi-value" id="kpi-users">—</div><div class="kpi-sub">Contas registradas</div></div>
-      <div class="kpi"><div class="kpi-label">Obras</div><div class="kpi-value" id="kpi-works">—</div><div class="kpi-sub">Publicadas na biblioteca</div></div>
       <div class="kpi"><div class="kpi-label">Pedidos</div><div class="kpi-value" id="kpi-orders">—</div><div class="kpi-sub">Total processados</div></div>
       <div class="kpi"><div class="kpi-label">Receita</div><div class="kpi-value" id="kpi-revenue" style="background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">—</div><div class="kpi-sub">Total bruto</div></div>
-      <div class="kpi"><div class="kpi-label">Pendências</div><div class="kpi-value" id="kpi-pending" style="color:var(--yellow)">—</div><div class="kpi-sub">Obras aguardando</div></div>
-      <div class="kpi"><div class="kpi-label">Arautos</div><div class="kpi-value" id="kpi-heralds">—</div><div class="kpi-sub">Autores ativos</div></div>
     </div>
 
     <div class="card" style="margin-bottom:16px;">
@@ -367,68 +355,6 @@ textarea.input{resize:vertical;min-height:80px}
     </div>
   </div>
 
-  <!-- OBRAS -->
-  <div id="tab-works" class="tab">
-    <div class="section-header">
-      <div><div class="section-title">Obras</div><div class="section-sub">Moderar, aprovar e gerenciar obras da plataforma</div></div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;">
-        <select class="input btn-sm" id="works-filter" onchange="loadAdminWorks()" style="width:auto">
-          <option value="pending">Aguardando</option>
-          <option value="published">Publicadas</option>
-          <option value="suspended">Suspensas</option>
-          <option value="">Todas</option>
-        </select>
-        <button class="btn btn-ghost btn-sm" onclick="loadAdminWorks()">↻</button>
-      </div>
-    </div>
-    <div id="works-list"></div>
-  </div>
-
-  <!-- CAPÍTULOS -->
-  <div id="tab-chapters" class="tab">
-    <div class="section-header">
-      <div><div class="section-title">Capítulos</div><div class="section-sub">Aprovar e gerenciar capítulos enviados pelos arautos</div></div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;">
-        <select class="input btn-sm" id="chapters-filter" onchange="loadAdminChapters()" style="width:auto">
-          <option value="pending">Aguardando</option>
-          <option value="published">Publicados</option>
-          <option value="rejected">Rejeitados</option>
-          <option value="draft">Rascunhos</option>
-          <option value="">Todos</option>
-        </select>
-        <button class="btn btn-ghost btn-sm" onclick="loadAdminChapters()">↻</button>
-      </div>
-    </div>
-    <div id="chapters-list"></div>
-  </div>
-
-  <!-- ARAUTOS -->
-  <div id="tab-heralds" class="tab">
-    <div class="section-header">
-      <div><div class="section-title">Candidaturas</div><div class="section-sub">Revisar candidaturas de novos arautos</div></div>
-      <select class="input btn-sm" id="heralds-filter" onchange="loadAdminHeralds()" style="width:auto">
-        <option value="pending">Pendentes</option>
-        <option value="approved">Aprovadas</option>
-        <option value="rejected">Rejeitadas</option>
-        <option value="">Todas</option>
-      </select>
-    </div>
-    <div id="heralds-list"></div>
-  </div>
-
-  <!-- COMENTÁRIOS -->
-  <div id="tab-comments" class="tab">
-    <div class="section-header">
-      <div><div class="section-title">Comentários</div><div class="section-sub">Moderar comentários da plataforma</div></div>
-      <select class="input btn-sm" id="comments-filter" onchange="loadAdminComments()" style="width:auto">
-        <option value="reported">Reportados</option>
-        <option value="active">Ativos</option>
-        <option value="hidden">Ocultos</option>
-      </select>
-    </div>
-    <div id="comments-list"></div>
-  </div>
-
   <!-- USUÁRIOS -->
   <div id="tab-users" class="tab">
     <div class="section-header">
@@ -440,32 +366,10 @@ textarea.input{resize:vertical;min-height:80px}
     </div>
     <div class="overflow-x">
       <table class="tbl">
-        <thead><tr><th>ID</th><th>Username</th><th>Email</th><th>Coins</th><th>Role</th><th>Criado</th><th>Ações</th></tr></thead>
-        <tbody id="tb-users"><tr><td colspan="7" style="text-align:center;color:var(--muted);padding:20px">Carregando...</td></tr></tbody>
+        <thead><tr><th>ID</th><th>Username</th><th>Email</th><th>Role</th><th>Criado</th><th>Ações</th></tr></thead>
+        <tbody id="tb-users"><tr><td colspan="6" style="text-align:center;color:var(--muted);padding:20px">Carregando...</td></tr></tbody>
       </table>
     </div>
-  </div>
-
-  <!-- JOGADORES (app) — item 12 fase 1: SÓ CONSULTA -->
-  <div id="tab-players" class="tab">
-    <div class="section-header">
-      <div>
-        <div class="section-title">Jogadores</div>
-        <div class="section-sub">Consulta do estado da conta no app — somente leitura</div>
-      </div>
-    </div>
-    <div class="search-row">
-      <input class="input" id="pl-q" placeholder="Buscar por email, username ou id…"
-             onkeydown="if(event.key==='Enter')buscarJogadores()">
-      <button class="btn btn-sm" onclick="buscarJogadores()">Buscar</button>
-    </div>
-    <div class="overflow-x">
-      <table class="tbl">
-        <thead><tr><th>Email</th><th>Username</th><th>Nv</th><th>Ouro</th><th>Gemas</th><th>Insíg.</th><th>Facção</th><th></th></tr></thead>
-        <tbody id="tb-players"><tr><td colspan="8" style="text-align:center;color:var(--muted);padding:20px">Digite um termo e busque.</td></tr></tbody>
-      </table>
-    </div>
-    <div id="pl-detalhe" style="margin-top:20px"></div>
   </div>
 
   <!-- LOJA -->
@@ -482,7 +386,7 @@ textarea.input{resize:vertical;min-height:80px}
       <div class="search-row"><input class="input" id="product-search" placeholder="Buscar produto..." oninput="filterProducts()"></div>
       <div class="overflow-x">
         <table class="tbl">
-          <thead><tr><th>ID</th><th>Nome</th><th>Tipo</th><th>Preço R$</th><th>Coins</th><th>Concede</th><th>Estoque</th><th>Status</th><th>Ações</th></tr></thead>
+          <thead><tr><th>ID</th><th>Nome</th><th>Tipo</th><th>Preço R$</th><th>Estoque</th><th>Status</th><th>Ações</th></tr></thead>
           <tbody id="tb-products"><tr><td colspan="7" style="text-align:center;color:var(--muted);padding:20px">Carregando...</td></tr></tbody>
         </table>
       </div>
@@ -538,7 +442,7 @@ textarea.input{resize:vertical;min-height:80px}
           </div>
           <div>
             <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Saudação personalizada</label>
-            <input class="input" id="nl-greeting" placeholder="Ex: Olá, Arauto! (deixe vazio para padrão)">
+            <input class="input" id="nl-greeting" placeholder="Ex: Olá! (deixe vazio para padrão)">
           </div>
           <div>
             <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px;">Corpo do e-mail * (aceita \n para quebra de linha)</label>
@@ -590,28 +494,6 @@ textarea.input{resize:vertical;min-height:80px}
     </div>
   </div>
 
-  <!-- FINANCEIRO -->
-  <div id="tab-revenue" class="tab">
-    <div class="section-header">
-      <div><div class="section-title">Financeiro</div><div class="section-sub">Receita, repasses e arautos</div></div>
-      <button class="btn btn-ghost btn-sm" onclick="loadRevenue()">↻</button>
-    </div>
-    <div class="kpi-grid" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr))">
-      <div class="kpi"><div class="kpi-label">Receita Total</div><div class="kpi-value" id="rev-total" style="color:var(--gold)">—</div></div>
-      <div class="kpi"><div class="kpi-label">Taxa Plataforma (10%)</div><div class="kpi-value" id="rev-fee" style="color:var(--green)">—</div></div>
-      <div class="kpi"><div class="kpi-label">Repasse Arautos (90%)</div><div class="kpi-value" id="rev-heralds">—</div></div>
-      <div class="kpi"><div class="kpi-label">Arautos Ativos</div><div class="kpi-value" id="rev-count">—</div></div>
-    </div>
-    <div class="card" style="margin-bottom:16px;">
-      <div style="font-size:13px;font-weight:700;margin-bottom:14px;">Por Obra</div>
-      <div id="rev-by-work"></div>
-    </div>
-    <div class="card">
-      <div style="font-size:13px;font-weight:700;margin-bottom:14px;">Por Arauto</div>
-      <div id="rev-by-herald"></div>
-    </div>
-  </div>
-
   <!-- LOGS -->
   <div id="tab-logs" class="tab">
     <div class="section-header">
@@ -648,7 +530,6 @@ textarea.input{resize:vertical;min-height:80px}
 <nav class="mob-nav">
   <div class="mob-nav-items">
     <button class="mob-btn active" onclick="goTab('dashboard')" id="mob-dashboard"><span class="mi">📊</span><span class="ml">Painel</span></button>
-    <button class="mob-btn" onclick="goTab('works')" id="mob-works"><span class="mi">📚</span><span class="ml">Obras</span></button>
     <button class="mob-btn" onclick="goTab('users')" id="mob-users"><span class="mi">👥</span><span class="ml">Users</span></button>
     <button class="mob-btn" onclick="goTab('shop')" id="mob-shop"><span class="mi">🛒</span><span class="ml">Loja</span></button>
     <button class="mob-btn" onclick="goTab('finance')" id="mob-finance"><span class="mi">💰</span><span class="ml">Financeiro</span></button>
@@ -662,22 +543,20 @@ textarea.input{resize:vertical;min-height:80px}
     <div class="section-header">
       <div>
         <div class="section-title">Financeiro</div>
-        <div class="section-sub">Receita consolidada · Repasses · Payouts</div>
+        <div class="section-sub">Receita consolidada</div>
       </div>
       <div style="display:flex;gap:8px;align-items:center;">
         <select class="input" id="fin-period" style="width:auto;" onchange="loadAdminFinance()">
           <!-- preenchido via JS -->
         </select>
         <button class="btn btn-ghost btn-sm" onclick="loadAdminFinance()">↻</button>
-        <button class="btn btn-primary btn-sm" onclick="generatePayouts()">Gerar Repasses</button>
+        
       </div>
     </div>
 
     <!-- KPIs -->
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:24px;">
       <div class="card"><div class="kpi-label">Receita Total</div><div class="kpi-value" id="fin-total" style="color:var(--gold);">—</div><div class="kpi-sub">No período</div></div>
-      <div class="card"><div class="kpi-label">Repasses Arautos</div><div class="kpi-value" id="fin-herald" style="color:var(--green);">—</div><div class="kpi-sub">30% das vendas</div></div>
-      <div class="card"><div class="kpi-label">Receita NoHeroes</div><div class="kpi-value" id="fin-net" style="color:var(--accent);">—</div><div class="kpi-sub">Líquido plataforma</div></div>
       <div class="card"><div class="kpi-label">Pedidos</div><div class="kpi-value" id="fin-orders" style="font-size:28px;">—</div><div class="kpi-sub">Aprovados</div></div>
     </div>
 
@@ -688,28 +567,6 @@ textarea.input{resize:vertical;min-height:80px}
         <table class="tbl">
           <thead><tr><th>Método</th><th>Pedidos</th><th>Receita</th></tr></thead>
           <tbody id="fin-by-method"><tr><td colspan="3" style="text-align:center;color:var(--muted);padding:20px">Carregando...</td></tr></tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- Payouts pendentes -->
-    <div class="card" style="margin-bottom:20px;">
-      <div style="font-size:13px;font-weight:700;margin-bottom:14px;">Repasses Pendentes</div>
-      <div class="overflow-x">
-        <table class="tbl">
-          <thead><tr><th>Arauto</th><th>Período</th><th>Valor</th><th>Status</th><th>Ação</th></tr></thead>
-          <tbody id="fin-payouts"><tr><td colspan="5" style="text-align:center;color:var(--muted);padding:20px">Carregando...</td></tr></tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- Por arauto -->
-    <div class="card">
-      <div style="font-size:13px;font-weight:700;margin-bottom:14px;">Receita por Arauto</div>
-      <div class="overflow-x">
-        <table class="tbl">
-          <thead><tr><th>Herald ID</th><th>Pedidos</th><th>Repasse</th></tr></thead>
-          <tbody id="fin-by-herald"><tr><td colspan="3" style="text-align:center;color:var(--muted);padding:20px">Carregando...</td></tr></tbody>
         </table>
       </div>
     </div>
@@ -735,11 +592,9 @@ textarea.input{resize:vertical;min-height:80px}
       <div class="field"><label class="label">Nome Completo</label><input class="input" id="um-nome"></div>
       <div class="field"><label class="label">Email</label><input class="input" id="um-email" type="email"></div>
       <div class="field"><label class="label">Status</label><select class="input" id="um-status"><option value="online">Online</option><option value="offline">Offline</option><option value="banido">Banido</option></select></div>
-      <div class="field"><label class="label">Coins</label><input class="input" id="um-coins" type="number"></div>
       <div class="field"><label class="label">Nível</label><input class="input" id="um-level" type="number"></div>
       <div class="field" style="grid-column:1/-1;display:flex;gap:16px;flex-wrap:wrap;">
         <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;"><input type="checkbox" id="um-admin"> Admin</label>
-        <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;"><input type="checkbox" id="um-herald"> Arauto</label>
         <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;"><input type="checkbox" id="um-verified"> Email verificado</label>
       </div>
     </div>
@@ -760,46 +615,15 @@ textarea.input{resize:vertical;min-height:80px}
       <!-- Tipo — controla campos dinâmicos -->
       <div class="field" style="grid-column:1/-1">
         <label class="label">Tipo de Produto</label>
-        <select class="input" id="pm-type" onchange="onProductTypeChange()">
+        <select class="input" id="pm-type">
           <option value="item">Item (inventário)</option>
-          <option value="coin_pack">Pacote de Coins</option>
-          <option value="season_pass">Passe de Temporada</option>
-          <option value="chapter">Capítulo Premium</option>
           <option value="ebook">E-book</option>
           <option value="book">Livro (PDF)</option>
         </select>
       </div>
 
       <div class="field"><label class="label">Preço R$</label><input class="input" id="pm-price-real" type="number" step=".01" min="0"></div>
-      <div class="field"><label class="label">Preço Coins</label><input class="input" id="pm-price-coins" type="number" min="0"></div>
 
-      <!-- Campos específicos por tipo -->
-      <div class="field" id="pm-coins-granted-field" style="display:none;grid-column:1/-1;background:rgba(143,79,255,.06);border:1px solid rgba(143,79,255,.2);border-radius:10px;padding:12px;">
-        <label class="label" style="color:var(--accent);">⚡ Coins Concedidos ao Comprar</label>
-        <input class="input" id="pm-coins-granted" type="number" min="1" placeholder="Ex: 500">
-        <div style="font-size:10px;color:var(--muted);margin-top:4px;">Quantidade de coins creditada automaticamente após pagamento.</div>
-      </div>
-
-      <div class="field" id="pm-entity-field" style="display:none;">
-        <label class="label" id="pm-entity-label">ID da Entidade</label>
-        <input class="input" id="pm-entity-id" type="number" placeholder="ID do capítulo / passe">
-        <div style="font-size:10px;color:var(--muted);margin-top:4px;" id="pm-entity-hint">ID do capítulo ou passe vinculado.</div>
-      </div>
-
-      <div class="field" id="pm-duration-field" style="display:none;">
-        <label class="label">Duração (dias)</label>
-        <input class="input" id="pm-duration" type="number" min="1" placeholder="Ex: 30">
-      </div>
-
-      <div class="field" id="pm-herald-field" style="display:none;">
-        <label class="label">ID do Arauto (heraldId)</label>
-        <input class="input" id="pm-herald-id" type="number" placeholder="User ID do criador">
-      </div>
-
-      <div class="field" id="pm-royalty-field" style="display:none;">
-        <label class="label">Royalty do Arauto (%)</label>
-        <input class="input" id="pm-royalty-pct" type="number" step=".01" min="0" max="1" placeholder="Ex: 0.30 = 30%">
-      </div>
 
       <div class="field"><label class="label">Estoque (vazio = ilimitado)</label><input class="input" id="pm-stock" type="number" min="0"></div>
       <div class="field"><label class="label">Categoria</label><input class="input" id="pm-category" placeholder="ebook, passe, avatar..."></div>
@@ -818,17 +642,6 @@ textarea.input{resize:vertical;min-height:80px}
   </div>
 </div>
 
-<div class="modal-backdrop" id="reject-modal">
-  <div class="modal-box" style="max-width:400px;">
-    <div class="modal-title">Nota de Rejeição</div>
-    <div class="field"><label class="label">Motivo (será enviado ao autor)</label><textarea class="input" id="reject-reason" rows="4" placeholder="Explique o motivo da rejeição para o autor poder corrigir..."></textarea></div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('reject-modal')">Cancelar</button>
-      <button class="btn btn-danger" id="reject-confirm-btn">Rejeitar</button>
-    </div>
-  </div>
-</div>
-
 <script>
 /* ═══════════════════════════════════════════════════════════
    NOHEROES ADMIN — v2.0
@@ -836,6 +649,7 @@ textarea.input{resize:vertical;min-height:80px}
 ═══════════════════════════════════════════════════════════ */
 
 const API_BASE = 'https://api.noheroes.com.br';
+const TIPOS_PRODUTO = ['item', 'ebook', 'book'];
 
 /* ─── AUTH ── */
 const Auth = {
@@ -851,8 +665,7 @@ const S = {
   products: [],
   editUserId: null,
   editProductId: null,
-  rejectTarget: null,
-  rejectType: null
+  editProductType: null
 };
 
 /* Escape de HTML — todo conteúdo de USUÁRIO renderizado por innerHTML passa aqui
@@ -918,9 +731,8 @@ function goTab(id) {
 
   // lazy load
   const loaders = {
-    dashboard:loadDashboard, works:loadAdminWorks, chapters:loadAdminChapters, heralds:loadAdminHeralds,
-    comments:loadAdminComments, users:loadAdminUsers, shop:loadShop, players:initPlayers,
-    goals:loadGoals, newsletter:loadNewsletter, revenue:loadRevenue, logs:loadLogs
+    dashboard:loadDashboard, users:loadAdminUsers, shop:loadShop,
+    goals:loadGoals, newsletter:loadNewsletter, logs:loadLogs
   };
   if(loaders[id]) loaders[id]();
 }
@@ -976,37 +788,16 @@ async function boot() {
 async function loadDashboard() {
   document.getElementById('dash-updated').textContent=new Date().toLocaleTimeString('pt-BR');
 
-  const [{ok:ok1,data:sd},{ok:ok2,data:od},{ok:ok3,data:wd},{ok:ok4,data:ha}] = await Promise.all([
+  const [{ok:ok1,data:sd},{ok:ok2,data:od}] = await Promise.all([
     api('/admin/stats?_='+Date.now()),
-    api('/admin/orders'),
-    api('/admin/works?status=pending'),
-    api('/admin/heralds?status=pending')
+    api('/admin/orders')
   ]);
 
   if(ok1) {
     document.getElementById('kpi-users').textContent=fmtNum(sd.users);
     document.getElementById('kpi-orders').textContent=fmtNum(sd.orders);
     document.getElementById('kpi-revenue').textContent=fmtBRL(sd.totalRealSales||sd.total_sales||0);
-    // arautos ativos vem do /admin/stats
-    document.getElementById('kpi-heralds').textContent=fmtNum(sd.heralds||0);
   }
-
-  // works pendentes
-  if(ok3) {
-    const pw = wd.total||wd.works?.length||0;
-    document.getElementById('kpi-pending').textContent=pw;
-    if(pw>0){ document.getElementById('badge-works').textContent=pw; document.getElementById('badge-works').style.display='inline'; }
-  }
-
-  // candidaturas pendentes — só o badge lateral
-  if(ok4) {
-    const ph = ha.applications?.length||0;
-    if(ph>0){ document.getElementById('badge-heralds').textContent=ph; document.getElementById('badge-heralds').style.display='inline'; }
-  }
-
-  // works published count
-  const {data:allW} = await api('/admin/works?status=published');
-  document.getElementById('kpi-works').textContent=fmtNum(allW?.total||allW?.works?.length||0);
 
   // recent orders
   const tb=document.getElementById('tb-recent-orders');
@@ -1043,238 +834,27 @@ async function loadDashboard() {
   }
 }
 
-/* ═══ OBRAS ═══ */
-async function loadAdminWorks() {
-  const status=document.getElementById('works-filter')?.value??'';
-  const {ok,data}=await api(`/admin/works${status?`?status=${status}`:''}`);
-  const container=document.getElementById('works-list');
-  if(!container) return;
-
-  const works=data.works||[];
-  if(!works.length) {
-    container.innerHTML='<div style="text-align:center;padding:32px;color:var(--muted);">Nenhuma obra encontrada.</div>';
-    return;
-  }
-
-  container.innerHTML=works.map(w=>`
-    <div class="mod-item">
-      <div class="mod-thumb">${w.cover_url?`<img src="${w.cover_url}">`:'📖'}</div>
-      <div class="mod-info">
-        <div class="mod-title">${w.title}</div>
-        <div class="mod-sub">por @${w.author?.username||'—'} · ${w.category||'—'} · ${fmtDate(w.createdAt)}</div>
-        <div class="mod-body">${w.synopsis||''}</div>
-        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
-          ${statusBadge(w.status)}
-          <span style="font-size:10px;color:var(--muted);font-family:var(--fm)">👁 ${fmtNum(w.total_views)} · ❤️ ${fmtNum(w.total_likes)}</span>
-        </div>
-      </div>
-      <div class="mod-actions">
-        ${w.status==='pending'?`
-          <button class="btn btn-green btn-sm" onclick="moderateWork(${w.id},'published')">✓ Aprovar</button>
-          <button class="btn btn-danger btn-sm" onclick="openRejectModal(${w.id},'work')">✕ Rejeitar</button>
-        `:''}
-        ${w.status==='published'?`
-          <button class="btn btn-ghost btn-sm" onclick="toggleFeatured(${w.id},${!w.featured})">${w.featured?'★ Remover destaque':'☆ Destacar'}</button>
-          <button class="btn btn-danger btn-sm" onclick="moderateWork(${w.id},'suspended')">Suspender</button>
-        `:''}
-        ${w.status==='suspended'?`
-          <button class="btn btn-green btn-sm" onclick="moderateWork(${w.id},'published')">Restaurar</button>
-        `:''}
-      </div>
-    </div>
-  `).join('');
-}
-
-async function moderateWork(id, status, notes='') {
-  const {ok}=await api(`/admin/works/${id}/status`,{method:'PATCH',body:JSON.stringify({status,admin_notes:notes})});
-  if(ok){ toast(status==='published'?'Obra aprovada!':'Obra atualizada.',status==='published'?'success':'info'); loadAdminWorks(); }
-  else toast('Erro ao moderar obra.','error');
-}
-
-async function toggleFeatured(id, featured) {
-  const {ok}=await api(`/admin/works/${id}/status`,{method:'PATCH',body:JSON.stringify({featured})});
-  if(ok){ toast(featured?'Obra em destaque!':'Destaque removido.','success'); loadAdminWorks(); }
-}
-
-/* ═══ CAPÍTULOS ═══ */
-async function loadAdminChapters() {
-  const status=document.getElementById('chapters-filter')?.value??'';
-  // busca todas as obras e depois os capítulos de cada uma
-  const {ok:wok, data:wdata}=await api('/admin/works');
-  const container=document.getElementById('chapters-list');
-  if(!container) return;
-  if(!wok){ container.innerHTML='<div style="text-align:center;padding:32px;color:var(--muted);">Erro ao carregar.</div>'; return; }
-
-  const works=wdata.works||[];
-  const allChapters=[];
-
-  await Promise.all(works.map(async w => {
-    const {ok,data}=await api(`/admin/chapters?work_id=${w.id}${status?`&status=${status}`:''}`);
-    if(ok)(data.chapters||[]).forEach(c=>{ c.workTitle=w.title; c.workId=w.id; allChapters.push(c); });
-  }));
-
-  // badge de pendentes
-  const pending=allChapters.filter(c=>c.status==='pending').length;
-  const badge=document.getElementById('badge-chapters');
-  if(badge){ badge.textContent=pending; badge.style.display=pending?'inline':'none'; }
-
-  if(!allChapters.length){
-    container.innerHTML='<div style="text-align:center;padding:32px;color:var(--muted);">Nenhum capítulo encontrado.</div>';
-    return;
-  }
-
-  allChapters.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
-
-  container.innerHTML=allChapters.map(ch=>`
-    <div class="mod-item">
-      <div class="mod-thumb" style="display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:var(--accent);font-family:var(--fm);">C${String(ch.number).padStart(2,'0')}</div>
-      <div class="mod-info">
-        <div class="mod-title">${ch.title}</div>
-        <div class="mod-sub">${ch.workTitle} · ${ch.total_pages||0} páginas · ${fmtDate(ch.createdAt)}</div>
-        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
-          ${statusBadge(ch.status)}
-          ${ch.is_premium?'<span class="badge" style="background:rgba(217,181,90,0.15);color:var(--gold);border-color:rgba(217,181,90,0.3);">Premium</span>':''}
-        </div>
-        ${ch.admin_notes?`<div style="margin-top:6px;font-size:11px;color:var(--red);font-family:var(--fm)">Nota: ${ch.admin_notes}</div>`:''}
-      </div>
-      <div class="mod-actions">
-        ${ch.status==='pending'?`
-          <button class="btn btn-green btn-sm" onclick="moderateChapter(${ch.id},'published')">✓ Aprovar</button>
-          <button class="btn btn-danger btn-sm" onclick="openRejectModal(${ch.id},'chapter')">✕ Rejeitar</button>
-        `:''}
-        ${ch.status==='published'?`
-          <button class="btn btn-danger btn-sm" onclick="moderateChapter(${ch.id},'rejected')">Rejeitar</button>
-        `:''}
-        ${ch.status==='rejected'||ch.status==='draft'?`
-          <button class="btn btn-green btn-sm" onclick="moderateChapter(${ch.id},'published')">✓ Publicar</button>
-        `:''}
-      </div>
-    </div>
-  `).join('');
-}
-
-async function moderateChapter(id, status, notes='') {
-  const {ok}=await api(`/admin/chapters/${id}/status`,{method:'PATCH',body:JSON.stringify({status,admin_notes:notes})});
-  if(ok){ toast(status==='published'?'Capítulo publicado!':'Capítulo atualizado.',status==='published'?'success':'info'); loadAdminChapters(); }
-  else toast('Erro ao moderar capítulo.','error');
-}
-
-/* ═══ ARAUTOS ═══ */
-async function loadAdminHeralds() {
-  const status=document.getElementById('heralds-filter')?.value??'';
-  const {ok,data}=await api(`/admin/heralds${status?`?status=${status}`:''}`);
-  const container=document.getElementById('heralds-list');
-  if(!container) return;
-
-  const apps=data.applications||[];
-  if(!apps.length) {
-    container.innerHTML='<div style="text-align:center;padding:32px;color:var(--muted);">Nenhuma candidatura encontrada.</div>';
-    return;
-  }
-
-  container.innerHTML=apps.map(h=>`
-    <div class="mod-item">
-      <div class="avatar" style="width:44px;height:44px;flex-shrink:0;font-size:14px">${initials(h.applicant?.username)}</div>
-      <div class="mod-info">
-        <div class="mod-title">${h.applicant?.username||'—'} <span style="color:var(--muted);font-size:11px;font-family:var(--fm)">@${h.applicant?.email||''}</span></div>
-        <div class="mod-sub">${fmtDate(h.createdAt)} ${h.portfolio_url?`· <a href="${h.portfolio_url}" target="_blank" style="color:var(--accent)">Portfólio →</a>`:''}</div>
-        <div class="mod-body">${h.motivation}</div>
-        ${h.admin_notes?`<div style="margin-top:6px;font-size:11px;color:var(--red);font-family:var(--fm)">Nota: ${h.admin_notes}</div>`:''}
-        <div style="margin-top:8px">${statusBadge(h.status)}</div>
-      </div>
-      <div class="mod-actions">
-        ${h.status==='pending'?`
-          <button class="btn btn-green btn-sm" onclick="moderateHerald(${h.id},'approved')">✓ Aprovar</button>
-          <button class="btn btn-danger btn-sm" onclick="openRejectModal(${h.id},'herald')">✕ Rejeitar</button>
-        `:''}
-      </div>
-    </div>
-  `).join('');
-}
-
-async function moderateHerald(id, status, notes='') {
-  const {ok}=await api(`/admin/heralds/${id}`,{method:'PATCH',body:JSON.stringify({status,admin_notes:notes})});
-  if(ok){ toast(status==='approved'?'Arauto aprovado!':'Candidatura rejeitada.',status==='approved'?'success':'error'); loadAdminHeralds(); }
-  else toast('Erro ao processar candidatura.','error');
-}
-
-/* ─── REJECT MODAL ── */
-function openRejectModal(id, type) {
-  S.rejectTarget=id; S.rejectType=type;
-  document.getElementById('reject-reason').value='';
-  document.getElementById('reject-confirm-btn').onclick=()=>{
-    const notes=document.getElementById('reject-reason').value.trim();
-    closeModal('reject-modal');
-    if(type==='work') moderateWork(id,'suspended',notes);
-    else if(type==='herald') moderateHerald(id,'rejected',notes);
-    else if(type==='chapter') moderateChapter(id,'rejected',notes);
-  };
-  openModal('reject-modal');
-}
-
-/* ═══ COMENTÁRIOS ═══ */
-async function loadAdminComments() {
-  const status=document.getElementById('comments-filter')?.value??'';
-  // busca comentários de capítulos publicados
-  const container=document.getElementById('comments-list');
-  if(!container) return;
-
-  // usa a rota de chapters genérica — busca comentários reportados via admin
-  const {ok,data}=await api(`/admin/comments?status=${status}`).catch(()=>({ok:false,data:{}}));
-
-  if(!ok || !data.comments?.length) {
-    container.innerHTML='<div style="text-align:center;padding:32px;color:var(--muted);">Nenhum comentário encontrado.</div>';
-    return;
-  }
-
-  container.innerHTML=data.comments.map(c=>`
-    <div class="mod-item">
-      <div class="avatar" style="width:36px;height:36px;font-size:11px;flex-shrink:0">${initials(c.user?.username)}</div>
-      <div class="mod-info">
-        <!-- XSS armazenado com alvo ADMIN (varredura v1, LOTE 1, CEO 2026-08-02):
-             o painel de moderação renderiza o comentário do usuário via innerHTML.
-             É o pior alvo possível (sessão de admin), então escapa SEMPRE. -->
-        <div class="mod-title">${escHtml(c.user?.username||'—')} <span style="color:var(--muted);font-size:11px;font-family:var(--fm)">${fmtDate(c.createdAt)}</span></div>
-        <div class="mod-body">${escHtml(c.content)}</div>
-        <div style="margin-top:6px">${statusBadge(c.status)}</div>
-      </div>
-      <div class="mod-actions">
-        <button class="btn btn-ghost btn-sm" onclick="moderateComment(${c.id},'active')">Restaurar</button>
-        <button class="btn btn-danger btn-sm" onclick="moderateComment(${c.id},'deleted')">Deletar</button>
-      </div>
-    </div>
-  `).join('');
-}
-
-async function moderateComment(id, status) {
-  const {ok}=await api(`/admin/comments/${id}/status`,{method:'PATCH',body:JSON.stringify({status})});
-  if(ok){ toast('Comentário atualizado.','info'); loadAdminComments(); }
-  else toast('Erro ao moderar comentário.','error');
-}
-
 /* ═══ USUÁRIOS ═══ */
 async function loadAdminUsers() {
   const {ok,data}=await api('/admin/users');
   const tb=document.getElementById('tb-users');
   if(!tb) return;
-  if(!ok) { tb.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:20px">Erro ao carregar usuários.</td></tr>'; return; }
+  if(!ok) { tb.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:20px">Erro ao carregar usuários.</td></tr>'; return; }
   S.users=data.data||data.users||[];
   renderUsers(S.users);
 }
 
 function renderUsers(users) {
   const tb=document.getElementById('tb-users');
-  if(!users.length) { tb.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:20px">Nenhum usuário encontrado.</td></tr>'; return; }
+  if(!users.length) { tb.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:20px">Nenhum usuário encontrado.</td></tr>'; return; }
   tb.innerHTML=users.map(u=>`
     <tr>
       <td style="font-family:var(--fm);font-size:11px;color:var(--muted)">${u.id}</td>
       <td style="font-weight:700">${u.username}</td>
       <td style="color:var(--muted);font-size:11px">${u.email}</td>
-      <td style="color:var(--gold);font-family:var(--fm)">${fmtNum(u.coins)}</td>
       <td>
         ${u.is_admin?'<span class="badge badge-red">Admin</span>':''}
-        ${u.is_herald?'<span class="badge badge-purple">Arauto</span>':''}
-        ${!u.is_admin&&!u.is_herald?'<span class="badge badge-muted">Usuário</span>':''}
+        ${!u.is_admin?'<span class="badge badge-muted">Usuário</span>':''}
       </td>
       <td style="color:var(--muted);font-size:11px">${fmtDate(u.createdAt)}</td>
       <td><button class="btn btn-ghost btn-sm" onclick="openUserModal(${u.id})">✏️ Editar</button></td>
@@ -1295,11 +875,9 @@ function openUserModal(id) {
   document.getElementById('um-username').value=u.username||'';
   document.getElementById('um-nome').value=u.nome_completo||'';
   document.getElementById('um-email').value=u.email||'';
-  document.getElementById('um-coins').value=u.coins||0;
   document.getElementById('um-level').value=u.level||1;
   document.getElementById('um-status').value=u.status||'online';
   document.getElementById('um-admin').checked=!!u.is_admin;
-  document.getElementById('um-herald').checked=!!u.is_herald;
   document.getElementById('um-verified').checked=!!u.emailVerified;
   openModal('user-modal');
 }
@@ -1309,11 +887,9 @@ async function saveUser() {
     username:document.getElementById('um-username').value.trim(),
     nome_completo:document.getElementById('um-nome').value.trim(),
     email:document.getElementById('um-email').value.trim(),
-    coins:parseInt(document.getElementById('um-coins').value)||0,
     level:parseInt(document.getElementById('um-level').value)||1,
     status:document.getElementById('um-status').value,
     is_admin:document.getElementById('um-admin').checked,
-    is_herald:document.getElementById('um-herald').checked,
     emailVerified:document.getElementById('um-verified').checked
   };
   const {ok}=await api(`/admin/users/${S.editUserId}`,{method:'PATCH',body:JSON.stringify(payload)});
@@ -1346,16 +922,14 @@ async function loadProducts() {
 
 function renderProducts(prods) {
   const tb=document.getElementById('tb-products');
-  if(!prods.length){ tb.innerHTML='<tr><td colspan="9" style="text-align:center;color:var(--muted);padding:20px">Nenhum produto.</td></tr>'; return; }
-  const typeLabel={'coin_pack':'🪙 Coins','season_pass':'🎫 Passe','chapter':'📖 Capítulo','ebook':'📕 E-book','book':'📗 Livro','item':'🎒 Item'};
+  if(!prods.length){ tb.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:20px">Nenhum produto.</td></tr>'; return; }
+  const typeLabel={'ebook':'📕 E-book','book':'📗 Livro','item':'🎒 Item'};
   tb.innerHTML=prods.map(p=>`
     <tr>
       <td style="font-family:var(--fm);font-size:11px;color:var(--muted)">${p.id}</td>
       <td style="font-weight:700">${p.name}</td>
       <td style="font-size:11px;font-family:var(--fm)">${typeLabel[p.type]||p.type||'—'}</td>
       <td style="color:var(--gold);font-family:var(--fm)">${fmtBRL(p.priceReal||p.price_real||0)}</td>
-      <td style="font-family:var(--fm)">${p.priceCoins||p.price_coins||'—'}</td>
-      <td style="font-family:var(--fm);color:var(--accent)">${p.coinsGranted||p.coins_granted||'—'}</td>
       <td style="font-family:var(--fm)">${p.stock!=null?p.stock:'∞'}</td>
       <td>${statusBadge(p.isActive||p.is_active?'active':'inactive')}</td>
       <td style="display:flex;gap:4px;flex-wrap:wrap;">
@@ -1372,19 +946,15 @@ function filterProducts() {
 
 function openProductModal(id=null) {
   S.editProductId=id;
+  S.editProductType=null;
   document.getElementById('product-modal-title').textContent=id?'Editar Produto':'Novo Produto';
   if(id) {
     const p=S.products.find(x=>x.id===id);
     if(p){
       document.getElementById('pm-name').value=p.name||'';
-      document.getElementById('pm-type').value=p.type||'item';
+      S.editProductType=p.type||'item';
+      document.getElementById('pm-type').value=TIPOS_PRODUTO.includes(p.type)?p.type:'item';
       document.getElementById('pm-price-real').value=p.priceReal||p.price_real||0;
-      document.getElementById('pm-price-coins').value=p.priceCoins||p.price_coins||0;
-      document.getElementById('pm-coins-granted').value=p.coinsGranted||p.coins_granted||'';
-      document.getElementById('pm-entity-id').value=p.entityId||p.entity_id||'';
-      document.getElementById('pm-duration').value=p.duration||'';
-      document.getElementById('pm-herald-id').value=p.heraldId||p.herald_id||'';
-      document.getElementById('pm-royalty-pct').value=p.royaltyPct||p.royalty_pct||'';
       document.getElementById('pm-stock').value=p.stock||'';
       document.getElementById('pm-category').value=p.category||'';
       document.getElementById('pm-rarity').value=p.rarity||'';
@@ -1394,58 +964,27 @@ function openProductModal(id=null) {
       document.getElementById('pm-consumable').checked=!!(p.isConsumable||p.is_consumable);
     }
   } else {
-    ['pm-name','pm-price-real','pm-price-coins','pm-coins-granted','pm-entity-id','pm-duration','pm-herald-id','pm-royalty-pct','pm-stock','pm-category','pm-rarity','pm-image','pm-description'].forEach(id=>document.getElementById(id).value='');
+    ['pm-name','pm-price-real','pm-stock','pm-category','pm-rarity','pm-image','pm-description'].forEach(id=>document.getElementById(id).value='');
     document.getElementById('pm-type').value='item';
     document.getElementById('pm-active').checked=true;
     document.getElementById('pm-consumable').checked=false;
   }
-  onProductTypeChange();
   openModal('product-modal');
 }
 
-
-function onProductTypeChange() {
-  const type = document.getElementById('pm-type').value;
-  // Campos específicos por tipo
-  const show = (id, visible) => {
-    const el = document.getElementById(id);
-    if(el) el.style.display = visible ? '' : 'none';
-  };
-  show('pm-coins-granted-field', type === 'coin_pack');
-  show('pm-entity-field',   ['chapter','season_pass'].includes(type));
-  show('pm-duration-field', type === 'season_pass');
-  show('pm-herald-field',   ['chapter','season_pass','ebook','book'].includes(type));
-  show('pm-royalty-field',  ['chapter','season_pass','ebook','book'].includes(type));
-  // Atualiza label e hint do entityId
-  const labelEl = document.getElementById('pm-entity-label');
-  const hintEl  = document.getElementById('pm-entity-hint');
-  if(type === 'chapter')      { if(labelEl) labelEl.textContent='ID do Capítulo'; if(hintEl) hintEl.textContent='ID do Chapter no banco.'; }
-  if(type === 'season_pass')  { if(labelEl) labelEl.textContent='ID do Passe';    if(hintEl) hintEl.textContent='ID do SeasonPass vinculado.'; }
-}
 async function saveProduct() {
   const type=document.getElementById('pm-type').value;
-  const coinsGrantedRaw=parseInt(document.getElementById('pm-coins-granted').value)||null;
-  const entityIdRaw=parseInt(document.getElementById('pm-entity-id').value)||null;
-  const durationRaw=parseInt(document.getElementById('pm-duration').value)||null;
-  const heraldIdRaw=parseInt(document.getElementById('pm-herald-id').value)||null;
-  const royaltyRaw=parseFloat(document.getElementById('pm-royalty-pct').value)||null;
+  // Tipos legados que o formulário não oferece mais são
+  // preservados na edição — o select não os tem, e salvar não pode trocá-los por 'item'.
+  const tipoParaSalvar = (S.editProductType && !TIPOS_PRODUTO.includes(S.editProductType)) ? S.editProductType : type;
   const stockRaw=document.getElementById('pm-stock').value;
 
-  if(type==='coin_pack' && !coinsGrantedRaw){
-    toast('Informe a quantidade de coins concedida.','error'); return;
-  }
 
   const payload={
     name:document.getElementById('pm-name').value.trim(),
-    type,
+    type: tipoParaSalvar,
     priceReal:parseFloat(document.getElementById('pm-price-real').value)||0,
     price:parseFloat(document.getElementById('pm-price-real').value)||0,
-    priceCoins:parseInt(document.getElementById('pm-price-coins').value)||0,
-    coinsGranted:coinsGrantedRaw,
-    entityId:entityIdRaw,
-    duration:durationRaw,
-    heraldId:heraldIdRaw,
-    royaltyPct:royaltyRaw,
     stock:stockRaw!==''?parseInt(stockRaw):null,
     category:document.getElementById('pm-category').value.trim()||type,
     rarity:document.getElementById('pm-rarity').value.trim(),
@@ -1548,8 +1087,6 @@ async function loadAdminFinance() {
   const s = data.summary || {};
   const setEl = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
   setEl('fin-total',  fmtBRL(s.totalRevenue || 0));
-  setEl('fin-herald', fmtBRL(s.totalHerald  || 0));
-  setEl('fin-net',    fmtBRL(s.noHeroesNet  || 0));
   setEl('fin-orders', s.orders || 0);
 
   // Por método
@@ -1561,67 +1098,6 @@ async function loadAdminFinance() {
       : '<tr><td colspan="3" style="text-align:center;color:var(--muted);padding:16px">Nenhum dado.</td></tr>';
   }
 
-  // Por arauto
-  const th = document.getElementById('fin-by-herald');
-  if (th) {
-    const rows = (data.byHerald || []);
-    th.innerHTML = rows.length
-      ? rows.map(r => `<tr><td style="font-family:var(--fm)">#${r.heraldId}</td><td>${r.orders}</td><td style="color:var(--green)">${fmtBRL(r.heraldRevenue)}</td></tr>`).join('')
-      : '<tr><td colspan="3" style="text-align:center;color:var(--muted);padding:16px">Nenhum arauto com receita.</td></tr>';
-  }
-
-  // Payouts
-  await loadPayouts();
-}
-
-async function loadPayouts() {
-  const { ok, data } = await api('/admin/finance/payouts?status=pending');
-  const tb = document.getElementById('fin-payouts');
-  if (!tb) return;
-  const rows = data?.data || [];
-  tb.innerHTML = rows.length
-    ? rows.map(r => `
-      <tr>
-        <td>${r.Herald?.username || '#' + r.herald_id}</td>
-        <td style="font-family:var(--fm)">${r.period}</td>
-        <td style="color:var(--gold);font-weight:700">${fmtBRL(r.amount)}</td>
-        <td>${statusBadge('pending')}</td>
-        <td>
-          <button class="btn btn-primary btn-sm" onclick="markPayoutPaid(${r.id}, '${r.Herald?.username || r.herald_id}', '${fmtBRL(r.amount)}')">
-            Marcar Pago
-          </button>
-        </td>
-      </tr>`).join('')
-    : '<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:20px">Nenhum repasse pendente.</td></tr>';
-}
-
-async function generatePayouts() {
-  const period = document.getElementById('fin-period')?.value || '';
-  if (!period) { toast('Selecione um período.', 'error'); return; }
-  confirm_(`Gerar repasses para ${period}?`, async () => {
-    const { ok, data } = await api('/admin/finance/generate-payouts', {
-      method: 'POST',
-      body: JSON.stringify({ period })
-    });
-    if (ok) {
-      toast(data.message || 'Repasses gerados!', 'success');
-      await loadPayouts();
-    } else {
-      toast(data.message || 'Erro ao gerar repasses.', 'error');
-    }
-  });
-}
-
-async function markPayoutPaid(id, herald, amount) {
-  confirm_(`Confirmar pagamento de ${amount} para ${herald}?`, async () => {
-    const { ok, data } = await api(`/admin/finance/payouts/${id}/pay`, { method: 'PATCH' });
-    if (ok) {
-      toast('Payout marcado como pago!', 'success');
-      await loadPayouts();
-    } else {
-      toast(data.message || 'Erro ao marcar payout.', 'error');
-    }
-  });
 }
 
 async function loadNewsletter() {
@@ -1715,43 +1191,6 @@ async function sendNewsletter() {
 
   if(ok) toast(`✅ Enviado para ${data.sent} inscritos${data.failed>0?` (${data.failed} falhas)`:''}.`,'success');
   else toast('Erro ao enviar newsletter.','error');
-}
-
-/* ═══ FINANCEIRO ═══ */
-async function loadRevenue() {
-  const {ok,data}=await api('/admin/revenue');
-  if(!ok) return;
-
-  document.getElementById('rev-total').textContent=fmtBRL(data.total_revenue);
-  document.getElementById('rev-fee').textContent=fmtBRL(data.platform_fee);
-  document.getElementById('rev-heralds').textContent=fmtBRL(data.herald_total);
-  document.getElementById('rev-count').textContent=fmtNum(data.by_herald?.length||0);
-
-  const byWork=document.getElementById('rev-by-work');
-  const works=data.by_work||[];
-  const maxW=Math.max(...works.map(w=>w.total_revenue||0),1);
-  byWork.innerHTML=works.length?works.map(w=>`
-    <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border2);">
-      <div style="flex:1;font-size:12px;font-weight:700">${w.title}</div>
-      <div style="flex:2;height:5px;background:var(--s2);border-radius:99px;overflow:hidden"><div style="height:100%;background:linear-gradient(90deg,var(--accent),var(--gold));border-radius:99px;width:${((w.total_revenue||0)/maxW*100).toFixed(1)}%"></div></div>
-      <div style="font-family:var(--fm);font-size:12px;color:var(--gold);min-width:80px;text-align:right">${fmtBRL(w.total_revenue)}</div>
-    </div>`).join(''):'<div style="color:var(--muted);font-size:12px;text-align:center;padding:16px">Nenhuma obra com receita ainda.</div>';
-
-  const byHerald=document.getElementById('rev-by-herald');
-  const heralds=data.by_herald||[];
-  byHerald.innerHTML=heralds.length?`
-    <div class="overflow-x"><table class="tbl">
-      <thead><tr><th>Arauto</th><th>Email</th><th>Bruto</th><th>Líquido (90%)</th><th>Taxa (10%)</th></tr></thead>
-      <tbody>${heralds.map(h=>`
-        <tr>
-          <td style="font-weight:700">@${h.author?.username||'—'}</td>
-          <td style="font-size:11px;color:var(--muted)">${h.author?.email||'—'}</td>
-          <td style="color:var(--gold);font-family:var(--fm)">${fmtBRL(h.gross)}</td>
-          <td style="color:var(--green);font-family:var(--fm)">${fmtBRL(h.net)}</td>
-          <td style="color:var(--red);font-family:var(--fm)">${fmtBRL(h.fee)}</td>
-        </tr>`).join('')}
-      </tbody>
-    </table></div>`:'<div style="color:var(--muted);font-size:12px;text-align:center;padding:16px">Nenhum repasse calculado ainda.</div>';
 }
 
 /* ═══ LOGS ═══ */
@@ -1897,143 +1336,6 @@ function logout() {
 
 /* ═══ INIT ═══ */
 document.addEventListener('DOMContentLoaded',boot);
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   JOGADORES (app) — item 12 fase 1, CEO 2026-08-04. SÓ CONSULTA.
-   "O que me destrava agora é enxergar as contas de fora do app."
-
-   Nenhuma função aqui muda estado. As ações (creditar/debitar moeda) entram na
-   fase 2; reset e exclusão só depois, com confirmação por digitação do email e
-   registro no razão de quem executou.
-
-   DADO HONESTO: o que o backend não souber vem como "—", nunca como 0 ou vazio
-   disfarçado de resposta. Quem lê a tela precisa distinguir "é zero" de "não sei".
-   ═══════════════════════════════════════════════════════════════════════════ */
-function plEsc(v){ return String(v==null?'':v).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
-function plNum(v){ return (v==null||v==='') ? '—' : Number(v).toLocaleString('pt-BR'); }
-function plData(ms){ if(!ms) return '—'; const d=new Date(Number(ms)); return isNaN(d)?'—':d.toLocaleString('pt-BR'); }
-
-async function plGet(url){
-  const r = await fetch(API_BASE + url, { headers: Auth.headers() });
-  if (r.status === 401 || r.status === 403) throw new Error('Sem permissão de administrador (403).');
-  if (!r.ok) throw new Error('HTTP ' + r.status);
-  return r.json();
-}
-
-function initPlayers(){ /* nada a carregar até haver busca — evita varrer a base à toa */ }
-
-async function buscarJogadores(){
-  const termo = (document.getElementById('pl-q').value||'').trim();
-  const tb = document.getElementById('tb-players');
-  document.getElementById('pl-detalhe').innerHTML = '';
-  if (termo.length < 2){ tb.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:20px">Mínimo 2 caracteres.</td></tr>'; return; }
-  tb.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:20px">Buscando…</td></tr>';
-  try{
-    const d = await plGet('/v1/admin/players?q=' + encodeURIComponent(termo));
-    if (!d.resultados || !d.resultados.length){ tb.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:20px">Nenhum jogador encontrado.</td></tr>'; return; }
-    tb.innerHTML = d.resultados.map(p => `<tr>
-      <td>${plEsc(p.email)}${p.is_admin?' <span class="nav-badge">admin</span>':''}${p.is_herald?' <span class="nav-badge">arauto</span>':''}</td>
-      <td>${plEsc(p.username)}</td><td>${plNum(p.level)}</td>
-      <td>${plNum(p.gold)}</td><td>${plNum(p.gems)}</td><td>${plNum(p.insignias)}</td>
-      <td>${plEsc(p.faction_type||'—')}</td>
-      <td><button class="btn btn-ghost btn-sm" onclick="abrirJogador('${plEsc(p.player_id)}')">Abrir</button></td>
-    </tr>`).join('');
-  }catch(e){ tb.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#e5484d;padding:20px">' + plEsc(e.message) + '</td></tr>'; }
-}
-
-async function abrirJogador(playerId){
-  const box = document.getElementById('pl-detalhe');
-  box.innerHTML = '<div style="color:var(--muted);padding:12px">Carregando ficha…</div>';
-  try{
-    // Em paralelo: a ficha é o que importa; as outras 4 podem falhar sem derrubar a tela.
-    const [ficha, inv, prog, razao, xp] = await Promise.all([
-      plGet('/v1/admin/players/' + playerId),
-      plGet('/v1/admin/players/' + playerId + '/inventory').catch(()=>null),
-      plGet('/v1/admin/players/' + playerId + '/progress').catch(()=>null),
-      plGet('/v1/players/' + playerId + '/economy-ledger?limit=100').catch(()=>null),
-      plGet('/v1/admin/players/' + playerId + '/xp-events?limit=100').catch(()=>null),
-    ]);
-    const f = ficha.ficha, c = f.contagens || {};
-    const linha = (k,v)=>`<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border2)"><span style="color:var(--muted)">${k}</span><span>${v}</span></div>`;
-
-    box.innerHTML = `
-      <div class="section-header"><div>
-        <div class="section-title">${plEsc(f.email)}</div>
-        <div class="section-sub">${plEsc(f.username)} · player ${plEsc(f.player_id)} · user ${plNum(f.user_id)}</div>
-      </div></div>
-
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px">
-        <div class="card"><div class="section-title" style="font-size:14px;margin-bottom:8px">Identidade</div>
-          ${linha('Admin', f.is_admin?'sim':'não')}${linha('Arauto', f.is_herald?'sim':'não')}
-          ${linha('Nascimento', f.birthdate?plEsc(f.birthdate):'—')}
-          ${linha('Criada em', f.created_at?new Date(f.created_at).toLocaleDateString('pt-BR'):'—')}
-          ${linha('Caelum', f.caelum? (plNum(f.caelum.caelum_day)+' / ano '+plNum(f.caelum.caelum_year)) : '—')}
-        </div>
-        <div class="card"><div class="section-title" style="font-size:14px;margin-bottom:8px">Progressão</div>
-          ${linha('Nível', plNum(f.level))}${linha('XP', plNum(f.xp)+' / '+plNum(f.xp_to_next))}
-          ${linha('Classe', plEsc(f.class_type||'—'))}${linha('Facção', plEsc(f.faction_type||'—'))}
-          ${linha('Guilda (rank)', plEsc(f.guild_rank||'—'))}${linha('Estilo', plEsc(f.play_style||'—'))}
-          ${linha('XP Caveira', plNum(f.skull_xp))}
-        </div>
-        <div class="card"><div class="section-title" style="font-size:14px;margin-bottom:8px">Moedas</div>
-          ${linha('Ouro', plNum(f.gold))}${linha('Gemas', plNum(f.gems))}${linha('Insígnias', plNum(f.insignias))}
-          ${linha('Ouro ganho (vida)', plNum(f.total_gold_earned_lifetime))}
-          ${linha('Gemas gastas (vida)', plNum(f.total_gems_spent))}
-          ${linha('Slots de inventário', plNum(f.inventory_slot_cap) + (f.inventory_locked?' (TRANCADO)':''))}
-        </div>
-        <div class="card"><div class="section-title" style="font-size:14px;margin-bottom:8px">Sombra &amp; Passe</div>
-          ${linha('Forma', plEsc(f.shadow_state||'—'))}${linha('Tipo', plEsc(f.shadow_type||'—'))}
-          ${linha('Corrupção', plNum(f.shadow_corruption))}
-          ${linha('Último eval', plEsc(f.shadow_last_eval_day||'—'))}
-          ${linha('Passe até', f.pass_until?plData(f.pass_until):'—')}
-          ${linha('XP da temporada', plNum(f.season_xp) + (f.pass_season?(' ('+plEsc(f.pass_season)+')'):''))}
-        </div>
-      </div>
-
-      <div class="card" style="margin-top:16px"><div class="section-title" style="font-size:14px;margin-bottom:8px">Contagens</div>
-        <div style="display:flex;flex-wrap:wrap;gap:14px;color:var(--muted);font-size:13px">
-          <span>itens <b style="color:var(--text)">${plNum(c.itens)}</b></span>
-          <span>cartas <b style="color:var(--text)">${plNum(c.cartas)}</b></span>
-          <span>decks <b style="color:var(--text)">${plNum(c.decks)}</b></span>
-          <span>conquistas <b style="color:var(--text)">${plNum(c.conquistas)}</b></span>
-          <span>amigos <b style="color:var(--text)">${plNum(c.amigos)}</b></span>
-          <span>correio <b style="color:var(--text)">${plNum(c.correio)}</b></span>
-          <span>razão <b style="color:var(--text)">${plNum(c.linhas_razao)}</b></span>
-          <span>eventos XP <b style="color:var(--text)">${plNum(c.eventos_xp)}</b></span>
-        </div>
-      </div>
-
-      ${plTabela('Extrato da economia (razão)', razao && razao.linhas, ['created_at','currency','delta','balance_after','reason','ref'],
-        ['quando','moeda','delta','saldo depois','motivo','ref'], razao && razao.truncado)}
-      ${plTabela('Eventos de XP', xp && xp.eventos, ['created_at','amount_raw','amount_final','reason','level_before','level_after'],
-        ['quando','pedido','entrou','motivo','nv antes','nv depois'], xp && xp.truncado)}
-      ${plTabela('Inventário', inv && inv.itens, ['item_key','name','rarity','quantity','is_equipped'],
-        ['chave','nome','raridade','qtd','equipado'], inv && inv.truncado)}
-      ${plTabela('Missões recentes', prog && prog.progresso && prog.progresso.missoes,
-        ['mission_key','modality','rank','current_value','target_value','reward_claimed'],
-        ['missão','modalidade','rank','progresso','meta','paga'], false)}
-    `;
-    box.scrollIntoView({behavior:'smooth', block:'start'});
-  }catch(e){ box.innerHTML = '<div style="color:#e5484d;padding:12px">' + plEsc(e.message) + '</div>'; }
-}
-
-/** Tabela genérica. `dados` nulo = a consulta FALHOU — e a tela diz isso, em vez de
- *  mostrar "nenhum registro", que faria erro parecer conta vazia. */
-function plTabela(titulo, dados, campos, cabecalhos, truncado){
-  let corpo;
-  if (dados == null) corpo = '<tr><td colspan="'+campos.length+'" style="text-align:center;color:#e5484d;padding:14px">não foi possível carregar</td></tr>';
-  else if (!dados.length) corpo = '<tr><td colspan="'+campos.length+'" style="text-align:center;color:var(--muted);padding:14px">nenhum registro</td></tr>';
-  else corpo = dados.map(r => '<tr>' + campos.map(k => {
-      let v = r[k];
-      if (k === 'created_at') v = plData(v);
-      else if (typeof v === 'boolean') v = v ? 'sim' : 'não';
-      else if (v == null || v === '') v = '—';
-      return '<td>' + plEsc(v) + '</td>';
-    }).join('') + '</tr>').join('');
-  return '<div class="card" style="margin-top:16px"><div class="section-title" style="font-size:14px;margin-bottom:8px">' + plEsc(titulo)
-    + (truncado ? ' <span class="nav-badge">truncado</span>' : '') + '</div><div class="overflow-x"><table class="tbl"><thead><tr>'
-    + cabecalhos.map(h=>'<th>'+plEsc(h)+'</th>').join('') + '</tr></thead><tbody>' + corpo + '</tbody></table></div></div>';
-}
 
 </script>
 </body>
