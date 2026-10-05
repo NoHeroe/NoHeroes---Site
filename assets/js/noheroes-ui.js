@@ -44,14 +44,6 @@
         <span class="drawer-tag">Portal</span>
       </a>
 
-      <a href="leitor.html" class="drawer-item">
-        <div class="flex items-center gap-4">
-          <svg class="w-5 h-5" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-          <span class="text-sm font-bold tracking-wide">Mangás</span>
-        </div>
-        <span class="drawer-tag">Crônicas</span>
-      </a>
-
       <a href="sobre.html" class="drawer-item">
         <div class="flex items-center gap-4">
           <svg class="w-5 h-5" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -74,14 +66,6 @@
           <span class="text-sm font-bold tracking-wide">Perfil</span>
         </div>
         <span class="drawer-tag">Avatar</span>
-      </a>
-
-      <a href="oraculum.html" class="drawer-item">
-        <div class="flex items-center gap-4">
-          <svg class="w-5 h-5" fill="none" stroke="#d9b55a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
-          <span class="text-sm font-bold tracking-wide">Oráculo</span>
-        </div>
-        <span class="drawer-tag">Mente</span>
       </a>
 
       <a href="suporte.html" class="drawer-item" style="border-color:rgba(143,79,255,0.25);background:rgba(143,79,255,0.04);">
@@ -289,13 +273,11 @@ ${DRAWER_HTML}`;
   <p style="font-size:12px;color:rgba(255,255,255,0.2);margin:0 0 20px;">Toda escolha tem um preço. Toda queda, uma razão.</p>
   <div style="display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:20px;">
     <a href="sobre.html" style="font-size:11px;color:rgba(255,255,255,0.25);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Sobre</a>
-    <a href="leitor.html" style="font-size:11px;color:rgba(255,255,255,0.25);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Biblioteca</a>
     <a href="store.html" style="font-size:11px;color:rgba(255,255,255,0.25);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Loja</a>
     <a href="apoiar.html" style="font-size:11px;color:rgba(255,255,255,0.25);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Apoiar</a>
     <a href="suporte.html" style="font-size:11px;color:rgba(255,255,255,0.25);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Suporte</a>
     <a href="termos.html" style="font-size:11px;color:rgba(255,255,255,0.25);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Termos</a>
     <a href="privacidade.html" style="font-size:11px;color:rgba(255,255,255,0.25);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Privacidade</a>
-    <a href="odds.html" style="font-size:11px;color:rgba(255,255,255,0.25);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;">Chances (Odds)</a>
   </div>
   <p style="font-size:11px;color:rgba(255,255,255,0.15);margin:0;">© <span id="footerYear"></span> NoHeroes. Todos os direitos reservados.</p>
 </footer>

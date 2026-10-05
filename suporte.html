@@ -209,32 +209,6 @@ select.field-input option{background:#0c0a10;color:#e5e5e5}
       </div>
     </div>
 
-    <!-- 📖 MANGÁS E LEITOR -->
-    <div class="faq-cat" data-cat="manga leitor capitulo pagina leitura biblioteca obra">
-      <button class="faq-cat-btn" onclick="toggleCat(this)">📖 Mangás e Leitor <span class="arrow">⌄</span></button>
-      <div class="faq-cat-body">
-        <details class="faq-item"><summary>Onde leio os mangás?</summary><p>Na página <a href="leitor.html">Biblioteca</a> — você pode filtrar obras, ver capítulos disponíveis e ler direto no navegador.</p></details>
-        <details class="faq-item"><summary>Os capítulos são gratuitos?</summary><p>Depende da obra. Cada obra tem uma quantidade de capítulos gratuitos definida pelo arauto. Capítulos premium requerem acesso pago.</p></details>
-        <details class="faq-item"><summary>A página do leitor não está carregando. O que faço?</summary><p>Tente recarregar a página. Se o problema persistir, verifique sua conexão ou <a href="#form-ticket">reporte o erro</a> com o nome da obra e número do capítulo.</p></details>
-        <details class="faq-item"><summary>Posso salvar o progresso de leitura?</summary><p>Sim! O progresso é salvo automaticamente quando você está logado. Na próxima vez que abrir o leitor, ele retoma de onde parou.</p></details>
-        <details class="faq-item"><summary>Como funciona o sistema de comentários?</summary><p>Usuários logados podem comentar em qualquer capítulo publicado. Você também pode curtir e responder comentários de outros leitores.</p></details>
-        <details class="faq-item"><summary>As imagens do mangá estão fora de ordem. O que faço?</summary><p>Isso pode ser um bug de sincronização. <a href="#form-ticket">Reporte</a> informando a obra, o número do capítulo e o dispositivo que está usando.</p></details>
-      </div>
-    </div>
-
-    <!-- 🛡️ ARAUTOS E AUTORDASH -->
-    <div class="faq-cat" data-cat="arauto autor autordash obra capitulo upload candidatura herald">
-      <button class="faq-cat-btn" onclick="toggleCat(this)">🛡️ Arautos e Criadores <span class="arrow">⌄</span></button>
-      <div class="faq-cat-body">
-        <details class="faq-item"><summary>Como me torno um Arauto?</summary><p>Acesse seu <a href="autordash.html">painel de arauto</a> — lá você encontra a aba "Candidatura". Preencha o formulário com sua motivação e portfólio. Nossa equipe avalia e responde em até 72h.</p></details>
-        <details class="faq-item"><summary>Como crio e publico uma obra?</summary><p>No <a href="autordash.html">painel do arauto</a>, aba "Obras", clique em "Nova Obra". Preencha título, sinopse, capa e banner. Após criar, a obra vai para revisão da nossa equipe antes de ser publicada.</p></details>
-        <details class="faq-item"><summary>Como faço upload de capítulos?</summary><p>Dentro de uma obra aprovada, clique em "Novo Capítulo". Você pode fazer upload de múltiplas páginas de uma vez — elas são comprimidas automaticamente para WebP. A ordem pode ser ajustada arrastando as imagens.</p></details>
-        <details class="faq-item"><summary>Por que meu capítulo está pendente?</summary><p>Todo capítulo passa por revisão antes de ser publicado. O prazo é de até 48h úteis. Se ultrapassar, <a href="#form-ticket">abra um ticket</a>.</p></details>
-        <details class="faq-item"><summary>Posso editar uma obra ou capítulo depois de publicado?</summary><p>Sim. No painel do arauto, clique no ícone de editar na obra ou capítulo desejado. Algumas alterações podem exigir nova revisão.</p></details>
-        <details class="faq-item"><summary>Como acompanho as visualizações da minha obra?</summary><p>No <a href="autordash.html">painel do arauto</a>, a aba "Dashboard" mostra views, comentários e estatísticas por obra e capítulo.</p></details>
-      </div>
-    </div>
-
     <!-- 📚 BIBLIOTECA E ITENS -->
     <div class="faq-cat" data-cat="ebook download produto inventario arquivo biblioteca">
       <button class="faq-cat-btn" onclick="toggleCat(this)">📚 Biblioteca e Itens Adquiridos <span class="arrow">⌄</span></button>
@@ -395,13 +369,8 @@ const KB = [
   {t:'Pagamento recusado',tags:'pagamento recusado cartao pix boleto erro',r:'Verifique saldo/limite e dados do cartão. Tente outro método. Se persistir, tente em aba anônima ou <a href="#form-ticket">contate o suporte</a>.'},
   {t:'Esqueci minha senha',tags:'senha login acesso esqueci recuperar',r:'Na página de <a href="login.html">login</a>, clique em "Esqueci minha senha". Um e-mail de redefinição será enviado.'},
   {t:'Não consigo fazer login',tags:'login acesso conta entrar erro',r:'Verifique seu e-mail e senha. Tente "Esqueci minha senha". Se o problema persistir, <a href="#form-ticket">abra um ticket</a>.'},
-  {t:'Mangá não está carregando',tags:'manga pagina leitor capitulo nao carrega erro',r:'Tente recarregar a página. Verifique sua conexão. Se persistir, <a href="#form-ticket">reporte o erro</a> com o nome da obra e capítulo.'},
-  {t:'Como ser um Arauto',tags:'arauto autor candidatura criar obra publicar',r:'Acesse o <a href="autordash.html">painel do arauto</a> — aba "Candidatura". Preencha o formulário. Nossa equipe avalia em até 72h.'},
-  {t:'Como criar um capítulo',tags:'capitulo upload paginas criar obra arauto autordash',r:'No <a href="autordash.html">painel do arauto</a>, dentro de uma obra aprovada, clique em "Novo Capítulo" e faça upload das páginas em ordem.'},
-  {t:'Progresso de leitura não salva',tags:'progresso leitura salvar capitulo leitor',r:'Certifique-se de estar logado. O progresso é salvo automaticamente ao scrollar. Se não funcionar, <a href="#form-ticket">reporte</a>.'},
   {t:'Reembolso',tags:'reembolso estorno dinheiro de volta',r:'<a href="#form-ticket">Abra um ticket</a> na categoria "Compras & Pagamentos" com o comprovante e o motivo. Analisamos em até 72h úteis.'},
   {t:'Download não funciona',tags:'download ebook arquivo produto inventario',r:'Acesse seu <a href="inventario.html">inventário</a> logado e clique no item. Se o link não funcionar, <a href="#form-ticket">abra um ticket</a>.'},
-  {t:'Capítulo pendente/sem aprovação',tags:'capitulo pendente aprovacao publicar arauto',r:'O prazo de revisão é de até 48h úteis. Se ultrapassar, <a href="#form-ticket">abra um ticket</a> informando o nome da obra e número do capítulo.'},
   {t:'Excluir conta',tags:'excluir conta deletar remover dados',r:'No <a href="profile.html">painel de perfil</a>, seção "Segurança" → "Excluir conta". Ação permanente — todos os dados são removidos.'},
 ];
 
