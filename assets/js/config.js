@@ -20,6 +20,18 @@
   window.API_BASE = api;
   window.NH_CONFIG = Object.freeze({ API_BASE: api, LOCAL: local });
 
+  // Estatísticas de visita sem cookies (Cloudflare Web Analytics): não guarda nada no navegador,
+  // por isso o site não precisa de banner de cookies. Vazio = desligado.
+  // [[RAUL: token do Cloudflare Web Analytics — painel Cloudflare › Analytics & Logs › Web Analytics › Add a site]]
+  var CF_BEACON_TOKEN = '';
+  if (CF_BEACON_TOKEN && !local && !/admin/.test(location.pathname)) {
+    var b = document.createElement('script');
+    b.defer = true;
+    b.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    b.setAttribute('data-cf-beacon', JSON.stringify({ token: CF_BEACON_TOKEN }));
+    document.head.appendChild(b);
+  }
+
   var fetchOriginal = window.fetch;
   if (!fetchOriginal || fetchOriginal.__nh) return;
   function idioma() {
