@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>NoHeroes | Finalizar compra</title>
+  <meta name="robots" content="noindex">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/css/noheroes-ui.css">
+  <script defer src="assets/js/noheroes-ui.js"></script>
+  <style>
+    html,body{min-height:100%}
+    body{font-family:'Roboto',system-ui,-apple-system,Segoe UI,sans-serif;background:#0a0a0a;color:#f4f4f4}
+    .cinzel{font-family:'Cinzel Decorative',serif}
+    .grad{background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+    .ck-card{border:1px solid rgba(168,85,247,.22);background:rgba(255,255,255,.04);border-radius:16px;padding:16px;margin-bottom:14px}
+    .ck-titulo{font-family:'Cinzel Decorative',serif;font-size:14px;color:#c4a3ff;margin:0 0 12px;display:flex;align-items:center;gap:8px}
+    .ck-num{width:22px;height:22px;border-radius:99px;background:rgba(168,85,247,.2);border:1px solid rgba(168,85,247,.5);display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-family:Roboto,sans-serif;color:#e9d5ff}
+    .ck-opcao{display:flex;gap:10px;align-items:flex-start;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:rgba(0,0,0,.25);cursor:pointer;margin-bottom:8px}
+    .ck-opcao:has(input:checked){border-color:#a855f7;background:rgba(168,85,247,.12)}
+    .ck-opcao input{margin-top:3px;accent-color:#a855f7;width:18px;height:18px;flex-shrink:0}
+    .ck-opcao .ck-sub{font-size:12px;color:rgba(255,255,255,.55)}
+    .ck-linha{display:flex;justify-content:space-between;gap:10px;font-size:14px;padding:4px 0}
+    .ck-total{font-size:18px;font-weight:700;color:#facc15}
+    .ck-input{width:100%;min-height:44px;background:rgba(0,0,0,.45);border:1px solid rgba(168,85,247,.35);border-radius:10px;padding:8px 12px;color:#f4f4f4;font-size:15px}
+    .ck-input:focus{outline:2px solid rgba(168,85,247,.6);outline-offset:1px}
+    .ck-label{display:block;font-size:12px;color:rgba(255,255,255,.6);margin:10px 0 4px}
+    .ck-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
+    .ck-span2{grid-column:1/-1}
+    .ck-btn{width:100%;min-height:48px;border-radius:12px;border:0;background:#a855f7;color:#000;font-weight:700;font-size:15px;cursor:pointer}
+    .ck-btn:disabled{background:#333;color:#777;cursor:not-allowed}
+    .ck-btn-sec{min-height:42px;padding:0 14px;border-radius:10px;border:1px solid rgba(168,85,247,.45);background:transparent;color:#c084fc;font-weight:700;cursor:pointer}
+    .ck-aviso{font-size:13px;border-radius:12px;padding:10px 12px;margin-bottom:12px}
+    .ck-aviso.erro{background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.4);color:#fecaca}
+    .ck-aviso.info{background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.3);color:#e9d5ff}
+    .ck-item{display:flex;gap:10px;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+    .ck-item:last-child{border-bottom:0}
+    .ck-item img{width:44px;height:58px;object-fit:cover;border-radius:6px;flex-shrink:0}
+    .ck-pix-qr{background:#fff;border-radius:12px;padding:10px;width:220px;max-width:100%;margin:0 auto}
+    .ck-pix-qr svg{width:100%;height:auto;display:block}
+    .ck-codigo{font-family:monospace;font-size:12px;word-break:break-all;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:10px;color:#e5e5e5}
+    @media(min-width:900px){.ck-layout{display:grid;grid-template-columns:1fr 340px;gap:18px;align-items:start}.ck-resumo{position:sticky;top:72px}}
+  </style>
+</head>
+<body class="min-h-screen">
+<nh-background></nh-background>
+<nh-drawer></nh-drawer>
+
+<header style="position:fixed;top:0;left:0;right:0;z-index:60;height:56px;background:rgba(10,10,10,0.92);border-bottom:1px solid rgba(255,255,255,0.06);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:space-between;padding:0 16px;">
+  <a href="store.html" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:#c4a3ff;font-size:13px;">← Voltar à loja</a>
+  <span class="cinzel grad" style="font-size:13px;">Finalizar compra</span>
+  <button data-nh-drawer-toggle aria-label="Abrir menu" style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:#f4f4f4;cursor:pointer;">☰</button>
+</header>
+<div style="height:56px;"></div>
+
+<main style="max-width:1000px;margin:0 auto;padding:16px 16px 48px;">
+  <div id="avisos"></div>
+
+  <!-- Resultado do Pix (some o formulário) -->
+  <section id="pixResultado" class="ck-card hidden" aria-live="polite">
+    <h2 class="ck-titulo">Pague com Pix</h2>
+    <p class="text-sm text-white/70 mb-3">Pedido <span id="pixPedido" class="font-mono"></span> · <strong id="pixValor" class="text-yellow-300"></strong></p>
+    <div id="pixQr" class="ck-pix-qr" aria-label="QR Code do Pix"></div>
+    <p class="ck-label" style="margin-top:14px">Pix copia e cola</p>
+    <div id="pixCodigo" class="ck-codigo"></div>
+    <button id="btnCopiarPix" class="ck-btn" style="margin-top:10px">Copiar código</button>
+    <p class="ck-aviso info" style="margin-top:12px">Seu pedido será confirmado após a verificação do pagamento. Você recebe um e-mail quando isso acontecer.</p>
+    <a id="pixVerPedido" href="profile.html" class="ck-btn-sec" style="display:flex;align-items:center;justify-content:center;text-decoration:none">Ver meus pedidos</a>
+  </section>
+
+  <div id="formCheckout" class="ck-layout">
+    <div>
+      <!-- 1. Endereço (só com item físico) -->
+      <section id="secEndereco" class="ck-card hidden">
+        <h2 class="ck-titulo"><span class="ck-num">1</span> Endereço de entrega</h2>
+        <div id="listaEnderecos" role="radiogroup" aria-label="Endereços salvos"></div>
+        <button id="btnNovoEndereco" class="ck-btn-sec" type="button">+ Novo endereço</button>
+        <form id="formEndereco" class="hidden" novalidate>
+          <div class="ck-grid">
+            <div><label class="ck-label" for="eCep">CEP</label><input id="eCep" class="ck-input" inputmode="numeric" autocomplete="postal-code" maxlength="9" placeholder="00000-000" required></div>
+            <div><label class="ck-label" for="eUf">UF</label><input id="eUf" class="ck-input" maxlength="2" autocomplete="address-level1" required></div>
+            <div class="ck-span2"><label class="ck-label" for="eRua">Rua</label><input id="eRua" class="ck-input" autocomplete="address-line1" required></div>
+            <div><label class="ck-label" for="eNumero">Número</label><input id="eNumero" class="ck-input" required></div>
+            <div><label class="ck-label" for="eCompl">Complemento</label><input id="eCompl" class="ck-input" autocomplete="address-line2"></div>
+            <div><label class="ck-label" for="eBairro">Bairro</label><input id="eBairro" class="ck-input" required></div>
+            <div><label class="ck-label" for="eCidade">Cidade</label><input id="eCidade" class="ck-input" autocomplete="address-level2" required></div>
+            <div class="ck-span2"><label class="ck-label" for="eNome">Destinatário</label><input id="eNome" class="ck-input" autocomplete="name" required></div>
+            <div><label class="ck-label" for="eFone">Telefone</label><input id="eFone" class="ck-input" inputmode="tel" autocomplete="tel"></div>
+            <div><label class="ck-label" for="eRotulo">Apelido</label><input id="eRotulo" class="ck-input" placeholder="Casa, Trabalho…"></div>
+          </div>
+          <p id="cepStatus" class="text-xs text-white/50 mt-2" aria-live="polite"></p>
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <button class="ck-btn" type="submit" style="flex:1">Salvar endereço</button>
+            <button id="btnCancelarEndereco" class="ck-btn-sec" type="button">Cancelar</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- 2. Frete -->
+      <section id="secFrete" class="ck-card hidden">
+        <h2 class="ck-titulo"><span class="ck-num">2</span> Forma de envio</h2>
+        <div id="listaFrete" role="radiogroup" aria-label="Opções de envio"><p class="text-sm text-white/50">Escolha um endereço para ver as opções.</p></div>
+      </section>
+
+      <!-- 3. Pagamento -->
+      <section class="ck-card">
+        <h2 class="ck-titulo"><span id="numPagamento" class="ck-num">3</span> Pagamento</h2>
+        <div id="listaPagamento" role="radiogroup" aria-label="Formas de pagamento"><p class="text-sm text-white/50">Carregando…</p></div>
+      </section>
+    </div>
+
+    <!-- Resumo -->
+    <aside class="ck-card ck-resumo" aria-label="Resumo do pedido">
+      <h2 class="ck-titulo">Resumo</h2>
+      <div id="resumoItens"></div>
+      <div style="border-top:1px solid rgba(255,255,255,.08);margin-top:8px;padding-top:8px">
+        <div class="ck-linha"><span class="text-white/70">Subtotal</span><span id="rSubtotal">—</span></div>
+        <div class="ck-linha" id="rFreteLinha"><span class="text-white/70">Frete</span><span id="rFrete">—</span></div>
+        <div class="ck-linha"><span>Total</span><span id="rTotal" class="ck-total">—</span></div>
+        <p class="text-xs text-white/40 mt-1">O valor final é confirmado pelo servidor ao criar o pedido.</p>
+      </div>
+      <button id="btnConfirmar" class="ck-btn" style="margin-top:12px" disabled>Confirmar pedido</button>
+    </aside>
+  </div>
+</main>
+
+<nh-footer></nh-footer>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/carrinho.js"></script>
+<script src="assets/js/enderecos.js"></script>
+<script>
+(function () {
+  'use strict';
+  const API = window.API_BASE;
+  const qs = (s, el = document) => el.querySelector(s);
+  const fmtBRL = (n) => (Number(n) || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  const esc = (s = '') => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const token = (localStorage.getItem('NoHeroes_token') || '').trim().replace(/^Bearer\s+/i, '');
+  const st = { produtos: [], enderecos: [], enderecoId: null, frete: [], freteId: null, metodo: null, enviando: false };
+
+  if (!token) { location.href = 'login.html'; return; }
+
+  async function api(path, opts = {}) {
+    const r = await fetch(API + path, { ...opts, headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token, ...(opts.headers || {}) } });
+    if (r.status === 401) { localStorage.removeItem('NoHeroes_token'); location.href = 'login.html'; throw new Error('Sessão expirada.'); }
+    let j = {}; try { j = await r.json(); } catch (_) { /* sem corpo */ }
+    if (!r.ok) throw Object.assign(new Error(j.message || j.error || 'Erro ' + r.status), { status: r.status });
+    return j;
+  }
+  function aviso(msg, tipo = 'erro') {
+    qs('#avisos').innerHTML = msg ? `<div class="ck-aviso ${tipo}" role="${tipo === 'erro' ? 'alert' : 'status'}">${esc(msg)}</div>` : '';
+    if (msg) window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  const temFisico = () => NHCart.temFisico();
+
+  // ── Resumo ──
+  function resumo() {
+    const itens = NHCart.itens();
+    qs('#resumoItens').innerHTML = itens.map((i) => `
+      <div class="ck-item">
+        <img src="${esc(i.imageUrl)}" alt="" onerror="this.style.visibility='hidden'">
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(i.name)}</div>
+          <div style="font-size:11px;color:rgba(255,255,255,.55)">${i.variant_label ? esc(i.variant_label) + ' · ' : ''}${i.fulfillment === 'physical' ? 'Físico' : 'Digital'} · ${i.quantity}×</div>
+        </div>
+        <div style="font-size:13px">${fmtBRL(i.unit_price * i.quantity)}</div>
+      </div>`).join('');
+    const sub = NHCart.total();
+    const op = st.frete.find((o) => o.id === st.freteId);
+    const frete = temFisico() ? (op ? op.price : null) : 0;
+    qs('#rSubtotal').textContent = fmtBRL(sub);
+    qs('#rFreteLinha').classList.toggle('hidden', !temFisico());
+    qs('#rFrete').textContent = frete == null ? '—' : (frete === 0 ? 'Grátis' : fmtBRL(frete));
+    qs('#rTotal').textContent = frete == null ? '—' : fmtBRL(sub + frete);
+    const pronto = itens.length && st.metodo && (!temFisico() || (st.enderecoId && op));
+    qs('#btnConfirmar').disabled = !pronto || st.enviando;
+  }
+
+  // ── Endereços ──
+  function renderEnderecos() {
+    const box = qs('#listaEnderecos');
+    if (!st.enderecos.length) { box.innerHTML = '<p class="text-sm text-white/50 mb-2">Nenhum endereço salvo ainda.</p>'; return; }
+    box.innerHTML = st.enderecos.map((a) => `
+      <label class="ck-opcao">
+        <input type="radio" name="endereco" value="${a.id}" ${a.id === st.enderecoId ? 'checked' : ''}>
+        <span><strong>${esc(a.label || a.recipient_name)}</strong>${a.is_default ? ' <span class="ck-sub">(padrão)</span>' : ''}<br>
+        <span class="ck-sub">${esc(a.recipient_name)} · ${NHEndereco.resumo(a)}</span></span>
+      </label>`).join('');
+  }
+  async function carregarEnderecos(selecionar) {
+    const j = await api('/account/addresses');
+    st.enderecos = j.data || [];
+    const padrao = st.enderecos.find((a) => a.is_default) || st.enderecos[0];
+    st.enderecoId = selecionar || st.enderecoId || (padrao ? padrao.id : null);
+    renderEnderecos();
+    if (!st.enderecos.length) abrirFormEndereco();
+    if (st.enderecoId) cotarFrete();
+  }
+  function abrirFormEndereco() { qs('#formEndereco').classList.remove('hidden'); qs('#btnNovoEndereco').classList.add('hidden'); qs('#eCep').focus(); }
+  function fecharFormEndereco() { qs('#formEndereco').classList.add('hidden'); qs('#btnNovoEndereco').classList.remove('hidden'); qs('#formEndereco').reset(); qs('#cepStatus').textContent = ''; }
+
+  // ViaCEP direto do navegador (assets/js/enderecos.js): preenche rua, bairro, cidade e UF.
+  let ultimoCep = '';
+  async function buscarCep() {
+    const cep = qs('#eCep').value.replace(/\D/g, '');
+    if (cep.length !== 8 || cep === ultimoCep) return;
+    ultimoCep = cep;
+    qs('#cepStatus').textContent = 'Buscando CEP…';
+    const r = await NHEndereco.viaCep(cep);
+    if (!r) { qs('#cepStatus').textContent = 'CEP não encontrado (ou serviço fora do ar). Preencha o endereço à mão.'; return; }
+    qs('#eRua').value = r.street || qs('#eRua').value;
+    qs('#eBairro').value = r.district || qs('#eBairro').value;
+    qs('#eCidade').value = r.city || qs('#eCidade').value;
+    qs('#eUf').value = r.state || qs('#eUf').value;
+    qs('#cepStatus').textContent = 'Endereço encontrado. Confira e informe o número.';
+    qs('#eNumero').focus();
+  }
+  async function salvarEndereco(e) {
+    e.preventDefault();
+    const body = {
+      cep: qs('#eCep').value, state: qs('#eUf').value, street: qs('#eRua').value, number: qs('#eNumero').value,
+      complement: qs('#eCompl').value, district: qs('#eBairro').value, city: qs('#eCidade').value,
+      recipient_name: qs('#eNome').value, phone: qs('#eFone').value, label: qs('#eRotulo').value,
+    };
+    try {
+      const j = await api('/account/addresses', { method: 'POST', body: JSON.stringify(body) });
+      fecharFormEndereco();
+      aviso('');
+      await carregarEnderecos(j.data.id);
+    } catch (err) { aviso(err.message); }
+  }
+
+  // ── Frete ──
+  async function cotarFrete() {
+    const a = st.enderecos.find((x) => x.id === st.enderecoId);
+    if (!a) return;
+    st.freteId = null; st.frete = [];
+    qs('#listaFrete').innerHTML = '<p class="text-sm text-white/50">Calculando o frete…</p>';
+    resumo();
+    try {
+      const j = await fetch(API + '/shipping/quote', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cep: a.cep, items: NHCart.paraApi() }),
+      }).then(async (r) => { const b = await r.json(); if (!r.ok) throw new Error(b.message || 'Erro ao cotar o frete.'); return b; });
+      st.frete = j.options || [];
+      if (!st.frete.length) { qs('#listaFrete').innerHTML = '<p class="text-sm text-white/60">Ainda não entregamos neste CEP. Fale com o suporte.</p>'; resumo(); return; }
+      st.freteId = st.frete[0].id;
+      qs('#listaFrete').innerHTML = st.frete.map((o) => `
+        <label class="ck-opcao">
+          <input type="radio" name="frete" value="${esc(o.id)}" ${o.id === st.freteId ? 'checked' : ''}>
+          <span style="flex:1"><strong>${esc(o.service)}</strong> <span class="ck-sub">${esc(o.carrier || '')}</span><br>
+          <span class="ck-sub">${o.kind === 'pickup' ? 'Combine a retirada com a gente' : o.days ? (o.days.min === o.days.max ? `${o.days.max} dia(s) úteis` : `${o.days.min} a ${o.days.max} dias úteis`) : 'Prazo a confirmar'}</span></span>
+          <strong>${o.price === 0 ? 'Grátis' : fmtBRL(o.price)}</strong>
+        </label>`).join('');
+    } catch (err) {
+      qs('#listaFrete').innerHTML = `<p class="text-sm text-red-300">${esc(err.message)}</p>`;
+    }
+    resumo();
+  }
+
+  // ── Pagamento ──
+  async function carregarMetodos() {
+    const j = await fetch(API + '/checkout/methods').then((r) => r.json());
+    const ms = j.methods || [];
+    st.metodo = ms[0] ? ms[0].id : null;
+    qs('#listaPagamento').innerHTML = ms.length ? ms.map((m) => `
+      <label class="ck-opcao">
+        <input type="radio" name="metodo" value="${esc(m.id)}" ${m.id === st.metodo ? 'checked' : ''}>
+        <span><strong>${esc(m.label)}</strong><br><span class="ck-sub">${m.id === 'mercadopago' ? 'Você será levado ao Mercado Pago para pagar.' : 'QR Code e código copia e cola nesta tela. Confirmação após a verificação do pagamento.'}</span></span>
+      </label>`).join('') : '<p class="text-sm text-red-300">Nenhuma forma de pagamento disponível no momento.</p>';
+    resumo();
+  }
+
+  // ── Confirmar ──
+  async function confirmar() {
+    if (st.enviando) return;
+    st.enviando = true; resumo();
+    qs('#btnConfirmar').textContent = 'Criando pedido…';
+    try {
+      const body = { items: NHCart.paraApi(), payment_method: st.metodo };
+      if (temFisico()) { body.address_id = st.enderecoId; body.shipping_option_id = st.freteId; }
+      const j = await api('/checkout', { method: 'POST', body: JSON.stringify(body) });
+      // Mercado Pago: o carrinho fica até a volta (agradecimento.html limpa se o pedido andou),
+      // para o cliente poder tentar de novo se desistir ou o pagamento for recusado.
+      if (j.next && j.next.kind === 'redirect' && j.next.url) { location.assign(j.next.url); return; }
+      NHCart.limpar();
+      if (j.next && j.next.kind === 'pix') return mostrarPix(j);
+      location.href = 'agradecimento.html?order=' + encodeURIComponent(j.order_id);
+    } catch (err) {
+      aviso(err.message);
+      if (err.status === 409) { await sincronizarCarrinho(); if (temFisico()) cotarFrete(); }
+    } finally {
+      st.enviando = false; qs('#btnConfirmar').textContent = 'Confirmar pedido'; resumo();
+    }
+  }
+  function mostrarPix(j) {
+    qs('#formCheckout').classList.add('hidden');
+    qs('#pixResultado').classList.remove('hidden');
+    qs('#pixPedido').textContent = j.order_id;
+    qs('#pixValor').textContent = fmtBRL(j.total);
+    qs('#pixQr').innerHTML = j.next.qr_svg; // SVG gerado pelo nosso servidor (sem conteúdo do usuário)
+    qs('#pixCodigo').textContent = j.next.payload;
+    qs('#pixVerPedido').href = 'agradecimento.html?order=' + encodeURIComponent(j.order_id);
+    window.scrollTo({ top: 0 });
+  }
+  qs('#btnCopiarPix').addEventListener('click', async () => {
+    const codigo = qs('#pixCodigo').textContent;
+    try { await navigator.clipboard.writeText(codigo); qs('#btnCopiarPix').textContent = 'Código copiado ✓'; }
+    catch (_) {
+      const r = document.createRange(); r.selectNodeContents(qs('#pixCodigo'));
+      const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+      qs('#btnCopiarPix').textContent = 'Código selecionado: copie';
+    }
+    setTimeout(() => { qs('#btnCopiarPix').textContent = 'Copiar código'; }, 2500);
+  });
+
+  async function sincronizarCarrinho() {
+    const j = await fetch(API + '/shop').then((r) => r.json());
+    st.produtos = j.data || [];
+    const avisos = NHCart.reconciliar(st.produtos);
+    if (avisos.length) aviso(avisos.join(' '), 'info');
+  }
+
+  // ── Eventos e início ──
+  document.addEventListener('change', (e) => {
+    if (e.target.name === 'endereco') { st.enderecoId = Number(e.target.value); cotarFrete(); }
+    if (e.target.name === 'frete') { st.freteId = e.target.value; resumo(); }
+    if (e.target.name === 'metodo') { st.metodo = e.target.value; resumo(); }
+  });
+  qs('#btnNovoEndereco').addEventListener('click', abrirFormEndereco);
+  qs('#btnCancelarEndereco').addEventListener('click', fecharFormEndereco);
+  qs('#formEndereco').addEventListener('submit', salvarEndereco);
+  qs('#eCep').addEventListener('input', (e) => {
+    e.target.value = NHEndereco.formatarCep(e.target.value);
+    buscarCep();
+  });
+  qs('#btnConfirmar').addEventListener('click', confirmar);
+
+  (async function iniciar() {
+    try {
+      await sincronizarCarrinho();
+      if (!NHCart.itens().length) {
+        qs('#formCheckout').innerHTML = '<div class="ck-card" style="grid-column:1/-1;text-align:center"><p class="mb-3">Seu carrinho está vazio.</p><a href="store.html" class="ck-btn-sec" style="display:inline-flex;align-items:center;text-decoration:none">Ir para a loja</a></div>';
+        return;
+      }
+      if (temFisico()) {
+        qs('#secEndereco').classList.remove('hidden');
+        qs('#secFrete').classList.remove('hidden');
+        await carregarEnderecos();
+      } else {
+        qs('#numPagamento').textContent = '1';
+      }
+      await carregarMetodos();
+      resumo();
+    } catch (err) { aviso(err.message || 'Não foi possível carregar o checkout.'); }
+  })();
+})();
+</script>
+</body>
+</html>

@@ -4,6 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Obrigado — NoHeroes</title>
+<meta name="robots" content="noindex">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
@@ -11,19 +12,17 @@
   --grad:linear-gradient(135deg,#8f4fff 0%,#facc15 100%);
   --border:rgba(255,255,255,.1);
 }
-body{background:#0a0a0a;color:#e5e5e5;font-family:Inter,system-ui,Arial,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;text-align:center;padding:2rem}
-h1{font-family:"Cinzel Decorative",serif;background:var(--grad);-webkit-background-clip:text;color:transparent;font-size:2rem;margin-bottom:.5rem}
-.card{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:14px;padding:2rem;max-width:480px}
-.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:.9rem 1.4rem;font-weight:600;margin-top:1.2rem;background:var(--grad);color:#000}
-#brasasCanvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 0;
-  pointer-events: none;
-}
+body{background:#0a0a0a;color:#e5e5e5;font-family:Inter,system-ui,Arial,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;text-align:center;padding:2rem 16px}
+h1{font-family:"Cinzel Decorative",serif;background:var(--grad);-webkit-background-clip:text;color:transparent;font-size:1.7rem;margin-bottom:.5rem}
+.card{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:14px;padding:1.5rem;max-width:480px;width:100%}
+.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:.9rem 1.4rem;font-weight:600;margin-top:1rem;background:var(--grad);color:#000;text-decoration:none}
+.btn-sec{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:.8rem 1.4rem;font-weight:600;margin-top:.7rem;border:1px solid rgba(168,85,247,.5);color:#c084fc;text-decoration:none}
+.pedido{text-align:left;margin-top:1rem;border-top:1px solid var(--border);padding-top:1rem;font-size:14px}
+.linha{display:flex;justify-content:space-between;gap:10px;padding:3px 0}
+.pix-qr{background:#fff;border-radius:12px;padding:10px;width:220px;max-width:100%;margin:12px auto 0}
+.pix-qr svg{width:100%;height:auto;display:block}
+.codigo{font-family:monospace;font-size:12px;word-break:break-all;background:rgba(0,0,0,.45);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:left;margin-top:8px}
+#brasasCanvas{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none}
 </style>
 </head>
 <body>
@@ -31,109 +30,157 @@ h1{font-family:"Cinzel Decorative",serif;background:var(--grad);-webkit-backgrou
 
   <div class="card relative z-10">
     <h1 id="titulo">Processando...</h1>
-    <p id="mensagem" class="text-white/70 mb-4">Aguarde um momento.</p>
+    <p id="mensagem" class="text-white/70 mb-2">Aguarde um momento.</p>
+    <div id="statusSelo"></div>
 
-    <!-- Botão NOVO → Voltar para a loja -->
-    <button id="btnLoja" class="btn w-full">
-      Voltar para a loja
-    </button>
+    <!-- Pix direto aguardando: QR e copia-e-cola de novo -->
+    <div id="pixBox" class="hidden">
+      <div id="pixQr" class="pix-qr" aria-label="QR Code do Pix"></div>
+      <div id="pixCodigo" class="codigo"></div>
+      <button id="btnCopiarPix" class="btn w-full" type="button">Copiar código</button>
+      <p class="text-xs text-white/60 mt-3">Seu pedido será confirmado após a verificação do pagamento.</p>
+    </div>
 
-    <!-- Botão antigo → agora "Voltar para apoiar" -->
-    <a href="apoiar.html" class="btn w-full">
-      Voltar para apoiar
-    </a>
+    <div id="pedido" class="pedido hidden"></div>
+
+    <div id="acoes" class="flex flex-col">
+      <a id="btnPedidos" href="profile.html#compras" class="btn w-full hidden">Ver minhas compras</a>
+      <a href="store.html" class="btn-sec w-full">Voltar para a loja</a>
+      <a id="btnApoiar" href="apoiar.html" class="btn-sec w-full hidden">Voltar para apoiar</a>
+    </div>
   </div>
 
+<script src="assets/js/config.js"></script>
+<script src="assets/js/carrinho.js"></script>
+<script src="assets/js/pedidos.js"></script>
 <script>
-/* ------------------------------------------------------
-   LÓGICA DO STATUS
------------------------------------------------------- */
-const p = new URLSearchParams(location.search);
-const status = p.get('mp_status') || 'success';
-const title = document.getElementById('titulo');
-const msg   = document.getElementById('mensagem');
+(function () {
+  'use strict';
+  const qs = (s) => document.querySelector(s);
+  const P = window.NHPedido;
+  const params = new URLSearchParams(location.search);
+  const orderId = params.get('order') || params.get('external_reference') || '';
+  const token = (localStorage.getItem('NoHeroes_token') || '').trim().replace(/^Bearer\s+/i, '');
+  const titulo = qs('#titulo'), msg = qs('#mensagem');
 
-if(status==='success'){
-  title.textContent='🎉Parabéns pela Coragem Aventureiro!';
-  msg.textContent='Seu Sacrificio foi devorado pelo abismo. Ele ajudará a manter o universo vivo. Agora tu es acompanhado pelo espirito de uma divindade protetora!';
-}else if(status==='pending'){
-  title.textContent='⏳ Pagamento pendente';
-  msg.textContent='Estamos aguardando a confirmação do Mercado Pago. Você será notificado em breve.';
-}else{
-  title.textContent='❌ Pagamento não concluído';
-  msg.textContent='Houve uma falha no processo de pagamento. Tente novamente ou entre em contato.';
-}
-
-/* ------------------------------------------------------
-   BOTÃO → LIMPAR CARRINHO + VOLTAR PARA A LOJA
------------------------------------------------------- */
-document.getElementById("btnLoja").onclick = () => {
-  try {
-    // P0 #18 (varredura v1): estas TRES chaves nunca existiram. A loja persiste o carrinho
-    // em "noheroes_cart" (store.html:356) e o recarrega no loadCart (store.html:374); no
-    // fluxo Mercado Pago ela NAO limpa antes de redirecionar (store.html:788-790 so faz
-    // toggleCart+assign). Resultado: depois de pagar de verdade, o usuario voltava com os
-    // MESMOS itens no carrinho e o badge cheio — nada indicando que ja tinham sido pagos.
-    // Segunda cobranca em dinheiro real, sem nenhuma guarda no caminho.
-    localStorage.removeItem("noheroes_cart");
-    // As antigas ficam por higiene (contas que passaram por versoes anteriores).
-    localStorage.removeItem("cart");
-    localStorage.removeItem("cartItems");
-    localStorage.removeItem("nh_cart");
-  } catch(e){}
-
-  window.location.href = "store.html";
-};
-
-/* ------------------------------------------------------
-   FUNDO – partículas (brasas)
------------------------------------------------------- */
-const canvas = document.getElementById("brasasCanvas");
-const ctx = canvas.getContext("2d");
-let particles = [], w, h;
-
-function resizeCanvas() {
-  w = canvas.width = window.innerWidth;
-  h = canvas.height = window.innerHeight;
-}
-window.addEventListener("resize", resizeCanvas);
-resizeCanvas();
-
-class Particle {
-  constructor() { this.reset(true); }
-  reset(initial = false) {
-    this.x = Math.random() * w;
-    this.y = initial ? Math.random() * h : h + Math.random() * 100;
-    this.size = 1 + Math.random() * 2.5;
-    this.speed = 0.2 + Math.random() * 0.5;
-    this.alpha = 0.4 + Math.random() * 0.3;
-    this.drift = (Math.random() - 0.5) * 0.5;
+  // ── Doação (apoiar.html): mensagem de sempre, pelo status que o Mercado Pago devolve ──
+  function doacao() {
+    qs('#btnApoiar').classList.remove('hidden');
+    const st = params.get('mp_status') || params.get('collection_status') || params.get('status') || 'success';
+    if (st === 'success' || st === 'approved') {
+      titulo.textContent = '🎉 Parabéns pela coragem, aventureiro!';
+      msg.textContent = 'Seu sacrifício foi devorado pelo abismo. Ele ajudará a manter o universo vivo. Agora tu és acompanhado pelo espírito de uma divindade protetora!';
+    } else if (st === 'pending' || st === 'in_process') {
+      titulo.textContent = '⏳ Pagamento pendente';
+      msg.textContent = 'Estamos aguardando a confirmação do Mercado Pago. Você será notificado em breve.';
+    } else {
+      titulo.textContent = '❌ Pagamento não concluído';
+      msg.textContent = 'Houve uma falha no processo de pagamento. Tente novamente ou entre em contato.';
+    }
   }
-  update() {
-    this.y -= this.speed;
-    this.x += this.drift;
-    if (this.y < -10 || this.x < -50 || this.x > w + 50) this.reset();
-  }
-  draw() {
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`;
-    ctx.shadowColor = "#a855f7";
-    ctx.shadowBlur = 12;
-    ctx.fill();
-  }
-}
 
-function createParticles(n) {
-  for (let i = 0; i < n; i++) particles.push(new Particle());
-}
-function animate() {
-  ctx.clearRect(0, 0, w, h);
-  for (const p of particles) { p.update(); p.draw(); }
-  requestAnimationFrame(animate);
-}
-createParticles(150);
-animate();
+  const TEXTOS = {
+    pending: ['⏳ Aguardando pagamento', 'Assim que o Mercado Pago confirmar, seu pedido é liberado. Esta página se atualiza sozinha.'],
+    awaiting_manual_confirmation: ['⏳ Pix em verificação', 'Se ainda não pagou, use o QR Code ou o código abaixo.'],
+    approved: ['🎉 Pedido confirmado!', 'Pagamento aprovado. Itens digitais já estão no seu inventário; os físicos entram em preparação.'],
+    needs_attention: ['Pagamento recebido', 'Recebemos o pagamento e estamos conferindo o estoque. Entraremos em contato.'],
+    rejected: ['❌ Pagamento não aprovado', 'Nada foi cobrado. Seus itens continuam no carrinho para tentar de novo.'],
+    cancelled: ['Pedido cancelado', 'Este pedido foi cancelado.'],
+    refunded: ['Pedido estornado', 'O valor foi devolvido.'],
+    charged_back: ['Pagamento contestado', 'O pagamento foi contestado junto ao meio de pagamento.'],
+  };
+
+  async function api(path) {
+    const r = await fetch(window.API_BASE + path, { headers: { Authorization: 'Bearer ' + token } });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok) throw Object.assign(new Error(j.message || 'Erro ' + r.status), { status: r.status });
+    return j.data;
+  }
+
+  function renderPedido(o) {
+    const t = TEXTOS[o.status] || ['Pedido ' + o.id, ''];
+    titulo.textContent = t[0];
+    msg.textContent = t[1];
+    qs('#statusSelo').innerHTML = P.seloPagamento(o.status) + (o.fulfillment_status !== 'na' ? ' ' + P.seloEntrega(o.fulfillment_status) : '');
+    qs('#btnPedidos').classList.remove('hidden');
+    qs('#pedido').classList.remove('hidden');
+    qs('#pedido').innerHTML =
+      `<div class="text-xs text-white/50 mb-2">Pedido <span class="font-mono">${P.esc(o.id)}</span> · ${P.esc(P.metodo(o.payment_provider))}</div>` +
+      o.items.map((i) => `<div class="linha"><span>${i.quantity}× ${P.esc(i.title || 'Item #' + i.id)}${i.variant_label ? ' <span class="text-white/50">(' + P.esc(i.variant_label) + ')</span>' : ''}</span><span>${i.unit_price != null ? P.brl(i.unit_price * i.quantity) : ''}</span></div>`).join('') +
+      (o.shipping_method ? `<div class="linha text-white/70"><span>Frete · ${P.esc(o.shipping_method.service)}</span><span>${o.shipping_cost ? P.brl(o.shipping_cost) : 'Grátis'}</span></div>` : '') +
+      `<div class="linha font-semibold" style="color:#facc15"><span>Total</span><span>${P.brl(o.total)}</span></div>`;
+    // Pedido andou (ou está aguardando): o carrinho já virou pedido.
+    if (!['rejected', 'cancelled'].includes(o.status)) NHCart.limpar();
+  }
+
+  async function mostrarPix(id) {
+    const d = await api('/orders/' + encodeURIComponent(id) + '/payment');
+    if (!d || d.kind !== 'pix') return;
+    qs('#pixQr').innerHTML = d.qr_svg; // SVG gerado pelo nosso servidor
+    qs('#pixCodigo').textContent = d.payload;
+    qs('#pixBox').classList.remove('hidden');
+  }
+  qs('#btnCopiarPix').addEventListener('click', async () => {
+    const b = qs('#btnCopiarPix');
+    try { await navigator.clipboard.writeText(qs('#pixCodigo').textContent); b.textContent = 'Código copiado ✓'; }
+    catch (_) {
+      const r = document.createRange(); r.selectNodeContents(qs('#pixCodigo'));
+      const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = 'Código selecionado: copie';
+    }
+    setTimeout(() => { b.textContent = 'Copiar código'; }, 2500);
+  });
+
+  async function pedidoDaLoja() {
+    if (!token) {
+      titulo.textContent = 'Pedido recebido';
+      msg.innerHTML = 'Entre na sua conta para acompanhar o pedido. <a href="login.html" class="underline text-purple-300">Entrar</a>';
+      return;
+    }
+    let tentativas = 0;
+    async function carregar() {
+      try {
+        const o = await api('/orders/' + encodeURIComponent(orderId));
+        renderPedido(o);
+        if (o.status === 'awaiting_manual_confirmation' && qs('#pixBox').classList.contains('hidden')) await mostrarPix(o.id);
+        if (o.status !== 'awaiting_manual_confirmation') qs('#pixBox').classList.add('hidden');
+        // O webhook do Mercado Pago pode chegar segundos depois da volta: consulta de novo por até ~2 min.
+        if (o.status === 'pending' && ++tentativas < 24) setTimeout(carregar, 5000);
+      } catch (e) {
+        titulo.textContent = 'Pedido não encontrado';
+        msg.textContent = e.status === 401 ? 'Sua sessão expirou. Entre de novo para ver o pedido.' : 'Não conseguimos carregar este pedido.';
+      }
+    }
+    await carregar();
+  }
+
+  if (!orderId || /^don_/.test(orderId)) doacao(); else pedidoDaLoja();
+
+  /* ── Fundo: partículas (brasas) ── */
+  const canvas = document.getElementById('brasasCanvas');
+  const ctx = canvas.getContext('2d');
+  const particles = []; let w, h;
+  function resizeCanvas() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+  class Particle {
+    constructor() { this.reset(true); }
+    reset(initial = false) {
+      this.x = Math.random() * w;
+      this.y = initial ? Math.random() * h : h + Math.random() * 100;
+      this.size = 1 + Math.random() * 2.5;
+      this.speed = 0.2 + Math.random() * 0.5;
+      this.alpha = 0.4 + Math.random() * 0.3;
+      this.drift = (Math.random() - 0.5) * 0.5;
+    }
+    update() { this.y -= this.speed; this.x += this.drift; if (this.y < -10 || this.x < -50 || this.x > w + 50) this.reset(); }
+    draw() {
+      ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`; ctx.shadowColor = '#a855f7'; ctx.shadowBlur = 12; ctx.fill();
+    }
+  }
+  for (let i = 0; i < 150; i++) particles.push(new Particle());
+  (function animate() { ctx.clearRect(0, 0, w, h); for (const p of particles) { p.update(); p.draw(); } requestAnimationFrame(animate); })();
+})();
 </script>
 </body>
 </html>
