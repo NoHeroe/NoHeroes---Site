@@ -71,7 +71,7 @@
     </li>
     <li>
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f0d99a" stroke-width="1.8" aria-hidden="true"><path d="M4 12a8 8 0 1014.9-4M19 4v4h-4"/></svg>
-      <span><strong data-i18n="loja.conf.troca_t">7 dias para desistir</strong><span><span data-i18n="loja.conf.troca">Compras online têm direito de arrependimento.</span> <a href="termos.html#arrependimento" class="nh-link" data-i18n="loja.conf.regras">Ver regras</a></span></span>
+      <span><strong data-i18n="loja.conf.troca_t">7 dias para desistir</strong><span><span data-i18n="loja.conf.troca">Compras online têm direito de arrependimento.</span> <a href="/termos#arrependimento" class="nh-link" data-i18n="loja.conf.regras">Ver regras</a></span></span>
     </li>
   </ul>
 
@@ -214,7 +214,7 @@
   const modal = { varId: null, qtd: 1 };
   function abrir(id) {
     const p = st.produtos.find((x) => String(x.id) === String(id));
-    if (!p) return;
+    if (!p) return false; // ainda carregando (ou id inexistente): o hash espera o carregar()
     st.aberto = p;
     modal.qtd = 1;
     const primeira = (p.variants || []).find((v) => v.available);
@@ -277,7 +277,9 @@
       fulfillment: p.fulfillment, imageUrl: imagem(p.imageUrl),
     }, qtd);
     if (depois === antes) { toast(t('loja.max_carrinho')); return false; }
-    gaveta(true);
+    // vindo do modal do produto, o carrinho toma o lugar dele no histórico (um Voltar fecha o que está aberto)
+    if (st.aberto) NH.trocarModal('produto-' + st.aberto.id, 'carrinho');
+    else if (!qs('#cartDrawer').classList.contains('aberta')) NH.abrirModal('carrinho');
     return true;
   }
   function toast(msg) {
@@ -344,6 +346,7 @@
     st.carregado = true;
     st.categorias = [...new Set(st.produtos.map((p) => p.category).filter(Boolean))].sort((a, b) => a.localeCompare(b));
     filtros(); vitrine();
+    if (window.NH && NH.irAoHash) NH.irAoHash(); // /store#produto-2 vindo de outra página
   }
 
   /* ---------- eventos ---------- */
@@ -352,15 +355,22 @@
     if (!b) return;
     st.ativa = b.dataset.cat; filtros(); vitrine();
   });
-  qs('#btnCart').addEventListener('click', () => gaveta());
-  qs('#btnCloseCart').addEventListener('click', () => gaveta(false));
-  qs('#cartOverlay').addEventListener('click', () => gaveta(false));
-  qs('#btnCloseInfo').addEventListener('click', fechar);
-  qs('[data-fecha-modal]').addEventListener('click', fechar);
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { fechar(); gaveta(false); } });
+  // Produto e carrinho entram no histórico (/store#produto-2, /store#carrinho): o Voltar fecha o que está aberto.
+  const fecharProduto = () => { if (st.aberto) NH.fecharModal('produto-' + st.aberto.id); };
+  const fecharCarrinho = () => { if (qs('#cartDrawer').classList.contains('aberta')) NH.fecharModal('carrinho'); };
+  document.addEventListener('DOMContentLoaded', () => {
+    NH.hashModal('produto-*', { abrir: (id) => abrir(id), fechar: () => fechar() });
+    NH.hashModal('carrinho', { abrir: () => gaveta(true), fechar: () => gaveta(false) });
+  });
+  qs('#btnCart').addEventListener('click', () => (qs('#cartDrawer').classList.contains('aberta') ? fecharCarrinho() : NH.abrirModal('carrinho')));
+  qs('#btnCloseCart').addEventListener('click', fecharCarrinho);
+  qs('#cartOverlay').addEventListener('click', fecharCarrinho);
+  qs('#btnCloseInfo').addEventListener('click', fecharProduto);
+  qs('[data-fecha-modal]').addEventListener('click', fecharProduto);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { fecharProduto(); fecharCarrinho(); } });
   qs('#vitrine').addEventListener('click', (e) => {
     const a = e.target.closest('[data-abrir]');
-    if (a) return abrir(a.dataset.abrir);
+    if (a) return NH.abrirModal('produto-' + a.dataset.abrir);
     const add = e.target.closest('[data-add]');
     if (add) { const p = st.produtos.find((x) => String(x.id) === add.dataset.add); if (p) adicionar(p, null, 1); }
   });
@@ -369,7 +379,7 @@
     if (v) { modal.varId = Number(v.dataset.var); modal.qtd = 1; return renderCompra(); }
     const q = e.target.closest('[data-q]');
     if (q) { const fonte = st.aberto.has_variants ? variante() : st.aberto; modal.qtd = Math.max(1, Math.min(fonte.max_qty, modal.qtd + Number(q.dataset.q))); return renderCompra(); }
-    if (e.target.closest('#btnAddModal') && adicionar(st.aberto, variante(), modal.qtd)) fechar();
+    if (e.target.closest('#btnAddModal')) adicionar(st.aberto, variante(), modal.qtd);
   });
   qs('#cartItems').addEventListener('click', (e) => {
     const rem = e.target.closest('[data-rem]');
@@ -378,7 +388,7 @@
     if (q) { const l = NHCart.itens().find((i) => i.key === q.dataset.cq); if (l) NHCart.definirQtd(l.key, l.quantity + Number(q.dataset.d)); }
   });
   qs('#btnCheckout').addEventListener('click', () => {
-    location.href = logado() ? 'checkout.html' : 'login.html?volta=checkout.html';
+    location.href = logado() ? '/checkout' : '/login?volta=/checkout';
   });
   document.addEventListener('nh:cart', renderCarrinho);
   document.addEventListener('nh:lang', () => { filtros(); vitrine(); renderCarrinho(); renderModal(); });

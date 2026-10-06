@@ -57,7 +57,7 @@
     </form>
   </div>
 
-  <p class="nh-auth-rodape"><span data-i18n="esq.lembrou">Lembrou a senha?</span> <a href="login.html" class="nh-link" data-i18n="login.entrar">Entrar</a></p>
+  <p class="nh-auth-rodape"><span data-i18n="esq.lembrou">Lembrou a senha?</span> <a href="/login" class="nh-link" data-i18n="login.entrar">Entrar</a></p>
 </main>
 
 <nh-footer></nh-footer>
@@ -101,7 +101,7 @@
       const data = await res.json().catch(() => ({}));
       if (res.ok && data.success) {
         aviso(msg, t('esq.redefinida'), true);
-        setTimeout(() => { location.href = 'login.html'; }, 2000);
+        setTimeout(() => { location.href = '/login'; }, 2000);
       } else aviso(msg, NHI18n.erro(data, 'esq.link_invalido'));
     } catch (_) { aviso(msg, t('err.conexao')); }
     finally { btn.disabled = false; }

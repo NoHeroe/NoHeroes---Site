@@ -44,7 +44,7 @@
     </div>
     <div class="nh-auth-linha">
       <label class="nh-check"><input id="remember" type="checkbox"> <span data-i18n="login.lembrar">Lembrar meu e-mail</span></label>
-      <a href="forgot.html" class="nh-link" data-i18n="login.esqueci">Esqueci a senha</a>
+      <a href="/forgot" class="nh-link" data-i18n="login.esqueci">Esqueci a senha</a>
     </div>
     <button id="submitBtn" type="submit" class="nh-btn nh-btn-pri nh-btn-grande w-full" data-i18n="login.entrar">Entrar</button>
     <p id="error" class="nh-form-msg erro" role="alert"></p>
@@ -52,7 +52,7 @@
     <div id="googleLoginContainer" class="nh-google"></div>
   </form>
 
-  <p class="nh-auth-rodape"><span data-i18n="login.sem_conta">Não tem conta?</span> <a href="register.html" class="nh-link" data-i18n="login.criar">Criar conta</a></p>
+  <p class="nh-auth-rodape"><span data-i18n="login.sem_conta">Não tem conta?</span> <a href="/register" class="nh-link" data-i18n="login.criar">Criar conta</a></p>
 </main>
 
 <nh-footer></nh-footer>
@@ -84,7 +84,9 @@
     localStorage.setItem('isAdmin', payload.is_admin ? 'true' : 'false');
     await window.enforceCompliance('Bearer ' + token, { termsOutdated: !!data.termsOutdated, needsBirthdate: !!data.needsBirthdate });
     const volta = new URLSearchParams(location.search).get('volta');
-    location.href = volta && /^[a-z0-9_\-]+\.html(\?[^#]*)?$/i.test(volta) ? volta : (payload.is_admin ? 'admin.html' : 'profile.html');
+    // Só páginas do próprio site: "/pagina?query#aba" (ou o formato antigo "pagina.html?query"); nunca outra origem.
+    const ok = volta && (/^\/[a-z0-9_\-]*(\?[^#]*)?(#[a-z0-9_\-]*)?$/i.test(volta) || /^[a-z0-9_\-]+\.html(\?[^#]*)?$/i.test(volta));
+    location.href = ok ? volta : (payload.is_admin ? '/admin' : '/profile');
   }
 
   form.addEventListener('submit', async (e) => {
@@ -107,7 +109,7 @@
         return;
       }
       if (data.code === 'EMAIL_NAO_VERIFICADO' || /Verifique seu e-mail/i.test(data.message || '')) {
-        erro(`${esc(t('err.EMAIL_NAO_VERIFICADO'))} <a href="reenvio.html" class="nh-link">${esc(t('login.reenviar'))}</a>`);
+        erro(`${esc(t('err.EMAIL_NAO_VERIFICADO'))} <a href="/reenvio" class="nh-link">${esc(t('login.reenviar'))}</a>`);
       } else {
         erro(esc(NHI18n.erro(data, 'login.invalido')));
       }

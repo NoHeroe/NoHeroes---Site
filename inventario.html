@@ -18,7 +18,7 @@
     // Sem sessão → login (volta para cá depois).
     (function () {
       var raw = (localStorage.getItem('NoHeroes_token') || '').replace(/^Bearer\s+/i, '').trim();
-      if (raw.split('.').length !== 3) { location.replace('login.html?volta=inventario.html'); }
+      if (raw.split('.').length !== 3) { location.replace('/login?volta=/inventario'); }
     })();
   </script>
   <script src="assets/js/i18n.js"></script>
@@ -53,8 +53,8 @@
     <h1 class="nh-h2" data-i18n="bib.titulo">Minha biblioteca</h1>
     <p class="pf-sub" style="margin-top:8px" data-i18n="bib.sub">Tudo o que você comprou. Os e-books ficam aqui para baixar sempre que precisar.</p>
     <div class="nh-ctas-linha" style="margin-top:0">
-      <a href="profile.html#compras" class="nh-link" data-i18n="bib.ver_compras">Ver minhas compras</a>
-      <a href="store.html" class="nh-link" data-i18n="bib.ir_loja">Ir para a loja</a>
+      <a href="/profile#compras" class="nh-link" data-i18n="bib.ver_compras">Ver minhas compras</a>
+      <a href="/store" class="nh-link" data-i18n="bib.ir_loja">Ir para a loja</a>
     </div>
 
     <div id="bibLista" class="bib-lista" aria-live="polite">
@@ -86,7 +86,7 @@
 
   async function api(path) {
     const r = await fetch(API_BASE + path, { headers: { Authorization: 'Bearer ' + token } });
-    if (r.status === 401) { localStorage.removeItem('NoHeroes_token'); location.href = 'login.html?volta=inventario.html'; throw new Error(t('err.sessao')); }
+    if (r.status === 401) { localStorage.removeItem('NoHeroes_token'); location.href = '/login?volta=/inventario'; throw new Error(t('err.sessao')); }
     return r;
   }
 
@@ -100,7 +100,7 @@
     if (!itens) return;
     if (!itens.length) {
       lista.innerHTML = `<div class="nh-vazio" style="grid-column:1/-1"><p style="margin-bottom:12px">${esc(t('bib.vazio'))}</p>
-        <a href="store.html" class="nh-btn nh-btn-pri">${esc(t('bib.ir_loja'))}</a></div>`;
+        <a href="/store" class="nh-btn nh-btn-pri">${esc(t('bib.ir_loja'))}</a></div>`;
       return;
     }
     lista.innerHTML = itens.map((i, n) => {
@@ -108,7 +108,7 @@
       const quando = i.acquiredAt ? t('bib.comprado_em', { data: NHI18n.data(i.acquiredAt, { dateStyle: 'medium' }) }) : '';
       const acao = i.permiteDownload
         ? `<button type="button" class="nh-btn nh-btn-pri" data-baixar="${n}">${esc(t('bib.baixar'))}</button>`
-        : `<a href="profile.html#compras" class="nh-btn nh-btn-sec">${esc(t('bib.acompanhar'))}</a>`;
+        : `<a href="/profile#compras" class="nh-btn nh-btn-sec">${esc(t('bib.acompanhar'))}</a>`;
       return `<article class="bib-item">
         <div class="bib-capa">${img ? `<img src="${esc(img)}" alt="" loading="lazy" onerror="this.remove()">` : ''}</div>
         <div>

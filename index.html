@@ -148,8 +148,8 @@
         </ol>
         <div class="nh-ctas-linha">
           <a data-nh-wa="tatuagem" class="nh-btn nh-btn-pri nh-btn-grande" data-i18n="idx.tattoo.cta_wa">Agendar pelo WhatsApp</a>
-          <a href="portif%C3%B3lio.html#contato" class="nh-btn nh-btn-sec nh-btn-grande" data-i18n="idx.tattoo.cta_form">Usar o formulário</a>
-          <a href="portif%C3%B3lio.html#vitrines" class="nh-link nh-ctas-mais" data-i18n="idx.tattoo.cta_portfolio">Ver o portfólio completo</a>
+          <a href="/portfolio#orcamento-tatuagem" class="nh-btn nh-btn-sec nh-btn-grande" data-i18n="idx.tattoo.cta_form">Usar o formulário</a>
+          <a href="/portfolio#vitrines" class="nh-link nh-ctas-mais" data-i18n="idx.tattoo.cta_portfolio">Ver o portfólio completo</a>
         </div>
       </div>
     </div>
@@ -173,7 +173,7 @@
         <div class="nh-livro">
           <h3 class="nh-h3" data-i18n="idx.obra.livro_t">O livro: As Cinzas do Amanhã</h3>
           <p data-i18n="idx.obra.livro">ACDA é o coração do universo NoHeroes — a obra que deu origem a tudo. O Volume I está disponível em PDF e impresso.</p>
-          <a href="acda.html#comprar" class="nh-btn nh-btn-sec" data-i18n="idx.obra.livro_cta">Comprar o livro</a>
+          <a href="/acda#comprar" class="nh-btn nh-btn-sec" data-i18n="idx.obra.livro_cta">Comprar o livro</a>
         </div>
       </div>
     </div>
@@ -182,7 +182,7 @@
       <div class="nh-trilogia-texto">
         <h3 class="nh-h3" data-i18n="idx.trilogia.titulo">Trilogia Sistema Vivo</h3>
         <p data-i18n="idx.trilogia.texto">Três volumes. Um sistema. Tudo na sua vida é interligado, interconectado, entrelaçado — e quando você entende isso, tudo muda.</p>
-        <a href="ebooks.html" class="nh-link" data-i18n="idx.trilogia.cta">Conhecer a trilogia</a>
+        <a href="/ebooks" class="nh-link" data-i18n="idx.trilogia.cta">Conhecer a trilogia</a>
       </div>
       <ol class="nh-volumes">
         <li><span class="nh-vol-n">I</span><span><strong>Tudo Está Conectado</strong><em class="nh-vol-ok" data-i18n="idx.trilogia.disponivel">Disponível</em></span></li>
@@ -200,7 +200,7 @@
           <h2 id="loja-titulo" class="nh-h2" data-i18n="idx.loja.titulo">Da loja</h2>
           <p class="nh-lead" data-i18n="idx.loja.lead">E-books com entrega imediata na sua conta e peças físicas para colecionador.</p>
         </div>
-        <a href="store.html" class="nh-btn nh-btn-sec" data-i18n="idx.loja.cta">Ver a loja</a>
+        <a href="/store" class="nh-btn nh-btn-sec" data-i18n="idx.loja.cta">Ver a loja</a>
       </div>
       <ul class="nh-produtos" id="destaquesLoja" aria-live="polite"></ul>
     </div>
@@ -216,7 +216,7 @@
           <p data-i18n="idx.serv.sites">Do layout ao servidor: sites e lojas completos, como este.</p>
           <div class="nh-servico-links">
             <a data-nh-wa="sites" class="nh-link" data-i18n="idx.serv.pedir">Pedir orçamento</a>
-            <a href="portif%C3%B3lio.html#vitrines" class="nh-link" data-i18n="idx.serv.ver">Ver trabalhos</a>
+            <a href="/portfolio#vitrines" class="nh-link" data-i18n="idx.serv.ver">Ver trabalhos</a>
           </div>
         </article>
         <article class="nh-servico">
@@ -224,7 +224,7 @@
           <p data-i18n="idx.serv.arte">Concept design, identidade visual, logos e ilustração.</p>
           <div class="nh-servico-links">
             <a data-nh-wa="arte" class="nh-link" data-i18n="idx.serv.pedir">Pedir orçamento</a>
-            <a href="portif%C3%B3lio.html#vitrines" class="nh-link" data-i18n="idx.serv.ver">Ver trabalhos</a>
+            <a href="/portfolio#vitrines" class="nh-link" data-i18n="idx.serv.ver">Ver trabalhos</a>
           </div>
         </article>
       </div>
@@ -237,7 +237,7 @@
       <div class="nh-faixa">
         <h2 class="nh-h3" data-i18n="idx.apoio.titulo">Apoie o projeto</h2>
         <p data-i18n="idx.apoio.texto">Cada contribuição sustenta o universo NoHeroes e acelera tudo que está sendo construído.</p>
-        <a href="apoiar.html" class="nh-btn nh-btn-sec" data-i18n="idx.apoio.cta">Apoiar</a>
+        <a href="/apoiar" class="nh-btn nh-btn-sec" data-i18n="idx.apoio.cta">Apoiar</a>
       </div>
       <form class="nh-faixa" id="formNews" novalidate>
         <h2 id="news-titulo" class="nh-h3" data-i18n="idx.news.titulo">Novidades por e-mail</h2>
@@ -300,7 +300,7 @@
       const preco = p.has_variants && p.variants && p.variants.length
         ? Math.min(...p.variants.map((v) => Number(v.price)))
         : Number(p.discountReal != null ? p.discountReal : p.priceReal);
-      return `<li><a class="nh-produto" href="store.html">
+      return `<li><a class="nh-produto" href="/store">
         <span class="nh-produto-img">${p.imageUrl ? `<img src="${esc(img(p.imageUrl))}" alt="" loading="lazy" decoding="async" width="300" height="400">` : ''}</span>
         <span class="nh-selo ${p.fulfillment === 'physical' ? 'nh-selo-fisico' : 'nh-selo-digital'}">${esc(t(p.fulfillment === 'physical' ? 'idx.loja.fisico' : 'idx.loja.digital'))}</span>
         <strong>${esc(p.name)}</strong>

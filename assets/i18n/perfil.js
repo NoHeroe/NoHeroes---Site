@@ -1,4 +1,4 @@
-/* profile.html */
+/* /profile */
 (function (D) {
   Object.assign(D.pt, {
     'pf.desde': 'Conta desde {data}',

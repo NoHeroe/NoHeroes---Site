@@ -82,7 +82,7 @@
               '<h2 style="color:#c4b5fd;margin:0 0 8px;font-size:20px">' + T('compliance.idade_titulo', 'Idade mínima') + '</h2>' +
               '<p style="font-size:14px;line-height:1.5;color:#d9d5e0">' + (j.message || T('compliance.idade_texto', 'É necessário ter ao menos 16 anos para usar o NoHeroes.')) + '</p>' +
               '<div style="display:flex;justify-content:flex-end;margin-top:14px"><button id="cgBdOut" style="' + BTN_PRI + '">' + T('compliance.sair', 'Sair') + '</button></div>';
-            ov.querySelector('#cgBdOut').onclick = function () { clearSession(); location.href = 'login.html'; };
+            ov.querySelector('#cgBdOut').onclick = function () { clearSession(); location.href = '/login'; };
             return;
           }
           showErr((j && j.message) || T('compliance.falha', 'Não foi possível registrar. Tente de novo.'));
@@ -108,7 +108,7 @@
         (needTerms ? T('compliance.termos_atualizados', 'Nossos Termos de Uso foram atualizados.') + ' ' : '') +
         (needConsent ? T('compliance.consentimento', 'Precisamos do seu consentimento para tratar seus dados conforme a Política de Privacidade (LGPD).') + ' ' : '') +
         T('compliance.aceite', 'Para continuar, aceite abaixo.') + '</p>' +
-        '<p style="margin:8px 0 16px"><a href="privacidade.html" target="_blank" rel="noopener" style="color:#a78bfa">' + T('compliance.ler', 'Ler os Termos e a Política de Privacidade') + '</a></p>' +
+        '<p style="margin:8px 0 16px"><a href="/privacidade" target="_blank" rel="noopener" style="color:#a78bfa">' + T('compliance.ler', 'Ler os Termos e a Política de Privacidade') + '</a></p>' +
         '<p id="cgErr" style="color:#f08a8a;font-size:12px;display:none"></p>' +
         '<div style="display:flex;gap:10px;justify-content:flex-end">' +
         '<button id="cgOut" style="' + BTN_SEC + '">' + T('compliance.sair', 'Sair') + '</button>' +
@@ -116,7 +116,7 @@
         '</div></div>';
       document.body.appendChild(ov);
       var err = ov.querySelector('#cgErr');
-      ov.querySelector('#cgOut').onclick = function () { clearSession(); location.href = 'login.html'; };
+      ov.querySelector('#cgOut').onclick = function () { clearSession(); location.href = '/login'; };
       ov.querySelector('#cgOk').onclick = async function () {
         var btn = ov.querySelector('#cgOk');
         btn.disabled = true; btn.textContent = '...'; err.style.display = 'none';

@@ -1,4 +1,4 @@
-/* inventario.html — Minha biblioteca */
+/* /inventario — Minha biblioteca */
 (function (D) {
   Object.assign(D.pt, {
     'bib.ir_loja': 'Ir para a loja',

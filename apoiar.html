@@ -111,11 +111,11 @@
 </head>
 <body>
   <!-- Header + drawer + fundo (componentes compartilhados) -->
-  <nh-header classico></nh-header>
+  <nh-header></nh-header>
   <nh-background></nh-background>
 
   <!-- CONTEÚDO -->
-  <main class="max-w-3xl mx-auto px-4 pt-44 pb-24 relative z-10">
+  <main id="conteudo" class="max-w-3xl mx-auto px-4 pt-12 pb-24 relative z-10">
     <h1 class="cinzel text-3xl sm:text-4xl grad-text reveal" data-i18n="apo.1">Apoie o Universo NoHeroes</h1>
     <p class="mt-3 text-white/70 leading-relaxed reveal" style="--reveal-delay:90ms" data-i18n="apo.2">
       Cada contribuição mantém o coração do universo batendo e acelera novas criações. Simples, transparente e digno da sua confiança.
@@ -165,7 +165,7 @@
     <!-- Ações -->
     <section class="mt-10 grid gap-3 sm:grid-cols-2 reveal" style="--reveal-delay:140ms">
       <button id="btnContribuir" class="btn btn-primary w-full" data-i18n="apo.11">Contribuir / Doar</button>
-      <a href="portifólio.html" id="btnSolicitar" class="btn btn-ghost w-full" data-i18n="apo.12">
+      <a href="/portfolio" id="btnSolicitar" class="btn btn-ghost w-full" data-i18n="apo.12">
   Pedir serviço / ajuda
 </a>
     </section>
@@ -219,7 +219,7 @@
   <div class="flex items-center gap-2">
     <input id="termos" type="checkbox" required />
     <label for="termos" class="text-xs text-white/60">
-      <span data-i18n="apo.31">Li e aceito os</span> <a href="termos.html" class="underline" data-i18n="apo.30">termos de uso</a>.
+      <span data-i18n="apo.31">Li e aceito os</span> <a href="/termos" class="underline" data-i18n="apo.30">termos de uso</a>.
     </label>
   </div>
   <button id="btnDoarMP" class="btn btn-primary w-full" type="button" data-i18n="apo.32">Fazer Doação</button>

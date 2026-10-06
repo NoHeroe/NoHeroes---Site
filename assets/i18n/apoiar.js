@@ -1,4 +1,4 @@
-/* apoiar.html — chaves apo.N geradas por tools/i18n-marcar.py; o PT está no HTML. */
+/* /apoiar — chaves apo.N geradas por tools/i18n-marcar.py; o PT está no HTML. */
 (function (D) {
   Object.assign(D.en, {
     'apo.meta.titulo': 'Support NoHeroes',

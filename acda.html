@@ -28,6 +28,7 @@
 <link rel="apple-touch-icon" href="/assets/img/og/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
 <style>
+html:root{--nh-ancora:128px} /* header fixo + barra de seções (vence o padrão de noheroes-ui.css) */
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;line-height:1.6;overflow-x:hidden}
@@ -42,7 +43,7 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
 /* DRAWER, #brasasCanvas e .drawer-* agora em assets/css/noheroes-ui.css */
 
 /* STICKY NAV */
-#sticky-nav{position:sticky;top:64px;z-index:50;background:rgba(7,6,10,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.06);overflow-x:auto;scrollbar-width:none}
+#sticky-nav{position:sticky;top:65px;z-index:50;background:rgba(7,6,10,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.06);overflow-x:auto;scrollbar-width:none}
 #sticky-nav::-webkit-scrollbar{display:none}
 .nav-pill{white-space:nowrap;padding:10px 16px;font-size:12px;font-weight:600;color:rgba(255,255,255,0.62);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;text-decoration:none;display:inline-block}
 .nav-pill:hover,.nav-pill.active{color:#c4a3ff;border-bottom-color:#8f4fff}
@@ -247,7 +248,7 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
 
       <!-- CTAs -->
       <div class="buy-grid" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px;">
-        <a class="btn-primary" href="store.html">
+        <a class="btn-primary" href="/store">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path fill="none" stroke="currentColor" stroke-width="2" d="M14 2v6h6"/></svg>
           <span class="acda-price" data-i18n="acd.35">PDF — R$ 14,97</span>
         </a>

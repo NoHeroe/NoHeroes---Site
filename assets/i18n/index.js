@@ -1,4 +1,4 @@
-/* index.html — o PT da marcação é o texto do HTML; aqui vão o EN e os textos montados por JS. */
+/* / — o PT da marcação é o texto do HTML; aqui vão o EN e os textos montados por JS. */
 (function (D) {
   // Estilos e locais de tatuagem (usados também pelo portfólio).
   const ESTILOS = {

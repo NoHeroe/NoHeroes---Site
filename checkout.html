@@ -40,7 +40,7 @@
     <div id="pixCodigo" class="ck-codigo"></div>
     <button id="btnCopiarPix" class="nh-btn nh-btn-pri nh-btn-grande w-full" style="margin-top:10px" type="button" data-i18n="ck.copiar">Copiar código</button>
     <p class="ck-aviso info" style="margin-top:12px" data-i18n="ck.pix_aviso">Seu pedido será confirmado após a verificação do pagamento. Você recebe um e-mail quando isso acontecer.</p>
-    <a id="pixVerPedido" href="profile.html#compras" class="nh-btn nh-btn-sec w-full" data-i18n="ck.ver_pedido">Ver meu pedido</a>
+    <a id="pixVerPedido" href="/profile#compras" class="nh-btn nh-btn-sec w-full" data-i18n="ck.ver_pedido">Ver meu pedido</a>
   </section>
 
   <div id="formCheckout" class="ck-layout">
@@ -107,8 +107,8 @@
       <button id="btnConfirmar" class="nh-btn nh-btn-pri nh-btn-grande w-full" style="margin-top:12px" type="button" disabled data-i18n="ck.confirmar">Confirmar pedido</button>
       <ul class="ck-confianca">
         <li data-i18n="ck.conf_pag">Pagamento processado pelo Mercado Pago ou por Pix.</li>
-        <li><span data-i18n="ck.conf_troca">7 dias para desistir da compra online.</span> <a href="termos.html#arrependimento" class="nh-link" data-i18n="loja.conf.regras">Ver regras</a></li>
-        <li><a href="suporte.html" class="nh-link" data-i18n="ck.conf_ajuda">Dúvidas? Fale com o suporte</a></li>
+        <li><span data-i18n="ck.conf_troca">7 dias para desistir da compra online.</span> <a href="/termos#arrependimento" class="nh-link" data-i18n="loja.conf.regras">Ver regras</a></li>
+        <li><a href="/suporte" class="nh-link" data-i18n="ck.conf_ajuda">Dúvidas? Fale com o suporte</a></li>
       </ul>
     </aside>
   </div>
@@ -126,11 +126,11 @@
   const token = (localStorage.getItem('NoHeroes_token') || '').trim().replace(/^Bearer\s+/i, '');
   const st = { produtos: [], enderecos: [], enderecoId: null, frete: [], freteId: null, metodos: [], metodo: null, cupom: null, desconto: 0, enviando: false };
 
-  if (!token) { location.href = 'login.html?volta=checkout.html'; return; }
+  if (!token) { location.href = '/login?volta=/checkout'; return; }
 
   async function api(path, opts = {}) {
     const r = await fetch(API_BASE + path, { ...opts, headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token, ...(opts.headers || {}) } });
-    if (r.status === 401) { localStorage.removeItem('NoHeroes_token'); location.href = 'login.html?volta=checkout.html'; throw new Error(t('err.sessao')); }
+    if (r.status === 401) { localStorage.removeItem('NoHeroes_token'); location.href = '/login?volta=/checkout'; throw new Error(t('err.sessao')); }
     let j = {}; try { j = await r.json(); } catch (_) { /* sem corpo */ }
     if (!r.ok) throw Object.assign(new Error(NHI18n.erro(j)), { status: r.status, json: j });
     return j;
@@ -248,7 +248,7 @@
       const j = await r.json().catch(() => ({}));
       if (!r.ok) throw new Error(NHI18n.erro(j, 'ck.erro_frete'));
       st.frete = j.options || [];
-      if (!st.frete.length) { qs('#listaFrete').innerHTML = `<p class="text-sm text-white/65">${esc(t(st.entrega === false ? 'ck.frete_breve' : 'ck.sem_frete'))} <a class="nh-link" href="suporte.html">${esc(t('nav.suporte'))}</a></p>`; resumo(); return; }
+      if (!st.frete.length) { qs('#listaFrete').innerHTML = `<p class="text-sm text-white/65">${esc(t(st.entrega === false ? 'ck.frete_breve' : 'ck.sem_frete'))} <a class="nh-link" href="/suporte">${esc(t('nav.suporte'))}</a></p>`; resumo(); return; }
       st.freteId = st.frete[0].id;
       renderFrete();
     } catch (err) {
@@ -303,11 +303,12 @@
       if (temFisico()) { body.address_id = st.enderecoId; body.shipping_option_id = st.freteId; }
       if (st.cupom) body.coupon = st.cupom;
       const j = await api('/checkout', { method: 'POST', body: JSON.stringify(body) });
-      // Mercado Pago: o carrinho fica até a volta (agradecimento.html limpa se o pedido andou).
-      if (j.next && j.next.kind === 'redirect' && j.next.url) { location.assign(j.next.url); return; }
+      // Mercado Pago: o carrinho fica até a volta (/agradecimento limpa se o pedido andou).
+      // replace: o checkout já enviado sai do histórico — o Voltar não reabre o formulário pronto para outro pedido.
+      if (j.next && j.next.kind === 'redirect' && j.next.url) { location.replace(j.next.url); return; }
       NHCart.limpar();
       if (j.next && j.next.kind === 'pix') return mostrarPix(j);
-      location.href = 'agradecimento.html?order=' + encodeURIComponent(j.order_id);
+      location.replace('/agradecimento?order=' + encodeURIComponent(j.order_id));
     } catch (err) {
       aviso(err.message);
       const cupomErro = err.json && /^CUPOM_/.test(err.json.code || '');
@@ -324,7 +325,7 @@
     qs('#pixValor').textContent = brl(j.total);
     qs('#pixQr').innerHTML = j.next.qr_svg; // SVG gerado pelo nosso servidor (sem conteúdo do usuário)
     qs('#pixCodigo').textContent = j.next.payload;
-    qs('#pixVerPedido').href = 'agradecimento.html?order=' + encodeURIComponent(j.order_id);
+    qs('#pixVerPedido').href = '/agradecimento?order=' + encodeURIComponent(j.order_id);
     window.scrollTo({ top: 0 });
   }
   qs('#btnCopiarPix').addEventListener('click', async () => {
@@ -362,7 +363,7 @@
     try {
       await sincronizar();
       if (!NHCart.itens().length) {
-        qs('#formCheckout').innerHTML = `<div class="ck-card" style="grid-column:1/-1;text-align:center"><p class="mb-3">${esc(t('ck.vazio'))}</p><a href="store.html" class="nh-btn nh-btn-sec">${esc(t('ck.ir_loja'))}</a></div>`;
+        qs('#formCheckout').innerHTML = `<div class="ck-card" style="grid-column:1/-1;text-align:center"><p class="mb-3">${esc(t('ck.vazio'))}</p><a href="/store" class="nh-btn nh-btn-sec">${esc(t('ck.ir_loja'))}</a></div>`;
         return;
       }
       if (temFisico()) {

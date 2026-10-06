@@ -181,3 +181,11 @@ nh-header, nh-background, nh-footer { display: block; }
 
 /* atributo hidden sempre vence classes com display */
 [hidden] { display: none !important; }
+
+/* ---------- navegação: página atual + âncoras sob o header fixo ---------- */
+.nh-navlink[aria-current="page"] { color: #fff; background: rgba(143, 79, 255, 0.14); }
+.drawer-item[aria-current="page"] { border-color: rgba(217, 181, 90, 0.45); background: rgba(217, 181, 90, 0.07); }
+/* o header fixo tem 64px (+ barra): o alvo de /pagina#id para logo abaixo dele.
+   Páginas com uma segunda barra fixa (acda, portfólio) aumentam --nh-ancora. */
+html { --nh-ancora: 84px; scroll-padding-top: var(--nh-ancora); }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }

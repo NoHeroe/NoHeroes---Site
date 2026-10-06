@@ -1,4 +1,4 @@
-/* checkout.html e agradecimento.html */
+/* /checkout e /agradecimento */
 (function (D) {
   Object.assign(D.pt, {
     'loja.fisico': 'Físico', 'loja.digital': 'Digital',

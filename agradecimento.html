@@ -43,9 +43,9 @@
     <div id="pedido" class="ag-pedido" hidden></div>
 
     <div class="grid gap-2" style="margin-top:6px">
-      <a id="btnPedidos" href="profile.html#compras" class="nh-btn nh-btn-pri nh-btn-grande w-full" hidden data-i18n="ag.ver_compras">Ver minhas compras</a>
-      <a href="store.html" class="nh-btn nh-btn-sec w-full" data-i18n="ag.voltar_loja">Voltar para a loja</a>
-      <a id="btnApoiar" href="apoiar.html" class="nh-btn nh-btn-sec w-full" hidden data-i18n="ag.voltar_apoiar">Voltar para apoiar</a>
+      <a id="btnPedidos" href="/profile#compras" class="nh-btn nh-btn-pri nh-btn-grande w-full" hidden data-i18n="ag.ver_compras">Ver minhas compras</a>
+      <a href="/store" class="nh-btn nh-btn-sec w-full" data-i18n="ag.voltar_loja">Voltar para a loja</a>
+      <a id="btnApoiar" href="/apoiar" class="nh-btn nh-btn-sec w-full" hidden data-i18n="ag.voltar_apoiar">Voltar para apoiar</a>
     </div>
   </div>
 </main>
@@ -69,7 +69,7 @@
 
   function textos(tituloK, msgK) { qs('#titulo').textContent = t(tituloK); qs('#mensagem').textContent = t(msgK); }
 
-  // Doação (apoiar.html): mensagem pelo status que o Mercado Pago devolve na URL.
+  // Doação (/apoiar): mensagem pelo status que o Mercado Pago devolve na URL.
   function doacao() {
     modo = 'doacao';
     qs('#btnApoiar').hidden = false;
@@ -124,7 +124,7 @@
     if (!token) {
       modo = 'sem_login';
       qs('#titulo').textContent = t('ag.recebido_t');
-      qs('#mensagem').innerHTML = `${P.esc(t('ag.entre'))} <a href="login.html?volta=${encodeURIComponent('agradecimento.html?order=' + orderId)}" class="nh-link">${P.esc(t('login.entrar'))}</a>`;
+      qs('#mensagem').innerHTML = `${P.esc(t('ag.entre'))} <a href="/login?volta=${encodeURIComponent('/agradecimento?order=' + orderId)}" class="nh-link">${P.esc(t('login.entrar'))}</a>`;
       return;
     }
     let tentativas = 0;

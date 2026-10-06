@@ -1,4 +1,4 @@
-/* acda.html — chaves acd.N geradas por tools/i18n-marcar.py; o PT está no HTML e nos dados do script da página.
+/* /acda — chaves acd.N geradas por tools/i18n-marcar.py; o PT está no HTML e nos dados do script da página.
    O livro em si é em português; aqui só a página. */
 (function (D) {
   // nomes próprios e termos iguais nas duas línguas

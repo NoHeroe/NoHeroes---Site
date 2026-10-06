@@ -1,4 +1,4 @@
-/* ebooks.html — chaves ebk.N geradas por tools/i18n-marcar.py; o PT está no HTML. Os e-books em si são em português. */
+/* /ebooks — chaves ebk.N geradas por tools/i18n-marcar.py; o PT está no HTML. Os e-books em si são em português. */
 (function (D) {
   Object.assign(D.pt, {
     'ebk.ver_loja_preco': 'Ver na Loja — {preco}',

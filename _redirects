@@ -3,3 +3,8 @@
 /PLANO_REDESIGN.md  /404.html  200
 /VISTORIA_2026-10.md  /404.html  200
 /MAPEAMENTO_SITE_2026-10-05.md  /404.html  200
+
+# Portfólio: endereço antigo com acento → /portfolio (o arquivo portifólio.html também redireciona)
+/portif%C3%B3lio /portfolio 301
+/portif%C3%B3lio.html /portfolio 301
+/NAVEGACAO.md  /404.html  200

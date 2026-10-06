@@ -18,7 +18,10 @@
     try { api = localStorage.getItem('nh_api_base') || api; } catch (_) { /* sem storage */ }
   }
   window.API_BASE = api;
-  window.NH_CONFIG = Object.freeze({ API_BASE: api, LOCAL: local });
+  // Instagram de tatuagem: com o endereço aqui, aparece o botão na linktree e o ícone no rodapé. Vazio = oculto.
+  // ex.: 'https://www.instagram.com/noheroes.tattoo'
+  var INSTAGRAM_TATTOO = '';
+  window.NH_CONFIG = Object.freeze({ API_BASE: api, LOCAL: local, INSTAGRAM_TATTOO: INSTAGRAM_TATTOO });
 
   // Imagens: um asset do site (assets/images/Nome.jpg, com ou sem domínio) vira a variante WebP
   // otimizada de assets/img mais próxima da largura pedida. Outras URLs passam intactas.

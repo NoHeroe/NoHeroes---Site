@@ -1,5 +1,5 @@
 /* ============================================================
-   NoHeroes — carrinho (localStorage), compartilhado por store.html e checkout.html.
+   NoHeroes — carrinho (localStorage), compartilhado por /store e checkout.html.
    Linha: { key, id, variant_id, name, variant_label, unit_price, quantity, max_qty,
             fulfillment, imageUrl }
    O preço aqui é só uma prévia: o servidor recalcula tudo no checkout.

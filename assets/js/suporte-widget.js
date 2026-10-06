@@ -71,7 +71,7 @@
 
   const fab = document.createElement('a');
   fab.id = 'nh-support-fab';
-  fab.href = 'suporte.html';
+  fab.href = '/suporte';
   fab.title = 'Suporte NoHeroes';
   fab.setAttribute('aria-label', 'Abrir suporte');
   fab.innerHTML = '?';

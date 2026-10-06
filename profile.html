@@ -19,7 +19,7 @@
     // Sem sessão → login (volta para cá depois).
     (function () {
       var raw = (localStorage.getItem('NoHeroes_token') || '').replace(/^Bearer\s+/i, '').trim();
-      if (raw.split('.').length !== 3) { location.replace('login.html?volta=profile.html'); }
+      if (raw.split('.').length !== 3) { location.replace('/login?volta=' + encodeURIComponent('/profile' + location.hash)); }
     })();
   </script>
   <script src="assets/js/i18n.js"></script>
@@ -50,7 +50,7 @@
     <div class="pf-acoes-topo">
       <label class="nh-btn nh-btn-sec" for="avatarFile" data-i18n="pf.trocar_foto">Trocar foto</label>
       <input id="avatarFile" type="file" accept="image/jpeg,image/png,image/webp" class="sr-only">
-      <a href="inventario.html" class="nh-btn nh-btn-sec" data-i18n="pf.biblioteca">Biblioteca</a>
+      <a href="/inventario" class="nh-btn nh-btn-sec" data-i18n="pf.biblioteca">Biblioteca</a>
       <button id="btnSair" class="nh-btn nh-btn-sec" type="button" data-i18n="pf.sair">Sair</button>
     </div>
   </section>
@@ -89,7 +89,7 @@
     <div id="ticketsLista">
       <div class="flex items-start justify-between gap-3 flex-wrap">
         <div><h2 data-i18n="pf.tk.titulo">Tickets de suporte</h2><p class="pf-sub" data-i18n="pf.tk.sub">Suas conversas com o suporte.</p></div>
-        <a href="suporte.html#abrir" class="nh-btn nh-btn-sec" data-i18n="pf.tk.novo">Abrir ticket</a>
+        <a href="/suporte#abrir" class="nh-btn nh-btn-sec" data-i18n="pf.tk.novo">Abrir ticket</a>
       </div>
       <div id="tickets" class="pf-lista" aria-live="polite"></div>
     </div>
@@ -198,7 +198,7 @@
 
   async function api(path, opts = {}) {
     const r = await fetch(API_BASE + path, { ...opts, headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token, ...(opts.headers || {}) } });
-    if (r.status === 401) { localStorage.removeItem('NoHeroes_token'); location.href = 'login.html?volta=profile.html'; throw new Error(t('err.sessao')); }
+    if (r.status === 401) { localStorage.removeItem('NoHeroes_token'); location.href = '/login?volta=/profile'; throw new Error(t('err.sessao')); }
     const j = await r.json().catch(() => ({}));
     if (!r.ok) throw Object.assign(new Error(NHI18n.erro(j)), { status: r.status, json: j });
     return j;
@@ -264,7 +264,7 @@
   });
   qs('#btnSair').addEventListener('click', () => {
     ['NoHeroes_token', 'isAdmin', 'adminToken'].forEach((k) => localStorage.removeItem(k));
-    location.href = 'index.html';
+    location.href = '/';
   });
 
   /* ---------- compras ---------- */
@@ -276,7 +276,7 @@
   }
   function renderCompras() {
     const box = qs('#compras');
-    if (!st.pedidos.length) { box.innerHTML = vazio('pf.compras.vazio') + `<p class="text-center mt-3"><a class="nh-link" href="store.html">${esc(t('ck.ir_loja'))}</a></p>`; return; }
+    if (!st.pedidos.length) { box.innerHTML = vazio('pf.compras.vazio') + `<p class="text-center mt-3"><a class="nh-link" href="/store">${esc(t('ck.ir_loja'))}</a></p>`; return; }
     box.innerHTML = st.pedidos.map((p) => {
       const resumo = (p.items || []).map((i) => `${i.quantity}× ${i.title || 'Item #' + i.id}`).join(', ');
       return `<button type="button" class="pf-item" data-pedido="${esc(p.id)}">
@@ -301,7 +301,7 @@
       let html = `<button type="button" class="nh-link pf-voltar" data-voltar="compras">← ${esc(t('geral.voltar'))}</button>
         <h2>${esc(t('ck.pedido'))} <span class="font-mono text-sm">${esc(o.id)}</span></h2>
         <div class="pf-selos">${P.seloPagamento(o.status)}${o.fulfillment_status !== 'na' ? P.seloEntrega(o.fulfillment_status) : ''}<span class="text-xs text-white/55 self-center">${esc(P.metodo(o.payment_provider))} · ${esc(P.data(o.createdAt))}</span></div>`;
-      if (o.status === 'awaiting_manual_confirmation') html += `<a href="agradecimento.html?order=${encodeURIComponent(o.id)}" class="nh-btn nh-btn-ouro" style="margin-top:12px">${esc(t('pf.compras.ver_pix'))}</a>`;
+      if (o.status === 'awaiting_manual_confirmation') html += `<a href="/agradecimento?order=${encodeURIComponent(o.id)}" class="nh-btn nh-btn-ouro" style="margin-top:12px">${esc(t('pf.compras.ver_pix'))}</a>`;
       html += bloco(t('pf.compras.itens'), itens + totais);
       if (o.shipping_address) {
         const m = o.shipping_method;
@@ -313,7 +313,7 @@
         html += bloco(t('pf.compras.rastreio'), `<p class="text-sm">${tr.carrier ? esc(tr.carrier) + ' · ' : ''}<span class="font-mono select-all">${esc(tr.code || '')}</span></p>${link}`);
       }
       html += bloco(t('pf.compras.historico'), P.timeline(o.events));
-      html += `<p class="text-sm mt-4"><a class="nh-link" href="suporte.html#abrir">${esc(t('pf.compras.ajuda'))}</a></p>`;
+      html += `<p class="text-sm mt-4"><a class="nh-link" href="/suporte#abrir">${esc(t('pf.compras.ajuda'))}</a></p>`;
       box.innerHTML = html;
     } catch (err) { box.innerHTML = `<p class="text-red-300">${esc(err.message)}</p>`; }
   }
@@ -373,7 +373,7 @@
         <h2>${esc(k.assunto)}</h2>
         <div class="pf-selos">${seloTk(k.status)}<span class="text-xs text-white/55 self-center font-mono">${esc(k.protocolo)}</span></div>
         <div class="pf-lista" style="margin-top:14px">${k.mensagens.map((m) => `<div class="pf-msg pf-msg-${m.autor === 'admin' ? 'admin' : 'cliente'}"><small>${esc(t(m.autor === 'admin' ? 'pf.tk.equipe' : 'pf.tk.voce'))} · ${esc(P.data(m.createdAt))}</small>${esc(m.corpo)}${(m.anexos || []).length ? `<small style="margin-top:6px">${esc(t('pf.tk.anexos'))}: ${m.anexos.map(esc).join(', ')}</small>` : ''}</div>`).join('')}</div>
-        ${k.status === 'fechado' ? `<p class="pf-vazio" style="margin-top:14px">${esc(t('pf.tk.fechado'))} <a class="nh-link" href="suporte.html#abrir">${esc(t('pf.tk.novo'))}</a></p>` : `
+        ${k.status === 'fechado' ? `<p class="pf-vazio" style="margin-top:14px">${esc(t('pf.tk.fechado'))} <a class="nh-link" href="/suporte#abrir">${esc(t('pf.tk.novo'))}</a></p>` : `
         <form id="formResposta" style="margin-top:14px" class="grid gap-2">
           <label class="ck-label" for="respTexto" data-i18n="pf.tk.responder">${esc(t('pf.tk.responder'))}</label>
           <textarea id="respTexto" class="nh-input" rows="4" maxlength="5000"></textarea>
@@ -536,7 +536,7 @@
     try {
       await api('/account/delete', { method: 'DELETE', body: JSON.stringify(password ? { password } : { googleCredential: credGoogle }) });
       ['NoHeroes_token', 'isAdmin', 'adminToken'].forEach((k) => localStorage.removeItem(k));
-      location.href = 'index.html';
+      location.href = '/';
     } catch (err) { msg(m, err.message); credGoogle = null; }
   });
 

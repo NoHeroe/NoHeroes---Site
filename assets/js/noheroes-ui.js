@@ -6,7 +6,9 @@
 
    Uso:
    • Páginas normais  → <nh-header></nh-header> + <nh-background> + <nh-footer>
-   • <nh-header classico> → o header antigo (logo central), para páginas de visual congelado
+   • <nh-header enxuto>   → só logo + idioma + ☰ em todas as larguras (linktree); o menu lateral é o mesmo
+   • Âncoras: /pagina#id chega ao alvo depois que traduções e imagens assentam; NH.hashModal registra
+     hashes que abrem um modal (o Voltar do navegador fecha o modal em vez de sair da página).
    • Páginas "app"    → header próprio + <nh-drawer></nh-drawer> e qualquer
        <button data-nh-drawer-toggle>…</button>; ou window.nhDrawer.open()/close()/toggle()
    • Seletor de idioma: qualquer <button data-nh-lang="pt|en"> troca o idioma do site.
@@ -29,8 +31,9 @@
       { nome: 'Instagram', url: 'https://www.instagram.com/universo_noheroes', icone: 'instagram' },
       { nome: 'TikTok', url: 'https://www.tiktok.com/@universo_noheroes', icone: 'tiktok' },
     ],
-    // [[RAUL: perfil de tatuagem]] — sem conta própria confirmada ainda
-    redesTattoo: [],
+    // Perfil de tatuagem: vem de NH_CONFIG.INSTAGRAM_TATTOO (assets/js/config.js); vazio = bloco oculto no rodapé.
+    redesTattoo: (window.NH_CONFIG && window.NH_CONFIG.INSTAGRAM_TATTOO)
+      ? [{ nome: 'Instagram', url: window.NH_CONFIG.INSTAGRAM_TATTOO, icone: 'instagram' }] : [],
     comunidade: [
       { nome: 'Discord', url: 'https://discord.gg/Yyb8Ff66cd', icone: 'discord' },
       { nome: 'WhatsApp', url: 'https://chat.whatsapp.com/DSiquXUkKpj22JwmqoGD7T', icone: 'whatsapp' },
@@ -65,12 +68,103 @@
       a.target = '_blank'; a.rel = 'noopener';
     });
     (raiz || document).querySelectorAll('[data-nh-conta]').forEach((a) => {
-      a.href = window.NH.logado() ? 'profile.html' : 'login.html';
+      a.href = window.NH.logado() ? '/profile' : '/login';
     });
     (raiz || document).querySelectorAll('[data-nh-lang]').forEach((b) => {
       b.setAttribute('aria-pressed', String(b.getAttribute('data-nh-lang') === lang()));
     });
   }
+
+  /* ---------- âncoras e modais por hash ---------- */
+  // Hashes que abrem modal: NH.hashModal('contato', { abrir, fechar }) ou, com prefixo, NH.hashModal('produto-*', …)
+  // (abrir recebe o resto do hash: "2" em #produto-2). abrir() que devolve false = ainda não dá (conteúdo carregando).
+  // Ao abrir pelo clique, o modal entra no histórico; o Voltar do navegador fecha o modal em vez de sair da página.
+  const MODAIS = {};
+  let modalAberto = null;
+  function acharModal(h) {
+    if (MODAIS[h]) return [MODAIS[h], undefined];
+    for (const k in MODAIS) if (k.endsWith('*') && h.startsWith(k.slice(0, -1)) && h.length > k.length - 1) return [MODAIS[k], h.slice(k.length - 1)];
+    return null;
+  }
+  window.NH.hashModal = function (nome, fns) { MODAIS[nome] = fns; };
+  window.NH.modalAtual = () => modalAberto; // qual hash-modal está aberto (usado pelos testes de navegação)
+  window.NH.abrirModal = function (h) {
+    const m = acharModal(h); if (!m) return;
+    if (m[0].abrir(m[1]) === false) return;
+    if (location.hash !== '#' + h) history.pushState({ nhModal: h }, '', '#' + h);
+    modalAberto = h;
+  };
+  // Fechar pelo X/fundo/Esc: volta o histórico (que dispara o popstate e fecha de fato).
+  // { trocarPor: '#x' } = fecha e troca a entrada do histórico (ex.: escolheu uma opção e seguiu adiante).
+  window.NH.fecharModal = function (h, opt) {
+    const m = acharModal(h);
+    if (opt && opt.trocarPor !== undefined) {
+      if (m) m[0].fechar(m[1]);
+      if (modalAberto === h) modalAberto = null;
+      history.replaceState(null, '', location.pathname + location.search + (opt.trocarPor || ''));
+      return;
+    }
+    if (modalAberto === h && history.state && history.state.nhModal === h) { history.back(); return; }
+    if (m) m[0].fechar(m[1]);
+    if (modalAberto === h) { modalAberto = null; history.replaceState(null, '', location.pathname + location.search); }
+  };
+  // Troca um modal por outro na MESMA entrada do histórico (ex.: produto → carrinho depois de adicionar).
+  window.NH.trocarModal = function (de, para) {
+    const m = acharModal(de); if (m) m[0].fechar(m[1]);
+    const n = acharModal(para); if (!n || n[0].abrir(n[1]) === false) { modalAberto = null; return; }
+    history.replaceState({ nhModal: para }, '', '#' + para);
+    modalAberto = para;
+  };
+  window.addEventListener('popstate', () => {
+    const h = decodeURIComponent(location.hash.slice(1));
+    if (modalAberto && modalAberto !== h) { const m = acharModal(modalAberto); const era = modalAberto; modalAberto = null; if (m) m[0].fechar(m[1], era); }
+    const m = h && acharModal(h);
+    if (m && modalAberto !== h && m[0].abrir(m[1]) !== false) modalAberto = h;
+  });
+
+  // Chegada com #id (vindo de outra página): o salto só vale depois que traduções, fontes e imagens
+  // assentam — senão o alvo "anda" e fica coberto. Reaplica até a página parar de mudar, salvo se a
+  // pessoa já começou a rolar.
+  let mexeu = false;
+  ['wheel', 'touchstart', 'keydown'].forEach((ev) => window.addEventListener(ev, () => { mexeu = true; }, { passive: true, once: true }));
+  function irAoHash(suave) {
+    const h = decodeURIComponent(location.hash.slice(1));
+    if (!h) return;
+    const m = acharModal(h);
+    if (m) {
+      if (modalAberto !== h && m[0].abrir(m[1]) !== false) { modalAberto = h; history.replaceState({ nhModal: h }, '', location.href); }
+      return;
+    }
+    const alvo = document.getElementById(h);
+    if (alvo) alvo.scrollIntoView({ block: 'start', behavior: suave ? 'smooth' : 'auto' });
+  }
+  function assentarHash() {
+    if (!location.hash) return;
+    irAoHash(false);
+    const reaplicar = () => { if (!mexeu) irAoHash(false); };
+    window.addEventListener('load', () => { reaplicar(); setTimeout(reaplicar, 350); setTimeout(reaplicar, 900); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(reaplicar);
+    document.addEventListener('nh:lang', reaplicar, { once: true });
+  }
+  // Páginas que montam o conteúdo depois (loja): chamam NH.irAoHash() quando ele chega.
+  window.NH.irAoHash = () => { if (!mexeu) irAoHash(false); };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => setTimeout(assentarHash, 0));
+  else setTimeout(assentarHash, 0);
+  // Mesma página: rolagem suave até a âncora (o menu lateral fecha pelo data-nh-fecha).
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href*="#"]');
+    if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    const u = new URL(a.getAttribute('href'), location.href);
+    const mesmaPagina = u.origin === location.origin && u.pathname.replace(/\.html$/, '').replace(/\/index$/, '/') === AQUI && u.search === location.search;
+    if (!mesmaPagina || !u.hash) return;
+    const h = decodeURIComponent(u.hash.slice(1));
+    if (acharModal(h)) { e.preventDefault(); window.NH.abrirModal(h); return; }
+    const alvo = document.getElementById(h);
+    if (!alvo) return;
+    e.preventDefault();
+    history.pushState(null, '', u.hash);
+    alvo.scrollIntoView({ block: 'start', behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+  });
 
   /* ---------- seletor de idioma (delegação global) ---------- */
   document.addEventListener('click', (e) => {
@@ -95,19 +189,26 @@
     loja: '<path d="M16 11V7a4 4 0 00-8 0v4M5 11h14l1 9H4l1-9z"/>',
     servicos: '<path d="M4 6h16v10H4zM8 20h8M12 16v4"/>',
     sobre: '<path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>',
+    inicio: '<path d="M3 11l9-7 9 7M5 10v10h5v-6h4v6h5V10"/>',
+    portfolio: '<path d="M4 7h16v12H4zM9 7V5h6v2M4 12h16"/>',
     conta: '<path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>',
     suporte: '<path d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/>',
   };
   const svg = (k, cor) => `<svg class="w-5 h-5 shrink-0" aria-hidden="true" fill="none" stroke="${cor || '#d9b55a'}" stroke-width="1.5" viewBox="0 0 24 24">${ICONE[k]}</svg>`;
 
-  // Navegação principal (header e menu lateral).
+  // Navegação principal — fonte única: o header mostra NAV; o menu lateral mostra MENU (NAV + Início e Portfólio).
   const NAV = [
-    { k: 'tatuagem', href: 'index.html#tatuagem' },
-    { k: 'obra', href: 'index.html#obra' },
-    { k: 'loja', href: 'store.html' },
-    { k: 'servicos', href: 'index.html#servicos' },
-    { k: 'sobre', href: 'sobre.html' },
+    { k: 'tatuagem', href: '/#tatuagem' },
+    { k: 'obra', href: '/#obra' },
+    { k: 'loja', href: '/store' },
+    { k: 'servicos', href: '/#servicos' },
+    { k: 'sobre', href: '/sobre' },
   ];
+  const MENU = [{ k: 'inicio', href: '/' }, ...NAV, { k: 'portfolio', href: '/portfolio' }];
+
+  // Página atual: "/store", "/sobre"… (com ou sem .html, como o Cloudflare serve); "/" = início.
+  const AQUI = (() => { const p = location.pathname.replace(/\.html$/, '').replace(/\/index$/, '/'); return p === '' ? '/' : p; })();
+  const atual = (href) => !href.includes('#') && href === AQUI ? ' aria-current="page"' : '';
 
   /* Markup do menu lateral + overlay — fonte única, usada pelo <nh-header> e pelo <nh-drawer>. */
   const DRAWER_HTML = () => `
@@ -117,22 +218,22 @@
     <span class="text-xl group-hover:rotate-90 transition-transform duration-300" aria-hidden="true">✕</span>
   </button>
   <div class="p-7 mt-10 flex flex-col min-h-full">
-    <a href="index.html" class="mb-8 block">
+    <a href="/" class="mb-8 block">
       <span class="text-2xl font-black gradiente-noheroes cinzel">NoHeroes</span>
       <span class="flex items-center gap-2 mt-1"><span class="h-px w-8 barra-degrade"></span>
       <span class="text-white/60 text-xs" data-i18n="nav.lema">Sem heróis. Apenas você.</span></span>
     </a>
     <nav class="flex flex-col" aria-label="Navegação principal" data-i18n-attr="aria-label:nav.principal">
-      ${NAV.map((n) => `
-      <a href="${n.href}" class="drawer-item" data-nh-fecha>
+      ${MENU.map((n) => `
+      <a href="${n.href}" class="drawer-item" data-nh-fecha${atual(n.href)}>
         <span class="flex items-center gap-3">${svg(n.k)}<span class="text-sm font-bold" data-i18n="nav.${n.k}">${T('nav.' + n.k)}</span></span>
         <span class="drawer-tag" data-i18n="nav.tag.${n.k}">${T('nav.tag.' + n.k)}</span>
       </a>`).join('')}
-      <a href="login.html" data-nh-conta class="drawer-item">
+      <a href="/login" data-nh-conta class="drawer-item">
         <span class="flex items-center gap-3">${svg('conta')}<span class="text-sm font-bold" data-i18n="nav.conta">${T('nav.conta')}</span></span>
         <span class="drawer-tag" data-i18n="nav.tag.conta">${T('nav.tag.conta')}</span>
       </a>
-      <a href="suporte.html" class="drawer-item" style="border-color:rgba(143,79,255,0.25);background:rgba(143,79,255,0.04);">
+      <a href="/suporte" class="drawer-item" data-nh-fecha${atual('/suporte')} style="border-color:rgba(143,79,255,0.25);background:rgba(143,79,255,0.04);">
         <span class="flex items-center gap-3">${svg('suporte', '#c4a3ff')}<span class="text-sm font-bold" style="color:#c4a3ff;" data-i18n="nav.suporte">${T('nav.suporte')}</span></span>
         <span class="drawer-tag" style="color:#c4a3ff;" data-i18n="nav.tag.suporte">${T('nav.tag.suporte')}</span>
       </a>
@@ -176,24 +277,24 @@
   /* ---------- <nh-header> ---------- */
   class NhHeader extends HTMLElement {
     connectedCallback() {
-      if (this.hasAttribute('classico')) return this.classico();
+      const enxuto = this.hasAttribute('enxuto');
       this.innerHTML = `
 <a href="#conteudo" class="nh-pular" data-i18n="geral.pular">Pular para o conteúdo</a>
 <header class="nh-topo fixed top-0 inset-x-0 z-50">
   <div class="mx-auto max-w-6xl h-16 px-4 flex items-center gap-4">
-    <a href="index.html" class="flex items-center gap-2 shrink-0" aria-label="NoHeroes — início">
+    <a href="/" class="flex items-center gap-2 shrink-0" aria-label="NoHeroes — início">
       <img src="assets/img/noheroes-logo-320.webp" alt="" width="40" height="40" class="h-10 w-10 drop-shadow-glow">
       <span class="cinzel text-lg text-grad-nh hidden sm:inline">NoHeroes</span>
     </a>
-    <nav class="hidden lg:flex items-center gap-1 ml-4" aria-label="Navegação principal" data-i18n-attr="aria-label:nav.principal">
-      ${NAV.map((n) => `<a href="${n.href}" class="nh-navlink" data-i18n="nav.${n.k}">${T('nav.' + n.k)}</a>`).join('')}
+    <nav class="${enxuto ? 'hidden' : 'hidden lg:flex'} items-center gap-1 ml-4" aria-label="Navegação principal" data-i18n-attr="aria-label:nav.principal">
+      ${NAV.map((n) => `<a href="${n.href}" class="nh-navlink" data-i18n="nav.${n.k}"${atual(n.href)}>${T('nav.' + n.k)}</a>`).join('')}
     </nav>
     <div class="ml-auto flex items-center gap-2">
       ${LANG_SWITCH()}
-      <a href="login.html" data-nh-conta class="nh-navlink nh-so-desktop items-center gap-1">${svg('conta', '#c4a3ff')}<span data-i18n="nav.conta">${T('nav.conta')}</span></a>
-      <span class="hidden md:block"><a data-nh-wa="tatuagem" class="nh-btn nh-btn-pri" data-i18n="nav.agendar">${T('nav.agendar')}</a></span>
+      ${enxuto ? '' : `<a href="/login" data-nh-conta class="nh-navlink nh-so-desktop items-center gap-1">${svg('conta', '#c4a3ff')}<span data-i18n="nav.conta">${T('nav.conta')}</span></a>
+      <span class="hidden md:block"><a data-nh-wa="tatuagem" class="nh-btn nh-btn-pri" data-i18n="nav.agendar">${T('nav.agendar')}</a></span>`}
       <button id="hamburgerBtn" type="button" aria-label="Abrir menu" data-i18n-attr="aria-label:nav.abrir_menu" aria-expanded="false" aria-controls="drawer"
-        class="lg:hidden h-11 w-11 inline-flex items-center justify-center rounded-xl border border-white/10 text-2xl text-white hover:text-[#c4a3ff] transition">☰</button>
+        class="${enxuto ? '' : 'lg:hidden '}h-11 w-11 inline-flex items-center justify-center rounded-xl border border-white/10 text-2xl text-white hover:text-[#c4a3ff] transition">☰</button>
     </div>
   </div>
   <div class="h-px barra-degrade"></div>
@@ -203,25 +304,6 @@ ${DRAWER_HTML()}`;
       const ham = this.querySelector('#hamburgerBtn');
       wireDrawer(this, (aberto) => ham.setAttribute('aria-expanded', String(aberto)));
       ham.addEventListener('click', () => window.nhDrawer.toggle());
-      if (window.NHI18n) window.NHI18n.aplicar(this);
-    }
-
-    // Header antigo (logo central sobreposto) — páginas de visual congelado (apoiar).
-    classico() {
-      this.innerHTML = `
-<header class="fixed top-0 left-0 w-full h-14 bg-[#0a0a0a] border-b border-[#2e2e2e] z-50">
-  <div class="absolute top-2 left-4">${LANG_SWITCH()}</div>
-  <button id="hamburgerBtn" type="button" aria-label="Abrir menu" data-i18n-attr="aria-label:nav.abrir_menu"
-    class="absolute top-3 right-4 text-3xl text-white hover:text-[#a855f7] transition z-[60]">☰</button>
-  <div class="absolute left-1/2 top-full transform -translate-x-1/2 -translate-y-1/2 z-30">
-    <a href="index.html" aria-label="NoHeroes"><img src="assets/img/noheroes-logo-320.webp" alt="NoHeroes" width="128" height="128" class="h-32 w-32 drop-shadow-glow" /></a>
-  </div>
-</header>
-<div class="fixed top-14 left-0 w-full h-1 barra-degrade z-40"></div>
-${DRAWER_HTML()}`;
-      const ctrl = wireDrawer(this);
-      const ham = this.querySelector('#hamburgerBtn');
-      ham.addEventListener('click', () => { ctrl.setOpen(!ctrl.isOpen); ham.textContent = ctrl.isOpen ? '✕' : '☰'; });
       if (window.NHI18n) window.NHI18n.aplicar(this);
     }
   }
@@ -309,7 +391,7 @@ ${DRAWER_HTML()}`;
 <footer class="nh-rodape">
   <div class="mx-auto max-w-6xl px-5 py-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
     <div>
-      <a href="index.html" class="cinzel text-xl text-grad-nh">NoHeroes</a>
+      <a href="/" class="cinzel text-xl text-grad-nh">NoHeroes</a>
       <p class="mt-3 text-sm text-white/55 max-w-xs" data-i18n="rodape.descricao">${T('rodape.descricao')}</p>
       <p class="mt-4 text-sm"><a data-nh-wa="geral" class="nh-link">WhatsApp ${C.whatsappExibicao}</a></p>
       <p class="mt-1 text-sm"><a href="mailto:${C.email}" class="nh-link">${C.email}</a></p>
@@ -318,17 +400,17 @@ ${DRAWER_HTML()}`;
       <h2 class="nh-rodape-tit" data-i18n="rodape.navegar">${T('rodape.navegar')}</h2>
       <ul class="nh-rodape-lista">
         ${NAV.map((n) => `<li><a href="${n.href}" data-i18n="nav.${n.k}">${T('nav.' + n.k)}</a></li>`).join('')}
-        <li><a href="portif%C3%B3lio.html" data-i18n="rodape.portfolio">${T('rodape.portfolio')}</a></li>
+        <li><a href="/portfolio" data-i18n="rodape.portfolio">${T('rodape.portfolio')}</a></li>
       </ul>
     </nav>
     <div>
       <h2 class="nh-rodape-tit" data-i18n="rodape.ajuda">${T('rodape.ajuda')}</h2>
       <ul class="nh-rodape-lista">
-        <li><a href="suporte.html" data-i18n="nav.suporte">${T('nav.suporte')}</a></li>
-        <li><a href="apoiar.html" data-i18n="rodape.apoiar">${T('rodape.apoiar')}</a></li>
-        <li><a href="termos.html" data-i18n="rodape.termos">${T('rodape.termos')}</a></li>
-        <li><a href="privacidade.html" data-i18n="rodape.privacidade">${T('rodape.privacidade')}</a></li>
-        <li><a href="linktree.html" data-i18n="rodape.links">${T('rodape.links')}</a></li>
+        <li><a href="/suporte" data-i18n="nav.suporte">${T('nav.suporte')}</a></li>
+        <li><a href="/apoiar" data-i18n="rodape.apoiar">${T('rodape.apoiar')}</a></li>
+        <li><a href="/termos" data-i18n="rodape.termos">${T('rodape.termos')}</a></li>
+        <li><a href="/privacidade" data-i18n="rodape.privacidade">${T('rodape.privacidade')}</a></li>
+        <li><a href="/linktree" data-i18n="rodape.links">${T('rodape.links')}</a></li>
       </ul>
     </div>
     <div>

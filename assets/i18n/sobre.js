@@ -1,4 +1,4 @@
-/* sobre.html — o PT está no HTML; aqui o EN. */
+/* /sobre — o PT está no HTML; aqui o EN. */
 (function (D) {
   Object.assign(D.pt, {
     'sob.meta.titulo': 'Sobre Raul Takagi, tatuador e escritor | NoHeroes',

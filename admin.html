@@ -292,7 +292,7 @@ textarea.input{resize:vertical;min-height:80px}
     <span class="admin-badge">ADMIN</span>
   </div>
   <div class="topbar-right">
-    <button class="btn btn-ghost btn-sm" onclick="location.href='index.html'" title="Ver site">🌐 Site</button>
+    <button class="btn btn-ghost btn-sm" onclick="location.href='/'" title="Ver site">🌐 Site</button>
     <button class="btn btn-ghost btn-sm" onclick="logout()">Sair</button>
   </div>
 </header>
@@ -335,7 +335,7 @@ textarea.input{resize:vertical;min-height:80px}
     <!-- ITEM 13: no mobile a barra de topo nao cabia com estes botoes (medido a 390px).
          Eles vem para a gaveta, que ja e a navegacao unica do mobile. -->
     <div class="sb-mobile-actions">
-      <button class="btn btn-ghost" onclick="location.href='index.html'">🌐 Ver o site</button>
+      <button class="btn btn-ghost" onclick="location.href='/'">🌐 Ver o site</button>
       <button class="btn btn-ghost" onclick="logout()">Sair</button>
     </div>
     <div class="user-pill">
@@ -918,7 +918,7 @@ async function api(path, opts={}) {
       headers:{ ...Auth.headers(), ...(opts.headers||{}) }
     });
     const data = await res.json().catch(()=>({}));
-    if (res.status===401) { Auth.clear(); location.href='login.html'; }
+    if (res.status===401) { Auth.clear(); location.href='/login'; }
     return { ok:res.ok, status:res.status, data };
   } catch(e) {
     toast('Erro de conexão com o servidor.','error');
@@ -1022,12 +1022,12 @@ function confirm_(msg, fn) {
 /* ─── BOOT ── */
     
 async function boot() {
-  if(!Auth.token()) { location.href='login.html'; return; }
+  if(!Auth.token()) { location.href='/login'; return; }
   const {ok,data} = await api('/users/me');
   if(!ok || !data?.user?.is_admin && !data?.is_admin) {
     toast('Acesso restrito a administradores.','error');
     Auth.clear();
-    setTimeout(()=>location.href='login.html',1500);
+    setTimeout(()=>location.href='/login',1500);
     return;
   }
   S.user = data.user || data;
@@ -1937,7 +1937,7 @@ async function clearLogs() {
 function logout() {
   confirm_('Deseja sair do painel admin?',()=>{
     Auth.clear();
-    location.href='login.html';
+    location.href='/login';
   });
 }
 

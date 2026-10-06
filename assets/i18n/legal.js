@@ -1,4 +1,4 @@
-/* termos.html e privacidade.html — o PT está no HTML; aqui só o EN (tradução de cortesia). */
+/* /termos e /privacidade — o PT está no HTML; aqui só o EN (tradução de cortesia). */
 (function (D) {
   Object.assign(D.pt, {
     'ter.meta.titulo': 'Termos de uso | NoHeroes',
@@ -26,7 +26,7 @@
     'ter.s12': '12. General provisions',
     'ter.t1': '<p>NoHeroes is the label and studio of Raul Takagi Sato Souza, tattoo artist and writer. Through www.noheroes.com.br we sell e-books, books and physical products, and share information about the works and about tattoo booking.</p>'
       + '<p>Responsible party: Raul Takagi Sato Souza, CNPJ (Brazilian company ID) 69.178.558/0001-68, address: Pousada Cantos da Mata, Chácara Japuira, Lote 003, Vale do Jamaca, Chapada dos Guimarães/MT, Brazil, postal code 78195-000. Contact: eco.noheroes@gmail.com.</p>'
-      + '<p>By using the website or buying, you agree to these terms and to the <a class="nh-link" href="privacidade.html">Privacy policy</a>.</p>',
+      + '<p>By using the website or buying, you agree to these terms and to the <a class="nh-link" href="/privacidade">Privacy policy</a>.</p>',
     'ter.t2': '<p>You need an account with a confirmed email to buy. The account is personal: keep your password safe and tell support if you suspect misuse. You must be at least 16 years old.</p>'
       + '<p>You can sign in with email and password or with Google, and you can delete your account at any time from your profile. We may suspend accounts used for fraud, abuse or breach of these terms.</p>',
     'ter.t3': '<p>Prices are in Brazilian reais (R$) and are confirmed by the server when the order is created, together with shipping and any discounts. The order is only accepted after payment is approved.</p>'
@@ -37,7 +37,7 @@
     'ter.t5': '<p>Physical products ship to addresses in Brazil. The shipping cost and delivery time show at checkout, before you confirm, and the delivery time starts after payment approval.</p>'
       + '<p>When the order ships, the tracking code and link appear in My purchases and are sent by email. Check your address before confirming: delivery to a wrongly entered address may require new shipping.</p>',
     'ter.t6': '<p>Online purchases can be cancelled within 7 (seven) days of receiving the product or of the purchase, under art. 49 of the Brazilian Consumer Protection Code. The amounts paid, including outbound shipping, are refunded.</p>'
-      + '<p>To cancel, open a ticket at <a class="nh-link" href="suporte.html#abrir">support</a> with your order number. Physical products must be returned unused, with their packaging and accompanying items, to the address of the responsible party (section 1). When you cancel, return shipping is on us: we arrange it through support.</p>'
+      + '<p>To cancel, open a ticket at <a class="nh-link" href="/suporte#abrir">support</a> with your order number. Physical products must be returned unused, with their packaging and accompanying items, to the address of the responsible party (section 1). When you cancel, return shipping is on us: we arrange it through support.</p>'
       + '<p>Purchases made on Mercado Livre follow the Mercado Livre return policy.</p>'
       + '<p>For e-books, access to the file ends when the refund is made.</p>',
     'ter.t7': '<p>A product that is defective, damaged in transit or different from the listing can be claimed within the periods of the Brazilian Consumer Protection Code (30 days for non-durable and 90 days for durable products). Send photos and your order number through support; we resolve it with a replacement, a partial refund or a full refund, and return shipping is on us.</p>'
@@ -46,7 +46,7 @@
       + '<p>If an order is refunded or disputed, access to the digital products in that order ends.</p>',
     'ter.t9': '<p>Tattoos, websites and digital art are arranged directly with Raul (WhatsApp or form). Prices, deadlines, deposit and rescheduling are agreed case by case before the service. The website does not sell tattoo sessions.</p>',
     'ter.t10': '<p>Texts, works, characters, illustrations, tattoo photos, trademarks and the website code belong to NoHeroes or to their authors. Copying, adapting or using them commercially without written permission is not allowed. Short quotes with credit and a link are welcome.</p>',
-    'ter.t11': '<p>Questions, complaints and cancellation requests are handled through <a class="nh-link" href="suporte.html">support</a>, by ticket, with a reply within 24 business hours, or by email at eco.noheroes@gmail.com.</p>',
+    'ter.t11': '<p>Questions, complaints and cancellation requests are handled through <a class="nh-link" href="/suporte">support</a>, by ticket, with a reply within 24 business hours, or by email at eco.noheroes@gmail.com.</p>',
     'ter.t12': '<p>We may update these terms; the version and date are at the top of the page and, when a change is relevant, we will ask you to accept again when you sign in.</p>'
       + '<p>Brazilian law applies. The courts of the consumer\'s place of residence have jurisdiction.</p>',
 
@@ -64,7 +64,7 @@
     'pri.s9': '9. Minimum age',
     'pri.s10': '10. Changes to this policy',
     'pri.t1': '<p>The controller of the data processed at www.noheroes.com.br is NoHeroes, the label and studio of Raul Takagi Sato Souza, CNPJ (Brazilian company ID) 69.178.558/0001-68, address: Pousada Cantos da Mata, Chácara Japuira, Lote 003, Vale do Jamaca, Chapada dos Guimarães/MT, Brazil, postal code 78195-000.</p>'
-      + '<p>For anything about your data, write to eco.noheroes@gmail.com or open a ticket at <a class="nh-link" href="suporte.html#abrir">support</a> with the topic “Privacy and data”.</p>',
+      + '<p>For anything about your data, write to eco.noheroes@gmail.com or open a ticket at <a class="nh-link" href="/suporte#abrir">support</a> with the topic “Privacy and data”.</p>',
     'pri.t2': '<ul>'
       + '<li><strong>Account:</strong> name, username, email, date of birth, password (stored only in encrypted form) or Google account identifier, language and notification preferences.</li>'
       + '<li><strong>Purchases:</strong> items, amounts, coupon used, payment and delivery status, tracking code and the delivery address you entered.</li>'
@@ -93,9 +93,9 @@
     'pri.t6': '<p>Account data is kept while the account exists. When you delete your account from your profile, we erase your registration data, saved addresses and preferences.</p>'
       + '<p>Orders are kept without any link to the account, for the period required by tax and consumer protection law. Tickets and technical records are kept as long as needed for support, security and defense in any legal proceedings.</p>',
     'pri.t7': '<p>Under the LGPD (art. 18) you can ask for: confirmation that we process your data, access, correction, anonymization or deletion of unnecessary data, portability, information about who we share it with, and withdrawal of consent.</p>'
-      + '<p>Much of this you can do directly in your <a class="nh-link" href="profile.html">profile</a>: edit your details, change notification preferences and delete your account. For the rest, write to eco.noheroes@gmail.com. You can also complain to Brazil\'s National Data Protection Authority (ANPD).</p>',
+      + '<p>Much of this you can do directly in your <a class="nh-link" href="/profile">profile</a>: edit your details, change notification preferences and delete your account. For the rest, write to eco.noheroes@gmail.com. You can also complain to Brazil\'s National Data Protection Authority (ANPD).</p>',
     'pri.t8': '<p>We use encrypted connections (HTTPS), hashed passwords, restricted access to the admin panel and backups. No system is infallible: if an incident puts you at risk, we will notify you and the ANPD, as the law requires.</p>',
     'pri.t9': '<p>You must be at least 16 years old to create an account. If we learn of an account belonging to someone under that age, it will be deleted.</p>',
-    'pri.t10': '<p>When this policy changes, the version and date at the top of the page are updated. If the change is relevant, we will ask you to accept again when you sign in. See also the <a class="nh-link" href="termos.html">Terms of use</a>.</p>',
+    'pri.t10': '<p>When this policy changes, the version and date at the top of the page are updated. If the change is relevant, we will ask you to accept again when you sign in. See also the <a class="nh-link" href="/termos">Terms of use</a>.</p>',
   });
 })(window.NH_DICT = window.NH_DICT || { pt: {}, en: {} });

@@ -1,4 +1,4 @@
-/* portifólio.html — dicionário que vivia dentro da página, migrado para o sistema único (prefixo port.). */
+/* /portfolio — dicionário que vivia dentro da página, migrado para o sistema único (prefixo port.). */
 (function (D) {
   Object.assign(D.pt, {
     "port.wa_generic": "Olá Raul! Vim pelo seu portfólio e quero conversar.",

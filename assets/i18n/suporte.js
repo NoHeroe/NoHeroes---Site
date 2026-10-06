@@ -1,4 +1,4 @@
-/* suporte.html */
+/* /suporte */
 (function (D) {
   Object.assign(D.pt, {
     'sup.tk.enviar': 'Enviar ticket',
@@ -30,7 +30,7 @@
     'sup.q.pagar': 'Which payment methods do you accept?',
     'sup.r.pagar': 'Card, Pix and boleto through Mercado Pago. You pay on Mercado Pago itself and come back to the website with your order status.',
     'sup.q.status': 'How do I follow my order?',
-    'sup.r.status': 'In <a class="nh-link" href="profile.html#compras">My purchases</a>, in your profile: payment, delivery, tracking and history are all there. You also get an email at every change.',
+    'sup.r.status': 'In <a class="nh-link" href="/profile#compras">My purchases</a>, in your profile: payment, delivery, tracking and history are all there. You also get an email at every change.',
     'sup.q.pendente': 'I paid, but the order still says "awaiting payment".',
     'sup.r.pendente': 'Mercado Pago confirmation can take a few minutes (boleto takes up to 3 business days). If it takes longer, open a ticket with your order number.',
     'sup.q.cupom': 'How do I use a discount coupon?',
@@ -47,7 +47,7 @@
     'sup.q.defeito': 'The product arrived damaged or wrong.',
     'sup.r.defeito': 'Open a ticket with photos and your order number. Damaged items or items different from the listing are replaced or refunded, as Brazilian consumer law requires.',
     'sup.q.ebook_onde': 'I bought an e-book. Where do I download it?',
-    'sup.r.ebook_onde': 'As soon as the payment is approved, the e-book appears in your <a class="nh-link" href="inventario.html">Library</a>, ready to download.',
+    'sup.r.ebook_onde': 'As soon as the payment is approved, the e-book appears in your <a class="nh-link" href="/inventario">Library</a>, ready to download.',
     'sup.q.ebook_formato': 'What format are the e-books in?',
     'sup.r.ebook_formato': 'PDF. It opens on any phone, tablet or computer.',
     'sup.q.ebook_idioma': 'Are the e-books and the book available in English?',
@@ -63,13 +63,13 @@
     'sup.q.cuidados': 'How do I care for a new tattoo?',
     'sup.r.cuidados': 'Follow the instructions given on the day of the session. In general: avoid whatever inflames or dehydrates the skin, stay out of the sun while it heals, cut back on sugar, carbs and processed fats, drink plenty of water and keep the skin moisturized with a fragrance-free cream that is gentle on the ink and the wound.',
     'sup.q.senha': 'I forgot my password.',
-    'sup.r.senha': 'Use <a class="nh-link" href="forgot.html">Reset password</a>: we send you a link to create a new one (valid for 1 hour).',
+    'sup.r.senha': 'Use <a class="nh-link" href="/forgot">Reset password</a>: we send you a link to create a new one (valid for 1 hour).',
     'sup.q.email': "I didn't get the confirmation email.",
-    'sup.r.email': 'Check your spam folder; if it is not there, request another one at <a class="nh-link" href="reenvio.html">Resend confirmation</a>.',
+    'sup.r.email': 'Check your spam folder; if it is not there, request another one at <a class="nh-link" href="/reenvio">Resend confirmation</a>.',
     'sup.q.excluir': 'How do I delete my account?',
-    'sup.r.excluir': 'In your <a class="nh-link" href="profile.html#conta">profile</a>, Account tab, confirming with your password or with Google. Orders are kept without any link to you, as the law requires.',
+    'sup.r.excluir': 'In your <a class="nh-link" href="/profile#conta">profile</a>, Account tab, confirming with your password or with Google. Orders are kept without any link to you, as the law requires.',
     'sup.q.dados': 'How do you use my data?',
-    'sup.r.dados': 'It is all in the <a class="nh-link" href="privacidade.html">Privacy policy</a>.',
+    'sup.r.dados': 'It is all in the <a class="nh-link" href="/privacidade">Privacy policy</a>.',
     'sup.tk.titulo': 'Open a ticket',
     'sup.tk.sub': 'Describe your case in detail. You get the ticket number by email; with an account, you can follow and reply from your profile.',
     'sup.tk.nome': 'Name',

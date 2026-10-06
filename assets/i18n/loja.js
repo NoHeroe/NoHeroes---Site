@@ -1,4 +1,4 @@
-/* store.html */
+/* /store */
 (function (D) {
   Object.assign(D.pt, {
     'loja.todas': 'Todas',
