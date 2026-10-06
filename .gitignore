@@ -1,2 +1,5 @@
-sobre.zip
+.claude/
+MAPEAMENTO_SITE_*.md
+node_modules/
 publicar-site.cmd
+sobre.zip

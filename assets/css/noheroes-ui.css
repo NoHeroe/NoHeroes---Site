@@ -112,3 +112,69 @@ nh-header, nh-background, nh-footer { display: block; }
   }
   html { scroll-behavior: auto; }
 }
+
+/* ============================================================
+   Padrão 2026-10 — base compartilhada do redesenho
+   ============================================================ */
+:root {
+  --nh-bg: #07060a;
+  --nh-violeta: #8f4fff;
+  --nh-violeta-claro: #c4a3ff;
+  --nh-dourado: #d9b55a;
+  --nh-texto: #ece8f3;
+  --nh-texto-2: rgba(236, 232, 243, 0.68);
+  --nh-linha: rgba(255, 255, 255, 0.09);
+}
+.text-grad-nh {
+  background: linear-gradient(135deg, #c4a3ff, #f0d99a);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+}
+:focus-visible { outline: 2px solid var(--nh-violeta-claro); outline-offset: 2px; border-radius: 6px; }
+
+/* pular para o conteúdo (teclado) */
+.nh-pular { position: absolute; left: 12px; top: -48px; z-index: 200; padding: 10px 14px; border-radius: 10px;
+  background: #fff; color: #000; font-weight: 700; transition: top .2s; }
+.nh-pular:focus { top: 12px; }
+
+/* header */
+.nh-topo { background: rgba(7, 6, 10, 0.86); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+.nh-navlink { padding: 8px 12px; border-radius: 10px; font-size: 14px; font-weight: 600; color: var(--nh-texto-2);
+  transition: color .2s, background .2s; white-space: nowrap; }
+.nh-navlink:hover, .nh-navlink[aria-current="page"] { color: #fff; background: rgba(143, 79, 255, 0.12); }
+
+/* botões */
+.nh-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px;
+  padding: 0 18px; border-radius: 12px; font-weight: 700; font-size: 14px; line-height: 1.2; text-align: center;
+  cursor: pointer; transition: transform .15s, box-shadow .2s, background .2s, border-color .2s; }
+.nh-btn:active { transform: translateY(1px); }
+.nh-btn-pri { background: linear-gradient(135deg, #8f4fff, #6b2fe0); color: #fff; box-shadow: 0 6px 22px rgba(143, 79, 255, 0.35); }
+.nh-btn-pri:hover { box-shadow: 0 8px 30px rgba(143, 79, 255, 0.55); }
+.nh-btn-ouro { background: linear-gradient(135deg, #f0d99a, #d9b55a); color: #1a1206; box-shadow: 0 6px 22px rgba(217, 181, 90, 0.25); }
+.nh-btn-sec { border: 1px solid rgba(196, 163, 255, 0.45); color: var(--nh-violeta-claro); background: rgba(143, 79, 255, 0.06); }
+.nh-btn-sec:hover { border-color: var(--nh-violeta-claro); background: rgba(143, 79, 255, 0.14); }
+.nh-btn-grande { min-height: 52px; padding: 0 24px; font-size: 16px; border-radius: 14px; }
+
+/* seletor de idioma */
+.nh-lang { display: inline-flex; padding: 3px; border-radius: 999px; border: 1px solid var(--nh-linha); background: rgba(255, 255, 255, 0.03); }
+.nh-lang button { min-width: 38px; min-height: 32px; padding: 0 10px; border-radius: 999px; font-size: 12px; font-weight: 700;
+  color: var(--nh-texto-2); letter-spacing: .04em; }
+.nh-lang button[aria-pressed="true"] { background: rgba(143, 79, 255, 0.25); color: #fff; }
+
+/* links e rodapé */
+.nh-link { color: var(--nh-violeta-claro); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(196, 163, 255, 0.4); }
+.nh-link:hover { text-decoration-color: currentColor; }
+.nh-rodape { background: #030305; color: var(--nh-texto); }
+.nh-rodape-tit { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 10px; }
+.nh-rodape-lista { display: grid; gap: 6px; font-size: 14px; }
+.nh-rodape-lista a { color: var(--nh-texto-2); }
+.nh-rodape-lista a:hover { color: #fff; }
+.nh-rede { display: inline-flex; width: 44px; height: 44px; align-items: center; justify-content: center; border-radius: 12px;
+  border: 1px solid var(--nh-linha); background: rgba(255, 255, 255, 0.03); transition: border-color .2s; }
+.nh-rede:hover { border-color: rgba(196, 163, 255, 0.5); }
+
+/* informação que falta (visível de propósito, até o Raul preencher) */
+.nh-raul { display: inline-block; padding: 2px 8px; border-radius: 6px; border: 1px dashed #facc15; color: #facc15;
+  background: rgba(250, 204, 21, 0.06); font-size: 12px; font-family: ui-monospace, monospace; }
+.nh-so-desktop { display: none; }
+@media (min-width: 1024px) { .nh-so-desktop { display: inline-flex; } }

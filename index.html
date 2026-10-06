@@ -1,902 +1,352 @@
 <!DOCTYPE html>
-<html lang="pt-br">  
-<head>  
-  <meta charset="UTF-8">  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-  <title>NoHeroes | Home</title>  
-  <script src="https://cdn.tailwindcss.com"></script>  
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title data-i18n="idx.meta.titulo">Raul Takagi — tatuagem e a webnovel Anjo Devorador | NoHeroes</title>
+  <meta name="description" content="Tatuagem autoral com Raul Takagi e a webnovel de dark fantasy Anjo Devorador, em português e inglês. Agende sua tatuagem, leia a obra e conheça a loja NoHeroes." data-i18n-attr="content:idx.meta.descricao">
+  <link rel="canonical" href="https://www.noheroes.com.br/">
+  <link rel="alternate" hreflang="pt-BR" href="https://www.noheroes.com.br/">
+  <link rel="alternate" hreflang="en" href="https://www.noheroes.com.br/?lang=en">
+  <link rel="alternate" hreflang="x-default" href="https://www.noheroes.com.br/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="NoHeroes">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:locale:alternate" content="en_US">
+  <meta property="og:url" content="https://www.noheroes.com.br/">
+  <meta property="og:title" content="Raul Takagi — tatuagem e a webnovel Anjo Devorador" data-i18n-attr="content:idx.og.titulo">
+  <meta property="og:description" content="Tatuagem autoral e dark fantasy em português e inglês, sob o selo NoHeroes." data-i18n-attr="content:idx.og.descricao">
+  <meta property="og:image" content="https://www.noheroes.com.br/assets/img/og/og-noheroes.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Raul Takagi — tatuagem e a webnovel Anjo Devorador" data-i18n-attr="content:idx.og.titulo">
+  <meta name="twitter:description" content="Tatuagem autoral e dark fantasy em português e inglês, sob o selo NoHeroes." data-i18n-attr="content:idx.og.descricao">
+  <meta name="twitter:image" content="https://www.noheroes.com.br/assets/img/og/og-noheroes.jpg">
+  <meta name="theme-color" content="#07060a">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/assets/img/og/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="assets/img/tattoos/tattoo-01-480.webp" imagesrcset="assets/img/tattoos/tattoo-01-480.webp 480w, assets/img/tattoos/tattoo-01-960.webp 960w" imagesizes="(min-width: 1024px) 300px, 45vw">
+  <link rel="stylesheet" href="assets/css/tw.css">
   <link rel="stylesheet" href="assets/css/noheroes-ui.css">
-  <style>  
-    body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #e5e5e5; }  
-    h1, h2, .cinzel {  
-  font-family: 'Cinzel Decorative', serif;  
-}  
-    .text-shadow-md { text-shadow: 0 0 10px rgba(143,79,255,0.4); }  
-    .overlay { position:absolute; inset:0; background:rgba(0,0,0,0.5); }  
-    .drop-shadow-glow { filter: drop-shadow(0 0 10px #8f4fff) drop-shadow(0 0 20px #8f4fff); }  
-    html { scroll-behavior: smooth; }  
-    /* Modal e drawer */  
-    .hidden { display: none; }  
-    /* Ajustes para o topo fixo */  
-    
-.gradiente-noheroes {
-  background: linear-gradient(to bottom right, #8f4fff 20%, #facc15 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
-  text-shadow: 0 0 8px rgba(143, 79, 255, 0.4);
-}
-.barra-degrade {
-  background: linear-gradient(to right, #8f4fff, #facc15);
-  box-shadow: 0 0 6px #8f4fff88, 0 0 10px #facc1588;
-}
-/* (#brasasCanvas e estilos do drawer agora vivem em assets/css/noheroes-ui.css) */
-@keyframes fluidPulse {
-  0%, 100% {
-    background-position: 0% 50%;
-    transform: scale(1);
-    box-shadow: 0 0 10px #8f4fff80, 0 0 20px #facc15aa;
+  <link rel="stylesheet" href="assets/css/paginas.css">
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/i18n/comum.js"></script>
+  <script src="assets/i18n/index.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script defer src="assets/js/noheroes-ui.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://www.noheroes.com.br/#raul",
+        "name": "Raul Takagi Sato Souza",
+        "alternateName": "NoHeroe",
+        "jobTitle": ["Tatuador", "Escritor"],
+        "url": "https://www.noheroes.com.br/",
+        "image": "https://www.noheroes.com.br/assets/img/foto-raul-960.jpg",
+        "email": "mailto:eco.noheroes@gmail.com",
+        "knowsLanguage": ["pt-BR", "en", "de"],
+        "sameAs": ["https://www.instagram.com/universo_noheroes", "https://www.youtube.com/@Universo_NoHeroes", "https://www.tiktok.com/@universo_noheroes"]
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://www.noheroes.com.br/#noheroes",
+        "name": "NoHeroes",
+        "url": "https://www.noheroes.com.br/",
+        "logo": "https://www.noheroes.com.br/assets/img/noheroes-logo-480.png",
+        "founder": { "@id": "https://www.noheroes.com.br/#raul" }
+      },
+      {
+        "@type": "Service",
+        "serviceType": "Tatuagem autoral",
+        "provider": { "@id": "https://www.noheroes.com.br/#raul" },
+        "url": "https://www.noheroes.com.br/#tatuagem"
+      },
+      {
+        "@type": "Book",
+        "name": "Anjo Devorador",
+        "author": { "@id": "https://www.noheroes.com.br/#raul" },
+        "inLanguage": ["pt-BR", "en"],
+        "genre": "Dark fantasy",
+        "image": "https://www.noheroes.com.br/assets/img/anjodevorador-960.jpg",
+        "url": "https://www.webnovel.com/book/36811359900298905"
+      }
+    ]
   }
-  50% {
-    background-position: 100% 50%;
-    transform: scale(1.05);
-    box-shadow: 0 0 20px #a855f799, 0 0 30px #facc15cc;
-  }
-}
-
-.btn-líquido-pulsante {
-  background: linear-gradient(270deg, #8f4fff, #a855f7, #facc15, #8f4fff);
-  background-size: 600% 600%;
-  animation: fluidPulse 6s ease-in-out infinite;
-  color: #000;
-  font-weight: 600;
-  font-family: 'Cinzel Decorative', serif;
-  border-radius: 9999px;
-  padding: 0.75rem 1.5rem;
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-}
-.btn-líquido-pulsante:hover {
-  transform: scale(1.06);
-  box-shadow: 0 0 30px #facc15dd, 0 0 40px #8f4fffcc;
-}
-
-.gradiente-titulo {
-  background: linear-gradient(to right, #8f4fff, #facc15);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.glass {
-  background: rgba(28, 28, 28, 0.2); /* cinza escuro semi-transparente */
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px); /* suporte Safari */
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-  transition: backdrop-filter 0.5s ease, background 0.5s ease;
-}
-.invisivel {
-  opacity: 0;
-  transform: translateY(-32px);
-  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  transition-delay: var(--reveal-delay, 0ms);
-  will-change: opacity, transform;
-}
-
-.slide-top {
-  transform: translateY(-32px);
-}
-
-.entrou {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-}
-#modal-sistema {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(6px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 50;
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
-
-#modal-sistema.ativo {
-  visibility: visible;
-  opacity: 1;
-}
-
-.modal-bolha {
-  background: #0a0000; /* preto absoluto */
-  border-radius: 1rem;
-  padding: 2rem;
-  position: relative;
-  overflow: hidden;
-  width: 90%;
-  max-width: 600px;
-  margin: 0 auto;
-  box-shadow:
-    0 0 12px rgba(153, 27, 27, 0.3),
-    0 0 25px rgba(220, 38, 38, 0.2),
-    inset 0 0 10px rgba(255, 0, 76, 0.08);
-  animation: pulseGlow 6s ease-in-out infinite;
-  border: 1px solid rgba(255, 0, 76, 0.25);
-  backdrop-filter: none !important;
-  background-blend-mode: normal;
-}
-
-@keyframes pulseGlow {
-  0%, 100% {
-    box-shadow:
-      0 0 20px rgba(153, 27, 27, 0.3),
-      0 0 40px rgba(220, 38, 38, 0.2),
-      inset 0 0 15px rgba(255, 0, 76, 0.1);
-  }
-  50% {
-    box-shadow:
-      0 0 35px rgba(220, 38, 38, 0.5),
-      0 0 60px rgba(255, 0, 76, 0.3),
-      inset 0 0 25px rgba(255, 0, 76, 0.2);
-  }
-}
-
-#modal-sistema.ativo .modal-bolha {
-  opacity: 1;
-  transform: scale(1);
-}
-.botao-modal-vinho {
-  background: linear-gradient(135deg, #4b002d, #000000, #4b002d);
-  background-size: 400% 400%;
-  animation: fluidPulseVinho 8s ease-in-out infinite;
-  color: #ffffff;
-  font-weight: 600;
-  font-family: 'Inter', sans-serif;
-  border-radius: 9999px;
-  padding: 0.75rem 1.8rem;
-  transition: all 0.3s ease;
-  text-shadow: 0 0 4px #000;
-  border: 1px solid #4b002d;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-  letter-spacing: 1px;
-  font-size: 0.95rem;
-}
-
-.botao-modal-vinho:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px #4b002dcc, 0 0 40px #000000aa;
-}
-
-@keyframes fluidPulseVinho {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-.gradiente-vinho-preto {
-  background: linear-gradient(to right, #991b1b, #000000);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
-  font-family: 'Cinzel Decorative', serif;
-  text-align: center;
-  text-shadow: 0 0 6px rgba(153, 27, 27, 0.4);
-}
-.atributos-hex {
-  position: relative;
-  width: 300px;
-  height: 300px;
-  margin: 0 auto;
-}
-
-.hex-bg {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.atributo {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #e5e5e5;
-  font-size: 1rem;
-  font-weight: bold;
-  font-family: monospace;
-  text-shadow: 0 0 5px rgba(255,255,255,0.1);
-}
-
-/* NOVA POSIÇÃO HEXAGONAL */
-.atributo:nth-child(2) { top: -25px; left: 50%; transform: translate(-50%, 0); }          /* FOR */
-.atributo:nth-child(3) { top: 35px; right: 0; transform: translate(0, 0); }               /* DES */
-.atributo:nth-child(4) { bottom: 35px; right: 0; transform: translate(0, 0); }            /* INT */
-.atributo:nth-child(5) { bottom: -25px; left: 50%; transform: translate(-50%, 0); }       /* ESP */
-.atributo:nth-child(6) { bottom: 35px; left: 0; transform: translate(0, 0); }             /* CAR */
-.atributo:nth-child(7) { top: 35px; left: 0; transform: translate(0, 0); }                /* CON */
-.glitch {
-  color: #ff3dff;
-  animation: glitchColor 0.3s alternate infinite, glitchShake 0.2s infinite;
-  text-shadow:
-    0 0 2px #ff3dff,
-    1px 1px 1px #ff0044,
-    -1px -1px 1px #8f4fff;
-  transform: rotate(-2deg) scale(1.1) skewX(2deg);
-}
-
-@keyframes glitchColor {
-  0% { color: #ff3dff; }
-  50% { color: #ff0044; }
-  100% { color: #8f4fff; }
-}
-
-@keyframes glitchShake {
-  0% { transform: translate(0, 0); }
-  25% { transform: translate(-1px, 1px) rotate(-2deg); }
-  50% { transform: translate(1px, -1px) rotate(2deg); }
-  75% { transform: translate(-2px, 2px) rotate(-1deg); }
-  100% { transform: translate(0, 0); }
-}
-.atributos-hex {
-  position: relative;
-  min-height: 250px; /* ou 300px, ajustável */
-  margin-bottom: 40px; /* espaçamento entre HUD e botões */
-}
-@keyframes fluidPulseDark {
-  0%, 100% {
-    background-position: 0% 50%;
-    transform: scale(1);
-    box-shadow: 0 0 10px #8f4fff80, 0 0 20px #000000aa;
-  }
-  50% {
-    background-position: 100% 50%;
-    transform: scale(1.05);
-    box-shadow: 0 0 20px #a855f799, 0 0 30px #000000cc;
-  }
-}
-
-.btn-líquido-pulsante-escuro {
-  background: linear-gradient(270deg, #8f4fff, #000000, #8f4fff);
-  background-size: 600% 600%;
-  animation: fluidPulseDark 6s ease-in-out infinite;
-  color: #fff;
-  font-weight: 600;
-  font-family: 'Cinzel Decorative', serif;
-  border-radius: 9999px;
-  padding: 0.75rem 1.5rem;
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-  border: 1px solid #8f4fff;
-}
-.btn-líquido-pulsante-escuro:hover {
-  transform: scale(1.06);
-  box-shadow: 0 0 30px #8f4fffcc, 0 0 40px #000000cc;
-}
-.btn-líquido-pulsante-escuro.glitchando {
-  animation: none;
-  background: #1a1a1a;
-  color: #ff0044;
-  text-shadow: 0 0 5px #8f4fff, 0 0 15px #ff0044;
-  transform: scale(1.05) rotate(-1deg);
-  box-shadow: 0 0 15px #8f4fff99, 0 0 30px #ff004499;
-}
-
-.btn-líquido-pulsante-escuro.glitchando .glitch-text {
-  animation: glitchTextRapid 0.15s steps(1) infinite;
-  color: #ff0044;
-}
-
-@keyframes glitchTextRapid {
-  0%   { transform: translate(0, 0) skewX(0deg) scale(1); opacity: 1; }
-  20%  { transform: translate(-2px, 2px) skewX(10deg) scale(1.1); opacity: 0.8; }
-  40%  { transform: translate(2px, -1px) skewX(-10deg) scale(0.9); opacity: 1; }
-  60%  { transform: translate(-1px, 1px) skewX(5deg) scale(1.05); opacity: 0.7; }
-  80%  { transform: translate(1px, -2px) skewX(-5deg) scale(1.15); opacity: 0.9; }
-  100% { transform: translate(0, 0) skewX(0deg) scale(1); opacity: 1; }
-}
-@keyframes btnShake {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  20% { transform: translate(-3px, 2px) rotate(-2deg); }
-  40% { transform: translate(3px, -2px) rotate(2deg); }
-  60% { transform: translate(-2px, 2px) rotate(-1deg); }
-  80% { transform: translate(2px, -1px) rotate(1deg); }
-}
-
-.btn-líquido-pulsante-escuro.glitchando {
-  animation: btnShake 0.1s infinite, none;
-}
-.modal-bolha.glitchando {
-  animation: modalGlitchIn 0.6s ease-out;
-}
-
-@keyframes modalGlitchIn {
-  0% {
-    transform: scale(0.6) rotate(5deg) skewX(10deg);
-    opacity: 0;
-    filter: hue-rotate(90deg) brightness(1.5);
-  }
-  50% {
-    transform: scale(1.1) rotate(-3deg) skewX(-5deg);
-    filter: hue-rotate(-30deg) brightness(2);
-  }
-  100% {
-    transform: scale(1) rotate(0deg) skewX(0);
-    opacity: 1;
-    filter: none;
-  }
-}
-.botao-desativado-duplo {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  justify-content: center;
-  margin-top: 1rem;
-}
-
-.botao-desativado-duplo button {
-  background: rgba(70, 30, 100, 0.3); /* roxo escuro translúcido */
-  color: #ccc;
-  border: 1px solid rgba(143, 79, 255, 0.4); /* borda sutil */
-  padding: 0.5rem 1.25rem;
-  border-radius: 9999px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: not-allowed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  white-space: nowrap;
-  transition: none;
-  backdrop-filter: blur(2px); /* leve glow */
-}
-
-.botao-desativado-duplo button span.ativo {
-  color: #fff;
-}
-
-.botao-desativado-duplo button span.em-breve {
-  color: #aaa;
-  opacity: 0.5;
-  font-size: 0.75rem;
-  margin-left: 0.35rem;
-}
-#carousel-container {
-  perspective: 1200px;
-  width: 100%;
-  height: 420px;
-  position: relative;
-  perspective-origin: center;
-overflow: visible;
-}
-
-#carousel-inner {
-  transform-style: preserve-3d;
-  animation: girar360 30s linear infinite;
-}
-
-@keyframes girar360 {
-  from { transform: rotateY(0deg); }
-  to { transform: rotateY(360deg); }
-}
-
-.glass-card {
-  position: absolute;
-  width: 180px;
-  height: 280px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 1rem;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 0 20px #00000080;
-  overflow: visible;
-  padding: 0;
-}
-
-.glass-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 1rem;
-backface-visibility: hidden;
-}
-.relative.h-64.overflow-hidden {
-  min-height: 420px;
-}
-.btn-noheroes {
-  background: linear-gradient(90deg, #8f4fff, #000000);
-  background-size: 200% 200%;
-  animation: btnPulse 4s ease-in-out infinite;
-  color: #fff;
-  font-weight: 600;
-  font-family: 'Inter', sans-serif;
-  padding: 0.75rem 1.5rem;
-  border-radius: 9999px;
-  border: 1px solid #8f4fff;
-  box-shadow: 0 0 10px rgba(143, 79, 255, 0.4);
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.btn-noheroes:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(143, 79, 255, 0.8);
-}
-
-@keyframes btnPulse {
-  0%, 100% {
-    background-position: 0% 50%;
-    box-shadow: 0 0 10px rgba(143, 79, 255, 0.4);
-  }
-  50% {
-    background-position: 100% 50%;
-    box-shadow: 0 0 20px rgba(143, 79, 255, 0.8);
-  }
-}
-/* Caixa vidro translúcida real */
-.apoio-glass {
-  background: rgba(28, 28, 28, 0.2);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-radius: 1.25rem;
-  border: 1px solid rgba(143, 79, 255, 0.3);
-  padding: 1.5rem; /* menor padding como pediu */
-  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-}
-
-/* Título degradê roxo-dourado */
-.gradiente-noheroes-calm {
-  background: linear-gradient(to right, #8f4fff, #facc15);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Botões refinados */
-.btn-apoio {
-  display: inline-block;
-  padding: 0.6rem 1.2rem;
-  border-radius: 9999px;
-  background: rgba(28, 28, 28, 0.4);
-  border: 1px solid #8f4fff;
-  color: #fff;
-  font-weight: 600;
-  font-family: 'Inter', sans-serif;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-/* Degradê aplicado no texto interno */
-.btn-apoio::before {
-  content: attr(data-text);
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(to right, #8f4fff, #facc15);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  pointer-events: none;
-}
-
-/* Remove texto original visível */
-.btn-apoio span {
-  opacity: 0;
-}
-
-.btn-apoio:hover {
-  backdrop-filter: blur(12px);
-  border-color: #facc15;
-  box-shadow: 0 0 20px #8f4fff99, 0 0 30px #facc1588;
-  transform: scale(1.05);
-}
-@keyframes fluidPulseVozes {
-  0%, 100% {
-    background-position: 0% 50%;
-    transform: scale(1);
-    box-shadow: 0 0 10px #8f4fff80, 0 0 20px #000000aa;
-  }
-  50% {
-    background-position: 100% 50%;
-    transform: scale(1.05);
-    box-shadow: 0 0 20px #a855f799, 0 0 30px #000000cc;
-  }
-}
-
-.btn-vozes {
-  background: linear-gradient(270deg, #8f4fff, #000000, #8f4fff);
-  background-size: 600% 600%;
-  animation: fluidPulseVozes 6s ease-in-out infinite;
-  color: #fff; /* fallback se gradient-text falhar */
-  font-weight: 600;
-  font-family: 'Inter', sans-serif;
-  border-radius: 9999px;
-  padding: 0.5rem 1.5rem;
-  font-size: 0.875rem;
-  border: 1px solid #8f4fff;
-  transition: all 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.btn-vozes:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 30px #8f4fffcc, 0 0 40px #000000cc;
-}
-
-.btn-vozes span {
-  background: linear-gradient(to right, #8f4fff, #facc15);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-@keyframes marquee {
-    0% { transform: translateX(0%); }
-    100% { transform: translateX(-100%); }
-  }
-  .animate-marquee {
-    display: inline-block;
-    min-width: 200%;
-    animation: marquee 70s linear infinite;
-  }
-/* Estilos do drawer e reduced-motion agora em assets/css/noheroes-ui.css */
-</style>
-
-</head>  
-<body class="leading-relaxed">   
-
-<!-- Header + drawer + overlay (componente compartilhado) -->
+  </script>
+</head>
+<body class="nh-pagina">
+<nh-background></nh-background>
 <nh-header></nh-header>
 
-    <!-- Main --> 
-   <main class="pt-8">  
+<main id="conteudo">
 
-    <!-- 1. CAPA HERO -->  
-
-    <section id="introducao" class="relative flex flex-col items-center justify-center h-screen bg-cover bg-center text-center text-[#d9d6ff]" style="background-image:url('assets/images/hero-bg.gif')">  
-      <div class="overlay"></div>  
-      <h1 class="z-10 text-3xl md:text-5xl max-w-2xl mb-8 text-shadow-md">  
-        “Num mundo onde até a luz engana, a única verdade nasce das sombras.”  
-      </h1>  
-      <a href="#universo" class="btn-líquido-pulsante z-10">
-  ✦ Mergulhar no Portal ✦
-</a>
-    </section> 
-
-
-<section id="oque-e-noheroes" class="py-20 px-6 max-w-7xl mx-auto text-center">
-  <h2 class="text-3xl md:text-4xl font-bold gradiente-noheroes cinzel mb-12">
-    O que é NoHeroes?
-  </h2>
-
-  <!-- Container de Cards -->
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-16">
-
-  <!-- 1. Um Portal Multimídia -->
- <div class="glass p-6 rounded-xl shadow-md reveal-top text-center">
-  <svg class="mx-auto mb-4" width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="grad-vortex" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#8f4fff"/>
-      <stop offset="100%" stop-color="#facc15"/>
-    </linearGradient>
-  </defs>
-
-  <!-- arco externo do portal -->
-  <ellipse cx="12" cy="12" rx="9" ry="10" stroke="url(#grad-vortex)" stroke-width="2" fill="none"/>
-
-  <!-- arco interno, dando profundidade -->
-  <ellipse cx="12" cy="12" rx="5" ry="7" stroke="url(#grad-vortex)" stroke-width="2" fill="none"/>
-
-  <!-- linhas internas simulando energia -->
-  <path d="M12 5v2M12 17v2M8 12h-2M18 12h2" stroke="url(#grad-vortex)" stroke-width="2" stroke-linecap="round"/>
-</svg>
-
-  <h3 class="text-lg font-bold gradiente-titulo mb-2 font-[Cinzel Decorative]">Um Portal Multimídia</h3>
-  <p class="text-sm text-gray-300 mb-4">Livros, eBooks. Um universo em expansão onde tudo é feito com propósito — e alma.</p>
-  <button onclick="document.querySelector('#universo').scrollIntoView({ behavior: 'smooth' })"
-    class="px-3 py-1 text-sm rounded-full bg-gradient-to-r from-[#8f4fff]/20 to-[#facc15]/20 border border-[#8f4fff] text-[#8f4fff] hover:brightness-125 transition">
-    Explorar o Universo
-  </button>
-</div>
-
-  <!-- 3. Uma Frequência Criativa -->
-  <div class="glass p-6 rounded-xl shadow-md reveal-top text-center">
-  <svg class="mx-auto mb-4" width="40" height="40" viewBox="0 0 24 24" fill="none">
-    <defs>
-      <linearGradient id="grad-freq" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#8f4fff"/>
-        <stop offset="100%" stop-color="#facc15"/>
-      </linearGradient>
-    </defs>
-    <path d="M3 12c2-4 4-4 6 0s4 4 6 0s4-4 6 0" stroke="url(#grad-freq)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-  <h3 class="text-lg font-bold gradiente-titulo mb-2 font-[Cinzel Decorative]">Uma Frequência Criativa</h3>
-  <p class="text-sm text-gray-300 mb-4">NoHeroes é um portal vivo onde ideias nascem, mutam e se chocam. Uma rede para quem nunca se encaixou — mas sempre quis criar.</p>
-  <button onclick="document.querySelector('#comunidade').scrollIntoView({ behavior: 'smooth' })"
-    class="px-3 py-1 text-sm rounded-full bg-gradient-to-r from-[#8f4fff]/20 to-[#facc15]/20 border border-[#8f4fff] text-[#8f4fff] hover:brightness-125 transition">
-    Ver Comunidade
-  </button>
-</div>
-
-  <!-- 4. A Forja dos Sonhos -->
-<div class="glass p-6 rounded-xl shadow-md reveal-top text-center">
-  <svg class="mx-auto mb-4" width="40" height="40" viewBox="0 0 24 24" fill="none">
-    <defs>
-      <linearGradient id="grad-forja" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#8f4fff"/>
-        <stop offset="100%" stop-color="#facc15"/>
-      </linearGradient>
-    </defs>
-    <path d="M4 10h16v3H4zM6 13v3h2v-3M16 13v3h2v-3" stroke="url(#grad-forja)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M12 2v2m0 0l1-1m-1 1l-1-1" stroke="url(#grad-forja)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-
-  <h3 class="text-lg font-bold gradiente-titulo mb-2 font-[Cinzel Decorative]">A Forja dos Sonhos</h3>
-  <p class="text-sm text-gray-300 mb-4">Ajudamos você a tirar da mente o que vive preso há anos. Sites, projetos, marcas — aqui, a gente transforma sonhos em realidade palpável.</p>
-
-  <button onclick="window.location.href='portifólio.html'"
-    class="px-3 py-1 text-sm rounded-full bg-gradient-to-r from-[#8f4fff]/20 to-[#facc15]/20 border border-[#8f4fff] text-[#8f4fff] hover:brightness-125 transition">
-    Criar com a Gente
-  </button>
-</div>
-</div>
-</section>
-
-<div class="w-full overflow-hidden whitespace-nowrap border-t border-b border-gray-700 py-2 bg-[#0a0a0a]">
-  <div class="inline-block animate-marquee">
-    <span class="mx-8 text-sm text-gray-400 italic">“Ainda que eu ande pelo vale da sombra da morte, não temerei mal algum, porque tu estás comigo.” (Salmos 23:4)</span>
-    <span class="mx-8 text-sm text-gray-400 italic">“O Deus de toda graça, que os chamou para sua glória eterna, os restaurará, confirmará, fortalecerá e os colocará sobre firmes alicerces.” (1 Pedro 5:10)</span>
-    <span class="mx-8 text-sm text-gray-400 italic">“Não temas, porque eu sou contigo; não te assombres, porque eu sou teu Deus; eu te fortaleço e te ajudo.” (Isaías 41:10)</span>
-    <span class="mx-8 text-sm text-gray-400 italic">“Pois Deus não nos deu espírito de covardia, mas de poder, de amor e de equilíbrio.” (2 Timóteo 1:7)</span>
-    <span class="mx-8 text-sm text-gray-400 italic">“Porque eis que as trevas cobrem a terra, e a escuridão os povos; mas sobre ti resplandece o Senhor.” (Isaías 60:2)</span>
-    <span class="mx-8 text-sm text-gray-400 italic">“Quando passares pelas águas, eu estarei contigo; e quando pelos rios, eles não te submergirão.” (Isaías 43:2)</span>
-    <span class="mx-8 text-sm text-gray-400 italic">“Não fui eu que lhe ordenei? Seja forte e corajoso! Não se apavore nem desanime, pois o Senhor, o seu Deus, estará com você por onde você andar.” (Josué 1:9)</span>
-    <span class="mx-8 text-sm text-gray-400 italic">“Bendito seja o Senhor, minha rocha, que adestra as minhas mãos para a batalha e os meus dedos para a guerra.” (Salmos 144:1)</span>
-  </div>
-</div>
-
-<!-- 4. UNIVERSO (REFORMULADO) -->
-<section id="universo" class="reveal-top py-20 px-6 max-w-7xl mx-auto relative text-center">
-  <h2 class="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-[#8f4fff] to-[#000] bg-clip-text text-transparent font-cinzel mb-4 uppercase tracking-wide">
-    A Forja da NoHeroes
-  </h2>
-  <p class="text-[#e0e0e0] max-w-2xl mx-auto mb-10 text-sm md:text-base">
-    Conheça os grimórios, relíquias e códigos do nosso universo. Eles não são Produtos. São nosso Arsenal.
-  </p>
-
-  <div class="relative h-64 overflow-hidden">
-    <div class="absolute inset-0 flex items-center justify-center gap-6">
-       <div id="carousel-container" class="relative h-[280px] mx-auto">
-    <div id="carousel-inner" class="absolute w-full h-full flex items-center justify-center">
-      <!-- Os .glass-card serão inseridos aqui -->
-    </div>
-  </div>
-    </div>
-  </div>
-
-  <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:24px;">
-    <!-- Mercado -->
-    <a href="store.html" style="padding:12px 24px;border-radius:12px;background:linear-gradient(135deg,#8f4fff,#d9b55a);color:#000;text-decoration:none;text-align:center;min-width:140px;">
-      <div style="font-family:'Cinzel Decorative',serif;font-weight:700;font-size:14px;">Mercado</div>
-      <div style="font-size:10px;opacity:0.65;margin-top:2px;">livros, ebooks e mais</div>
-    </a>
-    <!-- Em breve -->
-    <button disabled style="padding:12px 24px;border-radius:12px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);color:rgba(255,255,255,0.25);cursor:not-allowed;text-align:center;min-width:140px;">
-      <div style="font-family:'Cinzel Decorative',serif;font-size:14px;">Em Breve</div>
-      <div style="font-size:10px;opacity:0.5;margin-top:2px;">novas seções chegando</div>
-    </button>
-  </div>
-</section>
-
- <!-- 6. APOIO VITALISTA -->
-<section id="apoio" class="reveal-top px-4 py-10 max-w-3xl mx-auto">
-  <div style="background:rgba(12,10,16,0.9);border:1px solid rgba(143,79,255,0.2);border-radius:18px;padding:28px 24px;text-align:center;backdrop-filter:blur(8px);">
-    <div style="font-size:10px;font-weight:700;color:rgba(143,79,255,0.7);text-transform:uppercase;letter-spacing:0.2em;margin-bottom:10px;">Apoio Vitalista</div>
-    <h2 style="font-family:'Cinzel Decorative',serif;font-size:clamp(15px,3vw,20px);margin:0 0 8px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Sua ajuda alimenta o mundo de Caelum</h2>
-    <p style="font-size:12px;color:rgba(255,255,255,0.35);margin:0 0 20px;max-width:400px;margin-left:auto;margin-right:auto;">Cada contribuição sustenta o universo NoHeroes e acelera tudo que está sendo construído.</p>
-    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px;">
-      <a href="apoiar.html" style="padding:10px 20px;border-radius:10px;background:linear-gradient(135deg,#8f4fff,#d9b55a);color:#000;font-weight:700;font-size:13px;text-decoration:none;">Contribuir com Pix</a>
-      <a href="apoiar.html#outras" style="padding:10px 20px;border-radius:10px;border:1px solid rgba(143,79,255,0.3);color:#c4a3ff;font-size:13px;font-weight:600;text-decoration:none;">Outras formas</a>
-      <a href="portifólio.html" style="padding:10px 20px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);font-size:13px;font-weight:600;text-decoration:none;">Apoio no seu projeto</a>
-    </div>
-  </div>
-</section>
-
-<!-- 7. COMUNIDADE -->
-<section id="comunidade" class="reveal-top py-16 px-8 max-w-4xl mx-auto text-center" style="
-  background: rgba(0,0,0,0);
-">
-  <h2 class="text-2xl md:text-3xl font-bold uppercase tracking-wide mb-8 gradiente-noheroes-calm cinzel">
-  Toda sombra precisa de um clã
-</h2>
-
-  <p class="text-sm text-gray-400 mb-8 max-w-lg mx-auto">
-    Nossas comunidades não são para todos.<br>
-    São para aqueles que recusam a luz comum e não desistem fácil.<br>
-    Ideias colidem, verdades desconfortáveis surgem, e poucos permanecem.<br>
-    Se isso faz sentido para você — entre. Do contrário, siga em frente.
-  </p>
-
-  <div class="flex justify-center gap-6">
-    <a href="https://discord.gg/Yyb8Ff66cd" class="hover:scale-110 transition" style="display:inline-block;">
-      <img src="assets/icons/discord icon.png" alt="Discord" class="w-12" style="
-        opacity: 0.85; transition: opacity 0.2s;
-      "/>
-    </a>
-    <a href="https://chat.whatsapp.com/DSiquXUkKpj22JwmqoGD7T" class="hover:scale-110 transition" style="display:inline-block;">
-      <img src="assets/icons/whatsapp icon.png" alt="WhatsApp" class="w-12" style="
-        opacity: 0.85; transition: opacity 0.2s;
-      "/>
-    </a>
-  </div>
-</section>
-
-
-
-<!-- CITAÇÃO DO CRIADOR -->
-<section id="sobre-criador" class="reveal-top py-16 px-6 max-w-4xl mx-auto">
-  <div style="background:#0c0a10;border:1px solid rgba(143,79,255,0.2);border-radius:18px;padding:32px 28px;display:flex;flex-wrap:wrap;gap:28px;align-items:center;">
-    <img src="assets/images/foto-raul.jpg" alt="Raul" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid rgba(143,79,255,0.4);flex-shrink:0;">
-    <div style="flex:1;min-width:220px;">
-      <div style="font-size:10px;font-weight:700;color:rgba(143,79,255,0.7);text-transform:uppercase;letter-spacing:0.2em;margin-bottom:8px;">A Origem de Tudo</div>
-      <p class="italic" style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.75;margin:0 0 16px;">"Após anos num projeto solitário, lutei sozinho contra dragões e demônios. Em duas noites, transformei tudo num portal para o universo NoHeroes."</p>
-      <div style="display:flex;flex-wrap:wrap;gap:10px;">
-        <a href="sobre.html#criador" style="padding:8px 18px;border-radius:10px;border:1px solid rgba(143,79,255,0.35);color:#c4a3ff;font-size:12px;font-weight:600;text-decoration:none;font-family:'Cinzel Decorative',serif;">Sobre o Criador</a>
-        <a href="sobre.html" style="padding:8px 18px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);font-size:12px;font-weight:600;text-decoration:none;font-family:'Cinzel Decorative',serif;">Sobre o Projeto</a>
+  <!-- HERO: as duas artes do Raul, lado a lado -->
+  <section class="nh-hero" aria-labelledby="hero-titulo">
+    <div class="nh-wrap nh-hero-grid">
+      <div class="nh-hero-texto">
+        <h1 id="hero-titulo" class="nh-h1">Raul Takagi</h1>
+        <p class="nh-hero-sub" data-i18n="idx.hero.sub">Tatuador e escritor. Arte autoral na pele e histórias de dark fantasy, sob o selo NoHeroes.</p>
+        <div class="nh-hero-ctas">
+          <a data-nh-wa="tatuagem" class="nh-btn nh-btn-pri nh-btn-grande" data-i18n="idx.hero.cta_tattoo">Agendar tatuagem</a>
+          <a data-nh-webnovel class="nh-btn nh-btn-ouro nh-btn-grande" data-i18n="idx.hero.cta_ler">Ler Anjo Devorador</a>
+        </div>
+        <p class="nh-hero-nota" data-i18n="idx.hero.nota">Tamanho e valor da tatuagem sob consulta.</p>
+      </div>
+      <div class="nh-diptico" aria-hidden="true">
+        <a href="#tatuagem" class="nh-diptico-pele" tabindex="-1">
+          <picture>
+            <source type="image/webp" srcset="assets/img/tattoos/tattoo-01-480.webp 480w, assets/img/tattoos/tattoo-01-960.webp 960w" sizes="(min-width: 1024px) 300px, 45vw">
+            <img src="assets/img/tattoos/tattoo-01-480.jpg" alt="" width="480" height="640" fetchpriority="high">
+          </picture>
+          <span data-i18n="idx.hero.na_pele">Na pele</span>
+        </a>
+        <a href="#obra" class="nh-diptico-papel" tabindex="-1">
+          <picture>
+            <source type="image/webp" srcset="assets/img/anjodevorador-480.webp 480w, assets/img/anjodevorador-960.webp 960w" sizes="(min-width: 1024px) 260px, 40vw">
+            <img src="assets/img/anjodevorador-480.jpg" alt="" width="480" height="723">
+          </picture>
+          <span data-i18n="idx.hero.no_papel">No papel</span>
+        </a>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Footer (componente compartilhado) -->
+  <!-- TATUAGEM -->
+  <section id="tatuagem" class="nh-secao" aria-labelledby="tattoo-titulo">
+    <div class="nh-wrap">
+      <div class="nh-secao-topo">
+        <h2 id="tattoo-titulo" class="nh-h2" data-i18n="idx.tattoo.titulo">Tatuagem autoral</h2>
+        <p class="nh-lead" data-i18n="idx.tattoo.lead">Trabalhos reais na pele — cada peça com estilo e local. Tamanho e valor sob consulta.</p>
+      </div>
+      <ul class="nh-galeria" id="galeriaTattoo"></ul>
+      <div class="nh-estilos">
+        <h3 class="nh-h3" data-i18n="idx.tattoo.estilos">Estilos que eu faço</h3>
+        <ul class="nh-chips" id="estilosTattoo"></ul>
+      </div>
+      <div class="nh-passos-bloco">
+        <h3 class="nh-h3" data-i18n="idx.tattoo.como">Como agendar</h3>
+        <ol class="nh-passos">
+          <li>
+            <strong data-i18n="idx.tattoo.p1_t">Mande sua ideia</strong>
+            <span data-i18n="idx.tattoo.p1">Pelo WhatsApp ou pelo formulário: referências, local do corpo e tamanho aproximado.</span>
+          </li>
+          <li>
+            <strong data-i18n="idx.tattoo.p2_t">Receba o orçamento</strong>
+            <span data-i18n="idx.tattoo.p2">O valor depende do tamanho e dos detalhes da peça.</span>
+          </li>
+          <li>
+            <strong data-i18n="idx.tattoo.p3_t">Marque a sessão</strong>
+            <span><span data-i18n="idx.tattoo.p3">Combinamos data e horário.</span> <span class="nh-raul">[[RAUL: cidade/endereço do estúdio e se há sinal para reservar]]</span></span>
+          </li>
+        </ol>
+        <div class="nh-ctas-linha">
+          <a data-nh-wa="tatuagem" class="nh-btn nh-btn-pri nh-btn-grande" data-i18n="idx.tattoo.cta_wa">Agendar pelo WhatsApp</a>
+          <a href="portif%C3%B3lio.html#contato" class="nh-btn nh-btn-sec nh-btn-grande" data-i18n="idx.tattoo.cta_form">Usar o formulário</a>
+          <a href="portif%C3%B3lio.html#vitrines" class="nh-link nh-ctas-mais" data-i18n="idx.tattoo.cta_portfolio">Ver o portfólio completo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OBRA -->
+  <section id="obra" class="nh-secao nh-secao-obra" aria-labelledby="obra-titulo">
+    <div class="nh-wrap nh-obra-grid">
+      <picture class="nh-obra-capa">
+        <source type="image/webp" srcset="assets/img/anjodevorador-480.webp 480w, assets/img/anjodevorador-960.webp 960w" sizes="(min-width: 1024px) 340px, 70vw">
+        <img src="assets/img/anjodevorador-480.jpg" alt="Capa de Anjo Devorador" data-i18n-attr="alt:idx.obra.capa_alt" width="480" height="723" loading="lazy">
+      </picture>
+      <div>
+        <h2 id="obra-titulo" class="nh-h2">Anjo Devorador</h2>
+        <p class="nh-obra-meta" data-i18n="idx.obra.meta">Webnovel de dark fantasy, publicada em capítulos em português e em inglês.</p>
+        <p class="nh-sinopse" data-i18n="idx.obra.sinopse">O mundo está virando cinzas. Entre o rugido de dragões e a corrupção dos Voidrins, a humanidade se agarra a uma última e misteriosa esperança de sobrevivência. No centro deste caos, o jovem Vitalista Azuos desperta em uma floresta, sem memórias e sem destino. Enquanto luta para não ser consumido por um mundo que morre, Azuos busca um propósito — mas quanto mais perto ele chega da verdade, mais percebe que seu passado esquecido pode ser uma ameaça maior do que os monstros que cruzam os céus.</p>
+        <p class="nh-sinopse-en-falta"><span class="nh-raul" data-i18n="idx.obra.raul_en">[[RAUL: sinopse oficial em inglês]]</span></p>
+        <div class="nh-ctas-linha">
+          <a data-nh-webnovel="pt" class="nh-btn nh-btn-ouro nh-btn-grande" lang="pt-BR">Ler em português</a>
+          <a data-nh-webnovel="en" class="nh-btn nh-btn-sec nh-btn-grande" lang="en">Read in English</a>
+        </div>
+        <div class="nh-livro">
+          <h3 class="nh-h3" data-i18n="idx.obra.livro_t">O livro: As Cinzas do Amanhã</h3>
+          <p data-i18n="idx.obra.livro">ACDA é o coração do universo NoHeroes — a obra que deu origem a tudo. O Volume I está disponível em PDF e impresso.</p>
+          <a href="acda.html#comprar" class="nh-btn nh-btn-sec" data-i18n="idx.obra.livro_cta">Comprar o livro</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="nh-wrap nh-trilogia">
+      <div class="nh-trilogia-texto">
+        <h3 class="nh-h3" data-i18n="idx.trilogia.titulo">Trilogia Sistema Vivo</h3>
+        <p data-i18n="idx.trilogia.texto">Três volumes. Um sistema. Tudo na sua vida é interligado, interconectado, entrelaçado — e quando você entende isso, tudo muda.</p>
+        <a href="ebooks.html" class="nh-link" data-i18n="idx.trilogia.cta">Conhecer a trilogia</a>
+      </div>
+      <ol class="nh-volumes">
+        <li><span class="nh-vol-n">I</span><span><strong>Tudo Está Conectado</strong><em class="nh-vol-ok" data-i18n="idx.trilogia.disponivel">Disponível</em></span></li>
+        <li><span class="nh-vol-n">II</span><span><strong>Sistema Vivo</strong><em data-i18n="idx.trilogia.producao">Em produção</em></span></li>
+        <li><span class="nh-vol-n">III</span><span><strong>Manual das Sombras</strong><em data-i18n="idx.trilogia.breve">Em breve</em></span></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- LOJA -->
+  <section id="loja" class="nh-secao" aria-labelledby="loja-titulo">
+    <div class="nh-wrap">
+      <div class="nh-secao-topo nh-secao-topo-linha">
+        <div>
+          <h2 id="loja-titulo" class="nh-h2" data-i18n="idx.loja.titulo">Da loja</h2>
+          <p class="nh-lead" data-i18n="idx.loja.lead">E-books com entrega imediata na sua conta e peças físicas para colecionador.</p>
+        </div>
+        <a href="store.html" class="nh-btn nh-btn-sec" data-i18n="idx.loja.cta">Ver a loja</a>
+      </div>
+      <ul class="nh-produtos" id="destaquesLoja" aria-live="polite"></ul>
+    </div>
+  </section>
+
+  <!-- SERVIÇOS -->
+  <section id="servicos" class="nh-secao" aria-labelledby="serv-titulo">
+    <div class="nh-wrap">
+      <h2 id="serv-titulo" class="nh-h2" data-i18n="idx.serv.titulo">Outros serviços</h2>
+      <div class="nh-servicos">
+        <article class="nh-servico">
+          <h3 class="nh-h3" data-i18n="idx.serv.sites_t">Sites</h3>
+          <p data-i18n="idx.serv.sites">Do layout ao servidor: sites e lojas completos, como este.</p>
+          <div class="nh-servico-links">
+            <a data-nh-wa="sites" class="nh-link" data-i18n="idx.serv.pedir">Pedir orçamento</a>
+            <a href="portif%C3%B3lio.html#vitrines" class="nh-link" data-i18n="idx.serv.ver">Ver trabalhos</a>
+          </div>
+        </article>
+        <article class="nh-servico">
+          <h3 class="nh-h3" data-i18n="idx.serv.arte_t">Arte digital</h3>
+          <p data-i18n="idx.serv.arte">Concept design, identidade visual, logos e ilustração.</p>
+          <div class="nh-servico-links">
+            <a data-nh-wa="arte" class="nh-link" data-i18n="idx.serv.pedir">Pedir orçamento</a>
+            <a href="portif%C3%B3lio.html#vitrines" class="nh-link" data-i18n="idx.serv.ver">Ver trabalhos</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- APOIO + NEWSLETTER -->
+  <section class="nh-secao" aria-labelledby="news-titulo">
+    <div class="nh-wrap nh-faixas">
+      <div class="nh-faixa">
+        <h2 class="nh-h3" data-i18n="idx.apoio.titulo">Apoie o projeto</h2>
+        <p data-i18n="idx.apoio.texto">Cada contribuição sustenta o universo NoHeroes e acelera tudo que está sendo construído.</p>
+        <a href="apoiar.html" class="nh-btn nh-btn-sec" data-i18n="idx.apoio.cta">Apoiar</a>
+      </div>
+      <form class="nh-faixa" id="formNews" novalidate>
+        <h2 id="news-titulo" class="nh-h3" data-i18n="idx.news.titulo">Novidades por e-mail</h2>
+        <p data-i18n="idx.news.texto">Novidades da obra, da loja e do estúdio no seu e-mail.</p>
+        <div class="nh-news-campos">
+          <label class="sr-only" for="newsNome" data-i18n="idx.news.nome">Seu nome</label>
+          <input id="newsNome" name="name" class="nh-input" autocomplete="name" placeholder="Seu nome" data-i18n-attr="placeholder:idx.news.nome" required>
+          <label class="sr-only" for="newsEmail" data-i18n="idx.news.email">Seu e-mail</label>
+          <input id="newsEmail" name="email" type="email" class="nh-input" autocomplete="email" placeholder="Seu e-mail" data-i18n-attr="placeholder:idx.news.email" required>
+          <input type="text" name="hp" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true">
+          <button class="nh-btn nh-btn-pri" type="submit" data-i18n="idx.news.cta">Assinar</button>
+        </div>
+        <p class="nh-form-msg" id="newsMsg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
 <nh-footer></nh-footer>
-  </main>
 
-<!-- Fundo animado (componente compartilhado) -->
-<nh-background></nh-background>
-<script defer src="assets/js/noheroes-ui.js"></script>
-<script src="assets/js/suporte-widget.js"></script>
-<script src="assets/js/cookies.js"></script>
- <script>  
-  // Scroll suave  
-  const scrollToSection = sectionId => {  
-    const sec = document.getElementById(sectionId);  
-    if (sec) sec.scrollIntoView({ behavior: 'smooth' });  
-  };  
-  
-  document.getElementById('footerYear') && (document.getElementById('footerYear').textContent = new Date().getFullYear());  
+<script>
+(function () {
+  'use strict';
+  const t = (k, v) => NHI18n.t(k, v);
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-  // O header/drawer e o fundo de brasas agora são componentes
-  // compartilhados (<nh-header>, <nh-background>) — ver assets/js/noheroes-ui.js.
-  // Aqui fica só o que é específico desta página.
-
-  // Movimento reduzido (usado também pelo reveal abaixo).
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  function revelarDeCima(selector) {
-  const elementos = document.querySelectorAll(selector);
-
-  // Sem animação para quem pediu movimento reduzido: mostra tudo de imediato.
-  if (prefersReducedMotion) {
-    elementos.forEach((el) => el.classList.add('entrou'));
-    return;
-  }
-
-  const observer = new IntersectionObserver((entradas) => {
-    entradas.forEach((entrada) => {
-      if (entrada.isIntersecting) {
-        entrada.target.classList.add('entrou');
-        observer.unobserve(entrada.target); // anima UMA vez só → fim do lag ao rolar
-      }
-    });
-  }, {
-    threshold: 0.15,                 // dispara assim que o bloco começa a aparecer
-    rootMargin: '0px 0px -10% 0px'   // antecipa um pouco a entrada, sensação mais fluida
-  });
-
-  elementos.forEach((el) => {
-    el.classList.add('invisivel', 'slide-top');
-    // Stagger leve só entre cards agrupados (ex.: os 4 da grade) — cascata elegante.
-    // Seções inteiras revelam sozinhas conforme a rolagem, então ficam sem atraso.
-    const irmaos = el.parentElement
-      ? Array.prototype.filter.call(el.parentElement.children, (c) => c.matches(selector))
-      : [el];
-    const ehGrupo = el.tagName !== 'SECTION' && irmaos.length > 1;
-    const indice = ehGrupo ? irmaos.indexOf(el) : 0;
-    el.style.setProperty('--reveal-delay', (Math.min(indice, 3) * 90) + 'ms');
-    observer.observe(el);
-  });
-}
-
-revelarDeCima('.reveal-top');
-
-function startGlitch() {
-  const atributos = document.querySelectorAll('.atributo');
-  const simbolos = ['⟟','⚠','Ж','∑','⍰','█','//','!!','??','>>','==','xx','ψ','ø','∆','¿'];
-
-  atributos.forEach(attr => {
-    const nome = attr.dataset.attr;
-    const number = document.createElement('div');
-    number.className = 'valor';
-    number.textContent = Math.floor(Math.random() * 99) + 1;
-    
-    const label = document.createElement('div');
-    label.textContent = nome;
-
-    attr.append(label, number);
-  });
-
-  function glitchLoop() {
-    const all = document.querySelectorAll('.atributo .valor');
-    const alvos = [...all].sort(() => 0.5 - Math.random()).slice(0, 2);
-
-    alvos.forEach(el => {
-      const original = el.textContent;
-      el.classList.add('glitch');
-
-      // glitch visual com símbolos bugados
-      const interval = setInterval(() => {
-        el.textContent = simbolos[Math.floor(Math.random() * simbolos.length)];
-      }, 50);
-
-      // depois volta com número novo
-      setTimeout(() => {
-        clearInterval(interval);
-        el.classList.remove('glitch');
-
-        let novo;
-        do {
-          novo = Math.floor(Math.random() * 99) + 1;
-        } while (novo == original);
-
-        el.textContent = novo;
-      }, 1000);
-    });
-
-    // repete a cada 2.5 segundos
-    setTimeout(glitchLoop, 2500);
-  }
-
-  glitchLoop();
-}
-
-window.addEventListener('DOMContentLoaded', startGlitch);
-
-  const produtos = [
-    { nome: "Manual do escritor", img: "assets/images/manual-basico-escritor.jpg" },
-    { nome: "ACDA", img: "assets/images/ACDA.jpg" },
-    { nome: "Manual das Sombras", img: "assets/images/manualsombras-thumb.jpg" },
-    { nome: "Sistema Vivo", img: "assets/images/sistemavivo-thumb.jpg" },
-    { nome: "Tudo Está Conectado", img: "assets/images/tudo-esta-conectado.jpg" }
+  // Destaques do portfólio de tatuagem (mesmas peças e legendas do portfólio).
+  const TATTOOS = [
+    ['tattoo-31', 'oriental', 'braco'], ['tattoo-08', 'realismo_dark', 'coxa'], ['tattoo-06', 'oriental', 'costas'],
+    ['tattoo-26', 'floral', 'braco'], ['tattoo-23', 'anime', 'peito'], ['tattoo-21', 'black_grey', 'clavicula'],
   ];
+  const ESTILOS = ['dark_fantasy', 'realismo_dark', 'oriental', 'blackwork', 'black_grey', 'fine_line', 'floral', 'lettering',
+    'caligrafia', 'kanji', 'anime', 'new_school', 'old_school', 'ornamental', 'sketch', 'cover_up'];
 
-  const inner = document.getElementById("carousel-inner");
-const total = produtos.length;
-const raio = 360 / total;
+  function renderTattoo() {
+    document.getElementById('galeriaTattoo').innerHTML = TATTOOS.map(([img, estilo, local]) => `
+      <li><figure>
+        <picture>
+          <source type="image/webp" srcset="assets/img/tattoos/${img}-320.webp 320w, assets/img/tattoos/${img}-480.webp 480w, assets/img/tattoos/${img}-960.webp 960w" sizes="(min-width: 1024px) 340px, (min-width: 640px) 30vw, 46vw">
+          <img src="assets/img/tattoos/${img}-480.jpg" alt="${esc(t('idx.tattoo.alt', { estilo: t('estilo.' + estilo), local: t('local.' + local) }))}" width="480" height="640" loading="lazy" decoding="async">
+        </picture>
+        <figcaption><strong>${esc(t('estilo.' + estilo))}</strong><span>${esc(t('local.' + local))}</span></figcaption>
+      </figure></li>`).join('');
+    document.getElementById('estilosTattoo').innerHTML = ESTILOS.map((e) => `<li>${esc(t('estilo.' + e))}</li>`).join('');
+  }
 
-produtos.forEach((p, i) => {
-  const card = document.createElement("div");
-  card.className = "glass-card";
-  const rotacao = i * raio;
-  const distancia = 300;
+  // Destaques da loja (/shop): até 4 itens disponíveis.
+  let produtos = null;
+  const img = (u) => {
+    if (!u) return '';
+    if (/^https?:\/\//.test(u)) return u.replace(/^https?:\/\/(www\.)?noheroes\.com\.br\//, '');
+    return u.replace(/^(www\.)?noheroes\.com\.br\//, '').replace(/^\//, '');
+  };
+  function renderLoja() {
+    const ul = document.getElementById('destaquesLoja');
+    if (!produtos) return;
+    if (!produtos.length) { ul.innerHTML = `<li class="nh-vazio">${esc(t('idx.loja.vazio'))}</li>`; return; }
+    ul.innerHTML = produtos.map((p) => {
+      const preco = p.has_variants && p.variants && p.variants.length
+        ? Math.min(...p.variants.map((v) => Number(v.price)))
+        : Number(p.discountReal != null ? p.discountReal : p.priceReal);
+      return `<li><a class="nh-produto" href="store.html">
+        <span class="nh-produto-img">${p.imageUrl ? `<img src="${esc(img(p.imageUrl))}" alt="" loading="lazy" decoding="async" width="300" height="400">` : ''}</span>
+        <span class="nh-selo ${p.fulfillment === 'physical' ? 'nh-selo-fisico' : 'nh-selo-digital'}">${esc(t(p.fulfillment === 'physical' ? 'idx.loja.fisico' : 'idx.loja.digital'))}</span>
+        <strong>${esc(p.name)}</strong>
+        <span class="nh-produto-preco">${p.has_variants ? esc(t('idx.loja.a_partir')) + ' ' : ''}${esc(NHI18n.brl(preco))}</span>
+      </a></li>`;
+    }).join('');
+  }
+  async function carregarLoja() {
+    try {
+      const r = await fetch(API_BASE + '/shop');
+      const j = await r.json();
+      produtos = (j.data || []).filter((p) => p.available !== false).slice(0, 4);
+    } catch (_) {
+      produtos = [];
+    }
+    renderLoja();
+  }
 
-  card.style.transform = `rotateY(${rotacao}deg) translateZ(${distancia}px)`;
-  card.innerHTML = `
-    <img src="${p.img}" alt="${p.nome}">
-  `;
+  // Newsletter
+  document.getElementById('formNews').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const f = e.target, msg = document.getElementById('newsMsg');
+    const nome = f.name.value.trim(), email = f.email.value.trim();
+    msg.className = 'nh-form-msg';
+    if (!nome) { msg.textContent = t('idx.news.erro_nome'); msg.classList.add('erro'); f.name.focus(); return; }
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { msg.textContent = t('idx.news.erro_email'); msg.classList.add('erro'); f.email.focus(); return; }
+    const btn = f.querySelector('button[type=submit]');
+    btn.disabled = true;
+    try {
+      const r = await fetch(API_BASE + '/api/email/newsletter/subscribe', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, name: nome, source: 'home', hp: f.hp.value }),
+      });
+      const j = await r.json().catch(() => ({}));
+      if (r.ok) { f.reset(); msg.textContent = t(j.code === 'NEWS_JA_INSCRITO' ? 'idx.news.ja' : 'idx.news.ok'); msg.classList.add('ok'); }
+      else { msg.textContent = NHI18n.erro(j, 'idx.news.erro'); msg.classList.add('erro'); }
+    } catch (_) {
+      msg.textContent = t('err.conexao'); msg.classList.add('erro');
+    } finally { btn.disabled = false; }
+  });
 
-  inner.appendChild(card);
-});
+  function render() { renderTattoo(); renderLoja(); }
+  document.addEventListener('nh:lang', render);
+  render();
+  carregarLoja();
+})();
 </script>
-  </body>  
-</html> 
+</body>
+</html>

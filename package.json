@@ -1,0 +1,12 @@
+{
+  "name": "noheroes-site",
+  "private": true,
+  "description": "Site estático NoHeroes (Cloudflare Pages, sem build no deploy: o CSS gerado é versionado).",
+  "scripts": {
+    "build:css": "tailwindcss -c tailwind.config.js -i assets/css/tw.src.css -o assets/css/tw.css --minify",
+    "watch:css": "tailwindcss -c tailwind.config.js -i assets/css/tw.src.css -o assets/css/tw.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}
