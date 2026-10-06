@@ -73,7 +73,12 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
 .char-card{position:relative;border-radius:12px;overflow:hidden;cursor:pointer;aspect-ratio:2/3;background:#0c0a10;border:1px solid rgba(255,255,255,0.07);transition:all 0.25s}
 .char-card:hover{border-color:rgba(143,79,255,0.5);transform:translateY(-4px)}
 .char-card img{width:100%;height:100%;object-fit:cover;display:block}
-.char-sem-foto{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Cinzel Decorative',serif;font-size:56px;color:rgba(196,163,255,0.35);background:radial-gradient(circle at 50% 35%,rgba(143,79,255,0.18),rgba(12,10,16,0) 70%)}
+.char-sem-foto{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding-bottom:40%;background:radial-gradient(circle at 50% 37%,rgba(143,79,255,0.24),transparent 60%),repeating-linear-gradient(135deg,rgba(255,255,255,0.022) 0 2px,transparent 2px 12px),#0c0a10;font-family:'Cinzel Decorative',serif;font-size:clamp(38px,9vw,64px);line-height:1}
+.char-sem-foto span{position:relative;z-index:1;background:linear-gradient(160deg,#f4ecff 10%,#c4a3ff 50%,#f0d99a 95%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 14px rgba(143,79,255,0.45))}
+.char-sem-foto::before{content:'';position:absolute;left:19%;top:16%;width:62%;aspect-ratio:1;border-radius:50%;border:1px solid rgba(217,181,90,0.5);box-shadow:0 0 0 6px rgba(143,79,255,0.07),inset 0 0 26px rgba(143,79,255,0.28)}
+.char-sem-foto::after{content:'';position:absolute;left:12%;top:11.3%;width:76%;aspect-ratio:1;border-radius:50%;border:1px dashed rgba(196,163,255,0.28);animation:selo-gira 60s linear infinite}
+@keyframes selo-gira{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.char-sem-foto::after{animation:none}}
 .char-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.92) 0%,rgba(0,0,0,0.2) 60%,transparent 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:12px}
 .char-name{font-family:'Cinzel Decorative',serif;font-size:12px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:0 0 2px}
 .char-role{font-size:10px;color:rgba(255,255,255,0.65);margin:0}
@@ -168,7 +173,6 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
 <nav id="sticky-nav" style="padding:0 20px;">
   <div style="display:flex;align-items:center;min-width:max-content;">
     <a class="nav-pill active" href="#comprar" data-i18n="acd.1">Comprar</a>
-    <a class="nav-pill" href="#trailer" data-i18n="acd.2">Trailer</a>
     <a class="nav-pill" href="#personagens" data-i18n="acd.3">Personagens</a>
     <a class="nav-pill" href="#atos" data-i18n="acd.4">A Saga</a>
     <a class="nav-pill" href="#universo" data-i18n="acd.5">O Universo</a>
@@ -247,7 +251,6 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path fill="none" stroke="currentColor" stroke-width="2" d="M14 2v6h6"/></svg>
           <span class="acda-price" data-i18n="acd.35">PDF — R$ 14,97</span>
         </a>
-        <span class="nh-raul" data-i18n-ignorar style="align-self:center;">[[RAUL: link do livro físico no Mercado Livre]]</span>
         <a class="btn-uiclap" href="https://loja.uiclap.com/titulo/ua145735" target="_blank" rel="noopener">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12V2zm-2 17H8v-2h8v2zm0-4H8v-2h8v2zm0-4H8V9h8v2z"/></svg>
           <span data-i18n="acd.37">Uiclap</span> <span class="badge" data-i18n="acd.36">FÍSICO</span>
@@ -313,7 +316,6 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
       <div id="tab-formatos" class="tab-pane">
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;" class="buy-grid">
           <div class="panel" style="padding:12px;text-align:center;"><div style="font-size:13px;font-weight:700;color:#c4a3ff;margin-bottom:4px;" data-i18n="acd.64">PDF</div><div style="font-size:11px;color:rgba(255,255,255,0.62);" data-i18n="acd.65">Compra na loja NoHeroes · Acesso no inventário</div></div>
-          <div class="panel" style="padding:12px;text-align:center;"><div style="font-size:13px;font-weight:700;color:#facc15;margin-bottom:4px;" data-i18n="acd.66">Físico — ML</div><div style="font-size:11px;color:rgba(255,255,255,0.62);" data-i18n="acd.67">Mercado Livre · Frete varia por região</div></div>
           <div class="panel" style="padding:12px;text-align:center;"><div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.6);margin-bottom:4px;" data-i18n="acd.68">Físico — Uiclap</div><div style="font-size:11px;color:rgba(255,255,255,0.62);" data-i18n="acd.69">Encomenda sob demanda · Prazo variável</div></div>
         </div>
       </div>
@@ -353,10 +355,12 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
 ══════════════════════════════════════════════ -->
 
 <!-- TRAILER -->
+<!-- Trailer oculto até o vídeo chegar: para mostrar, tire o <template> e volte a pílula "Trailer" na navegação. -->
+<template id="trailer-pendente">
 <section id="trailer" style="padding:32px 20px 48px;max-width:900px;margin:0 auto;">
   <div class="section-label reveal" style="text-align:center;" data-i18n="acd.79">Trailer & Prévia</div>
-  <p class="nh-raul" data-i18n-ignorar style="display:block;text-align:center;margin:8px auto 0;">[[RAUL: vídeo do trailer — arquivo .mp4 ou link do YouTube]]</p>
 </section>
+</template>
 
 <!-- PERSONAGENS -->
 <section id="personagens" style="padding:0 20px 48px;max-width:1100px;margin:0 auto;">
@@ -365,65 +369,64 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
     <h2 class="cinzel text-grad" style="font-size:clamp(18px,2.5vw,26px);margin:0;" data-i18n="acd.81">Quem habita Caelum</h2>
   </div>
 
-  <p class="nh-raul" data-i18n-ignorar style="display:block;margin:0 auto 14px;max-width:max-content;">[[RAUL: imagens dos 10 personagens (as atuais nunca foram enviadas ao site)]]</p>
   <div class="char-grid reveal">
     <!-- Azuos -->
     <div class="char-card" onclick="openChar('','Azuos','O portador da Marca Negra','Jovem vitalista atormentado por um segredo terrível. Carrega cicatrizes físicas e emocionais. Busca respostas sobre seu passado e sobre a entidade que habita sua alma.')">
-      <div class="char-sem-foto" aria-hidden="true">A</div>
+      <div class="char-sem-foto" aria-hidden="true"><span>A</span></div>
       <div class="char-overlay"><p class="char-name" data-i18n="acd.83">Azuos</p><p class="char-role" data-i18n="acd.84">O portador da Marca Negra</p></div>
       <div class="char-expand"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c4a3ff" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 9L15 3M3 15l6 6"/></svg></div>
     </div>
     <!-- ??? -->
     <div class="char-card" onclick="openChar('','???','Entidade desconhecida','Nada se sabe sobre sua origem. Sua presença causa inquietação entre magos e vitalistas. Tudo o que se tem são rumores... e cicatrizes deixadas para trás.')">
-      <div class="char-sem-foto" aria-hidden="true">?</div>
+      <div class="char-sem-foto" aria-hidden="true"><span>?</span></div>
       <div class="char-overlay"><p class="char-name">???</p><p class="char-role" data-i18n="acd.86">Entidade desconhecida</p></div>
       <div class="char-expand"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c4a3ff" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 9L15 3M3 15l6 6"/></svg></div>
     </div>
     <!-- Cerverus -->
     <div class="char-card" onclick="openChar('','Cerverus','O último dragão','Membro da realeza draconiana e um dos maiores guerreiros vivos. Mestre de Azuos, tornou-se uma figura paterna em sua jornada.')">
-      <div class="char-sem-foto" aria-hidden="true">C</div>
+      <div class="char-sem-foto" aria-hidden="true"><span>C</span></div>
       <div class="char-overlay"><p class="char-name" data-i18n="acd.88">Cerverus</p><p class="char-role" data-i18n="acd.89">O último dragão</p></div>
       <div class="char-expand"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c4a3ff" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 9L15 3M3 15l6 6"/></svg></div>
     </div>
     <!-- Sado -->
     <div class="char-card" onclick="openChar('','Sado','O irmão de armas','Vitalista do furto e parceiro fiel. Feroz em combate, leal no silêncio. Um espírito que encontrou em Azuos um propósito maior que a guerra.')">
-      <div class="char-sem-foto" aria-hidden="true">S</div>
+      <div class="char-sem-foto" aria-hidden="true"><span>S</span></div>
       <div class="char-overlay"><p class="char-name" data-i18n="acd.91">Sado</p><p class="char-role" data-i18n="acd.92">O irmão de armas</p></div>
       <div class="char-expand"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c4a3ff" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 9L15 3M3 15l6 6"/></svg></div>
     </div>
     <!-- Sakura -->
     <div class="char-card" onclick="openChar('','Sakura','A flor letal','Mestra prodígio do Clã da Lua, perita em técnicas de assassinato e furtividade. Move-se com precisão cirúrgica — beleza e morte num só gesto.')">
-      <div class="char-sem-foto" aria-hidden="true">S</div>
+      <div class="char-sem-foto" aria-hidden="true"><span>S</span></div>
       <div class="char-overlay"><p class="char-name" data-i18n="acd.94">Sakura</p><p class="char-role" data-i18n="acd.95">A flor letal</p></div>
       <div class="char-expand"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c4a3ff" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 9L15 3M3 15l6 6"/></svg></div>
     </div>
     <!-- Slyther -->
     <div class="char-card" onclick="openChar('','Slyther','A sombra que desafia','Rival impulsivo de Azuos. Ágil, venenoso e arrogante. Seu orgulho o coloca sempre em rota de colisão com aqueles que brilham mais que ele.')">
-      <div class="char-sem-foto" aria-hidden="true">S</div>
+      <div class="char-sem-foto" aria-hidden="true"><span>S</span></div>
       <div class="char-overlay"><p class="char-name" data-i18n="acd.97">Slyther</p><p class="char-role" data-i18n="acd.98">A sombra que desafia</p></div>
       <div class="char-expand"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c4a3ff" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 9L15 3M3 15l6 6"/></svg></div>
     </div>
     <!-- Runan -->
     <div class="char-card" onclick="openChar('','Runan','Guardião do Clã das Runas','Vitalista prodígio com poderes misteriosos. Seus feitos desafiam a lógica e sua presença intimida até os mais experientes.')">
-      <div class="char-sem-foto" aria-hidden="true">R</div>
+      <div class="char-sem-foto" aria-hidden="true"><span>R</span></div>
       <div class="char-overlay"><p class="char-name" data-i18n="acd.100">Runan</p><p class="char-role" data-i18n="acd.101">Guardião das Runas</p></div>
       <div class="char-expand"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c4a3ff" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 9L15 3M3 15l6 6"/></svg></div>
     </div>
     <!-- Yumi -->
     <div class="char-card" onclick="openChar('','Yumi','A lâmina do silêncio','Instrutora no Clã da Lua e guarda-costas de elite. Discreta, precisa e letal. Protege o que acredita com disciplina inabalável.')">
-      <div class="char-sem-foto" aria-hidden="true">Y</div>
+      <div class="char-sem-foto" aria-hidden="true"><span>Y</span></div>
       <div class="char-overlay"><p class="char-name" data-i18n="acd.103">Yumi</p><p class="char-role" data-i18n="acd.104">A lâmina do silêncio</p></div>
       <div class="char-expand"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c4a3ff" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 9L15 3M3 15l6 6"/></svg></div>
     </div>
     <!-- Kagemitsu -->
     <div class="char-card" onclick="openChar('','Kagemitsu','O general da Lua','Líder respeitado do Clã da Lua. Mentor de jovens guerreiros e símbolo de estratégia, equilíbrio e força entre os vitalistas.')">
-      <div class="char-sem-foto" aria-hidden="true">K</div>
+      <div class="char-sem-foto" aria-hidden="true"><span>K</span></div>
       <div class="char-overlay"><p class="char-name" data-i18n="acd.106">Kagemitsu</p><p class="char-role" data-i18n="acd.107">O general da Lua</p></div>
       <div class="char-expand"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c4a3ff" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 9L15 3M3 15l6 6"/></svg></div>
     </div>
     <!-- Koda -->
     <div class="char-card" onclick="openChar('','Koda','O sol que sangra','Vitalista misterioso com poderes do sangue e da luz. Ator dos bastidores, guardião silencioso dos escolhidos e executor do destino.')">
-      <div class="char-sem-foto" aria-hidden="true">K</div>
+      <div class="char-sem-foto" aria-hidden="true"><span>K</span></div>
       <div class="char-overlay"><p class="char-name" data-i18n="acd.109">Koda</p><p class="char-role" data-i18n="acd.110">O sol que sangra</p></div>
       <div class="char-expand"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c4a3ff" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 9L15 3M3 15l6 6"/></svg></div>
     </div>
@@ -708,7 +711,7 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
 
 // ─── STICKY NAV HIGHLIGHT ───
 const navPills=document.querySelectorAll('.nav-pill');
-const sections=['comprar','trailer','personagens','atos','universo','mundo'];
+const sections=['comprar','personagens','atos','universo','mundo'];
 window.addEventListener('scroll',()=>{
   let cur='';
   sections.forEach(id=>{

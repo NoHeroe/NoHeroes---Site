@@ -85,8 +85,6 @@ body.nh-pagina { background: var(--nh-bg); color: var(--nh-texto); font-family: 
 .nh-obra-capa img { width: 100%; height: auto; border-radius: 14px; border: 1px solid rgba(217,181,90,.35); box-shadow: 0 24px 60px rgba(0,0,0,.6), 0 0 40px rgba(143,79,255,.18); }
 .nh-obra-meta { margin-top: 6px; color: #f0d99a; font-size: .95rem; }
 .nh-sinopse { margin-top: 16px; max-width: 40rem; font-size: 1.04rem; line-height: 1.75; color: #e4def0; }
-.nh-sinopse-en-falta { display: none; margin-top: 8px; }
-html[lang="en"] .nh-sinopse-en-falta { display: block; }
 .nh-livro { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--nh-linha); display: grid; gap: 10px; justify-items: start; color: var(--nh-texto-2); }
 .nh-trilogia { margin-top: 56px; display: grid; gap: 20px; }
 @media (min-width: 900px) { .nh-trilogia { grid-template-columns: 1fr 1.1fr; gap: 48px; align-items: center; } }

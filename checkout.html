@@ -248,7 +248,7 @@
       const j = await r.json().catch(() => ({}));
       if (!r.ok) throw new Error(NHI18n.erro(j, 'ck.erro_frete'));
       st.frete = j.options || [];
-      if (!st.frete.length) { qs('#listaFrete').innerHTML = `<p class="text-sm text-white/65">${esc(t('ck.sem_frete'))} <a class="nh-link" href="suporte.html">${esc(t('nav.suporte'))}</a></p>`; resumo(); return; }
+      if (!st.frete.length) { qs('#listaFrete').innerHTML = `<p class="text-sm text-white/65">${esc(t(st.entrega === false ? 'ck.frete_breve' : 'ck.sem_frete'))} <a class="nh-link" href="suporte.html">${esc(t('nav.suporte'))}</a></p>`; resumo(); return; }
       st.freteId = st.frete[0].id;
       renderFrete();
     } catch (err) {
@@ -270,6 +270,7 @@
   async function carregarMetodos() {
     const j = await fetch(API_BASE + '/checkout/methods').then((r) => r.json());
     st.metodos = j.methods || [];
+    st.entrega = !!(j.shipping && j.shipping.available);
     st.metodo = st.metodos[0] ? st.metodos[0].id : null;
     renderMetodos(); resumo();
   }

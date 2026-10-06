@@ -334,15 +334,16 @@ ${DRAWER_HTML()}`;
     <div>
       <h2 class="nh-rodape-tit" data-i18n="rodape.redes_obra">${T('rodape.redes_obra')}</h2>
       <div class="flex gap-2">${C.redesObra.map(redeIcone).join('')}</div>
-      <h2 class="nh-rodape-tit mt-6" data-i18n="rodape.redes_tattoo">${T('rodape.redes_tattoo')}</h2>
-      ${C.redesTattoo.length ? `<div class="flex gap-2">${C.redesTattoo.map(redeIcone).join('')}</div>` : '<p class="nh-raul">[[RAUL: link do perfil de tatuagem]]</p>'}
+      ${C.redesTattoo.length ? `<h2 class="nh-rodape-tit mt-6" data-i18n="rodape.redes_tattoo">${T('rodape.redes_tattoo')}</h2>
+      <div class="flex gap-2">${C.redesTattoo.map(redeIcone).join('')}</div>` : ''}
       <h2 class="nh-rodape-tit mt-6" data-i18n="rodape.comunidade">${T('rodape.comunidade')}</h2>
       <div class="flex gap-2">${C.comunidade.map(redeIcone).join('')}</div>
     </div>
   </div>
   <div class="mx-auto max-w-6xl px-5 pb-10 flex flex-col sm:flex-row gap-3 sm:items-center justify-between text-xs text-white/60">
     <p><span data-i18n="rodape.lema">${T('rodape.lema')}</span></p>
-    <p>© <span data-nh-ano></span> NoHeroes. <span data-i18n="rodape.direitos">${T('rodape.direitos')}</span></p>
+    <p>© <span data-nh-ano></span> NoHeroes. <span data-i18n="rodape.direitos">${T('rodape.direitos')}</span>
+      <span class="block sm:inline sm:ml-2">Raul Takagi Sato Souza · CNPJ 69.178.558/0001-68</span></p>
   </div>
 </footer>`;
       const ano = this.querySelector('[data-nh-ano]');

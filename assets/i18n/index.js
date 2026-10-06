@@ -58,8 +58,8 @@
     'idx.obra.capa_alt': 'Anjo Devorador cover',
     'idx.obra.meta': 'A dark fantasy webnovel, published in chapters in Portuguese and English.',
     // Sinopse oficial em inglês ainda não informada: mostra o texto em português e o marcador.
-    'idx.obra.sinopse': 'The world is turning to ash. Between the roar of dragons and the corruption of the Voidrins, humanity clings to one last, mysterious hope of survival. At the heart of this chaos, the young Vitalist Azuos wakes up in a forest, with no memories and no destiny. As he fights not to be consumed by a dying world, Azuos searches for a purpose — but the closer he gets to the truth, the more he realizes his forgotten past may be a greater threat than the monsters crossing the skies.',
-    'idx.obra.raul_en': '[[RAUL: confirmar a sinopse oficial em inglês — a de cima é tradução da sinopse em português]]',
+    'idx.obra.sinopse': 'The world is turning to ash.<br>Amid the roar of dragons and the corruption of the Voidrins, humanity clings to one last, mysterious hope for survival.<br>At the heart of this chaos, the young Vitalist Azuos awakens in a forest with no memories and no destiny.<br>As he struggles not to be consumed by a dying world, Azuos searches for a purpose — but the closer he gets to the truth, the more he realizes that the forgotten past he left behind may be a greater threat than the monsters that roam the skies.',
+    'idx.tattoo.p3_onde': 'I work in Chapada dos Guimarães/MT and, by appointment, in Cuiabá/MT. A 50% deposit reserves the date and is deducted from the total.',
     'idx.obra.livro_t': 'The book: As Cinzas do Amanhã',
     'idx.obra.livro': 'ACDA is the heart of the NoHeroes universe — the work where it all began. Volume I is available as a PDF and in print (Portuguese).',
     'idx.obra.livro_cta': 'Buy the book',

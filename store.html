@@ -122,7 +122,7 @@
   const qsa = (s, el = document) => Array.from(el.querySelectorAll(s));
   const brl = (n) => NHI18n.brl(n);
   const esc = (s = '') => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  const st = { produtos: [], categorias: [], ativa: 'todas', aberto: null, erro: false, carregado: false };
+  const st = { produtos: [], categorias: [], ativa: 'todas', aberto: null, erro: false, carregado: false, entrega: false };
 
   const PLACEHOLDER = 'data:image/svg+xml;utf8,' + encodeURIComponent(
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300"><rect width="200" height="300" fill="#141018"/>' +
@@ -162,11 +162,14 @@
   }
 
   /* ---------- vitrine ---------- */
+  // Físico só vende com frete de entrega configurado no servidor (desconhecido = sem frete).
+  const semFrete = (p) => p.fulfillment === 'physical' && !st.entrega;
   function card(p, i) {
     const breve = emBreve(p), esgotado = !breve && !p.available;
     let botao;
     if (breve) botao = `<button class="lj-btn lj-btn-pri" disabled>${esc(t('loja.em_breve'))}</button>`;
     else if (esgotado) botao = `<button class="lj-btn lj-btn-pri" disabled>${esc(t('loja.esgotado'))}</button>`;
+    else if (semFrete(p)) botao = `<button class="lj-btn lj-btn-pri" disabled>${esc(t('loja.frete_breve'))}</button>`;
     else if (p.has_variants) botao = `<button class="lj-btn lj-btn-pri" data-abrir="${p.id}">${esc(t('loja.escolher'))}</button>`;
     else botao = `<button class="lj-btn lj-btn-pri" data-add="${p.id}">${esc(t('loja.adicionar'))}</button>`;
     const ml = urlSegura(p.marketplace_url)
@@ -251,6 +254,7 @@
     html += `<div class="lj-linha-preco"><span class="lj-preco">${preco != null ? brl(preco) : '—'}</span>${fonte && fonte.low_stock ? `<span class="lj-selo lj-selo-baixo">${esc(t('loja.ultimas'))}</span>` : ''}</div>`;
     if (emBreve(p)) html += `<button class="lj-btn lj-btn-pri w-full" disabled>${esc(t('loja.em_breve'))}</button>`;
     else if (!fonte || !fonte.available) html += `<button class="lj-btn lj-btn-pri w-full" disabled>${esc(t('loja.esgotado'))}</button>`;
+    else if (semFrete(p)) html += `<button class="lj-btn lj-btn-pri w-full" disabled>${esc(t('loja.frete_breve'))}</button>`;
     else {
       html += `<div class="lj-qtd-linha"><span class="lj-rotulo" style="margin:0" id="rotQtd">${esc(t('loja.quantidade'))}</span>
         <div class="lj-qtd" role="group" aria-labelledby="rotQtd"><button type="button" data-q="-1" aria-label="${esc(t('loja.diminuir'))}" ${modal.qtd <= 1 ? 'disabled' : ''}>−</button>
@@ -323,6 +327,11 @@
   /* ---------- carga ---------- */
   async function carregar() {
     st.erro = false;
+    // frete disponível? (falha ao consultar = trata como indisponível)
+    fetch(`${API_BASE}/checkout/methods`).then((r) => r.json()).then((j) => {
+      st.entrega = !!(j && j.shipping && j.shipping.available);
+      if (st.carregado) vitrine();
+    }).catch(() => { st.entrega = false; });
     try {
       const res = await fetch(`${API_BASE}/shop`);
       const json = await res.json();

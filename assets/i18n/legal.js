@@ -25,7 +25,7 @@
     'ter.s11': '11. Support and contact',
     'ter.s12': '12. General provisions',
     'ter.t1': '<p>NoHeroes is the label and studio of Raul Takagi Sato Souza, tattoo artist and writer. Through www.noheroes.com.br we sell e-books, books and physical products, and share information about the works and about tattoo booking.</p>'
-      + '<p>Responsible party: <span class="nh-raul">[[RAUL: nome empresarial ou nome completo, CNPJ ou CPF e endereço para contato]]</span>. Contact: eco.noheroes@gmail.com.</p>'
+      + '<p>Responsible party: Raul Takagi Sato Souza, CNPJ (Brazilian company ID) 69.178.558/0001-68, address: Pousada Cantos da Mata, Chácara Japuira, Lote 003, Vale do Jamaca, Chapada dos Guimarães/MT, Brazil, postal code 78195-000. Contact: eco.noheroes@gmail.com.</p>'
       + '<p>By using the website or buying, you agree to these terms and to the <a class="nh-link" href="privacidade.html">Privacy policy</a>.</p>',
     'ter.t2': '<p>You need an account with a confirmed email to buy. The account is personal: keep your password safe and tell support if you suspect misuse. You must be at least 16 years old.</p>'
       + '<p>You can sign in with email and password or with Google, and you can delete your account at any time from your profile. We may suspend accounts used for fraud, abuse or breach of these terms.</p>',
@@ -35,13 +35,13 @@
     'ter.t4': '<p>Payment is processed by Mercado Pago (card, Pix or boleto), on its own platform. We do not receive or store card details.</p>'
       + '<p>When offered, direct Pix shows a QR code and a copy-and-paste code; the order is confirmed once the payment is verified.</p>',
     'ter.t5': '<p>Physical products ship to addresses in Brazil. The shipping cost and delivery time show at checkout, before you confirm, and the delivery time starts after payment approval.</p>'
-      + '<p>When the order ships, the tracking code and link appear in My purchases and are sent by email. Check your address before confirming: delivery to a wrongly entered address may require new shipping.</p>'
-      + '<p><span class="nh-raul">[[RAUL: opção de retirada (local e horários), se houver]]</span></p>',
+      + '<p>When the order ships, the tracking code and link appear in My purchases and are sent by email. Check your address before confirming: delivery to a wrongly entered address may require new shipping.</p>',
     'ter.t6': '<p>Online purchases can be cancelled within 7 (seven) days of receiving the product or of the purchase, under art. 49 of the Brazilian Consumer Protection Code. The amounts paid, including outbound shipping, are refunded.</p>'
-      + '<p>To cancel, open a ticket at <a class="nh-link" href="suporte.html#abrir">support</a> with your order number. Physical products must be returned unused, with their packaging and accompanying items. <span class="nh-raul">[[RAUL: endereço para devolução e forma de envio de volta]]</span></p>'
+      + '<p>To cancel, open a ticket at <a class="nh-link" href="suporte.html#abrir">support</a> with your order number. Physical products must be returned unused, with their packaging and accompanying items, to the address of the responsible party (section 1). When you cancel, return shipping is on us: we arrange it through support.</p>'
+      + '<p>Purchases made on Mercado Livre follow the Mercado Livre return policy.</p>'
       + '<p>For e-books, access to the file ends when the refund is made.</p>',
-    'ter.t7': '<p>A product that is defective, damaged in transit or different from the listing can be claimed within the periods of the Brazilian Consumer Protection Code (30 days for non-durable and 90 days for durable products). Send photos and your order number through support; we resolve it with a replacement, a partial refund or a full refund.</p>'
-      + '<p>Exchanges by preference (size or color, for example) depend on stock. <span class="nh-raul">[[RAUL: regras de troca por tamanho/cor, se houver]]</span></p>',
+    'ter.t7': '<p>A product that is defective, damaged in transit or different from the listing can be claimed within the periods of the Brazilian Consumer Protection Code (30 days for non-durable and 90 days for durable products). Send photos and your order number through support; we resolve it with a replacement, a partial refund or a full refund, and return shipping is on us.</p>'
+      + '<p>Exchanges by preference (size or color, for example) depend on stock, and the customer pays the shipping for the exchange.</p>',
     'ter.t8': '<p>E-books are released in your account Library after payment approval. The license is personal and non-transferable: reselling, sharing publicly or distributing the files is forbidden.</p>'
       + '<p>If an order is refunded or disputed, access to the digital products in that order ends.</p>',
     'ter.t9': '<p>Tattoos, websites and digital art are arranged directly with Raul (WhatsApp or form). Prices, deadlines, deposit and rescheduling are agreed case by case before the service. The website does not sell tattoo sessions.</p>',
@@ -63,7 +63,7 @@
     'pri.s8': '8. Security',
     'pri.s9': '9. Minimum age',
     'pri.s10': '10. Changes to this policy',
-    'pri.t1': '<p>The controller of the data processed at www.noheroes.com.br is NoHeroes, the label and studio of Raul Takagi Sato Souza. <span class="nh-raul">[[RAUL: nome empresarial ou nome completo, CNPJ ou CPF e endereço]]</span></p>'
+    'pri.t1': '<p>The controller of the data processed at www.noheroes.com.br is NoHeroes, the label and studio of Raul Takagi Sato Souza, CNPJ (Brazilian company ID) 69.178.558/0001-68, address: Pousada Cantos da Mata, Chácara Japuira, Lote 003, Vale do Jamaca, Chapada dos Guimarães/MT, Brazil, postal code 78195-000.</p>'
       + '<p>For anything about your data, write to eco.noheroes@gmail.com or open a ticket at <a class="nh-link" href="suporte.html#abrir">support</a> with the topic “Privacy and data”.</p>',
     'pri.t2': '<ul>'
       + '<li><strong>Account:</strong> name, username, email, date of birth, password (stored only in encrypted form) or Google account identifier, language and notification preferences.</li>'
