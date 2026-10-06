@@ -3,10 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>ACDA — As Cinzas do Amanhã | NoHeroes</title>
-<meta name="description" content="ACDA é o coração do universo NoHeroes. Fantasia sombria com ação, mistério e um mundo construído em camadas.">
+<title data-i18n="acd.meta.titulo">ACDA — As Cinzas do Amanhã | NoHeroes</title>
+<meta name="description" content="ACDA é o coração do universo NoHeroes. Fantasia sombria com ação, mistério e um mundo construído em camadas." data-i18n-attr="content:acd.meta.descricao">
+<link rel="canonical" href="https://www.noheroes.com.br/acda">
+<link rel="alternate" hreflang="pt-BR" href="https://www.noheroes.com.br/acda">
+<link rel="alternate" hreflang="en" href="https://www.noheroes.com.br/acda?lang=en">
+<link rel="alternate" hreflang="x-default" href="https://www.noheroes.com.br/acda">
+<meta property="og:type" content="book">
+<meta property="og:site_name" content="NoHeroes">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:url" content="https://www.noheroes.com.br/acda">
+<meta property="og:title" content="ACDA — As Cinzas do Amanhã" data-i18n-attr="content:acd.og.titulo">
+<meta property="og:description" content="ACDA é o coração do universo NoHeroes. Fantasia sombria com ação, mistério e um mundo construído em camadas." data-i18n-attr="content:acd.meta.descricao">
+<meta property="og:image" content="https://www.noheroes.com.br/assets/img/og/og-noheroes.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ACDA — As Cinzas do Amanhã" data-i18n-attr="content:acd.og.titulo">
+<meta name="twitter:description" content="ACDA é o coração do universo NoHeroes. Fantasia sombria com ação, mistério e um mundo construído em camadas." data-i18n-attr="content:acd.meta.descricao">
+<meta name="twitter:image" content="https://www.noheroes.com.br/assets/img/og/og-noheroes.jpg">
+<meta name="theme-color" content="#07060a">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/assets/img/og/apple-touch-icon.png">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
 <style>
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -53,6 +73,7 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
 .char-card{position:relative;border-radius:12px;overflow:hidden;cursor:pointer;aspect-ratio:2/3;background:#0c0a10;border:1px solid rgba(255,255,255,0.07);transition:all 0.25s}
 .char-card:hover{border-color:rgba(143,79,255,0.5);transform:translateY(-4px)}
 .char-card img{width:100%;height:100%;object-fit:cover;display:block}
+.char-sem-foto{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Cinzel Decorative',serif;font-size:56px;color:rgba(196,163,255,0.35);background:radial-gradient(circle at 50% 35%,rgba(143,79,255,0.18),rgba(12,10,16,0) 70%)}
 .char-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.92) 0%,rgba(0,0,0,0.2) 60%,transparent 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:12px}
 .char-name{font-family:'Cinzel Decorative',serif;font-size:12px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:0 0 2px}
 .char-role{font-size:10px;color:rgba(255,255,255,0.45);margin:0}
@@ -127,36 +148,30 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
   .vol-grid{grid-template-columns:repeat(2,1fr)!important}
 }
 </style>
+<link rel="stylesheet" href="assets/css/tw.css">
 <link rel="stylesheet" href="assets/css/noheroes-ui.css">
 <script defer src="assets/js/noheroes-ui.js"></script>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/i18n/comum.js"></script>
+<script src="assets/i18n/acda.js"></script>
+<script src="assets/js/config.js"></script>
 </head>
 <body>
 <!-- Fundo + menu lateral (componentes compartilhados) -->
 <nh-background></nh-background>
-<nh-drawer></nh-drawer>
 
 <!-- HEADER -->
-<header style="position:fixed;top:0;left:0;right:0;z-index:60;height:64px;background:rgba(7,6,10,0.9);border-bottom:1px solid rgba(255,255,255,0.06);backdrop-filter:blur(12px);display:flex;align-items:center;">
-  <div style="max-width:1200px;margin:0 auto;width:100%;padding:0 20px;display:flex;align-items:center;justify-content:space-between;">
-    <a href="/" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
-      <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#8f4fff,#d9b55a);box-shadow:0 0 16px rgba(143,79,255,0.3);flex-shrink:0;"></div>
-      <span class="cinzel" style="font-size:16px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">NoHeroes</span>
-    </a>
-    <button data-nh-drawer-toggle aria-label="Abrir menu" style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-    </button>
-  </div>
-</header>
+<nh-header></nh-header>
 
 <!-- STICKY NAV -->
 <nav id="sticky-nav" style="padding:0 20px;">
   <div style="display:flex;align-items:center;min-width:max-content;">
-    <a class="nav-pill active" href="#comprar">Comprar</a>
-    <a class="nav-pill" href="#trailer">Trailer</a>
-    <a class="nav-pill" href="#personagens">Personagens</a>
-    <a class="nav-pill" href="#atos">A Saga</a>
-    <a class="nav-pill" href="#universo">O Universo</a>
-    <a class="nav-pill" href="#mundo">A Obra</a>
+    <a class="nav-pill active" href="#comprar" data-i18n="acd.1">Comprar</a>
+    <a class="nav-pill" href="#trailer" data-i18n="acd.2">Trailer</a>
+    <a class="nav-pill" href="#personagens" data-i18n="acd.3">Personagens</a>
+    <a class="nav-pill" href="#atos" data-i18n="acd.4">A Saga</a>
+    <a class="nav-pill" href="#universo" data-i18n="acd.5">O Universo</a>
+    <a class="nav-pill" href="#mundo" data-i18n="acd.6">A Obra</a>
   </div>
 </nav>
 
@@ -171,32 +186,32 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
 
   <!-- Saga volumes -->
   <div style="margin-bottom:28px;" class="reveal">
-    <div class="section-label" style="margin-bottom:10px;">Saga ACDA — 5 Volumes</div>
+    <div class="section-label" style="margin-bottom:10px;" data-i18n="acd.7">Saga ACDA — 5 Volumes</div>
     <div class="vol-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;">
       <div class="vol-card active">
-        <div class="vol-num">Vol. I</div>
-        <div class="vol-title">As Cinzas do Amanhã</div>
-        <span class="vol-badge" style="background:rgba(74,222,128,0.1);color:#4ade80;border:1px solid rgba(74,222,128,0.25);">Disponível</span>
+        <div class="vol-num" data-i18n="acd.8">Vol. I</div>
+        <div class="vol-title" data-i18n="acd.9">As Cinzas do Amanhã</div>
+        <span class="vol-badge" style="background:rgba(74,222,128,0.1);color:#4ade80;border:1px solid rgba(74,222,128,0.25);" data-i18n="acd.10">Disponível</span>
       </div>
       <div class="vol-card">
-        <div class="vol-num">Vol. II</div>
-        <div class="vol-title">Ato II</div>
-        <span class="vol-badge" style="background:rgba(251,191,36,0.08);color:#fbbf24;border:1px solid rgba(251,191,36,0.2);">Em produção</span>
+        <div class="vol-num" data-i18n="acd.11">Vol. II</div>
+        <div class="vol-title" data-i18n="acd.12">Ato II</div>
+        <span class="vol-badge" style="background:rgba(251,191,36,0.08);color:#fbbf24;border:1px solid rgba(251,191,36,0.2);" data-i18n="acd.13">Em produção</span>
       </div>
       <div class="vol-card">
-        <div class="vol-num">Vol. III</div>
-        <div class="vol-title">Ato III</div>
-        <span class="vol-badge" style="background:rgba(255,255,255,0.03);color:rgba(255,255,255,0.3);border:1px solid rgba(255,255,255,0.08);">Em breve</span>
+        <div class="vol-num" data-i18n="acd.14">Vol. III</div>
+        <div class="vol-title" data-i18n="acd.15">Ato III</div>
+        <span class="vol-badge" style="background:rgba(255,255,255,0.03);color:rgba(255,255,255,0.3);border:1px solid rgba(255,255,255,0.08);" data-i18n="acd.16">Em breve</span>
       </div>
       <div class="vol-card">
-        <div class="vol-num">Vol. IV</div>
-        <div class="vol-title">Ato IV</div>
-        <span class="vol-badge" style="background:rgba(255,255,255,0.03);color:rgba(255,255,255,0.3);border:1px solid rgba(255,255,255,0.08);">Em breve</span>
+        <div class="vol-num" data-i18n="acd.17">Vol. IV</div>
+        <div class="vol-title" data-i18n="acd.18">Ato IV</div>
+        <span class="vol-badge" style="background:rgba(255,255,255,0.03);color:rgba(255,255,255,0.3);border:1px solid rgba(255,255,255,0.08);" data-i18n="acd.19">Em breve</span>
       </div>
       <div class="vol-card">
-        <div class="vol-num">Vol. V</div>
-        <div class="vol-title">Ato V</div>
-        <span class="vol-badge" style="background:rgba(255,255,255,0.03);color:rgba(255,255,255,0.3);border:1px solid rgba(255,255,255,0.08);">Em breve</span>
+        <div class="vol-num" data-i18n="acd.20">Vol. V</div>
+        <div class="vol-title" data-i18n="acd.21">Ato V</div>
+        <span class="vol-badge" style="background:rgba(255,255,255,0.03);color:rgba(255,255,255,0.3);border:1px solid rgba(255,255,255,0.08);" data-i18n="acd.22">Em breve</span>
       </div>
     </div>
   </div>
@@ -206,41 +221,38 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
 
     <!-- Capa -->
     <div class="hero-capa reveal">
-      <img src="assets/images/ACDA.jpg" alt="Capa ACDA — As Cinzas do Amanhã" style="width:100%;border-radius:14px;border:1px solid rgba(143,79,255,0.2);box-shadow:0 20px 60px rgba(0,0,0,0.6);">
+      <img src="assets/img/acda-480.webp" alt="Capa ACDA — As Cinzas do Amanhã" style="width:100%;border-radius:14px;border:1px solid rgba(143,79,255,0.2);box-shadow:0 20px 60px rgba(0,0,0,0.6);" data-i18n-attr="alt:acd.23">
       <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px;">
-        <span class="chip">PDF · 402 págs</span>
-        <span class="chip">Dark Fantasy</span>
-        <span class="chip">Lore NoHeroes</span>
+        <span class="chip" data-i18n="acd.24">PDF · 402 págs</span>
+        <span class="chip" data-i18n="acd.25">Dark Fantasy</span>
+        <span class="chip" data-i18n="acd.26">Lore NoHeroes</span>
       </div>
     </div>
 
     <!-- Copy -->
     <div class="reveal">
-      <div class="section-label">Volume I — Disponível Agora</div>
-      <h1 class="cinzel text-grad" style="font-size:clamp(22px,3.5vw,38px);margin:0 0 16px;line-height:1.2;">As Cinzas do Amanhã</h1>
-      <p style="font-size:15px;color:rgba(255,255,255,0.6);line-height:1.75;margin:0 0 12px;"><strong style="color:rgba(255,255,255,0.85);">ACDA</strong> é o coração do universo NoHeroes — a obra que deu origem a tudo. Fantasia sombria com ação, mistério e um mundo construído em camadas: clãs, runas, feras, política e forças antigas que não deveriam acordar.</p>
-      <p style="font-size:14px;color:rgba(255,255,255,0.5);line-height:1.75;margin:0 0 20px;">A história acompanha <strong style="color:rgba(255,255,255,0.7);">Azuos</strong>, encontrado após sair da floresta com marcas e silêncio demais, sendo empurrado para dentro de um sistema de poder onde <strong style="color:rgba(255,255,255,0.7);">nada é gratuito</strong> — nem o talento, nem a proteção, nem a verdade.</p>
+      <div class="section-label" data-i18n="acd.27">Volume I — Disponível Agora</div>
+      <h1 class="cinzel text-grad" style="font-size:clamp(22px,3.5vw,38px);margin:0 0 16px;line-height:1.2;" data-i18n="acd.28">As Cinzas do Amanhã</h1>
+      <p style="font-size:15px;color:rgba(255,255,255,0.6);line-height:1.75;margin:0 0 12px;" data-i18n-html="acd.29"><strong style="color:rgba(255,255,255,0.85);">ACDA</strong> é o coração do universo NoHeroes — a obra que deu origem a tudo. Fantasia sombria com ação, mistério e um mundo construído em camadas: clãs, runas, feras, política e forças antigas que não deveriam acordar.</p>
+      <p style="font-size:14px;color:rgba(255,255,255,0.5);line-height:1.75;margin:0 0 20px;" data-i18n-html="acd.30">A história acompanha <strong style="color:rgba(255,255,255,0.7);">Azuos</strong>, encontrado após sair da floresta com marcas e silêncio demais, sendo empurrado para dentro de um sistema de poder onde <strong style="color:rgba(255,255,255,0.7);">nada é gratuito</strong> — nem o talento, nem a proteção, nem a verdade.</p>
 
       <div style="background:rgba(143,79,255,0.06);border:1px solid rgba(143,79,255,0.15);border-radius:10px;padding:12px 14px;margin-bottom:20px;font-size:12px;color:rgba(255,255,255,0.4);">
-        Linha da saga: <span style="color:#f0d99a;font-weight:600;">Ato I — Equilíbrio Rompido</span> → <span style="color:rgba(255,255,255,0.35);">Ato II</span> → <span style="color:rgba(255,255,255,0.35);">Ato III — A Legião Negra</span>
+        <span data-i18n="acd.34">Linha da saga:</span> <span style="color:#f0d99a;font-weight:600;" data-i18n="acd.31">Ato I — Equilíbrio Rompido</span> → <span style="color:rgba(255,255,255,0.35);" data-i18n="acd.32">Ato II</span> → <span style="color:rgba(255,255,255,0.35);" data-i18n="acd.33">Ato III — A Legião Negra</span>
       </div>
 
       <!-- CTAs -->
       <div class="buy-grid" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px;">
         <a class="btn-primary" href="store.html">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path fill="none" stroke="currentColor" stroke-width="2" d="M14 2v6h6"/></svg>
-          <span class="acda-price">PDF — R$ 14,97</span>
+          <span class="acda-price" data-i18n="acd.35">PDF — R$ 14,97</span>
         </a>
-        <a class="btn-ml" href="ML_URL_AQUI" target="_blank" rel="noopener">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 7V6a6 6 0 0112 0v1h2l-1.2 14.4A2 2 0 0116.8 23H7.2a2 2 0 01-2-1.6L4 7h2zm2 0h8V6a4 4 0 00-8 0v1z"/></svg>
-          Mercado Livre <span class="badge">FÍSICO</span>
-        </a>
+        <span class="nh-raul" data-i18n-ignorar style="align-self:center;">[[RAUL: link do livro físico no Mercado Livre]]</span>
         <a class="btn-uiclap" href="https://loja.uiclap.com/titulo/ua145735" target="_blank" rel="noopener">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12V2zm-2 17H8v-2h8v2zm0-4H8v-2h8v2zm0-4H8V9h8v2z"/></svg>
-          Uiclap <span class="badge">FÍSICO</span>
+          <span data-i18n="acd.37">Uiclap</span> <span class="badge" data-i18n="acd.36">FÍSICO</span>
         </a>
       </div>
-      <p style="font-size:11px;color:rgba(255,255,255,0.25);">PDF: acesso no inventário após compra · Físico: compra externa, prazo varia por plataforma</p>
+      <p style="font-size:11px;color:rgba(255,255,255,0.25);" data-i18n="acd.38">PDF: acesso no inventário após compra · Físico: compra externa, prazo varia por plataforma</p>
     </div>
   </div>
 
@@ -249,21 +261,21 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
     <!-- Grid de cards informativos -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;" class="buy-grid">
       <div class="glass-card">
-        <h3 class="cinzel text-grad" style="font-size:14px;margin:0 0 14px;">Por que ACDA é a obra-pilar</h3>
+        <h3 class="cinzel text-grad" style="font-size:14px;margin:0 0 14px;" data-i18n="acd.39">Por que ACDA é a obra-pilar</h3>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-          <div class="panel" style="padding:10px;font-size:12px;color:rgba(255,255,255,0.55);"><strong style="color:rgba(255,255,255,0.8);">O palco:</strong> cidades que respiram mana e tecnologia mágica, tensão real por baixo.</div>
-          <div class="panel" style="padding:10px;font-size:12px;color:rgba(255,255,255,0.55);"><strong style="color:rgba(255,255,255,0.8);">A muralha:</strong> cúpulas surgem como resposta às ameaças — dragões e voidrins.</div>
-          <div class="panel" style="padding:10px;font-size:12px;color:rgba(255,255,255,0.55);"><strong style="color:rgba(255,255,255,0.8);">O poder:</strong> vitalistas nascem com dom único e perigoso — reorganizando hierarquias.</div>
-          <div class="panel" style="padding:10px;font-size:12px;color:rgba(255,255,255,0.55);"><strong style="color:rgba(255,255,255,0.8);">O conflito:</strong> o torneio não é só luta — é política, vitrine e armadilha.</div>
+          <div class="panel" style="padding:10px;font-size:12px;color:rgba(255,255,255,0.55);" data-i18n-html="acd.40"><strong style="color:rgba(255,255,255,0.8);">O palco:</strong> cidades que respiram mana e tecnologia mágica, tensão real por baixo.</div>
+          <div class="panel" style="padding:10px;font-size:12px;color:rgba(255,255,255,0.55);" data-i18n-html="acd.41"><strong style="color:rgba(255,255,255,0.8);">A muralha:</strong> cúpulas surgem como resposta às ameaças — dragões e voidrins.</div>
+          <div class="panel" style="padding:10px;font-size:12px;color:rgba(255,255,255,0.55);" data-i18n-html="acd.42"><strong style="color:rgba(255,255,255,0.8);">O poder:</strong> vitalistas nascem com dom único e perigoso — reorganizando hierarquias.</div>
+          <div class="panel" style="padding:10px;font-size:12px;color:rgba(255,255,255,0.55);" data-i18n-html="acd.43"><strong style="color:rgba(255,255,255,0.8);">O conflito:</strong> o torneio não é só luta — é política, vitrine e armadilha.</div>
         </div>
       </div>
       <div class="glass-card">
-        <h3 class="cinzel text-grad" style="font-size:14px;margin:0 0 14px;">O que você vai encontrar</h3>
+        <h3 class="cinzel text-grad" style="font-size:14px;margin:0 0 14px;" data-i18n="acd.44">O que você vai encontrar</h3>
         <div style="display:flex;flex-direction:column;gap:8px;">
-          <div style="font-size:12px;color:rgba(255,255,255,0.55);padding:8px 10px;background:rgba(255,255,255,0.02);border-radius:8px;border-left:2px solid rgba(143,79,255,0.4);"><strong style="color:rgba(255,255,255,0.8);">Lunaris Fortuna:</strong> cidade construída com a natureza — arquitetura e mana integradas.</div>
-          <div style="font-size:12px;color:rgba(255,255,255,0.55);padding:8px 10px;background:rgba(255,255,255,0.02);border-radius:8px;border-left:2px solid rgba(217,181,90,0.4);"><strong style="color:rgba(255,255,255,0.8);">Vitalismo:</strong> dom inato que ignora regras — pode ser "absorvido" em confrontos.</div>
-          <div style="font-size:12px;color:rgba(255,255,255,0.55);padding:8px 10px;background:rgba(255,255,255,0.02);border-radius:8px;border-left:2px solid rgba(143,79,255,0.4);"><strong style="color:rgba(255,255,255,0.8);">Clãs em guerra fria:</strong> símbolos, títulos, arena e hierarquia que definem a saga.</div>
-          <div style="font-size:12px;color:rgba(255,255,255,0.55);padding:8px 10px;background:rgba(255,255,255,0.02);border-radius:8px;border-left:2px solid rgba(217,181,90,0.4);"><strong style="color:rgba(255,255,255,0.8);">Ameaças reais:</strong> dragões, marionetes e presenças nas sombras — o perigo não é teoria.</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.55);padding:8px 10px;background:rgba(255,255,255,0.02);border-radius:8px;border-left:2px solid rgba(143,79,255,0.4);" data-i18n-html="acd.45"><strong style="color:rgba(255,255,255,0.8);">Lunaris Fortuna:</strong> cidade construída com a natureza — arquitetura e mana integradas.</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.55);padding:8px 10px;background:rgba(255,255,255,0.02);border-radius:8px;border-left:2px solid rgba(217,181,90,0.4);" data-i18n-html="acd.46"><strong style="color:rgba(255,255,255,0.8);">Vitalismo:</strong> dom inato que ignora regras — pode ser "absorvido" em confrontos.</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.55);padding:8px 10px;background:rgba(255,255,255,0.02);border-radius:8px;border-left:2px solid rgba(143,79,255,0.4);" data-i18n-html="acd.47"><strong style="color:rgba(255,255,255,0.8);">Clãs em guerra fria:</strong> símbolos, títulos, arena e hierarquia que definem a saga.</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.55);padding:8px 10px;background:rgba(255,255,255,0.02);border-radius:8px;border-left:2px solid rgba(217,181,90,0.4);" data-i18n-html="acd.48"><strong style="color:rgba(255,255,255,0.8);">Ameaças reais:</strong> dragões, marionetes e presenças nas sombras — o perigo não é teoria.</div>
         </div>
       </div>
     </div>
@@ -271,37 +283,37 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
     <!-- Tabs -->
     <div class="glass-card">
       <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;">
-        <button class="tab-btn active" onclick="switchTab(this,'tab-sumario')">Sumário</button>
-        <button class="tab-btn" onclick="switchTab(this,'tab-paraquem')">Para quem é</button>
-        <button class="tab-btn" onclick="switchTab(this,'tab-formatos')">Formatos & Entrega</button>
+        <button class="tab-btn active" onclick="switchTab(this,'tab-sumario')" data-i18n="acd.49">Sumário</button>
+        <button class="tab-btn" onclick="switchTab(this,'tab-paraquem')" data-i18n="acd.50">Para quem é</button>
+        <button class="tab-btn" onclick="switchTab(this,'tab-formatos')" data-i18n="acd.51">Formatos & Entrega</button>
       </div>
       <div style="height:1px;background:rgba(255,255,255,0.06);margin-bottom:16px;"></div>
 
       <div id="tab-sumario" class="tab-pane active">
         <ol style="display:grid;grid-template-columns:1fr 1fr;gap:8px;list-style:decimal;padding-left:18px;font-size:13px;color:rgba(255,255,255,0.55);" class="buy-grid">
-          <li>Entrada no mundo — Azuos e o "ponto sem volta"</li>
-          <li>Lunaris Fortuna — neutralidade, brilho e tensão</li>
-          <li>Cúpulas/Barreiras — a solução que virou narrativa oficial</li>
-          <li>Clãs e hierarquias — símbolos, títulos e seleção</li>
-          <li>Magia vs Vitalismo — dom inato, regras ignoradas e medo</li>
-          <li>Confrontos — vitrine, política e armadilhas</li>
-          <li>Ameaças emergentes — marionetes, dragões e observadores</li>
-          <li>Fechamento do Ato I — o estopim do que vem depois</li>
+          <li data-i18n="acd.52">Entrada no mundo — Azuos e o "ponto sem volta"</li>
+          <li data-i18n="acd.53">Lunaris Fortuna — neutralidade, brilho e tensão</li>
+          <li data-i18n="acd.54">Cúpulas/Barreiras — a solução que virou narrativa oficial</li>
+          <li data-i18n="acd.55">Clãs e hierarquias — símbolos, títulos e seleção</li>
+          <li data-i18n="acd.56">Magia vs Vitalismo — dom inato, regras ignoradas e medo</li>
+          <li data-i18n="acd.57">Confrontos — vitrine, política e armadilhas</li>
+          <li data-i18n="acd.58">Ameaças emergentes — marionetes, dragões e observadores</li>
+          <li data-i18n="acd.59">Fechamento do Ato I — o estopim do que vem depois</li>
         </ol>
       </div>
       <div id="tab-paraquem" class="tab-pane">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;" class="buy-grid">
-          <div class="panel" style="padding:10px;font-size:13px;color:rgba(255,255,255,0.55);">Leitores de dark fantasy que gostam de sistema de poder e consequências.</div>
-          <div class="panel" style="padding:10px;font-size:13px;color:rgba(255,255,255,0.55);">Quem quer a obra-origem do universo NoHeroes (a base da lore).</div>
-          <div class="panel" style="padding:10px;font-size:13px;color:rgba(255,255,255,0.55);">Fãs de clãs/facções, intriga e competição tensa — sem "herói perfeito".</div>
-          <div class="panel" style="padding:10px;font-size:13px;color:rgba(255,255,255,0.55);">Quem curte mundos vivos, magia com regras e ameaça constante.</div>
+          <div class="panel" style="padding:10px;font-size:13px;color:rgba(255,255,255,0.55);" data-i18n="acd.60">Leitores de dark fantasy que gostam de sistema de poder e consequências.</div>
+          <div class="panel" style="padding:10px;font-size:13px;color:rgba(255,255,255,0.55);" data-i18n="acd.61">Quem quer a obra-origem do universo NoHeroes (a base da lore).</div>
+          <div class="panel" style="padding:10px;font-size:13px;color:rgba(255,255,255,0.55);" data-i18n="acd.62">Fãs de clãs/facções, intriga e competição tensa — sem "herói perfeito".</div>
+          <div class="panel" style="padding:10px;font-size:13px;color:rgba(255,255,255,0.55);" data-i18n="acd.63">Quem curte mundos vivos, magia com regras e ameaça constante.</div>
         </div>
       </div>
       <div id="tab-formatos" class="tab-pane">
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;" class="buy-grid">
-          <div class="panel" style="padding:12px;text-align:center;"><div style="font-size:13px;font-weight:700;color:#c4a3ff;margin-bottom:4px;">PDF</div><div style="font-size:11px;color:rgba(255,255,255,0.4);">Compra na loja NoHeroes · Acesso no inventário</div></div>
-          <div class="panel" style="padding:12px;text-align:center;"><div style="font-size:13px;font-weight:700;color:#facc15;margin-bottom:4px;">Físico — ML</div><div style="font-size:11px;color:rgba(255,255,255,0.4);">Mercado Livre · Frete varia por região</div></div>
-          <div class="panel" style="padding:12px;text-align:center;"><div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.6);margin-bottom:4px;">Físico — Uiclap</div><div style="font-size:11px;color:rgba(255,255,255,0.4);">Encomenda sob demanda · Prazo variável</div></div>
+          <div class="panel" style="padding:12px;text-align:center;"><div style="font-size:13px;font-weight:700;color:#c4a3ff;margin-bottom:4px;" data-i18n="acd.64">PDF</div><div style="font-size:11px;color:rgba(255,255,255,0.4);" data-i18n="acd.65">Compra na loja NoHeroes · Acesso no inventário</div></div>
+          <div class="panel" style="padding:12px;text-align:center;"><div style="font-size:13px;font-weight:700;color:#facc15;margin-bottom:4px;" data-i18n="acd.66">Físico — ML</div><div style="font-size:11px;color:rgba(255,255,255,0.4);" data-i18n="acd.67">Mercado Livre · Frete varia por região</div></div>
+          <div class="panel" style="padding:12px;text-align:center;"><div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.6);margin-bottom:4px;" data-i18n="acd.68">Físico — Uiclap</div><div style="font-size:11px;color:rgba(255,255,255,0.4);" data-i18n="acd.69">Encomenda sob demanda · Prazo variável</div></div>
         </div>
       </div>
     </div>
@@ -309,19 +321,19 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
 
   <!-- FAQ -->
   <div style="margin-top:20px;" class="glass-card reveal">
-    <h3 class="cinzel text-grad" style="font-size:14px;margin:0 0 14px;">Perguntas frequentes</h3>
+    <h3 class="cinzel text-grad" style="font-size:14px;margin:0 0 14px;" data-i18n="acd.70">Perguntas frequentes</h3>
     <div style="display:flex;flex-direction:column;gap:0;">
       <details style="border-bottom:1px solid rgba(255,255,255,0.06);padding:10px 0;">
-        <summary style="cursor:pointer;font-size:13px;font-weight:600;color:rgba(255,255,255,0.8);list-style:none;display:flex;justify-content:space-between;align-items:center;">Preciso ter lido algo antes? <span style="color:rgba(143,79,255,0.6);">›</span></summary>
-        <p style="margin:8px 0 0;font-size:13px;color:rgba(255,255,255,0.5);">Não. ACDA é o ponto de entrada da saga e a base do universo NoHeroes.</p>
+        <summary style="cursor:pointer;font-size:13px;font-weight:600;color:rgba(255,255,255,0.8);list-style:none;display:flex;justify-content:space-between;align-items:center;"><span data-i18n="acd.71">Preciso ter lido algo antes?</span> <span style="color:rgba(143,79,255,0.6);">›</span></summary>
+        <p style="margin:8px 0 0;font-size:13px;color:rgba(255,255,255,0.5);" data-i18n="acd.72">Não. ACDA é o ponto de entrada da saga e a base do universo NoHeroes.</p>
       </details>
       <details style="border-bottom:1px solid rgba(255,255,255,0.06);padding:10px 0;">
-        <summary style="cursor:pointer;font-size:13px;font-weight:600;color:rgba(255,255,255,0.8);list-style:none;display:flex;justify-content:space-between;align-items:center;">O que torna esse mundo diferente? <span style="color:rgba(143,79,255,0.6);">›</span></summary>
-        <p style="margin:8px 0 0;font-size:13px;color:rgba(255,255,255,0.5);">O sistema de poder (magos vs vitalistas), as cúpulas/barreiras, e a sensação constante de que o espetáculo é só uma camada — por baixo tem política e ameaça antiga.</p>
+        <summary style="cursor:pointer;font-size:13px;font-weight:600;color:rgba(255,255,255,0.8);list-style:none;display:flex;justify-content:space-between;align-items:center;"><span data-i18n="acd.73">O que torna esse mundo diferente?</span> <span style="color:rgba(143,79,255,0.6);">›</span></summary>
+        <p style="margin:8px 0 0;font-size:13px;color:rgba(255,255,255,0.5);" data-i18n="acd.74">O sistema de poder (magos vs vitalistas), as cúpulas/barreiras, e a sensação constante de que o espetáculo é só uma camada — por baixo tem política e ameaça antiga.</p>
       </details>
       <details style="padding:10px 0;">
-        <summary style="cursor:pointer;font-size:13px;font-weight:600;color:rgba(255,255,255,0.8);list-style:none;display:flex;justify-content:space-between;align-items:center;">O tom é leve ou mais sombrio? <span style="color:rgba(143,79,255,0.6);">›</span></summary>
-        <p style="margin:8px 0 0;font-size:13px;color:rgba(255,255,255,0.5);">Fantasia sombria: consequências, dilemas e um mundo que não recompensa ingenuidade.</p>
+        <summary style="cursor:pointer;font-size:13px;font-weight:600;color:rgba(255,255,255,0.8);list-style:none;display:flex;justify-content:space-between;align-items:center;"><span data-i18n="acd.75">O tom é leve ou mais sombrio?</span> <span style="color:rgba(143,79,255,0.6);">›</span></summary>
+        <p style="margin:8px 0 0;font-size:13px;color:rgba(255,255,255,0.5);" data-i18n="acd.76">Fantasia sombria: consequências, dilemas e um mundo que não recompensa ingenuidade.</p>
       </details>
     </div>
   </div>
@@ -331,8 +343,8 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
 <!-- DIVISOR VISUAL -->
 <div style="margin:8px 0;height:1px;background:linear-gradient(90deg,transparent,rgba(143,79,255,0.3),rgba(217,181,90,0.3),transparent);"></div>
 <div style="text-align:center;padding:24px 20px 8px;">
-  <div class="section-label" style="text-align:center;">O Universo</div>
-  <h2 class="cinzel text-grad" style="font-size:clamp(18px,2.5vw,26px);margin:0;">As Cinzas do Amanhã</h2>
+  <div class="section-label" style="text-align:center;" data-i18n="acd.77">O Universo</div>
+  <h2 class="cinzel text-grad" style="font-size:clamp(18px,2.5vw,26px);margin:0;" data-i18n="acd.78">As Cinzas do Amanhã</h2>
 </div>
 
 <!-- ══════════════════════════════════════════════
@@ -341,86 +353,77 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
 
 <!-- TRAILER -->
 <section id="trailer" style="padding:32px 20px 48px;max-width:900px;margin:0 auto;">
-  <div class="section-label reveal" style="text-align:center;">Trailer & Prévia</div>
-  <div style="border-radius:16px;overflow:hidden;border:1px solid rgba(143,79,255,0.2);background:#000;" class="reveal">
-    <div style="aspect-ratio:16/9;">
-      <video controls poster="assets/images/teaser-thumb.jpg" style="width:100%;height:100%;object-fit:cover;display:block;">
-        <source src="assets/videos/roar-teaser.mp4" type="video/mp4">
-        Seu navegador não suporta vídeo.
-      </video>
-    </div>
-  </div>
-  <div style="text-align:center;margin-top:12px;">
-    <a href="https://youtube.com/seulink" target="_blank" rel="noopener" class="btn-ghost" style="font-size:12px;">Ver no YouTube →</a>
-  </div>
+  <div class="section-label reveal" style="text-align:center;" data-i18n="acd.79">Trailer & Prévia</div>
+  <p class="nh-raul" data-i18n-ignorar style="display:block;text-align:center;margin:8px auto 0;">[[RAUL: vídeo do trailer — arquivo .mp4 ou link do YouTube]]</p>
 </section>
 
 <!-- PERSONAGENS -->
 <section id="personagens" style="padding:0 20px 48px;max-width:1100px;margin:0 auto;">
   <div style="text-align:center;margin-bottom:24px;" class="reveal">
-    <div class="section-label" style="text-align:center;">Personagens</div>
-    <h2 class="cinzel text-grad" style="font-size:clamp(18px,2.5vw,26px);margin:0;">Quem habita Caelum</h2>
+    <div class="section-label" style="text-align:center;" data-i18n="acd.80">Personagens</div>
+    <h2 class="cinzel text-grad" style="font-size:clamp(18px,2.5vw,26px);margin:0;" data-i18n="acd.81">Quem habita Caelum</h2>
   </div>
 
+  <p class="nh-raul" data-i18n-ignorar style="display:block;margin:0 auto 14px;max-width:max-content;">[[RAUL: imagens dos 10 personagens (as atuais nunca foram enviadas ao site)]]</p>
   <div class="char-grid reveal">
     <!-- Azuos -->
-    <div class="char-card" onclick="openChar('assets/images/azuos.jpg','Azuos','O portador da Marca Negra','Jovem vitalista atormentado por um segredo terrível. Carrega cicatrizes físicas e emocionais. Busca respostas sobre seu passado e sobre a entidade que habita sua alma.')">
-      <img src="assets/images/azuos.jpg" alt="Azuos" loading="lazy">
-      <div class="char-overlay"><p class="char-name">Azuos</p><p class="char-role">O portador da Marca Negra</p></div>
+    <div class="char-card" onclick="openChar('','Azuos','O portador da Marca Negra','Jovem vitalista atormentado por um segredo terrível. Carrega cicatrizes físicas e emocionais. Busca respostas sobre seu passado e sobre a entidade que habita sua alma.')">
+      <div class="char-sem-foto" aria-hidden="true">A</div>
+      <div class="char-overlay"><p class="char-name" data-i18n="acd.83">Azuos</p><p class="char-role" data-i18n="acd.84">O portador da Marca Negra</p></div>
       <div class="char-expand"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c4a3ff" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 9L15 3M3 15l6 6"/></svg></div>
     </div>
     <!-- ??? -->
-    <div class="char-card" onclick="openChar('assets/images/tyrian.jpg','???','Entidade desconhecida','Nada se sabe sobre sua origem. Sua presença causa inquietação entre magos e vitalistas. Tudo o que se tem são rumores... e cicatrizes deixadas para trás.')">
-      <img src="assets/images/tyrian.jpg" alt="Entidade desconhecida" loading="lazy">
-      <div class="char-overlay"><p class="char-name">???</p><p class="char-role">Entidade desconhecida</p></div>
+    <div class="char-card" onclick="openChar('','???','Entidade desconhecida','Nada se sabe sobre sua origem. Sua presença causa inquietação entre magos e vitalistas. Tudo o que se tem são rumores... e cicatrizes deixadas para trás.')">
+      <div class="char-sem-foto" aria-hidden="true">?</div>
+      <div class="char-overlay"><p class="char-name">???</p><p class="char-role" data-i18n="acd.86">Entidade desconhecida</p></div>
       <div class="char-expand"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c4a3ff" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 9L15 3M3 15l6 6"/></svg></div>
     </div>
     <!-- Cerverus -->
-    <div class="char-card" onclick="openChar('assets/images/cerverus.jpg','Cerverus','O último dragão','Membro da realeza draconiana e um dos maiores guerreiros vivos. Mestre de Azuos, tornou-se uma figura paterna em sua jornada.')">
-      <img src="assets/images/cerverus.jpg" alt="Cerverus" loading="lazy">
-      <div class="char-overlay"><p class="char-name">Cerverus</p><p class="char-role">O último dragão</p></div>
+    <div class="char-card" onclick="openChar('','Cerverus','O último dragão','Membro da realeza draconiana e um dos maiores guerreiros vivos. Mestre de Azuos, tornou-se uma figura paterna em sua jornada.')">
+      <div class="char-sem-foto" aria-hidden="true">C</div>
+      <div class="char-overlay"><p class="char-name" data-i18n="acd.88">Cerverus</p><p class="char-role" data-i18n="acd.89">O último dragão</p></div>
       <div class="char-expand"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c4a3ff" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 9L15 3M3 15l6 6"/></svg></div>
     </div>
     <!-- Sado -->
-    <div class="char-card" onclick="openChar('assets/images/sado.jpg','Sado','O irmão de armas','Vitalista do furto e parceiro fiel. Feroz em combate, leal no silêncio. Um espírito que encontrou em Azuos um propósito maior que a guerra.')">
-      <img src="assets/images/sado.jpg" alt="Sado" loading="lazy">
-      <div class="char-overlay"><p class="char-name">Sado</p><p class="char-role">O irmão de armas</p></div>
+    <div class="char-card" onclick="openChar('','Sado','O irmão de armas','Vitalista do furto e parceiro fiel. Feroz em combate, leal no silêncio. Um espírito que encontrou em Azuos um propósito maior que a guerra.')">
+      <div class="char-sem-foto" aria-hidden="true">S</div>
+      <div class="char-overlay"><p class="char-name" data-i18n="acd.91">Sado</p><p class="char-role" data-i18n="acd.92">O irmão de armas</p></div>
       <div class="char-expand"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c4a3ff" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 9L15 3M3 15l6 6"/></svg></div>
     </div>
     <!-- Sakura -->
-    <div class="char-card" onclick="openChar('assets/images/sakura.jpg','Sakura','A flor letal','Mestra prodígio do Clã da Lua, perita em técnicas de assassinato e furtividade. Move-se com precisão cirúrgica — beleza e morte num só gesto.')">
-      <img src="assets/images/sakura.jpg" alt="Sakura" loading="lazy">
-      <div class="char-overlay"><p class="char-name">Sakura</p><p class="char-role">A flor letal</p></div>
+    <div class="char-card" onclick="openChar('','Sakura','A flor letal','Mestra prodígio do Clã da Lua, perita em técnicas de assassinato e furtividade. Move-se com precisão cirúrgica — beleza e morte num só gesto.')">
+      <div class="char-sem-foto" aria-hidden="true">S</div>
+      <div class="char-overlay"><p class="char-name" data-i18n="acd.94">Sakura</p><p class="char-role" data-i18n="acd.95">A flor letal</p></div>
       <div class="char-expand"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c4a3ff" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 9L15 3M3 15l6 6"/></svg></div>
     </div>
     <!-- Slyther -->
-    <div class="char-card" onclick="openChar('assets/images/slyther.jpg','Slyther','A sombra que desafia','Rival impulsivo de Azuos. Ágil, venenoso e arrogante. Seu orgulho o coloca sempre em rota de colisão com aqueles que brilham mais que ele.')">
-      <img src="assets/images/slyther.jpg" alt="Slyther" loading="lazy">
-      <div class="char-overlay"><p class="char-name">Slyther</p><p class="char-role">A sombra que desafia</p></div>
+    <div class="char-card" onclick="openChar('','Slyther','A sombra que desafia','Rival impulsivo de Azuos. Ágil, venenoso e arrogante. Seu orgulho o coloca sempre em rota de colisão com aqueles que brilham mais que ele.')">
+      <div class="char-sem-foto" aria-hidden="true">S</div>
+      <div class="char-overlay"><p class="char-name" data-i18n="acd.97">Slyther</p><p class="char-role" data-i18n="acd.98">A sombra que desafia</p></div>
       <div class="char-expand"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c4a3ff" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 9L15 3M3 15l6 6"/></svg></div>
     </div>
     <!-- Runan -->
-    <div class="char-card" onclick="openChar('assets/images/runan.jpg','Runan','Guardião do Clã das Runas','Vitalista prodígio com poderes misteriosos. Seus feitos desafiam a lógica e sua presença intimida até os mais experientes.')">
-      <img src="assets/images/runan.jpg" alt="Runan" loading="lazy">
-      <div class="char-overlay"><p class="char-name">Runan</p><p class="char-role">Guardião das Runas</p></div>
+    <div class="char-card" onclick="openChar('','Runan','Guardião do Clã das Runas','Vitalista prodígio com poderes misteriosos. Seus feitos desafiam a lógica e sua presença intimida até os mais experientes.')">
+      <div class="char-sem-foto" aria-hidden="true">R</div>
+      <div class="char-overlay"><p class="char-name" data-i18n="acd.100">Runan</p><p class="char-role" data-i18n="acd.101">Guardião das Runas</p></div>
       <div class="char-expand"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c4a3ff" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 9L15 3M3 15l6 6"/></svg></div>
     </div>
     <!-- Yumi -->
-    <div class="char-card" onclick="openChar('assets/images/yumi.jpg','Yumi','A lâmina do silêncio','Instrutora no Clã da Lua e guarda-costas de elite. Discreta, precisa e letal. Protege o que acredita com disciplina inabalável.')">
-      <img src="assets/images/yumi.jpg" alt="Yumi" loading="lazy">
-      <div class="char-overlay"><p class="char-name">Yumi</p><p class="char-role">A lâmina do silêncio</p></div>
+    <div class="char-card" onclick="openChar('','Yumi','A lâmina do silêncio','Instrutora no Clã da Lua e guarda-costas de elite. Discreta, precisa e letal. Protege o que acredita com disciplina inabalável.')">
+      <div class="char-sem-foto" aria-hidden="true">Y</div>
+      <div class="char-overlay"><p class="char-name" data-i18n="acd.103">Yumi</p><p class="char-role" data-i18n="acd.104">A lâmina do silêncio</p></div>
       <div class="char-expand"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c4a3ff" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 9L15 3M3 15l6 6"/></svg></div>
     </div>
     <!-- Kagemitsu -->
-    <div class="char-card" onclick="openChar('assets/images/kagemitsu.jpg','Kagemitsu','O general da Lua','Líder respeitado do Clã da Lua. Mentor de jovens guerreiros e símbolo de estratégia, equilíbrio e força entre os vitalistas.')">
-      <img src="assets/images/kagemitsu.jpg" alt="Kagemitsu" loading="lazy">
-      <div class="char-overlay"><p class="char-name">Kagemitsu</p><p class="char-role">O general da Lua</p></div>
+    <div class="char-card" onclick="openChar('','Kagemitsu','O general da Lua','Líder respeitado do Clã da Lua. Mentor de jovens guerreiros e símbolo de estratégia, equilíbrio e força entre os vitalistas.')">
+      <div class="char-sem-foto" aria-hidden="true">K</div>
+      <div class="char-overlay"><p class="char-name" data-i18n="acd.106">Kagemitsu</p><p class="char-role" data-i18n="acd.107">O general da Lua</p></div>
       <div class="char-expand"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c4a3ff" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 9L15 3M3 15l6 6"/></svg></div>
     </div>
     <!-- Koda -->
-    <div class="char-card" onclick="openChar('assets/images/koda.jpg','Koda','O sol que sangra','Vitalista misterioso com poderes do sangue e da luz. Ator dos bastidores, guardião silencioso dos escolhidos e executor do destino.')">
-      <img src="assets/images/koda.jpg" alt="Koda" loading="lazy">
-      <div class="char-overlay"><p class="char-name">Koda</p><p class="char-role">O sol que sangra</p></div>
+    <div class="char-card" onclick="openChar('','Koda','O sol que sangra','Vitalista misterioso com poderes do sangue e da luz. Ator dos bastidores, guardião silencioso dos escolhidos e executor do destino.')">
+      <div class="char-sem-foto" aria-hidden="true">K</div>
+      <div class="char-overlay"><p class="char-name" data-i18n="acd.109">Koda</p><p class="char-role" data-i18n="acd.110">O sol que sangra</p></div>
       <div class="char-expand"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#c4a3ff" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 9L15 3M3 15l6 6"/></svg></div>
     </div>
   </div>
@@ -443,44 +446,44 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
 <!-- ATOS DA SAGA -->
 <section id="atos" style="padding:0 20px 48px;max-width:900px;margin:0 auto;">
   <div style="text-align:center;margin-bottom:24px;" class="reveal">
-    <div class="section-label" style="text-align:center;">A Saga</div>
-    <h2 class="cinzel text-grad" style="font-size:clamp(18px,2.5vw,26px);margin:0;">Cinco Atos. Um Destino.</h2>
+    <div class="section-label" style="text-align:center;" data-i18n="acd.111">A Saga</div>
+    <h2 class="cinzel text-grad" style="font-size:clamp(18px,2.5vw,26px);margin:0;" data-i18n="acd.112">Cinco Atos. Um Destino.</h2>
   </div>
   <div class="reveal">
     <div class="ato-item">
       <div class="ato-header" onclick="toggleAto(this)">
-        <div><span class="ato-title">Ato I — Equilíbrio Rompido</span></div>
-        <div style="display:flex;align-items:center;gap:8px;"><span class="ato-badge" style="background:rgba(74,222,128,0.08);border-color:rgba(74,222,128,0.25);color:#4ade80;">Publicado</span><span class="ato-arrow">⌄</span></div>
+        <div><span class="ato-title" data-i18n="acd.113">Ato I — Equilíbrio Rompido</span></div>
+        <div style="display:flex;align-items:center;gap:8px;"><span class="ato-badge" style="background:rgba(74,222,128,0.08);border-color:rgba(74,222,128,0.25);color:#4ade80;" data-i18n="acd.114">Publicado</span><span class="ato-arrow">⌄</span></div>
       </div>
-      <div class="ato-body">Azuos emerge da floresta marcado e sem memória. Lunaris Fortuna parece segura — mas o sistema de poder dos clãs não aceita anomalias. O espetáculo começa, as alianças se formam e o equilíbrio frágil do mundo começa a rachar.</div>
+      <div class="ato-body" data-i18n="acd.115">Azuos emerge da floresta marcado e sem memória. Lunaris Fortuna parece segura — mas o sistema de poder dos clãs não aceita anomalias. O espetáculo começa, as alianças se formam e o equilíbrio frágil do mundo começa a rachar.</div>
     </div>
     <div class="ato-item">
       <div class="ato-header" onclick="toggleAto(this)">
-        <div><span class="ato-title">Ato II — As Luzes se Apagam</span></div>
-        <div style="display:flex;align-items:center;gap:8px;"><span class="ato-badge">Escalada</span><span class="ato-arrow">⌄</span></div>
+        <div><span class="ato-title" data-i18n="acd.116">Ato II — As Luzes se Apagam</span></div>
+        <div style="display:flex;align-items:center;gap:8px;"><span class="ato-badge" data-i18n="acd.117">Escalada</span><span class="ato-arrow">⌄</span></div>
       </div>
-      <div class="ato-body">A verdade por trás da Marca Negra começa a emergir. Forças que deveriam ser aliadas mostram suas fissuras. A energia negativa avança — e as luzes de Lunaris Fortuna deixam de ser símbolo de esperança.</div>
+      <div class="ato-body" data-i18n="acd.118">A verdade por trás da Marca Negra começa a emergir. Forças que deveriam ser aliadas mostram suas fissuras. A energia negativa avança — e as luzes de Lunaris Fortuna deixam de ser símbolo de esperança.</div>
     </div>
     <div class="ato-item">
       <div class="ato-header" onclick="toggleAto(this)">
-        <div><span class="ato-title">Ato III — A Legião Negra</span></div>
-        <div style="display:flex;align-items:center;gap:8px;"><span class="ato-badge">Ruptura</span><span class="ato-arrow">⌄</span></div>
+        <div><span class="ato-title" data-i18n="acd.119">Ato III — A Legião Negra</span></div>
+        <div style="display:flex;align-items:center;gap:8px;"><span class="ato-badge" data-i18n="acd.120">Ruptura</span><span class="ato-arrow">⌄</span></div>
       </div>
-      <div class="ato-body">A Legião Negra não é apenas um exército — é uma ideia. E ideias não morrem com espadas. O confronto que todos temiam chega, e Caelum descobre que seus maiores inimigos talvez não venham de fora.</div>
+      <div class="ato-body" data-i18n="acd.121">A Legião Negra não é apenas um exército — é uma ideia. E ideias não morrem com espadas. O confronto que todos temiam chega, e Caelum descobre que seus maiores inimigos talvez não venham de fora.</div>
     </div>
     <div class="ato-item">
       <div class="ato-header" onclick="toggleAto(this)">
-        <div><span class="ato-title">Ato IV — (em breve)</span></div>
-        <div style="display:flex;align-items:center;gap:8px;"><span class="ato-badge future">Em produção</span><span class="ato-arrow">⌄</span></div>
+        <div><span class="ato-title" data-i18n="acd.122">Ato IV — (em breve)</span></div>
+        <div style="display:flex;align-items:center;gap:8px;"><span class="ato-badge future" data-i18n="acd.123">Em produção</span><span class="ato-arrow">⌄</span></div>
       </div>
-      <div class="ato-body" style="color:rgba(255,255,255,0.3);font-style:italic;">Detalhes do Ato IV serão revelados em breve. Acompanhe as atualizações da saga.</div>
+      <div class="ato-body" style="color:rgba(255,255,255,0.3);font-style:italic;" data-i18n="acd.124">Detalhes do Ato IV serão revelados em breve. Acompanhe as atualizações da saga.</div>
     </div>
     <div class="ato-item">
       <div class="ato-header" onclick="toggleAto(this)">
-        <div><span class="ato-title">Ato V — (em breve)</span></div>
-        <div style="display:flex;align-items:center;gap:8px;"><span class="ato-badge future">Roadmap</span><span class="ato-arrow">⌄</span></div>
+        <div><span class="ato-title" data-i18n="acd.125">Ato V — (em breve)</span></div>
+        <div style="display:flex;align-items:center;gap:8px;"><span class="ato-badge future" data-i18n="acd.126">Roadmap</span><span class="ato-arrow">⌄</span></div>
       </div>
-      <div class="ato-body" style="color:rgba(255,255,255,0.3);font-style:italic;">O ato final da saga. O destino de Caelum e de todos que nele habitam será selado aqui.</div>
+      <div class="ato-body" style="color:rgba(255,255,255,0.3);font-style:italic;" data-i18n="acd.127">O ato final da saga. O destino de Caelum e de todos que nele habitam será selado aqui.</div>
     </div>
   </div>
 </section>
@@ -491,54 +494,54 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
 
     <!-- Header -->
     <div style="text-align:center;margin-bottom:28px;" class="reveal">
-      <div class="section-label" style="text-align:center;">Ambientação</div>
-      <h2 class="cinzel text-grad" style="font-size:clamp(18px,2.5vw,28px);margin:0 0 10px;">Universo & Ambientação</h2>
-      <p style="font-size:14px;color:rgba(229,229,229,.82);font-style:italic;margin:0 0 16px;">"Caelum não é um mundo. É um campo de guerra entre monstros, memórias e ambições."</p>
+      <div class="section-label" style="text-align:center;" data-i18n="acd.128">Ambientação</div>
+      <h2 class="cinzel text-grad" style="font-size:clamp(18px,2.5vw,28px);margin:0 0 10px;" data-i18n="acd.129">Universo & Ambientação</h2>
+      <p style="font-size:14px;color:rgba(229,229,229,.82);font-style:italic;margin:0 0 16px;" data-i18n="acd.130">"Caelum não é um mundo. É um campo de guerra entre monstros, memórias e ambições."</p>
       <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;">
-        <span class="chip">Caelum</span><span class="chip">Clãs</span><span class="chip">Dragões</span><span class="chip">Vitalismo</span><span class="chip">Energia Negativa</span>
+        <span class="chip" data-i18n="acd.131">Caelum</span><span class="chip" data-i18n="acd.132">Clãs</span><span class="chip" data-i18n="acd.133">Dragões</span><span class="chip" data-i18n="acd.134">Vitalismo</span><span class="chip" data-i18n="acd.135">Energia Negativa</span>
       </div>
     </div>
 
     <!-- Intro + Mapa -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:28px;align-items:start;" class="buy-grid reveal">
       <div style="color:rgba(204,204,204,1);line-height:1.75;">
-        <p style="margin:0 0 14px;font-size:14px;"><strong style="color:#e5e5e5;">Em ACDA, o mundo não é cenário — é um personagem.</strong> Caelum foi forjado por guerras, criaturas colossais e segredos enterrados. Aqui, magia não é fantasia: é maldição ou redenção.</p>
-        <p style="font-size:13px;color:rgba(156,163,175,1);margin:0;">Este é o solo onde Azuos desperta, marcado, caçado e escolhido para algo que ainda não entende.<em style="display:block;margin-top:10px;color:#c4a3ff;">Bem-vindo a Caelum. Onde cada nome carrega uma maldição.</em></p>
+        <p style="margin:0 0 14px;font-size:14px;" data-i18n-html="acd.136"><strong style="color:#e5e5e5;">Em ACDA, o mundo não é cenário — é um personagem.</strong> Caelum foi forjado por guerras, criaturas colossais e segredos enterrados. Aqui, magia não é fantasia: é maldição ou redenção.</p>
+        <p style="font-size:13px;color:rgba(156,163,175,1);margin:0;" data-i18n-html="acd.137">Este é o solo onde Azuos desperta, marcado, caçado e escolhido para algo que ainda não entende.<em style="display:block;margin-top:10px;color:#c4a3ff;">Bem-vindo a Caelum. Onde cada nome carrega uma maldição.</em></p>
       </div>
-      <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.10);background:rgba(0,0,0,.55);cursor:pointer;" onclick="openImg('assets/images/caelum-map-placeholder.jpg',IMG_DATA.MAPA_CAELUM)">
-        <img src="assets/images/caelum-map-placeholder.jpg" alt="Mapa de Caelum" style="width:100%;height:220px;object-fit:contain;display:block;background:rgba(0,0,0,.35);">
-        <div style="padding:6px 10px;font-size:11px;color:rgba(156,163,175,1);">Clique para ampliar o mapa.</div>
+      <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.10);background:rgba(0,0,0,.55);cursor:pointer;" onclick="openImg('assets/img/caelum-map-placeholder-1536.webp',IMG_DATA.MAPA_CAELUM)">
+        <img src="assets/img/caelum-map-placeholder-480.webp" alt="Mapa de Caelum" style="width:100%;height:220px;object-fit:contain;display:block;background:rgba(0,0,0,.35);" data-i18n-attr="alt:acd.138">
+        <div style="padding:6px 10px;font-size:11px;color:rgba(156,163,175,1);" data-i18n="acd.139">Clique para ampliar o mapa.</div>
       </div>
     </div>
 
     <!-- Tabs -->
     <div style="background:rgba(0,0,0,.45);border:1px solid rgba(143,79,255,.22);border-radius:14px;padding:16px 20px;backdrop-filter:blur(10px);" class="reveal">
       <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;" id="univ-tabs">
-        <button class="univ-tab-btn active" onclick="switchUnivTab(this,'utab-nacoes')">Nações, Clãs & Facções</button>
-        <button class="univ-tab-btn" onclick="switchUnivTab(this,'utab-magia')">Magia & Regras</button>
-        <button class="univ-tab-btn" onclick="switchUnivTab(this,'utab-mitos')">Mitos & Lendas</button>
-        <button class="univ-tab-btn" onclick="switchUnivTab(this,'utab-tecno')">Magitecnologia</button>
+        <button class="univ-tab-btn active" onclick="switchUnivTab(this,'utab-nacoes')" data-i18n="acd.140">Nações, Clãs & Facções</button>
+        <button class="univ-tab-btn" onclick="switchUnivTab(this,'utab-magia')" data-i18n="acd.141">Magia & Regras</button>
+        <button class="univ-tab-btn" onclick="switchUnivTab(this,'utab-mitos')" data-i18n="acd.142">Mitos & Lendas</button>
+        <button class="univ-tab-btn" onclick="switchUnivTab(this,'utab-tecno')" data-i18n="acd.143">Magitecnologia</button>
       </div>
 
       <!-- TAB NAÇÕES -->
       <div id="utab-nacoes" class="utab-pane active" style="display:block;">
         <div style="display:grid;grid-template-columns:1.2fr .8fr;gap:16px;align-items:start;" class="univ-two-col">
           <div style="color:rgba(204,204,204,1);line-height:1.75;">
-            <h3 style="font-size:18px;font-weight:700;color:#8f4fff;margin:0 0 14px;">Nações & Clãs</h3>
-            <p style="font-size:13px;margin:0 0 12px;"><strong style="color:#e5e5e5;">Aeon — Teocracia totalitária</strong><br><span style="color:rgba(156,163,175,1);">"Uma nação que diz servir aos deuses, mas age como se fosse um. Ordens são decretos divinos."</span></p>
-            <p style="font-size:13px;margin:0 0 12px;"><strong style="color:#e5e5e5;">Kaleidos — Democracia rebelde</strong><br><span style="color:rgba(156,163,175,1);">"Fragmentada, multicultural, perigosa. Unidos pela liberdade e pelo ódio à tirania de Aeon."</span></p>
-            <p style="font-size:13px;color:rgba(156,163,175,1);margin:0 0 8px;"><strong style="color:#e5e5e5;">Clãs:</strong> Lua (assassinos), Sol (luxo/sabedoria), Feras (instinto), Runas (magia antiga).</p>
-            <p style="font-size:13px;color:rgba(156,163,175,1);margin:0;"><strong style="color:#e5e5e5;">Facções:</strong> Culto do Vazio (corrupção) e Guilda de Aventureiros (caos útil).</p>
+            <h3 style="font-size:18px;font-weight:700;color:#8f4fff;margin:0 0 14px;" data-i18n="acd.144">Nações & Clãs</h3>
+            <p style="font-size:13px;margin:0 0 12px;"><strong style="color:#e5e5e5;" data-i18n="acd.145">Aeon — Teocracia totalitária</strong><br><span style="color:rgba(156,163,175,1);" data-i18n="acd.146">"Uma nação que diz servir aos deuses, mas age como se fosse um. Ordens são decretos divinos."</span></p>
+            <p style="font-size:13px;margin:0 0 12px;"><strong style="color:#e5e5e5;" data-i18n="acd.147">Kaleidos — Democracia rebelde</strong><br><span style="color:rgba(156,163,175,1);" data-i18n="acd.148">"Fragmentada, multicultural, perigosa. Unidos pela liberdade e pelo ódio à tirania de Aeon."</span></p>
+            <p style="font-size:13px;color:rgba(156,163,175,1);margin:0 0 8px;" data-i18n-html="acd.149"><strong style="color:#e5e5e5;">Clãs:</strong> Lua (assassinos), Sol (luxo/sabedoria), Feras (instinto), Runas (magia antiga).</p>
+            <p style="font-size:13px;color:rgba(156,163,175,1);margin:0;" data-i18n-html="acd.150"><strong style="color:#e5e5e5;">Facções:</strong> Culto do Vazio (corrupção) e Guilda de Aventureiros (caos útil).</p>
           </div>
           <div class="nh-gallery-new">
-            <button class="nh-thumb-new" onclick="openImg('assets/images/aeon-cathedral.jpg',IMG_DATA.AEON_CATEDRAL)"><img src="assets/images/aeon-cathedral.jpg" alt="Catedral de Aeon" loading="lazy"><div class="nh-cap">Aeon — Catedral</div></button>
-            <button class="nh-thumb-new" onclick="openImg('assets/images/kaleidos-city.jpg',IMG_DATA.KALEIDOS_CIDADE)"><img src="assets/images/kaleidos-city.jpg" alt="Kaleidos" loading="lazy"><div class="nh-cap">Kaleidos — Cidadela</div></button>
-            <button class="nh-thumb-new" onclick="openImg('assets/images/clan-lua.jpg',IMG_DATA.CLA_LUA)"><img src="assets/images/clan-lua.jpg" alt="Clã da Lua" loading="lazy"><div class="nh-cap">Clã da Lua</div></button>
-            <button class="nh-thumb-new" onclick="openImg('assets/images/clan-sol.jpg',IMG_DATA.CLA_SOL)"><img src="assets/images/clan-sol.jpg" alt="Clã do Sol" loading="lazy"><div class="nh-cap">Clã do Sol</div></button>
-            <button class="nh-thumb-new" onclick="openImg('assets/images/clan-feras.jpg',IMG_DATA.CLA_FERAS)"><img src="assets/images/clan-feras.jpg" alt="Clã das Feras" loading="lazy"><div class="nh-cap">Clã das Feras</div></button>
-            <button class="nh-thumb-new" onclick="openImg('assets/images/clan-runas.jpg',IMG_DATA.CLA_RUNAS)"><img src="assets/images/clan-runas.jpg" alt="Clã das Runas" loading="lazy"><div class="nh-cap">Clã das Runas</div></button>
-            <button class="nh-thumb-new" onclick="openImg('assets/images/culto-vazio.jpg',IMG_DATA.CULTO_VAZIO)"><img src="assets/images/culto-vazio.jpg" alt="Culto do Vazio" loading="lazy"><div class="nh-cap">Culto do Vazio</div></button>
-            <button class="nh-thumb-new" onclick="openImg('assets/images/guilda-avent.jpg',IMG_DATA.GUILDA_AVENTUREIROS)"><img src="assets/images/guilda-avent.jpg" alt="Guilda" loading="lazy"><div class="nh-cap">Guilda de Aventureiros</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/aeon-cathedral-1024.webp',IMG_DATA.AEON_CATEDRAL)"><img src="assets/img/aeon-cathedral-480.webp" alt="Catedral de Aeon" loading="lazy" data-i18n-attr="alt:acd.151"><div class="nh-cap" data-i18n="acd.152">Aeon — Catedral</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/kaleidos-city-1536.webp',IMG_DATA.KALEIDOS_CIDADE)"><img src="assets/img/kaleidos-city-480.webp" alt="Kaleidos" loading="lazy" data-i18n-attr="alt:acd.153"><div class="nh-cap" data-i18n="acd.154">Kaleidos — Cidadela</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/clan-lua-1024.webp',IMG_DATA.CLA_LUA)"><img src="assets/img/clan-lua-480.webp" alt="Clã da Lua" loading="lazy" data-i18n-attr="alt:acd.155"><div class="nh-cap" data-i18n="acd.156">Clã da Lua</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/clan-sol-1024.webp',IMG_DATA.CLA_SOL)"><img src="assets/img/clan-sol-480.webp" alt="Clã do Sol" loading="lazy" data-i18n-attr="alt:acd.157"><div class="nh-cap" data-i18n="acd.158">Clã do Sol</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/clan-feras-1536.webp',IMG_DATA.CLA_FERAS)"><img src="assets/img/clan-feras-480.webp" alt="Clã das Feras" loading="lazy" data-i18n-attr="alt:acd.159"><div class="nh-cap" data-i18n="acd.160">Clã das Feras</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/clan-runas-1024.webp',IMG_DATA.CLA_RUNAS)"><img src="assets/img/clan-runas-480.webp" alt="Clã das Runas" loading="lazy" data-i18n-attr="alt:acd.161"><div class="nh-cap" data-i18n="acd.162">Clã das Runas</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/culto-vazio-1536.webp',IMG_DATA.CULTO_VAZIO)"><img src="assets/img/culto-vazio-480.webp" alt="Culto do Vazio" loading="lazy" data-i18n-attr="alt:acd.163"><div class="nh-cap" data-i18n="acd.164">Culto do Vazio</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/guilda-avent-1536.webp',IMG_DATA.GUILDA_AVENTUREIROS)"><img src="assets/img/guilda-avent-480.webp" alt="Guilda" loading="lazy" data-i18n-attr="alt:acd.165"><div class="nh-cap" data-i18n="acd.166">Guilda de Aventureiros</div></button>
           </div>
         </div>
       </div>
@@ -546,39 +549,39 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
       <!-- TAB MAGIA -->
       <div id="utab-magia" class="utab-pane" style="display:none;">
         <div style="border:1px solid rgba(143,79,255,.22);background:rgba(0,0,0,.55);border-radius:12px;padding:20px;backdrop-filter:blur(10px);">
-          <h3 style="font-size:18px;font-weight:700;color:#8f4fff;margin:0 0 4px;">Sistema de Magia & Regras</h3>
-          <p style="font-style:italic;font-size:14px;color:rgba(156,163,175,1);margin:0 0 14px;">"Poder não é privilégio. É herança, fardo... ou ruína."</p>
-          <p style="font-size:13px;color:rgba(204,204,204,1);line-height:1.7;margin:0 0 20px;">Em <strong>Caelum</strong>, magia não é "truque" nem "dom gratuito". Toda manifestação mágica vem de <strong>mana excedente</strong> — energia que transborda do corpo e da alma. O problema é que esse poder sempre cobra: <strong>cansaço, risco, corrupção ou consequências irreversíveis</strong>.</p>
+          <h3 style="font-size:18px;font-weight:700;color:#8f4fff;margin:0 0 4px;" data-i18n="acd.167">Sistema de Magia & Regras</h3>
+          <p style="font-style:italic;font-size:14px;color:rgba(156,163,175,1);margin:0 0 14px;" data-i18n="acd.168">"Poder não é privilégio. É herança, fardo... ou ruína."</p>
+          <p style="font-size:13px;color:rgba(204,204,204,1);line-height:1.7;margin:0 0 20px;" data-i18n-html="acd.169">Em <strong>Caelum</strong>, magia não é "truque" nem "dom gratuito". Toda manifestação mágica vem de <strong>mana excedente</strong> — energia que transborda do corpo e da alma. O problema é que esse poder sempre cobra: <strong>cansaço, risco, corrupção ou consequências irreversíveis</strong>.</p>
           <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;" class="univ-three-col">
             <div style="border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);border-radius:10px;padding:14px;">
-              <h4 style="font-weight:700;color:#e5e5e5;font-size:13px;margin:0 0 10px;">Fontes de Energia</h4>
+              <h4 style="font-weight:700;color:#e5e5e5;font-size:13px;margin:0 0 10px;" data-i18n="acd.170">Fontes de Energia</h4>
               <ul style="font-size:12px;color:rgba(204,204,204,1);line-height:1.65;padding-left:16px;margin:0;display:flex;flex-direction:column;gap:8px;">
-                <li><strong>Vital (Vita):</strong> energia pessoal. Até 190%: técnicas básicas. A partir de 191%: habilidade única desperta.</li>
-                <li><strong>Positiva (Lumen):</strong> restauração, purificação. Pode queimar, expor e julgar.</li>
-                <li><strong>Negativa (Umbra):</strong> ruína e distorção. Poder rápido — cobra sanidade, humanidade e destino.</li>
+                <li data-i18n-html="acd.171"><strong>Vital (Vita):</strong> energia pessoal. Até 190%: técnicas básicas. A partir de 191%: habilidade única desperta.</li>
+                <li data-i18n-html="acd.172"><strong>Positiva (Lumen):</strong> restauração, purificação. Pode queimar, expor e julgar.</li>
+                <li data-i18n-html="acd.173"><strong>Negativa (Umbra):</strong> ruína e distorção. Poder rápido — cobra sanidade, humanidade e destino.</li>
               </ul>
             </div>
             <div style="border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);border-radius:10px;padding:14px;">
-              <h4 style="font-weight:700;color:#e5e5e5;font-size:13px;margin:0 0 10px;">Tipos de Usuários</h4>
+              <h4 style="font-weight:700;color:#e5e5e5;font-size:13px;margin:0 0 10px;" data-i18n="acd.174">Tipos de Usuários</h4>
               <ul style="font-size:12px;color:rgba(204,204,204,1);line-height:1.65;padding-left:16px;margin:0;display:flex;flex-direction:column;gap:8px;">
-                <li><strong>Inertes:</strong> pouco excedente. Sentem pressão de mana mas não canalizam conscientemente.</li>
-                <li><strong>Magos:</strong> moldam mana por técnica e estudo. Versáteis, mas limitados contra vitalistas de alto nível.</li>
-                <li><strong>Vitalistas:</strong> anomalia — o corpo vira motor mágico. Ultrapassam limites humanos. Vivem no fio da navalha.</li>
+                <li data-i18n-html="acd.175"><strong>Inertes:</strong> pouco excedente. Sentem pressão de mana mas não canalizam conscientemente.</li>
+                <li data-i18n-html="acd.176"><strong>Magos:</strong> moldam mana por técnica e estudo. Versáteis, mas limitados contra vitalistas de alto nível.</li>
+                <li data-i18n-html="acd.177"><strong>Vitalistas:</strong> anomalia — o corpo vira motor mágico. Ultrapassam limites humanos. Vivem no fio da navalha.</li>
               </ul>
             </div>
             <div style="border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);border-radius:10px;padding:14px;">
-              <h4 style="font-weight:700;color:#e5e5e5;font-size:13px;margin:0 0 10px;">Regras de Caelum</h4>
+              <h4 style="font-weight:700;color:#e5e5e5;font-size:13px;margin:0 0 10px;" data-i18n="acd.178">Regras de Caelum</h4>
               <ol style="font-size:12px;color:rgba(204,204,204,1);line-height:1.65;padding-left:16px;margin:0;display:flex;flex-direction:column;gap:6px;">
-                <li>Magia negra é proibida — atravessa limites éticos.</li>
-                <li>Vitalistas superam magos em combate puro.</li>
-                <li>Criar vida do zero é impossível.</li>
-                <li>Demônios podem renascer.</li>
-                <li>Energia negativa atrai predadores.</li>
+                <li data-i18n="acd.179">Magia negra é proibida — atravessa limites éticos.</li>
+                <li data-i18n="acd.180">Vitalistas superam magos em combate puro.</li>
+                <li data-i18n="acd.181">Criar vida do zero é impossível.</li>
+                <li data-i18n="acd.182">Demônios podem renascer.</li>
+                <li data-i18n="acd.183">Energia negativa atrai predadores.</li>
               </ol>
             </div>
           </div>
-          <div style="background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px 14px;font-size:12px;color:rgba(204,204,204,1);line-height:1.65;margin-bottom:12px;"><strong>Dica de leitura:</strong> quando um personagem usa magia, observe o "custo". Se algo parece forte demais sem consequência, desconfie: em Caelum, quase sempre existe um preço escondido.</div>
-          <p style="font-style:italic;color:rgba(204,204,204,1);text-align:center;font-size:13px;margin:0;">"A pergunta não é o que você faz com poder... é o que ele faz com você."</p>
+          <div style="background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px 14px;font-size:12px;color:rgba(204,204,204,1);line-height:1.65;margin-bottom:12px;" data-i18n-html="acd.184"><strong>Dica de leitura:</strong> quando um personagem usa magia, observe o "custo". Se algo parece forte demais sem consequência, desconfie: em Caelum, quase sempre existe um preço escondido.</div>
+          <p style="font-style:italic;color:rgba(204,204,204,1);text-align:center;font-size:13px;margin:0;" data-i18n="acd.185">"A pergunta não é o que você faz com poder... é o que ele faz com você."</p>
         </div>
       </div>
 
@@ -586,22 +589,22 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
       <div id="utab-mitos" class="utab-pane" style="display:none;">
         <div style="display:grid;grid-template-columns:1.2fr .8fr;gap:16px;align-items:start;" class="univ-two-col">
           <div style="color:rgba(204,204,204,1);">
-            <h3 style="font-size:18px;font-weight:700;color:#8f4fff;margin:0 0 6px;">Mitos & Lendas</h3>
-            <p style="color:rgba(156,163,175,1);font-style:italic;font-size:13px;margin:0 0 14px;">"Alguns mitos estão vivos. E eles lembram quem você é."</p>
+            <h3 style="font-size:18px;font-weight:700;color:#8f4fff;margin:0 0 6px;" data-i18n="acd.186">Mitos & Lendas</h3>
+            <p style="color:rgba(156,163,175,1);font-style:italic;font-size:13px;margin:0 0 14px;" data-i18n="acd.187">"Alguns mitos estão vivos. E eles lembram quem você é."</p>
             <ul style="font-size:13px;line-height:1.75;padding-left:18px;margin:0;display:flex;flex-direction:column;gap:8px;">
-              <li><strong>Oni Vagante</strong> — espadachim mascarado, imortal. Vaga em busca de um oponente digno.</li>
-              <li><strong>O Bom Dragão</strong> — oráculo alado que aparece a almas raras. Presságio de mudança.</li>
-              <li><strong>Barões Anciãos</strong> — topo da evolução draconiana. Devoram dor humana e tornam-se híbridos.</li>
-              <li><strong>Valdaryon</strong> — cidade subterrânea de draconianos sobreviventes. Mito ou realidade?</li>
-              <li><strong>Floresta Negra</strong> — selva consciente que devora o que entra. Nem dragões a sobrevoam.</li>
+              <li data-i18n-html="acd.188"><strong>Oni Vagante</strong> — espadachim mascarado, imortal. Vaga em busca de um oponente digno.</li>
+              <li data-i18n-html="acd.189"><strong>O Bom Dragão</strong> — oráculo alado que aparece a almas raras. Presságio de mudança.</li>
+              <li data-i18n-html="acd.190"><strong>Barões Anciãos</strong> — topo da evolução draconiana. Devoram dor humana e tornam-se híbridos.</li>
+              <li data-i18n-html="acd.191"><strong>Valdaryon</strong> — cidade subterrânea de draconianos sobreviventes. Mito ou realidade?</li>
+              <li data-i18n-html="acd.192"><strong>Floresta Negra</strong> — selva consciente que devora o que entra. Nem dragões a sobrevoam.</li>
             </ul>
           </div>
           <div class="nh-gallery-new">
-            <button class="nh-thumb-new" onclick="openImg('assets/images/oni-vagante.jpg',IMG_DATA.ONI_VAGANTE)"><img src="assets/images/oni-vagante.jpg" alt="Oni Vagante" loading="lazy"><div class="nh-cap">Oni Vagante</div></button>
-            <button class="nh-thumb-new" onclick="openImg('assets/images/bom-dragao.jpg',IMG_DATA.BOM_DRAGAO)"><img src="assets/images/bom-dragao.jpg" alt="Bom Dragão" loading="lazy"><div class="nh-cap">O Bom Dragão</div></button>
-            <button class="nh-thumb-new" onclick="openImg('assets/images/baroes-anciaos.jpg',IMG_DATA.BAROES_ANCIÃOS)"><img src="assets/images/baroes-anciaos.jpg" alt="Barões" loading="lazy"><div class="nh-cap">Barões Anciãos</div></button>
-            <button class="nh-thumb-new" onclick="openImg('assets/images/valdaryon.jpg',IMG_DATA.VALDARYON)"><img src="assets/images/valdaryon.jpg" alt="Valdaryon" loading="lazy"><div class="nh-cap">Valdaryon</div></button>
-            <button class="nh-thumb-new" onclick="openImg('assets/images/floresta-negra.jpg',IMG_DATA.FLORESTA_NEGRA)"><img src="assets/images/floresta-negra.jpg" alt="Floresta Negra" loading="lazy"><div class="nh-cap">Floresta Negra</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/oni-vagante-1024.webp',IMG_DATA.ONI_VAGANTE)"><img src="assets/img/oni-vagante-480.webp" alt="Oni Vagante" loading="lazy" data-i18n-attr="alt:acd.193"><div class="nh-cap" data-i18n="acd.194">Oni Vagante</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/bom-dragao-1024.webp',IMG_DATA.BOM_DRAGAO)"><img src="assets/img/bom-dragao-480.webp" alt="Bom Dragão" loading="lazy" data-i18n-attr="alt:acd.195"><div class="nh-cap" data-i18n="acd.196">O Bom Dragão</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/baroes-anciaos-1024.webp',IMG_DATA.BAROES_ANCIÃOS)"><img src="assets/img/baroes-anciaos-480.webp" alt="Barões" loading="lazy" data-i18n-attr="alt:acd.197"><div class="nh-cap" data-i18n="acd.198">Barões Anciãos</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/valdaryon-1024.webp',IMG_DATA.VALDARYON)"><img src="assets/img/valdaryon-480.webp" alt="Valdaryon" loading="lazy" data-i18n-attr="alt:acd.199"><div class="nh-cap" data-i18n="acd.200">Valdaryon</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/floresta-negra-1024.webp',IMG_DATA.FLORESTA_NEGRA)"><img src="assets/img/floresta-negra-480.webp" alt="Floresta Negra" loading="lazy" data-i18n-attr="alt:acd.201"><div class="nh-cap" data-i18n="acd.202">Floresta Negra</div></button>
           </div>
         </div>
       </div>
@@ -610,19 +613,19 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
       <div id="utab-tecno" class="utab-pane" style="display:none;">
         <div style="display:grid;grid-template-columns:1.2fr .8fr;gap:16px;align-items:start;" class="univ-two-col">
           <div style="color:rgba(204,204,204,1);">
-            <h3 style="font-size:18px;font-weight:700;color:#8f4fff;margin:0 0 6px;">Magitecnologia</h3>
-            <p style="color:rgba(156,163,175,1);font-style:italic;font-size:13px;margin:0 0 12px;">"Ciência não morreu. Ela foi devorada pela magia."</p>
-            <p style="font-size:13px;line-height:1.7;margin:0;">A magitecnologia une conhecimento arcano e necessidade prática. Em Caelum, progresso e desigualdade caminham lado a lado.</p>
+            <h3 style="font-size:18px;font-weight:700;color:#8f4fff;margin:0 0 6px;" data-i18n="acd.203">Magitecnologia</h3>
+            <p style="color:rgba(156,163,175,1);font-style:italic;font-size:13px;margin:0 0 12px;" data-i18n="acd.204">"Ciência não morreu. Ela foi devorada pela magia."</p>
+            <p style="font-size:13px;line-height:1.7;margin:0;" data-i18n="acd.205">A magitecnologia une conhecimento arcano e necessidade prática. Em Caelum, progresso e desigualdade caminham lado a lado.</p>
           </div>
           <div class="nh-gallery-new">
-            <button class="nh-thumb-new" onclick="openImg('assets/images/arma-encantada.jpg',IMG_DATA.ARTEFATOS_RUNICOS)"><img src="assets/images/arma-encantada.jpg" alt="Artefatos Rúnicos" loading="lazy"><div class="nh-cap">Artefatos rúnicos</div></button>
-            <button class="nh-thumb-new" onclick="openImg('assets/images/zepelim.jpg',IMG_DATA.ZEPELINS_MAGICOS)"><img src="assets/images/zepelim.jpg" alt="Zepelins" loading="lazy"><div class="nh-cap">Zepelins mágicos</div></button>
-            <button class="nh-thumb-new" onclick="openImg('assets/images/montaria-viva.jpg',IMG_DATA.MONTARIAS_VIVAS)"><img src="assets/images/montaria-viva.jpg" alt="Montarias" loading="lazy"><div class="nh-cap">Montarias vivas</div></button>
-            <button class="nh-thumb-new" onclick="openImg('assets/images/portal.jpg',IMG_DATA.PORTAIS_ARCANOS)"><img src="assets/images/portal.jpg" alt="Portais" loading="lazy"><div class="nh-cap">Portais arcanos</div></button>
-            <button class="nh-thumb-new" onclick="openImg('assets/images/relogio-runico.jpg',IMG_DATA.RELOGIOS_RUNICOS)"><img src="assets/images/relogio-runico.jpg" alt="Relógios" loading="lazy"><div class="nh-cap">Relógios rúnicos</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/arma-encantada-1024.webp',IMG_DATA.ARTEFATOS_RUNICOS)"><img src="assets/img/arma-encantada-480.webp" alt="Artefatos Rúnicos" loading="lazy" data-i18n-attr="alt:acd.206"><div class="nh-cap" data-i18n="acd.207">Artefatos rúnicos</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/zepelim-1536.webp',IMG_DATA.ZEPELINS_MAGICOS)"><img src="assets/img/zepelim-480.webp" alt="Zepelins" loading="lazy" data-i18n-attr="alt:acd.208"><div class="nh-cap" data-i18n="acd.209">Zepelins mágicos</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/montaria-viva-1024.webp',IMG_DATA.MONTARIAS_VIVAS)"><img src="assets/img/montaria-viva-480.webp" alt="Montarias" loading="lazy" data-i18n-attr="alt:acd.210"><div class="nh-cap" data-i18n="acd.211">Montarias vivas</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/portal-1024.webp',IMG_DATA.PORTAIS_ARCANOS)"><img src="assets/img/portal-480.webp" alt="Portais" loading="lazy" data-i18n-attr="alt:acd.212"><div class="nh-cap" data-i18n="acd.213">Portais arcanos</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/relogio-runico-1024.webp',IMG_DATA.RELOGIOS_RUNICOS)"><img src="assets/img/relogio-runico-480.webp" alt="Relógios" loading="lazy" data-i18n-attr="alt:acd.214"><div class="nh-cap" data-i18n="acd.215">Relógios rúnicos</div></button>
           </div>
         </div>
-        <p style="margin-top:16px;font-style:italic;color:rgba(204,204,204,1);text-align:center;font-size:13px;">"Caelum não quer heróis. Só almas fortes o bastante para sobreviver a ele."</p>
+        <p style="margin-top:16px;font-style:italic;color:rgba(204,204,204,1);text-align:center;font-size:13px;" data-i18n="acd.216">"Caelum não quer heróis. Só almas fortes o bastante para sobreviver a ele."</p>
       </div>
 
     </div>
@@ -632,15 +635,15 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
 <!-- A OBRA — modais -->
 <section id="mundo" style="padding:0 20px 80px;max-width:900px;margin:0 auto;">
   <div style="text-align:center;margin-bottom:24px;" class="reveal">
-    <div class="section-label" style="text-align:center;">A Obra</div>
-    <h2 class="cinzel text-grad" style="font-size:clamp(18px,2.5vw,26px);margin:0 0 10px;">ACDA — As Cinzas do Amanhã</h2>
-    <p style="font-size:14px;color:rgba(255,255,255,0.5);max-width:560px;margin:0 auto;line-height:1.75;">Em <strong style="color:rgba(255,255,255,0.7);">Caelum</strong>, os dragões não são lenda: eles encerraram eras. O que sobrou se divide entre <strong style="color:rgba(255,255,255,0.7);">Aeon</strong> e <strong style="color:rgba(255,255,255,0.7);">Kaleidos</strong>. ACDA é sobre o custo real de continuar vivo quando o mundo já desistiu de você.</p>
+    <div class="section-label" style="text-align:center;" data-i18n="acd.217">A Obra</div>
+    <h2 class="cinzel text-grad" style="font-size:clamp(18px,2.5vw,26px);margin:0 0 10px;" data-i18n="acd.218">ACDA — As Cinzas do Amanhã</h2>
+    <p style="font-size:14px;color:rgba(255,255,255,0.5);max-width:560px;margin:0 auto;line-height:1.75;" data-i18n-html="acd.219">Em <strong style="color:rgba(255,255,255,0.7);">Caelum</strong>, os dragões não são lenda: eles encerraram eras. O que sobrou se divide entre <strong style="color:rgba(255,255,255,0.7);">Aeon</strong> e <strong style="color:rgba(255,255,255,0.7);">Kaleidos</strong>. ACDA é sobre o custo real de continuar vivo quando o mundo já desistiu de você.</p>
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;" class="buy-grid reveal">
-    <button class="mundo-btn" onclick="openInfo('mundo')">Um mundo em colapso <span>›</span></button>
-    <button class="mundo-btn" onclick="openInfo('conflito')">O coração do conflito <span>›</span></button>
-    <button class="mundo-btn" onclick="openInfo('diferenciais')">O que torna ACDA único <span>›</span></button>
-    <button class="mundo-btn" onclick="openInfo('estetica')">Estética & inspiração <span>›</span></button>
+    <button class="mundo-btn" onclick="openInfo('mundo')" data-i18n-html="acd.220">Um mundo em colapso <span>›</span></button>
+    <button class="mundo-btn" onclick="openInfo('conflito')" data-i18n-html="acd.221">O coração do conflito <span>›</span></button>
+    <button class="mundo-btn" onclick="openInfo('diferenciais')" data-i18n-html="acd.222">O que torna ACDA único <span>›</span></button>
+    <button class="mundo-btn" onclick="openInfo('estetica')" data-i18n-html="acd.223">Estética & inspiração <span>›</span></button>
   </div>
 </section>
 
@@ -668,7 +671,7 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
       <h4 id="imgModalTitle" class="cinzel text-grad" style="font-size:16px;margin:0 0 12px;"></h4>
       <p id="imgModalDesc" style="font-size:13px;color:rgba(229,229,229,.85);line-height:1.7;white-space:pre-line;flex:1;margin:0;"></p>
       <div style="margin-top:16px;text-align:right;">
-        <button onclick="closeImg()" style="padding:8px 16px;border-radius:8px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);cursor:pointer;font-size:13px;font-family:'Inter',sans-serif;">Fechar</button>
+        <button onclick="closeImg()" style="padding:8px 16px;border-radius:8px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);cursor:pointer;font-size:13px;font-family:'Inter',sans-serif;" data-i18n="acd.224">Fechar</button>
       </div>
     </div>
   </div>
@@ -677,7 +680,6 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
 @media(max-width:640px){#imgModalBox{grid-template-columns:1fr!important;}#imgModalBox>div:last-child{border-left:none!important;border-top:1px solid rgba(255,255,255,.07);}}
 </style>
 
-<script src="assets/js/suporte-widget.js"></script>
 <script>
 // ─── ANO ───
 /* Ano do rodapé: agora no componente compartilhado <nh-footer> */
@@ -685,7 +687,7 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
 // ─── PREÇO ACDA via backend ───
 (async () => {
   try {
-    const res = await fetch('https://api.noheroes.com.br/shop');
+    const res = await fetch((window.API_BASE || 'https://api.noheroes.com.br') + '/shop');
     if (!res.ok) return;
     const data = await res.json();
     const items = data.items || data.data || data.products || data || [];
@@ -694,8 +696,8 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
     // valor em DINHEIRO (R$): discountReal tem prioridade, depois priceReal.
     const preco = parseFloat(produto.discountReal ?? produto.priceReal ?? 0);
     if (!preco) return;
-    const fmt = preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-    document.querySelectorAll('.acda-price').forEach(el => el.textContent = `PDF — ${fmt}`);
+    const pinta = () => document.querySelectorAll('.acda-price').forEach(el => el.textContent = `PDF — ${NHI18n.brl(preco)}`);
+    pinta(); document.addEventListener('nh:lang', pinta);
   } catch(e) {
     // silencia — mantém valor estático como fallback
   }
@@ -725,9 +727,14 @@ function switchTab(btn,id){
   document.getElementById(id).classList.add('active');
 }
 
+// Textos dos modais: EN em assets/i18n/acda.js; sem chave, fica o PT daqui.
+function tx(k,pt){if(!window.NHI18n)return pt;const v=NHI18n.t(k);return v===k?pt:v;}
+
 // ─── PERSONAGEM MODAL ───
 function openChar(img,name,role,desc){
-  document.getElementById('charModalImg').src=img;
+  const ck='acd.char.'+(name.replace(/[^A-Za-z]/g,'')||'x');
+  role=tx(ck+'.r',role); desc=tx(ck+'.d',desc); if(name==='???')name=tx('acd.char.x.n',name);
+  const cimg=document.getElementById('charModalImg'); cimg.style.display=img?'':'none'; if(img)cimg.src=img;
   document.getElementById('charModalImg').alt=name;
   document.getElementById('charModalName').textContent=name;
   document.getElementById('charModalRole').textContent=role;
@@ -772,8 +779,8 @@ const infoData={
 };
 function openInfo(key){
   const d=infoData[key];
-  document.getElementById('infoTitle').textContent=d.title;
-  document.getElementById('infoBody').innerHTML=d.body;
+  document.getElementById('infoTitle').textContent=tx('acd.info.'+key+'.t',d.title);
+  document.getElementById('infoBody').innerHTML=tx('acd.info.'+key+'.b',d.body);
   document.getElementById('infoModal').classList.add('open');
   document.body.style.overflow='hidden';
 }
@@ -808,6 +815,8 @@ const IMG_DATA = {
 
 // ─── IMG MODAL ───
 function openImg(src, data){
+  const ik=Object.keys(IMG_DATA).find(k=>IMG_DATA[k]===data);
+  if(ik)data={title:tx('acd.img.'+ik+'.t',data.title),text:tx('acd.img.'+ik+'.x',data.text)};
   document.getElementById('imgModalSrc').src=src;
   document.getElementById('imgModalSrc').alt=data.title||'';
   document.getElementById('imgModalTitle').textContent=data.title||'';
