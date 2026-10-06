@@ -130,12 +130,12 @@
     document.dispatchEvent(new CustomEvent('nh:lang', { detail: { lang: lang } }));
   }
 
-  // Erro da API: { code, message } → texto traduzido pelo code; senão a message do servidor (PT).
+  // Erro da API: { code, message }. O backend já devolve a message no idioma do header X-NH-Lang;
+  // um texto do dicionário para o code (err.CODE) tem prioridade quando existe.
   function erro(json, fallback) {
     var code = json && (json.code || json.error_code);
     if (code && dict[lang]['err.' + code] != null) return t('err.' + code, json.vars);
-    if (code && dict.pt['err.' + code] != null && lang === 'pt') return t('err.' + code, json.vars);
-    if (lang === 'pt' && json && (json.message || json.error)) return json.message || json.error;
+    if (json && (json.message || json.error)) return json.message || json.error;
     return t(fallback || 'err.generico');
   }
 

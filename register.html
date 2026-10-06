@@ -1,207 +1,128 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Cadastro — NoHeroes</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-  :root{
-    --nh-bg:#0a0a0a; --nh-fg:#e5e5e5; --nh-muted:#bdbdbd;
-    --grad:linear-gradient(135deg,#8f4fff 0%,#facc15 100%);
-    --border:rgba(255,255,255,.1); --glass:rgba(255,255,255,.04);
-    --radius:16px;
-  }
-  body{font-family:Inter,system-ui,Arial,sans-serif;background:var(--nh-bg);color:var(--nh-fg);overflow-x:hidden}
-  .cinzel{font-family:"Cinzel Decorative",serif}
-  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .card{background:var(--glass);border:1px solid var(--border);border-radius:var(--radius);backdrop-filter:blur(10px)}
-  .btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;padding:.85rem 1.1rem;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.05);transition:.25s;font-weight:600}
-  .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.08)}
-  .btn-primary{background:var(--grad);color:#000;border:none}
-  .btn-primary:hover{filter:saturate(1.05);transform:translateY(-1px) scale(1.01)}
-  .input{background:#0e0e0e;border:1px solid var(--border);border-radius:12px;padding:.8rem .9rem;color:var(--nh-fg);width:100%}
-  .hint{font-size:.82rem;color:#bdbdbd}
-  #brasasCanvas{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;pointer-events:none}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title data-i18n="reg.meta.titulo">Criar conta | NoHeroes</title>
+  <meta name="description" content="Crie sua conta NoHeroes para comprar e-books, acompanhar pedidos e receber novidades." data-i18n-attr="content:reg.meta.descricao">
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://www.noheroes.com.br/register">
+  <meta name="theme-color" content="#07060a">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tw.css">
+  <link rel="stylesheet" href="assets/css/noheroes-ui.css">
+  <link rel="stylesheet" href="assets/css/paginas.css">
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/i18n/comum.js"></script>
+  <script src="assets/i18n/conta.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script defer src="assets/js/noheroes-ui.js"></script>
 </head>
-<body>
-<canvas id="brasasCanvas" aria-hidden="true"></canvas>
+<body class="nh-pagina">
+<nh-background></nh-background>
+<nh-header></nh-header>
 
-<header class="fixed top-0 left-0 right-0 h-[70px] bg-[#0a0a0a]/85 border-b border-[#222] backdrop-blur-md z-50 flex items-center justify-between px-6">
-  <a href="index.html" class="flex items-center gap-3">
-    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-600 to-amber-400"></div>
-    <span class="cinzel text-xl bg-clip-text text-transparent bg-gradient-to-r from-purple-300 to-amber-200">NoHeroes</span>
-  </a>
-  <a href="login.html" class="text-sm font-semibold px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10">Entrar</a>
-</header>
-<div class="h-[70px]"></div>
+<main id="conteudo" class="nh-auth">
+  <h1 class="nh-h2" data-i18n="reg.titulo">Criar conta</h1>
+  <p class="nh-lead" data-i18n="reg.sub">Com a conta você compra e-books, acompanha pedidos e recebe novidades.</p>
 
-<main class="max-w-md mx-auto px-4 py-16 relative z-10">
-  <section class="card p-6 sm:p-8">
-    <h1 class="cinzel text-3xl grad-text text-center mb-2">Criar Conta</h1>
-    <p class="text-center hint mb-6">Registre-se para acessar o universo NoHeroes.</p>
-
-    <form id="registerForm" class="grid gap-4">
-      <label class="grid gap-2">
-        <span class="hint">Nome completo</span>
-        <input type="text" id="nome_completo" class="input" required>
-      </label>
-      <label class="grid gap-2">
-        <span class="hint">Nome de usuário</span>
-        <input type="text" id="username" class="input" required minlength="3" autocomplete="username">
-      </label>
-      <label class="grid gap-2">
-        <span class="hint">E-mail</span>
-        <input type="email" id="email" class="input" required autocomplete="email">
-      </label>
-      <div class="grid sm:grid-cols-2 gap-4">
-        <label class="grid gap-2">
-          <span class="hint">Senha</span>
-          <input type="password" id="password" class="input" required minlength="6" autocomplete="new-password">
-        </label>
-        <label class="grid gap-2">
-          <span class="hint">Confirmar senha</span>
-          <input type="password" id="confirmPassword" class="input" required minlength="6" autocomplete="new-password">
-        </label>
+  <form id="registerForm" class="nh-auth-card" novalidate>
+    <div class="nh-campo">
+      <label for="nome_completo" data-i18n="reg.nome">Nome completo</label>
+      <input type="text" id="nome_completo" class="nh-input" autocomplete="name" required>
+    </div>
+    <div class="nh-campo">
+      <label for="username" data-i18n="reg.usuario">Nome de usuário</label>
+      <input type="text" id="username" class="nh-input" autocomplete="username" required minlength="3">
+    </div>
+    <div class="nh-campo">
+      <label for="email" data-i18n="conta.email">E-mail</label>
+      <input type="email" id="email" class="nh-input" autocomplete="email" required>
+    </div>
+    <div class="nh-campos-2">
+      <div class="nh-campo">
+        <label for="password" data-i18n="conta.senha">Senha</label>
+        <input type="password" id="password" class="nh-input" autocomplete="new-password" required minlength="8">
       </div>
-      <label class="grid gap-2">
-        <span class="hint">Telefone (opcional)</span>
-        <input type="tel" id="phone" class="input">
-      </label>
-      <label class="grid gap-2">
-        <span class="hint">Data de nascimento (obrigatório — 16+)</span>
-        <input type="date" id="birthdate" class="input" required>
-      </label>
-      <label class="grid gap-2">
-        <span class="hint">Sobre você (opcional)</span>
-        <textarea id="bio" class="input" rows="3"></textarea>
-      </label>
+      <div class="nh-campo">
+        <label for="confirmPassword" data-i18n="reg.confirmar">Confirmar senha</label>
+        <input type="password" id="confirmPassword" class="nh-input" autocomplete="new-password" required minlength="8">
+      </div>
+    </div>
+    <p class="nh-dica" data-i18n="reg.senha_dica">Mínimo de 8 caracteres.</p>
+    <div class="nh-campo">
+      <label for="birthdate" data-i18n="reg.nascimento">Data de nascimento</label>
+      <input type="date" id="birthdate" class="nh-input" required>
+      <p class="nh-dica" data-i18n="reg.nascimento_dica">Obrigatório: a conta é para maiores de 16 anos.</p>
+    </div>
+    <div class="nh-campo">
+      <label for="phone" data-i18n="reg.telefone">Telefone (opcional)</label>
+      <input type="tel" id="phone" class="nh-input" autocomplete="tel">
+    </div>
+    <label class="nh-check">
+      <input id="terms" type="checkbox" required>
+      <span><span data-i18n="reg.concordo">Concordo com os</span> <a href="termos.html" target="_blank" class="nh-link" data-i18n="reg.termos">Termos de uso</a> <span data-i18n="reg.e_a">e a</span> <a href="privacidade.html" target="_blank" class="nh-link" data-i18n="reg.privacidade">Política de privacidade</a>.</span>
+    </label>
+    <button id="submitBtn" type="submit" class="nh-btn nh-btn-pri nh-btn-grande w-full" data-i18n="reg.criar">Criar conta</button>
+    <p id="error" class="nh-form-msg" role="alert"></p>
+  </form>
 
-      <label class="flex items-start gap-3 text-sm text-white/70 select-none">
-        <input id="terms" type="checkbox" class="accent-purple-500" required>
-        <span>Concordo com os <a href="termos.html" target="_blank" class="underline hover:no-underline">Termos</a> e a <a href="privacidade.html" target="_blank" class="underline hover:no-underline">Privacidade</a>.</span>
-      </label>
-
-      <button id="submitBtn" type="submit" class="btn btn-primary w-full mt-3">
-        <span id="btnText">Cadastrar</span>
-        <svg id="btnSpin" class="animate-spin h-4 w-4 hidden" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v3a5 5 0 00-5 5H4z"></path></svg>
-      </button>
-
-      <p id="error" class="text-red-400 text-sm hidden text-center"></p>
-    </form>
-
-    <p class="mt-6 text-center text-sm text-white/60">
-      Já tem conta? <a href="login.html" class="text-white hover:underline">Entrar</a>
-    </p>
-  </section>
+  <p class="nh-auth-rodape"><span data-i18n="reg.ja_tem">Já tem conta?</span> <a href="login.html" class="nh-link" data-i18n="login.entrar">Entrar</a></p>
 </main>
 
-<footer style="padding:32px 20px;text-align:center;border-top:1px solid rgba(255,255,255,0.06);background:#000;">
-  <div style="font-family:'Cinzel Decorative',serif;font-size:16px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px;">NoHeroes</div>
-  <p style="font-size:11px;color:rgba(255,255,255,0.2);margin:0;">© <span id="year"></span> NoHeroes. Todos os direitos reservados.</p>
-</footer>
+<nh-footer></nh-footer>
 
 <script>
-document.getElementById('year').textContent = new Date().getFullYear();
+(function () {
+  'use strict';
+  const t = (k, v) => NHI18n.t(k, v);
+  const form = document.getElementById('registerForm');
+  const msg = document.getElementById('error');
+  const btn = document.getElementById('submitBtn');
+  const aviso = (texto, ok) => { msg.textContent = texto; msg.className = 'nh-form-msg ' + (ok ? 'ok' : 'erro'); };
 
-// === Brasas canvas ===
-const canvas = document.getElementById("brasasCanvas");
-    const ctx = canvas.getContext("2d");
-    let particles = [], w, h;
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    aviso('', true);
+    const v = (id) => document.getElementById(id).value.trim();
+    const dados = {
+      nome_completo: v('nome_completo'), username: v('username'), email: v('email'),
+      password: document.getElementById('password').value, phone: v('phone'), birthdate: v('birthdate'),
+      termsAccepted: document.getElementById('terms').checked, lang: NHI18n.lang,
+    };
+    if (!dados.nome_completo || !dados.username || !dados.email || !dados.password || !dados.birthdate) return aviso(t('reg.erro_obrigatorios'));
+    if (dados.password.length < 8) return aviso(t('reg.erro_senha_curta'));
+    if (dados.password !== document.getElementById('confirmPassword').value) return aviso(t('reg.erro_senhas'));
+    const n = new Date(dados.birthdate), h = new Date();
+    let idade = h.getFullYear() - n.getFullYear();
+    if (h.getMonth() < n.getMonth() || (h.getMonth() === n.getMonth() && h.getDate() < n.getDate())) idade--;
+    if (idade < 16) return aviso(t('err.AGE_RESTRICTED'));
+    if (!dados.termsAccepted) return aviso(t('reg.erro_termos'));
 
-    function resizeCanvas() {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
-    }
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-
-    class Particle {
-      constructor() { this.reset(true); }
-      reset(initial = false) {
-        this.x = Math.random() * w;
-        this.y = initial ? Math.random() * h : h + Math.random() * 100;
-        this.size = 1 + Math.random() * 2.5;
-        this.speed = 0.2 + Math.random() * 0.5;
-        this.alpha = 0.4 + Math.random() * 0.3;
-        this.drift = (Math.random() - 0.5) * 0.5;
+    btn.disabled = true; btn.textContent = t('reg.criando');
+    try {
+      const res = await fetch(`${API_BASE}/api/auth/register`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(dados),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && (data.user || data.success)) {
+        form.reset();
+        form.querySelectorAll('input,button').forEach((el) => { el.disabled = true; });
+        aviso(t('reg.ok'), true);
+      } else {
+        aviso(NHI18n.erro(data, 'reg.erro'));
       }
-      update() {
-        this.y -= this.speed;
-        this.x += this.drift;
-        if (this.y < -10 || this.x < -50 || this.x > w + 50) this.reset();
-      }
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`;
-        ctx.shadowColor = "#a855f7";
-        ctx.shadowBlur = 12;
-        ctx.fill();
-      }
+    } catch (_) {
+      aviso(t('err.conexao'));
+    } finally {
+      if (!form.querySelector('input').disabled) { btn.disabled = false; }
+      btn.textContent = t('reg.criar');
     }
-
-    function createParticles(n) {
-      for (let i = 0; i < n; i++) particles.push(new Particle());
-    }
-    function animate() {
-      ctx.clearRect(0, 0, w, h);
-      for (const p of particles) { p.update(); p.draw(); }
-      requestAnimationFrame(animate);
-    }
-    createParticles(150);
-    animate();
-
-// === Cadastro ===
-const form=document.getElementById("registerForm");
-const errorEl=document.getElementById("error");
-const btnText=document.getElementById("btnText");
-const btnSpin=document.getElementById("btnSpin");
-const submitBtn=document.getElementById("submitBtn");
-
-form.addEventListener("submit",async e=>{
-  e.preventDefault();
-  errorEl.classList.add("hidden");errorEl.textContent="";
-  const nome_completo=document.getElementById("nome_completo").value.trim();
-  const username=document.getElementById("username").value.trim();
-  const email=document.getElementById("email").value.trim();
-  const password=document.getElementById("password").value;
-  const confirmPassword=document.getElementById("confirmPassword").value;
-  const phone=document.getElementById("phone").value.trim();
-  const birthdate=document.getElementById("birthdate").value;
-  const bio=document.getElementById("bio").value.trim();
-
-  if(!nome_completo||!username||!email||!password||!birthdate){errorEl.textContent="Preencha todos os campos obrigatórios (incluindo a data de nascimento).";errorEl.classList.remove("hidden");return;}
-  // Age-gate 16+ (o servidor também valida — esta checagem é só feedback imediato)
-  {const _b=new Date(birthdate);const _n=new Date();let _i=_n.getFullYear()-_b.getFullYear();const _m=_n.getMonth()-_b.getMonth();if(_m<0||(_m===0&&_n.getDate()<_b.getDate()))_i--;if(_i<16){errorEl.textContent="É necessário ter ao menos 16 anos para criar uma conta.";errorEl.classList.remove("hidden");return;}}
-  if(password!==confirmPassword){errorEl.textContent="As senhas não coincidem.";errorEl.classList.remove("hidden");return;}
-
-  const payload={nome_completo,username,email,password,phone,birthdate,bio,termsAccepted:document.getElementById('terms').checked};
-  submitBtn.disabled=true;btnSpin.classList.remove("hidden");btnText.textContent="Criando conta...";
-
-  try{
-    const res = await fetch("https://api.noheroes.com.br/api/auth/register", {
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify(payload)
-    });
-    const data=await res.json().catch(()=>({}));
-    if(res.ok && (data.user||data.success)){
-      localStorage.setItem("NoHeroes_token","Bearer "+(data.token||""));
-      alert("Conta criada com sucesso!");
-      window.location.href="profile.html";
-    }else{
-      errorEl.textContent=(data.message||data.error||"Não foi possível criar a conta.");errorEl.classList.remove("hidden");
-    }
-  }catch(err){
-    console.error("Erro:",err);
-    errorEl.textContent="Falha de conexão com o servidor.";errorEl.classList.remove("hidden");
-  }finally{
-    submitBtn.disabled=false;btnSpin.classList.add("hidden");btnText.textContent="Cadastrar";
-  }
-});
+  });
+})();
 </script>
 </body>
 </html>

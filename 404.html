@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title data-i18n="p404.titulo_meta">Página não encontrada | NoHeroes</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#07060a">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+  <!-- caminhos absolutos: esta página é servida em qualquer URL inexistente -->
+  <base href="/">
+  <link rel="stylesheet" href="/assets/css/tw.css">
+  <link rel="stylesheet" href="/assets/css/noheroes-ui.css">
+  <link rel="stylesheet" href="/assets/css/paginas.css">
+  <script src="/assets/js/i18n.js"></script>
+  <script src="/assets/i18n/comum.js"></script>
+  <script>
+    Object.assign(NH_DICT.en, {
+      'p404.titulo_meta': 'Page not found | NoHeroes',
+      'p404.titulo': 'This page does not exist',
+      'p404.texto': 'The link may be old or mistyped. Here is where most people are headed:',
+      'p404.inicio': 'Go to the home page',
+    });
+  </script>
+  <script src="/assets/js/config.js"></script>
+  <script defer src="/assets/js/noheroes-ui.js"></script>
+</head>
+<body class="nh-pagina">
+<nh-background></nh-background>
+<nh-header></nh-header>
+<main id="conteudo" class="nh-secao">
+  <div class="nh-wrap" style="max-width:40rem">
+    <p class="cinzel text-grad-nh" style="font-size:clamp(4rem,20vw,7rem);line-height:1">404</p>
+    <h1 class="nh-h2" style="margin-top:12px" data-i18n="p404.titulo">Esta página não existe</h1>
+    <p class="nh-lead" style="margin-top:10px" data-i18n="p404.texto">O link pode estar antigo ou com erro de digitação. É aqui que a maioria das pessoas quer chegar:</p>
+    <div class="nh-ctas-linha">
+      <a data-nh-wa="tatuagem" class="nh-btn nh-btn-pri nh-btn-grande" data-i18n="nav.agendar">Agendar tatuagem</a>
+      <a data-nh-webnovel class="nh-btn nh-btn-ouro nh-btn-grande" data-i18n="idx.hero.cta_ler">Ler Anjo Devorador</a>
+      <a href="/store.html" class="nh-btn nh-btn-sec nh-btn-grande" data-i18n="nav.loja">Loja</a>
+    </div>
+    <p style="margin-top:20px"><a href="/" class="nh-link" data-i18n="p404.inicio">Ir para o início</a></p>
+  </div>
+</main>
+<nh-footer></nh-footer>
+<script>
+  Object.assign(NH_DICT.pt, { 'idx.hero.cta_ler': 'Ler Anjo Devorador' });
+  Object.assign(NH_DICT.en, { 'idx.hero.cta_ler': 'Read Anjo Devorador' });
+  NHI18n.aplicar();
+</script>
+</body>
+</html>

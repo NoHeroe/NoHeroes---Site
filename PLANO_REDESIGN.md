@@ -15,7 +15,7 @@ Regras fixas: identidade visual atual (roxo #8f4fff/#a855f7, dourado #d9b55a/#fa
 ## Fase 0 — erro de publicação ✅
 - [x] Origem: GitHub Pages (`pages-build-deployment`, run 37365725827, job deploy não foi pego pelo runner do GitHub). O domínio é servido pelo Cloudflare Pages.
 - [x] GitHub Pages desativado via `gh api -X DELETE repos/NoHeroe/NoHeroes---Site/pages` (204).
-- [ ] Confirmar no próximo push: nenhum workflow do GitHub e Cloudflare publicando.
+- [x] Confirmado: push na main (robots.txt) publicou pelo Cloudflare sem nenhum run do GitHub.
 
 ## Fase 1 — skills ✅
 - [x] `frontend-design` e `webapp-testing` (Apache 2.0) copiadas para `~/.claude/skills/` e lidas. Playwright 1.63 instalado (usa o Chrome do sistema).
@@ -24,21 +24,24 @@ Regras fixas: identidade visual atual (roxo #8f4fff/#a855f7, dourado #d9b55a/#fa
 - [x] Playwright 375/1280, console, rede, rolagem, links, Lighthouse → `VISTORIA_2026-10.md`.
 
 ## Fase 3 — fundação técnica
-- [ ] 3.1 i18n.js + pt/en + seletor no header; migrar dicionários de linktree e portifólio
+- [x] 3.1a i18n.js + comum.js + seletor no header/menu (noheroes-ui.js)
+- [ ] 3.1b migrar dicionários de linktree e portifólio
 - [ ] 3.2 Traduzir 100%: páginas públicas, conta, checkout, toasts, títulos, metas, alt
 - [ ] 3.3 Backend: `Users.lang`, header `X-NH-Lang`, códigos de erro, e-mails PT/EN, migração SQL
 - [ ] 3.4 Tailwind compilado no lugar do CDN; `config.js` em todas as páginas; hero-bg.gif
-- [ ] 3.5 Imagens WebP + tamanhos + lazy
-- [ ] 3.6 SEO: metas/OG/Twitter por página e idioma, canonical, hreflang, schema.org, sitemap, robots, favicon, 404.html
+- [x] 3.5 Imagens WebP + tamanhos (tools/otimizar-imagens.py → assets/img) — aplicar nas páginas conforme forem migradas
+- [x] 3.6a og-image, apple-touch-icon, sitemap.xml, robots.txt, 404.html
+- [ ] 3.6b SEO: metas/OG/Twitter por página e idioma, canonical, hreflang, schema.org, sitemap, robots, favicon, 404.html
 - [ ] 3.7 Analytics sem cookies (Cloudflare Web Analytics, token `[[RAUL]]`) + banner de cookies coerente
 
 ## Fase 4 — redesenho
-- [ ] 4.1 index (header enxuto, hero com 2 CTAs, Tatuagem, Obra, Loja, Serviços, apoio/newsletter, rodapé)
+- [x] 4.1 index (header enxuto, hero com 2 CTAs, Tatuagem, Obra, Loja, Serviços, apoio/newsletter, rodapé)
 - [ ] 4.2 sobre (selo/estúdio, bio, trajetória, press kit)
 - [ ] 4.3 store/checkout/agradecimento: confiança, estados vazios/erro, físicos
 - [ ] 4.4 suporte: FAQ novo, remover métricas sem fonte, manter formulário
 - [ ] 4.5 termos e privacidade reescritos (data atual) — revisão jurídica do Raul
-- [ ] 4.6 login, cadastro, recuperação, perfil, inventário: acabamento
+- [x] 4.6a login, cadastro, recuperação, reenvio, verificação (padrão novo + PT/EN)
+- [ ] 4.6b perfil e inventário
 
 ## Fase 5 — conta, notificações, cupons, suporte
 - [ ] 5.1 Preferências de notificação (backend + aba no perfil) e envio pelo admin (todos/opt-in/usuário, + e-mail)
@@ -56,4 +59,6 @@ Regras fixas: identidade visual atual (roxo #8f4fff/#a855f7, dourado #d9b55a/#fa
 
 ## Pendências do Raul (`[[RAUL]]`)
 (lista completa no relatório final; é mantida aqui conforme surgem)
-- Título e sinopse oficiais em inglês do Anjo Devorador.
+- Título e sinopse oficiais em inglês do Anjo Devorador (index, seção Obra).
+- Cidade/endereço do estúdio e se há sinal para reservar (index, Como agendar).
+- Link do perfil de tatuagem (rodapé).
