@@ -143,6 +143,8 @@ select.field-input option{background:#0c0a10;color:#e5e5e5}
 /* CONTACT BTN HEADER */
 .hdr-contact{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:10px;background:linear-gradient(135deg,rgba(143,79,255,0.2),rgba(217,181,90,0.1));border:1px solid rgba(143,79,255,0.35);color:#c4a3ff;font-weight:600;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s}
 .hdr-contact:hover{background:rgba(143,79,255,0.25)}
+/* telas estreitas: o menu (☰) ficava fora da tela em 375px — Contato vira só ícone */
+@media(max-width:420px){header nav{padding:0 12px!important}.hdr-contact{padding:9px 11px}.hdr-contact span{display:none}}
 
 /* PORTRAIT */
 .portrait-wrap{border:1px solid rgba(143,79,255,0.2);border-radius:16px;overflow:hidden;background:#0c0a10;box-shadow:0 20px 60px rgba(0,0,0,0.5)}
@@ -193,6 +195,8 @@ select.field-input option{background:#0c0a10;color:#e5e5e5}
 <script src="assets/js/config.js"></script>
 </head>
 <body>
+<!-- gradiente dos ícones: fora de qualquer elemento escondido (o do modal não renderiza com o modal fechado) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><linearGradient id="ctg0" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs></svg>
 <!-- Fundo + menu lateral (componentes compartilhados) -->
 <nh-background></nh-background>
 <nh-drawer></nh-drawer>
@@ -204,7 +208,7 @@ select.field-input option{background:#0c0a10;color:#e5e5e5}
     <p data-i18n-html="port.modal_sub" style="font-size:13px;color:rgba(255,255,255,0.4);margin:0 0 20px;">Selecione o tipo de contato para ser direcionado ao formulário correto.</p>
     <div class="contact-types" style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:20px;">
       <div class="contact-type-card" onclick="selectContactType('Tatuagem')" id="ct-tatuagem">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="margin:0 auto 8px;display:block;"><defs><linearGradient id="ctg0" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M12 19l7-7a2.5 2.5 0 000-4l-3-3a2.5 2.5 0 00-4 0l-7 7M12 19l-4 1 1-4M12 19l-6.5-.5" stroke="url(#ctg0)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="margin:0 auto 8px;display:block;"><defs><linearGradient id="ctg0-modal" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c4a3ff"/><stop offset="100%" stop-color="#f0d99a"/></linearGradient></defs><path d="M12 19l7-7a2.5 2.5 0 000-4l-3-3a2.5 2.5 0 00-4 0l-7 7M12 19l-4 1 1-4M12 19l-6.5-.5" stroke="url(#ctg0)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <div data-i18n-html="port.ct_tattoo" style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.8);">Tatuagem</div>
         <div data-i18n-html="port.ct_tattoo_sub" style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:3px;">Agendar tattoo</div>
       </div>
@@ -243,7 +247,7 @@ select.field-input option{background:#0c0a10;color:#e5e5e5}
         <button id="lang-pt" onclick="switchLang('pt')" class="lang-btn active">PT</button>
         <button id="lang-en" onclick="switchLang('en')" class="lang-btn">EN</button>
       </div>
-      <button class="hdr-contact" onclick="openContactModal()">
+      <button class="hdr-contact" onclick="openContactModal()" aria-label="Contato" data-i18n-attr="aria-label:port.hdr_contact">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="url(#ctg0)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <span data-i18n-html="port.hdr_contact">Contato</span>
       </button>

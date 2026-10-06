@@ -58,8 +58,8 @@
     'idx.obra.capa_alt': 'Anjo Devorador cover',
     'idx.obra.meta': 'A dark fantasy webnovel, published in chapters in Portuguese and English.',
     // Sinopse oficial em inglês ainda não informada: mostra o texto em português e o marcador.
-    'idx.obra.sinopse': 'O mundo está virando cinzas. Entre o rugido de dragões e a corrupção dos Voidrins, a humanidade se agarra a uma última e misteriosa esperança de sobrevivência. No centro deste caos, o jovem Vitalista Azuos desperta em uma floresta, sem memórias e sem destino. Enquanto luta para não ser consumido por um mundo que morre, Azuos busca um propósito — mas quanto mais perto ele chega da verdade, mais percebe que seu passado esquecido pode ser uma ameaça maior do que os monstros que cruzam os céus.',
-    'idx.obra.raul_en': '[[RAUL: official English synopsis]]',
+    'idx.obra.sinopse': 'The world is turning to ash. Between the roar of dragons and the corruption of the Voidrins, humanity clings to one last, mysterious hope of survival. At the heart of this chaos, the young Vitalist Azuos wakes up in a forest, with no memories and no destiny. As he fights not to be consumed by a dying world, Azuos searches for a purpose — but the closer he gets to the truth, the more he realizes his forgotten past may be a greater threat than the monsters crossing the skies.',
+    'idx.obra.raul_en': '[[RAUL: confirmar a sinopse oficial em inglês — a de cima é tradução da sinopse em português]]',
     'idx.obra.livro_t': 'The book: As Cinzas do Amanhã',
     'idx.obra.livro': 'ACDA is the heart of the NoHeroes universe — the work where it all began. Volume I is available as a PDF and in print (Portuguese).',
     'idx.obra.livro_cta': 'Buy the book',
