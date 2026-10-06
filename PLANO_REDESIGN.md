@@ -81,7 +81,27 @@ Regras fixas: identidade visual atual (roxo #8f4fff/#a855f7, dourado #d9b55a/#fa
 
 Boas práticas fica em 82 por um único item: o script de detecção de bots que o próprio Cloudflare injeta (`/cdn-cgi/challenge-platform`) usa uma API obsoleta — não é do site.
 
-## Pendências do Raul (`[[RAUL]]`)
+## Ajustes pós-redesenho (06/10/2026, tarde)
+- [x] Preenchido em PT e EN: responsável legal (CNPJ e endereço) em Termos, Privacidade e rodapé; onde atende; sinal de 50% e remarcação com 24 h; cuidados pós-tatuagem; nota fiscal; devolução e trocas; sinopse oficial EN do Anjo Devorador; sem retirada em mãos
+- [x] Mercado Livre: nenhuma URL real no histórico do git, na landing antiga nem no banco → botão e painel ocultos
+- [x] Ocultos sem buraco: trailer (em `<template>`), Instagram de tatuagem (some do rodapé), analytics sem token não carrega; personagens com iniciais em selo
+- [x] Pix direto ligado em produção (PIX_KEY celular, nome, cidade "CHAP GUIMARAES" no limite EMV de 15); BR Code de teste com CRC válido
+- [x] Frete: SHIPPING_ORIGIN_CEP=78195000; sem MELHORENVIO_TOKEN, `/checkout/methods` diz `shipping.available:false` e a loja mostra "frete calculado em breve" nos físicos
+- [x] "run failed": run 37365725827 do GitHub Pages (05/10 19:48); Pages desativado (API 404), nenhum run depois dos pushes de 06/10
+- Backup R2 antes do .env: `noheroes_20261006_142326.dump`; backend `6b5021d`
+
+## Pendências do Raul (`[[RAUL]]`) — o que ainda falta
+- Instagram (ou outro perfil) de tatuagem → aparece no rodapé (`NH_CONTATO.redesTattoo` em assets/js/noheroes-ui.js).
+- Vídeo do trailer da ACDA → tirar a seção do `<template id="trailer-pendente">` e voltar a pílula "Trailer".
+- Imagens dos 10 personagens da ACDA (hoje: iniciais em selo).
+- Token do Cloudflare Web Analytics (`CF_BEACON_TOKEN` em assets/js/config.js).
+- Nomes e descrições em inglês dos produtos (Admin › Produtos).
+- Revisão jurídica de termos.html e privacidade.html.
+- Token do Melhor Envio (`MELHORENVIO_TOKEN` no .env do servidor) — sem ele, físicos não vendem.
+- Conferir no app do banco o QR de teste do Pix (recebedor = Raul Takagi Sato Souza).
+
+### Histórico (lista original)
+
 (lista completa no relatório final; é mantida aqui conforme surgem)
 - Título e sinopse oficiais em inglês do Anjo Devorador (index, seção Obra).
 - Cidade/endereço do estúdio e se há sinal para reservar (index, Como agendar).
