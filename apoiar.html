@@ -3,9 +3,31 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Apoiar — NoHeroes</title>
+<meta name="description" content="Apoie o universo NoHeroes: metas transparentes, doações pelo Mercado Pago e newsletter com novidades." data-i18n-attr="content:apo.meta.descricao">
+<link rel="canonical" href="https://www.noheroes.com.br/apoiar">
+<link rel="alternate" hreflang="pt-BR" href="https://www.noheroes.com.br/apoiar">
+<link rel="alternate" hreflang="en" href="https://www.noheroes.com.br/apoiar?lang=en">
+<link rel="alternate" hreflang="x-default" href="https://www.noheroes.com.br/apoiar">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NoHeroes">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:url" content="https://www.noheroes.com.br/apoiar">
+<meta property="og:title" content="Apoiar" data-i18n-attr="content:apo.og.titulo">
+<meta property="og:description" content="Apoie o universo NoHeroes: metas transparentes, doações pelo Mercado Pago e newsletter com novidades." data-i18n-attr="content:apo.meta.descricao">
+<meta property="og:image" content="https://www.noheroes.com.br/assets/img/og/og-noheroes.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Apoiar" data-i18n-attr="content:apo.og.titulo">
+<meta name="twitter:description" content="Apoie o universo NoHeroes: metas transparentes, doações pelo Mercado Pago e newsletter com novidades." data-i18n-attr="content:apo.meta.descricao">
+<meta name="twitter:image" content="https://www.noheroes.com.br/assets/img/og/og-noheroes.jpg">
+<meta name="theme-color" content="#07060a">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/assets/img/og/apple-touch-icon.png">
+<title data-i18n="apo.meta.titulo">Apoiar — NoHeroes</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="assets/css/tw.css">
 <link rel="stylesheet" href="assets/css/noheroes-ui.css">
 <script defer src="assets/js/noheroes-ui.js"></script>
 <style>
@@ -81,16 +103,20 @@
   /* Mobile safe */
   html,body,main{max-width:100vw; overflow-x:hidden}
 </style>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/i18n/comum.js"></script>
+<script src="assets/i18n/apoiar.js"></script>
+<script src="assets/js/config.js"></script>
 </head>
 <body>
   <!-- Header + drawer + fundo (componentes compartilhados) -->
-  <nh-header></nh-header>
+  <nh-header classico></nh-header>
   <nh-background></nh-background>
 
   <!-- CONTEÚDO -->
   <main class="max-w-3xl mx-auto px-4 pt-44 pb-24 relative z-10">
-    <h1 class="cinzel text-3xl sm:text-4xl grad-text reveal">Apoie o Universo NoHeroes</h1>
-    <p class="mt-3 text-white/70 leading-relaxed reveal" style="--reveal-delay:90ms">
+    <h1 class="cinzel text-3xl sm:text-4xl grad-text reveal" data-i18n="apo.1">Apoie o Universo NoHeroes</h1>
+    <p class="mt-3 text-white/70 leading-relaxed reveal" style="--reveal-delay:90ms" data-i18n="apo.2">
       Cada contribuição mantém o coração do universo batendo e acelera novas criações. Simples, transparente e digno da sua confiança.
     </p>
 
@@ -99,82 +125,82 @@
       <article class="card p-4 reveal">
         <div class="kpi">
           <span class="dot" aria-hidden="true"></span>
-          <h2 class="cinzel text-lg">Meta Geral — NoHeroes</h2>
+          <h2 class="cinzel text-lg" data-i18n="apo.3">Meta Geral — NoHeroes</h2>
         </div>
         <div class="mt-3 flex items-end justify-between">
           <div>
-            <div class="text-sm text-white/60">Arrecadado</div>
+            <div class="text-sm text-white/60" data-i18n="apo.4">Arrecadado</div>
             <div class="text-xl font-semibold"><span id="mGeralValor">R$ 0,00</span></div>
           </div>
           <div class="text-right">
-            <div class="text-sm text-white/60">Meta</div>
+            <div class="text-sm text-white/60" data-i18n="apo.5">Meta</div>
             <div class="text-xl font-semibold" id="mGeralMeta">R$ 500.000,00</div>
           </div>
         </div>
         <div class="mt-3 progress"><span id="mGeralBar" style="width:0%"></span></div>
-        <div class="mt-1 text-xs text-white/50"><span id="mGeralPerc">0%</span> concluído</div>
+        <div class="mt-1 text-xs text-white/50"><span id="mGeralPerc">0%</span> <span data-i18n="apo.6">concluído</span></div>
       </article>
 
       <article class="card p-4 reveal" style="--reveal-delay:120ms">
         <div class="kpi">
           <span class="dot" aria-hidden="true"></span>
-          <h2 class="cinzel text-lg">Meta — Servidor do Universo</h2>
+          <h2 class="cinzel text-lg" data-i18n="apo.7">Meta — Servidor do Universo</h2>
         </div>
         <div class="mt-3 flex items-end justify-between">
           <div>
-            <div class="text-sm text-white/60">Arrecadado</div>
+            <div class="text-sm text-white/60" data-i18n="apo.8">Arrecadado</div>
             <div class="text-xl font-semibold"><span id="mServValor">R$ 0,00</span></div>
           </div>
           <div class="text-right">
-            <div class="text-sm text-white/60">Meta</div>
+            <div class="text-sm text-white/60" data-i18n="apo.9">Meta</div>
             <div class="text-xl font-semibold" id="mServMeta">R$ 12.000,00</div>
           </div>
         </div>
         <div class="mt-3 progress"><span id="mServBar" style="width:0%"></span></div>
-        <div class="mt-1 text-xs text-white/50"><span id="mServPerc">0%</span> concluído</div>
+        <div class="mt-1 text-xs text-white/50"><span id="mServPerc">0%</span> <span data-i18n="apo.10">concluído</span></div>
       </article>
     </section>
 
     <!-- Ações -->
     <section class="mt-10 grid gap-3 sm:grid-cols-2 reveal" style="--reveal-delay:140ms">
-      <button id="btnContribuir" class="btn btn-primary w-full">Contribuir / Doar</button>
-      <a href="portifólio.html" id="btnSolicitar" class="btn btn-ghost w-full">
+      <button id="btnContribuir" class="btn btn-primary w-full" data-i18n="apo.11">Contribuir / Doar</button>
+      <a href="portifólio.html" id="btnSolicitar" class="btn btn-ghost w-full" data-i18n="apo.12">
   Pedir serviço / ajuda
 </a>
     </section>
 
     <!-- Leads -->
     <section class="mt-10 card p-4 reveal" style="--reveal-delay:160ms">
-      <h3 class="cinzel text-lg">Receba novidades e metas</h3>
+      <h3 class="cinzel text-lg" data-i18n="apo.13">Receba novidades e metas</h3>
       <form id="formLead" class="mt-3 grid gap-3 sm:grid-cols-2" autocomplete="on">
-        <input class="input" name="nome" placeholder="Seu nome" required />
-        <input class="input" type="email" name="email" placeholder="Seu e-mail" required />
-        <button class="btn btn-primary sm:col-span-2" type="submit">Assinar</button>
+        <input class="input" name="nome" placeholder="Seu nome" required  data-i18n-attr="placeholder:apo.14"/>
+        <input class="input" type="email" name="email" placeholder="Seu e-mail" required  data-i18n-attr="placeholder:apo.15"/>
+        <button class="btn btn-primary sm:col-span-2" type="submit" data-i18n="apo.16">Assinar</button>
       </form>
-      <p class="mt-2 text-xs text-white/50">Aqui você assina a Newsletter da NoHeroes onde será atualizado sobre novidades e metas da empresa.</p>
+      <p class="mt-2 text-xs text-white/50" data-i18n="apo.17">Aqui você assina a Newsletter da NoHeroes onde será atualizado sobre novidades e metas da empresa.</p>
     </section>
   </main>
 
   <!-- MODAL: Contribuir -->
-  <div id="modalContribuir" class="overlay" role="dialog" aria-modal="true" aria-label="Contribuir">
+  <div id="modalContribuir" class="overlay" role="dialog" aria-modal="true" aria-label="Contribuir" data-i18n-attr="aria-label:apo.18">
     <div class="modal">
-      <h3 class="cinzel text-xl grad-text">Contribuir</h3>
+      <h3 class="cinzel text-xl grad-text" data-i18n="apo.19">Contribuir</h3>
       <form id="formDoacao" class="mt-3 grid gap-3">
   <div class="field">
-    <label class="text-sm text-white/70">Nome completo</label>
-    <input class="input" name="name" required placeholder="Seu nome completo" />
+    <label class="text-sm text-white/70" data-i18n="apo.20">Nome completo</label>
+    <input class="input" name="name" required placeholder="Seu nome completo"  data-i18n-attr="placeholder:apo.21"/>
   </div>
   <div class="field">
-    <label class="text-sm text-white/70">CPF</label>
+    <label class="text-sm text-white/70" data-i18n="apo.22">CPF</label>
     <input class="input" name="cpf" required placeholder="000.000.000-00" maxlength="14" />
   </div>
   <div class="field">
-    <label class="text-sm text-white/70">E-mail</label>
-    <input class="input" type="email" name="email" required placeholder="Seu e-mail" />
+    <label class="text-sm text-white/70" data-i18n="apo.23">E-mail</label>
+    <input class="input" type="email" name="email" required placeholder="Seu e-mail"  data-i18n-attr="placeholder:apo.24"/>
   </div>
   <div class="field">
-    <label class="text-sm text-white/70">Valor (R$)</label>
-    <input class="input" id="inputValor" type="number" min="1" step="0.01" name="valor" required placeholder="Ex.: 25.00" />
+    <label class="text-sm text-white/70" data-i18n="apo.25">Valor (R$)</label>
+    <input class="input" id="inputValor" type="number" min="1" step="0.01" name="valor" required placeholder="Ex.: 25.00"  data-i18n-attr="placeholder:apo.26"/>
     <div class="quick-vals">
       <button type="button" class="quick-val" onclick="setValor(10)">R$ 10</button>
       <button type="button" class="quick-val" onclick="setValor(25)">R$ 25</button>
@@ -183,32 +209,31 @@
     </div>
   </div>
   <div class="field">
-    <label class="text-sm text-white/70">Destino</label>
+    <label class="text-sm text-white/70" data-i18n="apo.27">Destino</label>
     <select class="input" name="destino">
-      <option value="geral">Meta Geral — NoHeroes</option>
-      <option value="servidor">Servidor do Universo</option>
+      <option value="geral" data-i18n="apo.28">Meta Geral — NoHeroes</option>
+      <option value="servidor" data-i18n="apo.29">Servidor do Universo</option>
     </select>
   </div>
   <div class="flex items-center gap-2">
     <input id="termos" type="checkbox" required />
     <label for="termos" class="text-xs text-white/60">
-      Li e aceito os <a href="termos.html" class="underline">termos de uso</a>.
+      <span data-i18n="apo.31">Li e aceito os</span> <a href="termos.html" class="underline" data-i18n="apo.30">termos de uso</a>.
     </label>
   </div>
-  <button id="btnDoarMP" class="btn btn-primary w-full" type="button">Fazer Doação</button>
+  <button id="btnDoarMP" class="btn btn-primary w-full" type="button" data-i18n="apo.32">Fazer Doação</button>
 </form>
       <div class="mt-3 flex justify-end gap-2">
-        <button class="btn" data-close>Fechar</button>
+        <button class="btn" data-close data-i18n="apo.33">Fechar</button>
       </div>
     </div>
   </div>
 
   <!-- Footer (componente compartilhado) -->
   <nh-footer></nh-footer>
-<script src="assets/js/cookies.js"></script>
 <script>
-  /* ===== API base ===== */
-window.API_BASE = "https://api.noheroes.com.br";
+  /* API_BASE vem de assets/js/config.js */
+const T = (k, pt) => { const v = NHI18n.t(k); return v === k ? pt : v; };
 
 /* ===== Toast ===== */
 function showToast(msg, type='info') {
@@ -263,7 +288,7 @@ sections.forEach(section=>{
 /* Brasas: agora no componente compartilhado <nh-background> (noheroes-ui.js) */
 
 /* ===== Metas (mock até API real) ===== */
-const fmtBRL = (v)=> v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const fmtBRL = (v)=> NHI18n.brl(v);
 const metas = {geral: 500000, servidor: 12000};
 const totals = { geral: 0, servidor: 0 };
 
@@ -296,6 +321,7 @@ function renderMetas(){
   document.getElementById('mServPerc').textContent = p2+'%';
 }
 renderMetas();
+document.addEventListener('nh:lang', renderMetas);
 
 /* ===== Modais ===== */
 const overlays = document.querySelectorAll('.overlay');
@@ -313,22 +339,22 @@ document.getElementById('btnContribuir')?.addEventListener('click', ()=> documen
   const btn  = form.querySelector('button[type="submit"]');
   const nome = form.querySelector('input[name="nome"]');
   const mail = form.querySelector('input[name="email"]');
-  const setBusy = (v)=>{ btn.disabled=v; btn.textContent=v?'Enviando…':'Assinar'; };
+  const setBusy = (v)=>{ btn.disabled=v; btn.textContent=v?T('apo.js.enviando','Enviando…'):T('apo.16','Assinar'); };
 
   form.addEventListener('submit', async (e)=>{
     e.preventDefault();
     const n=(nome.value||'').trim(), m=(mail.value||'').trim();
-    if(!n){showToast('Informe seu nome.','error');return;}
-    if(!m){showToast('Informe seu e-mail.','error');return;}
-    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(m)){showToast('E-mail inválido.','error');return;}
+    if(!n){showToast(T('apo.js.nome','Informe seu nome.'),'error');return;}
+    if(!m){showToast(T('apo.js.email','Informe seu e-mail.'),'error');return;}
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(m)){showToast(T('apo.js.email_invalido','E-mail inválido.'),'error');return;}
     setBusy(true);
     try{
       const url = `${window.API_BASE}/api/email/newsletter/subscribe`;
       const res = await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:m,name:n,source:'apoiar'})});
       const data = await res.json().catch(()=>({}));
-      if(res.ok){form.reset();showToast(data.message||'Inscrição registrada! 🎉','success');}
-      else showToast(data.message||'Falha ao registrar.','error');
-    }catch(err){console.error(err);showToast('Erro de conexão.','error');}
+      if(res.ok){form.reset();showToast(NHI18n.lang==='en'?T('apo.js.inscrito','Inscrição registrada! 🎉'):(data.message||'Inscrição registrada! 🎉'),'success');}
+      else showToast(NHI18n.erro(data,'apo.js.falha'),'error');
+    }catch(err){console.error(err);showToast(T('apo.js.conexao','Erro de conexão.'),'error');}
     finally{setBusy(false);}
   });
 })();
@@ -345,12 +371,12 @@ document.getElementById('btnDoarMP')?.addEventListener('click', async ()=>{
   const btn=document.getElementById('btnDoarMP');
 
   if(!name||!cpf||cpf.length!==11||!email||!amount||!termos){
-    showToast('Preencha todos os campos e aceite os termos.','error');
+    showToast(T('apo.js.campos','Preencha todos os campos e aceite os termos.'),'error');
     return;
   }
 
   btn.disabled=true;
-  btn.textContent='Gerando pagamento...';
+  btn.textContent=T('apo.js.gerando','Gerando pagamento...');
 
   try{
     const res=await fetch(`${window.API_BASE}/checkout/create-preference`,{
@@ -363,10 +389,10 @@ document.getElementById('btnDoarMP')?.addEventListener('click', async ()=>{
     window.location.href=json.init_point;
   }catch(err){
     console.error(err);
-    showToast('Erro ao iniciar a doação. Tente novamente.','error');
+    showToast(T('apo.js.erro_doacao','Erro ao iniciar a doação. Tente novamente.'),'error');
   }finally{
     btn.disabled=false;
-    btn.textContent='Fazer Doação';
+    btn.textContent=T('apo.32','Fazer Doação');
   }
 });
 
