@@ -26,7 +26,7 @@
 <link rel="apple-touch-icon" href="/assets/img/og/apple-touch-icon.png">
   <link rel="stylesheet" href="assets/css/noheroes-ui.css">
   <script defer src="assets/js/noheroes-ui.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root{ --nh-bg:#0a0a0a; --nh-ink:#e5e5e5; --nh-ink-dim:#bfbfe0; --nh-accent1:#8f4fff; --nh-accent2:#facc15; --nh-border:rgba(255,255,255,.10); }
     body{font-family:Inter,system-ui,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;background:#0a0a0a;color:#e5e5e5;margin:0}
@@ -160,7 +160,7 @@
     </div>
 
     <!-- HAMBURGER MENU -->
-    <button onclick="nhOpen()" style="width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);">
+    <button onclick="nhOpen()" aria-label="Abrir menu" data-i18n-attr="aria-label:nav.abrir_menu" style="width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
   </div>

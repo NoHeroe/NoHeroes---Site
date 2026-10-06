@@ -45,8 +45,8 @@
 .lj-selo-baixo { color: #fca5a5; border-color: rgba(248,113,113,.45); background: rgba(248,113,113,.08); }
 .lj-selo-breve { position: absolute; top: 8px; left: 8px; background: #a855f7; color: #fff; border-color: #a855f7; }
 .lj-btn { display: flex; align-items: center; justify-content: center; min-height: 40px; padding: 0 10px; border-radius: 10px; font-size: 13px; font-weight: 700; text-align: center; }
-.lj-btn-pri { background: #8f4fff; color: #fff; }
-.lj-btn-pri:hover { background: #9d63ff; }
+.lj-btn-pri { background: #7c3aed; color: #fff; }
+.lj-btn-pri:hover { background: #8f4fff; }
 .lj-btn-pri:disabled { background: #2a2630; color: rgba(255,255,255,.45); cursor: not-allowed; }
 .lj-btn-ml { border: 1px solid rgba(250,204,21,.45); color: #facc15; }
 .lj-btn-ml:hover { background: rgba(250,204,21,.08); }

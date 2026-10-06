@@ -111,7 +111,7 @@
 
   /* Markup do menu lateral + overlay — fonte única, usada pelo <nh-header> e pelo <nh-drawer>. */
   const DRAWER_HTML = () => `
-<div id="drawer" class="fixed top-0 right-0 w-72 max-w-[85vw] h-full text-white transform transition-transform duration-500 z-[100] overflow-y-auto" style="transform: translateX(100%)" aria-hidden="true">
+<div id="drawer" class="fixed top-0 right-0 w-72 max-w-[85vw] h-full text-white transform transition-transform duration-500 z-[100] overflow-y-auto" style="transform: translateX(100%)" aria-hidden="true" inert>
   <button id="drawerClose" type="button" aria-label="Fechar menu" data-i18n-attr="aria-label:nav.fechar_menu"
     class="absolute top-5 right-5 h-11 w-11 flex items-center justify-center rounded-full glass hover:bg-white/10 transition group">
     <span class="text-xl group-hover:rotate-90 transition-transform duration-300" aria-hidden="true">✕</span>
@@ -120,7 +120,7 @@
     <a href="index.html" class="mb-8 block">
       <span class="text-2xl font-black gradiente-noheroes cinzel">NoHeroes</span>
       <span class="flex items-center gap-2 mt-1"><span class="h-px w-8 barra-degrade"></span>
-      <span class="text-white/40 text-xs" data-i18n="nav.lema">Sem heróis. Apenas você.</span></span>
+      <span class="text-white/60 text-xs" data-i18n="nav.lema">Sem heróis. Apenas você.</span></span>
     </a>
     <nav class="flex flex-col" aria-label="Navegação principal" data-i18n-attr="aria-label:nav.principal">
       ${NAV.map((n) => `
@@ -139,7 +139,7 @@
     </nav>
     <a data-nh-wa="tatuagem" class="nh-btn nh-btn-pri mt-6" data-i18n="nav.agendar">${T('nav.agendar')}</a>
     <div class="mt-6 flex items-center justify-between">
-      <span class="text-xs text-white/40" data-i18n="nav.idioma">${T('nav.idioma')}</span>
+      <span class="text-xs text-white/60" data-i18n="nav.idioma">${T('nav.idioma')}</span>
       ${LANG_SWITCH()}
     </div>
   </div>
@@ -157,6 +157,7 @@
       open = v;
       drawer.style.transform = v ? 'translateX(0)' : 'translateX(100%)';
       drawer.setAttribute('aria-hidden', String(!v));
+      drawer.inert = !v; // fechado: links fora do Tab e do leitor de tela
       overlay.style.display = v ? 'block' : 'none';
       document.body.style.overflow = v ? 'hidden' : '';
       if (v) { gatilho = document.activeElement; closeBtn.focus(); } else if (gatilho && gatilho.focus) gatilho.focus();
@@ -339,7 +340,7 @@ ${DRAWER_HTML()}`;
       <div class="flex gap-2">${C.comunidade.map(redeIcone).join('')}</div>
     </div>
   </div>
-  <div class="mx-auto max-w-6xl px-5 pb-10 flex flex-col sm:flex-row gap-3 sm:items-center justify-between text-xs text-white/40">
+  <div class="mx-auto max-w-6xl px-5 pb-10 flex flex-col sm:flex-row gap-3 sm:items-center justify-between text-xs text-white/60">
     <p><span data-i18n="rodape.lema">${T('rodape.lema')}</span></p>
     <p>© <span data-nh-ano></span> NoHeroes. <span data-i18n="rodape.direitos">${T('rodape.direitos')}</span></p>
   </div>

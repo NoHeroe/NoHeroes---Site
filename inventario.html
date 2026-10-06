@@ -76,6 +76,8 @@
   const nome = (i) => (NHI18n.lang === 'en' && i.name_en) || i.name || t('bib.item');
   const imagem = (u) => {
     if (!u) return '';
+    u = window.NH_IMG(u, 320); // asset do site → WebP otimizado
+    if (u.startsWith('assets/')) return u;
     if (/^https?:\/\//.test(u)) return u;
     if (u.startsWith('/uploads')) return API_BASE + u;
     if (u.startsWith('/')) return u;

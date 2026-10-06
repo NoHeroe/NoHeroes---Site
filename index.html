@@ -289,6 +289,7 @@
   let produtos = null;
   const img = (u) => {
     if (!u) return '';
+    u = window.NH_IMG(u, 480); // asset do site → WebP otimizado
     if (/^https?:\/\//.test(u)) return u.replace(/^https?:\/\/(www\.)?noheroes\.com\.br\//, '');
     return u.replace(/^(www\.)?noheroes\.com\.br\//, '').replace(/^\//, '');
   };

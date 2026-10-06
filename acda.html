@@ -26,7 +26,7 @@
 <meta name="theme-color" content="#07060a">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="/assets/img/og/apple-touch-icon.png">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -44,7 +44,7 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
 /* STICKY NAV */
 #sticky-nav{position:sticky;top:64px;z-index:50;background:rgba(7,6,10,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.06);overflow-x:auto;scrollbar-width:none}
 #sticky-nav::-webkit-scrollbar{display:none}
-.nav-pill{white-space:nowrap;padding:10px 16px;font-size:12px;font-weight:600;color:rgba(255,255,255,0.4);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;text-decoration:none;display:inline-block}
+.nav-pill{white-space:nowrap;padding:10px 16px;font-size:12px;font-weight:600;color:rgba(255,255,255,0.62);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;text-decoration:none;display:inline-block}
 .nav-pill:hover,.nav-pill.active{color:#c4a3ff;border-bottom-color:#8f4fff}
 
 /* CARDS */
@@ -60,7 +60,7 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
 .btn-ml{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 18px;border-radius:10px;background:#ffe600;color:#000;font-weight:700;font-size:13px;text-decoration:none;transition:filter 0.2s}
 .btn-ml:hover{filter:brightness(1.08)}
 .btn-uiclap{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 18px;border-radius:10px;background:#1a1a2e;border:1px solid rgba(255,255,255,0.15);color:#e5e5e5;font-weight:600;font-size:13px;text-decoration:none;transition:border-color 0.2s}
-.btn-uiclap:hover{border-color:rgba(255,255,255,0.35)}
+.btn-uiclap:hover{border-color:rgba(255,255,255,0.6)}
 .badge{display:inline-block;font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;background:rgba(250,204,21,0.15);color:#facc15;border:1px solid rgba(250,204,21,0.3);margin-left:6px;vertical-align:middle}
 
 /* TABS */
@@ -76,7 +76,7 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
 .char-sem-foto{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Cinzel Decorative',serif;font-size:56px;color:rgba(196,163,255,0.35);background:radial-gradient(circle at 50% 35%,rgba(143,79,255,0.18),rgba(12,10,16,0) 70%)}
 .char-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.92) 0%,rgba(0,0,0,0.2) 60%,transparent 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:12px}
 .char-name{font-family:'Cinzel Decorative',serif;font-size:12px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:0 0 2px}
-.char-role{font-size:10px;color:rgba(255,255,255,0.45);margin:0}
+.char-role{font-size:10px;color:rgba(255,255,255,0.65);margin:0}
 .char-expand{position:absolute;top:8px;right:8px;width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,0.7);border:1px solid rgba(143,79,255,0.3);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.2s;cursor:pointer}
 .char-card:hover .char-expand{opacity:1}
 
@@ -92,7 +92,7 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
 .ato-item:hover{border-color:rgba(143,79,255,0.3)}
 .ato-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;gap:12px}
 .ato-title{font-family:'Cinzel Decorative',serif;font-size:13px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.ato-badge{font-size:10px;padding:3px 10px;border-radius:99px;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.4);white-space:nowrap;flex-shrink:0}
+.ato-badge{font-size:10px;padding:3px 10px;border-radius:99px;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.62);white-space:nowrap;flex-shrink:0}
 .ato-badge.future{border-color:rgba(251,191,36,0.25);color:#fbbf24}
 .ato-arrow{color:rgba(143,79,255,0.6);font-size:18px;transition:transform 0.3s;flex-shrink:0}
 .ato-body{display:none;padding:0 20px 16px;font-size:13px;color:rgba(255,255,255,0.55);line-height:1.7}
@@ -110,7 +110,7 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
 .vol-card{background:#0c0a10;border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:12px;text-align:center;transition:all 0.2s}
 .vol-card.active{border-color:rgba(143,79,255,0.4);background:rgba(143,79,255,0.06)}
 .vol-card:hover{border-color:rgba(143,79,255,0.25)}
-.vol-num{font-family:'Cinzel Decorative',serif;font-size:11px;color:rgba(255,255,255,0.3);margin-bottom:4px}
+.vol-num{font-family:'Cinzel Decorative',serif;font-size:11px;color:rgba(255,255,255,0.58);margin-bottom:4px}
 .vol-title{font-size:11px;font-weight:700;color:rgba(255,255,255,0.6)}
 .vol-badge{font-size:9px;margin-top:4px;display:inline-block;padding:2px 8px;border-radius:99px}
 
@@ -176,7 +176,7 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
   </div>
 </nav>
 
-<main style="padding-top:64px;">
+<main id="conteudo" style="padding-top:64px;">
 
 <!-- ══════════════════════════════════════════════
      ZONA 1 — VENDA
@@ -202,17 +202,17 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
       <div class="vol-card">
         <div class="vol-num" data-i18n="acd.14">Vol. III</div>
         <div class="vol-title" data-i18n="acd.15">Ato III</div>
-        <span class="vol-badge" style="background:rgba(255,255,255,0.03);color:rgba(255,255,255,0.3);border:1px solid rgba(255,255,255,0.08);" data-i18n="acd.16">Em breve</span>
+        <span class="vol-badge" style="background:rgba(255,255,255,0.03);color:rgba(255,255,255,0.58);border:1px solid rgba(255,255,255,0.08);" data-i18n="acd.16">Em breve</span>
       </div>
       <div class="vol-card">
         <div class="vol-num" data-i18n="acd.17">Vol. IV</div>
         <div class="vol-title" data-i18n="acd.18">Ato IV</div>
-        <span class="vol-badge" style="background:rgba(255,255,255,0.03);color:rgba(255,255,255,0.3);border:1px solid rgba(255,255,255,0.08);" data-i18n="acd.19">Em breve</span>
+        <span class="vol-badge" style="background:rgba(255,255,255,0.03);color:rgba(255,255,255,0.58);border:1px solid rgba(255,255,255,0.08);" data-i18n="acd.19">Em breve</span>
       </div>
       <div class="vol-card">
         <div class="vol-num" data-i18n="acd.20">Vol. V</div>
         <div class="vol-title" data-i18n="acd.21">Ato V</div>
-        <span class="vol-badge" style="background:rgba(255,255,255,0.03);color:rgba(255,255,255,0.3);border:1px solid rgba(255,255,255,0.08);" data-i18n="acd.22">Em breve</span>
+        <span class="vol-badge" style="background:rgba(255,255,255,0.03);color:rgba(255,255,255,0.58);border:1px solid rgba(255,255,255,0.08);" data-i18n="acd.22">Em breve</span>
       </div>
     </div>
   </div>
@@ -237,8 +237,8 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
       <p style="font-size:15px;color:rgba(255,255,255,0.6);line-height:1.75;margin:0 0 12px;" data-i18n-html="acd.29"><strong style="color:rgba(255,255,255,0.85);">ACDA</strong> é o coração do universo NoHeroes — a obra que deu origem a tudo. Fantasia sombria com ação, mistério e um mundo construído em camadas: clãs, runas, feras, política e forças antigas que não deveriam acordar.</p>
       <p style="font-size:14px;color:rgba(255,255,255,0.5);line-height:1.75;margin:0 0 20px;" data-i18n-html="acd.30">A história acompanha <strong style="color:rgba(255,255,255,0.7);">Azuos</strong>, encontrado após sair da floresta com marcas e silêncio demais, sendo empurrado para dentro de um sistema de poder onde <strong style="color:rgba(255,255,255,0.7);">nada é gratuito</strong> — nem o talento, nem a proteção, nem a verdade.</p>
 
-      <div style="background:rgba(143,79,255,0.06);border:1px solid rgba(143,79,255,0.15);border-radius:10px;padding:12px 14px;margin-bottom:20px;font-size:12px;color:rgba(255,255,255,0.4);">
-        <span data-i18n="acd.34">Linha da saga:</span> <span style="color:#f0d99a;font-weight:600;" data-i18n="acd.31">Ato I — Equilíbrio Rompido</span> → <span style="color:rgba(255,255,255,0.35);" data-i18n="acd.32">Ato II</span> → <span style="color:rgba(255,255,255,0.35);" data-i18n="acd.33">Ato III — A Legião Negra</span>
+      <div style="background:rgba(143,79,255,0.06);border:1px solid rgba(143,79,255,0.15);border-radius:10px;padding:12px 14px;margin-bottom:20px;font-size:12px;color:rgba(255,255,255,0.62);">
+        <span data-i18n="acd.34">Linha da saga:</span> <span style="color:#f0d99a;font-weight:600;" data-i18n="acd.31">Ato I — Equilíbrio Rompido</span> → <span style="color:rgba(255,255,255,0.6);" data-i18n="acd.32">Ato II</span> → <span style="color:rgba(255,255,255,0.6);" data-i18n="acd.33">Ato III — A Legião Negra</span>
       </div>
 
       <!-- CTAs -->
@@ -253,7 +253,7 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
           <span data-i18n="acd.37">Uiclap</span> <span class="badge" data-i18n="acd.36">FÍSICO</span>
         </a>
       </div>
-      <p style="font-size:11px;color:rgba(255,255,255,0.25);" data-i18n="acd.38">PDF: acesso no inventário após compra · Físico: compra externa, prazo varia por plataforma</p>
+      <p style="font-size:11px;color:rgba(255,255,255,0.55);" data-i18n="acd.38">PDF: acesso no inventário após compra · Físico: compra externa, prazo varia por plataforma</p>
     </div>
   </div>
 
@@ -262,7 +262,7 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
     <!-- Grid de cards informativos -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;" class="buy-grid">
       <div class="glass-card">
-        <h3 class="cinzel text-grad" style="font-size:14px;margin:0 0 14px;" data-i18n="acd.39">Por que ACDA é a obra-pilar</h3>
+        <h2 class="cinzel text-grad" style="font-size:14px;margin:0 0 14px;" data-i18n="acd.39">Por que ACDA é a obra-pilar</h2>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
           <div class="panel" style="padding:10px;font-size:12px;color:rgba(255,255,255,0.55);" data-i18n-html="acd.40"><strong style="color:rgba(255,255,255,0.8);">O palco:</strong> cidades que respiram mana e tecnologia mágica, tensão real por baixo.</div>
           <div class="panel" style="padding:10px;font-size:12px;color:rgba(255,255,255,0.55);" data-i18n-html="acd.41"><strong style="color:rgba(255,255,255,0.8);">A muralha:</strong> cúpulas surgem como resposta às ameaças — dragões e voidrins.</div>
@@ -271,7 +271,7 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
         </div>
       </div>
       <div class="glass-card">
-        <h3 class="cinzel text-grad" style="font-size:14px;margin:0 0 14px;" data-i18n="acd.44">O que você vai encontrar</h3>
+        <h2 class="cinzel text-grad" style="font-size:14px;margin:0 0 14px;" data-i18n="acd.44">O que você vai encontrar</h2>
         <div style="display:flex;flex-direction:column;gap:8px;">
           <div style="font-size:12px;color:rgba(255,255,255,0.55);padding:8px 10px;background:rgba(255,255,255,0.02);border-radius:8px;border-left:2px solid rgba(143,79,255,0.4);" data-i18n-html="acd.45"><strong style="color:rgba(255,255,255,0.8);">Lunaris Fortuna:</strong> cidade construída com a natureza — arquitetura e mana integradas.</div>
           <div style="font-size:12px;color:rgba(255,255,255,0.55);padding:8px 10px;background:rgba(255,255,255,0.02);border-radius:8px;border-left:2px solid rgba(217,181,90,0.4);" data-i18n-html="acd.46"><strong style="color:rgba(255,255,255,0.8);">Vitalismo:</strong> dom inato que ignora regras — pode ser "absorvido" em confrontos.</div>
@@ -312,9 +312,9 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
       </div>
       <div id="tab-formatos" class="tab-pane">
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;" class="buy-grid">
-          <div class="panel" style="padding:12px;text-align:center;"><div style="font-size:13px;font-weight:700;color:#c4a3ff;margin-bottom:4px;" data-i18n="acd.64">PDF</div><div style="font-size:11px;color:rgba(255,255,255,0.4);" data-i18n="acd.65">Compra na loja NoHeroes · Acesso no inventário</div></div>
-          <div class="panel" style="padding:12px;text-align:center;"><div style="font-size:13px;font-weight:700;color:#facc15;margin-bottom:4px;" data-i18n="acd.66">Físico — ML</div><div style="font-size:11px;color:rgba(255,255,255,0.4);" data-i18n="acd.67">Mercado Livre · Frete varia por região</div></div>
-          <div class="panel" style="padding:12px;text-align:center;"><div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.6);margin-bottom:4px;" data-i18n="acd.68">Físico — Uiclap</div><div style="font-size:11px;color:rgba(255,255,255,0.4);" data-i18n="acd.69">Encomenda sob demanda · Prazo variável</div></div>
+          <div class="panel" style="padding:12px;text-align:center;"><div style="font-size:13px;font-weight:700;color:#c4a3ff;margin-bottom:4px;" data-i18n="acd.64">PDF</div><div style="font-size:11px;color:rgba(255,255,255,0.62);" data-i18n="acd.65">Compra na loja NoHeroes · Acesso no inventário</div></div>
+          <div class="panel" style="padding:12px;text-align:center;"><div style="font-size:13px;font-weight:700;color:#facc15;margin-bottom:4px;" data-i18n="acd.66">Físico — ML</div><div style="font-size:11px;color:rgba(255,255,255,0.62);" data-i18n="acd.67">Mercado Livre · Frete varia por região</div></div>
+          <div class="panel" style="padding:12px;text-align:center;"><div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.6);margin-bottom:4px;" data-i18n="acd.68">Físico — Uiclap</div><div style="font-size:11px;color:rgba(255,255,255,0.62);" data-i18n="acd.69">Encomenda sob demanda · Prazo variável</div></div>
         </div>
       </div>
     </div>
@@ -477,14 +477,14 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
         <div><span class="ato-title" data-i18n="acd.122">Ato IV — (em breve)</span></div>
         <div style="display:flex;align-items:center;gap:8px;"><span class="ato-badge future" data-i18n="acd.123">Em produção</span><span class="ato-arrow">⌄</span></div>
       </div>
-      <div class="ato-body" style="color:rgba(255,255,255,0.3);font-style:italic;" data-i18n="acd.124">Detalhes do Ato IV serão revelados em breve. Acompanhe as atualizações da saga.</div>
+      <div class="ato-body" style="color:rgba(255,255,255,0.58);font-style:italic;" data-i18n="acd.124">Detalhes do Ato IV serão revelados em breve. Acompanhe as atualizações da saga.</div>
     </div>
     <div class="ato-item">
       <div class="ato-header" onclick="toggleAto(this)">
         <div><span class="ato-title" data-i18n="acd.125">Ato V — (em breve)</span></div>
         <div style="display:flex;align-items:center;gap:8px;"><span class="ato-badge future" data-i18n="acd.126">Roadmap</span><span class="ato-arrow">⌄</span></div>
       </div>
-      <div class="ato-body" style="color:rgba(255,255,255,0.3);font-style:italic;" data-i18n="acd.127">O ato final da saga. O destino de Caelum e de todos que nele habitam será selado aqui.</div>
+      <div class="ato-body" style="color:rgba(255,255,255,0.58);font-style:italic;" data-i18n="acd.127">O ato final da saga. O destino de Caelum e de todos que nele habitam será selado aqui.</div>
     </div>
   </div>
 </section>
@@ -535,14 +535,14 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
             <p style="font-size:13px;color:rgba(156,163,175,1);margin:0;" data-i18n-html="acd.150"><strong style="color:#e5e5e5;">Facções:</strong> Culto do Vazio (corrupção) e Guilda de Aventureiros (caos útil).</p>
           </div>
           <div class="nh-gallery-new">
-            <button class="nh-thumb-new" onclick="openImg('assets/img/aeon-cathedral-1024.webp',IMG_DATA.AEON_CATEDRAL)"><img src="assets/img/aeon-cathedral-480.webp" alt="Catedral de Aeon" loading="lazy" data-i18n-attr="alt:acd.151"><div class="nh-cap" data-i18n="acd.152">Aeon — Catedral</div></button>
-            <button class="nh-thumb-new" onclick="openImg('assets/img/kaleidos-city-1536.webp',IMG_DATA.KALEIDOS_CIDADE)"><img src="assets/img/kaleidos-city-480.webp" alt="Kaleidos" loading="lazy" data-i18n-attr="alt:acd.153"><div class="nh-cap" data-i18n="acd.154">Kaleidos — Cidadela</div></button>
-            <button class="nh-thumb-new" onclick="openImg('assets/img/clan-lua-1024.webp',IMG_DATA.CLA_LUA)"><img src="assets/img/clan-lua-480.webp" alt="Clã da Lua" loading="lazy" data-i18n-attr="alt:acd.155"><div class="nh-cap" data-i18n="acd.156">Clã da Lua</div></button>
-            <button class="nh-thumb-new" onclick="openImg('assets/img/clan-sol-1024.webp',IMG_DATA.CLA_SOL)"><img src="assets/img/clan-sol-480.webp" alt="Clã do Sol" loading="lazy" data-i18n-attr="alt:acd.157"><div class="nh-cap" data-i18n="acd.158">Clã do Sol</div></button>
-            <button class="nh-thumb-new" onclick="openImg('assets/img/clan-feras-1536.webp',IMG_DATA.CLA_FERAS)"><img src="assets/img/clan-feras-480.webp" alt="Clã das Feras" loading="lazy" data-i18n-attr="alt:acd.159"><div class="nh-cap" data-i18n="acd.160">Clã das Feras</div></button>
-            <button class="nh-thumb-new" onclick="openImg('assets/img/clan-runas-1024.webp',IMG_DATA.CLA_RUNAS)"><img src="assets/img/clan-runas-480.webp" alt="Clã das Runas" loading="lazy" data-i18n-attr="alt:acd.161"><div class="nh-cap" data-i18n="acd.162">Clã das Runas</div></button>
-            <button class="nh-thumb-new" onclick="openImg('assets/img/culto-vazio-1536.webp',IMG_DATA.CULTO_VAZIO)"><img src="assets/img/culto-vazio-480.webp" alt="Culto do Vazio" loading="lazy" data-i18n-attr="alt:acd.163"><div class="nh-cap" data-i18n="acd.164">Culto do Vazio</div></button>
-            <button class="nh-thumb-new" onclick="openImg('assets/img/guilda-avent-1536.webp',IMG_DATA.GUILDA_AVENTUREIROS)"><img src="assets/img/guilda-avent-480.webp" alt="Guilda" loading="lazy" data-i18n-attr="alt:acd.165"><div class="nh-cap" data-i18n="acd.166">Guilda de Aventureiros</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/aeon-cathedral-1024.webp',IMG_DATA.AEON_CATEDRAL)"><img src="assets/img/aeon-cathedral-480.webp" alt="" loading="lazy"><div class="nh-cap" data-i18n="acd.152">Aeon — Catedral</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/kaleidos-city-1536.webp',IMG_DATA.KALEIDOS_CIDADE)"><img src="assets/img/kaleidos-city-480.webp" alt="" loading="lazy"><div class="nh-cap" data-i18n="acd.154">Kaleidos — Cidadela</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/clan-lua-1024.webp',IMG_DATA.CLA_LUA)"><img src="assets/img/clan-lua-480.webp" alt="" loading="lazy"><div class="nh-cap" data-i18n="acd.156">Clã da Lua</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/clan-sol-1024.webp',IMG_DATA.CLA_SOL)"><img src="assets/img/clan-sol-480.webp" alt="" loading="lazy"><div class="nh-cap" data-i18n="acd.158">Clã do Sol</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/clan-feras-1536.webp',IMG_DATA.CLA_FERAS)"><img src="assets/img/clan-feras-480.webp" alt="" loading="lazy"><div class="nh-cap" data-i18n="acd.160">Clã das Feras</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/clan-runas-1024.webp',IMG_DATA.CLA_RUNAS)"><img src="assets/img/clan-runas-480.webp" alt="" loading="lazy"><div class="nh-cap" data-i18n="acd.162">Clã das Runas</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/culto-vazio-1536.webp',IMG_DATA.CULTO_VAZIO)"><img src="assets/img/culto-vazio-480.webp" alt="" loading="lazy"><div class="nh-cap" data-i18n="acd.164">Culto do Vazio</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/guilda-avent-1536.webp',IMG_DATA.GUILDA_AVENTUREIROS)"><img src="assets/img/guilda-avent-480.webp" alt="" loading="lazy"><div class="nh-cap" data-i18n="acd.166">Guilda de Aventureiros</div></button>
           </div>
         </div>
       </div>
@@ -601,11 +601,11 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
             </ul>
           </div>
           <div class="nh-gallery-new">
-            <button class="nh-thumb-new" onclick="openImg('assets/img/oni-vagante-1024.webp',IMG_DATA.ONI_VAGANTE)"><img src="assets/img/oni-vagante-480.webp" alt="Oni Vagante" loading="lazy" data-i18n-attr="alt:acd.193"><div class="nh-cap" data-i18n="acd.194">Oni Vagante</div></button>
-            <button class="nh-thumb-new" onclick="openImg('assets/img/bom-dragao-1024.webp',IMG_DATA.BOM_DRAGAO)"><img src="assets/img/bom-dragao-480.webp" alt="Bom Dragão" loading="lazy" data-i18n-attr="alt:acd.195"><div class="nh-cap" data-i18n="acd.196">O Bom Dragão</div></button>
-            <button class="nh-thumb-new" onclick="openImg('assets/img/baroes-anciaos-1024.webp',IMG_DATA.BAROES_ANCIÃOS)"><img src="assets/img/baroes-anciaos-480.webp" alt="Barões" loading="lazy" data-i18n-attr="alt:acd.197"><div class="nh-cap" data-i18n="acd.198">Barões Anciãos</div></button>
-            <button class="nh-thumb-new" onclick="openImg('assets/img/valdaryon-1024.webp',IMG_DATA.VALDARYON)"><img src="assets/img/valdaryon-480.webp" alt="Valdaryon" loading="lazy" data-i18n-attr="alt:acd.199"><div class="nh-cap" data-i18n="acd.200">Valdaryon</div></button>
-            <button class="nh-thumb-new" onclick="openImg('assets/img/floresta-negra-1024.webp',IMG_DATA.FLORESTA_NEGRA)"><img src="assets/img/floresta-negra-480.webp" alt="Floresta Negra" loading="lazy" data-i18n-attr="alt:acd.201"><div class="nh-cap" data-i18n="acd.202">Floresta Negra</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/oni-vagante-1024.webp',IMG_DATA.ONI_VAGANTE)"><img src="assets/img/oni-vagante-480.webp" alt="" loading="lazy"><div class="nh-cap" data-i18n="acd.194">Oni Vagante</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/bom-dragao-1024.webp',IMG_DATA.BOM_DRAGAO)"><img src="assets/img/bom-dragao-480.webp" alt="" loading="lazy"><div class="nh-cap" data-i18n="acd.196">O Bom Dragão</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/baroes-anciaos-1024.webp',IMG_DATA.BAROES_ANCIÃOS)"><img src="assets/img/baroes-anciaos-480.webp" alt="" loading="lazy"><div class="nh-cap" data-i18n="acd.198">Barões Anciãos</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/valdaryon-1024.webp',IMG_DATA.VALDARYON)"><img src="assets/img/valdaryon-480.webp" alt="" loading="lazy"><div class="nh-cap" data-i18n="acd.200">Valdaryon</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/floresta-negra-1024.webp',IMG_DATA.FLORESTA_NEGRA)"><img src="assets/img/floresta-negra-480.webp" alt="" loading="lazy"><div class="nh-cap" data-i18n="acd.202">Floresta Negra</div></button>
           </div>
         </div>
       </div>
@@ -619,11 +619,11 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
             <p style="font-size:13px;line-height:1.7;margin:0;" data-i18n="acd.205">A magitecnologia une conhecimento arcano e necessidade prática. Em Caelum, progresso e desigualdade caminham lado a lado.</p>
           </div>
           <div class="nh-gallery-new">
-            <button class="nh-thumb-new" onclick="openImg('assets/img/arma-encantada-1024.webp',IMG_DATA.ARTEFATOS_RUNICOS)"><img src="assets/img/arma-encantada-480.webp" alt="Artefatos Rúnicos" loading="lazy" data-i18n-attr="alt:acd.206"><div class="nh-cap" data-i18n="acd.207">Artefatos rúnicos</div></button>
-            <button class="nh-thumb-new" onclick="openImg('assets/img/zepelim-1536.webp',IMG_DATA.ZEPELINS_MAGICOS)"><img src="assets/img/zepelim-480.webp" alt="Zepelins" loading="lazy" data-i18n-attr="alt:acd.208"><div class="nh-cap" data-i18n="acd.209">Zepelins mágicos</div></button>
-            <button class="nh-thumb-new" onclick="openImg('assets/img/montaria-viva-1024.webp',IMG_DATA.MONTARIAS_VIVAS)"><img src="assets/img/montaria-viva-480.webp" alt="Montarias" loading="lazy" data-i18n-attr="alt:acd.210"><div class="nh-cap" data-i18n="acd.211">Montarias vivas</div></button>
-            <button class="nh-thumb-new" onclick="openImg('assets/img/portal-1024.webp',IMG_DATA.PORTAIS_ARCANOS)"><img src="assets/img/portal-480.webp" alt="Portais" loading="lazy" data-i18n-attr="alt:acd.212"><div class="nh-cap" data-i18n="acd.213">Portais arcanos</div></button>
-            <button class="nh-thumb-new" onclick="openImg('assets/img/relogio-runico-1024.webp',IMG_DATA.RELOGIOS_RUNICOS)"><img src="assets/img/relogio-runico-480.webp" alt="Relógios" loading="lazy" data-i18n-attr="alt:acd.214"><div class="nh-cap" data-i18n="acd.215">Relógios rúnicos</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/arma-encantada-1024.webp',IMG_DATA.ARTEFATOS_RUNICOS)"><img src="assets/img/arma-encantada-480.webp" alt="" loading="lazy"><div class="nh-cap" data-i18n="acd.207">Artefatos rúnicos</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/zepelim-1536.webp',IMG_DATA.ZEPELINS_MAGICOS)"><img src="assets/img/zepelim-480.webp" alt="" loading="lazy"><div class="nh-cap" data-i18n="acd.209">Zepelins mágicos</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/montaria-viva-1024.webp',IMG_DATA.MONTARIAS_VIVAS)"><img src="assets/img/montaria-viva-480.webp" alt="" loading="lazy"><div class="nh-cap" data-i18n="acd.211">Montarias vivas</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/portal-1024.webp',IMG_DATA.PORTAIS_ARCANOS)"><img src="assets/img/portal-480.webp" alt="" loading="lazy"><div class="nh-cap" data-i18n="acd.213">Portais arcanos</div></button>
+            <button class="nh-thumb-new" onclick="openImg('assets/img/relogio-runico-1024.webp',IMG_DATA.RELOGIOS_RUNICOS)"><img src="assets/img/relogio-runico-480.webp" alt="" loading="lazy"><div class="nh-cap" data-i18n="acd.215">Relógios rúnicos</div></button>
           </div>
         </div>
         <p style="margin-top:16px;font-style:italic;color:rgba(204,204,204,1);text-align:center;font-size:13px;" data-i18n="acd.216">"Caelum não quer heróis. Só almas fortes o bastante para sobreviver a ele."</p>

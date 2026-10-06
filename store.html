@@ -82,7 +82,7 @@
 
 <!-- Carrinho -->
 <div id="cartOverlay" class="lj-gaveta-fundo"></div>
-<aside id="cartDrawer" class="lj-gaveta" aria-label="Carrinho" data-i18n-attr="aria-label:loja.carrinho" aria-hidden="true">
+<aside id="cartDrawer" class="lj-gaveta" aria-label="Carrinho" data-i18n-attr="aria-label:loja.carrinho" aria-hidden="true" inert>
   <div class="p-4 border-b border-white/10 flex items-center justify-between">
     <h2 class="nh-h3" data-i18n="loja.seu_carrinho">Seu carrinho</h2>
     <button id="btnCloseCart" class="lj-fechar" style="position:static" type="button" aria-label="Fechar carrinho" data-i18n-attr="aria-label:loja.fechar_carrinho">✕</button>
@@ -129,7 +129,7 @@
     '<text x="100" y="170" font-family="Georgia,serif" font-size="72" fill="#a855f7" text-anchor="middle" opacity=".5">N</text></svg>');
   function imagem(u) {
     if (!u) return PLACEHOLDER;
-    u = String(u).trim();
+    u = window.NH_IMG(String(u).trim(), 480); // asset do site → WebP otimizado
     if (/^https?:\/\/(www\.)?noheroes\.com\.br\//i.test(u)) return u.replace(/^https?:\/\/(www\.)?noheroes\.com\.br\//i, '');
     if (/^https?:\/\//i.test(u)) return u;
     if (/^(www\.)?noheroes\.com\.br\//.test(u)) return u.replace(/^(www\.)?noheroes\.com\.br\//, '');
@@ -162,7 +162,7 @@
   }
 
   /* ---------- vitrine ---------- */
-  function card(p) {
+  function card(p, i) {
     const breve = emBreve(p), esgotado = !breve && !p.available;
     let botao;
     if (breve) botao = `<button class="lj-btn lj-btn-pri" disabled>${esc(t('loja.em_breve'))}</button>`;
@@ -173,7 +173,7 @@
       ? `<a class="lj-btn lj-btn-ml" href="${esc(urlSegura(p.marketplace_url))}" target="_blank" rel="noopener noreferrer">${esc(t('loja.ml'))}</a>` : '';
     return `<li class="lj-card">
       <button class="lj-card-img" data-abrir="${p.id}" aria-label="${esc(t('loja.ver_detalhes', { nome: nome(p) }))}">
-        <img src="${esc(imagem(p.imageUrl))}" alt="" loading="lazy" decoding="async" width="300" height="450">
+        <img src="${esc(imagem(p.imageUrl))}" alt="" loading="${i < 2 ? 'eager' : 'lazy'}" decoding="async" width="300" height="450">
         ${breve ? `<span class="lj-selo lj-selo-breve">${esc(t('loja.em_breve'))}</span>` : ''}
       </button>
       <div class="lj-card-corpo">
@@ -314,6 +314,7 @@
     const a = abrirG === undefined ? !el.classList.contains('aberta') : abrirG;
     el.classList.toggle('aberta', a);
     el.setAttribute('aria-hidden', String(!a));
+    el.inert = !a;
     qs('#cartOverlay').classList.toggle('aberta', a);
     qs('#btnCart').setAttribute('aria-expanded', String(a));
     if (a) qs('#btnCloseCart').focus();

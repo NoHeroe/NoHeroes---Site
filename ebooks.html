@@ -26,7 +26,7 @@
 <meta name="theme-color" content="#07060a">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="/assets/img/og/apple-touch-icon.png">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/noheroes-ui.css">
 <script defer src="assets/js/noheroes-ui.js"></script>
 <style>
@@ -51,7 +51,7 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
 .btn-primary:hover{filter:brightness(1.1);transform:translateY(-1px)}
 .btn-ghost{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 18px;border-radius:10px;border:1px solid rgba(143,79,255,0.3);color:#c4a3ff;font-weight:600;font-size:13px;text-decoration:none;transition:background 0.2s;background:rgba(143,79,255,0.06);cursor:pointer;font-family:'Inter',sans-serif}
 .btn-ghost:hover{background:rgba(143,79,255,0.14)}
-.btn-disabled{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 18px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.25);font-weight:600;font-size:13px;text-decoration:none;background:rgba(255,255,255,0.02);cursor:not-allowed;font-family:'Inter',sans-serif}
+.btn-disabled{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 18px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.55);font-weight:600;font-size:13px;text-decoration:none;background:rgba(255,255,255,0.02);cursor:not-allowed;font-family:'Inter',sans-serif}
 
 /* CARDS */
 .glass-card{background:#0c0a10;border:1px solid rgba(143,79,255,0.15);border-radius:14px;padding:24px;transition:border-color 0.25s}
@@ -112,7 +112,7 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
 <!-- HEADER -->
 <nh-header></nh-header>
 
-<main style="padding-top:64px;">
+<main id="conteudo" style="padding-top:64px;">
 
 <!-- ═══ HERO — VENDE O CONCEITO ═══ -->
 <section style="padding:56px 20px 48px;max-width:1100px;margin:0 auto;">
@@ -177,7 +177,7 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
       <div id="tooltip"></div>
     </div>
 
-    <p style="font-size:12px;color:rgba(255,255,255,0.25);margin-top:12px;font-style:italic;" data-i18n="ebk.4">Toque nos nós para explorar cada eixo do sistema.</p>
+    <p style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:12px;font-style:italic;" data-i18n="ebk.4">Toque nos nós para explorar cada eixo do sistema.</p>
   </div>
 
   <!-- Os 3 volumes -->
@@ -186,40 +186,40 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
     <!-- Vol I -->
     <div class="vol-card active" id="vol-btn-1" onclick="selectVol(1)">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-        <span style="font-size:10px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.15em;" data-i18n="ebk.5">Volume I</span>
+        <span style="font-size:10px;color:rgba(255,255,255,0.58);text-transform:uppercase;letter-spacing:0.15em;" data-i18n="ebk.5">Volume I</span>
         <span class="vol-badge" style="background:rgba(74,222,128,0.1);color:#4ade80;border:1px solid rgba(74,222,128,0.25);" data-i18n="ebk.6">Disponível</span>
       </div>
       <div>
         <img src="assets/img/tudo-esta-conectado-480.webp" srcset="assets/img/tudo-esta-conectado-480.webp 480w, assets/img/tudo-esta-conectado-960.webp 960w" sizes="(min-width: 768px) 320px, 90vw" width="480" height="720" loading="lazy" alt="Tudo Está Conectado" style="width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:8px;margin-bottom:10px;border:1px solid rgba(143,79,255,0.2);" data-i18n-attr="alt:ebk.7">
       </div>
-      <h3 class="cinzel text-grad" style="font-size:13px;margin:0 0 4px;line-height:1.3;" data-i18n="ebk.8">Tudo Está Conectado</h3>
-      <p style="font-size:11px;color:rgba(255,255,255,0.4);margin:0;" data-i18n="ebk.9">A base. Introdução ao sistema vivo.</p>
+      <h2 class="cinzel text-grad" style="font-size:13px;margin:0 0 4px;line-height:1.3;" data-i18n="ebk.8">Tudo Está Conectado</h2>
+      <p style="font-size:11px;color:rgba(255,255,255,0.62);margin:0;" data-i18n="ebk.9">A base. Introdução ao sistema vivo.</p>
     </div>
 
     <!-- Vol II -->
     <div class="vol-card" id="vol-btn-2" onclick="selectVol(2)">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-        <span style="font-size:10px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.15em;" data-i18n="ebk.10">Volume II</span>
+        <span style="font-size:10px;color:rgba(255,255,255,0.58);text-transform:uppercase;letter-spacing:0.15em;" data-i18n="ebk.10">Volume II</span>
         <span class="vol-badge" style="background:rgba(251,191,36,0.08);color:#fbbf24;border:1px solid rgba(251,191,36,0.2);" data-i18n="ebk.11">Em produção</span>
       </div>
       <div style="width:100%;aspect-ratio:2/3;background:rgba(143,79,255,0.05);border-radius:8px;margin-bottom:10px;border:1px solid rgba(143,79,255,0.15);display:flex;align-items:center;justify-content:center;">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="sv-g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#8f4fff" stop-opacity="0.5"/><stop offset="100%" stop-color="#d9b55a" stop-opacity="0.5"/></linearGradient></defs><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" fill="url(#sv-g)"/></svg>
       </div>
-      <h3 class="cinzel text-grad" style="font-size:13px;margin:0 0 4px;line-height:1.3;" data-i18n="ebk.12">Sistema Vivo</h3>
-      <p style="font-size:11px;color:rgba(255,255,255,0.4);margin:0;" data-i18n="ebk.13">O coração. Sistema completo mastigado.</p>
+      <h2 class="cinzel text-grad" style="font-size:13px;margin:0 0 4px;line-height:1.3;" data-i18n="ebk.12">Sistema Vivo</h2>
+      <p style="font-size:11px;color:rgba(255,255,255,0.62);margin:0;" data-i18n="ebk.13">O coração. Sistema completo mastigado.</p>
     </div>
 
     <!-- Vol III -->
     <div class="vol-card" id="vol-btn-3" onclick="selectVol(3)">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-        <span style="font-size:10px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.15em;" data-i18n="ebk.14">Volume III</span>
-        <span class="vol-badge" style="background:rgba(255,255,255,0.03);color:rgba(255,255,255,0.3);border:1px solid rgba(255,255,255,0.08);" data-i18n="ebk.15">Em breve</span>
+        <span style="font-size:10px;color:rgba(255,255,255,0.58);text-transform:uppercase;letter-spacing:0.15em;" data-i18n="ebk.14">Volume III</span>
+        <span class="vol-badge" style="background:rgba(255,255,255,0.03);color:rgba(255,255,255,0.58);border:1px solid rgba(255,255,255,0.08);" data-i18n="ebk.15">Em breve</span>
       </div>
       <div style="width:100%;aspect-ratio:2/3;background:rgba(255,255,255,0.02);border-radius:8px;margin-bottom:10px;border:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="mds-g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#8f4fff" stop-opacity="0.3"/><stop offset="100%" stop-color="#d9b55a" stop-opacity="0.3"/></linearGradient></defs><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" fill="url(#mds-g)" stroke="rgba(143,79,255,0.3)" stroke-width="1"/></svg>
       </div>
-      <h3 class="cinzel" style="font-size:13px;margin:0 0 4px;line-height:1.3;color:rgba(255,255,255,0.4);" data-i18n="ebk.16">Manual das Sombras</h3>
-      <p style="font-size:11px;color:rgba(255,255,255,0.3);margin:0;" data-i18n="ebk.17">Hacks e macetes.</p>
+      <h2 class="cinzel" style="font-size:13px;margin:0 0 4px;line-height:1.3;color:rgba(255,255,255,0.62);" data-i18n="ebk.16">Manual das Sombras</h2>
+      <p style="font-size:11px;color:rgba(255,255,255,0.58);margin:0;" data-i18n="ebk.17">Hacks e macetes.</p>
     </div>
 
   </div>
@@ -244,8 +244,8 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
         <div>
           <h2 class="cinzel text-grad" style="font-size:clamp(18px,2.5vw,26px);margin:0 0 12px;" data-i18n="ebk.24">Tudo Está Conectado</h2>
           <p style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.75;margin:0 0 16px;" data-i18n-html="ebk.25">Um volume introdutório em formato de "grimório" para quem sente a vida fragmentada. Aqui você entende o <strong style="color:rgba(255,255,255,0.85);">Núcleo</strong> — o ponto que integra mente, corpo, trabalho, relações e propósito — e aprende a identificar <strong style="color:rgba(255,255,255,0.85);">bloqueios invisíveis</strong> antes de tentar resolver tudo na força.</p>
-          <div style="background:rgba(143,79,255,0.06);border:1px solid rgba(143,79,255,0.15);border-radius:8px;padding:10px 14px;font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:16px;">
-            <span data-i18n="ebk.29">Fluxo da trilogia:</span> <strong style="color:#c4a3ff;" data-i18n="ebk.26">Tudo Está Conectado</strong> <span data-i18n="ebk.30">(base) →</span> <span style="color:rgba(255,255,255,0.3);" data-i18n="ebk.27">Sistema Vivo</span> → <span style="color:rgba(255,255,255,0.3);" data-i18n="ebk.28">Manual das Sombras</span>
+          <div style="background:rgba(143,79,255,0.06);border:1px solid rgba(143,79,255,0.15);border-radius:8px;padding:10px 14px;font-size:12px;color:rgba(255,255,255,0.62);margin-bottom:16px;">
+            <span data-i18n="ebk.29">Fluxo da trilogia:</span> <strong style="color:#c4a3ff;" data-i18n="ebk.26">Tudo Está Conectado</strong> <span data-i18n="ebk.30">(base) →</span> <span style="color:rgba(255,255,255,0.58);" data-i18n="ebk.27">Sistema Vivo</span> → <span style="color:rgba(255,255,255,0.58);" data-i18n="ebk.28">Manual das Sombras</span>
           </div>
           <div style="display:flex;flex-wrap:wrap;gap:10px;">
             <a href="store.html" class="btn-primary" id="tec-buy-btn">
@@ -301,9 +301,9 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
         </div>
         <div id="tec-entrega" class="tab-pane">
           <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;" class="three-col">
-            <div class="panel" style="text-align:center;"><div style="font-size:12px;font-weight:700;color:#c4a3ff;margin-bottom:4px;" data-i18n="ebk.55">Formato</div><div style="font-size:11px;color:rgba(255,255,255,0.4);" data-i18n="ebk.56">PDF — qualquer dispositivo</div></div>
-            <div class="panel" style="text-align:center;"><div style="font-size:12px;font-weight:700;color:#c4a3ff;margin-bottom:4px;" data-i18n="ebk.57">Acesso</div><div style="font-size:11px;color:rgba(255,255,255,0.4);" data-i18n="ebk.58">Vinculado à conta NoHeroes</div></div>
-            <div class="panel" style="text-align:center;"><div style="font-size:12px;font-weight:700;color:#c4a3ff;margin-bottom:4px;" data-i18n="ebk.59">Entrega</div><div style="font-size:11px;color:rgba(255,255,255,0.4);" data-i18n="ebk.60">Inventário após compra</div></div>
+            <div class="panel" style="text-align:center;"><div style="font-size:12px;font-weight:700;color:#c4a3ff;margin-bottom:4px;" data-i18n="ebk.55">Formato</div><div style="font-size:11px;color:rgba(255,255,255,0.62);" data-i18n="ebk.56">PDF — qualquer dispositivo</div></div>
+            <div class="panel" style="text-align:center;"><div style="font-size:12px;font-weight:700;color:#c4a3ff;margin-bottom:4px;" data-i18n="ebk.57">Acesso</div><div style="font-size:11px;color:rgba(255,255,255,0.62);" data-i18n="ebk.58">Vinculado à conta NoHeroes</div></div>
+            <div class="panel" style="text-align:center;"><div style="font-size:12px;font-weight:700;color:#c4a3ff;margin-bottom:4px;" data-i18n="ebk.59">Entrega</div><div style="font-size:11px;color:rgba(255,255,255,0.62);" data-i18n="ebk.60">Inventário após compra</div></div>
           </div>
         </div>
       </div>
@@ -325,14 +325,14 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
         <div style="flex:1;min-width:240px;">
           <h2 class="cinzel text-grad" style="font-size:clamp(18px,2.5vw,26px);margin:0 0 12px;" data-i18n="ebk.63">Sistema Vivo</h2>
           <p style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.75;margin:0 0 16px;" data-i18n-html="ebk.64">O <strong style="color:rgba(255,255,255,0.85);">coração</strong> da trilogia. O volume mais profundo: o sistema completo mastigado, passo a passo, para você entender como todas as áreas da sua vida funcionam como um organismo único — e como otimizar cada parte sem destruir o todo.</p>
-          <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7;margin:0 0 16px;" data-i18n="ebk.65">Cobre crescimento físico, mental, espiritual, interpessoal, financeiro e profissional — não em silos, mas integrados num sistema real e aplicável.</p>
+          <p style="font-size:13px;color:rgba(255,255,255,0.62);line-height:1.7;margin:0 0 16px;" data-i18n="ebk.65">Cobre crescimento físico, mental, espiritual, interpessoal, financeiro e profissional — não em silos, mas integrados num sistema real e aplicável.</p>
           <div style="display:flex;gap:10px;flex-wrap:wrap;">
             <span class="btn-disabled" data-i18n="ebk.66">Em produção — em breve</span>
             <a href="store.html" class="btn-ghost" style="font-size:12px;" data-i18n="ebk.67">Ver loja</a>
           </div>
         </div>
       </div>
-      <div style="margin-top:20px;padding:14px;background:rgba(251,191,36,0.04);border-radius:10px;border:1px solid rgba(251,191,36,0.12);font-size:12px;color:rgba(255,255,255,0.4);" data-i18n="ebk.68">
+      <div style="margin-top:20px;padding:14px;background:rgba(251,191,36,0.04);border-radius:10px;border:1px solid rgba(251,191,36,0.12);font-size:12px;color:rgba(255,255,255,0.62);" data-i18n="ebk.68">
         💡 Acompanhe as atualizações pela newsletter — você será notificado no lançamento.
       </div>
     </div>
@@ -352,7 +352,7 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
         </div>
         <div style="flex:1;min-width:240px;">
           <h2 class="cinzel" style="font-size:clamp(18px,2.5vw,26px);margin:0 0 12px;color:rgba(255,255,255,0.5);" data-i18n="ebk.71">Manual das Sombras</h2>
-          <p style="font-size:14px;color:rgba(255,255,255,0.45);line-height:1.75;margin:0 0 16px;" data-i18n-html="ebk.72">O complemento denso. <strong style="color:rgba(255,255,255,0.6);">Hacks, macetes e técnicas adicionais</strong> — vitalidade hormonal, ganho de massa, foco, paz mental e dissolução de pensamentos intrusivos.</p>
+          <p style="font-size:14px;color:rgba(255,255,255,0.65);line-height:1.75;margin:0 0 16px;" data-i18n-html="ebk.72">O complemento denso. <strong style="color:rgba(255,255,255,0.6);">Hacks, macetes e técnicas adicionais</strong> — vitalidade hormonal, ganho de massa, foco, paz mental e dissolução de pensamentos intrusivos.</p>
           <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;">
             <span class="chip" data-i18n="ebk.73">~60 págs</span><span class="chip" data-i18n="ebk.74">Nível avançado</span>
           </div>
@@ -364,7 +364,7 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
       <div style="margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:10px;" class="two-col">
         <div style="padding:12px;background:rgba(255,255,255,0.02);border-radius:10px;border:1px solid rgba(255,255,255,0.06);">
           <h4 style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.5);margin:0 0 8px;" data-i18n="ebk.76">Macetes e Técnicas</h4>
-          <div style="display:flex;flex-direction:column;gap:5px;font-size:11px;color:rgba(255,255,255,0.35);">
+          <div style="display:flex;flex-direction:column;gap:5px;font-size:11px;color:rgba(255,255,255,0.6);">
             <div data-i18n="ebk.77">• Aumento natural de testosterona e libido</div>
             <div data-i18n="ebk.78">• Protocolos para ganho de massa muscular</div>
             <div data-i18n="ebk.79">• Técnicas de paz mental e foco</div>
@@ -374,7 +374,7 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
         </div>
         <div style="padding:12px;background:rgba(255,255,255,0.02);border-radius:10px;border:1px solid rgba(255,255,255,0.06);">
           <h4 style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.5);margin:0 0 8px;" data-i18n="ebk.82">Sumário previsto</h4>
-          <div style="display:flex;flex-direction:column;gap:5px;font-size:11px;color:rgba(255,255,255,0.35);">
+          <div style="display:flex;flex-direction:column;gap:5px;font-size:11px;color:rgba(255,255,255,0.6);">
             <div data-i18n="ebk.83">1. Conexões com os volumes anteriores</div>
             <div data-i18n="ebk.84">2. Hormônios e vitalidade</div>
             <div data-i18n="ebk.85">3. Macetes físicos — treino e energia</div>
@@ -395,13 +395,13 @@ body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;li
     <h2 class="cinzel text-grad" style="font-size:20px;margin:0 0 10px;" data-i18n="ebk.89">Os 3 eBooks + Audiobooks</h2>
     <p style="font-size:13px;color:rgba(255,255,255,0.5);margin:0 0 16px;line-height:1.7;" data-i18n-html="ebk.90">Leve a trilogia completa — <strong style="color:rgba(255,255,255,0.7);">Tudo Está Conectado</strong>, <strong style="color:rgba(255,255,255,0.7);">Sistema Vivo</strong> e <strong style="color:rgba(255,255,255,0.7);">Manual das Sombras</strong> — com audiobooks.</p>
     <div style="display:inline-flex;align-items:baseline;gap:10px;margin-bottom:16px;">
-      <span style="font-size:13px;color:rgba(255,255,255,0.2);text-decoration:line-through;">R$ 109,90</span>
-      <span style="font-size:32px;font-weight:800;color:rgba(255,255,255,0.2);">R$ 55,00</span>
+      <span style="font-size:13px;color:rgba(255,255,255,0.5);text-decoration:line-through;">R$ 109,90</span>
+      <span style="font-size:32px;font-weight:800;color:rgba(255,255,255,0.5);">R$ 55,00</span>
     </div>
     <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;">
       <span class="btn-disabled" style="font-size:14px;padding:12px 24px;" data-i18n="ebk.91">🔒 Disponível com o lançamento completo</span>
     </div>
-    <p style="font-size:11px;color:rgba(255,255,255,0.2);margin-top:12px;" data-i18n="ebk.92">Os volumes II e III ainda estão em produção. O combo será liberado quando a trilogia estiver completa.</p>
+    <p style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:12px;" data-i18n="ebk.92">Os volumes II e III ainda estão em produção. O combo será liberado quando a trilogia estiver completa.</p>
   </div>
 </section>
 
