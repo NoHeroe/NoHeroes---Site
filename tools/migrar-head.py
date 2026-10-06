@@ -16,12 +16,12 @@ s = re.sub(r'[ \t]*<script src="https://cdn\.tailwindcss\.com"></script>\r?\n', 
 s = re.sub(r'[ \t]*<script>\s*tailwind\.config\s*=.*?</script>\r?\n', '', s, flags=re.S)
 
 if 'assets/css/tw.css' not in s:
-    m = re.search(r'([ \t]*)<link rel="stylesheet" href="assets/css/noheroes-ui\.css">', s)
-    assert m, 'sem noheroes-ui.css no head'
-    s = s[:m.start()] + m.group(1) + '<link rel="stylesheet" href="assets/css/tw.css">' + nl + s[m.start():]
+    # no fim do <head>: o CDN injetava os utilitários depois do <style> da página, e a cascata depende disso
+    h = s.find('</head>')
+    s = s[:h] + '<!-- utilitários por último: mesma ordem de cascata do antigo Tailwind CDN -->' + nl + '<link rel="stylesheet" href="assets/css/tw.css">' + nl + s[h:]
 
 scripts = [f'<script src="{src}"></script>' for src in
-           ('assets/js/i18n.js', 'assets/i18n/comum.js', f'assets/i18n/{dic}.js', 'assets/js/config.js') if src not in s]
+           ('assets/js/i18n.js', 'assets/i18n/comum.js', f'assets/i18n/{dic}.js', 'assets/js/config.js') if f'src="{src}"' not in s]
 if scripts:
     # os dicionários vão no fim do <head>, antes de qualquer script da página
     h = s.find('</head>')
