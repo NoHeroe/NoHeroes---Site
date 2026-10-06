@@ -20,7 +20,7 @@
   window.API_BASE = api;
   // Instagram de tatuagem: com o endereço aqui, aparece o botão na linktree e o ícone no rodapé. Vazio = oculto.
   // ex.: 'https://www.instagram.com/noheroes.tattoo'
-  var INSTAGRAM_TATTOO = '';
+  var INSTAGRAM_TATTOO = 'https://www.instagram.com/maru_tattoo_nh';
   window.NH_CONFIG = Object.freeze({ API_BASE: api, LOCAL: local, INSTAGRAM_TATTOO: INSTAGRAM_TATTOO });
 
   // Imagens: um asset do site (assets/images/Nome.jpg, com ou sem domínio) vira a variante WebP

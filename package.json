@@ -4,7 +4,8 @@
   "description": "Site estático NoHeroes (Cloudflare Pages, sem build no deploy: o CSS gerado é versionado).",
   "scripts": {
     "build:css": "tailwindcss -c tailwind.config.js -i assets/css/tw.src.css -o assets/css/tw.css --minify",
-    "watch:css": "tailwindcss -c tailwind.config.js -i assets/css/tw.src.css -o assets/css/tw.css --watch"
+    "watch:css": "tailwindcss -c tailwind.config.js -i assets/css/tw.src.css -o assets/css/tw.css --watch",
+    "build": "npm run build:css && python tools/versionar-assets.py"
   },
   "devDependencies": {
     "tailwindcss": "^3.4.17"
