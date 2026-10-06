@@ -101,12 +101,17 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);overflow-x:hid
 }
 
 /* ── EDITOR DE VARIANTES ── */
-.var-row{display:grid;grid-template-columns:1fr 1.4fr 1fr 1fr 1fr 1fr auto auto;gap:6px;align-items:center;margin-bottom:6px}
+.var-row{display:grid;grid-template-columns:1fr 1.3fr 1.2fr 1fr 1fr 1fr 1fr auto auto;gap:6px;align-items:center;margin-bottom:6px}
+.nav-badge{margin-left:auto;min-width:18px;height:18px;padding:0 5px;border-radius:99px;background:var(--yellow);color:#1a1206;font-size:10px;font-weight:800;display:inline-grid;place-items:center}
+.tk-msg{padding:10px 12px;border-radius:10px;border:1px solid var(--border2);margin-bottom:8px;font-size:13px;white-space:pre-wrap;word-break:break-word}
+.tk-msg.admin{background:rgba(143,79,255,.08);border-color:rgba(143,79,255,.25)}
+.tk-msg-topo{font-size:10px;color:var(--muted);margin-bottom:4px;font-family:var(--fm);letter-spacing:.05em}
+.av-recente{padding:10px 12px;border:1px solid var(--border2);border-radius:10px;margin-bottom:8px;font-size:12px}
 .var-row.var-off{opacity:.45}
 .var-ativa{display:flex;align-items:center;gap:4px;font-size:11px;white-space:nowrap}
 @media(max-width:640px){
   .var-row{grid-template-columns:1fr 1fr;padding:8px;border:1px solid var(--border2);border-radius:10px}
-  .var-row [data-k="label"]{grid-column:1/-1}
+  .var-row [data-k="label"],.var-row [data-k="label_en"]{grid-column:1/-1}
 }
 .filtros{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:14px}
 /* ── TABS ── */
@@ -312,11 +317,14 @@ textarea.input{resize:vertical;min-height:80px}
   <span class="nav-section">Plataforma</span>
   <button class="nav-item" onclick="goTab('users')" id="nav-users"><span class="ni">👥</span>Usuários</button>
   <button class="nav-item" onclick="goTab('shop')" id="nav-shop"><span class="ni">🛒</span>Produtos</button>
+  <button class="nav-item" onclick="goTab('coupons')" id="nav-coupons"><span class="ni">🏷️</span>Cupons</button>
   <button class="nav-item" onclick="goTab('orders')" id="nav-orders"><span class="ni">📦</span>Pedidos</button>
   <button class="nav-item" onclick="goTab('shipping')" id="nav-shipping"><span class="ni">🚚</span>Frete</button>
   <button class="nav-item" onclick="goTab('finance')" id="nav-finance"><span class="ni">💰</span>Financeiro</button>
   <button class="nav-item" onclick="goTab('goals')" id="nav-goals"><span class="ni">🎯</span>Metas</button>
   <button class="nav-item" onclick="goTab('newsletter')" id="nav-newsletter"><span class="ni">📧</span>Newsletter</button>
+  <button class="nav-item" onclick="goTab('notices')" id="nav-notices"><span class="ni">🔔</span>Avisos</button>
+  <button class="nav-item" onclick="goTab('tickets')" id="nav-tickets"><span class="ni">🎫</span>Tickets<span class="nav-badge" id="tickets-badge" style="display:none">0</span></button>
 
   <span class="nav-section">Sistema</span>
   <button class="nav-item" onclick="goTab('logs')" id="nav-logs"><span class="ni">🧾</span>Logs</button>
@@ -446,6 +454,77 @@ textarea.input{resize:vertical;min-height:80px}
       <button class="btn btn-ghost btn-sm" id="orders-prev" onclick="paginaPedidos(-1)">← Anterior</button>
       <span id="orders-page-info" style="color:var(--muted)">—</span>
       <button class="btn btn-ghost btn-sm" id="orders-next" onclick="paginaPedidos(1)">Próxima →</button>
+    </div>
+  </div>
+
+  <!-- CUPONS -->
+  <div id="tab-coupons" class="tab">
+    <div class="section-header">
+      <div><div class="section-title">Cupons</div><div class="section-sub">Desconto percentual ou fixo nos produtos (nunca no frete) · um cupom por pedido</div></div>
+      <button class="btn btn-primary btn-sm" onclick="openCouponModal()">+ Novo cupom</button>
+    </div>
+    <div class="overflow-x">
+      <table class="tbl">
+        <thead><tr><th>Código</th><th>Desconto</th><th>Validade</th><th>Usos</th><th>Limites</th><th>Status</th><th>Ações</th></tr></thead>
+        <tbody id="tb-coupons"><tr><td colspan="7" style="text-align:center;color:var(--muted);padding:20px">Carregando...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- AVISOS -->
+  <div id="tab-notices" class="tab">
+    <div class="section-header">
+      <div><div class="section-title">Avisos</div><div class="section-sub">Notificação no site (sino do perfil) e, se marcado, e-mail. Quem usa o site em inglês recebe a versão em inglês, quando ela é preenchida.</div></div>
+    </div>
+    <div class="card" style="margin-bottom:16px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 12px" class="grid-2">
+        <div class="field"><label class="label" for="av-alvo">Para quem</label>
+          <select class="input" id="av-alvo" onchange="atualizarAlvoAviso()">
+            <option value="optin">Quem ativou a categoria (opt-in)</option>
+            <option value="todos">Todas as contas (no site; e-mail só para opt-in)</option>
+            <option value="usuario">Um usuário</option>
+          </select></div>
+        <div class="field"><label class="label" for="av-categoria">Categoria</label>
+          <select class="input" id="av-categoria">
+            <option value="novidades">Novidades (lançamentos, produtos)</option>
+            <option value="descontos">Descontos e cupons</option>
+            <option value="sistema">Sistema (conta, avisos importantes)</option>
+          </select></div>
+        <div class="field" id="av-usuario-box" style="grid-column:1/-1;display:none"><label class="label" for="av-usuario">Usuário (id ou e-mail)</label><input class="input" id="av-usuario" placeholder="123 ou pessoa@email.com"></div>
+        <div class="field"><label class="label" for="av-titulo">Título *</label><input class="input" id="av-titulo" maxlength="255"></div>
+        <div class="field"><label class="label" for="av-titulo-en">Título em inglês (opcional)</label><input class="input" id="av-titulo-en" maxlength="255"></div>
+        <div class="field"><label class="label" for="av-corpo">Mensagem *</label><textarea class="input" id="av-corpo" rows="4"></textarea></div>
+        <div class="field"><label class="label" for="av-corpo-en">Mensagem em inglês (opcional)</label><textarea class="input" id="av-corpo-en" rows="4"></textarea></div>
+        <div class="field"><label class="label" for="av-link">Link (opcional)</label><input class="input" id="av-link" placeholder="/store.html ou https://..."></div>
+        <div class="field" style="display:flex;align-items:flex-end"><label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;padding-bottom:10px"><input type="checkbox" id="av-email"> Enviar também por e-mail</label></div>
+      </div>
+      <button class="btn btn-primary" id="av-enviar" onclick="enviarAviso()">Enviar aviso</button>
+    </div>
+    <div class="section-title" style="font-size:14px;margin-bottom:8px">Últimos avisos</div>
+    <div id="av-recentes"><div style="color:var(--muted);font-size:12px">Carregando...</div></div>
+  </div>
+
+  <!-- TICKETS -->
+  <div id="tab-tickets" class="tab">
+    <div class="section-header">
+      <div><div class="section-title">Tickets</div><div class="section-sub">Suporte com protocolo · a resposta vai por e-mail e aparece no perfil do cliente</div></div>
+      <button class="btn btn-ghost btn-sm" onclick="loadTickets()">↻ Atualizar</button>
+    </div>
+    <div class="filtros">
+      <select class="input" id="tk-status" onchange="loadTickets()" aria-label="Status">
+        <option value="">Status: todos</option>
+        <option value="aberto">Aberto</option>
+        <option value="aguardando">Aguardando a equipe</option>
+        <option value="respondido">Respondido</option>
+        <option value="fechado">Fechado</option>
+      </select>
+      <input class="input" id="tk-q" placeholder="Protocolo, e-mail, assunto… (Enter)" onkeydown="if(event.key==='Enter')loadTickets()" aria-label="Buscar ticket">
+    </div>
+    <div class="overflow-x">
+      <table class="tbl">
+        <thead><tr><th>Protocolo</th><th>Assunto</th><th>Cliente</th><th>Status</th><th>Atualizado</th></tr></thead>
+        <tbody id="tb-tickets"><tr><td colspan="5" style="text-align:center;color:var(--muted);padding:20px">Carregando...</td></tr></tbody>
+      </table>
     </div>
   </div>
 
@@ -650,11 +729,56 @@ textarea.input{resize:vertical;min-height:80px}
   </div>
 </div>
 
+<div class="modal-backdrop" id="coupon-modal">
+  <div class="modal-box" style="max-width:640px;width:min(640px,96vw)">
+    <div class="modal-title" id="coupon-modal-title">Novo cupom</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 12px" class="grid-2">
+      <div class="field"><label class="label" for="cp-code">Código *</label><input class="input" id="cp-code" placeholder="BEMVINDO" style="text-transform:uppercase"></div>
+      <div class="field"><label class="label" for="cp-descricao">Descrição interna</label><input class="input" id="cp-descricao" maxlength="255"></div>
+      <div class="field"><label class="label" for="cp-tipo">Tipo *</label>
+        <select class="input" id="cp-tipo"><option value="percentual">Percentual (%)</option><option value="fixo">Valor fixo (R$)</option></select></div>
+      <div class="field"><label class="label" for="cp-valor">Valor *</label><input class="input" id="cp-valor" type="number" step=".01" min="0"></div>
+      <div class="field"><label class="label" for="cp-inicio">Início (vazio = já vale)</label><input class="input" id="cp-inicio" type="datetime-local"></div>
+      <div class="field"><label class="label" for="cp-fim">Fim (vazio = sem prazo)</label><input class="input" id="cp-fim" type="datetime-local"></div>
+      <div class="field"><label class="label" for="cp-limite-total">Limite total de usos</label><input class="input" id="cp-limite-total" type="number" min="1" step="1" placeholder="∞"></div>
+      <div class="field"><label class="label" for="cp-limite-usuario">Limite por cliente</label><input class="input" id="cp-limite-usuario" type="number" min="1" step="1" placeholder="∞"></div>
+      <div class="field"><label class="label" for="cp-minimo">Valor mínimo dos produtos R$</label><input class="input" id="cp-minimo" type="number" step=".01" min="0" placeholder="sem mínimo"></div>
+      <div class="field"><label class="label" for="cp-produtos">Só nestes produtos (ids, vírgula)</label><input class="input" id="cp-produtos" placeholder="vazio = todos"></div>
+      <div class="field" style="grid-column:1/-1"><label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;"><input type="checkbox" id="cp-ativo" checked> Ativo</label></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('coupon-modal')">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveCoupon()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="ticket-modal">
+  <div class="modal-box" style="max-width:720px;width:min(720px,96vw)">
+    <div class="modal-title" id="tk-titulo">Ticket</div>
+    <div id="tk-info" style="font-size:12px;color:var(--muted);margin-bottom:12px"></div>
+    <div id="tk-mensagens" style="max-height:44vh;overflow:auto;margin-bottom:12px"></div>
+    <div class="field"><label class="label" for="tk-resposta">Resposta</label><textarea class="input" id="tk-resposta" rows="4" placeholder="Escreva a resposta (vai por e-mail para o cliente)"></textarea></div>
+    <div class="modal-footer" style="flex-wrap:wrap;gap:8px">
+      <select class="input" id="tk-mudar-status" style="width:auto" aria-label="Mudar status" onchange="mudarStatusTicket(this.value)">
+        <option value="">Mudar status…</option>
+        <option value="aberto">Aberto</option><option value="aguardando">Aguardando a equipe</option>
+        <option value="respondido">Respondido</option><option value="fechado">Fechado</option>
+      </select>
+      <span style="flex:1"></span>
+      <button class="btn btn-ghost" onclick="closeModal('ticket-modal')">Fechar</button>
+      <button class="btn btn-ghost" onclick="responderTicket(true)">Responder e fechar</button>
+      <button class="btn btn-primary" onclick="responderTicket(false)">Responder</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-backdrop" id="product-modal">
   <div class="modal-box" style="max-width:780px;width:min(780px,96vw)">
     <div class="modal-title" id="product-modal-title">Novo Produto</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 12px;" class="grid-2">
       <div class="field" style="grid-column:1/-1"><label class="label" for="pm-name">Nome</label><input class="input" id="pm-name" placeholder="Nome do produto"></div>
+      <div class="field" style="grid-column:1/-1"><label class="label" for="pm-name-en">Nome em inglês (opcional — sem ele, a loja em EN mostra o nome em português)</label><input class="input" id="pm-name-en" placeholder="Product name"></div>
       <div class="field">
         <label class="label" for="pm-type">Tipo</label>
         <select class="input" id="pm-type">
@@ -679,6 +803,7 @@ textarea.input{resize:vertical;min-height:80px}
       <div class="field"><label class="label" for="pm-details">Página "+ Informações" (detailsUrl)</label><input class="input" id="pm-details" placeholder="/ebooks.html"></div>
       <div class="field"><label class="label" for="pm-marketplace">Link do Mercado Livre</label><input class="input" id="pm-marketplace" placeholder="https://produto.mercadolivre.com.br/..."></div>
       <div class="field" style="grid-column:1/-1"><label class="label" for="pm-description">Descrição</label><textarea class="input" id="pm-description" rows="3"></textarea></div>
+      <div class="field" style="grid-column:1/-1"><label class="label" for="pm-description-en">Descrição em inglês (opcional)</label><textarea class="input" id="pm-description-en" rows="3"></textarea></div>
 
       <!-- Digital -->
       <div id="pm-digital-box" style="grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:0 12px" class="grid-2">
@@ -842,7 +967,8 @@ function goTab(id) {
   // lazy load
   const loaders = {
     dashboard:loadDashboard, users:loadAdminUsers, shop:loadShop, orders:loadOrders, shipping:loadRates,
-    finance:loadAdminFinance, goals:loadGoals, newsletter:loadNewsletter, logs:loadLogs
+    finance:loadAdminFinance, goals:loadGoals, newsletter:loadNewsletter, logs:loadLogs,
+    coupons:loadCoupons, notices:loadAvisosRecentes, tickets:loadTickets
   };
   if(loaders[id]) loaders[id]();
 }
@@ -907,6 +1033,147 @@ async function boot() {
   document.getElementById('sb-avatar').textContent=ini;
   document.getElementById('sb-name').textContent=S.user.username||'Admin';
   loadDashboard();
+  atualizarSeloTickets();
+}
+
+/* ═══ CUPONS ═══ */
+const brl = (n) => Number(n||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const dataHora = (d) => d ? new Date(d).toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'}) : '—';
+// datetime-local trabalha em hora local, sem fuso
+const paraInputData = (d) => { if(!d) return ''; const x=new Date(d); x.setMinutes(x.getMinutes()-x.getTimezoneOffset()); return x.toISOString().slice(0,16); };
+
+async function loadCoupons() {
+  const tb=$('tb-coupons');
+  const {ok,data}=await api('/admin/coupons');
+  if(!ok){ tb.innerHTML=`<tr><td colspan="7" style="text-align:center;color:var(--red);padding:20px">${escHtml(data.message||'Erro ao carregar cupons.')}</td></tr>`; return; }
+  S.coupons=data.data||[];
+  if(!S.coupons.length){ tb.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:20px">Nenhum cupom ainda.</td></tr>'; return; }
+  const agora=Date.now();
+  tb.innerHTML=S.coupons.map(c=>{
+    const desc=c.tipo==='percentual'?`${Number(c.valor)}%`:brl(c.valor);
+    const validade=(c.inicio||c.fim)?`${c.inicio?dataHora(c.inicio):'já'} → ${c.fim?dataHora(c.fim):'sem prazo'}`:'sem prazo';
+    const expirado=c.fim && new Date(c.fim).getTime()<agora;
+    const esgotado=c.limite_total && c.usos>=c.limite_total;
+    const status=!c.ativo?'<span class="badge badge-muted">Inativo</span>':expirado?'<span class="badge badge-red">Expirado</span>':esgotado?'<span class="badge badge-yellow">Esgotado</span>':'<span class="badge badge-green">Ativo</span>';
+    const limites=[c.limite_total?`total ${c.limite_total}`:'',c.limite_usuario?`${c.limite_usuario}/cliente`:'',c.minimo?`mín. ${brl(c.minimo)}`:'',c.produtos&&c.produtos.length?`produtos ${c.produtos.join(', ')}`:''].filter(Boolean).join(' · ')||'—';
+    return `<tr><td><strong>${escHtml(c.code)}</strong>${c.descricao?`<div style="color:var(--muted);font-size:11px">${escHtml(c.descricao)}</div>`:''}</td>
+      <td>${desc}</td><td style="font-size:11px">${validade}</td><td>${c.usos}${c.desconto_total?` <span style="color:var(--muted);font-size:11px">(−${brl(c.desconto_total)})</span>`:''}</td>
+      <td style="font-size:11px">${escHtml(limites)}</td><td>${status}</td>
+      <td style="white-space:nowrap"><button class="btn btn-ghost btn-sm" onclick="openCouponModal(${c.id})">Editar</button>
+        <button class="btn btn-ghost btn-sm" onclick="deleteCoupon(${c.id})">Excluir</button></td></tr>`;
+  }).join('');
+}
+function openCouponModal(id=null) {
+  S.editCouponId=id;
+  const c=id?S.coupons.find(x=>x.id===id):null;
+  $('coupon-modal-title').textContent=c?`Editar cupom ${c.code}`:'Novo cupom';
+  const set=(k,v)=>{ $(k).value=v==null?'':v; };
+  set('cp-code',c?.code); set('cp-descricao',c?.descricao); $('cp-tipo').value=c?.tipo||'percentual'; set('cp-valor',c?.valor);
+  $('cp-inicio').value=paraInputData(c?.inicio); $('cp-fim').value=paraInputData(c?.fim);
+  set('cp-limite-total',c?.limite_total); set('cp-limite-usuario',c?.limite_usuario); set('cp-minimo',c?.minimo);
+  set('cp-produtos',(c?.produtos||[]).join(', ')); $('cp-ativo').checked=c?!!c.ativo:true;
+  openModal('coupon-modal');
+}
+async function saveCoupon() {
+  const dt=(k)=>{ const v=$(k).value; return v?new Date(v).toISOString():null; };
+  const payload={ code:val('cp-code').toUpperCase(), descricao:val('cp-descricao')||null, tipo:$('cp-tipo').value, valor:$('cp-valor').value,
+    inicio:dt('cp-inicio'), fim:dt('cp-fim'), limite_total:$('cp-limite-total').value, limite_usuario:$('cp-limite-usuario').value,
+    minimo:$('cp-minimo').value, produtos:val('cp-produtos'), ativo:$('cp-ativo').checked };
+  if(!payload.code||!payload.valor){ toast('Informe código e valor.','error'); return; }
+  const id=S.editCouponId;
+  const {ok,data}=await api(id?`/admin/coupons/${id}`:'/admin/coupons',{method:id?'PATCH':'POST',body:JSON.stringify(payload)});
+  if(ok){ toast(id?'Cupom atualizado.':'Cupom criado.','success'); closeModal('coupon-modal'); loadCoupons(); }
+  else toast(data.message||'Erro ao salvar cupom.','error');
+}
+function deleteCoupon(id) {
+  const c=S.coupons.find(x=>x.id===id);
+  confirm_(`Excluir o cupom ${c?.code}? Se ele já foi usado, só é desativado (o histórico dos pedidos fica).`, async ()=>{
+    const {ok,data}=await api(`/admin/coupons/${id}`,{method:'DELETE'});
+    toast(data.message||(ok?'Feito.':'Erro ao excluir.'),ok?'success':'error');
+    loadCoupons();
+  });
+}
+
+/* ═══ AVISOS ═══ */
+function atualizarAlvoAviso() { $('av-usuario-box').style.display=$('av-alvo').value==='usuario'?'block':'none'; }
+async function loadAvisosRecentes() {
+  const box=$('av-recentes');
+  const {ok,data}=await api('/admin/notifications/recentes');
+  if(!ok){ box.innerHTML=`<div style="color:var(--red);font-size:12px">${escHtml(data.message||'Erro ao carregar.')}</div>`; return; }
+  const rotulo={product_new:'Novidades',discount:'Descontos',system:'Sistema'};
+  const lista=data.data||[];
+  box.innerHTML=lista.length?lista.map(a=>`<div class="av-recente"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap">
+      <strong>${escHtml(a.title)}</strong><span style="color:var(--muted)">${rotulo[a.type]||a.type} · ${a.destinatarios} conta(s) · ${dataHora(a.enviado_em)}</span></div>
+      <div style="color:var(--muted);margin-top:4px;white-space:pre-wrap">${escHtml(a.body)}</div></div>`).join('')
+    :'<div style="color:var(--muted);font-size:12px">Nenhum aviso enviado ainda.</div>';
+}
+function enviarAviso() {
+  const b={ alvo:$('av-alvo').value, categoria:$('av-categoria').value, usuario:val('av-usuario'),
+    titulo:val('av-titulo'), corpo:$('av-corpo').value.trim(), titulo_en:val('av-titulo-en'), corpo_en:$('av-corpo-en').value.trim(),
+    link:val('av-link')||null, email:$('av-email').checked };
+  if(!b.titulo||!b.corpo){ toast('Título e mensagem são obrigatórios.','error'); return; }
+  if(b.alvo==='usuario'&&!b.usuario){ toast('Informe o usuário.','error'); return; }
+  const quem={todos:'TODAS as contas',optin:'quem ativou esta categoria',usuario:`o usuário ${b.usuario}`}[b.alvo];
+  confirm_(`Enviar "${b.titulo}" para ${quem}${b.email?' (com e-mail)':''}?`, async ()=>{
+    const btn=$('av-enviar'); btn.disabled=true; btn.textContent='Enviando…';
+    const {ok,data}=await api('/admin/notifications',{method:'POST',body:JSON.stringify(b)});
+    btn.disabled=false; btn.textContent='Enviar aviso';
+    toast(data.message||(ok?'Aviso enviado.':'Erro ao enviar aviso.'),ok?'success':'error');
+    if(ok){ ['av-titulo','av-corpo','av-titulo-en','av-corpo-en','av-link','av-usuario'].forEach(k=>$(k).value=''); $('av-email').checked=false; loadAvisosRecentes(); }
+  });
+}
+
+/* ═══ TICKETS ═══ */
+const STATUS_TICKET={aberto:['Aberto','badge-yellow'],aguardando:['Aguardando a equipe','badge-yellow'],respondido:['Respondido','badge-purple'],fechado:['Fechado','badge-muted']};
+const seloTicket=(s)=>{ const [r,c]=STATUS_TICKET[s]||[s,'badge-muted']; return `<span class="badge ${c}">${escHtml(r)}</span>`; };
+async function atualizarSeloTickets() {
+  const {ok,data}=await api('/admin/tickets-pendentes');
+  const b=$('tickets-badge'); if(!b||!ok) return;
+  b.textContent=data.pendentes; b.style.display=data.pendentes?'':'none';
+  const chip=document.querySelector('#tabstrip [data-tab="tickets"]');
+  if(chip) chip.textContent=data.pendentes?`🎫Tickets (${data.pendentes})`:'🎫Tickets';
+}
+async function loadTickets() {
+  const tb=$('tb-tickets');
+  const qs=new URLSearchParams();
+  if($('tk-status').value) qs.set('status',$('tk-status').value);
+  if(val('tk-q')) qs.set('q',val('tk-q'));
+  const {ok,data}=await api('/admin/tickets'+(qs.toString()?'?'+qs:''));
+  if(!ok){ tb.innerHTML=`<tr><td colspan="5" style="text-align:center;color:var(--red);padding:20px">${escHtml(data.message||'Erro ao carregar tickets.')}</td></tr>`; return; }
+  const lista=data.data||[];
+  tb.innerHTML=lista.length?lista.map(t=>`<tr style="cursor:pointer" onclick="openTicket(${t.id})">
+      <td><strong>${escHtml(t.protocolo)}</strong>${t.lang==='en'?' <span class="badge badge-muted">EN</span>':''}</td>
+      <td>${escHtml(t.assunto)}${t.pedido_id?`<div style="color:var(--muted);font-size:11px">pedido ${escHtml(t.pedido_id)}</div>`:''}</td>
+      <td>${escHtml(t.nome)}<div style="color:var(--muted);font-size:11px">${escHtml(t.email)}</div></td>
+      <td>${seloTicket(t.status)}</td><td style="font-size:11px">${dataHora(t.updatedAt)}</td></tr>`).join('')
+    :'<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:20px">Nenhum ticket.</td></tr>';
+  atualizarSeloTickets();
+}
+async function openTicket(id) {
+  S.ticketId=id;
+  $('tk-resposta').value=''; $('tk-mudar-status').value='';
+  $('tk-mensagens').innerHTML='<div style="color:var(--muted);font-size:12px">Carregando...</div>';
+  openModal('ticket-modal');
+  const {ok,data}=await api(`/admin/tickets/${id}`);
+  if(!ok){ $('tk-mensagens').innerHTML=`<div style="color:var(--red)">${escHtml(data.message||'Erro.')}</div>`; return; }
+  const t=data.data;
+  $('tk-titulo').textContent=`${t.protocolo} — ${t.assunto}`;
+  $('tk-info').innerHTML=`${seloTicket(t.status)} · ${escHtml(t.nome)} &lt;${escHtml(t.email)}&gt; · ${escHtml(t.categoria||'—')} · prioridade ${escHtml(t.prioridade||'normal')}${t.pedido_id?` · pedido ${escHtml(t.pedido_id)}`:''} · idioma ${t.lang==='en'?'inglês':'português'}`;
+  $('tk-mensagens').innerHTML=(t.mensagens||[]).map(m=>`<div class="tk-msg ${m.autor==='admin'?'admin':''}"><div class="tk-msg-topo">${m.autor==='admin'?'EQUIPE':'CLIENTE'} · ${dataHora(m.createdAt)}${m.anexos&&m.anexos.length?` · anexos: ${escHtml(m.anexos.join(', '))}`:''}</div>${escHtml(m.corpo)}</div>`).join('')
+    ||'<div style="color:var(--muted);font-size:12px">Sem mensagens.</div>';
+}
+async function responderTicket(fechar) {
+  const corpo=$('tk-resposta').value.trim();
+  if(!corpo){ toast('Escreva a resposta.','error'); return; }
+  const {ok,data}=await api(`/admin/tickets/${S.ticketId}/reply`,{method:'POST',body:JSON.stringify({corpo,fechar})});
+  toast(data.message||(ok?'Resposta enviada.':'Erro ao responder.'),ok?(data.emailOk===false?'info':'success'):'error');
+  if(ok){ openTicket(S.ticketId); loadTickets(); }
+}
+async function mudarStatusTicket(status) {
+  if(!status) return;
+  const {ok,data}=await api(`/admin/tickets/${S.ticketId}`,{method:'PATCH',body:JSON.stringify({status})});
+  toast(ok?'Status atualizado.':(data.message||'Erro ao mudar status.'),ok?'success':'error');
+  if(ok){ openTicket(S.ticketId); loadTickets(); }
 }
 
 /* ═══ DASHBOARD ═══ */
@@ -1087,6 +1354,7 @@ function linhaVariante(v={}) {
   div.innerHTML=`
     <input class="input" data-k="sku" placeholder="SKU *" value="${escHtml(v.sku||'')}">
     <input class="input" data-k="label" placeholder="Rótulo * (M / Preta)" value="${escHtml(v.label||'')}">
+    <input class="input" data-k="label_en" placeholder="Rótulo EN (M / Black)" value="${escHtml(v.label_en||'')}">
     <input class="input" data-k="tamanho" placeholder="Tamanho" value="${escHtml(at.tamanho||'')}">
     <input class="input" data-k="cor" placeholder="Cor" value="${escHtml(at.cor||'')}">
     <input class="input" data-k="price_override" type="number" step=".01" min="0" placeholder="Preço próprio" value="${v.price_override!=null?v.price_override:''}">
@@ -1104,7 +1372,7 @@ function lerVariantes() {
     const attributes={};
     if(g('tamanho').value.trim()) attributes.tamanho=g('tamanho').value.trim();
     if(g('cor').value.trim()) attributes.cor=g('cor').value.trim();
-    const v={ sku:g('sku').value.trim(), label:g('label').value.trim(), attributes,
+    const v={ sku:g('sku').value.trim(), label:g('label').value.trim(), label_en:g('label_en').value.trim()||null, attributes,
       price_override:g('price_override').value===''?null:Number(g('price_override').value),
       stock:g('stock').value===''?null:Number(g('stock').value),
       is_active:g('is_active').checked, sort:i };
@@ -1122,6 +1390,7 @@ function openProductModal(id=null) {
   set('pm-name',p?.name); set('pm-price-real',p?.priceReal); set('pm-discount',p?.discountReal);
   set('pm-stock',p?.stock); set('pm-category',p?.category); set('pm-rarity',p?.rarity);
   set('pm-image',p?.imageUrl); set('pm-description',p?.description); set('pm-details',p?.detailsUrl);
+  set('pm-name-en',p?.name_en); set('pm-description-en',p?.description_en);
   set('pm-marketplace',p?.marketplace_url); set('pm-file-key',p?.digitalFileKey);
   set('pm-weight',p?.weight_g); set('pm-length',p?.length_cm); set('pm-width',p?.width_cm); set('pm-height',p?.height_cm);
   S.editProductType=p?.type||null;
@@ -1142,6 +1411,8 @@ async function saveProduct() {
   const fisico=$('pm-fulfillment').value==='physical';
   const payload={
     name:val('pm-name'),
+    name_en:val('pm-name-en')||null,
+    description_en:val('pm-description-en')||null,
     type:tipoParaSalvar,
     fulfillment:$('pm-fulfillment').value,
     priceReal:numOuNulo('pm-price-real')||0,
