@@ -1,8 +1,8 @@
 # Mapa de navegação — NoHeroes
 
-Gerado por `tools/teste-navegacao.py` contra `http://localhost:4173` em 375 e 1280 px, PT e EN. Destino interno: aberto vindo de outra página; âncora da própria página: também clicada. "Visível" = alvo dentro da tela e não coberto por header ou barra fixa.
+Gerado por `tools/teste-navegacao.py` contra `https://www.noheroes.com.br` em 375 e 1280 px, PT e EN. Destino interno: aberto vindo de outra página; âncora da própria página: também clicada. "Visível" = alvo dentro da tela e não coberto por header ou barra fixa.
 
-**Resultado:** 331 links, 81 botões, 284 aberturas de destino, **6 falha(s)**.
+**Resultado:** 315 links, 65 botões, 268 aberturas de destino, **12 falha(s)**.
 
 ## (header, menu e rodapé — iguais em todas as páginas)
 
@@ -22,7 +22,7 @@ Gerado por `tools/teste-navegacao.py` contra `http://localhost:4173` em 375 e 12
 | menu | Tatuagem AGENDA ABERTA | `/#tatuagem` | abre / e mostra #tatuagem (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | menu | Anjo Devorador WEBNOVEL | `/#obra` | abre / e mostra #obra (ou o modal) abaixo do header | ✓ em 4 combinações + clique na própria página — visível (top 84) |
 | menu | Loja E-BOOKS E LIVROS | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
-| menu | Serviços SITES E ARTE | `/#servicos` | abre / e mostra #servicos (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 245) |
+| menu | Serviços SITES E ARTE | `/#servicos` | abre / e mostra #servicos (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 226) |
 | menu | Sobre O ESTÚDIO | `/sobre` | abre /sobre | ✓ em 2 combinações — abre (200) |
 | menu | Portfólio TRABALHOS | `/portfolio` | abre /portfolio | ✓ em 2 combinações — abre (200) |
 | menu | Conta PEDIDOS E PERFIL | `/login` | abre /login | ✓ em 2 combinações — abre (200) |
@@ -31,10 +31,10 @@ Gerado por `tools/teste-navegacao.py` contra `http://localhost:4173` em 375 e 12
 | rodapé | NoHeroes | `/` | abre / | ✓ em 4 combinações — abre (200) |
 | rodapé | WhatsApp (65) 99324-0270 | `https://wa.me/5565993240270?text=Ol%C3%A1%20Raul!%20Vim%20pelo%20site%20e%20quero%20conversar.` | abre o WhatsApp (externo) | externo (não aberto) |
 | rodapé | eco.noheroes@gmail.com | `mailto:eco.noheroes@gmail.com` | abre o e-mail | externo (não aberto) |
-| rodapé | Tatuagem | `/#tatuagem` | abre / e mostra #tatuagem (ou o modal) abaixo do header | ✗ 375pt clique: ✗ clique falhou: Locator.click: Timeout 4000ms exceeded. |
-| rodapé | Anjo Devorador | `/#obra` | abre / e mostra #obra (ou o modal) abaixo do header | ✗ 375en clique: ✗ clique falhou: Locator.click: Timeout 4000ms exceeded.; 375pt clique: ✗ clique falhou: Locator.click: Timeout 4000ms exceeded. |
+| rodapé | Tatuagem | `/#tatuagem` | abre / e mostra #tatuagem (ou o modal) abaixo do header | ✗ 1280pt clique: ✗ coberto pelo header (top 43); 375pt clique: ✗ alvo fora da tela (top -89) |
+| rodapé | Anjo Devorador | `/#obra` | abre / e mostra #obra (ou o modal) abaixo do header | ✓ em 4 combinações + clique na própria página — visível (top 74) |
 | rodapé | Loja | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
-| rodapé | Serviços | `/#servicos` | abre / e mostra #servicos (ou o modal) abaixo do header | ✗ 375pt clique: ✗ clique falhou: Locator.click: Timeout 4000ms exceeded. |
+| rodapé | Serviços | `/#servicos` | abre / e mostra #servicos (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | rodapé | Sobre | `/sobre` | abre /sobre | ✓ em 2 combinações — abre (200) |
 | rodapé | Portfólio | `/portfolio` | abre /portfolio | ✓ em 2 combinações — abre (200) |
 | rodapé | Suporte | `/suporte` | abre /suporte | ✓ em 2 combinações — abre (200) |
@@ -58,16 +58,16 @@ Gerado por `tools/teste-navegacao.py` contra `http://localhost:4173` em 375 e 12
 | menu | Home START | `/` | abre / | ✓ em 2 combinações — abre (200) |
 | menu | Tattoo BOOKING OPEN | `/#tatuagem` | abre / e mostra #tatuagem (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | menu | Store E-BOOKS & BOOKS | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
-| menu | Services WEBSITES & ART | `/#servicos` | abre / e mostra #servicos (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 267) |
+| menu | Services WEBSITES & ART | `/#servicos` | abre / e mostra #servicos (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 212) |
 | menu | About THE STUDIO | `/sobre` | abre /sobre | ✓ em 2 combinações — abre (200) |
 | menu | Portfolio WORKS | `/portfolio` | abre /portfolio | ✓ em 2 combinações — abre (200) |
 | menu | Account ORDERS & PROFILE | `/login` | abre /login | ✓ em 2 combinações — abre (200) |
 | menu | Support HELP | `/suporte` | abre /suporte | ✓ em 2 combinações — abre (200) |
 | menu | Book a tattoo | `https://wa.me/5565993240270?text=Hi%20Raul!%20I'd%20like%20to%20book%20a%20tattoo.` | abre o WhatsApp (externo) | externo (não aberto) |
 | rodapé | WhatsApp (65) 99324-0270 | `https://wa.me/5565993240270?text=Hi%20Raul!%20I%20found%20you%20through%20the%20website%20and%20would%20like%20to%20talk.` | abre o WhatsApp (externo) | externo (não aberto) |
-| rodapé | Tattoo | `/#tatuagem` | abre / e mostra #tatuagem (ou o modal) abaixo do header | ✗ 375en clique: ✗ clique falhou: Locator.click: Timeout 4000ms exceeded. |
+| rodapé | Tattoo | `/#tatuagem` | abre / e mostra #tatuagem (ou o modal) abaixo do header | ✗ 1280en clique: ✗ coberto pelo header (top 46); 375en clique: ✗ alvo fora da tela (top -95) |
 | rodapé | Store | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
-| rodapé | Services | `/#servicos` | abre / e mostra #servicos (ou o modal) abaixo do header | ✗ 375en clique: ✗ clique falhou: Locator.click: Timeout 4000ms exceeded. |
+| rodapé | Services | `/#servicos` | abre / e mostra #servicos (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | rodapé | About | `/sobre` | abre /sobre | ✓ em 2 combinações — abre (200) |
 | rodapé | Portfolio | `/portfolio` | abre /portfolio | ✓ em 2 combinações — abre (200) |
 | rodapé | Support | `/suporte` | abre /suporte | ✓ em 2 combinações — abre (200) |
@@ -93,9 +93,8 @@ Gerado por `tools/teste-navegacao.py` contra `http://localhost:4173` em 375 e 12
 | página | Comprar o livro | `/acda#comprar` | abre /acda e mostra #comprar (ou o modal) abaixo do header | ✓ em 2 combinações — visível (top 128) |
 | página | Conhecer a trilogia | `/ebooks` | abre /ebooks | ✓ em 2 combinações — abre (200) |
 | página | Ver a loja | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
-| página | Digital Ebook Legado R$ 19,90 | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
-| página | Físico Camisa NoHeroes a partir de R$ 79,90 | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
-| página | Físico Livro Impresso ACDA R$ 59,90 | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
+| página | Digital Tudo está Conectado R$ 9,99 | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
+| página | Digital No Heroes As Cinzas Do Amanhã (PDF) R$ 14,97 | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
 | página | Pedir orçamento | `https://wa.me/5565993240270?text=Ol%C3%A1%20Raul!%20Quero%20um%20site%20como%20os%20do%20seu%20portf%C3%B3lio.` | abre o WhatsApp (externo) | externo (não aberto) |
 | página | Ver trabalhos | `/portfolio#sites` | abre /portfolio e mostra #sites (ou o modal) abaixo do header | ✓ em 2 combinações — visível (top 132) |
 | página | Pedir orçamento | `https://wa.me/5565993240270?text=Ol%C3%A1%20Raul!%20Quero%20encomendar%20uma%20arte%2Flogo.` | abre o WhatsApp (externo) | externo (não aberto) |
@@ -111,9 +110,8 @@ Gerado por `tools/teste-navegacao.py` contra `http://localhost:4173` em 375 e 12
 | página | Buy the book | `/acda#comprar` | abre /acda e mostra #comprar (ou o modal) abaixo do header | ✓ em 2 combinações — visível (top 128) |
 | página | About the trilogy | `/ebooks` | abre /ebooks | ✓ em 2 combinações — abre (200) |
 | página | Visit the store | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
-| página | Digital Ebook Legado R$19.90 | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
-| página | Physical Camisa NoHeroes from R$79.90 | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
-| página | Physical Livro Impresso ACDA R$59.90 | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
+| página | Digital Tudo está Conectado R$9.99 | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
+| página | Digital No Heroes As Cinzas Do Amanhã (PDF) R$14.97 | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
 | página | Ask for a quote | `https://wa.me/5565993240270?text=Hi%20Raul!%20I'd%20like%20a%20website%20like%20the%20ones%20in%20your%20portfolio.` | abre o WhatsApp (externo) | externo (não aberto) |
 | página | See the work | `/portfolio#sites` | abre /portfolio e mostra #sites (ou o modal) abaixo do header | ✓ em 2 combinações — visível (top 132) |
 | página | Ask for a quote | `https://wa.me/5565993240270?text=Hi%20Raul!%20I'd%20like%20to%20commission%20an%20artwork%2Flogo.` | abre o WhatsApp (externo) | externo (não aberto) |
@@ -155,25 +153,23 @@ Gerado por `tools/teste-navegacao.py` contra `http://localhost:4173` em 375 e 12
 | onde | texto | destino | esperado | real |
 | --- | --- | --- | --- | --- |
 | página | Ver regras | `/termos#arrependimento` | abre /termos e mostra #arrependimento (ou o modal) abaixo do header | ✓ em 2 combinações — visível (top 84) |
-| página | Comprar no Mercado Livre | `https://www.mercadolivre.com.br/` | abre site externo | externo (não aberto) |
 | página | See the rules | `/termos#arrependimento` | abre /termos e mostra #arrependimento (ou o modal) abaixo do header | ✓ em 2 combinações — visível (top 84) |
-| página | Buy on Mercado Livre | `https://www.mercadolivre.com.br/` | abre site externo | externo (não aberto) |
 
 ## /acda
 
 | onde | texto | destino | esperado | real |
 | --- | --- | --- | --- | --- |
 | página | Comprar | `#comprar` | abre /acda e mostra #comprar (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 128) |
-| página | Personagens | `#personagens` | abre /acda e mostra #personagens (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 128) |
-| página | A Saga | `#atos` | abre /acda e mostra #atos (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 190) |
+| página | Personagens | `#personagens` | abre /acda e mostra #personagens (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 129) |
+| página | A Saga | `#atos` | abre /acda e mostra #atos (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 180) |
 | página | O Universo | `#universo` | abre /acda e mostra #universo (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 238) |
 | página | A Obra | `#mundo` | abre /acda e mostra #mundo (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 527) |
 | página | PDF — R$ 14,97 | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
 | página | Uiclap FÍSICO | `https://loja.uiclap.com/titulo/ua145735` | abre site externo | externo (não aberto) |
 | página | Buy | `#comprar` | abre /acda e mostra #comprar (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 128) |
-| página | Characters | `#personagens` | abre /acda e mostra #personagens (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 130) |
-| página | The saga | `#atos` | abre /acda e mostra #atos (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 193) |
-| página | The universe | `#universo` | abre /acda e mostra #universo (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 224) |
+| página | Characters | `#personagens` | abre /acda e mostra #personagens (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 129) |
+| página | The saga | `#atos` | abre /acda e mostra #atos (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 182) |
+| página | The universe | `#universo` | abre /acda e mostra #universo (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 238) |
 | página | The work | `#mundo` | abre /acda e mostra #mundo (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 527) |
 | página | PDF — R$14.97 | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
 | página | Uiclap PRINT | `https://loja.uiclap.com/titulo/ua145735` | abre site externo | externo (não aberto) |
@@ -182,10 +178,10 @@ Gerado por `tools/teste-navegacao.py` contra `http://localhost:4173` em 375 e 12
 
 | onde | texto | destino | esperado | real |
 | --- | --- | --- | --- | --- |
-| página | Ver na Loja — R$ 79,90 | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
+| página | Ver na Loja — R$ 9,99 | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
 | página | Ver sumário | `#` | abre /ebooks | ✓ em 2 combinações — abre (200) |
 | página | Ver loja | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
-| página | See in the store — R$79.90 | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
+| página | See in the store — R$9.99 | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
 | página | See contents | `#` | abre /ebooks | ✓ em 2 combinações — abre (200) |
 | página | See store | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
 
@@ -196,8 +192,8 @@ Gerado por `tools/teste-navegacao.py` contra `http://localhost:4173` em 375 e 12
 | página | Tatuagem | `#tatuagem` | abre /portfolio e mostra #tatuagem (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 132) |
 | página | Escrita | `#escrita` | abre /portfolio e mostra #escrita (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 132) |
 | página | Arte | `#arte` | abre /portfolio e mostra #arte (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 133) |
-| página | Sites | `#sites` | abre /portfolio e mostra #sites (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 169) |
-| página | Sobre | `#sobre` | abre /portfolio e mostra #sobre (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 218) |
+| página | Sites | `#sites` | abre /portfolio e mostra #sites (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 161) |
+| página | Sobre | `#sobre` | abre /portfolio e mostra #sobre (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 206) |
 | página | Contato | `#formulario` | abre /portfolio e mostra #formulario (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 454) |
 | página | Chamar no WhatsApp | `https://wa.me/5565993240270?text=Ol%C3%A1%20Raul!%20Vim%20pelo%20seu%20portf%C3%B3lio%20e%20quero%20conversar.` | abre o WhatsApp (externo) | externo (não aberto) |
 | página | Agendar no WhatsApp | `https://wa.me/5565993240270?text=Ol%C3%A1%20Raul!%20Quero%20agendar%20uma%20tatuagem.` | abre o WhatsApp (externo) | externo (não aberto) |
@@ -214,10 +210,10 @@ Gerado por `tools/teste-navegacao.py` contra `http://localhost:4173` em 375 e 12
 | página | ? | `/suporte` | abre /suporte | ✓ em 4 combinações — abre (200) |
 | página | Tattoo | `#tatuagem` | abre /portfolio e mostra #tatuagem (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 132) |
 | página | Writing | `#escrita` | abre /portfolio e mostra #escrita (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 132) |
-| página | Art | `#arte` | abre /portfolio e mostra #arte (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 133) |
-| página | Websites | `#sites` | abre /portfolio e mostra #sites (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 165) |
-| página | About | `#sobre` | abre /portfolio e mostra #sobre (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 220) |
-| página | Contact | `#formulario` | abre /portfolio e mostra #formulario (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 461) |
+| página | Art | `#arte` | abre /portfolio e mostra #arte (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 132) |
+| página | Websites | `#sites` | abre /portfolio e mostra #sites (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 158) |
+| página | About | `#sobre` | abre /portfolio e mostra #sobre (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 208) |
+| página | Contact | `#formulario` | abre /portfolio e mostra #formulario (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 407) |
 | página | Message on WhatsApp | `https://wa.me/5565993240270?text=Hi%20Raul!%20I%20came%20from%20your%20portfolio%20and%20I%20would%20like%20to%20talk.` | abre o WhatsApp (externo) | externo (não aberto) |
 | página | Book on WhatsApp | `https://wa.me/5565993240270?text=Hi%20Raul!%20I%20would%20like%20to%20book%20a%20tattoo.` | abre o WhatsApp (externo) | externo (não aberto) |
 | página | Discover the book | `/acda` | abre /acda | ✓ em 2 combinações — abre (200) |
@@ -271,12 +267,12 @@ Gerado por `tools/teste-navegacao.py` contra `http://localhost:4173` em 375 e 12
 | página | Tatuagem | `#g-tattoo` | abre /suporte e mostra #g-tattoo (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | página | Conta | `#g-conta` | abre /suporte e mostra #g-conta (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | página | Abrir ticket | `#abrir` | abre /suporte e mostra #abrir (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
-| página | (ícone) | `/profile#compras` | abre /profile e mostra #compras (ou o modal) abaixo do header | ✓ em 4 combinações — aba aberta |
+| página | (ícone) | `/profile#compras` | abre /profile e mostra #compras (ou o modal) abaixo do header | ✗ 1280en: ✗ âncora #compras não existe; 1280pt: ✗ âncora #compras não existe; 375en: ✗ âncora #compras não existe; 375pt: ✗ âncora #compras não existe |
 | página | (ícone) | `/inventario` | abre /inventario | ✓ em 4 combinações — abre (200) |
 | página | (ícone) | `https://wa.me/5565993240270?text=Ol%C3%A1%20Raul!%20Quero%20agendar%20uma%20tatuagem.` | abre o WhatsApp (externo) | externo (não aberto) |
 | página | (ícone) | `/forgot` | abre /forgot | ✓ em 4 combinações — abre (200) |
 | página | (ícone) | `/reenvio` | abre /reenvio | ✓ em 4 combinações — abre (200) |
-| página | (ícone) | `/profile#conta` | abre /profile e mostra #conta (ou o modal) abaixo do header | ✓ em 4 combinações — aba aberta |
+| página | (ícone) | `/profile#conta` | abre /profile e mostra #conta (ou o modal) abaixo do header | ✗ 1280en: ✗ âncora #conta não existe; 1280pt: ✗ âncora #conta não existe; 375en: ✗ âncora #conta não existe; 375pt: ✗ âncora #conta não existe |
 | página | (ícone) | `/privacidade` | abre /privacidade | ✓ em 4 combinações — abre (200) |
 | página | Termos de uso | `/termos` | abre /termos | ✓ em 2 combinações — abre (200) |
 | página | Privacidade | `/privacidade` | abre /privacidade | ✓ em 2 combinações — abre (200) |
@@ -303,7 +299,7 @@ Gerado por `tools/teste-navegacao.py` contra `http://localhost:4173` em 375 e 12
 | página | 8. Produtos digitais | `#digitais` | abre /termos e mostra #digitais (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 95) |
 | página | 9. Tatuagem e serviços | `#tatuagem` | abre /termos e mostra #tatuagem (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 108) |
 | página | 10. Conteúdo e direitos autorais | `#conteudo-site` | abre /termos e mostra #conteudo-site (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 120) |
-| página | 11. Suporte e contato | `#suporte` | abre /termos e mostra #suporte (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 129) |
+| página | 11. Suporte e contato | `#suporte` | abre /termos e mostra #suporte (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 139) |
 | página | 12. Disposições gerais | `#gerais` | abre /termos e mostra #gerais (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 153) |
 | página | Política de privacidade | `/privacidade` | abre /privacidade | ✓ em 2 combinações — abre (200) |
 | página | suporte | `/suporte#abrir` | abre /suporte e mostra #abrir (ou o modal) abaixo do header | ✓ em 2 combinações — visível (top 84) |
@@ -316,9 +312,9 @@ Gerado por `tools/teste-navegacao.py` contra `http://localhost:4173` em 375 e 12
 | página | 6. Right of withdrawal | `#arrependimento` | abre /termos e mostra #arrependimento (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | página | 7. Exchanges and defects | `#trocas` | abre /termos e mostra #trocas (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 85) |
 | página | 8. Digital products | `#digitais` | abre /termos e mostra #digitais (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 93) |
-| página | 9. Tattoos and services | `#tatuagem` | abre /termos e mostra #tatuagem (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 104) |
+| página | 9. Tattoos and services | `#tatuagem` | abre /termos e mostra #tatuagem (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 110) |
 | página | 10. Content and copyright | `#conteudo-site` | abre /termos e mostra #conteudo-site (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 115) |
-| página | 11. Support and contact | `#suporte` | abre /termos e mostra #suporte (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 122) |
+| página | 11. Support and contact | `#suporte` | abre /termos e mostra #suporte (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 130) |
 | página | 12. General provisions | `#gerais` | abre /termos e mostra #gerais (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 144) |
 | página | Privacy policy | `/privacidade` | abre /privacidade | ✓ em 2 combinações — abre (200) |
 | página | support | `/suporte#abrir` | abre /suporte e mostra #abrir (ou o modal) abaixo do header | ✓ em 2 combinações — visível (top 84) |
@@ -332,11 +328,11 @@ Gerado por `tools/teste-navegacao.py` contra `http://localhost:4173` em 375 e 12
 | página | 2. Quais dados coletamos | `#dados` | abre /privacidade e mostra #dados (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | página | 3. Para que usamos | `#finalidades` | abre /privacidade e mostra #finalidades (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | página | 4. Com quem compartilhamos | `#compartilhamento` | abre /privacidade e mostra #compartilhamento (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
-| página | 5. Armazenamento no navegador e estatísticas | `#navegador` | abre /privacidade e mostra #navegador (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 85) |
+| página | 5. Armazenamento no navegador e estatísticas | `#navegador` | abre /privacidade e mostra #navegador (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | página | 6. Por quanto tempo guardamos | `#retencao` | abre /privacidade e mostra #retencao (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 90) |
 | página | 7. Seus direitos | `#direitos` | abre /privacidade e mostra #direitos (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 103) |
 | página | 8. Segurança | `#seguranca` | abre /privacidade e mostra #seguranca (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 126) |
-| página | 9. Idade mínima | `#menores` | abre /privacidade e mostra #menores (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 143) |
+| página | 9. Idade mínima | `#menores` | abre /privacidade e mostra #menores (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 142) |
 | página | 10. Mudanças nesta política | `#mudancas` | abre /privacidade e mostra #mudancas (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 155) |
 | página | suporte | `/suporte#abrir` | abre /suporte e mostra #abrir (ou o modal) abaixo do header | ✓ em 2 combinações — visível (top 84) |
 | página | perfil | `/profile` | abre /profile | ✓ em 2 combinações — abre (200) |
@@ -346,10 +342,10 @@ Gerado por `tools/teste-navegacao.py` contra `http://localhost:4173` em 375 e 12
 | página | 3. What we use it for | `#finalidades` | abre /privacidade e mostra #finalidades (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | página | 4. Who we share it with | `#compartilhamento` | abre /privacidade e mostra #compartilhamento (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | página | 5. Browser storage and statistics | `#navegador` | abre /privacidade e mostra #navegador (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
-| página | 6. How long we keep it | `#retencao` | abre /privacidade e mostra #retencao (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 90) |
+| página | 6. How long we keep it | `#retencao` | abre /privacidade e mostra #retencao (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 87) |
 | página | 7. Your rights | `#direitos` | abre /privacidade e mostra #direitos (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 97) |
-| página | 8. Security | `#seguranca` | abre /privacidade e mostra #seguranca (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 115) |
-| página | 9. Minimum age | `#menores` | abre /privacidade e mostra #menores (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 138) |
+| página | 8. Security | `#seguranca` | abre /privacidade e mostra #seguranca (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 109) |
+| página | 9. Minimum age | `#menores` | abre /privacidade e mostra #menores (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 128) |
 | página | 10. Changes to this policy | `#mudancas` | abre /privacidade e mostra #mudancas (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 139) |
 | página | support | `/suporte#abrir` | abre /suporte e mostra #abrir (ou o modal) abaixo do header | ✓ em 2 combinações — visível (top 84) |
 | página | profile | `/profile` | abre /profile | ✓ em 2 combinações — abre (200) |
@@ -418,49 +414,18 @@ Gerado por `tools/teste-navegacao.py` contra `http://localhost:4173` em 375 e 12
 | página | Store | `/store.html` | abre /store.html | ✓ em 2 combinações — abre (200) |
 | página | Go to the home page | `/` | abre / | ✓ em 2 combinações — abre (200) |
 
-## /profile
-
-| onde | texto | destino | esperado | real |
-| --- | --- | --- | --- | --- |
-| página | Biblioteca | `/inventario` | abre /inventario | ✓ em 2 combinações — abre (200) |
-| página | Ler os Termos e a Política de Privacidade | `/privacidade` | abre /privacidade | ✓ em 2 combinações — abre (200) |
-| página | Library | `/inventario` | abre /inventario | ✓ em 2 combinações — abre (200) |
-| página | Read the Terms and Privacy Policy | `/privacidade` | abre /privacidade | ✓ em 2 combinações — abre (200) |
-
-## /inventario
-
-| onde | texto | destino | esperado | real |
-| --- | --- | --- | --- | --- |
-| página | Ver minhas compras | `/profile#compras` | abre /profile e mostra #compras (ou o modal) abaixo do header | ✓ em 2 combinações — aba aberta |
-| página | Ir para a loja | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
-| página | Acompanhar entrega | `/profile#compras` | abre /profile e mostra #compras (ou o modal) abaixo do header | ✓ em 2 combinações — aba aberta |
-| página | See my purchases | `/profile#compras` | abre /profile e mostra #compras (ou o modal) abaixo do header | ✓ em 2 combinações — aba aberta |
-| página | Go to the store | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
-| página | Track delivery | `/profile#compras` | abre /profile e mostra #compras (ou o modal) abaixo do header | ✓ em 2 combinações — aba aberta |
-
-## /checkout
-
-| onde | texto | destino | esperado | real |
-| --- | --- | --- | --- | --- |
-| página | Ir para a loja | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
-| página | Go to the store | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
-
 ## Botões (ação)
 
 | página | botão | ação |
 | --- | --- | --- |
 | / | Assinar | `data-i18n=idx.news.cta` |
 | /store | Todas | `data-cat=todas` |
-| /store | Camisas | `data-cat=Camisas` |
-| /store | E-books | `data-cat=Ebooks` |
-| /store | Livros | `data-cat=Livros` |
+| /store | Ebook | `data-cat=Ebook` |
 | /store | Carrinho 0 | `#btnCart` |
-| /store | Ver detalhes de Camisa NoHeroes | `data-abrir=2` |
-| /store | Escolher opção | `data-abrir=2` |
-| /store | Ver detalhes de Ebook Legado | `data-abrir=1` |
-| /store | Adicionar | `data-add=1` |
-| /store | Ver detalhes de Livro Impresso ACDA | `data-abrir=3` |
-| /store | Adicionar | `data-add=3` |
+| /store | Ver detalhes de Tudo está Conectado | `data-abrir=2` |
+| /store | Adicionar | `data-add=2` |
+| /store | Ver detalhes de No Heroes As Cinzas Do Amanhã (PDF) | `data-abrir=7` |
+| /store | Adicionar | `data-add=7` |
 | /acda | Sumário | `switchTab(this,'tab-sumario')` |
 | /acda | Para quem é | `switchTab(this,'tab-paraquem')` |
 | /acda | Formatos & Entrega | `switchTab(this,'tab-formatos')` |
@@ -515,18 +480,6 @@ Gerado por `tools/teste-navegacao.py` contra `http://localhost:4173` em 375 e 12
 | /suporte | Enviar ticket | `#tEnviar` |
 | /login | Mostrar | `#togglePass` |
 | /login | Entrar | `#submitBtn` |
-| /login | Continuar com o Google | `?` |
 | /register | Criar conta | `#submitBtn` |
 | /forgot | Enviar link | `#reqBtn` |
 | /reenvio | Reenviar e-mail | `#submitBtn` |
-| /profile | Sair | `#btnSair` |
-| /profile | Compras | `#aba-compras` |
-| /profile | Notificações 6 | `#aba-notificacoes` |
-| /profile | Tickets | `#aba-tickets` |
-| /profile | Endereços | `#aba-enderecos` |
-| /profile | Preferências | `#aba-preferencias` |
-| /profile | Conta | `#aba-conta` |
-| /profile | 06/10/2026, 00:35 R$ 19,90 1× Item #1 Pago | `data-pedido=ord-antigo` |
-| /profile | Sair | `#cgOut` |
-| /profile | Aceitar e continuar | `#cgOk` |
-| /inventario | Baixar | `data-baixar=0` |

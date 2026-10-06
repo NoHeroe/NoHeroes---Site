@@ -189,3 +189,7 @@ nh-header, nh-background, nh-footer { display: block; }
    Páginas com uma segunda barra fixa (acda, portfólio) aumentam --nh-ancora. */
 html { --nh-ancora: 84px; scroll-padding-top: var(--nh-ancora); }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+
+/* <nh-header> só se monta quando o noheroes-ui.js (defer) roda: a altura do espaçador fica reservada
+   desde a primeira pintura — sem isso o conteúdo da página "pulava" 64px (CLS). */
+nh-header { display: block; min-height: 64px; }

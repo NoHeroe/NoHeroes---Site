@@ -164,7 +164,20 @@
     e.preventDefault();
     history.pushState(null, '', u.hash);
     alvo.scrollIntoView({ block: 'start', behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+    realinhar(alvo);
   });
+  // Imagem que termina de carregar durante a rolagem suave muda o layout e o alvo "foge":
+  // quando a rolagem para, confere e corrige sem animação.
+  function realinhar(alvo) {
+    let feito = false;
+    const conferir = () => {
+      if (feito) return; feito = true;
+      const pad = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+      if (Math.abs(alvo.getBoundingClientRect().top - pad) > 4) alvo.scrollIntoView({ block: 'start', behavior: 'auto' });
+    };
+    if ('onscrollend' in window) window.addEventListener('scrollend', conferir, { once: true });
+    setTimeout(conferir, 1200);
+  }
 
   /* ---------- seletor de idioma (delegação global) ---------- */
   document.addEventListener('click', (e) => {

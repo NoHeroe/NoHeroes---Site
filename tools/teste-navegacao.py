@@ -158,6 +158,9 @@ with sync_playwright() as p:
                             titulo = pg2.title()
                             if st2 >= 400 or '404' in titulo:
                                 r = {'ok': False, 'como': f'página não existe ({st2})'}
+                            elif (u.path or '/') in ('/profile', '/inventario', '/checkout') and urllib.parse.urlsplit(pg2.url).path == '/login':
+                                volta = urllib.parse.parse_qs(urllib.parse.urlsplit(pg2.url).query).get('volta', [''])[0]
+                                r = {'ok': volta.startswith(u.path or '/'), 'como': f'sem sessão: pede login (volta={volta})'}
                             elif h:
                                 r = pg2.evaluate(VERIFICA, h)
                             else:
