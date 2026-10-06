@@ -38,18 +38,20 @@ Regras fixas: identidade visual atual (roxo #8f4fff/#a855f7, dourado #d9b55a/#fa
 - [x] 4.1 index (header enxuto, hero com 2 CTAs, Tatuagem, Obra, Loja, Serviços, apoio/newsletter, rodapé)
 - [ ] 4.2 sobre (selo/estúdio, bio, trajetória, press kit)
 - [x] 4.3a store (confiança, estados vazio/erro, carrinho sem login, PT/EN)
-- [ ] 4.3b checkout/agradecimento: confiança, estados vazios/erro, físicos
-- [ ] 4.4 suporte: FAQ novo, remover métricas sem fonte, manter formulário
-- [ ] 4.5 termos e privacidade reescritos (data atual) — revisão jurídica do Raul
+- [x] 4.3b checkout/agradecimento: confiança, cupom, estados vazios/erro, físicos (`23ae5c4`)
+- [x] 4.4 suporte: FAQ com busca, métricas sem fonte removidas, formulário mantido e gravando ticket (`4d328e5`)
+- [x] 4.5 termos 3.0 e privacidade reescritos em 06/10/2026, PT + EN de cortesia (`4d328e5`; backend TERMS_VERSION 3.0 `aaed255`) — ⚠️ revisão jurídica do Raul
 - [x] 4.6a login, cadastro, recuperação, reenvio, verificação (padrão novo + PT/EN)
-- [ ] 4.6b perfil e inventário
+- [x] 4.6b perfil (abas compras/notificações/tickets/endereços/preferências/conta)
+- [ ] 4.6c inventário
 
 ## Fase 5 — conta, notificações, cupons, suporte
 - [x] 5.0 Backend da Fase 5 inteiro (backend `34bf64e`): preferências, avisos do admin, cupons, tickets, senha — 115 testes OK
-- [ ] 5.1 Preferências de notificação (backend + aba no perfil) e envio pelo admin (todos/opt-in/usuário, + e-mail)
-- [ ] 5.2 Cupons (percentual/fixo, validade, limites, mínimo, produtos) no checkout e CRUD no admin
-- [ ] 5.3 Tickets no banco (protocolo, status, histórico, respostas), perfil e aba Tickets no admin
-- [ ] 5.4 Troca de senha no perfil; exclusão de conta Google confirmada pelo Google
+- [x] 5.1 Preferências de notificação (backend + aba no perfil) e envio pelo admin (todos/opt-in/usuário, + e-mail)
+- [x] 5.2a Cupons no checkout
+- [ ] 5.2b Admin: CRUD de cupons, envio de avisos, aba Tickets, campos EN do produto
+- [x] 5.3 Tickets no banco (protocolo, status, histórico, respostas), perfil e aba Tickets no admin
+- [x] 5.4 Troca de senha no perfil; exclusão de conta Google confirmada pelo Google
 
 ## Fase 6 — QA
 - [ ] Playwright 375/768/1280 × PT/EN: console, rolagem, links, varredura de PT na versão EN
@@ -64,3 +66,10 @@ Regras fixas: identidade visual atual (roxo #8f4fff/#a855f7, dourado #d9b55a/#fa
 - Título e sinopse oficiais em inglês do Anjo Devorador (index, seção Obra).
 - Cidade/endereço do estúdio e se há sinal para reservar (index, Como agendar).
 - Link do perfil de tatuagem (rodapé).
+- Responsável legal: nome empresarial ou completo, CNPJ/CPF e endereço (termos §1, privacidade §1).
+- Retirada em mãos: local e horários, se houver (termos §5).
+- Endereço e forma de devolução; quem paga o frete de volta (termos §6).
+- Regras de troca por tamanho/cor (termos §7).
+- Nota fiscal: emite ou não (suporte, FAQ).
+- Sinal/remarcação e cuidados pós-tatuagem (suporte, FAQ Tatuagem).
+- Revisão jurídica de termos.html e privacidade.html.
