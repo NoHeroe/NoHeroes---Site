@@ -25,31 +25,31 @@ Regras fixas: identidade visual atual (roxo #8f4fff/#a855f7, dourado #d9b55a/#fa
 
 ## Fase 3 — fundação técnica
 - [x] 3.1a i18n.js + comum.js + seletor no header/menu (noheroes-ui.js)
-- [ ] 3.1b migrar dicionários de linktree e portifólio
-- [ ] 3.2 Traduzir 100%: páginas públicas, conta, checkout, toasts, títulos, metas, alt
+- [x] 3.1b dicionários de linktree (`lt.*`, `296eec2`) e portifólio (`port.*`, `f5e7087`) no i18n único, visual mantido
+- [x] 3.2 Tradução: todas as páginas públicas, conta, checkout, ebooks (`e82e045`), acda com lore e modais (`44d87bd`), apoiar (`c46a508`), biblioteca — conferência final na Fase 6
 - [x] 3.3 Backend: `Users.lang`, header `X-NH-Lang`, códigos de erro, e-mails PT/EN, migração SQL (backend `77b1562`, branch redesign-2026-10)
-- [ ] 3.4 Tailwind compilado no lugar do CDN; `config.js` em todas as páginas; hero-bg.gif
+- [x] 3.4 Nenhuma página usa mais o CDN; `config.js` em todas; hero-bg.gif saiu com o novo index. Nas páginas legadas o tw.css fica no fim do head (mesma cascata do CDN)
 - [x] 3.5 Imagens WebP + tamanhos (tools/otimizar-imagens.py → assets/img) — aplicar nas páginas conforme forem migradas
 - [x] 3.6a og-image, apple-touch-icon, sitemap.xml, robots.txt, 404.html
-- [ ] 3.6b SEO: metas/OG/Twitter por página e idioma, canonical, hreflang, schema.org, sitemap, robots, favicon, 404.html
-- [ ] 3.7 Analytics sem cookies (Cloudflare Web Analytics, token `[[RAUL]]`) + banner de cookies coerente
+- [x] 3.6b SEO: canonical/hreflang/OG/Twitter/description traduzíveis em todas as públicas (tools/seo-head.py), schema.org no index e na sobre, noindex nas privadas e no admin, sitemap 22 URLs
+- [x] 3.7 cookies.js (GA/Pixel com IDs falsos + banner) removido; Cloudflare Web Analytics em config.js com token `[[RAUL]]` — sem cookies, sem banner (`cf27d0b`)
 
 ## Fase 4 — redesenho
 - [x] 4.1 index (header enxuto, hero com 2 CTAs, Tatuagem, Obra, Loja, Serviços, apoio/newsletter, rodapé)
-- [ ] 4.2 sobre (selo/estúdio, bio, trajetória, press kit)
+- [x] 4.2 sobre refeita: bio, frentes, trajetória, manifesto, press kit; sem versículos/números sem fonte/card de equipe (`7b22463`)
 - [x] 4.3a store (confiança, estados vazio/erro, carrinho sem login, PT/EN)
 - [x] 4.3b checkout/agradecimento: confiança, cupom, estados vazios/erro, físicos (`23ae5c4`)
 - [x] 4.4 suporte: FAQ com busca, métricas sem fonte removidas, formulário mantido e gravando ticket (`4d328e5`)
 - [x] 4.5 termos 3.0 e privacidade reescritos em 06/10/2026, PT + EN de cortesia (`4d328e5`; backend TERMS_VERSION 3.0 `aaed255`) — ⚠️ revisão jurídica do Raul
 - [x] 4.6a login, cadastro, recuperação, reenvio, verificação (padrão novo + PT/EN)
 - [x] 4.6b perfil (abas compras/notificações/tickets/endereços/preferências/conta)
-- [ ] 4.6c inventário
+- [x] 4.6c inventário vira "Minha biblioteca" (lista + download, PT/EN) (`d2b0d24`; backend `/inventory` com name_en `ec9febe`)
 
 ## Fase 5 — conta, notificações, cupons, suporte
 - [x] 5.0 Backend da Fase 5 inteiro (backend `34bf64e`): preferências, avisos do admin, cupons, tickets, senha — 115 testes OK
 - [x] 5.1 Preferências de notificação (backend + aba no perfil) e envio pelo admin (todos/opt-in/usuário, + e-mail)
 - [x] 5.2a Cupons no checkout
-- [ ] 5.2b Admin: CRUD de cupons, envio de avisos, aba Tickets, campos EN do produto
+- [x] 5.2b Admin: Cupons, Avisos, Tickets (com selo) e campos EN de produto/variante (`617503a`; backend label_en `16e125a`)
 - [x] 5.3 Tickets no banco (protocolo, status, histórico, respostas), perfil e aba Tickets no admin
 - [x] 5.4 Troca de senha no perfil; exclusão de conta Google confirmada pelo Google
 
@@ -73,3 +73,8 @@ Regras fixas: identidade visual atual (roxo #8f4fff/#a855f7, dourado #d9b55a/#fa
 - Nota fiscal: emite ou não (suporte, FAQ).
 - Sinal/remarcação e cuidados pós-tatuagem (suporte, FAQ Tatuagem).
 - Revisão jurídica de termos.html e privacidade.html.
+- Link do livro físico no Mercado Livre (acda, botão de compra — era `ML_URL_AQUI`).
+- Vídeo do trailer (acda — o .mp4 foi removido do repo e o link do YouTube era `seulink`).
+- Imagens dos 10 personagens (acda — os arquivos nunca foram enviados ao site; hoje há placeholder com a inicial).
+- Token do Cloudflare Web Analytics (assets/js/config.js, `CF_BEACON_TOKEN`) — ou ligar o Web Analytics no painel do Pages.
+- Nomes/descrições em inglês dos produtos (admin › Produtos; sem eles a loja EN mostra o PT).
