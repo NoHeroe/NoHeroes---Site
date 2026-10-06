@@ -333,4 +333,25 @@
     'portm.meta.descricao': 'Tattoo & Portfolio of Raul Takagi — tattoo artist, full-stack developer, digital artist, writer and founder of NoHeroes. Websites, art, writing and tattoos.',
     'portm.og.titulo': 'Tattoo & Portfolio — Raul Takagi',
   });
+  // organização nova (out/2026): barra de seções, ver mais, galeria, lightbox, atalhos do celular
+  Object.assign(D.pt, {
+    'port.cat_writing': 'Escrita', 'port.cat_art': 'Arte', 'port.cat_about': 'Sobre',
+    'port.secoes': 'Seções do portfólio', 'port.atalhos': 'Atalhos',
+    'port.ver_mais': 'Ver mais', 'port.ver_menos': 'Ver menos', 'port.ver_todas': 'Ver todas ({n})',
+    'port.ler_mais': 'Ler mais', 'port.ler_menos': 'Ler menos', 'port.topo': 'Voltar ao topo',
+    'port.bar_agendar': 'Agendar tatuagem', 'port.bar_orcamento': 'Orçamento',
+    'port.lb_titulo': 'Galeria de tatuagens', 'port.lb_fechar': 'Fechar', 'port.lb_ant': 'Anterior', 'port.lb_prox': 'Próxima',
+    'port.lb_pos': '{i} de {n}', 'port.lb_abrir': 'Ampliar tatuagem: {s}, {l}', 'port.tg_alt': 'Tatuagem — {s}',
+    'port.proj_resumo': 'IP autoral de dark fantasy: livro, loja e ecossistema completo, feitos do zero.',
+  });
+  Object.assign(D.en, {
+    'port.cat_writing': 'Writing', 'port.cat_art': 'Art', 'port.cat_about': 'About',
+    'port.secoes': 'Portfolio sections', 'port.atalhos': 'Shortcuts',
+    'port.ver_mais': 'Show more', 'port.ver_menos': 'Show less', 'port.ver_todas': 'See all ({n})',
+    'port.ler_mais': 'Read more', 'port.ler_menos': 'Read less', 'port.topo': 'Back to top',
+    'port.bar_agendar': 'Book a tattoo', 'port.bar_orcamento': 'Get a quote',
+    'port.lb_titulo': 'Tattoo gallery', 'port.lb_fechar': 'Close', 'port.lb_ant': 'Previous', 'port.lb_prox': 'Next',
+    'port.lb_pos': '{i} of {n}', 'port.lb_abrir': 'Enlarge tattoo: {s}, {l}', 'port.tg_alt': 'Tattoo — {s}',
+    'port.proj_resumo': 'Original dark fantasy IP: book, store and a complete ecosystem, built from scratch.',
+  });
 })(window.NH_DICT = window.NH_DICT || { pt: {}, en: {} });

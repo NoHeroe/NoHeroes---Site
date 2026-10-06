@@ -9,7 +9,7 @@ html[lang="en"] .lg-aviso-en { display: block; }
 @media (min-width: 640px) { .lg-indice { grid-template-columns: 1fr 1fr; column-gap: 24px; } }
 .lg-indice a { color: #cbbcf0; font-size: .92rem; text-decoration: none; padding: 4px 0; }
 .lg-indice a:hover { color: #f1eaff; text-decoration: underline; }
-.lg-secao { margin-top: 36px; scroll-margin-top: 96px; }
+.lg-secao { margin-top: 36px; }
 .lg-secao h2 { font-family: 'Cinzel Decorative', serif; font-size: 1.15rem; color: #e9dcff; margin-bottom: 12px; line-height: 1.3; }
 .lg-secao p, .lg-secao li { color: #d4cfe0; font-size: .97rem; line-height: 1.7; }
 .lg-secao p + p { margin-top: 10px; }

@@ -124,8 +124,10 @@ with sync_playwright() as p:
                             try:
                                 pg.evaluate('scrollTo(0,0)')
                                 if l['ctx'] == 'menu': pg.evaluate("window.nhDrawer && nhDrawer.open()"); pg.wait_for_timeout(750)
-                                loc = pg.locator(f'a[href="{l["href"]}"]').filter(has_text=l['texto'][:20]) if l['texto'] != '(ícone)' else pg.locator(f'a[href="{l["href"]}"]')
-                                alvo_loc = loc.locator('visible=true').first
+                                escopo = {'menu': '#drawer ', 'header': 'nh-header header ', 'rodapé': 'nh-footer '}.get(l['ctx'], '')
+                                loc = pg.locator(f'{escopo}a[href="{l["href"]}"] >> visible=true')
+                                if l['texto'] != '(ícone)': loc = loc.filter(has_text=l['texto'][:20])
+                                alvo_loc = loc.first
                                 alvo_loc.scroll_into_view_if_needed(timeout=3000)
                                 alvo_loc.click(timeout=4000)
                                 pg.wait_for_timeout(900)

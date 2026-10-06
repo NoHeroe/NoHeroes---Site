@@ -18,7 +18,7 @@ body.nh-pagina { background: var(--nh-bg); color: var(--nh-texto); font-family: 
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
 /* seções */
-.nh-secao { padding: 64px 0; scroll-margin-top: 72px; }
+.nh-secao { padding: 64px 0; }
 @media (min-width: 1024px) { .nh-secao { padding: 96px 0; } }
 .nh-secao-topo { margin-bottom: 28px; display: grid; gap: 10px; }
 .nh-secao-topo-linha { align-items: end; }
