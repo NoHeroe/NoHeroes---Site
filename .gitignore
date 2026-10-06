@@ -3,3 +3,4 @@ MAPEAMENTO_SITE_*.md
 node_modules/
 publicar-site.cmd
 sobre.zip
+tools/i18n-saida/
