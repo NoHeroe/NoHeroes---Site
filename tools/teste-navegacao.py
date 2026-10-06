@@ -122,7 +122,8 @@ with sync_playwright() as p:
                         if h and mesma and l['visivel'] and 'nh-pular' not in (l.get('classe') or ''):
                             # dentro da mesma página: clica de verdade (abre o menu antes, se o link estiver nele)
                             try:
-                                pg.evaluate('scrollTo(0,0)')
+                                # instantâneo: com scroll-behavior:smooth, um scrollTo animado atropelaria a rolagem do clique
+                                pg.evaluate("scrollTo({top: 0, behavior: 'instant'})"); pg.wait_for_timeout(150)
                                 if l['ctx'] == 'menu': pg.evaluate("window.nhDrawer && nhDrawer.open()"); pg.wait_for_timeout(750)
                                 escopo = {'menu': '#drawer ', 'header': 'nh-header header ', 'rodapé': 'nh-footer '}.get(l['ctx'], '')
                                 loc = pg.locator(f'{escopo}a[href="{l["href"]}"] >> visible=true')
@@ -130,7 +131,7 @@ with sync_playwright() as p:
                                 alvo_loc = loc.first
                                 alvo_loc.scroll_into_view_if_needed(timeout=3000)
                                 alvo_loc.click(timeout=4000)
-                                pg.wait_for_timeout(900)
+                                pg.wait_for_timeout(1500)  # rolagem suave + realinhamento no fim
                                 r = pg.evaluate(VERIFICA, h)
                                 if l['ctx'] == 'menu' and pg.evaluate("window.nhDrawer && nhDrawer.isOpen"):
                                     r = {'ok': False, 'como': 'menu não fechou'}

@@ -2,7 +2,7 @@
 
 Gerado por `tools/teste-navegacao.py` contra `https://www.noheroes.com.br` em 375 e 1280 px, PT e EN. Destino interno: aberto vindo de outra página; âncora da própria página: também clicada. "Visível" = alvo dentro da tela e não coberto por header ou barra fixa.
 
-**Resultado:** 315 links, 65 botões, 268 aberturas de destino, **12 falha(s)**.
+**Resultado:** 315 links, 65 botões, 268 aberturas de destino, **0 falha(s)**.
 
 ## (header, menu e rodapé — iguais em todas as páginas)
 
@@ -22,7 +22,7 @@ Gerado por `tools/teste-navegacao.py` contra `https://www.noheroes.com.br` em 37
 | menu | Tatuagem AGENDA ABERTA | `/#tatuagem` | abre / e mostra #tatuagem (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | menu | Anjo Devorador WEBNOVEL | `/#obra` | abre / e mostra #obra (ou o modal) abaixo do header | ✓ em 4 combinações + clique na própria página — visível (top 84) |
 | menu | Loja E-BOOKS E LIVROS | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
-| menu | Serviços SITES E ARTE | `/#servicos` | abre / e mostra #servicos (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 226) |
+| menu | Serviços SITES E ARTE | `/#servicos` | abre / e mostra #servicos (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | menu | Sobre O ESTÚDIO | `/sobre` | abre /sobre | ✓ em 2 combinações — abre (200) |
 | menu | Portfólio TRABALHOS | `/portfolio` | abre /portfolio | ✓ em 2 combinações — abre (200) |
 | menu | Conta PEDIDOS E PERFIL | `/login` | abre /login | ✓ em 2 combinações — abre (200) |
@@ -31,8 +31,8 @@ Gerado por `tools/teste-navegacao.py` contra `https://www.noheroes.com.br` em 37
 | rodapé | NoHeroes | `/` | abre / | ✓ em 4 combinações — abre (200) |
 | rodapé | WhatsApp (65) 99324-0270 | `https://wa.me/5565993240270?text=Ol%C3%A1%20Raul!%20Vim%20pelo%20site%20e%20quero%20conversar.` | abre o WhatsApp (externo) | externo (não aberto) |
 | rodapé | eco.noheroes@gmail.com | `mailto:eco.noheroes@gmail.com` | abre o e-mail | externo (não aberto) |
-| rodapé | Tatuagem | `/#tatuagem` | abre / e mostra #tatuagem (ou o modal) abaixo do header | ✗ 1280pt clique: ✗ coberto pelo header (top 43); 375pt clique: ✗ alvo fora da tela (top -89) |
-| rodapé | Anjo Devorador | `/#obra` | abre / e mostra #obra (ou o modal) abaixo do header | ✓ em 4 combinações + clique na própria página — visível (top 74) |
+| rodapé | Tatuagem | `/#tatuagem` | abre / e mostra #tatuagem (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
+| rodapé | Anjo Devorador | `/#obra` | abre / e mostra #obra (ou o modal) abaixo do header | ✓ em 4 combinações + clique na própria página — visível (top 84) |
 | rodapé | Loja | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
 | rodapé | Serviços | `/#servicos` | abre / e mostra #servicos (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | rodapé | Sobre | `/sobre` | abre /sobre | ✓ em 2 combinações — abre (200) |
@@ -58,14 +58,14 @@ Gerado por `tools/teste-navegacao.py` contra `https://www.noheroes.com.br` em 37
 | menu | Home START | `/` | abre / | ✓ em 2 combinações — abre (200) |
 | menu | Tattoo BOOKING OPEN | `/#tatuagem` | abre / e mostra #tatuagem (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | menu | Store E-BOOKS & BOOKS | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
-| menu | Services WEBSITES & ART | `/#servicos` | abre / e mostra #servicos (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 212) |
+| menu | Services WEBSITES & ART | `/#servicos` | abre / e mostra #servicos (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | menu | About THE STUDIO | `/sobre` | abre /sobre | ✓ em 2 combinações — abre (200) |
 | menu | Portfolio WORKS | `/portfolio` | abre /portfolio | ✓ em 2 combinações — abre (200) |
 | menu | Account ORDERS & PROFILE | `/login` | abre /login | ✓ em 2 combinações — abre (200) |
 | menu | Support HELP | `/suporte` | abre /suporte | ✓ em 2 combinações — abre (200) |
 | menu | Book a tattoo | `https://wa.me/5565993240270?text=Hi%20Raul!%20I'd%20like%20to%20book%20a%20tattoo.` | abre o WhatsApp (externo) | externo (não aberto) |
 | rodapé | WhatsApp (65) 99324-0270 | `https://wa.me/5565993240270?text=Hi%20Raul!%20I%20found%20you%20through%20the%20website%20and%20would%20like%20to%20talk.` | abre o WhatsApp (externo) | externo (não aberto) |
-| rodapé | Tattoo | `/#tatuagem` | abre / e mostra #tatuagem (ou o modal) abaixo do header | ✗ 1280en clique: ✗ coberto pelo header (top 46); 375en clique: ✗ alvo fora da tela (top -95) |
+| rodapé | Tattoo | `/#tatuagem` | abre / e mostra #tatuagem (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | rodapé | Store | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
 | rodapé | Services | `/#servicos` | abre / e mostra #servicos (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | rodapé | About | `/sobre` | abre /sobre | ✓ em 2 combinações — abre (200) |
@@ -160,17 +160,17 @@ Gerado por `tools/teste-navegacao.py` contra `https://www.noheroes.com.br` em 37
 | onde | texto | destino | esperado | real |
 | --- | --- | --- | --- | --- |
 | página | Comprar | `#comprar` | abre /acda e mostra #comprar (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 128) |
-| página | Personagens | `#personagens` | abre /acda e mostra #personagens (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 129) |
-| página | A Saga | `#atos` | abre /acda e mostra #atos (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 180) |
-| página | O Universo | `#universo` | abre /acda e mostra #universo (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 238) |
-| página | A Obra | `#mundo` | abre /acda e mostra #mundo (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 527) |
+| página | Personagens | `#personagens` | abre /acda e mostra #personagens (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 128) |
+| página | A Saga | `#atos` | abre /acda e mostra #atos (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 128) |
+| página | O Universo | `#universo` | abre /acda e mostra #universo (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 128) |
+| página | A Obra | `#mundo` | abre /acda e mostra #mundo (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 128) |
 | página | PDF — R$ 14,97 | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
 | página | Uiclap FÍSICO | `https://loja.uiclap.com/titulo/ua145735` | abre site externo | externo (não aberto) |
 | página | Buy | `#comprar` | abre /acda e mostra #comprar (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 128) |
-| página | Characters | `#personagens` | abre /acda e mostra #personagens (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 129) |
-| página | The saga | `#atos` | abre /acda e mostra #atos (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 182) |
-| página | The universe | `#universo` | abre /acda e mostra #universo (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 238) |
-| página | The work | `#mundo` | abre /acda e mostra #mundo (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 527) |
+| página | Characters | `#personagens` | abre /acda e mostra #personagens (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 128) |
+| página | The saga | `#atos` | abre /acda e mostra #atos (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 128) |
+| página | The universe | `#universo` | abre /acda e mostra #universo (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 128) |
+| página | The work | `#mundo` | abre /acda e mostra #mundo (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 128) |
 | página | PDF — R$14.97 | `/store` | abre /store | ✓ em 2 combinações — abre (200) |
 | página | Uiclap PRINT | `https://loja.uiclap.com/titulo/ua145735` | abre site externo | externo (não aberto) |
 
@@ -191,10 +191,10 @@ Gerado por `tools/teste-navegacao.py` contra `https://www.noheroes.com.br` em 37
 | --- | --- | --- | --- | --- |
 | página | Tatuagem | `#tatuagem` | abre /portfolio e mostra #tatuagem (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 132) |
 | página | Escrita | `#escrita` | abre /portfolio e mostra #escrita (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 132) |
-| página | Arte | `#arte` | abre /portfolio e mostra #arte (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 133) |
-| página | Sites | `#sites` | abre /portfolio e mostra #sites (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 161) |
-| página | Sobre | `#sobre` | abre /portfolio e mostra #sobre (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 206) |
-| página | Contato | `#formulario` | abre /portfolio e mostra #formulario (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 454) |
+| página | Arte | `#arte` | abre /portfolio e mostra #arte (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 132) |
+| página | Sites | `#sites` | abre /portfolio e mostra #sites (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 132) |
+| página | Sobre | `#sobre` | abre /portfolio e mostra #sobre (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 132) |
+| página | Contato | `#formulario` | abre /portfolio e mostra #formulario (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 132) |
 | página | Chamar no WhatsApp | `https://wa.me/5565993240270?text=Ol%C3%A1%20Raul!%20Vim%20pelo%20seu%20portf%C3%B3lio%20e%20quero%20conversar.` | abre o WhatsApp (externo) | externo (não aberto) |
 | página | Agendar no WhatsApp | `https://wa.me/5565993240270?text=Ol%C3%A1%20Raul!%20Quero%20agendar%20uma%20tatuagem.` | abre o WhatsApp (externo) | externo (não aberto) |
 | página | Conhecer a obra | `/acda` | abre /acda | ✓ em 2 combinações — abre (200) |
@@ -211,9 +211,9 @@ Gerado por `tools/teste-navegacao.py` contra `https://www.noheroes.com.br` em 37
 | página | Tattoo | `#tatuagem` | abre /portfolio e mostra #tatuagem (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 132) |
 | página | Writing | `#escrita` | abre /portfolio e mostra #escrita (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 132) |
 | página | Art | `#arte` | abre /portfolio e mostra #arte (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 132) |
-| página | Websites | `#sites` | abre /portfolio e mostra #sites (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 158) |
-| página | About | `#sobre` | abre /portfolio e mostra #sobre (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 208) |
-| página | Contact | `#formulario` | abre /portfolio e mostra #formulario (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 407) |
+| página | Websites | `#sites` | abre /portfolio e mostra #sites (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 132) |
+| página | About | `#sobre` | abre /portfolio e mostra #sobre (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 132) |
+| página | Contact | `#formulario` | abre /portfolio e mostra #formulario (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 132) |
 | página | Message on WhatsApp | `https://wa.me/5565993240270?text=Hi%20Raul!%20I%20came%20from%20your%20portfolio%20and%20I%20would%20like%20to%20talk.` | abre o WhatsApp (externo) | externo (não aberto) |
 | página | Book on WhatsApp | `https://wa.me/5565993240270?text=Hi%20Raul!%20I%20would%20like%20to%20book%20a%20tattoo.` | abre o WhatsApp (externo) | externo (não aberto) |
 | página | Discover the book | `/acda` | abre /acda | ✓ em 2 combinações — abre (200) |
@@ -267,12 +267,12 @@ Gerado por `tools/teste-navegacao.py` contra `https://www.noheroes.com.br` em 37
 | página | Tatuagem | `#g-tattoo` | abre /suporte e mostra #g-tattoo (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | página | Conta | `#g-conta` | abre /suporte e mostra #g-conta (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | página | Abrir ticket | `#abrir` | abre /suporte e mostra #abrir (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
-| página | (ícone) | `/profile#compras` | abre /profile e mostra #compras (ou o modal) abaixo do header | ✗ 1280en: ✗ âncora #compras não existe; 1280pt: ✗ âncora #compras não existe; 375en: ✗ âncora #compras não existe; 375pt: ✗ âncora #compras não existe |
-| página | (ícone) | `/inventario` | abre /inventario | ✓ em 4 combinações — abre (200) |
+| página | (ícone) | `/profile#compras` | abre /profile e mostra #compras (ou o modal) abaixo do header | ✓ em 4 combinações — sem sessão: pede login (volta=/profile#compras) |
+| página | (ícone) | `/inventario` | abre /inventario | ✓ em 4 combinações — sem sessão: pede login (volta=/inventario) |
 | página | (ícone) | `https://wa.me/5565993240270?text=Ol%C3%A1%20Raul!%20Quero%20agendar%20uma%20tatuagem.` | abre o WhatsApp (externo) | externo (não aberto) |
 | página | (ícone) | `/forgot` | abre /forgot | ✓ em 4 combinações — abre (200) |
 | página | (ícone) | `/reenvio` | abre /reenvio | ✓ em 4 combinações — abre (200) |
-| página | (ícone) | `/profile#conta` | abre /profile e mostra #conta (ou o modal) abaixo do header | ✗ 1280en: ✗ âncora #conta não existe; 1280pt: ✗ âncora #conta não existe; 375en: ✗ âncora #conta não existe; 375pt: ✗ âncora #conta não existe |
+| página | (ícone) | `/profile#conta` | abre /profile e mostra #conta (ou o modal) abaixo do header | ✓ em 4 combinações — sem sessão: pede login (volta=/profile#conta) |
 | página | (ícone) | `/privacidade` | abre /privacidade | ✓ em 4 combinações — abre (200) |
 | página | Termos de uso | `/termos` | abre /termos | ✓ em 2 combinações — abre (200) |
 | página | Privacidade | `/privacidade` | abre /privacidade | ✓ em 2 combinações — abre (200) |
@@ -295,12 +295,12 @@ Gerado por `tools/teste-navegacao.py` contra `https://www.noheroes.com.br` em 37
 | página | 4. Pagamento | `#pagamento` | abre /termos e mostra #pagamento (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | página | 5. Entrega | `#entrega` | abre /termos e mostra #entrega (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | página | 6. Direito de arrependimento | `#arrependimento` | abre /termos e mostra #arrependimento (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
-| página | 7. Trocas e defeitos | `#trocas` | abre /termos e mostra #trocas (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 85) |
-| página | 8. Produtos digitais | `#digitais` | abre /termos e mostra #digitais (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 95) |
-| página | 9. Tatuagem e serviços | `#tatuagem` | abre /termos e mostra #tatuagem (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 108) |
-| página | 10. Conteúdo e direitos autorais | `#conteudo-site` | abre /termos e mostra #conteudo-site (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 120) |
-| página | 11. Suporte e contato | `#suporte` | abre /termos e mostra #suporte (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 139) |
-| página | 12. Disposições gerais | `#gerais` | abre /termos e mostra #gerais (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 153) |
+| página | 7. Trocas e defeitos | `#trocas` | abre /termos e mostra #trocas (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
+| página | 8. Produtos digitais | `#digitais` | abre /termos e mostra #digitais (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
+| página | 9. Tatuagem e serviços | `#tatuagem` | abre /termos e mostra #tatuagem (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
+| página | 10. Conteúdo e direitos autorais | `#conteudo-site` | abre /termos e mostra #conteudo-site (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
+| página | 11. Suporte e contato | `#suporte` | abre /termos e mostra #suporte (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
+| página | 12. Disposições gerais | `#gerais` | abre /termos e mostra #gerais (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | página | Política de privacidade | `/privacidade` | abre /privacidade | ✓ em 2 combinações — abre (200) |
 | página | suporte | `/suporte#abrir` | abre /suporte e mostra #abrir (ou o modal) abaixo do header | ✓ em 2 combinações — visível (top 84) |
 | página | suporte | `/suporte` | abre /suporte | ✓ em 2 combinações — abre (200) |
@@ -310,12 +310,12 @@ Gerado por `tools/teste-navegacao.py` contra `https://www.noheroes.com.br` em 37
 | página | 4. Payment | `#pagamento` | abre /termos e mostra #pagamento (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | página | 5. Delivery | `#entrega` | abre /termos e mostra #entrega (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | página | 6. Right of withdrawal | `#arrependimento` | abre /termos e mostra #arrependimento (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
-| página | 7. Exchanges and defects | `#trocas` | abre /termos e mostra #trocas (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 85) |
-| página | 8. Digital products | `#digitais` | abre /termos e mostra #digitais (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 93) |
-| página | 9. Tattoos and services | `#tatuagem` | abre /termos e mostra #tatuagem (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 110) |
-| página | 10. Content and copyright | `#conteudo-site` | abre /termos e mostra #conteudo-site (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 115) |
-| página | 11. Support and contact | `#suporte` | abre /termos e mostra #suporte (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 130) |
-| página | 12. General provisions | `#gerais` | abre /termos e mostra #gerais (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 144) |
+| página | 7. Exchanges and defects | `#trocas` | abre /termos e mostra #trocas (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
+| página | 8. Digital products | `#digitais` | abre /termos e mostra #digitais (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
+| página | 9. Tattoos and services | `#tatuagem` | abre /termos e mostra #tatuagem (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
+| página | 10. Content and copyright | `#conteudo-site` | abre /termos e mostra #conteudo-site (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
+| página | 11. Support and contact | `#suporte` | abre /termos e mostra #suporte (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
+| página | 12. General provisions | `#gerais` | abre /termos e mostra #gerais (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | página | Privacy policy | `/privacidade` | abre /privacidade | ✓ em 2 combinações — abre (200) |
 | página | support | `/suporte#abrir` | abre /suporte e mostra #abrir (ou o modal) abaixo do header | ✓ em 2 combinações — visível (top 84) |
 | página | support | `/suporte` | abre /suporte | ✓ em 2 combinações — abre (200) |
@@ -329,26 +329,26 @@ Gerado por `tools/teste-navegacao.py` contra `https://www.noheroes.com.br` em 37
 | página | 3. Para que usamos | `#finalidades` | abre /privacidade e mostra #finalidades (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | página | 4. Com quem compartilhamos | `#compartilhamento` | abre /privacidade e mostra #compartilhamento (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | página | 5. Armazenamento no navegador e estatísticas | `#navegador` | abre /privacidade e mostra #navegador (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
-| página | 6. Por quanto tempo guardamos | `#retencao` | abre /privacidade e mostra #retencao (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 90) |
-| página | 7. Seus direitos | `#direitos` | abre /privacidade e mostra #direitos (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 103) |
-| página | 8. Segurança | `#seguranca` | abre /privacidade e mostra #seguranca (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 126) |
-| página | 9. Idade mínima | `#menores` | abre /privacidade e mostra #menores (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 142) |
-| página | 10. Mudanças nesta política | `#mudancas` | abre /privacidade e mostra #mudancas (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 155) |
+| página | 6. Por quanto tempo guardamos | `#retencao` | abre /privacidade e mostra #retencao (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
+| página | 7. Seus direitos | `#direitos` | abre /privacidade e mostra #direitos (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
+| página | 8. Segurança | `#seguranca` | abre /privacidade e mostra #seguranca (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
+| página | 9. Idade mínima | `#menores` | abre /privacidade e mostra #menores (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
+| página | 10. Mudanças nesta política | `#mudancas` | abre /privacidade e mostra #mudancas (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | página | suporte | `/suporte#abrir` | abre /suporte e mostra #abrir (ou o modal) abaixo do header | ✓ em 2 combinações — visível (top 84) |
-| página | perfil | `/profile` | abre /profile | ✓ em 2 combinações — abre (200) |
+| página | perfil | `/profile` | abre /profile | ✓ em 2 combinações — sem sessão: pede login (volta=/profile) |
 | página | Termos de uso | `/termos` | abre /termos | ✓ em 2 combinações — abre (200) |
 | página | 1. Who looks after your data | `#controlador` | abre /privacidade e mostra #controlador (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | página | 2. What data we collect | `#dados` | abre /privacidade e mostra #dados (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | página | 3. What we use it for | `#finalidades` | abre /privacidade e mostra #finalidades (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | página | 4. Who we share it with | `#compartilhamento` | abre /privacidade e mostra #compartilhamento (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | página | 5. Browser storage and statistics | `#navegador` | abre /privacidade e mostra #navegador (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
-| página | 6. How long we keep it | `#retencao` | abre /privacidade e mostra #retencao (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 87) |
-| página | 7. Your rights | `#direitos` | abre /privacidade e mostra #direitos (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 97) |
-| página | 8. Security | `#seguranca` | abre /privacidade e mostra #seguranca (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 109) |
-| página | 9. Minimum age | `#menores` | abre /privacidade e mostra #menores (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 128) |
-| página | 10. Changes to this policy | `#mudancas` | abre /privacidade e mostra #mudancas (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 139) |
+| página | 6. How long we keep it | `#retencao` | abre /privacidade e mostra #retencao (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
+| página | 7. Your rights | `#direitos` | abre /privacidade e mostra #direitos (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
+| página | 8. Security | `#seguranca` | abre /privacidade e mostra #seguranca (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
+| página | 9. Minimum age | `#menores` | abre /privacidade e mostra #menores (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
+| página | 10. Changes to this policy | `#mudancas` | abre /privacidade e mostra #mudancas (ou o modal) abaixo do header | ✓ em 2 combinações + clique na própria página — visível (top 84) |
 | página | support | `/suporte#abrir` | abre /suporte e mostra #abrir (ou o modal) abaixo do header | ✓ em 2 combinações — visível (top 84) |
-| página | profile | `/profile` | abre /profile | ✓ em 2 combinações — abre (200) |
+| página | profile | `/profile` | abre /profile | ✓ em 2 combinações — sem sessão: pede login (volta=/profile) |
 | página | Terms of use | `/termos` | abre /termos | ✓ em 2 combinações — abre (200) |
 
 ## /login

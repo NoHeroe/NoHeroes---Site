@@ -90,6 +90,15 @@ Boas práticas fica em 82 por um único item: o script de detecção de bots que
 - [x] "run failed": run 37365725827 do GitHub Pages (05/10 19:48); Pages desativado (API 404), nenhum run depois dos pushes de 06/10
 - Backup R2 antes do .env: `noheroes_20261006_142326.dump`; backend `6b5021d`
 
+## Navegação, linktree e portfólio (06/10/2026, noite) — site `dfe80fd`+, backend `51a3e06`
+- [x] Linktree aprovada (botões principais, ordem, header enxuto, música sob demanda, lobos 0,8 s, Instagram tattoo por config, UTM)
+- [x] Seletor de idioma único: linktree, portfólio e apoiar no `<nh-header>`; header clássico removido
+- [x] Links internos limpos (sem .html e sem acento), `/portfolio` (o endereço antigo redireciona), retorno do MP em `/agradecimento`
+- [x] Âncoras: só `scroll-padding` (saíram os `scroll-margin` que se somavam), realinhamento após a rolagem, header com altura reservada (CLS)
+- [x] Hash-modais com Voltar: portfólio (#contato, #orcamento-*, #tattoo-N), loja (#produto-ID, #carrinho); checkout com replace
+- [x] Portfólio reorganizado (barra com scrollspy, galeria 6+27 com lightbox, sanfonas, ver mais, barra fixa no celular, voltar ao topo)
+- [x] `NAVEGACAO.md`: 315 links, 65 botões, 268 destinos em 375/1280 × PT/EN — 0 falha em produção; `tools/teste-portfolio.py`: 194/194
+
 ## Pendências do Raul (`[[RAUL]]`) — o que ainda falta
 - Instagram (ou outro perfil) de tatuagem → aparece no rodapé (`NH_CONTATO.redesTattoo` em assets/js/noheroes-ui.js).
 - Vídeo do trailer da ACDA → tirar a seção do `<template id="trailer-pendente">` e voltar a pílula "Trailer".
