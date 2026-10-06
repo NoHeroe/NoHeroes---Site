@@ -1,0 +1,47 @@
+/* profile.html — minha conta */
+.pf-main { padding-top: 24px; padding-bottom: 56px; }
+.pf-topo { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; padding: 18px; border-radius: 20px;
+  border: 1px solid rgba(168,85,247,.25); background: linear-gradient(160deg, rgba(143,79,255,.1), rgba(217,181,90,.04)); }
+.pf-avatar { position: relative; width: 84px; height: 84px; border-radius: 50%; overflow: hidden; border: 2px solid rgba(217,181,90,.6); flex-shrink: 0; background: #141018; }
+.pf-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.pf-quem { flex: 1; min-width: 180px; }
+.pf-quem h1 { font-size: 1.4rem; font-weight: 700; color: #fff; line-height: 1.2; }
+.pf-quem p { font-size: 14px; color: var(--nh-texto-2); word-break: break-all; }
+.pf-acoes-topo { display: flex; gap: 8px; flex-wrap: wrap; }
+.pf-abas { margin: 18px 0 14px; display: flex; flex-wrap: wrap; gap: 6px; }
+.pf-aba { min-height: 40px; padding: 0 14px; border-radius: 99px; border: 1px solid rgba(168,85,247,.25); font-size: 14px; font-weight: 600;
+  color: var(--nh-texto-2); display: inline-flex; align-items: center; gap: 6px; }
+.pf-aba[aria-selected="true"] { background: rgba(168,85,247,.18); border-color: #a855f7; color: #fff; }
+.pf-badge { min-width: 20px; height: 20px; padding: 0 6px; border-radius: 99px; background: #facc15; color: #1a1206; font-size: 12px; display: inline-grid; place-items: center; }
+.pf-painel { border: 1px solid rgba(168,85,247,.2); background: rgba(12,10,16,.8); border-radius: 18px; padding: 16px; }
+@media (min-width: 640px) { .pf-painel { padding: 22px; } }
+.pf-painel h2 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+.pf-sub { font-size: 14px; color: var(--nh-texto-2); margin-bottom: 14px; }
+.pf-lista { display: grid; gap: 10px; }
+.pf-item { display: block; width: 100%; text-align: left; padding: 12px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,.09); background: rgba(255,255,255,.025); }
+button.pf-item:hover { border-color: rgba(196,163,255,.45); }
+.pf-item-topo { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; }
+.pf-item-tit { font-weight: 700; color: #fff; font-size: 14px; }
+.pf-item-sub { font-size: 13px; color: var(--nh-texto-2); }
+.pf-selos { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.pf-vazio { padding: 22px; text-align: center; color: var(--nh-texto-2); border: 1px dashed var(--nh-linha); border-radius: 14px; }
+.pf-bloco { margin-top: 18px; }
+.pf-bloco h3 { font-size: 12px; font-weight: 700; color: rgba(255,255,255,.55); margin-bottom: 6px; }
+.pf-linha { display: flex; justify-content: space-between; gap: 10px; font-size: 14px; padding: 4px 0; }
+.pf-voltar { margin-bottom: 12px; }
+.pf-msg { padding: 12px 14px; border-radius: 14px; font-size: 14px; white-space: pre-line; }
+.pf-msg-cliente { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); }
+.pf-msg-admin { background: rgba(143,79,255,.1); border: 1px solid rgba(143,79,255,.3); }
+.pf-msg small { display: block; font-size: 12px; color: rgba(255,255,255,.5); margin-bottom: 4px; }
+.pf-notif { display: flex; gap: 10px; align-items: flex-start; }
+.pf-notif-ponto { width: 9px; height: 9px; border-radius: 50%; margin-top: 6px; flex-shrink: 0; background: #a855f7; }
+.pf-notif.lida .pf-notif-ponto { background: transparent; border: 1px solid rgba(255,255,255,.25); }
+.pf-tabela { width: 100%; border-collapse: collapse; font-size: 14px; }
+.pf-tabela th, .pf-tabela td { padding: 10px 6px; border-bottom: 1px solid rgba(255,255,255,.07); text-align: left; vertical-align: top; }
+.pf-tabela th { font-size: 12px; color: rgba(255,255,255,.55); font-weight: 600; }
+.pf-tabela td:nth-child(n+2), .pf-tabela th:nth-child(n+2) { text-align: center; width: 70px; }
+.pf-tabela input { width: 20px; height: 20px; accent-color: #8f4fff; }
+.pf-tabela small { display: block; font-size: 12px; color: rgba(255,255,255,.5); }
+.pf-perigo { border-color: rgba(248,113,113,.35); }
+.pf-btn-perigo { background: rgba(239,68,68,.15); color: #fca5a5; border: 1px solid rgba(239,68,68,.45); }
+.pf-btn-perigo:hover { background: rgba(239,68,68,.25); }

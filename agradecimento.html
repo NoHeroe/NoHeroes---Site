@@ -1,185 +1,156 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Obrigado — NoHeroes</title>
-<meta name="robots" content="noindex">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-:root{
-  --grad:linear-gradient(135deg,#8f4fff 0%,#facc15 100%);
-  --border:rgba(255,255,255,.1);
-}
-body{background:#0a0a0a;color:#e5e5e5;font-family:Inter,system-ui,Arial,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;text-align:center;padding:2rem 16px}
-h1{font-family:"Cinzel Decorative",serif;background:var(--grad);-webkit-background-clip:text;color:transparent;font-size:1.7rem;margin-bottom:.5rem}
-.card{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:14px;padding:1.5rem;max-width:480px;width:100%}
-.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:.9rem 1.4rem;font-weight:600;margin-top:1rem;background:var(--grad);color:#000;text-decoration:none}
-.btn-sec{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:.8rem 1.4rem;font-weight:600;margin-top:.7rem;border:1px solid rgba(168,85,247,.5);color:#c084fc;text-decoration:none}
-.pedido{text-align:left;margin-top:1rem;border-top:1px solid var(--border);padding-top:1rem;font-size:14px}
-.linha{display:flex;justify-content:space-between;gap:10px;padding:3px 0}
-.pix-qr{background:#fff;border-radius:12px;padding:10px;width:220px;max-width:100%;margin:12px auto 0}
-.pix-qr svg{width:100%;height:auto;display:block}
-.codigo{font-family:monospace;font-size:12px;word-break:break-all;background:rgba(0,0,0,.45);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:left;margin-top:8px}
-#brasasCanvas{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title data-i18n="ag.meta.titulo">Obrigado | NoHeroes</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#07060a">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tw.css">
+  <link rel="stylesheet" href="assets/css/noheroes-ui.css">
+  <link rel="stylesheet" href="assets/css/paginas.css">
+  <link rel="stylesheet" href="assets/css/checkout.css">
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/i18n/comum.js"></script>
+  <script src="assets/i18n/pedidos.js"></script>
+  <script src="assets/i18n/checkout.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/carrinho.js"></script>
+  <script src="assets/js/pedidos.js"></script>
+  <script defer src="assets/js/noheroes-ui.js"></script>
 </head>
-<body>
-  <canvas id="brasasCanvas"></canvas>
+<body class="nh-pagina">
+<nh-background></nh-background>
+<nh-header></nh-header>
 
-  <div class="card relative z-10">
-    <h1 id="titulo">Processando...</h1>
-    <p id="mensagem" class="text-white/70 mb-2">Aguarde um momento.</p>
+<main id="conteudo" class="nh-auth" style="max-width:34rem;text-align:center">
+  <div class="nh-auth-card" aria-live="polite">
+    <h1 id="titulo" class="nh-h2" data-i18n="ag.processando">Processando…</h1>
+    <p id="mensagem" class="nh-lead" style="margin:0 auto" data-i18n="ag.aguarde">Aguarde um momento.</p>
     <div id="statusSelo"></div>
 
-    <!-- Pix direto aguardando: QR e copia-e-cola de novo -->
-    <div id="pixBox" class="hidden">
-      <div id="pixQr" class="pix-qr" aria-label="QR Code do Pix"></div>
-      <div id="pixCodigo" class="codigo"></div>
-      <button id="btnCopiarPix" class="btn w-full" type="button">Copiar código</button>
-      <p class="text-xs text-white/60 mt-3">Seu pedido será confirmado após a verificação do pagamento.</p>
+    <div id="pixBox" hidden>
+      <div id="pixQr" class="ck-pix-qr" role="img" aria-label="QR Code do Pix" data-i18n-attr="aria-label:ck.pix_qr"></div>
+      <div id="pixCodigo" class="ck-codigo" style="margin-top:10px;text-align:left"></div>
+      <button id="btnCopiarPix" class="nh-btn nh-btn-pri nh-btn-grande w-full" style="margin-top:10px" type="button" data-i18n="ck.copiar">Copiar código</button>
+      <p class="text-xs text-white/60 mt-3" data-i18n="ag.pix_aviso">Seu pedido será confirmado após a verificação do pagamento.</p>
     </div>
 
-    <div id="pedido" class="pedido hidden"></div>
+    <div id="pedido" class="ag-pedido" hidden></div>
 
-    <div id="acoes" class="flex flex-col">
-      <a id="btnPedidos" href="profile.html#compras" class="btn w-full hidden">Ver minhas compras</a>
-      <a href="store.html" class="btn-sec w-full">Voltar para a loja</a>
-      <a id="btnApoiar" href="apoiar.html" class="btn-sec w-full hidden">Voltar para apoiar</a>
+    <div class="grid gap-2" style="margin-top:6px">
+      <a id="btnPedidos" href="profile.html#compras" class="nh-btn nh-btn-pri nh-btn-grande w-full" hidden data-i18n="ag.ver_compras">Ver minhas compras</a>
+      <a href="store.html" class="nh-btn nh-btn-sec w-full" data-i18n="ag.voltar_loja">Voltar para a loja</a>
+      <a id="btnApoiar" href="apoiar.html" class="nh-btn nh-btn-sec w-full" hidden data-i18n="ag.voltar_apoiar">Voltar para apoiar</a>
     </div>
   </div>
+</main>
 
-<script src="assets/js/config.js"></script>
-<script src="assets/js/carrinho.js"></script>
-<script src="assets/js/pedidos.js"></script>
+<nh-footer></nh-footer>
+
+<style>
+  .ag-pedido { text-align: left; border-top: 1px solid var(--nh-linha); padding-top: 12px; font-size: 14px; }
+  .ag-linha { display: flex; justify-content: space-between; gap: 10px; padding: 3px 0; }
+</style>
 <script>
 (function () {
   'use strict';
+  const t = (k, v) => NHI18n.t(k, v);
   const qs = (s) => document.querySelector(s);
   const P = window.NHPedido;
   const params = new URLSearchParams(location.search);
   const orderId = params.get('order') || params.get('external_reference') || '';
   const token = (localStorage.getItem('NoHeroes_token') || '').trim().replace(/^Bearer\s+/i, '');
-  const titulo = qs('#titulo'), msg = qs('#mensagem');
+  let ultimo = null, modo = null;
 
-  // ── Doação (apoiar.html): mensagem de sempre, pelo status que o Mercado Pago devolve ──
+  function textos(tituloK, msgK) { qs('#titulo').textContent = t(tituloK); qs('#mensagem').textContent = t(msgK); }
+
+  // Doação (apoiar.html): mensagem pelo status que o Mercado Pago devolve na URL.
   function doacao() {
-    qs('#btnApoiar').classList.remove('hidden');
-    const st = params.get('mp_status') || params.get('collection_status') || params.get('status') || 'success';
-    if (st === 'success' || st === 'approved') {
-      titulo.textContent = '🎉 Parabéns pela coragem, aventureiro!';
-      msg.textContent = 'Seu sacrifício foi devorado pelo abismo. Ele ajudará a manter o universo vivo. Agora tu és acompanhado pelo espírito de uma divindade protetora!';
-    } else if (st === 'pending' || st === 'in_process') {
-      titulo.textContent = '⏳ Pagamento pendente';
-      msg.textContent = 'Estamos aguardando a confirmação do Mercado Pago. Você será notificado em breve.';
-    } else {
-      titulo.textContent = '❌ Pagamento não concluído';
-      msg.textContent = 'Houve uma falha no processo de pagamento. Tente novamente ou entre em contato.';
-    }
+    modo = 'doacao';
+    qs('#btnApoiar').hidden = false;
+    const s = params.get('mp_status') || params.get('collection_status') || params.get('status') || 'success';
+    if (s === 'success' || s === 'approved') textos('ag.doacao_ok_t', 'ag.doacao_ok');
+    else if (s === 'pending' || s === 'in_process') textos('ag.doacao_pend_t', 'ag.doacao_pend');
+    else textos('ag.doacao_erro_t', 'ag.doacao_erro');
   }
 
-  const TEXTOS = {
-    pending: ['⏳ Aguardando pagamento', 'Assim que o Mercado Pago confirmar, seu pedido é liberado. Esta página se atualiza sozinha.'],
-    awaiting_manual_confirmation: ['⏳ Pix em verificação', 'Se ainda não pagou, use o QR Code ou o código abaixo.'],
-    approved: ['🎉 Pedido confirmado!', 'Pagamento aprovado. Itens digitais já estão no seu inventário; os físicos entram em preparação.'],
-    needs_attention: ['Pagamento recebido', 'Recebemos o pagamento e estamos conferindo o estoque. Entraremos em contato.'],
-    rejected: ['❌ Pagamento não aprovado', 'Nada foi cobrado. Seus itens continuam no carrinho para tentar de novo.'],
-    cancelled: ['Pedido cancelado', 'Este pedido foi cancelado.'],
-    refunded: ['Pedido estornado', 'O valor foi devolvido.'],
-    charged_back: ['Pagamento contestado', 'O pagamento foi contestado junto ao meio de pagamento.'],
-  };
+  function render(o) {
+    ultimo = o; modo = 'pedido';
+    const chave = 'ag.' + o.status;
+    if (t(chave + '_t') !== chave + '_t') textos(chave + '_t', chave);
+    else { qs('#titulo').textContent = t('ck.pedido') + ' ' + o.id; qs('#mensagem').textContent = ''; }
+    qs('#statusSelo').innerHTML = P.seloPagamento(o.status) + (o.fulfillment_status !== 'na' ? ' ' + P.seloEntrega(o.fulfillment_status) : '');
+    qs('#btnPedidos').hidden = false;
+    qs('#pedido').hidden = false;
+    qs('#pedido').innerHTML =
+      `<div class="text-xs text-white/55 mb-2">${P.esc(t('ck.pedido'))} <span class="font-mono">${P.esc(o.id)}</span> · ${P.esc(P.metodo(o.payment_provider))}</div>` +
+      o.items.map((i) => `<div class="ag-linha"><span>${i.quantity}× ${P.esc(i.title || 'Item #' + i.id)}${i.variant_label ? ' <span class="text-white/55">(' + P.esc(i.variant_label) + ')</span>' : ''}</span><span>${i.unit_price != null ? P.brl(i.unit_price * i.quantity) : ''}</span></div>`).join('') +
+      (o.discount ? `<div class="ag-linha text-green-300"><span>${P.esc(t('ck.desconto'))}</span><span>−${P.brl(o.discount)}</span></div>` : '') +
+      (o.shipping_method ? `<div class="ag-linha text-white/70"><span>${P.esc(t('ck.frete'))} · ${P.esc(o.shipping_method.service)}</span><span>${o.shipping_cost ? P.brl(o.shipping_cost) : P.esc(t('ck.gratis'))}</span></div>` : '') +
+      `<div class="ag-linha font-semibold" style="color:#facc15"><span>${P.esc(t('ck.total'))}</span><span>${P.brl(o.total)}</span></div>`;
+    // O carrinho virou pedido (a não ser que o pagamento tenha sido recusado ou cancelado).
+    if (!['rejected', 'cancelled'].includes(o.status)) NHCart.limpar();
+  }
 
   async function api(path) {
-    const r = await fetch(window.API_BASE + path, { headers: { Authorization: 'Bearer ' + token } });
+    const r = await fetch(API_BASE + path, { headers: { Authorization: 'Bearer ' + token } });
     const j = await r.json().catch(() => ({}));
     if (!r.ok) throw Object.assign(new Error(j.message || 'Erro ' + r.status), { status: r.status });
     return j.data;
   }
-
-  function renderPedido(o) {
-    const t = TEXTOS[o.status] || ['Pedido ' + o.id, ''];
-    titulo.textContent = t[0];
-    msg.textContent = t[1];
-    qs('#statusSelo').innerHTML = P.seloPagamento(o.status) + (o.fulfillment_status !== 'na' ? ' ' + P.seloEntrega(o.fulfillment_status) : '');
-    qs('#btnPedidos').classList.remove('hidden');
-    qs('#pedido').classList.remove('hidden');
-    qs('#pedido').innerHTML =
-      `<div class="text-xs text-white/50 mb-2">Pedido <span class="font-mono">${P.esc(o.id)}</span> · ${P.esc(P.metodo(o.payment_provider))}</div>` +
-      o.items.map((i) => `<div class="linha"><span>${i.quantity}× ${P.esc(i.title || 'Item #' + i.id)}${i.variant_label ? ' <span class="text-white/50">(' + P.esc(i.variant_label) + ')</span>' : ''}</span><span>${i.unit_price != null ? P.brl(i.unit_price * i.quantity) : ''}</span></div>`).join('') +
-      (o.shipping_method ? `<div class="linha text-white/70"><span>Frete · ${P.esc(o.shipping_method.service)}</span><span>${o.shipping_cost ? P.brl(o.shipping_cost) : 'Grátis'}</span></div>` : '') +
-      `<div class="linha font-semibold" style="color:#facc15"><span>Total</span><span>${P.brl(o.total)}</span></div>`;
-    // Pedido andou (ou está aguardando): o carrinho já virou pedido.
-    if (!['rejected', 'cancelled'].includes(o.status)) NHCart.limpar();
-  }
-
   async function mostrarPix(id) {
     const d = await api('/orders/' + encodeURIComponent(id) + '/payment');
     if (!d || d.kind !== 'pix') return;
     qs('#pixQr').innerHTML = d.qr_svg; // SVG gerado pelo nosso servidor
     qs('#pixCodigo').textContent = d.payload;
-    qs('#pixBox').classList.remove('hidden');
+    qs('#pixBox').hidden = false;
   }
   qs('#btnCopiarPix').addEventListener('click', async () => {
     const b = qs('#btnCopiarPix');
-    try { await navigator.clipboard.writeText(qs('#pixCodigo').textContent); b.textContent = 'Código copiado ✓'; }
+    try { await navigator.clipboard.writeText(qs('#pixCodigo').textContent); b.textContent = t('ck.copiado'); }
     catch (_) {
       const r = document.createRange(); r.selectNodeContents(qs('#pixCodigo'));
-      const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = 'Código selecionado: copie';
+      const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = t('ck.selecionado');
     }
-    setTimeout(() => { b.textContent = 'Copiar código'; }, 2500);
+    setTimeout(() => { b.textContent = t('ck.copiar'); }, 2500);
   });
 
-  async function pedidoDaLoja() {
+  async function pedido() {
     if (!token) {
-      titulo.textContent = 'Pedido recebido';
-      msg.innerHTML = 'Entre na sua conta para acompanhar o pedido. <a href="login.html" class="underline text-purple-300">Entrar</a>';
+      modo = 'sem_login';
+      qs('#titulo').textContent = t('ag.recebido_t');
+      qs('#mensagem').innerHTML = `${P.esc(t('ag.entre'))} <a href="login.html?volta=${encodeURIComponent('agradecimento.html?order=' + orderId)}" class="nh-link">${P.esc(t('login.entrar'))}</a>`;
       return;
     }
     let tentativas = 0;
     async function carregar() {
       try {
         const o = await api('/orders/' + encodeURIComponent(orderId));
-        renderPedido(o);
-        if (o.status === 'awaiting_manual_confirmation' && qs('#pixBox').classList.contains('hidden')) await mostrarPix(o.id);
-        if (o.status !== 'awaiting_manual_confirmation') qs('#pixBox').classList.add('hidden');
-        // O webhook do Mercado Pago pode chegar segundos depois da volta: consulta de novo por até ~2 min.
+        render(o);
+        if (o.status === 'awaiting_manual_confirmation' && qs('#pixBox').hidden) await mostrarPix(o.id);
+        if (o.status !== 'awaiting_manual_confirmation') qs('#pixBox').hidden = true;
+        // O aviso do Mercado Pago pode chegar segundos depois da volta: consulta de novo por até ~2 min.
         if (o.status === 'pending' && ++tentativas < 24) setTimeout(carregar, 5000);
       } catch (e) {
-        titulo.textContent = 'Pedido não encontrado';
-        msg.textContent = e.status === 401 ? 'Sua sessão expirou. Entre de novo para ver o pedido.' : 'Não conseguimos carregar este pedido.';
+        modo = 'erro';
+        qs('#titulo').textContent = t('ag.nao_encontrado_t');
+        qs('#mensagem').textContent = e.status === 401 ? t('err.sessao') : t('ag.nao_encontrado');
       }
     }
     await carregar();
   }
 
-  if (!orderId || /^don_/.test(orderId)) doacao(); else pedidoDaLoja();
-
-  /* ── Fundo: partículas (brasas) ── */
-  const canvas = document.getElementById('brasasCanvas');
-  const ctx = canvas.getContext('2d');
-  const particles = []; let w, h;
-  function resizeCanvas() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
-  window.addEventListener('resize', resizeCanvas);
-  resizeCanvas();
-  class Particle {
-    constructor() { this.reset(true); }
-    reset(initial = false) {
-      this.x = Math.random() * w;
-      this.y = initial ? Math.random() * h : h + Math.random() * 100;
-      this.size = 1 + Math.random() * 2.5;
-      this.speed = 0.2 + Math.random() * 0.5;
-      this.alpha = 0.4 + Math.random() * 0.3;
-      this.drift = (Math.random() - 0.5) * 0.5;
-    }
-    update() { this.y -= this.speed; this.x += this.drift; if (this.y < -10 || this.x < -50 || this.x > w + 50) this.reset(); }
-    draw() {
-      ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`; ctx.shadowColor = '#a855f7'; ctx.shadowBlur = 12; ctx.fill();
-    }
-  }
-  for (let i = 0; i < 150; i++) particles.push(new Particle());
-  (function animate() { ctx.clearRect(0, 0, w, h); for (const p of particles) { p.update(); p.draw(); } requestAnimationFrame(animate); })();
+  document.addEventListener('nh:lang', () => {
+    if (modo === 'pedido' && ultimo) render(ultimo);
+    else if (modo === 'doacao') doacao();
+  });
+  NH_DICT.pt['login.entrar'] = 'Entrar'; NH_DICT.en['login.entrar'] = 'Sign in';
+  if (!orderId || /^don_/.test(orderId)) doacao(); else pedido();
 })();
 </script>
 </body>

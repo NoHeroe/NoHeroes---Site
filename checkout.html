@@ -1,152 +1,138 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>NoHeroes | Finalizar compra</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title data-i18n="ck.meta.titulo">Finalizar compra | NoHeroes</title>
   <meta name="robots" content="noindex">
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="theme-color" content="#07060a">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tw.css">
   <link rel="stylesheet" href="assets/css/noheroes-ui.css">
+  <link rel="stylesheet" href="assets/css/paginas.css">
+  <link rel="stylesheet" href="assets/css/checkout.css">
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/i18n/comum.js"></script>
+  <script src="assets/i18n/pedidos.js"></script>
+  <script src="assets/i18n/checkout.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/carrinho.js"></script>
+  <script src="assets/js/enderecos.js"></script>
   <script defer src="assets/js/noheroes-ui.js"></script>
-  <style>
-    html,body{min-height:100%}
-    body{font-family:'Roboto',system-ui,-apple-system,Segoe UI,sans-serif;background:#0a0a0a;color:#f4f4f4}
-    .cinzel{font-family:'Cinzel Decorative',serif}
-    .grad{background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-    .ck-card{border:1px solid rgba(168,85,247,.22);background:rgba(255,255,255,.04);border-radius:16px;padding:16px;margin-bottom:14px}
-    .ck-titulo{font-family:'Cinzel Decorative',serif;font-size:14px;color:#c4a3ff;margin:0 0 12px;display:flex;align-items:center;gap:8px}
-    .ck-num{width:22px;height:22px;border-radius:99px;background:rgba(168,85,247,.2);border:1px solid rgba(168,85,247,.5);display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-family:Roboto,sans-serif;color:#e9d5ff}
-    .ck-opcao{display:flex;gap:10px;align-items:flex-start;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:rgba(0,0,0,.25);cursor:pointer;margin-bottom:8px}
-    .ck-opcao:has(input:checked){border-color:#a855f7;background:rgba(168,85,247,.12)}
-    .ck-opcao input{margin-top:3px;accent-color:#a855f7;width:18px;height:18px;flex-shrink:0}
-    .ck-opcao .ck-sub{font-size:12px;color:rgba(255,255,255,.55)}
-    .ck-linha{display:flex;justify-content:space-between;gap:10px;font-size:14px;padding:4px 0}
-    .ck-total{font-size:18px;font-weight:700;color:#facc15}
-    .ck-input{width:100%;min-height:44px;background:rgba(0,0,0,.45);border:1px solid rgba(168,85,247,.35);border-radius:10px;padding:8px 12px;color:#f4f4f4;font-size:15px}
-    .ck-input:focus{outline:2px solid rgba(168,85,247,.6);outline-offset:1px}
-    .ck-label{display:block;font-size:12px;color:rgba(255,255,255,.6);margin:10px 0 4px}
-    .ck-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
-    .ck-span2{grid-column:1/-1}
-    .ck-btn{width:100%;min-height:48px;border-radius:12px;border:0;background:#a855f7;color:#000;font-weight:700;font-size:15px;cursor:pointer}
-    .ck-btn:disabled{background:#333;color:#777;cursor:not-allowed}
-    .ck-btn-sec{min-height:42px;padding:0 14px;border-radius:10px;border:1px solid rgba(168,85,247,.45);background:transparent;color:#c084fc;font-weight:700;cursor:pointer}
-    .ck-aviso{font-size:13px;border-radius:12px;padding:10px 12px;margin-bottom:12px}
-    .ck-aviso.erro{background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.4);color:#fecaca}
-    .ck-aviso.info{background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.3);color:#e9d5ff}
-    .ck-item{display:flex;gap:10px;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.06)}
-    .ck-item:last-child{border-bottom:0}
-    .ck-item img{width:44px;height:58px;object-fit:cover;border-radius:6px;flex-shrink:0}
-    .ck-pix-qr{background:#fff;border-radius:12px;padding:10px;width:220px;max-width:100%;margin:0 auto}
-    .ck-pix-qr svg{width:100%;height:auto;display:block}
-    .ck-codigo{font-family:monospace;font-size:12px;word-break:break-all;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:10px;color:#e5e5e5}
-    @media(min-width:900px){.ck-layout{display:grid;grid-template-columns:1fr 340px;gap:18px;align-items:start}.ck-resumo{position:sticky;top:72px}}
-  </style>
 </head>
-<body class="min-h-screen">
+<body class="nh-pagina">
 <nh-background></nh-background>
-<nh-drawer></nh-drawer>
+<nh-header></nh-header>
 
-<header style="position:fixed;top:0;left:0;right:0;z-index:60;height:56px;background:rgba(10,10,10,0.92);border-bottom:1px solid rgba(255,255,255,0.06);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:space-between;padding:0 16px;">
-  <a href="store.html" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:#c4a3ff;font-size:13px;">← Voltar à loja</a>
-  <span class="cinzel grad" style="font-size:13px;">Finalizar compra</span>
-  <button data-nh-drawer-toggle aria-label="Abrir menu" style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:#f4f4f4;cursor:pointer;">☰</button>
-</header>
-<div style="height:56px;"></div>
-
-<main style="max-width:1000px;margin:0 auto;padding:16px 16px 48px;">
-  <div id="avisos"></div>
+<main id="conteudo" class="nh-wrap ck-main">
+  <h1 class="nh-h2" data-i18n="ck.titulo">Finalizar compra</h1>
+  <div id="avisos" aria-live="polite"></div>
 
   <!-- Resultado do Pix (some o formulário) -->
-  <section id="pixResultado" class="ck-card hidden" aria-live="polite">
-    <h2 class="ck-titulo">Pague com Pix</h2>
-    <p class="text-sm text-white/70 mb-3">Pedido <span id="pixPedido" class="font-mono"></span> · <strong id="pixValor" class="text-yellow-300"></strong></p>
-    <div id="pixQr" class="ck-pix-qr" aria-label="QR Code do Pix"></div>
-    <p class="ck-label" style="margin-top:14px">Pix copia e cola</p>
+  <section id="pixResultado" class="ck-card" hidden aria-labelledby="pixTitulo">
+    <h2 class="ck-titulo" id="pixTitulo" data-i18n="ck.pix_titulo">Pague com Pix</h2>
+    <p class="text-sm text-white/70 mb-3"><span data-i18n="ck.pedido">Pedido</span> <span id="pixPedido" class="font-mono"></span> · <strong id="pixValor" class="text-yellow-300"></strong></p>
+    <div id="pixQr" class="ck-pix-qr" role="img" aria-label="QR Code do Pix" data-i18n-attr="aria-label:ck.pix_qr"></div>
+    <p class="ck-label" style="margin-top:14px" data-i18n="ck.pix_copia">Pix copia e cola</p>
     <div id="pixCodigo" class="ck-codigo"></div>
-    <button id="btnCopiarPix" class="ck-btn" style="margin-top:10px">Copiar código</button>
-    <p class="ck-aviso info" style="margin-top:12px">Seu pedido será confirmado após a verificação do pagamento. Você recebe um e-mail quando isso acontecer.</p>
-    <a id="pixVerPedido" href="profile.html" class="ck-btn-sec" style="display:flex;align-items:center;justify-content:center;text-decoration:none">Ver meus pedidos</a>
+    <button id="btnCopiarPix" class="nh-btn nh-btn-pri nh-btn-grande w-full" style="margin-top:10px" type="button" data-i18n="ck.copiar">Copiar código</button>
+    <p class="ck-aviso info" style="margin-top:12px" data-i18n="ck.pix_aviso">Seu pedido será confirmado após a verificação do pagamento. Você recebe um e-mail quando isso acontecer.</p>
+    <a id="pixVerPedido" href="profile.html#compras" class="nh-btn nh-btn-sec w-full" data-i18n="ck.ver_pedido">Ver meu pedido</a>
   </section>
 
   <div id="formCheckout" class="ck-layout">
     <div>
       <!-- 1. Endereço (só com item físico) -->
-      <section id="secEndereco" class="ck-card hidden">
-        <h2 class="ck-titulo"><span class="ck-num">1</span> Endereço de entrega</h2>
-        <div id="listaEnderecos" role="radiogroup" aria-label="Endereços salvos"></div>
-        <button id="btnNovoEndereco" class="ck-btn-sec" type="button">+ Novo endereço</button>
-        <form id="formEndereco" class="hidden" novalidate>
+      <section id="secEndereco" class="ck-card" hidden aria-labelledby="endTitulo">
+        <h2 class="ck-titulo" id="endTitulo"><span class="ck-num" aria-hidden="true">1</span> <span data-i18n="ck.endereco">Endereço de entrega</span></h2>
+        <div id="listaEnderecos" role="radiogroup" aria-labelledby="endTitulo"></div>
+        <button id="btnNovoEndereco" class="nh-btn nh-btn-sec" type="button" data-i18n="ck.novo_endereco">+ Novo endereço</button>
+        <form id="formEndereco" hidden novalidate>
           <div class="ck-grid">
-            <div><label class="ck-label" for="eCep">CEP</label><input id="eCep" class="ck-input" inputmode="numeric" autocomplete="postal-code" maxlength="9" placeholder="00000-000" required></div>
-            <div><label class="ck-label" for="eUf">UF</label><input id="eUf" class="ck-input" maxlength="2" autocomplete="address-level1" required></div>
-            <div class="ck-span2"><label class="ck-label" for="eRua">Rua</label><input id="eRua" class="ck-input" autocomplete="address-line1" required></div>
-            <div><label class="ck-label" for="eNumero">Número</label><input id="eNumero" class="ck-input" required></div>
-            <div><label class="ck-label" for="eCompl">Complemento</label><input id="eCompl" class="ck-input" autocomplete="address-line2"></div>
-            <div><label class="ck-label" for="eBairro">Bairro</label><input id="eBairro" class="ck-input" required></div>
-            <div><label class="ck-label" for="eCidade">Cidade</label><input id="eCidade" class="ck-input" autocomplete="address-level2" required></div>
-            <div class="ck-span2"><label class="ck-label" for="eNome">Destinatário</label><input id="eNome" class="ck-input" autocomplete="name" required></div>
-            <div><label class="ck-label" for="eFone">Telefone</label><input id="eFone" class="ck-input" inputmode="tel" autocomplete="tel"></div>
-            <div><label class="ck-label" for="eRotulo">Apelido</label><input id="eRotulo" class="ck-input" placeholder="Casa, Trabalho…"></div>
+            <div><label class="ck-label" for="eCep" data-i18n="end.cep">CEP</label><input id="eCep" class="nh-input" inputmode="numeric" autocomplete="postal-code" maxlength="9" placeholder="00000-000" required></div>
+            <div><label class="ck-label" for="eUf" data-i18n="end.uf">UF</label><input id="eUf" class="nh-input" maxlength="2" autocomplete="address-level1" required></div>
+            <div class="ck-span2"><label class="ck-label" for="eRua" data-i18n="end.rua">Rua</label><input id="eRua" class="nh-input" autocomplete="address-line1" required></div>
+            <div><label class="ck-label" for="eNumero" data-i18n="end.numero">Número</label><input id="eNumero" class="nh-input" required></div>
+            <div><label class="ck-label" for="eCompl" data-i18n="end.complemento">Complemento</label><input id="eCompl" class="nh-input" autocomplete="address-line2"></div>
+            <div><label class="ck-label" for="eBairro" data-i18n="end.bairro">Bairro</label><input id="eBairro" class="nh-input" required></div>
+            <div><label class="ck-label" for="eCidade" data-i18n="end.cidade">Cidade</label><input id="eCidade" class="nh-input" autocomplete="address-level2" required></div>
+            <div class="ck-span2"><label class="ck-label" for="eNome" data-i18n="end.destinatario">Destinatário</label><input id="eNome" class="nh-input" autocomplete="name" required></div>
+            <div><label class="ck-label" for="eFone" data-i18n="end.telefone">Telefone</label><input id="eFone" class="nh-input" inputmode="tel" autocomplete="tel"></div>
+            <div><label class="ck-label" for="eRotulo" data-i18n="end.apelido">Apelido</label><input id="eRotulo" class="nh-input" placeholder="Casa, Trabalho…" data-i18n-attr="placeholder:end.apelido_ph"></div>
           </div>
-          <p id="cepStatus" class="text-xs text-white/50 mt-2" aria-live="polite"></p>
+          <p id="cepStatus" class="text-xs text-white/55 mt-2" aria-live="polite"></p>
+          <p class="text-xs text-white/45 mt-1" data-i18n="end.so_brasil">Entregamos apenas no Brasil.</p>
           <div style="display:flex;gap:8px;margin-top:12px">
-            <button class="ck-btn" type="submit" style="flex:1">Salvar endereço</button>
-            <button id="btnCancelarEndereco" class="ck-btn-sec" type="button">Cancelar</button>
+            <button class="nh-btn nh-btn-pri" type="submit" style="flex:1" data-i18n="end.salvar">Salvar endereço</button>
+            <button id="btnCancelarEndereco" class="nh-btn nh-btn-sec" type="button" data-i18n="geral.cancelar">Cancelar</button>
           </div>
         </form>
       </section>
 
       <!-- 2. Frete -->
-      <section id="secFrete" class="ck-card hidden">
-        <h2 class="ck-titulo"><span class="ck-num">2</span> Forma de envio</h2>
-        <div id="listaFrete" role="radiogroup" aria-label="Opções de envio"><p class="text-sm text-white/50">Escolha um endereço para ver as opções.</p></div>
+      <section id="secFrete" class="ck-card" hidden aria-labelledby="freteTitulo">
+        <h2 class="ck-titulo" id="freteTitulo"><span class="ck-num" aria-hidden="true">2</span> <span data-i18n="ck.envio">Forma de envio</span></h2>
+        <div id="listaFrete" role="radiogroup" aria-labelledby="freteTitulo"><p class="text-sm text-white/55" data-i18n="ck.escolha_endereco">Escolha um endereço para ver as opções.</p></div>
       </section>
 
       <!-- 3. Pagamento -->
-      <section class="ck-card">
-        <h2 class="ck-titulo"><span id="numPagamento" class="ck-num">3</span> Pagamento</h2>
-        <div id="listaPagamento" role="radiogroup" aria-label="Formas de pagamento"><p class="text-sm text-white/50">Carregando…</p></div>
+      <section class="ck-card" aria-labelledby="pagTitulo">
+        <h2 class="ck-titulo" id="pagTitulo"><span id="numPagamento" class="ck-num" aria-hidden="true">3</span> <span data-i18n="ck.pagamento">Pagamento</span></h2>
+        <div id="listaPagamento" role="radiogroup" aria-labelledby="pagTitulo"><p class="text-sm text-white/55" data-i18n="geral.carregando">Carregando…</p></div>
       </section>
     </div>
 
     <!-- Resumo -->
-    <aside class="ck-card ck-resumo" aria-label="Resumo do pedido">
-      <h2 class="ck-titulo">Resumo</h2>
+    <aside class="ck-card ck-resumo" aria-labelledby="resumoTitulo">
+      <h2 class="ck-titulo" id="resumoTitulo" data-i18n="ck.resumo">Resumo</h2>
       <div id="resumoItens"></div>
-      <div style="border-top:1px solid rgba(255,255,255,.08);margin-top:8px;padding-top:8px">
-        <div class="ck-linha"><span class="text-white/70">Subtotal</span><span id="rSubtotal">—</span></div>
-        <div class="ck-linha" id="rFreteLinha"><span class="text-white/70">Frete</span><span id="rFrete">—</span></div>
-        <div class="ck-linha"><span>Total</span><span id="rTotal" class="ck-total">—</span></div>
-        <p class="text-xs text-white/40 mt-1">O valor final é confirmado pelo servidor ao criar o pedido.</p>
+      <form id="formCupom" class="ck-cupom" novalidate>
+        <label class="ck-label" for="cupom" data-i18n="ck.cupom">Cupom de desconto</label>
+        <div class="ck-cupom-linha">
+          <input id="cupom" class="nh-input" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="40">
+          <button class="nh-btn nh-btn-sec" type="submit" id="btnCupom" data-i18n="ck.aplicar">Aplicar</button>
+        </div>
+        <p id="cupomMsg" class="nh-form-msg" aria-live="polite"></p>
+      </form>
+      <div class="ck-totais">
+        <div class="ck-linha"><span class="text-white/70" data-i18n="ck.subtotal">Subtotal</span><span id="rSubtotal">—</span></div>
+        <div class="ck-linha" id="rDescontoLinha" hidden><span class="text-green-300"><span data-i18n="ck.desconto">Desconto</span> <span id="rCupom" class="font-mono text-xs"></span></span><span id="rDesconto" class="text-green-300"></span></div>
+        <div class="ck-linha" id="rFreteLinha"><span class="text-white/70" data-i18n="ck.frete">Frete</span><span id="rFrete">—</span></div>
+        <div class="ck-linha"><span data-i18n="ck.total">Total</span><span id="rTotal" class="ck-total">—</span></div>
+        <p class="text-xs text-white/45 mt-1" data-i18n="ck.valor_servidor">O valor final é confirmado pelo servidor ao criar o pedido.</p>
       </div>
-      <button id="btnConfirmar" class="ck-btn" style="margin-top:12px" disabled>Confirmar pedido</button>
+      <button id="btnConfirmar" class="nh-btn nh-btn-pri nh-btn-grande w-full" style="margin-top:12px" type="button" disabled data-i18n="ck.confirmar">Confirmar pedido</button>
+      <ul class="ck-confianca">
+        <li data-i18n="ck.conf_pag">Pagamento processado pelo Mercado Pago ou por Pix.</li>
+        <li><span data-i18n="ck.conf_troca">7 dias para desistir da compra online.</span> <a href="termos.html#arrependimento" class="nh-link" data-i18n="loja.conf.regras">Ver regras</a></li>
+        <li><a href="suporte.html" class="nh-link" data-i18n="ck.conf_ajuda">Dúvidas? Fale com o suporte</a></li>
+      </ul>
     </aside>
   </div>
 </main>
 
 <nh-footer></nh-footer>
 
-<script src="assets/js/config.js"></script>
-<script src="assets/js/carrinho.js"></script>
-<script src="assets/js/enderecos.js"></script>
 <script>
 (function () {
   'use strict';
-  const API = window.API_BASE;
+  const t = (k, v) => NHI18n.t(k, v);
   const qs = (s, el = document) => el.querySelector(s);
-  const fmtBRL = (n) => (Number(n) || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-  const esc = (s = '') => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const brl = (n) => NHI18n.brl(n);
+  const esc = (s = '') => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const token = (localStorage.getItem('NoHeroes_token') || '').trim().replace(/^Bearer\s+/i, '');
-  const st = { produtos: [], enderecos: [], enderecoId: null, frete: [], freteId: null, metodo: null, enviando: false };
+  const st = { produtos: [], enderecos: [], enderecoId: null, frete: [], freteId: null, metodos: [], metodo: null, cupom: null, desconto: 0, enviando: false };
 
-  if (!token) { location.href = 'login.html'; return; }
+  if (!token) { location.href = 'login.html?volta=checkout.html'; return; }
 
   async function api(path, opts = {}) {
-    const r = await fetch(API + path, { ...opts, headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token, ...(opts.headers || {}) } });
-    if (r.status === 401) { localStorage.removeItem('NoHeroes_token'); location.href = 'login.html'; throw new Error('Sessão expirada.'); }
+    const r = await fetch(API_BASE + path, { ...opts, headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token, ...(opts.headers || {}) } });
+    if (r.status === 401) { localStorage.removeItem('NoHeroes_token'); location.href = 'login.html?volta=checkout.html'; throw new Error(t('err.sessao')); }
     let j = {}; try { j = await r.json(); } catch (_) { /* sem corpo */ }
-    if (!r.ok) throw Object.assign(new Error(j.message || j.error || 'Erro ' + r.status), { status: r.status });
+    if (!r.ok) throw Object.assign(new Error(NHI18n.erro(j)), { status: r.status, json: j });
     return j;
   }
   function aviso(msg, tipo = 'erro') {
@@ -154,38 +140,42 @@
     if (msg) window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   const temFisico = () => NHCart.temFisico();
+  const nomeItem = (i) => (NHI18n.lang === 'en' && i.name_en) || i.name;
 
-  // ── Resumo ──
+  /* ---------- resumo ---------- */
   function resumo() {
     const itens = NHCart.itens();
     qs('#resumoItens').innerHTML = itens.map((i) => `
       <div class="ck-item">
         <img src="${esc(i.imageUrl)}" alt="" onerror="this.style.visibility='hidden'">
         <div style="flex:1;min-width:0">
-          <div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(i.name)}</div>
-          <div style="font-size:11px;color:rgba(255,255,255,.55)">${i.variant_label ? esc(i.variant_label) + ' · ' : ''}${i.fulfillment === 'physical' ? 'Físico' : 'Digital'} · ${i.quantity}×</div>
+          <div class="ck-item-nome">${esc(nomeItem(i))}</div>
+          <div class="ck-item-det">${i.variant_label ? esc(i.variant_label) + ' · ' : ''}${esc(t(i.fulfillment === 'physical' ? 'loja.fisico' : 'loja.digital'))} · ${i.quantity}×</div>
         </div>
-        <div style="font-size:13px">${fmtBRL(i.unit_price * i.quantity)}</div>
+        <div class="text-sm">${brl(i.unit_price * i.quantity)}</div>
       </div>`).join('');
     const sub = NHCart.total();
     const op = st.frete.find((o) => o.id === st.freteId);
     const frete = temFisico() ? (op ? op.price : null) : 0;
-    qs('#rSubtotal').textContent = fmtBRL(sub);
-    qs('#rFreteLinha').classList.toggle('hidden', !temFisico());
-    qs('#rFrete').textContent = frete == null ? '—' : (frete === 0 ? 'Grátis' : fmtBRL(frete));
-    qs('#rTotal').textContent = frete == null ? '—' : fmtBRL(sub + frete);
+    qs('#rSubtotal').textContent = brl(sub);
+    qs('#rDescontoLinha').hidden = !st.desconto;
+    qs('#rCupom').textContent = st.cupom || '';
+    qs('#rDesconto').textContent = st.desconto ? '−' + brl(st.desconto) : '';
+    qs('#rFreteLinha').hidden = !temFisico();
+    qs('#rFrete').textContent = frete == null ? '—' : (frete === 0 ? t('ck.gratis') : brl(frete));
+    qs('#rTotal').textContent = frete == null ? '—' : brl(Math.max(0, sub - st.desconto) + frete);
     const pronto = itens.length && st.metodo && (!temFisico() || (st.enderecoId && op));
     qs('#btnConfirmar').disabled = !pronto || st.enviando;
   }
 
-  // ── Endereços ──
+  /* ---------- endereços ---------- */
   function renderEnderecos() {
     const box = qs('#listaEnderecos');
-    if (!st.enderecos.length) { box.innerHTML = '<p class="text-sm text-white/50 mb-2">Nenhum endereço salvo ainda.</p>'; return; }
+    if (!st.enderecos.length) { box.innerHTML = `<p class="text-sm text-white/55 mb-2">${esc(t('ck.sem_enderecos'))}</p>`; return; }
     box.innerHTML = st.enderecos.map((a) => `
       <label class="ck-opcao">
         <input type="radio" name="endereco" value="${a.id}" ${a.id === st.enderecoId ? 'checked' : ''}>
-        <span><strong>${esc(a.label || a.recipient_name)}</strong>${a.is_default ? ' <span class="ck-sub">(padrão)</span>' : ''}<br>
+        <span><strong>${esc(a.label || a.recipient_name)}</strong>${a.is_default ? ` <span class="ck-sub">(${esc(t('end.padrao'))})</span>` : ''}<br>
         <span class="ck-sub">${esc(a.recipient_name)} · ${NHEndereco.resumo(a)}</span></span>
       </label>`).join('');
   }
@@ -198,132 +188,162 @@
     if (!st.enderecos.length) abrirFormEndereco();
     if (st.enderecoId) cotarFrete();
   }
-  function abrirFormEndereco() { qs('#formEndereco').classList.remove('hidden'); qs('#btnNovoEndereco').classList.add('hidden'); qs('#eCep').focus(); }
-  function fecharFormEndereco() { qs('#formEndereco').classList.add('hidden'); qs('#btnNovoEndereco').classList.remove('hidden'); qs('#formEndereco').reset(); qs('#cepStatus').textContent = ''; }
-
-  // ViaCEP direto do navegador (assets/js/enderecos.js): preenche rua, bairro, cidade e UF.
+  function abrirFormEndereco() { qs('#formEndereco').hidden = false; qs('#btnNovoEndereco').hidden = true; qs('#eCep').focus(); }
+  function fecharFormEndereco() { qs('#formEndereco').hidden = true; qs('#btnNovoEndereco').hidden = false; qs('#formEndereco').reset(); qs('#cepStatus').textContent = ''; }
   let ultimoCep = '';
   async function buscarCep() {
     const cep = qs('#eCep').value.replace(/\D/g, '');
     if (cep.length !== 8 || cep === ultimoCep) return;
     ultimoCep = cep;
-    qs('#cepStatus').textContent = 'Buscando CEP…';
+    qs('#cepStatus').textContent = t('end.buscando');
     const r = await NHEndereco.viaCep(cep);
-    if (!r) { qs('#cepStatus').textContent = 'CEP não encontrado (ou serviço fora do ar). Preencha o endereço à mão.'; return; }
+    if (!r) { qs('#cepStatus').textContent = t('end.cep_nao_achado'); return; }
     qs('#eRua').value = r.street || qs('#eRua').value;
     qs('#eBairro').value = r.district || qs('#eBairro').value;
     qs('#eCidade').value = r.city || qs('#eCidade').value;
     qs('#eUf').value = r.state || qs('#eUf').value;
-    qs('#cepStatus').textContent = 'Endereço encontrado. Confira e informe o número.';
+    qs('#cepStatus').textContent = t('end.cep_ok');
     qs('#eNumero').focus();
   }
   async function salvarEndereco(e) {
     e.preventDefault();
+    const v = (id) => qs('#' + id).value;
     const body = {
-      cep: qs('#eCep').value, state: qs('#eUf').value, street: qs('#eRua').value, number: qs('#eNumero').value,
-      complement: qs('#eCompl').value, district: qs('#eBairro').value, city: qs('#eCidade').value,
-      recipient_name: qs('#eNome').value, phone: qs('#eFone').value, label: qs('#eRotulo').value,
+      cep: v('eCep'), state: v('eUf'), street: v('eRua'), number: v('eNumero'), complement: v('eCompl'),
+      district: v('eBairro'), city: v('eCidade'), recipient_name: v('eNome'), phone: v('eFone'), label: v('eRotulo'),
     };
     try {
       const j = await api('/account/addresses', { method: 'POST', body: JSON.stringify(body) });
-      fecharFormEndereco();
-      aviso('');
+      fecharFormEndereco(); aviso('');
       await carregarEnderecos(j.data.id);
     } catch (err) { aviso(err.message); }
   }
 
-  // ── Frete ──
+  /* ---------- frete ---------- */
+  function prazo(o) {
+    if (o.kind === 'pickup') return t('ck.retirada');
+    if (!o.days) return t('ck.prazo_confirmar');
+    return o.days.min === o.days.max ? t('ck.prazo_um', { n: o.days.max }) : t('ck.prazo', { min: o.days.min, max: o.days.max });
+  }
+  function renderFrete() {
+    const box = qs('#listaFrete');
+    if (!st.frete.length) return;
+    box.innerHTML = st.frete.map((o) => `
+      <label class="ck-opcao">
+        <input type="radio" name="frete" value="${esc(o.id)}" ${o.id === st.freteId ? 'checked' : ''}>
+        <span style="flex:1"><strong>${esc(o.service)}</strong> <span class="ck-sub">${esc(o.carrier || '')}</span><br><span class="ck-sub">${esc(prazo(o))}</span></span>
+        <strong>${o.price === 0 ? esc(t('ck.gratis')) : brl(o.price)}</strong>
+      </label>`).join('');
+  }
   async function cotarFrete() {
     const a = st.enderecos.find((x) => x.id === st.enderecoId);
     if (!a) return;
     st.freteId = null; st.frete = [];
-    qs('#listaFrete').innerHTML = '<p class="text-sm text-white/50">Calculando o frete…</p>';
+    qs('#listaFrete').innerHTML = `<p class="text-sm text-white/55">${esc(t('ck.calculando'))}</p>`;
     resumo();
     try {
-      const j = await fetch(API + '/shipping/quote', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ cep: a.cep, items: NHCart.paraApi() }),
-      }).then(async (r) => { const b = await r.json(); if (!r.ok) throw new Error(b.message || 'Erro ao cotar o frete.'); return b; });
+      const r = await fetch(API_BASE + '/shipping/quote', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ cep: a.cep, items: NHCart.paraApi() }),
+      });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(NHI18n.erro(j, 'ck.erro_frete'));
       st.frete = j.options || [];
-      if (!st.frete.length) { qs('#listaFrete').innerHTML = '<p class="text-sm text-white/60">Ainda não entregamos neste CEP. Fale com o suporte.</p>'; resumo(); return; }
+      if (!st.frete.length) { qs('#listaFrete').innerHTML = `<p class="text-sm text-white/65">${esc(t('ck.sem_frete'))} <a class="nh-link" href="suporte.html">${esc(t('nav.suporte'))}</a></p>`; resumo(); return; }
       st.freteId = st.frete[0].id;
-      qs('#listaFrete').innerHTML = st.frete.map((o) => `
-        <label class="ck-opcao">
-          <input type="radio" name="frete" value="${esc(o.id)}" ${o.id === st.freteId ? 'checked' : ''}>
-          <span style="flex:1"><strong>${esc(o.service)}</strong> <span class="ck-sub">${esc(o.carrier || '')}</span><br>
-          <span class="ck-sub">${o.kind === 'pickup' ? 'Combine a retirada com a gente' : o.days ? (o.days.min === o.days.max ? `${o.days.max} dia(s) úteis` : `${o.days.min} a ${o.days.max} dias úteis`) : 'Prazo a confirmar'}</span></span>
-          <strong>${o.price === 0 ? 'Grátis' : fmtBRL(o.price)}</strong>
-        </label>`).join('');
+      renderFrete();
     } catch (err) {
-      qs('#listaFrete').innerHTML = `<p class="text-sm text-red-300">${esc(err.message)}</p>`;
+      qs('#listaFrete').innerHTML = `<p class="text-sm text-red-300" role="alert">${esc(err.message)}</p>`;
     }
     resumo();
   }
 
-  // ── Pagamento ──
-  async function carregarMetodos() {
-    const j = await fetch(API + '/checkout/methods').then((r) => r.json());
-    const ms = j.methods || [];
-    st.metodo = ms[0] ? ms[0].id : null;
-    qs('#listaPagamento').innerHTML = ms.length ? ms.map((m) => `
+  /* ---------- pagamento ---------- */
+  function rotuloMetodo(m) { const k = 'ck.metodo.' + m.id; const v = t(k); return v === k ? m.label : v; }
+  function renderMetodos() {
+    qs('#listaPagamento').innerHTML = st.metodos.length ? st.metodos.map((m) => `
       <label class="ck-opcao">
         <input type="radio" name="metodo" value="${esc(m.id)}" ${m.id === st.metodo ? 'checked' : ''}>
-        <span><strong>${esc(m.label)}</strong><br><span class="ck-sub">${m.id === 'mercadopago' ? 'Você será levado ao Mercado Pago para pagar.' : 'QR Code e código copia e cola nesta tela. Confirmação após a verificação do pagamento.'}</span></span>
-      </label>`).join('') : '<p class="text-sm text-red-300">Nenhuma forma de pagamento disponível no momento.</p>';
-    resumo();
+        <span><strong>${esc(rotuloMetodo(m))}</strong><br>
+        <span class="ck-sub">${esc(t(m.id === 'mercadopago' ? 'ck.metodo_mp' : 'ck.metodo_pix'))}</span></span>
+      </label>`).join('') : `<p class="text-sm text-red-300">${esc(t('ck.sem_metodos'))}</p>`;
+  }
+  async function carregarMetodos() {
+    const j = await fetch(API_BASE + '/checkout/methods').then((r) => r.json());
+    st.metodos = j.methods || [];
+    st.metodo = st.metodos[0] ? st.metodos[0].id : null;
+    renderMetodos(); resumo();
   }
 
-  // ── Confirmar ──
+  /* ---------- cupom ---------- */
+  async function aplicarCupom(e) {
+    e.preventDefault();
+    const msg = qs('#cupomMsg');
+    const codigo = qs('#cupom').value.trim();
+    msg.className = 'nh-form-msg';
+    if (!codigo) { st.cupom = null; st.desconto = 0; msg.textContent = ''; resumo(); return; }
+    qs('#btnCupom').disabled = true;
+    try {
+      const j = await api('/checkout/coupon', { method: 'POST', body: JSON.stringify({ coupon: codigo, items: NHCart.paraApi() }) });
+      st.cupom = j.code; st.desconto = j.desconto;
+      msg.textContent = t('ck.cupom_ok', { valor: brl(j.desconto) }); msg.classList.add('ok');
+    } catch (err) {
+      st.cupom = null; st.desconto = 0;
+      msg.textContent = err.message; msg.classList.add('erro');
+    } finally { qs('#btnCupom').disabled = false; resumo(); }
+  }
+
+  /* ---------- confirmar ---------- */
   async function confirmar() {
     if (st.enviando) return;
     st.enviando = true; resumo();
-    qs('#btnConfirmar').textContent = 'Criando pedido…';
+    qs('#btnConfirmar').textContent = t('ck.criando');
     try {
       const body = { items: NHCart.paraApi(), payment_method: st.metodo };
       if (temFisico()) { body.address_id = st.enderecoId; body.shipping_option_id = st.freteId; }
+      if (st.cupom) body.coupon = st.cupom;
       const j = await api('/checkout', { method: 'POST', body: JSON.stringify(body) });
-      // Mercado Pago: o carrinho fica até a volta (agradecimento.html limpa se o pedido andou),
-      // para o cliente poder tentar de novo se desistir ou o pagamento for recusado.
+      // Mercado Pago: o carrinho fica até a volta (agradecimento.html limpa se o pedido andou).
       if (j.next && j.next.kind === 'redirect' && j.next.url) { location.assign(j.next.url); return; }
       NHCart.limpar();
       if (j.next && j.next.kind === 'pix') return mostrarPix(j);
       location.href = 'agradecimento.html?order=' + encodeURIComponent(j.order_id);
     } catch (err) {
       aviso(err.message);
-      if (err.status === 409) { await sincronizarCarrinho(); if (temFisico()) cotarFrete(); }
+      const cupomErro = err.json && /^CUPOM_/.test(err.json.code || '');
+      if (cupomErro) { st.cupom = null; st.desconto = 0; qs('#cupomMsg').textContent = err.message; qs('#cupomMsg').className = 'nh-form-msg erro'; }
+      if (err.status === 409 || cupomErro) { await sincronizar(); if (temFisico()) cotarFrete(); }
     } finally {
-      st.enviando = false; qs('#btnConfirmar').textContent = 'Confirmar pedido'; resumo();
+      st.enviando = false; qs('#btnConfirmar').textContent = t('ck.confirmar'); resumo();
     }
   }
   function mostrarPix(j) {
-    qs('#formCheckout').classList.add('hidden');
-    qs('#pixResultado').classList.remove('hidden');
+    qs('#formCheckout').hidden = true;
+    qs('#pixResultado').hidden = false;
     qs('#pixPedido').textContent = j.order_id;
-    qs('#pixValor').textContent = fmtBRL(j.total);
+    qs('#pixValor').textContent = brl(j.total);
     qs('#pixQr').innerHTML = j.next.qr_svg; // SVG gerado pelo nosso servidor (sem conteúdo do usuário)
     qs('#pixCodigo').textContent = j.next.payload;
     qs('#pixVerPedido').href = 'agradecimento.html?order=' + encodeURIComponent(j.order_id);
     window.scrollTo({ top: 0 });
   }
   qs('#btnCopiarPix').addEventListener('click', async () => {
-    const codigo = qs('#pixCodigo').textContent;
-    try { await navigator.clipboard.writeText(codigo); qs('#btnCopiarPix').textContent = 'Código copiado ✓'; }
+    const b = qs('#btnCopiarPix');
+    try { await navigator.clipboard.writeText(qs('#pixCodigo').textContent); b.textContent = t('ck.copiado'); }
     catch (_) {
       const r = document.createRange(); r.selectNodeContents(qs('#pixCodigo'));
-      const s = getSelection(); s.removeAllRanges(); s.addRange(r);
-      qs('#btnCopiarPix').textContent = 'Código selecionado: copie';
+      const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = t('ck.selecionado');
     }
-    setTimeout(() => { qs('#btnCopiarPix').textContent = 'Copiar código'; }, 2500);
+    setTimeout(() => { b.textContent = t('ck.copiar'); }, 2500);
   });
 
-  async function sincronizarCarrinho() {
-    const j = await fetch(API + '/shop').then((r) => r.json());
+  async function sincronizar() {
+    const j = await fetch(API_BASE + '/shop').then((r) => r.json());
     st.produtos = j.data || [];
     const avisos = NHCart.reconciliar(st.produtos);
-    if (avisos.length) aviso(avisos.join(' '), 'info');
+    if (avisos.length) aviso(t('ck.carrinho_ajustado'), 'info');
   }
 
-  // ── Eventos e início ──
+  /* ---------- eventos ---------- */
   document.addEventListener('change', (e) => {
     if (e.target.name === 'endereco') { st.enderecoId = Number(e.target.value); cotarFrete(); }
     if (e.target.name === 'frete') { st.freteId = e.target.value; resumo(); }
@@ -332,29 +352,28 @@
   qs('#btnNovoEndereco').addEventListener('click', abrirFormEndereco);
   qs('#btnCancelarEndereco').addEventListener('click', fecharFormEndereco);
   qs('#formEndereco').addEventListener('submit', salvarEndereco);
-  qs('#eCep').addEventListener('input', (e) => {
-    e.target.value = NHEndereco.formatarCep(e.target.value);
-    buscarCep();
-  });
+  qs('#formCupom').addEventListener('submit', aplicarCupom);
+  qs('#eCep').addEventListener('input', (e) => { e.target.value = NHEndereco.formatarCep(e.target.value); buscarCep(); });
   qs('#btnConfirmar').addEventListener('click', confirmar);
+  document.addEventListener('nh:lang', () => { resumo(); renderEnderecos(); renderFrete(); renderMetodos(); });
 
   (async function iniciar() {
     try {
-      await sincronizarCarrinho();
+      await sincronizar();
       if (!NHCart.itens().length) {
-        qs('#formCheckout').innerHTML = '<div class="ck-card" style="grid-column:1/-1;text-align:center"><p class="mb-3">Seu carrinho está vazio.</p><a href="store.html" class="ck-btn-sec" style="display:inline-flex;align-items:center;text-decoration:none">Ir para a loja</a></div>';
+        qs('#formCheckout').innerHTML = `<div class="ck-card" style="grid-column:1/-1;text-align:center"><p class="mb-3">${esc(t('ck.vazio'))}</p><a href="store.html" class="nh-btn nh-btn-sec">${esc(t('ck.ir_loja'))}</a></div>`;
         return;
       }
       if (temFisico()) {
-        qs('#secEndereco').classList.remove('hidden');
-        qs('#secFrete').classList.remove('hidden');
+        qs('#secEndereco').hidden = false;
+        qs('#secFrete').hidden = false;
         await carregarEnderecos();
       } else {
         qs('#numPagamento').textContent = '1';
       }
       await carregarMetodos();
       resumo();
-    } catch (err) { aviso(err.message || 'Não foi possível carregar o checkout.'); }
+    } catch (err) { aviso(err.message || t('ck.erro_carregar')); }
   })();
 })();
 </script>

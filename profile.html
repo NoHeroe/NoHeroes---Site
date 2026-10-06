@@ -1,1313 +1,560 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Perfil | NoHeroes</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title data-i18n="pf.meta.titulo">Minha conta | NoHeroes</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#07060a">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tw.css">
   <link rel="stylesheet" href="assets/css/noheroes-ui.css">
-  <script defer src="assets/js/noheroes-ui.js"></script>
-  <style>
-    :root{ --nh-bg:#0a0a0a; --nh-fg:#e5e5e5; --nh-card:#0f0f10; --nh-stroke:#2a2a2e; --nh-purple:#7c3aed; --nh-gold:#d4af37; }
-    html,body{height:100%}
-    body{background:#0a0a0a;color:var(--nh-fg);font-family:Inter,system-ui,Arial,sans-serif;overflow-x:hidden}
-
-    /* Fundo brasas + glows */
-    #brasasCanvas{position:fixed;inset:0;z-index:-3;pointer-events:none}
-    body::before{
-      content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
-      background:
-        radial-gradient(1200px 800px at 80% -10%, rgba(124,58,237,.18), transparent 60%),
-        radial-gradient(1000px 600px at 0% 110%, rgba(212,175,55,.14), transparent 60%);
-    }
-    body::after{
-      content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
-      background:radial-gradient(100% 120% at 50% 110%, rgba(0,0,0,.45), transparent 40%);
-      mix-blend-mode:screen;
-    }
-
-    /* Cards */
-    .card{
-      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.015));
-      border:1px solid #2a2a2e; border-radius:1rem; backdrop-filter:saturate(120%) blur(10px);
-      box-shadow:0 10px 30px rgba(0,0,0,.25);
-    }
-    .ring-gradient{position:relative}
-    .ring-gradient:before{
-      content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;
-      background:linear-gradient(135deg, rgba(124,58,237,.8), rgba(212,175,55,.7));
-      -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite:xor;mask-composite:exclude;border-radius:inherit;
-    }
-
-    /* Header */
-    .header{background:rgba(10,10,10,.8);backdrop-filter:blur(8px)}
-    .title-font{font-family:'Cinzel Decorative',serif}
-
-    /* Dialog glass pro */
-    dialog{border:none;padding:0}
-    dialog::backdrop{background:rgba(10,10,12,.55);backdrop-filter:blur(10px)}
-    .dialog-ctr{
-      background:rgba(18,18,22,.72);
-      backdrop-filter: blur(14px) saturate(150%);
-      border:1px solid #34343a; border-radius:18px;
-      box-shadow:0 20px 80px rgba(0,0,0,.55);
-    }
-
-    /* Abas */
-    .tab-btn{border-bottom:2px solid transparent}
-    .tab-btn[aria-selected="true"]{border-color:#a78bfa;color:#dcd4ff}
-
-    /* Botões/inputs */
-    .btn{display:inline-flex;align-items:center;gap:.5rem;border:1px solid rgba(255,255,255,.08);border-radius:.75rem;padding:.6rem .95rem}
-    .btn-primary{background:linear-gradient(90deg,#7c3aed,#6d28d9);color:#fff}
-    .btn-primary:hover{filter:brightness(1.1)}
-    .btn-ghost{background:rgba(255,255,255,.06)}
-    .btn-ghost:hover{background:rgba(255,255,255,.1)}
-    .input{width:100%;padding:.7rem .85rem;border:1px solid #3a3a40;border-radius:.75rem;background:#0b0b0c;color:#fff}
-    .input:focus{outline:none;box-shadow:0 0 0 3px rgba(124,58,237,.25);border-color:#5b21b6}
-
-    /* Timer logout */
-    .timer-bar{height:6px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden}
-    .timer-fill{height:100%;width:0;background:linear-gradient(90deg,#f43f5e,#fb7185)}
-
-    /* Hero */
-    .hero-wrap{position:relative}
-    .hero-img{width:100%;max-height:420px;object-fit:cover;border-radius:1rem;border:1px solid #2a2a2e;transition:opacity .2s}
-    .hero-dots{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);display:flex;gap:.6rem}
-    .hero-dot{width:12px;height:12px;border-radius:999px;background:rgba(255,255,255,.35);border:1px solid rgba(255,255,255,.5);cursor:pointer;transition:.2s}
-    .hero-dot[aria-selected="true"]{background:#a78bfa;border-color:#ddd;transform:scale(1.08)}
-
-    /* Avatar bloco (coluna do meio) */
-    .avatar-wrap{display:flex;align-items:center;gap:14px}
-    .avatar-img{width:72px;height:72px;border-radius:999px;object-fit:cover;border:3px solid #7c3aed;background:#0b0b0c}
-
-    @media (max-width: 640px){
-      .dialog-ctr{border-radius:14px}
-    }
-    @media (prefers-reduced-motion:reduce){#brasasCanvas{display:none}}
-
-    /* adiciona isso no <style> do topo */
-/* ── NOTIFICAÇÕES ── */
-#notif-btn { position:relative; }
-#notif-badge {
-  position:absolute; top:-4px; right:-4px;
-  min-width:16px; height:16px; border-radius:99px;
-  background:#ef4444; color:#fff; font-size:9px; font-weight:800;
-  display:none; align-items:center; justify-content:center; padding:0 4px;
-  font-family:monospace;
-}
-#notif-badge.show { display:flex; }
-
-#notif-modal {
-  position:fixed; inset:0; z-index:200;
-  background:rgba(0,0,0,0.7); backdrop-filter:blur(8px);
-  display:none; align-items:flex-end; justify-content:center;
-  padding-bottom:0;
-}
-#notif-modal.open { display:flex; }
-#notif-panel {
-  width:100%; max-width:480px;
-  background:#0e0c16; border:1px solid rgba(143,79,255,0.2);
-  border-radius:20px 20px 0 0;
-  max-height:75vh; display:flex; flex-direction:column;
-  animation:slideUp .25s ease-out;
-}
-@keyframes slideUp { from{transform:translateY(100%);opacity:0} to{transform:translateY(0);opacity:1} }
-#notif-header {
-  display:flex; align-items:center; justify-content:space-between;
-  padding:16px 18px 12px;
-  border-bottom:1px solid rgba(255,255,255,0.06);
-}
-#notif-header h3 { font-size:14px; font-weight:700; color:#e8e4f0; }
-#notif-list { overflow-y:auto; flex:1; padding:8px 0; }
-.notif-item {
-  display:flex; align-items:flex-start; gap:10px;
-  padding:12px 18px; cursor:pointer; transition:background .15s;
-  border-left:3px solid transparent;
-}
-.notif-item:hover { background:rgba(255,255,255,.03); }
-.notif-item.unread { border-left-color:#8f4fff; background:rgba(143,79,255,.04); }
-.notif-icon { font-size:18px; flex-shrink:0; margin-top:1px; }
-.notif-content { flex:1; min-width:0; }
-.notif-title { font-size:12px; font-weight:700; color:#e8e4f0; margin-bottom:2px; }
-.notif-body { font-size:11px; color:rgba(232,228,240,.5); line-height:1.4; }
-.notif-time { font-size:10px; color:rgba(232,228,240,.3); margin-top:3px; font-family:monospace; }
-.notif-dot { width:7px; height:7px; border-radius:50%; background:#8f4fff; flex-shrink:0; margin-top:5px; }
-#notif-footer {
-  padding:12px 18px;
-  border-top:1px solid rgba(255,255,255,.06);
-  display:flex; justify-content:space-between; gap:8px;
-}
-#notif-footer button { font-size:11px; font-weight:700; padding:7px 14px; border-radius:8px; cursor:pointer; border:none; }
-#notif-mark-all { background:rgba(143,79,255,.15); color:#c084fc; }
-#notif-close-btn { background:rgba(255,255,255,.06); color:rgba(232,228,240,.6); }
-
-#btnSelectFile, #avatarUrl, #btnSalvarAvatar {
-  position: relative;
-  z-index: 50;
-}
-.ring-gradient::before { pointer-events: none; }
-/* ====== CORREÇÃO GLOBAL DOS MODAIS (todos) ====== */
-dialog {
-  all: unset;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 9999;
-  display: none;
-  width: min(95vw, 900px);
-  max-height: 90vh;
-}
-dialog[open] {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-dialog::backdrop {
-  background: rgba(0, 0, 0, 0.65);
-  backdrop-filter: blur(10px);
-}
-
-/* Container interno */
-dialog .dialog-ctr {
-  width: 100%;
-  height: auto;
-  max-height: 85vh;
-  overflow-y: auto;
-  border-radius: 1.25rem;
-  border: none !important;
-  background: rgba(18, 18, 22, 0.85);
-  backdrop-filter: blur(16px) saturate(150%);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-  padding: 0;
-}
-
-/* Remove aquela borda feia da ring-gradient */
-.ring-gradient::before {
-  background: linear-gradient(135deg, rgba(124,58,237,0.8), rgba(212,175,55,0.6));
-  opacity: 0.7;
-  filter: blur(1px);
-}
-
-/* Seções internas */
-.dialog-ctr > * {
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/* ===== ESTOURO DE LARGURA POR TEXTO SEM QUEBRA (correção 2026-07-28) =====
-   Sintoma: no celular o perfil aparecia cortado à direita, com o conteúdo maior
-   que a tela e SEM como rolar até ele.
-   Gatilho original: #userEmail exibia a URL COMPLETA do avatar (~100 caracteres
-   sem um espaço). A largura MÍNIMA do parágrafo virava a URL inteira; o ancestral
-   `.flex-1` é item de flex e itens de flex nascem com `min-width:auto`, recusando
-   encolher — o estouro subia a cadeia e levava o <main> a 445px numa tela de 375px.
-   O `overflow-x:hidden` do body então CORTAVA o excedente, escondendo o defeito em
-   vez de expor (por isso não reproduzia estreitando a janela no desktop).
-   Aquele gatilho foi removido na origem (o campo voltou a mostrar o e-mail), mas
-   estas regras FICAM: e-mail longo, nome longo ou qualquer string sem espaço têm
-   o mesmo poder de estourar a linha. Corrige a classe do problema, não um caso. */
-#userEmail,
-#miniNome {
-  overflow-wrap: anywhere;
-  word-break: break-word;
-}
-#heroSection .flex-1,
-#heroSection .flex > * {
-  min-width: 0;
-}
-
-/* ===== MOBILE ===== */
-@media (max-width: 640px) {
-  dialog {
-    width: 95vw;
-    max-height: 92vh;
-  }
-  dialog .dialog-ctr {
-    border-radius: 1rem;
-    padding: 0;
-  }
-
-  .dialog-ctr .px-6 {
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
-  }
-  .dialog-ctr .py-4 {
-    padding-top: 0.75rem !important;
-    padding-bottom: 0.75rem !important;
-  }
-
-  /* previne scroll lateral */
-  body {
-    overflow-x: hidden !important;
-  }
-
-  /* botões com área confortável */
-  .dialog-ctr .btn {
-    min-height: 44px;
-    width: auto;
-  }
-}
-
-/* ===== HEADER AJUSTADO ===== */
-header.header {
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  padding: 0.75rem 1rem;
-  background: rgba(10,10,10,0.75);
-  backdrop-filter: blur(8px);
-}
-header.header .flex.justify-center {
-  justify-content: center;
-}
-header.header .flex.items-center.justify-end {
-  justify-content: flex-end;
-  gap: 0.75rem;
-}
-header.header .title-font {
-  font-size: clamp(1rem, 3vw, 1.2rem);
-}
-header.header .btn img {
-  height: 1.75rem;
-  width: 1.75rem;
-}
-
-/* ===== SUAVIZA A ENTRADA DOS MODAIS ===== */
-dialog[open] .dialog-ctr {
-  animation: modalIn .25s ease-out;
-}
-@keyframes modalIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to   { opacity: 1; transform: scale(1); }
-}
-/* ===== Ajuste final: scroll invisível + modais sem corte ===== */
-
-/* Oculta barras de rolagem internas */
-.dialog-ctr::-webkit-scrollbar {
-  width: 0 !important;
-  height: 0 !important;
-}
-.dialog-ctr {
-  -ms-overflow-style: none;  /* IE e Edge */
-  scrollbar-width: none;     /* Firefox */
-}
-
-/* Permite overflow natural (sem corte em bordas arredondadas) */
-dialog .dialog-ctr {
-  overflow-y: visible !important;
-  overflow-x: visible !important;
-  padding-bottom: 1.5rem;
-}
-
-/* Corrige comportamento do backdrop em modais longos */
-dialog[open] {
-  display: flex;
-  align-items: flex-start; /* alinha no topo se o modal for alto */
-  justify-content: center;
-  padding: 4vh 0; /* espaço respirável em cima e embaixo */
-}
-
-/* Se o conteúdo for muito alto, o body do modal rola internamente */
-@media (max-height: 680px) {
-  dialog[open] {
-    align-items: flex-start;
-    padding: 2vh 0;
-  }
-  dialog .dialog-ctr {
-    max-height: 92vh;
-    overflow-y: auto !important;
-  }
-}
-
-/* Suaviza a animação */
-dialog[open] .dialog-ctr {
-  animation: modalIn .25s ease-out;
-  transform-origin: center top;
-}
-
-
-/* Drawer: agora em assets/css/noheroes-ui.css (componente <nh-drawer>) */
-  </style>
-
-  <script src="assets/js/config.js"></script>
-  <!-- Gate: token normalizado -->
-    <script>
-    (function(){
-      const raw = localStorage.getItem('NoHeroes_token')||'';
-      const normalized = raw.replace(/^Bearer\s+/i,'');
-      if(!normalized || normalized.split('.').length!==3){
-        console.warn('⚠️ Sem token. Redirecionamento desativado para edição do layout.'); localStorage.removeItem('NoHeroes_token');
- location.href = 'login.html';
-        return;
-      }
-      localStorage.setItem('NoHeroes_token', normalized);
-      window.tokenJWT = normalized;
+  <link rel="stylesheet" href="assets/css/paginas.css">
+  <link rel="stylesheet" href="assets/css/checkout.css">
+  <link rel="stylesheet" href="assets/css/perfil.css">
+  <script>
+    // Sem sessão → login (volta para cá depois).
+    (function () {
+      var raw = (localStorage.getItem('NoHeroes_token') || '').replace(/^Bearer\s+/i, '').trim();
+      if (raw.split('.').length !== 3) { location.replace('login.html?volta=profile.html'); }
     })();
   </script>
-
-  <!-- Gate de COMPLIANCE (F2.8): script COMPARTILHADO — re-checa Termos + consentimento LGPD
-       ao abrir a página (data-auto). Fecha o furo do token antigo (sessão viva pula o login). -->
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/i18n/comum.js"></script>
+  <script src="assets/i18n/pedidos.js"></script>
+  <script src="assets/i18n/conta.js"></script>
+  <script src="assets/i18n/checkout.js"></script>
+  <script src="assets/i18n/perfil.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/pedidos.js"></script>
+  <script src="assets/js/enderecos.js"></script>
+  <script defer src="assets/js/noheroes-ui.js"></script>
   <script defer src="assets/js/compliance.js" data-auto="1"></script>
-
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
-<body class="min-h-screen flex flex-col">
-<!-- Menu lateral (componente compartilhado) -->
-<nh-drawer></nh-drawer>
+<body class="nh-pagina">
+<nh-background></nh-background>
+<nh-header></nh-header>
 
-
-  <!-- Fundo (componente compartilhado) -->
-  <nh-background></nh-background>
-
-  <!-- HEADER -->
-    <header class="header flex items-center justify-between px-4 sm:px-6 py-4 border-b border-purple-800/50 sticky top-0 z-50">
-    
-    <button data-nh-drawer-toggle aria-label="Abrir menu" style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
-
-    <div class="flex justify-center flex-1">
-      <a href="index.html" class="flex items-center gap-2 hover:scale-105 transition-transform">
-        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-purple-600 to-amber-400 shadow-[0_0_15px_rgba(124,58,237,0.4)]"></div>
-        <span class="title-font text-xl tracking-wide bg-clip-text text-transparent bg-gradient-to-r from-purple-300 to-amber-200">NoHeroes</span>
-      </a>
+<main id="conteudo" class="nh-wrap pf-main">
+  <section class="pf-topo" aria-labelledby="pfNome">
+    <div class="pf-avatar"><img id="avatarImg" src="assets/img/noheroes-logo-320.webp" alt=""></div>
+    <div class="pf-quem">
+      <h1 id="pfNome">—</h1>
+      <p id="pfEmail"></p>
+      <p id="pfDesde" class="text-xs"></p>
     </div>
-
-    <div class="flex items-center justify-end gap-2 sm:gap-4 w-auto">
-      <button id="openConfig" class="group p-2 rounded-full hover:bg-white/5 transition-all duration-300" title="Configurações">
-  <svg class="w-7 h-7 transition-transform duration-500 group-hover:rotate-90" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="nh-gradient-icon" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#8f4fff" />
-        <stop offset="100%" stop-color="#d9b55a" />
-      </linearGradient>
-    </defs>
-    <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="url(#nh-gradient-icon)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" stroke="url(#nh-gradient-icon)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-</button>
-      
-      <!-- SINO DE NOTIFICAÇÕES -->
-      <button id="notif-btn" onclick="openNotifModal()" class="group p-2 rounded-full hover:bg-white/5 transition-all duration-300" title="Notificações">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="bell-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#8f4fff"/>
-              <stop offset="100%" stop-color="#d9b55a"/>
-            </linearGradient>
-          </defs>
-          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="url(#bell-grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="url(#bell-grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <span id="notif-badge">0</span>
-      </button>
-
-      <button id="btnLogout" class="btn !p-2 sm:px-4 rounded-xl border border-red-500/20 text-red-400 hover:bg-red-500/10 hover:border-red-500/50 transition-all">
-        <span class="hidden sm:inline font-semibold text-sm">Desconectar</span>
-        <svg class="w-5 h-5 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-      </button>
-    </div>
-  </header>
-
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-8">
-
-  <section id="heroSection" class="relative overflow-hidden rounded-[2rem] border border-purple-500/20 bg-[#121212]/40 backdrop-blur-md p-6 shadow-2xl">
-    <div class="absolute -top-24 -right-24 w-80 h-80 bg-purple-600/10 rounded-full blur-[100px]"></div>
-    
-    <div class="relative flex flex-col lg:flex-row items-center gap-8">
-      
-      <div class="flex flex-col items-center gap-4 shrink-0">
-        <div class="relative group">
-          <div class="absolute -inset-1 bg-gradient-to-tr from-purple-600 to-amber-400 rounded-full blur-sm opacity-40"></div>
-          <div class="relative w-24 h-24 rounded-full border-2 border-white/10 overflow-hidden bg-black">
-            <img id="miniAvatar" src="assets/images/linktree.png" alt="Avatar" class="w-full h-full object-cover"/>
-          </div>
-          <div class="absolute -bottom-1 -right-1 bg-gradient-to-r from-purple-600 to-indigo-600 px-2 py-0.5 rounded-full border border-white/20 text-[10px] font-black text-white italic">
-            <span id="miniNivel">Nível —</span>
-          </div>
-        </div>
-        
-        <input id="avatarFile" type="file" accept="image/*" class="hidden">
-        <button id="btnSelectFile" type="button" class="text-[10px] font-bold text-purple-400 uppercase tracking-widest hover:text-amber-300 transition-colors">
-          [ Escolher Arquivo ]
-        </button>
-      </div>
-
-      <div class="flex-1 w-full space-y-4">
-        <div class="text-center lg:text-left">
-          <h1 id="miniNome" class="text-2xl font-bold text-white italic tracking-tight">—</h1>
-          <p id="userEmail" class="text-purple-300/40 text-xs italic"></p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 items-end">
-          <div class="flex flex-col gap-1">
-            <span class="text-[9px] text-gray-500 uppercase font-bold ml-1">URL da Imagem</span>
-            <input id="avatarUrl" type="url" placeholder="https://..." class="input !bg-black/40 !border-white/5 !text-[11px] w-full h-10">
-          </div>
-          <button id="btnSalvarAvatar" class="btn btn-primary !h-10 !text-[11px] font-bold uppercase tracking-widest" type="button">
-            Salvar Avatar
-          </button>
-        </div>
-      </div>
+    <div class="pf-acoes-topo">
+      <label class="nh-btn nh-btn-sec" for="avatarFile" data-i18n="pf.trocar_foto">Trocar foto</label>
+      <input id="avatarFile" type="file" accept="image/jpeg,image/png,image/webp" class="sr-only">
+      <a href="inventario.html" class="nh-btn nh-btn-sec" data-i18n="pf.biblioteca">Biblioteca</a>
+      <button id="btnSair" class="nh-btn nh-btn-sec" type="button" data-i18n="pf.sair">Sair</button>
     </div>
   </section>
+  <p id="avatarMsg" class="nh-form-msg" role="status"></p>
 
-  <div class="grid grid-cols-2 gap-4">
-    <a href="https://discord.gg/noheroes" target="_blank" class="flex items-center justify-center gap-3 p-4 rounded-2xl bg-[#5865F2]/10 border border-[#5865F2]/20 hover:bg-[#5865F2]/20 transition-all group">
-      <div class="w-8 h-8 rounded-lg bg-[#5865F2] flex items-center justify-center shadow-lg group-hover:scale-110 transition">
-        <img src="https://cdn-icons-png.flaticon.com/512/3670/3670157.png" class="w-5 h-5 invert" alt="Discord">
-      </div>
-      <span class="text-xs font-black text-[#9da5ff] uppercase tracking-tighter">Discord Oficial</span>
-    </a>
-    <a href="https://wa.me/noheroes" target="_blank" class="flex items-center justify-center gap-3 p-4 rounded-2xl bg-[#25D366]/5 border border-[#25D366]/20 hover:bg-[#25D366]/10 transition-all group">
-      <div class="w-8 h-8 rounded-lg bg-[#25D366] flex items-center justify-center shadow-lg group-hover:scale-110 transition">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" class="w-4 h-4 invert" alt="WhatsApp">
-      </div>
-      <span class="text-xs font-black text-[#85f7ae] uppercase tracking-tighter">WhatsApp Guild</span>
-    </a>
+  <div class="pf-abas" role="tablist" aria-label="Seções da conta" data-i18n-attr="aria-label:pf.secoes">
+    <button class="pf-aba" role="tab" id="aba-compras" aria-controls="painel-compras" data-aba="compras" data-i18n="pf.aba.compras">Compras</button>
+    <button class="pf-aba" role="tab" id="aba-notificacoes" aria-controls="painel-notificacoes" data-aba="notificacoes"><span data-i18n="pf.aba.notificacoes">Notificações</span> <span id="badgeNotif" class="pf-badge" hidden></span></button>
+    <button class="pf-aba" role="tab" id="aba-tickets" aria-controls="painel-tickets" data-aba="tickets" data-i18n="pf.aba.tickets">Tickets</button>
+    <button class="pf-aba" role="tab" id="aba-enderecos" aria-controls="painel-enderecos" data-aba="enderecos" data-i18n="pf.aba.enderecos">Endereços</button>
+    <button class="pf-aba" role="tab" id="aba-preferencias" aria-controls="painel-preferencias" data-aba="preferencias" data-i18n="pf.aba.preferencias">Preferências</button>
+    <button class="pf-aba" role="tab" id="aba-conta" aria-controls="painel-conta" data-aba="conta" data-i18n="pf.aba.conta">Conta</button>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+  <!-- COMPRAS -->
+  <section id="painel-compras" class="pf-painel" role="tabpanel" aria-labelledby="aba-compras" hidden>
+    <div id="comprasLista">
+      <h2 data-i18n="pf.compras.titulo">Minhas compras</h2>
+      <p class="pf-sub" data-i18n="pf.compras.sub">Pagamento, entrega e rastreio de cada pedido.</p>
+      <div id="compras" class="pf-lista" aria-live="polite"></div>
+    </div>
+    <div id="compraDetalhe" hidden></div>
+  </section>
 
-    <section class="space-y-6">
-      <div>
-        <h3 class="text-xl font-bold text-purple-300">Cartel Velado</h3>
-        <p class="text-[10px] text-gray-500 uppercase tracking-widest">Acesso Restrito</p>
+  <!-- NOTIFICAÇÕES -->
+  <section id="painel-notificacoes" class="pf-painel" role="tabpanel" aria-labelledby="aba-notificacoes" hidden>
+    <div class="flex items-start justify-between gap-3 flex-wrap">
+      <div><h2 data-i18n="pf.notif.titulo">Notificações</h2><p class="pf-sub" data-i18n="pf.notif.sub">Avisos sobre pedidos, suporte e novidades.</p></div>
+      <button id="btnLerTodas" class="nh-btn nh-btn-sec" type="button" data-i18n="pf.notif.ler_todas">Marcar todas como lidas</button>
+    </div>
+    <div id="notificacoes" class="pf-lista" aria-live="polite"></div>
+  </section>
+
+  <!-- TICKETS -->
+  <section id="painel-tickets" class="pf-painel" role="tabpanel" aria-labelledby="aba-tickets" hidden>
+    <div id="ticketsLista">
+      <div class="flex items-start justify-between gap-3 flex-wrap">
+        <div><h2 data-i18n="pf.tk.titulo">Tickets de suporte</h2><p class="pf-sub" data-i18n="pf.tk.sub">Suas conversas com o suporte.</p></div>
+        <a href="suporte.html#abrir" class="nh-btn nh-btn-sec" data-i18n="pf.tk.novo">Abrir ticket</a>
       </div>
-      
-      <div class="flex gap-4">
-        <a href="store.html" class="card ring-gradient w-[140px] rounded-xl overflow-hidden shadow-md hover:brightness-110 transition shrink-0">
-          <img src="assets/images/lojanoheroes.png" alt="Loja" class="w-full h-auto object-cover"/>
-        </a>
+      <div id="tickets" class="pf-lista" aria-live="polite"></div>
+    </div>
+    <div id="ticketDetalhe" hidden></div>
+  </section>
+
+  <!-- ENDEREÇOS -->
+  <section id="painel-enderecos" class="pf-painel" role="tabpanel" aria-labelledby="aba-enderecos" hidden>
+    <h2 data-i18n="pf.end.titulo">Endereços de entrega</h2>
+    <p class="pf-sub" data-i18n="pf.end.sub">Usados nas compras de itens físicos. O padrão já vem marcado no checkout.</p>
+    <div id="listaEnderecos" class="pf-lista"></div>
+    <button id="btnNovoEndereco" class="nh-btn nh-btn-sec" style="margin-top:12px" type="button" data-i18n="ck.novo_endereco">+ Novo endereço</button>
+    <form id="formEndereco" hidden novalidate style="margin-top:12px">
+      <input type="hidden" id="eId">
+      <div class="ck-grid">
+        <div><label class="ck-label" for="eCep" data-i18n="end.cep">CEP</label><input id="eCep" class="nh-input" inputmode="numeric" autocomplete="postal-code" maxlength="9" placeholder="00000-000"></div>
+        <div><label class="ck-label" for="eUf" data-i18n="end.uf">UF</label><input id="eUf" class="nh-input" maxlength="2" autocomplete="address-level1"></div>
+        <div class="ck-span2"><label class="ck-label" for="eRua" data-i18n="end.rua">Rua</label><input id="eRua" class="nh-input" autocomplete="address-line1"></div>
+        <div><label class="ck-label" for="eNumero" data-i18n="end.numero">Número</label><input id="eNumero" class="nh-input"></div>
+        <div><label class="ck-label" for="eCompl" data-i18n="end.complemento">Complemento</label><input id="eCompl" class="nh-input" autocomplete="address-line2"></div>
+        <div><label class="ck-label" for="eBairro" data-i18n="end.bairro">Bairro</label><input id="eBairro" class="nh-input"></div>
+        <div><label class="ck-label" for="eCidade" data-i18n="end.cidade">Cidade</label><input id="eCidade" class="nh-input" autocomplete="address-level2"></div>
+        <div class="ck-span2"><label class="ck-label" for="eNome" data-i18n="end.destinatario">Destinatário</label><input id="eNome" class="nh-input" autocomplete="name"></div>
+        <div><label class="ck-label" for="eFone" data-i18n="end.telefone">Telefone</label><input id="eFone" class="nh-input" inputmode="tel" autocomplete="tel"></div>
+        <div><label class="ck-label" for="eRotulo" data-i18n="end.apelido">Apelido</label><input id="eRotulo" class="nh-input" placeholder="Casa, Trabalho…" data-i18n-attr="placeholder:end.apelido_ph"></div>
       </div>
-
-      <div class="flex flex-col gap-2">
-        <a href="inventario.html" class="btn btn-primary !w-full">Inventário</a>
-        <button id="btnCompras" class="btn btn-ghost border border-purple-500/40 hover:bg-purple-500/10 text-purple-300 !text-xs">Minhas Compras</button>
-      </div>
-    </section>
-
-    <section class="space-y-4">
-      <h3 class="text-xl font-bold text-purple-300">Universos</h3>
-      
-      <div class="flex flex-col gap-3">
-        <a href="acda.html" class="card p-4 flex items-center gap-4 hover:bg-white/5 border border-white/5 transition group">
-          <div class="w-10 h-10 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-xl group-hover:rotate-6 transition"></div>
-          <div>
-            <h4 class="text-sm font-bold text-white italic">ACDA</h4>
-            <p class="text-[10px] text-gray-500">Acesse o mundo de ACDA</p>
-          </div>
-        </a>
-      </div>
-    </section>
-
-    <section class="hidden md:block space-y-4">
-       <div class="p-6 rounded-2xl bg-gradient-to-b from-purple-900/20 to-transparent border border-white/5 text-center">
-          <p class="text-[10px] text-purple-300 font-black uppercase tracking-widest mb-1">NoHeroes Portal</p>
-          <p class="text-[9px] text-gray-500 italic">v2.0 - Sistema Vivo Estável</p>
-       </div>
-    </section>
-
-  </div>
-</main>
-
-  <!-- MODAL CONFIGURAÇÕES (maior e organizado) -->
-  <dialog id="configModal">
-    <form method="dialog" class="dialog-ctr w-[min(94vw,920px)] max-h-[85vh] overflow-hidden">
-      <div class="flex items-center justify-between px-6 py-4 border-b border-purple-800/60">
-        <h2 class="text-xl font-bold text-purple-300">Configurações</h2>
-        <button id="closeConfig" class="text-red-400 hover:text-red-300 text-2xl leading-none" type="button">&times;</button>
-      </div>
-
-      <div class="flex flex-wrap px-4 sm:px-6 gap-x-2 bg-transparent sticky top-0 z-10 pt-2">
-        <button data-tab="security" class="tab-btn flex-1 basis-[45%] sm:basis-0 py-2 text-center font-semibold" aria-selected="true" type="button">Senha & Segurança</button>
-        <button data-tab="profile"  class="tab-btn flex-1 basis-[45%] sm:basis-0 py-2 text-center font-semibold" type="button">Dados Pessoais</button>
-        <button data-tab="address"  class="tab-btn flex-1 basis-[45%] sm:basis-0 py-2 text-center font-semibold" type="button">Endereço</button>
-        <button data-tab="permissions" class="tab-btn flex-1 basis-[45%] sm:basis-0 py-2 text-center font-semibold" type="button">Permissões</button>
-      </div>
-
-      <div class="px-6 py-5 space-y-6 overflow-y-auto" style="max-height:calc(85vh - 132px)">
-        <!-- Segurança -->
-        <section id="tab-security" class="space-y-4">
-          <div class="grid sm:grid-cols-2 gap-4">
-            <label class="block">
-              <span class="text-sm text-gray-300/80 mb-1 block">Senha Atual</span>
-              <input id="senha-atual" type="password" placeholder="••••••••" class="input"/>
-            </label>
-            <label class="block">
-              <span class="text-sm text-gray-300/80 mb-1 block">Nova Senha</span>
-              <input id="senha-nova" type="password" placeholder="Digite nova senha" class="input"/>
-            </label>
-          </div>
-          <p class="text-xs text-gray-400">Troca de senha será implementada em endpoint próprio.</p>
-        </section>
-
-        <!-- Dados pessoais -->
-        <section id="tab-profile" class="hidden space-y-4">
-          <div class="grid sm:grid-cols-2 gap-4">
-            <label class="block">
-              <span class="text-sm text-gray-300/80 mb-1 block">Nome completo</span>
-              <input type="text" id="input-nomecompleto" class="input" placeholder="Nome completo"/>
-            </label>
-            <label class="block">
-              <span class="text-sm text-gray-300/80 mb-1 block">E-mail (somente leitura)</span>
-              <input type="email" id="input-email" class="input" placeholder="email" disabled/>
-            </label>
-            <label class="block">
-              <span class="text-sm text-gray-300/80 mb-1 block">Telefone</span>
-              <input type="text" id="input-telefone" class="input" placeholder="(xx) xxxxx-xxxx"/>
-            </label>
-            <label class="block">
-              <span class="text-sm text-gray-300/80 mb-1 block">Documento</span>
-              <input type="text" id="input-documento" class="input" placeholder="CPF/CNPJ"/>
-            </label>
-          </div>
-        </section>
-
-        <!-- Endereços de entrega (/account/addresses — os mesmos do checkout) -->
-        <section id="tab-address" class="hidden space-y-4">
-          <p class="text-xs text-gray-400">Usados na entrega de produtos físicos. O padrão já vem marcado no checkout.</p>
-          <div id="listaEnderecos" class="space-y-2"><p class="text-sm text-gray-400">Carregando…</p></div>
-          <button id="btnNovoEndereco" class="btn btn-ghost border border-purple-500/40 hover:bg-purple-500/10 text-purple-300" type="button">+ Novo endereço</button>
-          <div id="formEndereco" class="hidden space-y-3">
-            <input type="hidden" id="eId"/>
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              <label class="block"><span class="text-sm text-gray-300/80 mb-1 block">CEP</span>
-                <input type="text" id="eCep" class="input" inputmode="numeric" maxlength="9" placeholder="00000-000" autocomplete="postal-code"/></label>
-              <label class="block"><span class="text-sm text-gray-300/80 mb-1 block">UF</span>
-                <input type="text" id="eUf" class="input" maxlength="2" autocomplete="address-level1"/></label>
-              <label class="block col-span-2 sm:col-span-1"><span class="text-sm text-gray-300/80 mb-1 block">Cidade</span>
-                <input type="text" id="eCidade" class="input" autocomplete="address-level2"/></label>
-              <label class="block col-span-2"><span class="text-sm text-gray-300/80 mb-1 block">Rua</span>
-                <input type="text" id="eRua" class="input" autocomplete="address-line1"/></label>
-              <label class="block"><span class="text-sm text-gray-300/80 mb-1 block">Número</span>
-                <input type="text" id="eNumero" class="input"/></label>
-              <label class="block"><span class="text-sm text-gray-300/80 mb-1 block">Complemento</span>
-                <input type="text" id="eCompl" class="input" autocomplete="address-line2"/></label>
-              <label class="block col-span-2 sm:col-span-1"><span class="text-sm text-gray-300/80 mb-1 block">Bairro</span>
-                <input type="text" id="eBairro" class="input"/></label>
-              <label class="block col-span-2"><span class="text-sm text-gray-300/80 mb-1 block">Destinatário</span>
-                <input type="text" id="eNome" class="input" autocomplete="name"/></label>
-              <label class="block"><span class="text-sm text-gray-300/80 mb-1 block">Telefone</span>
-                <input type="text" id="eFone" class="input" inputmode="tel"/></label>
-              <label class="block col-span-2 sm:col-span-1"><span class="text-sm text-gray-300/80 mb-1 block">Apelido</span>
-                <input type="text" id="eRotulo" class="input" placeholder="Casa, Trabalho…"/></label>
-            </div>
-            <p id="cepStatus" class="text-xs text-gray-400" aria-live="polite"></p>
-            <div class="flex gap-2">
-              <button id="btnSalvarEndereco" class="btn btn-primary flex-1" type="button">Salvar endereço</button>
-              <button id="btnCancelarEndereco" class="btn btn-ghost" type="button">Cancelar</button>
-            </div>
-          </div>
-        </section>
-
-        <!-- Permissões -->
-        <section id="tab-permissions" class="hidden space-y-4">
-          <label class="flex items-center gap-2">
-            <input id="perm-msg" type="checkbox" class="h-5 w-5 accent-purple-500 bg-black border-gray-600 rounded"/>
-            <span class="text-sm text-gray-300/90">Permitir mensagens de desconhecidos</span>
-          </label>
-          <label class="flex items-center gap-2">
-            <input id="perm-public" type="checkbox" class="h-5 w-5 accent-purple-500 bg-black border-gray-600 rounded"/>
-            <span class="text-sm text-gray-300/90">Exibir perfil público</span>
-          </label>
-          <p class="text-xs text-gray-400">Permissões são locais por enquanto.</p>
-
-          <!-- Conta & Privacidade (compliance v1) -->
-          <div class="mt-4 pt-4 border-t border-purple-800/60 space-y-3">
-            <div class="flex flex-wrap gap-4 text-sm">
-              <a href="termos.html" target="_blank" rel="noopener" class="text-purple-300 hover:text-purple-200 underline">Termos de Uso</a>
-              <a href="privacidade.html" target="_blank" rel="noopener" class="text-purple-300 hover:text-purple-200 underline">Política de Privacidade</a>
-            </div>
-            <div class="rounded-xl border border-red-500/30 bg-red-500/5 p-4">
-              <h3 class="text-sm font-bold text-red-300 mb-1">Zona de perigo</h3>
-              <p class="text-xs text-gray-400 mb-3">Excluir sua conta é permanente. Seus dados pessoais são removidos (registros financeiros são retidos por obrigação legal, sem vínculo com você).</p>
-              <button id="btnDeleteAccount" type="button" class="btn" style="background:#7f1d1d;color:#fff">Excluir minha conta</button>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <div class="flex justify-end gap-3 px-6 py-4 border-t border-purple-800/60">
-        <button id="btnCloseConfig" class="btn btn-ghost" type="button">Fechar</button>
-        <button id="btnSalvar" class="btn btn-primary" type="button">Salvar</button>
+      <p id="cepStatus" class="text-xs text-white/55 mt-2" aria-live="polite"></p>
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button class="nh-btn nh-btn-pri" type="submit" style="flex:1" data-i18n="end.salvar">Salvar endereço</button>
+        <button id="btnCancelarEndereco" class="nh-btn nh-btn-sec" type="button" data-i18n="geral.cancelar">Cancelar</button>
       </div>
     </form>
-  </dialog>
+  </section>
 
-  <!-- LOGOUT -->
-<dialog id="logoutModal">
-  <div class="dialog-ctr w-[min(94vw,520px)] p-6 ring-gradient">
-    <h2 class="text-xl font-bold text-red-400 mb-2">Confirmar Logout?</h2>
-    <p id="logoutMsg" class="mb-4 text-sm text-gray-400">Tem certeza que deseja sair da sua conta?</p>
-    <div class="flex justify-end gap-3">
-      <button id="cancelLogout" class="btn btn-ghost" type="button">Cancelar</button>
-      <button id="confirmLogout" class="btn" style="background:#7f1d1d;color:#fff" type="button">Sair</button>
-    </div>
-  </div>
-</dialog>
-
-  <!-- EXCLUIR CONTA (compliance — 2 passos) -->
-<dialog id="deleteAccountModal">
-  <div class="dialog-ctr w-[min(94vw,520px)] p-6 ring-gradient">
-    <h2 class="text-xl font-bold text-red-400 mb-2">Excluir conta permanentemente?</h2>
-    <p class="text-sm text-gray-300/85 mb-3">Esta ação é <strong>irreversível</strong>. Para confirmar, digite <strong>EXCLUIR</strong> abaixo.</p>
-    <input id="deleteConfirmInput" type="text" placeholder="Digite EXCLUIR" class="input mb-3" autocomplete="off"/>
-    <input id="deletePasswordInput" type="password" placeholder="Confirme com sua senha" class="input mb-1" autocomplete="current-password"/>
-    <p class="text-[11px] text-gray-400 mb-4">Usa login com Google? A exclusão pela web ainda não reautentica com Google — abra um ticket no <a href="suporte.html" class="underline">suporte</a>.</p>
-    <div class="flex justify-end gap-3">
-      <button id="cancelDelete" class="btn btn-ghost" type="button">Cancelar</button>
-      <button id="confirmDelete" class="btn" style="background:#7f1d1d;color:#fff" disabled type="button">Excluir conta</button>
-    </div>
-    <p id="deleteError" class="text-xs text-red-400 mt-3 hidden"></p>
-  </div>
-</dialog>
-
-  <!-- MODAL HISTÓRICO DE COMPRAS -->
-<dialog id="comprasModal">
-  <div class="dialog-ctr w-[min(94vw,900px)] max-h-[85vh] overflow-hidden ring-gradient flex flex-col">
-    <div class="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-purple-800/60">
-      <h2 class="text-xl font-bold text-purple-300">Minhas Compras</h2>
-      <button id="btnFecharCompras" class="text-red-400 hover:text-red-300 text-2xl leading-none" type="button">&times;</button>
-    </div>
-
-    <div id="comprasContainer" class="flex-1 overflow-y-auto px-4 sm:px-6 py-4 space-y-3 text-sm">
-      <p class="text-center text-gray-400/80">Carregando compras...</p>
-    </div>
-
-    <div class="flex justify-end px-6 py-4 border-t border-purple-800/60">
-      <button id="btnCloseCompras" class="btn btn-ghost" type="button">Fechar</button>
-    </div>
-  </div>
-</dialog>
-
-<!-- MODAL DETALHES DA COMPRA -->
-<dialog id="detalhesCompraModal">
-  <div class="dialog-ctr w-[min(94vw,680px)] max-h-[80vh] overflow-hidden ring-gradient flex flex-col">
-    <div class="flex items-center justify-between px-6 py-4 border-b border-purple-800/60">
-      <h2 id="detalhesTitulo" class="text-lg font-semibold text-purple-300">Detalhes da Compra</h2>
-      <button id="btnFecharDetalhes" class="text-red-400 hover:text-red-300 text-2xl leading-none" type="button">&times;</button>
-    </div>
-
-    <div id="detalhesItens" class="flex-1 overflow-y-auto px-4 sm:px-6 py-4 space-y-4 text-sm text-gray-300/90">
-      <p class="text-center text-gray-400">Carregando detalhes...</p>
-    </div>
-
-    <div class="flex justify-end px-6 py-4 border-t border-purple-800/60">
-      <button id="btnCloseDetalhes" class="btn btn-ghost" type="button">Fechar</button>
-    </div>
-  </div>
-</dialog>
-<script src="assets/js/cookies.js"></script>
-<script src="assets/js/pedidos.js"></script>
-<script src="assets/js/enderecos.js"></script>
-  <script>
-    // ========= helper: close-on-backdrop para <dialog> =========
-    function enableBackdropClose(dlg){
-      dlg.addEventListener('mousedown', (e)=>{
-        const rect = dlg.getBoundingClientRect();
-        const clickedOutside = e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom;
-        if (e.target === dlg && clickedOutside) dlg.close();
-      });
-    }
-
-    // ========= Config modal open/close =========
-    const configDlg = document.getElementById('configModal');
-    document.getElementById('openConfig').addEventListener('click', ()=>configDlg.showModal());
-    ['closeConfig','btnCloseConfig'].forEach(id=>{
-      document.getElementById(id).addEventListener('click', ()=>configDlg.close());
-    });
-    enableBackdropClose(configDlg);
-
-    // ========= Tabs =========
-    document.querySelectorAll('[data-tab]').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        document.querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('aria-selected','false'));
-        document.querySelectorAll('section[id^="tab-"]').forEach(sec=>sec.classList.add('hidden'));
-        btn.setAttribute('aria-selected','true');
-        document.getElementById('tab-'+btn.dataset.tab).classList.remove('hidden');
-      });
-    });
-
-    // ===== Logout completamente funcional =====
-const logoutDlg = document.getElementById('logoutModal');
-enableBackdropClose(logoutDlg);
-
-const btnLogout = document.getElementById('btnLogout');
-const btnCancelLogout = document.getElementById('cancelLogout');
-const btnConfirmLogout = document.getElementById('confirmLogout');
-const logoutMsg = document.getElementById('logoutMsg');
-
-let logoutArmed = false;
-
-function resetLogoutConfirm() {
-  logoutArmed = false;
-  btnConfirmLogout.textContent = 'Sair';
-  logoutMsg.textContent = 'Tem certeza que deseja sair da sua conta?';
-}
-
-btnLogout.addEventListener('click', () => {
-  resetLogoutConfirm();
-  logoutDlg.showModal();
-});
-
-btnCancelLogout.addEventListener('click', () => {
-  resetLogoutConfirm();
-  logoutDlg.close();
-});
-
-btnConfirmLogout.addEventListener('click', () => {
-  if (!logoutArmed) {
-    // primeiro clique: pede confirmação de novo, sem timer
-    logoutArmed = true;
-    btnConfirmLogout.textContent = 'Clique novamente para confirmar';
-    logoutMsg.textContent = 'Essa ação vai encerrar sua sessão neste dispositivo.';
-    return;
-  }
-
-  // segundo clique: efetiva o logout
-  btnConfirmLogout.disabled = true;
-  btnConfirmLogout.textContent = 'Saindo...';
-
-  localStorage.removeItem('NoHeroes_token');
-  localStorage.removeItem('NoHeroes_email');
-  setTimeout(() => {
-    logoutDlg.close();
-    window.location.href = 'login.html';
-  }, 400);
-});
-
-// ===== Excluir conta (compliance v1) — 2 passos: abrir modal + digitar EXCLUIR =====
-(function(){
-  const dlg = document.getElementById('deleteAccountModal');
-  const btnOpen = document.getElementById('btnDeleteAccount');
-  const input = document.getElementById('deleteConfirmInput');
-  const pwd = document.getElementById('deletePasswordInput');
-  const btnCancel = document.getElementById('cancelDelete');
-  const btnConfirm = document.getElementById('confirmDelete');
-  const errEl = document.getElementById('deleteError');
-  if (!dlg || !btnOpen) return;
-  if (typeof enableBackdropClose === 'function') enableBackdropClose(dlg);
-  const recheck = () => { btnConfirm.disabled = !(input.value.trim().toUpperCase() === 'EXCLUIR' && pwd.value.length > 0); };
-  btnOpen.addEventListener('click', () => { input.value=''; pwd.value=''; btnConfirm.disabled=true; errEl.classList.add('hidden'); dlg.showModal(); });
-  input.addEventListener('input', recheck);
-  pwd.addEventListener('input', recheck);
-  btnCancel.addEventListener('click', () => dlg.close());
-  btnConfirm.addEventListener('click', async () => {
-    btnConfirm.disabled = true; btnConfirm.textContent = 'Excluindo...';
-    try {
-      const res = await fetch(`${window.API_BASE}/account/delete`, {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + (localStorage.getItem('NoHeroes_token') || '') },
-        body: JSON.stringify({ password: pwd.value })
-      });
-      if (res.status === 401) throw new Error('Senha incorreta (ou reautenticação necessária).');
-      if (!res.ok) throw new Error('Falha ao excluir a conta (' + res.status + ').');
-      localStorage.removeItem('NoHeroes_token');
-      localStorage.removeItem('NoHeroes_email');
-      dlg.close();
-      window.location.href = 'login.html';
-    } catch (e) {
-      errEl.textContent = e.message || 'Erro ao excluir conta.';
-      errEl.classList.remove('hidden');
-      btnConfirm.disabled = false; btnConfirm.textContent = 'Excluir conta';
-    }
-  });
-})();
-
-    // ========= API helper =========
-    async function api(path, opts={}){
-      const res = await fetch(`${window.API_BASE}${path}`, {
-        ...opts,
-        headers: {
-          'Content-Type':'application/json',
-          'Authorization': `Bearer ${window.tokenJWT}`,
-          ...(opts.headers||{})
-        }
-      });
-      if(res.status===401){ localStorage.removeItem('NoHeroes_token'); location.href='login.html'; return null; }
-      return res;
-    }
-
-    // ========= Carregar Dashboard =========
-    let __userCache = null;
-    async function carregarDashboard(){
-      try{
-        const res = await api('/dashboard', { method:'GET' });
-        if(!res) return;
-        const json = await res.json();
-        const user = json?.data?.account || {};
-        __userCache = user;
-
-        // Preenche bloco do meio
-        document.getElementById('miniNome').textContent = user.nome_completo || user.username || '—';
-        document.getElementById('miniNivel').textContent = `Nível ${user.level ?? '—'}`;
-        const R2_PUBLIC_BASE = 'https://pub-efeea1887cb740da8bb4185535dfeea9.r2.dev';
-        function fullAvatarUrl(raw) {
-          if (!raw) return '';
-          if (/^https?:\/\//i.test(raw) || raw.startsWith('data:image/')) return raw;
-          return `${R2_PUBLIC_BASE}/${String(raw).replace(/^\/+/, '')}`;
-        }
-
-        const avatarSrc = fullAvatarUrl(user.avatar) || 'assets/images/linktree.png';
-        const avatarEl = document.getElementById('miniAvatar');
-        avatarEl.src = avatarSrc;
-        avatarEl.onerror = () => { avatarEl.src = 'assets/images/linktree.png'; };
-
-        // #userEmail volta a mostrar o E-MAIL (CEO 2026-07-28).
-        // Antes exibia a URL completa do avatar. Era intencional ("em vez do e-mail"), mas
-        // errado por três motivos: (1) o elemento se chama userEmail e passou a mentir sobre
-        // o próprio conteúdo; (2) a MESMA URL já aparece logo abaixo no campo #avatarUrl, então
-        // era informação duplicada na tela; (3) uma URL crua de storage é saída de depuração,
-        // não informação para o usuário — e foi ela que estourava o layout no celular.
-        const userEmailEl = document.getElementById('userEmail');
-        if (userEmailEl) userEmailEl.textContent = user.email || '';
-        const avatarUrlInput = document.getElementById('avatarUrl');
-        if (avatarUrlInput && user.avatar) avatarUrlInput.value = fullAvatarUrl(user.avatar);
-
-        // Preenche modal (dados editáveis)
-        document.getElementById('input-nomecompleto').value = user.nome_completo || '';
-        document.getElementById('input-email').value = user.email || '';
-        document.getElementById('input-telefone').value = user.telefone || '';
-        document.getElementById('input-documento').value = user.documento || '';
-      }catch(e){
-        console.error('Erro ao carregar dashboard:', e);
-      }
-    }
-    carregarDashboard();
-
-    // ========= Salvar avatar =========
-    document.getElementById('btnSalvarAvatar').addEventListener('click', async ()=>{
-      let avatar = document.getElementById('avatarUrl').value.trim();
-
-      const file = document.getElementById('avatarFile').files[0];
-      if(file){
-        // converte pra DataURL (MVP). Recomendado: endpoint de upload dedicado.
-        avatar = await new Promise((resolve,reject)=>{
-          const r = new FileReader();
-          r.onload = ()=>resolve(r.result);
-          r.onerror = reject;
-          r.readAsDataURL(file);
-        });
-      }
-      if(!avatar){ alert('Selecione um arquivo ou informe uma URL de avatar.'); return; }
-
-      try{
-        const res = await api('/dashboard/update', {
-          method:'PATCH',
-          body: JSON.stringify({ avatar }) // ⚠️ backend: incluir 'avatar' em camposPermitidos
-        });
-        if(!res) return;
-        const json = await res.json();
-        if(json?.success){
-          document.getElementById('miniAvatar').src = avatar;
-          alert('Avatar atualizado.');
-        }else{
-          alert(json?.message || 'Não foi possível atualizar o avatar.');
-        }
-      }catch(e){
-        alert('Erro ao enviar avatar.');
-      }
-    });
-
-    // ========= Salvar configurações =========
-    document.getElementById('btnSalvar').addEventListener('click', async ()=>{
-      const payload = {
-        nome_completo: document.getElementById('input-nomecompleto').value.trim(),
-        telefone: document.getElementById('input-telefone').value.trim(),
-        documento: document.getElementById('input-documento').value.trim()
-      };
-      try{
-        const res = await api('/dashboard/update', { method:'PATCH', body: JSON.stringify(payload) });
-        if(!res) return;
-        const json = await res.json();
-        if(json?.success){
-          alert('Dados atualizados com sucesso.');
-          document.getElementById('configModal').close();
-          carregarDashboard();
-        }else{
-          alert(json?.message || 'Erro ao salvar dados.');
-        }
-      }catch(e){
-        alert('Erro de conexão ao salvar.');
-      }
-    });
-
-    // Brasas: agora no componente compartilhado <nh-background> (noheroes-ui.js)
-    // ========= Corrige clique no upload de avatar =========
-const avatarFile = document.getElementById('avatarFile');
-document.getElementById('btnSelectFile').addEventListener('click', () => avatarFile.click());
-
-// ========= HISTÓRICO DE COMPRAS =========
-const comprasDlg = document.getElementById('comprasModal');
-const detalhesDlg = document.getElementById('detalhesCompraModal');
-enableBackdropClose(comprasDlg);
-enableBackdropClose(detalhesDlg);
-
-// abrir modal principal
-document.getElementById('btnCompras').addEventListener('click', async () => {
-  comprasDlg.showModal();
-  carregarCompras();
-});
-
-// fechar modais
-['btnFecharCompras', 'btnCloseCompras'].forEach(id =>
-  document.getElementById(id).addEventListener('click', () => comprasDlg.close())
-);
-['btnFecharDetalhes', 'btnCloseDetalhes'].forEach(id =>
-  document.getElementById(id).addEventListener('click', () => detalhesDlg.close())
-);
-
-// carregar histórico (Minhas Compras): pagamento + entrega de cada pedido
-async function carregarCompras(){
-  const cont = document.getElementById('comprasContainer');
-  cont.innerHTML = '<p class="text-center text-gray-400/80">Carregando compras...</p>';
-  const P = window.NHPedido;
-
-  try {
-    const res = await api('/orders', { method:'GET' });
-    if(!res) return;
-    const json = await res.json();
-    if(!json.success) throw new Error(json.message || 'Erro ao carregar compras.');
-
-    const pedidos = json.data || [];
-    if(!pedidos.length){
-      cont.innerHTML = '<p class="text-center text-gray-500 py-6">Você ainda não realizou nenhuma compra.</p>';
-      return;
-    }
-
-    cont.innerHTML = pedidos.map(p => {
-      const resumo = (p.items || []).map(i => `${i.quantity}× ${P.esc(i.title || 'Item #' + i.id)}`).join(', ');
-      return `
-      <button type="button" class="verDetalhesBtn w-full text-left card ring-gradient p-3 sm:p-4 rounded-xl hover:bg-purple-500/5" data-id="${P.esc(p.id)}">
-        <div class="flex items-start justify-between gap-3">
-          <div class="min-w-0">
-            <p class="font-semibold text-purple-300">${P.esc(fmtData(p.createdAt))}</p>
-            <p class="text-xs text-gray-400 truncate">${resumo || '—'}</p>
-          </div>
-          <p class="text-base font-bold text-amber-300 whitespace-nowrap">${P.brl(p.total)}</p>
-        </div>
-        <div class="flex flex-wrap gap-1 mt-2">${P.seloPagamento(p.status)}${p.fulfillment_status && p.fulfillment_status !== 'na' ? P.seloEntrega(p.fulfillment_status) : ''}</div>
-      </button>`;
-    }).join('');
-
-    cont.querySelectorAll('.verDetalhesBtn').forEach(btn => {
-      btn.addEventListener('click', ()=>abrirDetalhes(btn.dataset.id));
-    });
-  } catch (err){
-    console.error(err);
-    cont.innerHTML = `<p class="text-center text-red-400">Erro ao carregar compras.</p>`;
-  }
-}
-
-// formata data
-function fmtData(iso){
-  if(!iso) return '—';
-  const d = new Date(iso);
-  return d.toLocaleDateString('pt-BR', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
-}
-
-// detalhe: itens, endereço, frete, rastreio e linha do tempo
-async function abrirDetalhes(orderId){
-  const box = document.getElementById('detalhesItens');
-  const P = window.NHPedido;
-  if (!orderId) {
-    box.innerHTML = '<p class="text-center text-red-400">Este pedido está incompleto.</p>';
-    return;
-  }
-  detalhesDlg.showModal();
-  document.getElementById('detalhesTitulo').textContent = 'Pedido ' + orderId;
-  box.innerHTML = '<p class="text-center text-gray-400/80">Carregando…</p>';
-
-  try{
-    const res = await api(`/orders/${encodeURIComponent(orderId)}`, { method:'GET' });
-    if(!res) return;
-    const json = await res.json();
-    if(!json.success) throw new Error(json.message);
-    const o = json.data;
-    const bloco = (titulo, html) => `<div><h3 class="text-xs uppercase tracking-wider text-gray-400 mb-1">${titulo}</h3>${html}</div>`;
-
-    const itens = (o.items || []).map(i => `
-      <div class="flex justify-between gap-3 border-b border-gray-700/40 py-1.5">
-        <span class="min-w-0"><span class="text-purple-200">${i.quantity}× ${P.esc(i.title || 'Item #' + i.id)}</span>${i.variant_label ? ` <span class="text-gray-400">(${P.esc(i.variant_label)})</span>` : ''}
-          <span class="text-[10px] text-gray-500 uppercase ml-1">${i.fulfillment === 'physical' ? 'físico' : 'digital'}</span></span>
-        <span class="whitespace-nowrap">${i.unit_price != null ? P.brl(i.unit_price * i.quantity) : ''}</span>
-      </div>`).join('');
-    const totais = `
-      <div class="flex justify-between pt-2 text-gray-400"><span>Subtotal</span><span>${P.brl(o.subtotal != null ? o.subtotal : o.total)}</span></div>
-      ${o.shipping_method ? `<div class="flex justify-between text-gray-400"><span>Frete</span><span>${o.shipping_cost ? P.brl(o.shipping_cost) : 'Grátis'}</span></div>` : ''}
-      ${o.discount ? `<div class="flex justify-between text-gray-400"><span>Desconto</span><span>− ${P.brl(o.discount)}</span></div>` : ''}
-      <div class="flex justify-between font-bold text-amber-300"><span>Total</span><span>${P.brl(o.total)}</span></div>`;
-
-    let html = `<div class="flex flex-wrap gap-1">${P.seloPagamento(o.status)}${o.fulfillment_status !== 'na' ? P.seloEntrega(o.fulfillment_status) : ''}
-      <span class="text-xs text-gray-400 ml-1 self-center">${P.esc(P.metodo(o.payment_provider))}</span></div>`;
-    if (o.status === 'awaiting_manual_confirmation')
-      html += `<a href="agradecimento.html?order=${encodeURIComponent(o.id)}" class="btn btn-ghost border border-amber-400/50 text-amber-300 w-full">Ver QR Code / código Pix</a>`;
-    html += bloco('Itens', itens + totais);
-    if (o.shipping_address) {
-      const m = o.shipping_method;
-      html += bloco('Entrega', `<p>${P.endereco(o.shipping_address)}</p>` +
-        (m ? `<p class="mt-1 text-gray-400">${P.esc(m.service)}${m.carrier ? ' · ' + P.esc(m.carrier) : ''}${m.days ? ` · ${m.days.min === m.days.max ? m.days.max : m.days.min + '–' + m.days.max} dia(s) úteis` : ''}</p>` : ''));
-    }
-    if (o.tracking) {
-      const t = o.tracking;
-      const link = t.url && /^https?:\/\//i.test(t.url) ? `<a href="${P.esc(t.url)}" target="_blank" rel="noopener" class="text-purple-300 underline">Acompanhar entrega</a>` : '';
-      html += bloco('Rastreio', `<p>${t.carrier ? P.esc(t.carrier) + ' · ' : ''}<span class="font-mono select-all">${P.esc(t.code || '')}</span></p>${link}`);
-    }
-    html += bloco('Histórico', P.timeline(o.events));
-    box.innerHTML = html;
-  }catch(err){
-    console.error(err);
-    box.innerHTML = `<p class="text-center text-red-400">Erro ao carregar detalhes.</p>`;
-  }
-}
-
-// vindo do agradecimento.html (#compras): abre Minhas Compras direto
-if (location.hash === '#compras') { comprasDlg.showModal(); carregarCompras(); }
-
-// ========= ENDEREÇOS DE ENTREGA (/account/addresses) =========
-let __enderecos = [];
-const $e = (id) => document.getElementById(id);
-async function carregarEnderecos(){
-  const box = $e('listaEnderecos');
-  try{
-    const res = await api('/account/addresses', { method:'GET' });
-    if(!res) return;
-    const json = await res.json();
-    __enderecos = json.data || [];
-    if(!__enderecos.length){ box.innerHTML = '<p class="text-sm text-gray-400">Nenhum endereço salvo.</p>'; return; }
-    box.innerHTML = __enderecos.map(a => `
-      <div class="rounded-xl border ${a.is_default ? 'border-purple-500/60 bg-purple-500/5' : 'border-gray-700/60'} p-3 text-sm">
-        <p class="font-semibold text-purple-200">${NHPedido.esc(a.label || a.recipient_name)}${a.is_default ? ' <span class="text-xs text-gray-400">(padrão)</span>' : ''}</p>
-        <p class="text-gray-400 text-xs mt-0.5">${NHPedido.esc(a.recipient_name)} · ${NHEndereco.resumo(a)}</p>
-        <div class="flex flex-wrap gap-3 mt-2 text-xs">
-          <button type="button" class="text-purple-300 underline" data-end-editar="${a.id}">Editar</button>
-          ${a.is_default ? '' : `<button type="button" class="text-purple-300 underline" data-end-padrao="${a.id}">Tornar padrão</button>`}
-          <button type="button" class="text-red-400 underline" data-end-remover="${a.id}">Remover</button>
-        </div>
-      </div>`).join('');
-  }catch(e){
-    box.innerHTML = '<p class="text-sm text-red-400">Erro ao carregar endereços.</p>';
-  }
-}
-function abrirFormEndereco(a){
-  $e('formEndereco').classList.remove('hidden');
-  $e('btnNovoEndereco').classList.add('hidden');
-  $e('eId').value = a ? a.id : '';
-  $e('eCep').value = a ? NHEndereco.formatarCep(a.cep) : '';
-  $e('eUf').value = a ? a.state : '';
-  $e('eCidade').value = a ? a.city : '';
-  $e('eRua').value = a ? a.street : '';
-  $e('eNumero').value = a ? a.number : '';
-  $e('eCompl').value = a ? (a.complement || '') : '';
-  $e('eBairro').value = a ? a.district : '';
-  $e('eNome').value = a ? a.recipient_name : ($e('input-nomecompleto').value || '');
-  $e('eFone').value = a ? (a.phone || '') : ($e('input-telefone').value || '');
-  $e('eRotulo').value = a ? (a.label || '') : '';
-  $e('cepStatus').textContent = '';
-  $e('eCep').focus();
-}
-function fecharFormEndereco(){
-  $e('formEndereco').classList.add('hidden');
-  $e('btnNovoEndereco').classList.remove('hidden');
-}
-$e('btnNovoEndereco').addEventListener('click', () => abrirFormEndereco(null));
-$e('btnCancelarEndereco').addEventListener('click', fecharFormEndereco);
-$e('eCep').addEventListener('input', async (e) => {
-  e.target.value = NHEndereco.formatarCep(e.target.value);
-  if (e.target.value.replace(/\D/g, '').length !== 8) return;
-  $e('cepStatus').textContent = 'Buscando CEP…';
-  const r = await NHEndereco.viaCep(e.target.value);
-  if (!r) { $e('cepStatus').textContent = 'CEP não encontrado (ou serviço fora do ar). Preencha à mão.'; return; }
-  $e('eRua').value = r.street || $e('eRua').value;
-  $e('eBairro').value = r.district || $e('eBairro').value;
-  $e('eCidade').value = r.city;
-  $e('eUf').value = r.state;
-  $e('cepStatus').textContent = 'Endereço encontrado. Confira e informe o número.';
-  $e('eNumero').focus();
-});
-$e('btnSalvarEndereco').addEventListener('click', async () => {
-  const id = $e('eId').value;
-  const body = {
-    cep: $e('eCep').value, state: $e('eUf').value, city: $e('eCidade').value, street: $e('eRua').value,
-    number: $e('eNumero').value, complement: $e('eCompl').value, district: $e('eBairro').value,
-    recipient_name: $e('eNome').value, phone: $e('eFone').value, label: $e('eRotulo').value,
-  };
-  const res = await api(id ? `/account/addresses/${id}` : '/account/addresses', { method: id ? 'PATCH' : 'POST', body: JSON.stringify(body) });
-  if(!res) return;
-  const json = await res.json().catch(() => ({}));
-  if(!res.ok){ $e('cepStatus').textContent = json.message || 'Não foi possível salvar.'; return; }
-  fecharFormEndereco();
-  carregarEnderecos();
-});
-$e('listaEnderecos').addEventListener('click', async (e) => {
-  const b = e.target.closest('button'); if(!b) return;
-  if (b.dataset.endEditar) return abrirFormEndereco(__enderecos.find(a => String(a.id) === b.dataset.endEditar));
-  if (b.dataset.endPadrao) { await api(`/account/addresses/${b.dataset.endPadrao}/default`, { method:'PATCH' }); return carregarEnderecos(); }
-  if (b.dataset.endRemover) {
-    if (b.dataset.armado !== '1') { b.dataset.armado = '1'; b.textContent = 'Confirmar remoção'; return; }
-    await api(`/account/addresses/${b.dataset.endRemover}`, { method:'DELETE' });
-    carregarEnderecos();
-  }
-});
-document.querySelector('[data-tab="address"]').addEventListener('click', carregarEnderecos);
-
-// Drawer: agora no componente compartilhado <nh-drawer> (gatilho via [data-nh-drawer-toggle])
-
-// ═══════════════════════════════════════════════
-// NOTIFICAÇÕES
-// ═══════════════════════════════════════════════
-// XSS armazenado (varredura v1, LOTE 1, CEO 2026-08-02): o CORPO da notificação
-// é texto CRU de outro usuário — routes/comments.js:72 grava
-// `body: content.trim().slice(0, 100)` SEM passar nem pelo mask de palavrão.
-// Como a lista entra por innerHTML, escapar aqui é a única barreira.
-function escHtml(s) {
-  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-const NOTIF_ICONS = {
-  purchase_confirmed:     '🛒',
-  critical_error:         '💀',
-  system:                 '🔔',
-};
-
-function timeAgoNotif(dateStr) {
-  if (!dateStr) return '';
-  const diff = Date.now() - new Date(dateStr).getTime();
-  const m = Math.floor(diff / 60000);
-  if (m < 1) return 'agora';
-  if (m < 60) return `${m}min atrás`;
-  const h = Math.floor(m / 60);
-  if (h < 24) return `${h}h atrás`;
-  return `${Math.floor(h / 24)}d atrás`;
-}
-
-async function loadNotifications() {
-  const token = localStorage.getItem('NoHeroes_token') || '';
-  if (!token) return;
-  try {
-    const res = await fetch(`${window.API_BASE}/api/me/notifications?limit=30`, {
-      headers: { 'Authorization': token.startsWith('Bearer') ? token : `Bearer ${token}` }
-    });
-    if (!res.ok) return;
-    const data = await res.json();
-    const notifs = data.notifications || [];
-    const unread = data.unread || 0;
-
-    // Badge
-    const badge = document.getElementById('notif-badge');
-    if (badge) {
-      badge.textContent = unread > 9 ? '9+' : unread;
-      badge.classList.toggle('show', unread > 0);
-    }
-
-    // Contador no modal
-    const counter = document.getElementById('notif-unread-count');
-    if (counter) counter.textContent = unread > 0 ? `${unread} não lida${unread > 1 ? 's' : ''}` : 'Tudo lido';
-
-    // Lista
-    const list = document.getElementById('notif-list');
-    if (!list) return;
-
-    if (!notifs.length) {
-      list.innerHTML = '<div style="padding:40px;text-align:center;color:rgba(232,228,240,.3);font-size:12px;">Nenhuma notificação.</div>';
-      return;
-    }
-
-    list.innerHTML = notifs.map(n => `
-      <div class="notif-item ${n.read ? '' : 'unread'}" onclick="markNotifRead(${n.id}, this, '${n.link || ''}')">
-        <span class="notif-icon">${NOTIF_ICONS[n.type] || '🔔'}</span>
-        <div class="notif-content">
-          <div class="notif-title">${escHtml(n.title)}</div>
-          <div class="notif-body">${escHtml(n.body)}</div>
-          <div class="notif-time">${timeAgoNotif(n.createdAt)}</div>
-        </div>
-        ${!n.read ? '<div class="notif-dot"></div>' : ''}
+  <!-- PREFERÊNCIAS -->
+  <section id="painel-preferencias" class="pf-painel" role="tabpanel" aria-labelledby="aba-preferencias" hidden>
+    <h2 data-i18n="pf.pref.titulo">Preferências de notificação</h2>
+    <p class="pf-sub" data-i18n="pf.pref.sub">Escolha o que você quer receber no site e por e-mail. Novidades e descontos só chegam se você ativar.</p>
+    <form id="formPrefs">
+      <table class="pf-tabela">
+        <thead><tr><th data-i18n="pf.pref.tipo">Tipo de aviso</th><th data-i18n="pf.pref.site">No site</th><th data-i18n="pf.pref.email">E-mail</th></tr></thead>
+        <tbody id="prefsCorpo"></tbody>
+      </table>
+      <div class="nh-campo" style="margin-top:16px;max-width:280px">
+        <label for="prefLang" data-i18n="pf.pref.idioma">Idioma dos e-mails</label>
+        <select id="prefLang" class="nh-input"><option value="pt">Português</option><option value="en">English</option></select>
       </div>
-    `).join('');
-  } catch (err) {
-    console.error('Erro ao carregar notificações:', err);
-  }
-}
+      <button class="nh-btn nh-btn-pri" type="submit" style="margin-top:14px" data-i18n="pf.pref.salvar">Salvar preferências</button>
+      <p id="prefsMsg" class="nh-form-msg" role="status"></p>
+    </form>
+  </section>
 
-async function markNotifRead(id, el, link) {
-  const token = localStorage.getItem('NoHeroes_token') || '';
-  try {
-    await fetch(`${window.API_BASE}/api/me/notifications/${id}/read`, {
-      method: 'PATCH',
-      headers: { 'Authorization': token.startsWith('Bearer') ? token : `Bearer ${token}` }
-    });
-    el.classList.remove('unread');
-    el.querySelector('.notif-dot')?.remove();
-    // atualiza badge
-    const badge = document.getElementById('notif-badge');
-    if (badge) {
-      const cur = parseInt(badge.textContent) || 0;
-      const next = Math.max(0, cur - 1);
-      badge.textContent = next > 9 ? '9+' : next;
-      badge.classList.toggle('show', next > 0);
-    }
-  } catch {}
-  if (link) { closeNotifModal(); window.location.href = link; }
-}
+  <!-- CONTA -->
+  <section id="painel-conta" class="pf-painel" role="tabpanel" aria-labelledby="aba-conta" hidden>
+    <h2 data-i18n="pf.conta.dados">Dados pessoais</h2>
+    <form id="formDados" class="grid gap-3" style="max-width:34rem;margin-top:10px">
+      <div class="nh-campo"><label for="dNome" data-i18n="reg.nome">Nome completo</label><input id="dNome" class="nh-input" autocomplete="name"></div>
+      <div class="nh-campo"><label for="dTelefone" data-i18n="end.telefone">Telefone</label><input id="dTelefone" class="nh-input" autocomplete="tel" inputmode="tel"></div>
+      <div class="nh-campo"><label for="dDocumento" data-i18n="pf.conta.documento">CPF ou CNPJ</label><input id="dDocumento" class="nh-input" inputmode="numeric"></div>
+      <div><button class="nh-btn nh-btn-pri" type="submit" data-i18n="geral.salvar">Salvar</button></div>
+      <p id="dadosMsg" class="nh-form-msg" role="status"></p>
+    </form>
 
-async function markAllNotifsRead() {
-  const token = localStorage.getItem('NoHeroes_token') || '';
-  try {
-    await fetch(`${window.API_BASE}/api/me/notifications/read-all`, {
-      method: 'PATCH',
-      headers: { 'Authorization': token.startsWith('Bearer') ? token : `Bearer ${token}` }
-    });
-    document.querySelectorAll('.notif-item.unread').forEach(el => {
-      el.classList.remove('unread');
-      el.querySelector('.notif-dot')?.remove();
-    });
-    const badge = document.getElementById('notif-badge');
-    if (badge) { badge.textContent = '0'; badge.classList.remove('show'); }
-    const counter = document.getElementById('notif-unread-count');
-    if (counter) counter.textContent = 'Tudo lido';
-  } catch {}
-}
+    <div class="pf-bloco" style="border-top:1px solid var(--nh-linha);padding-top:18px">
+      <h2 data-i18n="pf.conta.senha">Trocar senha</h2>
+      <p class="pf-sub" data-i18n="pf.conta.senha_google">Se você entra com o Google e nunca criou senha, use "Esqueci a senha" no login para criar uma.</p>
+      <form id="formSenha" class="grid gap-3" style="max-width:34rem">
+        <div class="nh-campo"><label for="sAtual" data-i18n="pf.conta.atual">Senha atual</label><input id="sAtual" type="password" class="nh-input" autocomplete="current-password"></div>
+        <div class="nh-campos-2">
+          <div class="nh-campo"><label for="sNova" data-i18n="esq.nova">Nova senha</label><input id="sNova" type="password" class="nh-input" autocomplete="new-password" minlength="8"></div>
+          <div class="nh-campo"><label for="sConf" data-i18n="esq.confirmar">Confirmar nova senha</label><input id="sConf" type="password" class="nh-input" autocomplete="new-password" minlength="8"></div>
+        </div>
+        <p class="nh-dica" data-i18n="reg.senha_dica">Mínimo de 8 caracteres.</p>
+        <div><button class="nh-btn nh-btn-pri" type="submit" data-i18n="pf.conta.trocar">Trocar senha</button></div>
+        <p id="senhaMsg" class="nh-form-msg" role="status"></p>
+      </form>
+    </div>
 
-function openNotifModal() {
-  document.getElementById('notif-modal').classList.add('open');
-  loadNotifications(); // atualiza ao abrir
-}
+    <div class="pf-bloco pf-painel pf-perigo" style="margin-top:22px">
+      <h2 style="color:#fca5a5" data-i18n="pf.del.titulo">Excluir conta</h2>
+      <p class="pf-sub" data-i18n="pf.del.texto">Apaga sua conta e seus dados pessoais. Os pedidos ficam guardados sem vínculo com você, como exige a lei. Não dá para desfazer.</p>
+      <form id="formExcluir" class="grid gap-3" style="max-width:34rem">
+        <div class="nh-campo"><label for="delSenha" data-i18n="pf.del.senha">Confirme com a sua senha</label><input id="delSenha" type="password" class="nh-input" autocomplete="current-password"></div>
+        <p class="text-sm text-white/60" data-i18n="pf.del.ou_google">Entra com o Google? Confirme com a sua conta Google:</p>
+        <div id="delGoogle" class="nh-google" style="justify-content:flex-start"></div>
+        <label class="nh-check"><input id="delCiente" type="checkbox"> <span data-i18n="pf.del.ciente">Entendo que a exclusão é definitiva.</span></label>
+        <div><button class="nh-btn pf-btn-perigo" type="submit" data-i18n="pf.del.botao">Excluir minha conta</button></div>
+        <p id="delMsg" class="nh-form-msg" role="alert"></p>
+      </form>
+    </div>
+  </section>
+</main>
 
-function closeNotifModal() {
-  document.getElementById('notif-modal').classList.remove('open');
-}
-
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeNotifModal();
-});
-
-// Carrega badge ao abrir a página
-document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(loadNotifications, 800); // aguarda login carregar
-});
-
-</script>
-<!-- Footer (componente compartilhado) -->
 <nh-footer></nh-footer>
 
-<!-- MODAL DE NOTIFICAÇÕES -->
-<div id="notif-modal" onclick="if(event.target===this)closeNotifModal()">
-  <div id="notif-panel">
-    <div id="notif-header">
-      <h3>🔔 Notificações</h3>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <span id="notif-unread-count" style="font-size:10px;color:rgba(232,228,240,.4);font-family:monospace;"></span>
-      </div>
-    </div>
-    <div id="notif-list">
-      <div style="padding:32px;text-align:center;color:rgba(232,228,240,.3);font-size:12px;">Carregando...</div>
-    </div>
-    <div id="notif-footer">
-      <button id="notif-mark-all" onclick="markAllNotifsRead()">✓ Marcar todas como lidas</button>
-      <button id="notif-close-btn" onclick="closeNotifModal()">Fechar</button>
-    </div>
-  </div>
-</div>
+<script>
+(function () {
+  'use strict';
+  const t = (k, v) => NHI18n.t(k, v);
+  const qs = (s, el = document) => el.querySelector(s);
+  const qsa = (s, el = document) => Array.from(el.querySelectorAll(s));
+  const P = window.NHPedido;
+  const esc = P.esc;
+  const token = (localStorage.getItem('NoHeroes_token') || '').replace(/^Bearer\s+/i, '').trim();
+  const st = { usuario: null, pedidos: null, notifs: null, tickets: null, enderecos: [], prefs: null, aba: null, carregado: {} };
 
+  async function api(path, opts = {}) {
+    const r = await fetch(API_BASE + path, { ...opts, headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token, ...(opts.headers || {}) } });
+    if (r.status === 401) { localStorage.removeItem('NoHeroes_token'); location.href = 'login.html?volta=profile.html'; throw new Error(t('err.sessao')); }
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok) throw Object.assign(new Error(NHI18n.erro(j)), { status: r.status, json: j });
+    return j;
+  }
+  const msg = (el, texto, ok) => { el.textContent = texto || ''; el.className = 'nh-form-msg ' + (texto ? (ok ? 'ok' : 'erro') : ''); };
+  const vazio = (k) => `<div class="pf-vazio">${esc(t(k))}</div>`;
+  const carregando = () => `<p class="text-sm text-white/55">${esc(t('geral.carregando'))}</p>`;
+
+  /* ---------- abas (hash na URL) ---------- */
+  const ABAS = ['compras', 'notificacoes', 'tickets', 'enderecos', 'preferencias', 'conta'];
+  function abrirAba(nome, empurrar) {
+    if (!ABAS.includes(nome)) nome = 'compras';
+    st.aba = nome;
+    ABAS.forEach((a) => {
+      qs('#painel-' + a).hidden = a !== nome;
+      qs('#aba-' + a).setAttribute('aria-selected', String(a === nome));
+      qs('#aba-' + a).tabIndex = a === nome ? 0 : -1;
+    });
+    if (empurrar) history.replaceState(null, '', '#' + nome);
+    const carregar = { compras: carregarCompras, notificacoes: carregarNotifs, tickets: carregarTickets, enderecos: carregarEnderecos, preferencias: carregarPrefs, conta: preencherConta }[nome];
+    if (carregar) carregar();
+  }
+  qs('.pf-abas').addEventListener('click', (e) => { const b = e.target.closest('[data-aba]'); if (b) abrirAba(b.dataset.aba, true); });
+  qs('.pf-abas').addEventListener('keydown', (e) => {
+    if (!['ArrowRight', 'ArrowLeft'].includes(e.key)) return;
+    const i = ABAS.indexOf(st.aba), n = ABAS[(i + (e.key === 'ArrowRight' ? 1 : ABAS.length - 1)) % ABAS.length];
+    abrirAba(n, true); qs('#aba-' + n).focus();
+  });
+  window.addEventListener('hashchange', () => abrirAba(location.hash.slice(1), false));
+
+  /* ---------- topo ---------- */
+  function avatarUrl(a) {
+    if (!a) return 'assets/img/noheroes-logo-320.webp';
+    return /^(https?:|data:)/.test(a) ? a : 'assets/img/noheroes-logo-320.webp';
+  }
+  function renderTopo() {
+    const u = st.usuario;
+    if (!u) return;
+    qs('#pfNome').textContent = u.nome_completo || u.username || '—';
+    qs('#pfEmail').textContent = u.email || '';
+    qs('#pfDesde').textContent = u.createdAt ? t('pf.desde', { data: new Date(u.createdAt).toLocaleDateString(NHI18n.lang === 'en' ? 'en-US' : 'pt-BR', { month: 'long', year: 'numeric' }) }) : '';
+    const img = qs('#avatarImg');
+    img.src = avatarUrl(u.avatar); img.alt = t('pf.foto_de', { nome: u.username || '' });
+    img.onerror = () => { img.src = 'assets/img/noheroes-logo-320.webp'; };
+  }
+  async function carregarUsuario() {
+    const j = await api('/dashboard');
+    st.usuario = j.data.account;
+    renderTopo();
+  }
+  qs('#avatarFile').addEventListener('change', async (e) => {
+    const f = e.target.files[0];
+    const m = qs('#avatarMsg');
+    if (!f) return;
+    if (f.size > 5 * 1024 * 1024) return msg(m, t('err.AVATAR_GRANDE'));
+    const dataUrl = await new Promise((ok, falha) => { const r = new FileReader(); r.onload = () => ok(r.result); r.onerror = falha; r.readAsDataURL(f); });
+    try {
+      const j = await api('/dashboard/update', { method: 'PATCH', body: JSON.stringify({ avatar: dataUrl }) });
+      st.usuario.avatar = (j.user && j.user.avatar) || dataUrl; renderTopo();
+      msg(m, t('pf.foto_ok'), true);
+    } catch (err) { msg(m, err.message); }
+    e.target.value = '';
+  });
+  qs('#btnSair').addEventListener('click', () => {
+    ['NoHeroes_token', 'isAdmin', 'adminToken'].forEach((k) => localStorage.removeItem(k));
+    location.href = 'index.html';
+  });
+
+  /* ---------- compras ---------- */
+  async function carregarCompras(forcar) {
+    if (st.pedidos && !forcar) return renderCompras();
+    qs('#compras').innerHTML = carregando();
+    try { st.pedidos = (await api('/orders')).data || []; } catch (err) { qs('#compras').innerHTML = `<p class="text-red-300">${esc(err.message)}</p>`; return; }
+    renderCompras();
+  }
+  function renderCompras() {
+    const box = qs('#compras');
+    if (!st.pedidos.length) { box.innerHTML = vazio('pf.compras.vazio') + `<p class="text-center mt-3"><a class="nh-link" href="store.html">${esc(t('ck.ir_loja'))}</a></p>`; return; }
+    box.innerHTML = st.pedidos.map((p) => {
+      const resumo = (p.items || []).map((i) => `${i.quantity}× ${i.title || 'Item #' + i.id}`).join(', ');
+      return `<button type="button" class="pf-item" data-pedido="${esc(p.id)}">
+        <div class="pf-item-topo"><span class="pf-item-tit">${esc(P.data(p.createdAt))}</span><span class="pf-item-tit" style="color:#facc15">${P.brl(p.total)}</span></div>
+        <div class="pf-item-sub" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(resumo)}</div>
+        <div class="pf-selos">${P.seloPagamento(p.status)}${p.fulfillment_status && p.fulfillment_status !== 'na' ? P.seloEntrega(p.fulfillment_status) : ''}</div>
+      </button>`;
+    }).join('');
+  }
+  async function detalheCompra(id) {
+    const box = qs('#compraDetalhe');
+    qs('#comprasLista').hidden = true; box.hidden = false;
+    box.innerHTML = carregando();
+    try {
+      const o = (await api('/orders/' + encodeURIComponent(id))).data;
+      const bloco = (titulo, html) => `<div class="pf-bloco"><h3>${esc(titulo)}</h3>${html}</div>`;
+      const itens = (o.items || []).map((i) => `<div class="pf-linha"><span>${i.quantity}× ${esc(i.title || 'Item #' + i.id)}${i.variant_label ? ` <span class="text-white/55">(${esc(i.variant_label)})</span>` : ''} <span class="text-[11px] text-white/45">${esc(t(i.fulfillment === 'physical' ? 'loja.fisico' : 'loja.digital'))}</span></span><span>${i.unit_price != null ? P.brl(i.unit_price * i.quantity) : ''}</span></div>`).join('');
+      const totais = `<div class="pf-linha text-white/60"><span>${esc(t('ck.subtotal'))}</span><span>${P.brl(o.subtotal != null ? o.subtotal : o.total)}</span></div>` +
+        (o.discount ? `<div class="pf-linha text-green-300"><span>${esc(t('ck.desconto'))}</span><span>−${P.brl(o.discount)}</span></div>` : '') +
+        (o.shipping_method ? `<div class="pf-linha text-white/60"><span>${esc(t('ck.frete'))}</span><span>${o.shipping_cost ? P.brl(o.shipping_cost) : esc(t('ck.gratis'))}</span></div>` : '') +
+        `<div class="pf-linha font-bold" style="color:#facc15"><span>${esc(t('ck.total'))}</span><span>${P.brl(o.total)}</span></div>`;
+      let html = `<button type="button" class="nh-link pf-voltar" data-voltar="compras">← ${esc(t('geral.voltar'))}</button>
+        <h2>${esc(t('ck.pedido'))} <span class="font-mono text-sm">${esc(o.id)}</span></h2>
+        <div class="pf-selos">${P.seloPagamento(o.status)}${o.fulfillment_status !== 'na' ? P.seloEntrega(o.fulfillment_status) : ''}<span class="text-xs text-white/55 self-center">${esc(P.metodo(o.payment_provider))} · ${esc(P.data(o.createdAt))}</span></div>`;
+      if (o.status === 'awaiting_manual_confirmation') html += `<a href="agradecimento.html?order=${encodeURIComponent(o.id)}" class="nh-btn nh-btn-ouro" style="margin-top:12px">${esc(t('pf.compras.ver_pix'))}</a>`;
+      html += bloco(t('pf.compras.itens'), itens + totais);
+      if (o.shipping_address) {
+        const m = o.shipping_method;
+        html += bloco(t('ck.endereco'), `<p class="text-sm">${P.endereco(o.shipping_address)}</p>` + (m ? `<p class="text-sm text-white/60 mt-1">${esc(m.service)}${m.carrier ? ' · ' + esc(m.carrier) : ''}</p>` : ''));
+      }
+      if (o.tracking) {
+        const tr = o.tracking;
+        const link = tr.url && /^https?:\/\//i.test(tr.url) ? `<a href="${esc(tr.url)}" target="_blank" rel="noopener" class="nh-link">${esc(t('pf.compras.acompanhar'))}</a>` : '';
+        html += bloco(t('pf.compras.rastreio'), `<p class="text-sm">${tr.carrier ? esc(tr.carrier) + ' · ' : ''}<span class="font-mono select-all">${esc(tr.code || '')}</span></p>${link}`);
+      }
+      html += bloco(t('pf.compras.historico'), P.timeline(o.events));
+      html += `<p class="text-sm mt-4"><a class="nh-link" href="suporte.html#abrir">${esc(t('pf.compras.ajuda'))}</a></p>`;
+      box.innerHTML = html;
+    } catch (err) { box.innerHTML = `<p class="text-red-300">${esc(err.message)}</p>`; }
+  }
+  qs('#compras').addEventListener('click', (e) => { const b = e.target.closest('[data-pedido]'); if (b) detalheCompra(b.dataset.pedido); });
+
+  /* ---------- notificações ---------- */
+  async function carregarNotifs() {
+    qs('#notificacoes').innerHTML = carregando();
+    try {
+      const j = await api('/api/me/notifications?limit=50');
+      st.notifs = j.notifications || [];
+      qs('#badgeNotif').hidden = !j.unread; qs('#badgeNotif').textContent = j.unread || '';
+      renderNotifs();
+    } catch (err) { qs('#notificacoes').innerHTML = `<p class="text-red-300">${esc(err.message)}</p>`; }
+  }
+  function renderNotifs() {
+    const box = qs('#notificacoes');
+    if (!st.notifs.length) { box.innerHTML = vazio('pf.notif.vazio'); return; }
+    box.innerHTML = st.notifs.map((n) => `
+      <button type="button" class="pf-item pf-notif ${n.read ? 'lida' : ''}" data-notif="${n.id}" data-link="${esc(n.link || '')}">
+        <span class="pf-notif-ponto" aria-hidden="true"></span>
+        <span style="flex:1;min-width:0"><span class="pf-item-tit">${esc(n.title)}</span><br><span class="pf-item-sub">${esc(n.body)}</span><br><span class="text-xs text-white/45">${esc(P.data(n.createdAt))}${n.read ? '' : ' · ' + esc(t('pf.notif.nova'))}</span></span>
+      </button>`).join('');
+  }
+  qs('#notificacoes').addEventListener('click', async (e) => {
+    const b = e.target.closest('[data-notif]');
+    if (!b) return;
+    const n = st.notifs.find((x) => String(x.id) === b.dataset.notif);
+    if (n && !n.read) { try { await api(`/api/me/notifications/${n.id}/read`, { method: 'PATCH' }); n.read = true; } catch (_) { /* segue */ } }
+    const link = b.dataset.link;
+    if (link && /^\/(?!\/)/.test(link)) { location.href = link.replace(/^\//, ''); if (/#/.test(link)) abrirAba(link.split('#')[1], false); return; }
+    renderNotifs(); carregarNotifs();
+  });
+  qs('#btnLerTodas').addEventListener('click', async () => {
+    try { await api('/api/me/notifications/read-all', { method: 'PATCH' }); carregarNotifs(); } catch (_) { /* nada */ }
+  });
+
+  /* ---------- tickets ---------- */
+  const STATUS_TK = { aberto: '#facc15', respondido: '#4ade80', aguardando: '#60a5fa', fechado: '#a1a1aa' };
+  const seloTk = (s) => `<span style="display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:99px;border:1px solid ${STATUS_TK[s] || '#a1a1aa'}66;color:${STATUS_TK[s] || '#a1a1aa'}">${esc(t('pf.tk.st.' + s))}</span>`;
+  async function carregarTickets() {
+    qs('#ticketsLista').hidden = false; qs('#ticketDetalhe').hidden = true;
+    qs('#tickets').innerHTML = carregando();
+    try { st.tickets = (await api('/account/tickets')).data || []; } catch (err) { qs('#tickets').innerHTML = `<p class="text-red-300">${esc(err.message)}</p>`; return; }
+    const box = qs('#tickets');
+    if (!st.tickets.length) { box.innerHTML = vazio('pf.tk.vazio'); return; }
+    box.innerHTML = st.tickets.map((k) => `<button type="button" class="pf-item" data-ticket="${esc(k.protocolo)}">
+      <div class="pf-item-topo"><span class="pf-item-tit">${esc(k.assunto)}</span>${seloTk(k.status)}</div>
+      <div class="pf-item-sub"><span class="font-mono">${esc(k.protocolo)}</span> · ${esc(P.data(k.updatedAt))}</div></button>`).join('');
+  }
+  async function detalheTicket(protocolo) {
+    const box = qs('#ticketDetalhe');
+    qs('#ticketsLista').hidden = true; box.hidden = false; box.innerHTML = carregando();
+    try {
+      const k = (await api('/account/tickets/' + encodeURIComponent(protocolo))).data;
+      box.innerHTML = `<button type="button" class="nh-link pf-voltar" data-voltar="tickets">← ${esc(t('geral.voltar'))}</button>
+        <h2>${esc(k.assunto)}</h2>
+        <div class="pf-selos">${seloTk(k.status)}<span class="text-xs text-white/55 self-center font-mono">${esc(k.protocolo)}</span></div>
+        <div class="pf-lista" style="margin-top:14px">${k.mensagens.map((m) => `<div class="pf-msg pf-msg-${m.autor === 'admin' ? 'admin' : 'cliente'}"><small>${esc(t(m.autor === 'admin' ? 'pf.tk.equipe' : 'pf.tk.voce'))} · ${esc(P.data(m.createdAt))}</small>${esc(m.corpo)}${(m.anexos || []).length ? `<small style="margin-top:6px">${esc(t('pf.tk.anexos'))}: ${m.anexos.map(esc).join(', ')}</small>` : ''}</div>`).join('')}</div>
+        ${k.status === 'fechado' ? `<p class="pf-vazio" style="margin-top:14px">${esc(t('pf.tk.fechado'))} <a class="nh-link" href="suporte.html#abrir">${esc(t('pf.tk.novo'))}</a></p>` : `
+        <form id="formResposta" style="margin-top:14px" class="grid gap-2">
+          <label class="ck-label" for="respTexto" data-i18n="pf.tk.responder">${esc(t('pf.tk.responder'))}</label>
+          <textarea id="respTexto" class="nh-input" rows="4" maxlength="5000"></textarea>
+          <div><button class="nh-btn nh-btn-pri" type="submit">${esc(t('geral.enviar'))}</button></div>
+          <p id="respMsg" class="nh-form-msg" role="status"></p>
+        </form>`}`;
+      const f = qs('#formResposta');
+      if (f) f.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const corpo = qs('#respTexto').value.trim();
+        if (!corpo) return msg(qs('#respMsg'), t('pf.tk.escreva'));
+        try { await api(`/account/tickets/${encodeURIComponent(protocolo)}/messages`, { method: 'POST', body: JSON.stringify({ corpo }) }); detalheTicket(protocolo); }
+        catch (err) { msg(qs('#respMsg'), err.message); }
+      });
+    } catch (err) { box.innerHTML = `<p class="text-red-300">${esc(err.message)}</p>`; }
+  }
+  qs('#tickets').addEventListener('click', (e) => { const b = e.target.closest('[data-ticket]'); if (b) detalheTicket(b.dataset.ticket); });
+  document.addEventListener('click', (e) => {
+    const v = e.target.closest('[data-voltar]');
+    if (!v) return;
+    if (v.dataset.voltar === 'compras') { qs('#compraDetalhe').hidden = true; qs('#comprasLista').hidden = false; }
+    else carregarTickets();
+  });
+
+  /* ---------- endereços ---------- */
+  async function carregarEnderecos() {
+    const box = qs('#listaEnderecos');
+    try { st.enderecos = (await api('/account/addresses')).data || []; } catch (err) { box.innerHTML = `<p class="text-red-300">${esc(err.message)}</p>`; return; }
+    if (!st.enderecos.length) { box.innerHTML = vazio('ck.sem_enderecos'); return; }
+    box.innerHTML = st.enderecos.map((a) => `
+      <div class="pf-item" ${a.is_default ? 'style="border-color:rgba(168,85,247,.5)"' : ''}>
+        <p class="pf-item-tit">${esc(a.label || a.recipient_name)}${a.is_default ? ` <span class="text-xs text-white/55">(${esc(t('end.padrao'))})</span>` : ''}</p>
+        <p class="pf-item-sub">${esc(a.recipient_name)} · ${NHEndereco.resumo(a)}</p>
+        <div class="flex flex-wrap gap-4 mt-2 text-sm">
+          <button type="button" class="nh-link" data-end-editar="${a.id}">${esc(t('pf.end.editar'))}</button>
+          ${a.is_default ? '' : `<button type="button" class="nh-link" data-end-padrao="${a.id}">${esc(t('pf.end.tornar_padrao'))}</button>`}
+          <button type="button" class="nh-link" style="color:#fca5a5" data-end-remover="${a.id}">${esc(t('pf.end.remover'))}</button>
+        </div>
+      </div>`).join('');
+  }
+  function abrirFormEndereco(a) {
+    const f = qs('#formEndereco');
+    f.hidden = false; qs('#btnNovoEndereco').hidden = true;
+    const set = (id, v) => { qs('#' + id).value = v || ''; };
+    set('eId', a && a.id); set('eCep', a && NHEndereco.formatarCep(a.cep)); set('eUf', a && a.state); set('eCidade', a && a.city);
+    set('eRua', a && a.street); set('eNumero', a && a.number); set('eCompl', a && a.complement); set('eBairro', a && a.district);
+    set('eNome', a ? a.recipient_name : st.usuario && st.usuario.nome_completo); set('eFone', a && a.phone); set('eRotulo', a && a.label);
+    qs('#cepStatus').textContent = ''; qs('#eCep').focus();
+  }
+  function fecharFormEndereco() { qs('#formEndereco').hidden = true; qs('#btnNovoEndereco').hidden = false; }
+  qs('#btnNovoEndereco').addEventListener('click', () => abrirFormEndereco(null));
+  qs('#btnCancelarEndereco').addEventListener('click', fecharFormEndereco);
+  qs('#eCep').addEventListener('input', async (e) => {
+    e.target.value = NHEndereco.formatarCep(e.target.value);
+    if (e.target.value.replace(/\D/g, '').length !== 8) return;
+    qs('#cepStatus').textContent = t('end.buscando');
+    const r = await NHEndereco.viaCep(e.target.value);
+    if (!r) { qs('#cepStatus').textContent = t('end.cep_nao_achado'); return; }
+    qs('#eRua').value = r.street || qs('#eRua').value; qs('#eBairro').value = r.district || qs('#eBairro').value;
+    qs('#eCidade').value = r.city; qs('#eUf').value = r.state;
+    qs('#cepStatus').textContent = t('end.cep_ok'); qs('#eNumero').focus();
+  });
+  qs('#formEndereco').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = qs('#eId').value;
+    const v = (k) => qs('#' + k).value;
+    const body = { cep: v('eCep'), state: v('eUf'), city: v('eCidade'), street: v('eRua'), number: v('eNumero'), complement: v('eCompl'),
+      district: v('eBairro'), recipient_name: v('eNome'), phone: v('eFone'), label: v('eRotulo') };
+    try {
+      await api(id ? `/account/addresses/${id}` : '/account/addresses', { method: id ? 'PATCH' : 'POST', body: JSON.stringify(body) });
+      fecharFormEndereco(); carregarEnderecos();
+    } catch (err) { qs('#cepStatus').textContent = err.message; }
+  });
+  qs('#listaEnderecos').addEventListener('click', async (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    try {
+      if (b.dataset.endEditar) return abrirFormEndereco(st.enderecos.find((a) => String(a.id) === b.dataset.endEditar));
+      if (b.dataset.endPadrao) { await api(`/account/addresses/${b.dataset.endPadrao}/default`, { method: 'PATCH' }); return carregarEnderecos(); }
+      if (b.dataset.endRemover) {
+        if (b.dataset.armado !== '1') { b.dataset.armado = '1'; b.textContent = t('pf.end.confirmar_remocao'); return; }
+        await api(`/account/addresses/${b.dataset.endRemover}`, { method: 'DELETE' });
+        carregarEnderecos();
+      }
+    } catch (err) { alert(err.message); }
+  });
+
+  /* ---------- preferências ---------- */
+  const CATS = ['pedidos', 'novidades', 'descontos', 'sistema'];
+  async function carregarPrefs() {
+    try {
+      const j = await api('/account/preferences');
+      st.prefs = j.data.prefs; qs('#prefLang').value = j.data.lang || NHI18n.lang;
+      renderPrefs();
+    } catch (err) { msg(qs('#prefsMsg'), err.message); }
+  }
+  function renderPrefs() {
+    if (!st.prefs) return;
+    qs('#prefsCorpo').innerHTML = CATS.map((c) => `<tr>
+      <td><strong>${esc(t('pf.pref.cat.' + c))}</strong><small>${esc(t('pf.pref.cat.' + c + '_d'))}</small></td>
+      <td><input type="checkbox" data-cat="${c}" data-canal="site" aria-label="${esc(t('pf.pref.cat.' + c) + ' — ' + t('pf.pref.site'))}" ${st.prefs[c].site ? 'checked' : ''} ${c === 'pedidos' ? 'disabled' : ''}></td>
+      <td><input type="checkbox" data-cat="${c}" data-canal="email" aria-label="${esc(t('pf.pref.cat.' + c) + ' — ' + t('pf.pref.email'))}" ${st.prefs[c].email ? 'checked' : ''}></td>
+    </tr>`).join('');
+  }
+  qs('#formPrefs').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const prefs = {};
+    qsa('#prefsCorpo input').forEach((i) => { (prefs[i.dataset.cat] = prefs[i.dataset.cat] || {})[i.dataset.canal] = i.checked; });
+    try {
+      const j = await api('/account/preferences', { method: 'PUT', body: JSON.stringify({ prefs, lang: qs('#prefLang').value }) });
+      st.prefs = j.data.prefs; renderPrefs();
+      msg(qs('#prefsMsg'), t('pf.pref.ok'), true);
+    } catch (err) { msg(qs('#prefsMsg'), err.message); }
+  });
+
+  /* ---------- conta ---------- */
+  function preencherConta() {
+    const u = st.usuario || {};
+    qs('#dNome').value = u.nome_completo || ''; qs('#dTelefone').value = u.telefone || ''; qs('#dDocumento').value = u.documento || '';
+    botaoGoogle();
+  }
+  qs('#formDados').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    try {
+      await api('/dashboard/update', { method: 'PATCH', body: JSON.stringify({ nome_completo: qs('#dNome').value.trim(), telefone: qs('#dTelefone').value.trim(), documento: qs('#dDocumento').value.trim() }) });
+      await carregarUsuario();
+      msg(qs('#dadosMsg'), t('pf.conta.salvo'), true);
+    } catch (err) { msg(qs('#dadosMsg'), err.message); }
+  });
+  qs('#formSenha').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const m = qs('#senhaMsg');
+    const nova = qs('#sNova').value;
+    if (nova.length < 8) return msg(m, t('reg.erro_senha_curta'));
+    if (nova !== qs('#sConf').value) return msg(m, t('reg.erro_senhas'));
+    try {
+      await api('/account/password', { method: 'PATCH', body: JSON.stringify({ currentPassword: qs('#sAtual').value, newPassword: nova }) });
+      e.target.reset(); msg(m, t('pf.conta.senha_ok'), true);
+    } catch (err) { msg(m, err.message); }
+  });
+
+  // Exclusão: senha OU reautenticação com o Google (credencial vai direto para o servidor validar).
+  let credGoogle = null;
+  function botaoGoogle() {
+    const c = qs('#delGoogle');
+    if (!window.google || !google.accounts || !google.accounts.id || c.dataset.pronto) return;
+    c.dataset.pronto = '1';
+    google.accounts.id.initialize({
+      client_id: '356288579641-hc457vliri7rif3h6vobbc4qmsr4blcm.apps.googleusercontent.com',
+      callback: (r) => { credGoogle = r.credential; msg(qs('#delMsg'), t('pf.del.google_ok'), true); },
+      auto_select: false, cancel_on_tap_outside: true,
+    });
+    google.accounts.id.renderButton(c, { theme: 'filled_black', size: 'medium', shape: 'pill', text: 'continue_with', locale: NHI18n.lang === 'en' ? 'en' : 'pt-BR' });
+  }
+  qs('#formExcluir').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const m = qs('#delMsg');
+    const password = qs('#delSenha').value;
+    if (!qs('#delCiente').checked) return msg(m, t('pf.del.marque'));
+    if (!password && !credGoogle) return msg(m, t('pf.del.confirme'));
+    try {
+      await api('/account/delete', { method: 'DELETE', body: JSON.stringify(password ? { password } : { googleCredential: credGoogle }) });
+      ['NoHeroes_token', 'isAdmin', 'adminToken'].forEach((k) => localStorage.removeItem(k));
+      location.href = 'index.html';
+    } catch (err) { msg(m, err.message); credGoogle = null; }
+  });
+
+  /* ---------- início ---------- */
+  document.addEventListener('nh:lang', () => {
+    renderTopo();
+    if (st.pedidos) renderCompras();
+    if (st.notifs) renderNotifs();
+    if (st.prefs) renderPrefs();
+    if (st.aba === 'tickets') carregarTickets();
+    if (st.aba === 'enderecos') carregarEnderecos();
+  });
+  carregarUsuario().catch(() => {});
+  api('/api/me/notifications?limit=1&unread=true').then((j) => { qs('#badgeNotif').hidden = !j.unread; qs('#badgeNotif').textContent = j.unread || ''; }).catch(() => {});
+  abrirAba(location.hash.slice(1) || 'compras', false);
+  let tentativasG = 0;
+  const tg = setInterval(() => { tentativasG++; if (window.google && google.accounts) { clearInterval(tg); if (st.aba === 'conta') botaoGoogle(); } if (tentativasG > 40) clearInterval(tg); }, 200);
+})();
+</script>
 </body>
 </html>

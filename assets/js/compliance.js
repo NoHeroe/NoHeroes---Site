@@ -43,19 +43,21 @@
      SERVER-SIDE). O backend trata contas antigas sem idade como NÃO-bloqueantes
      no login, então oferecemos "Agora não"; mas se o servidor recusar por idade,
      a sessão é encerrada. */
+  // Textos pelo i18n do site (assets/i18n/comum.js); sem ele, o PT.
+  var T = function (k, pt) { if (!window.NHI18n) return pt; var v = window.NHI18n.t(k); return v === k ? pt : v; };
+
   function birthdateGate(bearer) {
     return new Promise(function (resolve) {
       var ov = scrim();
       ov.innerHTML =
         '<div style="' + CARD + '">' +
-        '<h2 style="color:#c4b5fd;margin:0 0 8px;font-size:20px">Confirme sua data de nascimento</h2>' +
-        '<p style="font-size:14px;line-height:1.5;color:#d9d5e0">Sua conta ainda não tem data de nascimento registrada. ' +
-        'Por exigência legal (classificação etária 16+), precisamos confirmá-la.</p>' +
+        '<h2 style="color:#c4b5fd;margin:0 0 8px;font-size:20px">' + T('compliance.data_titulo', 'Confirme sua data de nascimento') + '</h2>' +
+        '<p style="font-size:14px;line-height:1.5;color:#d9d5e0">' + T('compliance.data_texto', 'Por exigência legal (classificação etária 16+), precisamos confirmá-la.') + '</p>' +
         '<input id="cgBd" type="date" style="margin:12px 0;background:#0e0e0e;border:1px solid #4a3e63;border-radius:10px;padding:10px 12px;color:#e5e7eb;width:100%;box-sizing:border-box;color-scheme:dark" />' +
         '<p id="cgBdErr" style="color:#f08a8a;font-size:12px;display:none;margin:0 0 10px"></p>' +
         '<div style="display:flex;gap:10px;justify-content:flex-end">' +
-        '<button id="cgBdSkip" style="' + BTN_SEC + '">Agora não</button>' +
-        '<button id="cgBdOk" style="' + BTN_PRI + '">Confirmar</button>' +
+        '<button id="cgBdSkip" style="' + BTN_SEC + '">' + T('compliance.agora_nao', 'Agora não') + '</button>' +
+        '<button id="cgBdOk" style="' + BTN_PRI + '">' + T('compliance.confirmar', 'Confirmar') + '</button>' +
         '</div></div>';
       document.body.appendChild(ov);
       var err = ov.querySelector('#cgBdErr');
@@ -64,7 +66,7 @@
       ov.querySelector('#cgBdOk').onclick = async function () {
         var btn = ov.querySelector('#cgBdOk');
         var v = ov.querySelector('#cgBd').value;
-        if (!v) { showErr('Informe a data de nascimento.'); return; }
+        if (!v) { showErr(T('compliance.informe_data', 'Informe a data de nascimento.')); return; }
         btn.disabled = true; btn.textContent = '...'; err.style.display = 'none';
         try {
           var r = await fetch(API() + '/account/birthdate', {
@@ -77,17 +79,17 @@
           if (r.status === 403 && j && j.code === 'AGE_RESTRICTED') {
             // Menor de 16: o servidor recusa (age-gate). Encerra a sessão.
             ov.querySelector('div').innerHTML =
-              '<h2 style="color:#c4b5fd;margin:0 0 8px;font-size:20px">Idade mínima</h2>' +
-              '<p style="font-size:14px;line-height:1.5;color:#d9d5e0">' + (j.message || 'É necessário ter ao menos 16 anos para usar o NoHeroes.') + '</p>' +
-              '<div style="display:flex;justify-content:flex-end;margin-top:14px"><button id="cgBdOut" style="' + BTN_PRI + '">Sair</button></div>';
+              '<h2 style="color:#c4b5fd;margin:0 0 8px;font-size:20px">' + T('compliance.idade_titulo', 'Idade mínima') + '</h2>' +
+              '<p style="font-size:14px;line-height:1.5;color:#d9d5e0">' + (j.message || T('compliance.idade_texto', 'É necessário ter ao menos 16 anos para usar o NoHeroes.')) + '</p>' +
+              '<div style="display:flex;justify-content:flex-end;margin-top:14px"><button id="cgBdOut" style="' + BTN_PRI + '">' + T('compliance.sair', 'Sair') + '</button></div>';
             ov.querySelector('#cgBdOut').onclick = function () { clearSession(); location.href = 'login.html'; };
             return;
           }
-          showErr((j && j.message) || 'Não foi possível registrar. Tente de novo.');
-          btn.disabled = false; btn.textContent = 'Confirmar';
+          showErr((j && j.message) || T('compliance.falha', 'Não foi possível registrar. Tente de novo.'));
+          btn.disabled = false; btn.textContent = T('compliance.confirmar', 'Confirmar');
         } catch (_) {
-          showErr('Falha de conexão. Tente de novo.');
-          btn.disabled = false; btn.textContent = 'Confirmar';
+          showErr(T('compliance.sem_conexao', 'Falha de conexão. Tente de novo.'));
+          btn.disabled = false; btn.textContent = T('compliance.confirmar', 'Confirmar');
         }
       };
     });
@@ -101,17 +103,16 @@
       var ov = scrim();
       ov.innerHTML =
         '<div style="' + CARD + '">' +
-        '<h2 style="color:#c4b5fd;margin:0 0 8px;font-size:20px">Antes de continuar</h2>' +
+        '<h2 style="color:#c4b5fd;margin:0 0 8px;font-size:20px">' + T('compliance.antes_titulo', 'Antes de continuar') + '</h2>' +
         '<p style="font-size:14px;line-height:1.5;color:#d9d5e0">' +
-        (needTerms ? 'Nossos <b>Termos de Uso</b> foram atualizados. ' : '') +
-        (needConsent ? 'Precisamos do seu <b>consentimento</b> para tratar dados de hábitos/diário (LGPD). ' : '') +
-        'Para usar o NoHeroes, aceite abaixo.</p>' +
-        /* [CONTEÚDO JURÍDICO: o CEO precisa escrever/revisar o texto oficial do consentimento LGPD] */
-        '<p style="margin:8px 0 16px"><a href="termos.html#privacidade" target="_blank" rel="noopener" style="color:#a78bfa">Ler os Termos e a Política de Privacidade</a></p>' +
+        (needTerms ? T('compliance.termos_atualizados', 'Nossos Termos de Uso foram atualizados.') + ' ' : '') +
+        (needConsent ? T('compliance.consentimento', 'Precisamos do seu consentimento para tratar seus dados conforme a Política de Privacidade (LGPD).') + ' ' : '') +
+        T('compliance.aceite', 'Para continuar, aceite abaixo.') + '</p>' +
+        '<p style="margin:8px 0 16px"><a href="privacidade.html" target="_blank" rel="noopener" style="color:#a78bfa">' + T('compliance.ler', 'Ler os Termos e a Política de Privacidade') + '</a></p>' +
         '<p id="cgErr" style="color:#f08a8a;font-size:12px;display:none"></p>' +
         '<div style="display:flex;gap:10px;justify-content:flex-end">' +
-        '<button id="cgOut" style="' + BTN_SEC + '">Sair</button>' +
-        '<button id="cgOk" style="' + BTN_PRI + '">Aceitar e continuar</button>' +
+        '<button id="cgOut" style="' + BTN_SEC + '">' + T('compliance.sair', 'Sair') + '</button>' +
+        '<button id="cgOk" style="' + BTN_PRI + '">' + T('compliance.aceitar', 'Aceitar e continuar') + '</button>' +
         '</div></div>';
       document.body.appendChild(ov);
       var err = ov.querySelector('#cgErr');
@@ -124,8 +125,8 @@
           if (needConsent) { var r2 = await fetch(API() + '/api/consent/accept', { method: 'POST', headers: H, body: '{}' }); if (!r2.ok) throw 0; }
           ov.remove(); resolve(true);
         } catch (_) {
-          err.textContent = 'Não foi possível registrar. Tente de novo.';
-          err.style.display = 'block'; btn.disabled = false; btn.textContent = 'Aceitar e continuar';
+          err.textContent = T('compliance.falha', 'Não foi possível registrar. Tente de novo.');
+          err.style.display = 'block'; btn.disabled = false; btn.textContent = T('compliance.aceitar', 'Aceitar e continuar');
         }
       };
     });

@@ -178,3 +178,6 @@ nh-header, nh-background, nh-footer { display: block; }
   background: rgba(250, 204, 21, 0.06); font-size: 12px; font-family: ui-monospace, monospace; }
 .nh-so-desktop { display: none; }
 @media (min-width: 1024px) { .nh-so-desktop { display: inline-flex; } }
+
+/* atributo hidden sempre vence classes com display */
+[hidden] { display: none !important; }
