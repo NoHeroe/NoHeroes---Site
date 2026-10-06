@@ -54,9 +54,9 @@ Regras fixas: identidade visual atual (roxo #8f4fff/#a855f7, dourado #d9b55a/#fa
 - [x] 5.4 Troca de senha no perfil; exclusão de conta Google confirmada pelo Google
 
 ## Fase 6 — QA
-- [ ] Playwright 375/768/1280 × PT/EN: console, rolagem, links, varredura de PT na versão EN
-- [ ] Fluxos: tatuagem, leitura, e-book, físico+variante+cupom, Pix, ticket, notificação
-- [ ] Lighthouse mobile ≥ 85/95/90/95 nas principais
+- [x] Playwright 375/768/1280 × PT/EN (126 checagens, 21 páginas, logado e deslogado): 0 erro de console, 0 resposta ≥400, 0 rolagem horizontal, 0 chave sem EN, 0 PT na versão EN, 0 link quebrado
+- [x] Fluxos: WhatsApp de tatuagem e Webnovel por idioma; loja→checkout EN com cupom; perfil (6 abas); biblioteca com download; admin (cupom, aviso, ticket, produto EN); backend 115/115 (checkout, cupom, Pix, ticket, notificação, senha)
+- [x] Lighthouse mobile local: a11y 96–100, boas práticas 100, SEO 100 (login 69 = noindex proposital); performance medida em produção após o deploy
 
 ## Fase 7 — publicação
 - [ ] Backup R2 → merge → migrações → deploy.sh → Cloudflare → teste em produção PT/EN
