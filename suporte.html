@@ -1,497 +1,262 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>NoHeroes · Suporte</title>
-<meta name="description" content="Centro de Suporte NoHeroes — encontre respostas, explore a FAQ e abra um ticket com nossa equipe.">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
-<script>tailwind.config={theme:{extend:{colors:{nh:{bg:'#07060a',dark:'#0c0a10',accent:'#8f4fff',gold:'#d9b55a',card:'rgba(255,255,255,0.04)',border:'rgba(255,255,255,0.08)'}},fontFamily:{display:['Cinzel Decorative','serif'],sans:['Inter','sans-serif']}}}}</script>
-<style>
-*{box-sizing:border-box}
-body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;line-height:1.6;overflow-x:hidden}
-
-/* DEGRADÊ GLOBAL */
-.text-grad{background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.grad-nh{background:linear-gradient(135deg,#8f4fff,#d9b55a)}
-.border-grad{border:1px solid rgba(143,79,255,0.2)}
-
-/* DRAWER, #brasasCanvas e .drawer-* agora em assets/css/noheroes-ui.css */
-
-/* FAQ ACCORDION */
-.faq-cat{background:#0c0a10;border:1px solid rgba(143,79,255,0.15);border-radius:14px;overflow:hidden;margin-bottom:10px}
-.faq-cat-btn{width:100%;text-align:left;padding:16px 20px;font-weight:700;font-size:15px;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;color:#e5e5e5;transition:background 0.2s}
-.faq-cat-btn:hover{background:rgba(143,79,255,0.05)}
-.faq-cat-btn .arrow{transition:transform 0.3s;color:rgba(143,79,255,0.7);font-size:18px}
-.faq-cat-btn.open .arrow{transform:rotate(180deg)}
-.faq-cat-body{display:none;padding:0 20px 16px}
-.faq-cat-body.open{display:block}
-.faq-item{border-bottom:1px solid rgba(255,255,255,0.05);padding:12px 0}
-.faq-item:last-child{border-bottom:none}
-.faq-item summary{cursor:pointer;font-weight:600;font-size:14px;color:rgba(255,255,255,0.85);list-style:none;display:flex;align-items:center;justify-content:space-between;gap:8px}
-.faq-item summary::-webkit-details-marker{display:none}
-.faq-item summary::after{content:'›';font-size:18px;color:rgba(143,79,255,0.6);transition:transform 0.2s;flex-shrink:0}
-.faq-item[open] summary::after{transform:rotate(90deg)}
-.faq-item p{margin:10px 0 0;font-size:13px;color:rgba(255,255,255,0.55);line-height:1.65}
-.faq-item a{color:#c4a3ff;text-decoration:underline;text-underline-offset:3px}
-.faq-item a:hover{color:#f0d99a}
-
-/* BUSCA */
-.search-input{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(143,79,255,0.2);border-radius:14px;padding:14px 50px 14px 20px;color:#e5e5e5;font-size:15px;outline:none;transition:border-color 0.2s}
-.search-input:focus{border-color:rgba(143,79,255,0.5);background:rgba(143,79,255,0.04)}
-.search-input::placeholder{color:rgba(255,255,255,0.25)}
-
-/* CARDS */
-.cat-card{background:#0c0a10;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:20px;transition:all 0.25s;cursor:pointer;text-decoration:none;display:block;color:#e5e5e5}
-.cat-card:hover{border-color:rgba(143,79,255,0.4);background:rgba(143,79,255,0.04);transform:translateY(-2px)}
-.cat-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:12px;background:rgba(143,79,255,0.1);border:1px solid rgba(143,79,255,0.2)}
-
-/* FORM */
-.field-label{display:block;font-size:12px;font-weight:600;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px}
-.field-input{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:11px 14px;color:#e5e5e5;font-size:14px;outline:none;transition:border-color 0.2s;font-family:'Inter',sans-serif}
-.field-input:focus{border-color:rgba(143,79,255,0.5);background:rgba(143,79,255,0.03)}
-.field-input::placeholder{color:rgba(255,255,255,0.2)}
-select.field-input option{background:#0c0a10;color:#e5e5e5}
-
-/* STATUS INDICATOR */
-.status-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:6px}
-.status-online{background:#4ade80;box-shadow:0 0 6px rgba(74,222,128,0.5)}
-.status-offline{background:#f87171;box-shadow:0 0 6px rgba(248,113,113,0.5)}
-
-/* PROTOCOL BOX */
-.protocol-box{background:rgba(143,79,255,0.08);border:1px solid rgba(143,79,255,0.25);border-radius:12px;padding:16px;text-align:center;margin-top:16px}
-
-/* TOAST */
-.toast-msg{padding:12px 16px;border-radius:10px;font-size:13px;font-weight:600;margin-top:12px;display:none}
-.toast-ok{background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.3);color:#4ade80}
-.toast-err{background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.3);color:#f87171}
-.toast-warn{background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.3);color:#fbbf24}
-
-/* KB RESULTS */
-.kb-result{background:#0c0a10;border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:14px;margin-bottom:8px}
-.kb-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:99px;background:rgba(143,79,255,0.1);border:1px solid rgba(143,79,255,0.2);color:#c4a3ff;margin:2px}
-
-/* HIDDEN (busca) */
-.search-hidden{display:none!important}
-
-/* HERO GRID MOBILE */
-@media(max-width:768px){
-  .hero-grid{grid-template-columns:1fr!important;gap:24px!important}
-  .hero-status-card{display:none!important}
-  .hero-section{padding:32px 16px 24px!important}
-  .faq-section{padding:0 16px 40px!important}
-  .ticket-section{padding:0 16px 60px!important}
-  .search-section{padding:0 16px 24px!important}
-  .ticket-grid{grid-template-columns:1fr!important}
-}
-
-#suporte-fab{position:fixed;bottom:88px;right:20px;z-index:200;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#8f4fff,#d9b55a);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(143,79,255,0.4);transition:transform 0.2s,box-shadow 0.2s;color:#000;font-size:20px;font-weight:700}
-#suporte-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(143,79,255,0.6)}
-#suporte-fab-label{position:fixed;bottom:148px;right:16px;z-index:200;background:rgba(12,10,16,0.95);border:1px solid rgba(143,79,255,0.3);border-radius:8px;padding:6px 12px;font-size:11px;color:#c4a3ff;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity 0.2s}
-#suporte-fab:hover+#suporte-fab-label{opacity:1}
-</style>
-<link rel="stylesheet" href="assets/css/noheroes-ui.css">
-<script defer src="assets/js/noheroes-ui.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title data-i18n="sup.meta.titulo">Suporte e perguntas frequentes | NoHeroes</title>
+  <meta name="description" content="Respostas sobre pedidos, envio, trocas, e-books, pagamentos e agendamento de tatuagem. Abra um ticket e acompanhe pelo seu perfil." data-i18n-attr="content:sup.meta.descricao">
+  <link rel="canonical" href="https://www.noheroes.com.br/suporte">
+  <link rel="alternate" hreflang="pt-BR" href="https://www.noheroes.com.br/suporte">
+  <link rel="alternate" hreflang="en" href="https://www.noheroes.com.br/suporte?lang=en">
+  <link rel="alternate" hreflang="x-default" href="https://www.noheroes.com.br/suporte">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="NoHeroes">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:locale:alternate" content="en_US">
+  <meta property="og:url" content="https://www.noheroes.com.br/suporte">
+  <meta property="og:title" content="Suporte NoHeroes" data-i18n-attr="content:sup.og.titulo">
+  <meta property="og:description" content="Perguntas frequentes e abertura de ticket." data-i18n-attr="content:sup.og.descricao">
+  <meta property="og:image" content="https://www.noheroes.com.br/assets/img/og/og-noheroes.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#07060a">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/assets/img/og/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tw.css">
+  <link rel="stylesheet" href="assets/css/noheroes-ui.css">
+  <link rel="stylesheet" href="assets/css/paginas.css">
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/i18n/comum.js"></script>
+  <script src="assets/i18n/suporte.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script defer src="assets/js/noheroes-ui.js"></script>
+  <style>
+    .sp-busca { position: relative; margin-top: 18px; max-width: 36rem; }
+    .sp-busca .nh-input { padding-left: 42px; }
+    .sp-busca svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); }
+    .sp-atalhos { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .sp-grupo { margin-top: 28px; }
+    .sp-grupo h2 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .sp-q { border: 1px solid rgba(255,255,255,.08); border-radius: 14px; background: rgba(255,255,255,.025); margin-bottom: 8px; }
+    .sp-q summary { cursor: pointer; list-style: none; padding: 14px 16px; font-weight: 600; font-size: 15px; display: flex; justify-content: space-between; gap: 10px; }
+    .sp-q summary::-webkit-details-marker { display: none; }
+    .sp-q summary::after { content: '+'; color: #c4a3ff; font-size: 20px; line-height: 1; }
+    .sp-q[open] summary::after { content: '−'; }
+    .sp-q .sp-r { padding: 0 16px 16px; color: var(--nh-texto-2); font-size: 15px; display: grid; gap: 8px; }
+    .sp-form { margin-top: 12px; display: grid; gap: 12px; }
+    @media (min-width: 640px) { .sp-form-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; } }
+    .sp-protocolo { margin-top: 14px; padding: 16px; border-radius: 14px; background: rgba(143,79,255,.1); border: 1px solid rgba(143,79,255,.35); text-align: center; }
+  </style>
 </head>
-<body>
-<!-- Fundo + menu lateral (componentes compartilhados) -->
+<body class="nh-pagina">
 <nh-background></nh-background>
-<nh-drawer></nh-drawer>
+<nh-header></nh-header>
 
-<!-- HEADER -->
-<header style="position:fixed;top:0;left:0;right:0;z-index:60;height:64px;background:rgba(7,6,10,0.9);border-bottom:1px solid rgba(255,255,255,0.06);backdrop-filter:blur(12px);display:flex;align-items:center;">
-  <div style="max-width:1200px;margin:0 auto;width:100%;padding:0 20px;display:flex;align-items:center;justify-content:space-between;">
-    <a href="/" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
-      <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#8f4fff,#d9b55a);box-shadow:0 0 16px rgba(143,79,255,0.3);flex-shrink:0;"></div>
-      <span style="font-family:'Cinzel Decorative',serif;font-size:18px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">NoHeroes</span>
-    </a>
-    <div style="display:flex;align-items:center;gap:12px;">
-      <span id="apiStatusBadge" style="font-size:11px;color:rgba(255,255,255,0.3);display:flex;align-items:center;"><span class="status-dot status-offline" id="apiDot"></span><span id="apiText">Verificando...</span></span>
-      <button data-nh-drawer-toggle aria-label="Abrir menu" style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
-    </div>
-  </div>
-</header>
-
-<main style="padding-top:64px;">
-
-  <!-- HERO -->
-  <section class="hero-section" style="padding:40px 20px 32px;max-width:1200px;margin:0 auto;">
-    <div class="hero-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;">
-      <div>
-        <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:99px;background:rgba(143,79,255,0.08);border:1px solid rgba(143,79,255,0.2);margin-bottom:20px;">
-          <span style="width:6px;height:6px;border-radius:50%;background:#4ade80;box-shadow:0 0 6px rgba(74,222,128,0.5);"></span>
-          <span style="font-size:11px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.15em;">Suporte Ativo</span>
-        </div>
-        <h1 style="font-family:'Cinzel Decorative',serif;font-size:clamp(24px,4vw,40px);margin:0 0 16px;line-height:1.2;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Centro de Suporte</h1>
-        <p style="font-size:16px;color:rgba(255,255,255,0.5);margin:0 0 28px;max-width:440px;line-height:1.7;">Encontre respostas, explore nossa base de conhecimento e, se precisar, abra um ticket que chega direto à nossa equipe.</p>
-        <div style="display:flex;flex-wrap:wrap;gap:10px;">
-          <a href="#busca" style="padding:10px 20px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;font-weight:600;">🔍 Buscar respostas</a>
-          <a href="#form-ticket" style="padding:10px 20px;border-radius:10px;background:linear-gradient(135deg,#8f4fff,#d9b55a);color:#000;text-decoration:none;font-size:13px;font-weight:700;">🎫 Abrir Ticket</a>
-          <a href="#faq" style="padding:10px 20px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px;font-weight:600;">❓ FAQ</a>
-        </div>
+<main id="conteudo">
+  <section class="nh-secao" style="padding-bottom:16px">
+    <div class="nh-wrap">
+      <h1 class="nh-h2" data-i18n="sup.titulo">Como podemos ajudar?</h1>
+      <p class="nh-lead" data-i18n="sup.sub">Veja as respostas mais comuns. Se não resolver, abra um ticket — respondemos em até 24 horas úteis e você acompanha tudo pelo seu perfil.</p>
+      <div class="sp-busca">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c4a3ff" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <label for="busca" class="sr-only" data-i18n="sup.buscar">Buscar nas perguntas</label>
+        <input id="busca" type="search" class="nh-input" placeholder="Buscar: frete, Pix, e-book, tatuagem…" data-i18n-attr="placeholder:sup.buscar_ph" autocomplete="off">
       </div>
-      <div class="hero-status-card" style="background:#0c0a10;border:1px solid rgba(143,79,255,0.15);border-radius:18px;padding:24px;">
-        <div style="font-size:12px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px;">Status do Serviço</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
-          <div style="background:rgba(255,255,255,0.03);border-radius:10px;padding:16px;text-align:center;">
-            <div style="font-size:22px;font-weight:800;color:#4ade80;" id="hero-uptime">—</div>
-            <div style="font-size:10px;color:rgba(255,255,255,0.3);margin-top:4px;">Uptime</div>
+      <nav class="sp-atalhos" aria-label="Atalhos" data-i18n-attr="aria-label:sup.atalhos">
+        <a href="#g-pedidos" class="nh-btn nh-btn-sec" data-i18n="sup.g.pedidos">Pedidos e pagamento</a>
+        <a href="#g-envio" class="nh-btn nh-btn-sec" data-i18n="sup.g.envio">Envio e trocas</a>
+        <a href="#g-ebooks" class="nh-btn nh-btn-sec" data-i18n="sup.g.ebooks">E-books</a>
+        <a href="#g-tattoo" class="nh-btn nh-btn-sec" data-i18n="sup.g.tattoo">Tatuagem</a>
+        <a href="#g-conta" class="nh-btn nh-btn-sec" data-i18n="sup.g.conta">Conta</a>
+        <a href="#abrir" class="nh-btn nh-btn-pri" data-i18n="sup.abrir_ticket">Abrir ticket</a>
+      </nav>
+    </div>
+  </section>
+
+  <section class="nh-wrap" aria-label="Perguntas frequentes" data-i18n-attr="aria-label:sup.faq">
+    <p id="semResultado" class="nh-vazio" hidden data-i18n="sup.sem_resultado">Nenhuma pergunta com esse termo. Abra um ticket logo abaixo.</p>
+
+    <div class="sp-grupo" id="g-pedidos">
+      <h2 data-i18n="sup.g.pedidos">Pedidos e pagamento</h2>
+      <details class="sp-q"><summary data-i18n="sup.q.pagar">Quais formas de pagamento vocês aceitam?</summary>
+        <div class="sp-r"><p data-i18n="sup.r.pagar">Cartão, Pix e boleto pelo Mercado Pago. Você paga no ambiente do próprio Mercado Pago e volta para o site com o status do pedido.</p></div></details>
+      <details class="sp-q"><summary data-i18n="sup.q.status">Como acompanho meu pedido?</summary>
+        <div class="sp-r"><p data-i18n-html="sup.r.status">Em <a class="nh-link" href="profile.html#compras">Minhas compras</a>, no seu perfil: lá aparecem o pagamento, a entrega, o rastreio e o histórico. Você também recebe um e-mail a cada mudança.</p></div></details>
+      <details class="sp-q"><summary data-i18n="sup.q.pendente">Paguei, mas o pedido continua "aguardando pagamento".</summary>
+        <div class="sp-r"><p data-i18n="sup.r.pendente">A confirmação do Mercado Pago pode levar alguns minutos (boleto leva até 3 dias úteis). Se passar disso, abra um ticket com o número do pedido.</p></div></details>
+      <details class="sp-q"><summary data-i18n="sup.q.cupom">Como uso um cupom de desconto?</summary>
+        <div class="sp-r"><p data-i18n="sup.r.cupom">Digite o código no resumo do checkout e clique em Aplicar. O desconto vale para os produtos (não para o frete) e aparece antes de você confirmar.</p></div></details>
+      <details class="sp-q"><summary data-i18n="sup.q.nota">Vocês emitem nota fiscal?</summary>
+        <div class="sp-r"><p><span class="nh-raul">[[RAUL: informar se emite nota fiscal e como o cliente recebe]]</span></p></div></details>
+    </div>
+
+    <div class="sp-grupo" id="g-envio">
+      <h2 data-i18n="sup.g.envio">Envio e trocas</h2>
+      <details class="sp-q"><summary data-i18n="sup.q.frete">Quanto custa o frete e quanto tempo demora?</summary>
+        <div class="sp-r"><p data-i18n="sup.r.frete">O valor e o prazo aparecem no checkout depois que você informa o CEP. Por enquanto entregamos apenas no Brasil.</p></div></details>
+      <details class="sp-q"><summary data-i18n="sup.q.rastreio">Onde está o código de rastreio?</summary>
+        <div class="sp-r"><p data-i18n="sup.r.rastreio">Quando o pedido sai, o código e o link de rastreio aparecem em Minhas compras e chegam por e-mail.</p></div></details>
+      <details class="sp-q" id="arrependimento"><summary data-i18n="sup.q.desistir">Posso desistir da compra?</summary>
+        <div class="sp-r">
+          <p data-i18n="sup.r.desistir">Sim. Compras feitas pela internet podem ser canceladas em até 7 dias a partir do recebimento (Código de Defesa do Consumidor, art. 49), com devolução do valor pago. Abra um ticket com o número do pedido.</p>
+          <p><span class="nh-raul">[[RAUL: endereço para devolução e quem paga o frete de volta]]</span></p>
+        </div></details>
+      <details class="sp-q"><summary data-i18n="sup.q.defeito">O produto chegou com defeito ou errado.</summary>
+        <div class="sp-r"><p data-i18n="sup.r.defeito">Abra um ticket com fotos e o número do pedido. Produto com defeito ou diferente do anunciado é trocado ou reembolsado, como prevê o Código de Defesa do Consumidor.</p></div></details>
+    </div>
+
+    <div class="sp-grupo" id="g-ebooks">
+      <h2 data-i18n="sup.g.ebooks">E-books</h2>
+      <details class="sp-q"><summary data-i18n="sup.q.ebook_onde">Comprei um e-book. Onde baixo?</summary>
+        <div class="sp-r"><p data-i18n-html="sup.r.ebook_onde">Assim que o pagamento é aprovado, o e-book aparece na sua <a class="nh-link" href="inventario.html">Biblioteca</a> (inventário), pronto para baixar.</p></div></details>
+      <details class="sp-q"><summary data-i18n="sup.q.ebook_formato">Em que formato vêm os e-books?</summary>
+        <div class="sp-r"><p data-i18n="sup.r.ebook_formato">Em PDF. Abre em qualquer celular, tablet ou computador.</p></div></details>
+      <details class="sp-q"><summary data-i18n="sup.q.ebook_idioma">Os e-books e o livro têm versão em inglês?</summary>
+        <div class="sp-r"><p data-i18n="sup.r.ebook_idioma">Ainda não: os e-books e o livro estão em português. A webnovel Anjo Devorador tem versão em inglês no Webnovel.</p></div></details>
+    </div>
+
+    <div class="sp-grupo" id="g-tattoo">
+      <h2 data-i18n="sup.g.tattoo">Tatuagem</h2>
+      <details class="sp-q"><summary data-i18n="sup.q.agendar">Como agendo uma tatuagem?</summary>
+        <div class="sp-r">
+          <p data-i18n="sup.r.agendar">Mande sua ideia pelo WhatsApp ou pelo formulário do portfólio: referências, local do corpo e tamanho aproximado. O Raul responde com o orçamento e vocês combinam data e horário.</p>
+          <p><a data-nh-wa="tatuagem" class="nh-btn nh-btn-pri" data-i18n="nav.agendar">Agendar tatuagem</a></p>
+        </div></details>
+      <details class="sp-q"><summary data-i18n="sup.q.valor">Quanto custa uma tatuagem?</summary>
+        <div class="sp-r"><p data-i18n="sup.r.valor">O valor é sob consulta: depende do tamanho, do local e dos detalhes da peça.</p></div></details>
+      <details class="sp-q"><summary data-i18n="sup.q.onde">Onde fica o estúdio?</summary>
+        <div class="sp-r"><p><span class="nh-raul">[[RAUL: cidade e endereço do estúdio]]</span></p></div></details>
+      <details class="sp-q"><summary data-i18n="sup.q.sinal">Precisa de sinal para reservar?</summary>
+        <div class="sp-r"><p><span class="nh-raul">[[RAUL: política de sinal e remarcação]]</span></p></div></details>
+      <details class="sp-q"><summary data-i18n="sup.q.cuidados">Quais os cuidados depois de tatuar?</summary>
+        <div class="sp-r"><p><span class="nh-raul">[[RAUL: orientações de cuidados pós-tatuagem]]</span></p></div></details>
+    </div>
+
+    <div class="sp-grupo" id="g-conta">
+      <h2 data-i18n="sup.g.conta">Conta</h2>
+      <details class="sp-q"><summary data-i18n="sup.q.senha">Esqueci minha senha.</summary>
+        <div class="sp-r"><p data-i18n-html="sup.r.senha">Use <a class="nh-link" href="forgot.html">Recuperar senha</a>: enviamos um link para criar uma nova (vale por 1 hora).</p></div></details>
+      <details class="sp-q"><summary data-i18n="sup.q.email">Não recebi o e-mail de confirmação.</summary>
+        <div class="sp-r"><p data-i18n-html="sup.r.email">Confira o spam e, se não estiver lá, peça outro em <a class="nh-link" href="reenvio.html">Reenviar confirmação</a>.</p></div></details>
+      <details class="sp-q"><summary data-i18n="sup.q.excluir">Como excluo minha conta?</summary>
+        <div class="sp-r"><p data-i18n-html="sup.r.excluir">No <a class="nh-link" href="profile.html#conta">perfil</a>, aba Conta, confirmando com a senha ou com o Google. Os pedidos ficam guardados sem vínculo com você, como a lei exige.</p></div></details>
+      <details class="sp-q"><summary data-i18n="sup.q.dados">Como vocês usam meus dados?</summary>
+        <div class="sp-r"><p data-i18n-html="sup.r.dados">Está tudo na <a class="nh-link" href="privacidade.html">Política de privacidade</a>.</p></div></details>
+    </div>
+  </section>
+
+  <!-- ABRIR TICKET -->
+  <section id="abrir" class="nh-secao" aria-labelledby="tkTitulo">
+    <div class="nh-wrap" style="max-width:44rem">
+      <div class="nh-auth-card">
+        <h2 id="tkTitulo" class="nh-h3" data-i18n="sup.tk.titulo">Abrir ticket</h2>
+        <p class="text-sm text-white/65" data-i18n="sup.tk.sub">Descreva o caso com detalhes. Você recebe o número do protocolo por e-mail; com a conta, acompanha e responde pelo perfil.</p>
+        <form id="formTicket" class="sp-form" novalidate>
+          <div class="sp-form-2">
+            <div class="nh-campo"><label for="tNome" data-i18n="sup.tk.nome">Nome</label><input id="tNome" name="nome" class="nh-input" autocomplete="name" required></div>
+            <div class="nh-campo"><label for="tEmail" data-i18n="conta.email">E-mail</label><input id="tEmail" name="email" type="email" class="nh-input" autocomplete="email" required></div>
           </div>
-          <div style="background:rgba(255,255,255,0.03);border-radius:10px;padding:16px;text-align:center;">
-            <div style="font-size:22px;font-weight:800;color:#c4a3ff;">24h</div>
-            <div style="font-size:10px;color:rgba(255,255,255,0.3);margin-top:4px;">Resp. máx.</div>
+          <div class="sp-form-2">
+            <div class="nh-campo"><label for="tCategoria" data-i18n="sup.tk.categoria">Assunto principal</label>
+              <select id="tCategoria" name="categoria" class="nh-input" required>
+                <option value="" data-i18n="sup.tk.selecione">Selecione…</option>
+                <option value="Compras & Pagamentos" data-i18n="sup.cat.compras">Pedidos e pagamento</option>
+                <option value="Envio & Trocas" data-i18n="sup.cat.envio">Envio e trocas</option>
+                <option value="Produtos & Downloads" data-i18n="sup.cat.downloads">E-books e downloads</option>
+                <option value="Tatuagem" data-i18n="sup.cat.tattoo">Tatuagem</option>
+                <option value="Contas & Acesso" data-i18n="sup.cat.conta">Conta e acesso</option>
+                <option value="Privacidade & LGPD" data-i18n="sup.cat.lgpd">Privacidade e dados</option>
+                <option value="Parcerias" data-i18n="sup.cat.parcerias">Parcerias</option>
+                <option value="Outro" data-i18n="sup.cat.outro">Outro</option>
+              </select></div>
+            <div class="nh-campo"><label for="tPrioridade" data-i18n="sup.tk.prioridade">Urgência</label>
+              <select id="tPrioridade" name="prioridade" class="nh-input">
+                <option value="Normal" data-i18n="sup.pri.normal">Normal</option>
+                <option value="Alta" data-i18n="sup.pri.alta">Alta</option>
+                <option value="Crítica" data-i18n="sup.pri.critica">Crítica</option>
+              </select></div>
           </div>
-          <div style="background:rgba(255,255,255,0.03);border-radius:10px;padding:16px;text-align:center;">
-            <div style="font-size:22px;font-weight:800;color:#f0d99a;">4.8</div>
-            <div style="font-size:10px;color:rgba(255,255,255,0.3);margin-top:4px;">CSAT</div>
+          <div class="nh-campo"><label for="tAssunto" data-i18n="sup.tk.assunto">Título</label><input id="tAssunto" name="assunto" class="nh-input" maxlength="200" required></div>
+          <div class="nh-campo"><label for="tDescricao" data-i18n="sup.tk.descricao">Descrição</label><textarea id="tDescricao" name="descricao" class="nh-input" rows="5" required></textarea></div>
+          <div class="sp-form-2">
+            <div class="nh-campo"><label for="tPedido" data-i18n="sup.tk.pedido">Número do pedido (opcional)</label><input id="tPedido" name="pedidoId" class="nh-input"></div>
+            <div class="nh-campo"><label for="tAnexos" data-i18n="sup.tk.anexos">Anexos (até 5 arquivos, 10 MB no total)</label><input id="tAnexos" name="anexos" type="file" multiple class="nh-input" style="padding:10px"></div>
           </div>
-        </div>
-        <div style="margin-top:16px;padding:12px 14px;background:rgba(255,255,255,0.02);border-radius:10px;border-left:3px solid rgba(143,79,255,0.4);">
-          <div style="font-size:11px;color:rgba(255,255,255,0.25);margin-bottom:4px;">API</div>
-          <div id="hero-api-status" style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.4);">Verificando...</div>
+          <input type="text" name="website" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true">
+          <label class="nh-check"><input id="tTermos" type="checkbox" required> <span><span data-i18n="reg.concordo">Concordo com os</span> <a href="termos.html" class="nh-link" data-i18n="rodape.termos">Termos de uso</a> <span data-i18n="reg.e_a">e a</span> <a href="privacidade.html" class="nh-link" data-i18n="rodape.privacidade">Privacidade</a>.</span></label>
+          <div><button id="tEnviar" class="nh-btn nh-btn-pri nh-btn-grande" type="submit" data-i18n="sup.tk.enviar">Enviar ticket</button></div>
+          <p id="tMsg" class="nh-form-msg" role="alert"></p>
+        </form>
+        <div id="tOk" class="sp-protocolo" hidden role="status">
+          <p data-i18n="sup.tk.ok">Ticket enviado. Guarde o protocolo:</p>
+          <p id="tProtocolo" class="font-mono text-lg text-white" style="margin:6px 0"></p>
+          <p class="text-sm"><a href="profile.html#tickets" class="nh-link" data-i18n="sup.tk.acompanhar">Acompanhar no perfil</a></p>
         </div>
       </div>
     </div>
   </section>
-
-  <!-- BUSCA INTELIGENTE -->
-  <section id="busca" class="search-section" style="padding:0 20px 28px;max-width:800px;margin:0 auto;">
-    <div style="position:relative;">
-      <input id="searchInput" class="search-input" type="search" placeholder="Descreva seu problema (ex: pagamento, login)…">
-      <svg style="position:absolute;right:18px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.25);width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-    </div>
-    <div id="kbResults" style="margin-top:12px;"></div>
-  </section>
-
-  <!-- FAQ COMPLETA -->
-  <section id="faq" class="faq-section" style="padding:0 20px 48px;max-width:900px;margin:0 auto;">
-    <div style="display:flex;align-items:center;gap:16px;margin-bottom:28px;">
-      <h2 style="font-family:'Cinzel Decorative',serif;font-size:22px;margin:0;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Perguntas Frequentes</h2>
-      <div style="flex:1;height:1px;background:rgba(255,255,255,0.06);"></div>
-    </div>
-
-    <!-- 🛒 COMPRAS E PRODUTOS -->
-    <div class="faq-cat" data-cat="compras pagamento produto reembolso cartao pix boleto">
-      <button class="faq-cat-btn" onclick="toggleCat(this)">🛒 Compras e Produtos <span class="arrow">⌄</span></button>
-      <div class="faq-cat-body">
-        <details class="faq-item"><summary>Onde vejo os produtos que comprei?</summary><p>Acesse seu <a href="inventario.html">inventário</a> após fazer login — tudo estará organizado lá.</p></details>
-        <details class="faq-item"><summary>Como sei se a compra foi confirmada?</summary><p>Você receberá um e-mail de confirmação. Também pode checar seu <a href="inventario.html">inventário</a> diretamente.</p></details>
-        <details class="faq-item"><summary>Fiz o pagamento mas não recebi nada. E agora?</summary><p>Confira seu e-mail (inclusive a caixa de spam). Se nada aparecer em até 10 minutos, <a href="#form-ticket">abra um ticket</a> informando o ID da transação ou o comprovante.</p></details>
-        <details class="faq-item"><summary>Qual o tempo de entrega dos produtos digitais?</summary><p>Imediatamente após a confirmação do pagamento — os produtos ficam disponíveis no inventário na hora.</p></details>
-        <details class="faq-item"><summary>O que acontece se meu pagamento for recusado?</summary><p>Tente outro método de pagamento ou verifique seu saldo/limite. Se o problema persistir, <a href="#form-ticket">entre em contato</a> com o suporte.</p></details>
-        <details class="faq-item"><summary>Como funciona o reembolso?</summary><p>Solicitações de reembolso seguem nossa política. Abra um ticket com o comprovante e o motivo — a análise leva até 72h úteis.</p></details>
-        <details class="faq-item"><summary>Quais métodos de pagamento vocês aceitam?</summary><p>Cartão de crédito/débito, Pix e boleto via Mercado Pago.</p></details>
-      </div>
-    </div>
-
-    <!-- 👤 CONTA E ACESSO -->
-    <div class="faq-cat" data-cat="conta login senha acesso perfil 2fa recuperar">
-      <button class="faq-cat-btn" onclick="toggleCat(this)">👤 Conta e Acesso <span class="arrow">⌄</span></button>
-      <div class="faq-cat-body">
-        <details class="faq-item"><summary>Como crio minha conta?</summary><p>Acesse <a href="register.html">register.html</a> ou clique em "Perfil" no menu. O processo é rápido — nome, e-mail e senha.</p></details>
-        <details class="faq-item"><summary>Esqueci minha senha. O que faço?</summary><p>Na página de <a href="login.html">login</a>, clique em "Esqueci minha senha". Você receberá um link de redefinição por e-mail.</p></details>
-        <details class="faq-item"><summary>Posso alterar meu nome de usuário?</summary><p>Sim, pelo seu <a href="profile.html">painel de perfil</a>, com algumas limitações de tempo entre alterações.</p></details>
-        <details class="faq-item"><summary>Preciso estar logado para comprar?</summary><p>Sim. A loja e o inventário só estão disponíveis para contas ativas e logadas.</p></details>
-        <details class="faq-item"><summary>Como excluir minha conta?</summary><p>No painel de perfil, seção "Segurança". Essa ação é permanente e remove todos os seus dados.</p></details>
-      </div>
-    </div>
-
-    <!-- 📚 BIBLIOTECA E ITENS -->
-    <div class="faq-cat" data-cat="ebook download produto inventario arquivo biblioteca">
-      <button class="faq-cat-btn" onclick="toggleCat(this)">📚 Biblioteca e Itens Adquiridos <span class="arrow">⌄</span></button>
-      <div class="faq-cat-body">
-        <details class="faq-item"><summary>Onde encontro meus e-books comprados?</summary><p>No <a href="inventario.html">inventário</a>, aba "e-books".</p></details>
-        <details class="faq-item"><summary>Posso fazer download dos meus produtos?</summary><p>Sim, para produtos marcados como "liberados para download". Clique no item no inventário.</p></details>
-        <details class="faq-item"><summary>Os produtos são meus para sempre?</summary><p>Sim, desde que sua conta esteja ativa.</p></details>
-        <details class="faq-item"><summary>Posso acessar em outro dispositivo?</summary><p>Sim — basta fazer login com a mesma conta em qualquer dispositivo.</p></details>
-      </div>
-    </div>
-
-    <!-- 🌐 NAVEGAÇÃO -->
-    <div class="faq-cat" data-cat="navegacao site menu mobile responsivo pagina">
-      <button class="faq-cat-btn" onclick="toggleCat(this)">🌐 Navegação no Site <span class="arrow">⌄</span></button>
-      <div class="faq-cat-body">
-        <details class="faq-item"><summary>Como navego pelo site?</summary><p>Use o menu hambúrguer (☰) no canto superior direito de qualquer página para acessar todas as seções principais.</p></details>
-        <details class="faq-item"><summary>O site funciona bem no celular?</summary><p>Sim! O site é 100% responsivo e otimizado para mobile.</p></details>
-        <details class="faq-item"><summary>Onde fico para dúvidas rápidas?</summary><p>O botão de suporte (❓) no canto inferior direito de qualquer página leva direto para cá.</p></details>
-        <details class="faq-item"><summary>Tem versão offline?</summary><p>Não. O NoHeroes é uma plataforma online — você precisa de conexão para acessar o conteúdo.</p></details>
-      </div>
-    </div>
-
-    <!-- 🔐 SEGURANÇA E PRIVACIDADE -->
-    <div class="faq-cat" data-cat="seguranca privacidade lgpd dados cookies termos">
-      <button class="faq-cat-btn" onclick="toggleCat(this)">🔐 Segurança e Privacidade <span class="arrow">⌄</span></button>
-      <div class="faq-cat-body">
-        <details class="faq-item"><summary>Meus dados estão seguros?</summary><p>Sim. Usamos criptografia, tokens JWT e boas práticas de segurança. Seus dados nunca são vendidos.</p></details>
-        <details class="faq-item"><summary>Quais dados vocês armazenam?</summary><p>Apenas os fornecidos por você no cadastro e uso da plataforma. Veja mais em <a href="termos.html">Termos de Uso</a>.</p></details>
-        <details class="faq-item"><summary>Como excluir meus dados?</summary><p>Excluindo sua conta no painel de perfil. Para solicitações específicas de LGPD, <a href="#form-ticket">abra um ticket</a> na categoria "Privacidade".</p></details>
-      </div>
-    </div>
-
-    <!-- 🌌 SOBRE O PROJETO -->
-    <div class="faq-cat" data-cat="projeto noheroes criador universo roar echoes">
-      <button class="faq-cat-btn" onclick="toggleCat(this)">🌌 Sobre o Projeto <span class="arrow">⌄</span></button>
-      <div class="faq-cat-body">
-        <details class="faq-item"><summary>O que é NoHeroes?</summary><p>É um universo multimídia de dark fantasy — livros e e-books. Saiba mais em <a href="sobre.html">Sobre</a>.</p></details>
-        <details class="faq-item"><summary>Qual a ordem dos livros?</summary><p>1. ROAR → 2. FREQ → 3. Echoes. Cada um expande o universo de forma independente mas interconectada.</p></details>
-        <details class="faq-item"><summary>Posso colaborar com o projeto?</summary><p>Sim! Acesse <a href="apoiar.html">Apoiar</a> ou envie um e-mail diretamente. Artistas, roteiristas e editores são bem-vindos.</p></details>
-      </div>
-    </div>
-
-  </section>
-
-  <!-- FORM TICKET -->
-  <section id="form-ticket" class="ticket-section" style="padding:0 20px 80px;max-width:700px;margin:0 auto;">
-    <div style="background:#0c0a10;border:1px solid rgba(143,79,255,0.2);border-radius:18px;padding:32px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-        <h2 style="font-family:'Cinzel Decorative',serif;font-size:20px;margin:0;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Abrir Ticket</h2>
-        <span style="font-size:11px;color:rgba(255,255,255,0.3);">Resposta em até 24h úteis</span>
-      </div>
-      <p style="font-size:13px;color:rgba(255,255,255,0.35);margin:0 0 28px;">Descreva seu caso com detalhes — quanto mais informações, mais rápido resolvemos.</p>
-
-      <form id="ticketForm">
-        <!-- Honeypot -->
-        <div style="display:none;"><input id="website" name="website" autocomplete="off" tabindex="-1"></div>
-
-        <div class="ticket-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
-          <div>
-            <label class="field-label">Nome *</label>
-            <input id="t-nome" class="field-input" placeholder="Seu nome" required>
-          </div>
-          <div>
-            <label class="field-label">E-mail *</label>
-            <input id="t-email" class="field-input" type="email" placeholder="seu@email.com" required>
-          </div>
-          <div>
-            <label class="field-label">Categoria *</label>
-            <select id="t-categoria" class="field-input" required>
-              <option value="">Selecione...</option>
-              <option value="Pagamento">Compras & Pagamentos</option>
-              <option value="Conta">Contas & Acesso</option>
-              <option value="Produto">Produtos & Downloads</option>
-              <option value="Tecnico">Problemas Técnicos</option>
-              <option value="Privacidade">Privacidade & LGPD</option>
-              <option value="Parceria">Parcerias</option>
-              <option value="Outro">Outro</option>
-            </select>
-          </div>
-          <div>
-            <label class="field-label">Prioridade</label>
-            <select id="t-prioridade" class="field-input">
-              <option value="Normal">Normal</option>
-              <option value="Alta">Alta</option>
-              <option value="Crítica">Crítica</option>
-            </select>
-          </div>
-          <div style="grid-column:1/-1;">
-            <label class="field-label">Assunto *</label>
-            <input id="t-assunto" class="field-input" placeholder="Resumo em uma linha" maxlength="140" required>
-          </div>
-          <div style="grid-column:1/-1;">
-            <label class="field-label">Descrição * <span style="font-weight:400;text-transform:none;color:rgba(255,255,255,0.2);">— quanto mais detalhes, melhor</span></label>
-            <textarea id="t-descricao" class="field-input" rows="5" placeholder="Explique o que aconteceu, quais passos realizou, mensagens de erro, dispositivo/navegador..." required style="resize:vertical;"></textarea>
-          </div>
-          <div>
-            <label class="field-label">ID do Pedido (opcional)</label>
-            <input id="t-pedido" class="field-input" placeholder="Ex: #12345">
-          </div>
-          <div>
-            <label class="field-label">Anexos (até 10MB)</label>
-            <input id="t-anexos" class="field-input" type="file" multiple accept="image/*,.pdf,.zip,.txt,.log" style="padding:8px 14px;cursor:pointer;">
-          </div>
-        </div>
-
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px;flex-wrap:wrap;gap:12px;">
-          <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,0.4);cursor:pointer;">
-            <input id="t-consent" type="checkbox" required style="accent-color:#8f4fff;width:16px;height:16px;">
-            Concordo com os <a href="termos.html" style="color:#c4a3ff;">Termos</a> e a <a href="termos.html" style="color:#c4a3ff;">Privacidade</a>
-          </label>
-          <button id="submitBtn" type="submit" style="padding:12px 28px;border-radius:10px;background:linear-gradient(135deg,#8f4fff,#d9b55a);border:none;color:#000;font-weight:700;font-size:14px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:opacity 0.2s;">
-            <svg id="btnIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
-            Enviar Ticket
-          </button>
-        </div>
-
-        <div id="ticketToast" class="toast-msg"></div>
-        <div id="protocolBox" class="protocol-box" style="display:none;">
-          <div style="font-size:11px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">Seu protocolo</div>
-          <div id="protocolNumber" style="font-size:28px;font-weight:800;color:#c4a3ff;font-family:monospace;letter-spacing:0.1em;"></div>
-          <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:6px;">Guarde este número para acompanhar seu ticket</div>
-        </div>
-      </form>
-    </div>
-  </section>
-
 </main>
 
-<!-- Footer (componente compartilhado) -->
 <nh-footer></nh-footer>
 
 <script>
-const API_BASE = 'https://api.noheroes.com.br';
-const $ = s => document.querySelector(s);
-const $$ = s => Array.from(document.querySelectorAll(s));
+(function () {
+  'use strict';
+  const t = (k, v) => NHI18n.t(k, v);
+  const qs = (s) => document.querySelector(s);
+  const token = (localStorage.getItem('NoHeroes_token') || '').replace(/^Bearer\s+/i, '').trim();
 
-// Ano do rodapé e drawer: agora nos componentes compartilhados (noheroes-ui.js)
-
-// ─── FAQ ACCORDION ───
-function toggleCat(btn) {
-  const body = btn.nextElementSibling;
-  const isOpen = body.classList.contains('open');
-  // fecha todos
-  $$('.faq-cat-body.open').forEach(b => b.classList.remove('open'));
-  $$('.faq-cat-btn.open').forEach(b => b.classList.remove('open'));
-  if (!isOpen) {
-    body.classList.add('open');
-    btn.classList.add('open');
-  }
-}
-
-// ─── BUSCA ───
-const KB = [
-  {t:'Pagamento aprovado mas produto não chegou',tags:'pagamento aprovado produto nao recebi mercadopago pix cartao',r:'Confira seu e-mail (inclusive spam). Acesse seu <a href="inventario.html">inventário</a>. Se nada aparecer, <a href="#form-ticket">abra um ticket</a> com o ID da transação.'},
-  {t:'Pagamento recusado',tags:'pagamento recusado cartao pix boleto erro',r:'Verifique saldo/limite e dados do cartão. Tente outro método. Se persistir, tente em aba anônima ou <a href="#form-ticket">contate o suporte</a>.'},
-  {t:'Esqueci minha senha',tags:'senha login acesso esqueci recuperar',r:'Na página de <a href="login.html">login</a>, clique em "Esqueci minha senha". Um e-mail de redefinição será enviado.'},
-  {t:'Não consigo fazer login',tags:'login acesso conta entrar erro',r:'Verifique seu e-mail e senha. Tente "Esqueci minha senha". Se o problema persistir, <a href="#form-ticket">abra um ticket</a>.'},
-  {t:'Reembolso',tags:'reembolso estorno dinheiro de volta',r:'<a href="#form-ticket">Abra um ticket</a> na categoria "Compras & Pagamentos" com o comprovante e o motivo. Analisamos em até 72h úteis.'},
-  {t:'Download não funciona',tags:'download ebook arquivo produto inventario',r:'Acesse seu <a href="inventario.html">inventário</a> logado e clique no item. Se o link não funcionar, <a href="#form-ticket">abra um ticket</a>.'},
-  {t:'Excluir conta',tags:'excluir conta deletar remover dados',r:'No <a href="profile.html">painel de perfil</a>, seção "Segurança" → "Excluir conta". Ação permanente — todos os dados são removidos.'},
-];
-
-$('#searchInput').addEventListener('input', e => {
-  const q = e.target.value.trim().toLowerCase();
-  const box = $('#kbResults');
-
-  // filtra e abre categorias relevantes na FAQ
-  $$('.faq-cat').forEach(cat => {
-    const catTags = (cat.dataset.cat || '').toLowerCase();
-    const items = Array.from(cat.querySelectorAll('.faq-item'));
-    const itemTags = items.map(i => i.querySelector('summary')?.textContent.toLowerCase() || '').join(' ');
-    const match = !q || q.length < 2 || catTags.includes(q) || itemTags.includes(q);
-    cat.classList.toggle('search-hidden', !match);
-    // abre automaticamente a categoria se houver match
-    if (q.length >= 2 && match) {
-      const btn = cat.querySelector('.faq-cat-btn');
-      const body = cat.querySelector('.faq-cat-body');
-      if (!body.classList.contains('open')) { body.classList.add('open'); btn.classList.add('open'); }
-    }
+  // Busca nas perguntas (no idioma atual)
+  const norm = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  qs('#busca').addEventListener('input', (e) => {
+    const termo = norm(e.target.value.trim());
+    let algum = false;
+    document.querySelectorAll('.sp-grupo').forEach((g) => {
+      let noGrupo = 0;
+      g.querySelectorAll('.sp-q').forEach((q) => {
+        const bate = !termo || norm(q.textContent).includes(termo);
+        q.hidden = !bate;
+        if (bate) { noGrupo++; if (termo) q.open = true; } else q.open = false;
+      });
+      g.hidden = !noGrupo; if (noGrupo) algum = true;
+    });
+    qs('#semResultado').hidden = algum;
   });
 
-  // KB results inline
-  if (!q || q.length < 2) { box.innerHTML = ''; return; }
-  const results = KB.filter(i => (i.t + ' ' + i.tags).toLowerCase().includes(q)).slice(0, 4);
-  box.innerHTML = results.length ? results.map(i => `
-    <div class="kb-result">
-      <div style="font-weight:700;font-size:14px;margin-bottom:6px;">${i.t}</div>
-      <div style="font-size:13px;color:rgba(255,255,255,0.55);">${i.r}</div>
-    </div>`).join('') + `<div style="font-size:12px;color:rgba(255,255,255,0.25);margin-top:8px;">↓ Veja mais respostas na FAQ abaixo</div>` :
-    `<div class="kb-result" style="color:rgba(255,255,255,0.3);font-size:13px;">Nenhuma resposta rápida encontrada — <a href="#form-ticket" style="color:#c4a3ff;">abra um ticket</a> e nossa equipe te ajuda.</div>`;
-});
+  // Logado: preenche nome e e-mail
+  if (token.split('.').length === 3) {
+    fetch(API_BASE + '/dashboard', { headers: { Authorization: 'Bearer ' + token } }).then((r) => r.ok ? r.json() : null).then((j) => {
+      const u = j && j.data && j.data.account;
+      if (!u) return;
+      if (!qs('#tNome').value) qs('#tNome').value = u.nome_completo || u.username || '';
+      if (!qs('#tEmail').value) qs('#tEmail').value = u.email || '';
+    }).catch(() => {});
+  }
 
-// ─── AUTO-PREENCHER SE LOGADO ───
-(async () => {
-  const token = (localStorage.getItem('NoHeroes_token') || '').replace(/^Bearer\s+/i,'').trim();
-  if (!token) return;
-  try {
-    const r = await fetch(`${API_BASE}/users/me`, { headers: { Authorization: `Bearer ${token}` } });
-    if (!r.ok) return;
-    const d = await r.json();
-    const u = d.user || d;
-    if (u.username) $('#t-nome').value = u.username;
-    if (u.email) $('#t-email').value = u.email;
-  } catch(e) {}
+  qs('#formTicket').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const f = e.target, m = qs('#tMsg');
+    const erro = (k) => { m.textContent = t(k); m.className = 'nh-form-msg erro'; };
+    m.textContent = '';
+    if (!f.nome.value.trim() || !f.assunto.value.trim() || !f.descricao.value.trim() || !f.categoria.value) return erro('sup.tk.erro_campos');
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(f.email.value.trim())) return erro('conta.erro_email');
+    if (!qs('#tTermos').checked) return erro('sup.tk.erro_termos');
+    const total = Array.from(f.anexos.files).reduce((s, x) => s + x.size, 0);
+    if (f.anexos.files.length > 5 || total > 10 * 1024 * 1024) return erro('sup.tk.erro_anexos');
+    const btn = qs('#tEnviar'); btn.disabled = true; btn.textContent = t('sup.tk.enviando');
+    try {
+      const fd = new FormData(f);
+      const r = await fetch(API_BASE + '/suporte/ticket', { method: 'POST', headers: token ? { Authorization: 'Bearer ' + token } : {}, body: fd });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || !j.success) throw new Error(NHI18n.erro(j, 'sup.tk.erro'));
+      f.hidden = true; qs('#tOk').hidden = false; qs('#tProtocolo').textContent = j.protocolo;
+    } catch (err) {
+      m.textContent = err.message === 'Failed to fetch' ? t('err.conexao') : err.message; m.className = 'nh-form-msg erro';
+    } finally { btn.disabled = false; btn.textContent = t('sup.tk.enviar'); }
+  });
 })();
-
-// ─── STATUS API ───
-async function checkApiStatus() {
-  try {
-    const r = await fetch(`${API_BASE}/healthz`, { signal: AbortSignal.timeout(5000) });
-    const online = r.ok;
-    $('#apiDot').className = 'status-dot ' + (online ? 'status-online' : 'status-offline');
-    $('#apiText').textContent = online ? 'API Online' : 'API com problemas';
-    $('#hero-uptime').textContent = online ? '99,9%' : '—';
-    $('#hero-api-status').textContent = online ? '✅ Todos os sistemas operacionais' : '⚠️ Verificando...';
-    $('#hero-api-status').style.color = online ? '#4ade80' : '#fbbf24';
-  } catch {
-    $('#apiDot').className = 'status-dot status-offline';
-    $('#apiText').textContent = 'API Offline';
-    $('#hero-api-status').textContent = '⚠️ Serviço temporariamente indisponível';
-    $('#hero-api-status').style.color = '#f87171';
-  }
-}
-checkApiStatus();
-setInterval(checkApiStatus, 60000);
-
-// ─── TICKET FORM ───
-function generateProtocol() {
-  const ts = Date.now().toString(36).toUpperCase();
-  const rand = Math.random().toString(36).slice(2,6).toUpperCase();
-  return `NH-${ts}-${rand}`;
-}
-
-function showToast(type, msg) {
-  const t = $('#ticketToast');
-  t.className = `toast-msg toast-${type}`;
-  t.innerHTML = msg;
-  t.style.display = 'block';
-}
-
-$('#ticketForm').addEventListener('submit', async e => {
-  e.preventDefault();
-  if ($('#website').value) return;
-
-  const files = $('#t-anexos').files || [];
-  let totalSize = 0;
-  for (const f of files) totalSize += f.size;
-  if (totalSize > 10 * 1024 * 1024) { showToast('warn', 'Tamanho total dos anexos excede 10MB.'); return; }
-
-  const btn = $('#submitBtn');
-  btn.disabled = true;
-  btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin 1s linear infinite"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0"/></svg> Enviando...';
-  showToast('warn', 'Enviando seu ticket...');
-
-  const protocolo = generateProtocol();
-  const data = new FormData();
-  data.append('nome', $('#t-nome').value.trim());
-  data.append('email', $('#t-email').value.trim());
-  data.append('categoria', $('#t-categoria').value);
-  data.append('prioridade', $('#t-prioridade').value);
-  data.append('assunto', $('#t-assunto').value.trim());
-  data.append('descricao', $('#t-descricao').value.trim());
-  data.append('protocolo', protocolo);
-  if ($('#t-pedido').value) data.append('pedidoId', $('#t-pedido').value.trim());
-  for (const f of files) data.append('anexos', f, f.name);
-
-  try {
-    const res = await fetch(`${API_BASE}/suporte/ticket`, {
-      method: 'POST',
-      headers: { 'X-Client': 'noheroes-support-v2' },
-      body: data
-    });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
-    showToast('ok', '✅ Ticket enviado com sucesso! Você receberá um e-mail de confirmação em breve.');
-    $('#protocolNumber').textContent = protocolo;
-    $('#protocolBox').style.display = 'block';
-    $('#ticketForm').reset();
-    $('#protocolBox').scrollIntoView({ behavior: 'smooth', block: 'center' });
-  } catch (err) {
-    showToast('err', '❌ Não foi possível enviar agora. Verifique sua conexão e tente novamente.');
-  } finally {
-    btn.disabled = false;
-    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg> Enviar Ticket';
-  }
-});
-
-// CSS spin
-const s = document.createElement('style');
-s.textContent = '@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}';
-document.head.appendChild(s);
-
-// Brasas: agora no componente compartilhado <nh-background> (noheroes-ui.js)
 </script>
 </body>
 </html>

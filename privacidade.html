@@ -1,49 +1,154 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Política de Privacidade — NoHeroes</title>
-  <meta name="description" content="Como o NoHeroes coleta, usa e protege seus dados — resumo e link para a política completa (Termos, seção 13).">
-  <!-- CEO 2026-07-09: Termos e Privacidade viraram UMA página com abas — este arquivo só
-       redireciona (mantido pra links antigos). O resumo abaixo fica como fallback noscript. -->
-  <meta http-equiv="refresh" content="0;url=termos.html?tab=privacidade">
-  <script>location.replace('termos.html?tab=privacidade');</script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
-  <style>
-    :root{ --grad: linear-gradient(135deg,#c4a3ff 0%,#f0d99a 100%); }
-    body{margin:0;background:#0a0a0a;color:#e5e5e5;font-family:Inter,system-ui,'Segoe UI',Roboto,sans-serif;line-height:1.65}
-    .wrap{max-width:760px;margin:0 auto;padding:64px 24px}
-    h1{font-family:"Cinzel Decorative",serif;font-size:clamp(24px,4vw,34px);margin:0 0 6px;
-       background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-    .sep{width:44px;height:1px;background:linear-gradient(90deg,#8f4fff,#d9b55a);margin:14px 0 26px}
-    p{color:#cfcbd8;font-size:15px}
-    a{color:#a78bfa}
-    .cta{display:inline-block;margin-top:18px;padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:600;
-         background:linear-gradient(135deg,#8f4fff 0%,#facc15 100%);color:#000}
-    .muted{color:#8b8695;font-size:13px;margin-top:34px}
-    .back{display:inline-block;margin-top:10px;font-size:13px}
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title data-i18n="pri.meta.titulo">Política de privacidade | NoHeroes</title>
+  <meta name="description" content="Quais dados o NoHeroes coleta, para quê, com quem compartilha, por quanto tempo guarda e como exercer seus direitos pela LGPD." data-i18n-attr="content:pri.meta.descricao">
+  <link rel="canonical" href="https://www.noheroes.com.br/privacidade">
+  <link rel="alternate" hreflang="pt-BR" href="https://www.noheroes.com.br/privacidade">
+  <link rel="alternate" hreflang="en" href="https://www.noheroes.com.br/privacidade?lang=en">
+  <link rel="alternate" hreflang="x-default" href="https://www.noheroes.com.br/privacidade">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="NoHeroes">
+  <meta property="og:title" content="Política de privacidade | NoHeroes" data-i18n-attr="content:pri.meta.titulo">
+  <meta property="og:image" content="https://www.noheroes.com.br/assets/img/og/og-noheroes.jpg">
+  <meta name="theme-color" content="#07060a">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tw.css">
+  <link rel="stylesheet" href="assets/css/noheroes-ui.css">
+  <link rel="stylesheet" href="assets/css/paginas.css">
+  <link rel="stylesheet" href="assets/css/legal.css">
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/i18n/comum.js"></script>
+  <script src="assets/i18n/legal.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script defer src="assets/js/noheroes-ui.js"></script>
 </head>
-<body>
-  <div class="wrap">
-    <h1>Política de Privacidade</h1>
-    <div class="sep"></div>
+<body class="nh-pagina">
+<nh-background></nh-background>
+<nh-header></nh-header>
 
-    <!-- Decisão do CEO (F2.8): a Política de Privacidade vive DENTRO dos Termos de Uso (§13).
-         Esta página é um resumo curto + porta de entrada. Quando/se um texto jurídico próprio
-         for redigido, ele substitui este resumo.
-         [CONTEÚDO JURÍDICO: o CEO precisa escrever/revisar — o texto oficial e completo é o §13 dos Termos.] -->
+<main id="conteudo" class="nh-wrap lg-main">
+  <h1 class="nh-h2" data-i18n="pri.titulo">Política de privacidade</h1>
+  <p class="lg-data"><span data-i18n="lg.versao">Versão 3.0 — atualizada em 6 de outubro de 2026.</span></p>
+  <p class="lg-aviso-en" data-i18n="lg.aviso_en">Esta é uma tradução de cortesia. Em caso de divergência, vale a versão em português.</p>
 
-    <p>O NoHeroes coleta apenas os dados necessários para criar sua conta, processar pedidos,
-    proteger a plataforma e personalizar sua experiência — e <strong>não vende</strong> seus dados.</p>
-    <p>Os detalhes completos — quais dados coletamos, as bases legais (LGPD), com quem compartilhamos,
-    por quanto tempo retemos e os seus direitos como titular — estão na
-    <strong>seção 13 dos Termos de Uso</strong>, que é a nossa Política de Privacidade oficial.</p>
+  <nav class="lg-indice" aria-label="Índice" data-i18n-attr="aria-label:lg.indice">
+    <a href="#controlador" data-i18n="pri.s1">1. Quem cuida dos seus dados</a>
+    <a href="#dados" data-i18n="pri.s2">2. Quais dados coletamos</a>
+    <a href="#finalidades" data-i18n="pri.s3">3. Para que usamos</a>
+    <a href="#compartilhamento" data-i18n="pri.s4">4. Com quem compartilhamos</a>
+    <a href="#navegador" data-i18n="pri.s5">5. Armazenamento no navegador e estatísticas</a>
+    <a href="#retencao" data-i18n="pri.s6">6. Por quanto tempo guardamos</a>
+    <a href="#direitos" data-i18n="pri.s7">7. Seus direitos</a>
+    <a href="#seguranca" data-i18n="pri.s8">8. Segurança</a>
+    <a href="#menores" data-i18n="pri.s9">9. Idade mínima</a>
+    <a href="#mudancas" data-i18n="pri.s10">10. Mudanças nesta política</a>
+  </nav>
 
-    <a class="cta" href="termos.html?tab=privacidade">Ler a Política completa (aba Privacidade dos Termos)</a>
-    <p class="muted">Dúvidas ou solicitações sobre seus dados: use a página de <a href="suporte.html">Suporte</a>.</p>
-    <a class="back" href="index.html">&larr; Voltar ao início</a>
-  </div>
+  <section id="controlador" class="lg-secao">
+    <h2 data-i18n="pri.s1">1. Quem cuida dos seus dados</h2>
+    <div data-i18n-html="pri.t1">
+      <p>O controlador dos dados tratados em www.noheroes.com.br é o NoHeroes, selo e estúdio de Raul Takagi Sato Souza. <span class="nh-raul">[[RAUL: nome empresarial ou nome completo, CNPJ ou CPF e endereço]]</span></p>
+      <p>Para qualquer assunto sobre seus dados, escreva para eco.noheroes@gmail.com ou abra um ticket no <a class="nh-link" href="suporte.html#abrir">suporte</a> com o assunto “Privacidade e dados”.</p>
+    </div>
+  </section>
+
+  <section id="dados" class="lg-secao">
+    <h2 data-i18n="pri.s2">2. Quais dados coletamos</h2>
+    <div data-i18n-html="pri.t2">
+      <ul>
+        <li><strong>Conta:</strong> nome, nome de usuário, e-mail, data de nascimento, senha (guardada apenas em formato criptografado) ou identificador da conta Google, idioma e preferências de notificação.</li>
+        <li><strong>Compras:</strong> itens, valores, cupom usado, status de pagamento e de entrega, código de rastreio e o endereço de entrega informado.</li>
+        <li><strong>Endereços salvos:</strong> os endereços que você cadastra no perfil.</li>
+        <li><strong>Suporte:</strong> nome, e-mail, assunto, mensagens e o número do pedido, quando informado. Anexos são encaminhados por e-mail para a caixa do suporte e não ficam guardados no site.</li>
+        <li><strong>Newsletter:</strong> o e-mail que você inscreve.</li>
+        <li><strong>Registros técnicos:</strong> endereço IP, navegador e data, usados para segurança e para comprovar o aceite dos termos.</li>
+      </ul>
+      <p>Não recebemos nem guardamos dados de cartão: o pagamento acontece no ambiente do Mercado Pago.</p>
+    </div>
+  </section>
+
+  <section id="finalidades" class="lg-secao">
+    <h2 data-i18n="pri.s3">3. Para que usamos</h2>
+    <div data-i18n-html="pri.t3">
+      <ul>
+        <li>Criar e manter sua conta e permitir o login (execução de contrato).</li>
+        <li>Processar pedidos, pagamentos, entregas, trocas e reembolsos e liberar e-books na Biblioteca (execução de contrato).</li>
+        <li>Enviar e-mails sobre a conta, os pedidos e os tickets (execução de contrato).</li>
+        <li>Enviar novidades, lançamentos e descontos, só se você permitir nas preferências ou se inscrever na newsletter (consentimento, que pode ser retirado a qualquer momento).</li>
+        <li>Prevenir fraudes, proteger o site e cumprir obrigações legais e fiscais (obrigação legal e legítimo interesse).</li>
+      </ul>
+      <p>Não vendemos seus dados e não os usamos para publicidade de terceiros.</p>
+    </div>
+  </section>
+
+  <section id="compartilhamento" class="lg-secao">
+    <h2 data-i18n="pri.s4">4. Com quem compartilhamos</h2>
+    <div data-i18n-html="pri.t4">
+      <p>Somente com os serviços necessários para o site funcionar, cada um com a parte dos dados de que precisa:</p>
+      <ul>
+        <li><strong>Mercado Pago:</strong> processamento de pagamentos.</li>
+        <li><strong>Resend:</strong> envio de e-mails.</li>
+        <li><strong>Cloudflare:</strong> hospedagem, proteção contra ataques, armazenamento de arquivos e estatísticas de acesso sem cookies.</li>
+        <li><strong>Google:</strong> login com a conta Google, quando você escolhe essa opção.</li>
+        <li><strong>ViaCEP:</strong> consulta do endereço pelo CEP (só o CEP é enviado).</li>
+        <li><strong>Transportadoras:</strong> nome e endereço de entrega dos pedidos físicos.</li>
+      </ul>
+      <p>Alguns desses serviços ficam fora do Brasil; nesses casos a transferência segue as regras da LGPD. Também podemos fornecer dados quando a lei ou uma autoridade exigir.</p>
+    </div>
+  </section>
+
+  <section id="navegador" class="lg-secao">
+    <h2 data-i18n="pri.s5">5. Armazenamento no navegador e estatísticas</h2>
+    <div data-i18n-html="pri.t5">
+      <p>O site guarda no seu navegador (armazenamento local) apenas o necessário para funcionar: a sessão de login, o carrinho e o idioma escolhido. Esses dados não são enviados a terceiros e você pode apagá-los saindo da conta ou limpando os dados do navegador.</p>
+      <p>Para contar visitas usamos o Cloudflare Web Analytics, que não usa cookies nem identifica você. Não usamos cookies de publicidade nem pixels de redes sociais.</p>
+    </div>
+  </section>
+
+  <section id="retencao" class="lg-secao">
+    <h2 data-i18n="pri.s6">6. Por quanto tempo guardamos</h2>
+    <div data-i18n-html="pri.t6">
+      <p>Os dados da conta ficam guardados enquanto ela existir. Ao excluir a conta pelo perfil, apagamos seus dados de cadastro, endereços salvos e preferências.</p>
+      <p>Os pedidos são mantidos sem vínculo com a conta, pelo prazo exigido pela legislação fiscal e de defesa do consumidor. Tickets e registros técnicos ficam guardados pelo tempo necessário para atendimento, segurança e defesa em eventuais processos.</p>
+    </div>
+  </section>
+
+  <section id="direitos" class="lg-secao">
+    <h2 data-i18n="pri.s7">7. Seus direitos</h2>
+    <div data-i18n-html="pri.t7">
+      <p>Pela LGPD (art. 18) você pode pedir: confirmação de que tratamos seus dados, acesso, correção, anonimização ou eliminação de dados desnecessários, portabilidade, informação sobre com quem compartilhamos e revogação do consentimento.</p>
+      <p>Boa parte disso você faz direto no <a class="nh-link" href="profile.html">perfil</a>: editar dados, mudar as preferências de notificação e excluir a conta. Para o resto, escreva para eco.noheroes@gmail.com. Você também pode reclamar à Autoridade Nacional de Proteção de Dados (ANPD).</p>
+    </div>
+  </section>
+
+  <section id="seguranca" class="lg-secao">
+    <h2 data-i18n="pri.s8">8. Segurança</h2>
+    <div data-i18n-html="pri.t8">
+      <p>Usamos conexão criptografada (HTTPS), senhas com hash, acesso restrito ao painel administrativo e cópias de segurança. Nenhum sistema é infalível: se acontecer um incidente que traga risco a você, avisaremos você e a ANPD, como a lei manda.</p>
+    </div>
+  </section>
+
+  <section id="menores" class="lg-secao">
+    <h2 data-i18n="pri.s9">9. Idade mínima</h2>
+    <div data-i18n-html="pri.t9">
+      <p>É necessário ter pelo menos 16 anos para criar uma conta. Se soubermos de uma conta de alguém abaixo dessa idade, ela será excluída.</p>
+    </div>
+  </section>
+
+  <section id="mudancas" class="lg-secao">
+    <h2 data-i18n="pri.s10">10. Mudanças nesta política</h2>
+    <div data-i18n-html="pri.t10">
+      <p>Quando esta política mudar, a versão e a data no topo da página serão atualizadas. Se a mudança for relevante, pediremos um novo aceite ao entrar na conta. Veja também os <a class="nh-link" href="termos.html">Termos de uso</a>.</p>
+    </div>
+  </section>
+</main>
+
+<nh-footer></nh-footer>
 </body>
 </html>
