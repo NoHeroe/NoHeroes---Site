@@ -30,7 +30,7 @@
       var max = Math.max(0, Number(p.max_qty) || 0);
       if (!linha) {
         linha = {
-          key: k, id: p.id, variant_id: p.variant_id || null, name: p.name,
+          key: k, id: p.id, variant_id: p.variant_id || null, name: p.name, name_en: p.name_en || null,
           variant_label: p.variant_label || null, unit_price: Number(p.unit_price) || 0,
           quantity: 0, max_qty: max, fulfillment: p.fulfillment || 'digital', imageUrl: p.imageUrl || ''
         };
@@ -81,6 +81,7 @@
         i.max_qty = fonte.max_qty;
         if (i.quantity > i.max_qty) { i.quantity = i.max_qty; avisos.push('Quantidade de "' + i.name + '" ajustada ao estoque.'); }
         i.fulfillment = p.fulfillment || 'digital';
+        i.name_en = p.name_en || null;
         return i.quantity > 0;
       });
       gravar(itens);

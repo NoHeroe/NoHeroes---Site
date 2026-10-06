@@ -1,0 +1,95 @@
+/* Loja (store.html) — vitrine, filtros, modal do produto e carrinho. */
+
+/* barra fixa: categorias + carrinho */
+.lj-barra { position: sticky; top: 64px; z-index: 30; background: rgba(7,6,10,.94); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(168,85,247,.14); }
+.lj-barra-in { display: flex; align-items: center; gap: 10px; }
+.lj-filtros { flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; scrollbar-width: none; padding: 8px 0; }
+.lj-filtros::-webkit-scrollbar { display: none; }
+.lj-pill { display: inline-flex; align-items: center; min-height: 38px; padding: 0 14px; margin-right: 6px; border-radius: 99px; border: 1px solid rgba(168,85,247,.25);
+  font-size: 13px; font-weight: 600; color: var(--nh-texto-2); transition: all .2s; }
+.lj-pill:hover { border-color: rgba(168,85,247,.5); color: #fff; }
+.lj-pill[aria-pressed="true"] { background: rgba(168,85,247,.16); border-color: #a855f7; color: #e9d5ff; }
+.lj-carrinho { position: relative; flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px; min-height: 42px; padding: 0 12px; border-radius: 12px;
+  border: 1px solid rgba(168,85,247,.4); color: #e9d5ff; font-weight: 700; font-size: 13px; }
+.lj-badge { min-width: 20px; height: 20px; padding: 0 6px; border-radius: 99px; background: #facc15; color: #1a1206; font-size: 12px; display: inline-grid; place-items: center; }
+
+/* topo e confiança */
+.lj-topo { padding: 28px 0 8px; display: grid; gap: 8px; }
+.lj-confianca { margin: 18px 0 8px; display: grid; gap: 8px; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .lj-confianca { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .lj-confianca { grid-template-columns: repeat(4, 1fr); } }
+.lj-confianca li { display: flex; gap: 10px; align-items: flex-start; padding: 12px; border-radius: 14px; border: 1px solid var(--nh-linha);
+  background: rgba(255,255,255,.025); font-size: 13px; color: var(--nh-texto-2); line-height: 1.4; }
+.lj-confianca strong { display: block; color: #fff; font-size: 14px; }
+.lj-confianca svg { flex-shrink: 0; margin-top: 2px; }
+
+/* vitrine */
+.lj-cat { padding: 22px 0 6px; display: flex; align-items: baseline; gap: 8px; font-size: 1.1rem; font-weight: 700; color: #fff; }
+.lj-cat span { font-size: 12px; font-weight: 600; color: #c084fc; }
+.lj-grade { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (min-width: 640px) { .lj-grade { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .lj-grade { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; } }
+.lj-card { position: relative; display: flex; flex-direction: column; border-radius: 16px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.035);
+  overflow: hidden; transition: border-color .2s, transform .2s; }
+.lj-card:hover { border-color: rgba(168,85,247,.45); transform: translateY(-2px); }
+.lj-card-img { position: relative; display: block; aspect-ratio: 2 / 3; background: #141018; }
+.lj-card-img img { width: 100%; height: 100%; object-fit: cover; }
+.lj-card-corpo { padding: 10px; display: grid; gap: 6px; flex: 1; align-content: start; }
+.lj-card-nome { font-size: 14px; font-weight: 700; color: #fff; line-height: 1.3; }
+.lj-card-preco { font-size: 14px; font-weight: 700; color: #facc15; }
+.lj-card-acoes { margin-top: auto; display: grid; gap: 6px; padding: 0 10px 10px; }
+.lj-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+.lj-selo { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; border: 1px solid; }
+.lj-selo-fisico { color: #facc15; border-color: rgba(250,204,21,.45); background: rgba(250,204,21,.08); }
+.lj-selo-digital { color: #c084fc; border-color: rgba(168,85,247,.45); background: rgba(168,85,247,.08); }
+.lj-selo-baixo { color: #fca5a5; border-color: rgba(248,113,113,.45); background: rgba(248,113,113,.08); }
+.lj-selo-breve { position: absolute; top: 8px; left: 8px; background: #a855f7; color: #fff; border-color: #a855f7; }
+.lj-btn { display: flex; align-items: center; justify-content: center; min-height: 40px; padding: 0 10px; border-radius: 10px; font-size: 13px; font-weight: 700; text-align: center; }
+.lj-btn-pri { background: #8f4fff; color: #fff; }
+.lj-btn-pri:hover { background: #9d63ff; }
+.lj-btn-pri:disabled { background: #2a2630; color: rgba(255,255,255,.45); cursor: not-allowed; }
+.lj-btn-ml { border: 1px solid rgba(250,204,21,.45); color: #facc15; }
+.lj-btn-ml:hover { background: rgba(250,204,21,.08); }
+.lj-btn-sec { border: 1px solid rgba(168,85,247,.45); color: #c4a3ff; }
+.lj-estado { padding: 40px 16px; text-align: center; color: var(--nh-texto-2); border: 1px dashed var(--nh-linha); border-radius: 16px; margin-top: 16px; }
+.lj-esqueleto { aspect-ratio: 2 / 3; border-radius: 16px; background: linear-gradient(90deg, rgba(255,255,255,.04), rgba(255,255,255,.09), rgba(255,255,255,.04));
+  background-size: 200% 100%; animation: ljSkel 1.2s ease-in-out infinite; }
+@keyframes ljSkel { from { background-position: 0 0; } to { background-position: 200% 0; } }
+
+/* modal do produto */
+.lj-modal { position: fixed; inset: 0; z-index: 170; display: none; align-items: center; justify-content: center; padding: 16px; }
+.lj-modal.aberto { display: flex; }
+.lj-modal-fundo { position: absolute; inset: 0; background: rgba(0,0,0,.72); backdrop-filter: blur(4px); }
+.lj-modal-caixa { position: relative; width: 100%; max-width: 440px; max-height: 92vh; overflow-y: auto; padding: 16px; border-radius: 20px;
+  background: rgba(18,16,24,.97); border: 1px solid rgba(168,85,247,.4); box-shadow: 0 20px 60px rgba(0,0,0,.6); }
+.lj-modal-caixa img { width: 100%; max-height: 46vh; object-fit: contain; border-radius: 12px; margin-bottom: 12px; }
+@media (max-width: 640px) { .lj-modal-caixa img { max-height: 30vh; } }
+.lj-fechar { position: absolute; top: 10px; right: 10px; width: 40px; height: 40px; border-radius: 12px; border: 1px solid rgba(168,85,247,.4); background: rgba(0,0,0,.55); color: #fff; }
+.lj-rotulo { font-size: 13px; color: rgba(255,255,255,.6); margin: 14px 0 6px; }
+.lj-variantes { display: flex; flex-wrap: wrap; gap: 6px; }
+.lj-var { min-height: 42px; padding: 0 12px; border-radius: 10px; border: 1px solid rgba(168,85,247,.35); color: #f4f4f4; font-size: 14px; }
+.lj-var[aria-checked="true"] { border-color: #a855f7; background: rgba(168,85,247,.18); color: #e9d5ff; }
+.lj-var:disabled { opacity: .4; cursor: not-allowed; text-decoration: line-through; }
+.lj-linha-preco { display: flex; align-items: center; gap: 8px; margin: 14px 0 10px; }
+.lj-preco { font-size: 22px; font-weight: 700; color: #facc15; }
+.lj-qtd-linha { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.lj-qtd { display: inline-flex; align-items: center; border: 1px solid rgba(168,85,247,.35); border-radius: 10px; overflow: hidden; }
+.lj-qtd button { width: 44px; height: 44px; font-size: 18px; color: #fff; }
+.lj-qtd button:disabled { opacity: .3; cursor: not-allowed; }
+.lj-qtd span { min-width: 34px; text-align: center; font-weight: 700; }
+.lj-qtd-p button { width: 36px; height: 36px; font-size: 15px; }
+.lj-nota { font-size: 12px; color: rgba(255,255,255,.5); margin: 0 0 8px; }
+.lj-modal-links { margin-top: 10px; display: grid; gap: 8px; }
+
+/* gaveta do carrinho */
+.lj-gaveta { position: fixed; top: 0; right: 0; z-index: 160; height: 100%; width: 100%; max-width: 400px; display: flex; flex-direction: column;
+  background: rgba(18,16,24,.98); border-left: 1px solid rgba(168,85,247,.3); transform: translateX(100%); transition: transform .3s ease; }
+.lj-gaveta.aberta { transform: none; }
+.lj-gaveta-fundo { position: fixed; inset: 0; z-index: 150; background: rgba(0,0,0,.6); display: none; }
+.lj-gaveta-fundo.aberta { display: block; }
+.lj-linha { display: flex; gap: 10px; align-items: flex-start; padding: 8px; border-radius: 12px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); }
+.lj-linha img { width: 56px; height: 72px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
+.lj-linha-info { flex: 1; min-width: 0; }
+.lj-linha-nome { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lj-linha-det { font-size: 12px; color: rgba(255,255,255,.55); margin-bottom: 4px; }
+.lj-remover { width: 36px; height: 36px; border-radius: 10px; border: 1px solid rgba(239,68,68,.4); color: #f87171; flex-shrink: 0; }
