@@ -1,342 +1,234 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>NoHeroes · Sobre</title>
-<meta name="description" content="Conheça o universo NoHeroes — plataforma multimídia de dark fantasy com livros e muito mais.">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
-<script>tailwind.config={theme:{extend:{colors:{nh:{bg:'#07060a',dark:'#0c0a10',accent:'#8f4fff',gold:'#d9b55a'}},fontFamily:{display:['Cinzel Decorative','serif'],sans:['Inter','sans-serif']}}}}</script>
-<link rel="stylesheet" href="assets/css/noheroes-ui.css">
-<style>
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:#07060a;color:#e5e5e5;font-family:'Inter',sans-serif;line-height:1.6;overflow-x:hidden}
-
-/* GLOBALS */
-.text-grad{background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.grad-nh{background:linear-gradient(135deg,#8f4fff,#d9b55a)}
-.cinzel{font-family:'Cinzel Decorative',serif}
-.divider{width:40px;height:2px;background:linear-gradient(90deg,#8f4fff,#d9b55a);border-radius:99px;margin:0 auto}
-.section-label{font-size:11px;font-weight:700;color:rgba(143,79,255,0.7);text-transform:uppercase;letter-spacing:0.2em;margin-bottom:12px}
-
-/* DRAWER, #brasasCanvas e .drawer-* agora em assets/css/noheroes-ui.css */
-
-/* CARDS */
-.glass-card{background:#0c0a10;border:1px solid rgba(143,79,255,0.15);border-radius:16px;padding:24px;transition:all 0.3s}
-.glass-card:hover{border-color:rgba(143,79,255,0.35);transform:translateY(-3px)}
-.badge-future{display:inline-block;font-size:10px;padding:3px 10px;border-radius:99px;background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.3);color:#fbbf24;margin-top:8px}
-
-/* MARQUEE */
-.marquee-wrap{overflow:hidden;white-space:nowrap;border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.3);padding:10px 0}
-.marquee-inner{display:inline-block;animation:marquee 80s linear infinite}
-@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-
-/* BALÕES */
-.balao-resp{background:linear-gradient(135deg,rgba(143,79,255,0.25),rgba(217,181,90,0.15));border:1px solid rgba(143,79,255,0.2);border-radius:18px 18px 18px 4px;padding:14px 18px;max-width:80%}
-.balao-ask{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:18px 18px 4px 18px;padding:14px 18px;max-width:80%}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
-.float{animation:float 3s ease-in-out infinite}
-.float-2{animation:float 3.5s ease-in-out infinite 0.3s}
-.float-3{animation:float 4s ease-in-out infinite 0.6s}
-
-/* TIMELINE */
-.timeline-scroll{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:16px;padding:0 20px 16px;scrollbar-width:none}
-.timeline-scroll::-webkit-scrollbar{display:none}
-.tl-box{flex:0 0 auto;width:280px;background:#0c0a10;border:1px solid rgba(143,79,255,0.2);border-radius:14px;padding:20px;scroll-snap-align:start;transition:transform 0.2s}
-.tl-box:hover{transform:scale(1.02)}
-.tl-year{font-family:'Cinzel Decorative',serif;font-size:13px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
-.tl-now{border-color:rgba(143,79,255,0.5);box-shadow:0 0 20px rgba(143,79,255,0.1)}
-
-/* SCROLL REVEAL */
-.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
-.reveal.visible{opacity:1;transform:none}
-
-/* STATS */
-.stat-item{text-align:center;padding:20px 16px}
-.stat-num{font-size:32px;font-weight:800;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-
-/* MOBILE */
-@media(max-width:768px){
-  .hero-grid{grid-template-columns:1fr!important}
-  .projects-grid{grid-template-columns:1fr 1fr!important}
-  .team-grid{grid-template-columns:1fr!important}
-  .stats-grid{grid-template-columns:1fr 1fr!important}
-  .press-btns{flex-direction:column!important}
-}
-@media(max-width:480px){
-  .projects-grid{grid-template-columns:1fr!important}
-  .stats-grid{grid-template-columns:1fr 1fr!important}
-}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title data-i18n="sob.meta.titulo">Sobre Raul Takagi, tatuador e escritor | NoHeroes</title>
+  <meta name="description" content="Raul Takagi é tatuador e escritor de dark fantasy, autor da webnovel Anjo Devorador. Conheça a trajetória, o manifesto NoHeroes e o press kit." data-i18n-attr="content:sob.meta.descricao">
+  <link rel="canonical" href="https://www.noheroes.com.br/sobre">
+  <link rel="alternate" hreflang="pt-BR" href="https://www.noheroes.com.br/sobre">
+  <link rel="alternate" hreflang="en" href="https://www.noheroes.com.br/sobre?lang=en">
+  <link rel="alternate" hreflang="x-default" href="https://www.noheroes.com.br/sobre">
+  <meta property="og:type" content="profile">
+  <meta property="og:site_name" content="NoHeroes">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:locale:alternate" content="en_US">
+  <meta property="og:url" content="https://www.noheroes.com.br/sobre">
+  <meta property="og:title" content="Sobre Raul Takagi, tatuador e escritor" data-i18n-attr="content:sob.og.titulo">
+  <meta property="og:description" content="Trajetória, manifesto e press kit do selo NoHeroes." data-i18n-attr="content:sob.og.descricao">
+  <meta property="og:image" content="https://www.noheroes.com.br/assets/img/og/og-noheroes.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sobre Raul Takagi, tatuador e escritor" data-i18n-attr="content:sob.og.titulo">
+  <meta name="twitter:description" content="Trajetória, manifesto e press kit do selo NoHeroes." data-i18n-attr="content:sob.og.descricao">
+  <meta name="twitter:image" content="https://www.noheroes.com.br/assets/img/og/og-noheroes.jpg">
+  <meta name="theme-color" content="#07060a">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/assets/img/og/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="assets/img/foto-raul-480.webp" imagesrcset="assets/img/foto-raul-480.webp 480w, assets/img/foto-raul-960.webp 960w" imagesizes="(min-width: 1024px) 420px, 80vw">
+  <link rel="stylesheet" href="assets/css/tw.css">
+  <link rel="stylesheet" href="assets/css/noheroes-ui.css">
+  <link rel="stylesheet" href="assets/css/paginas.css">
+  <link rel="stylesheet" href="assets/css/sobre.css">
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/i18n/comum.js"></script>
+  <script src="assets/i18n/sobre.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script defer src="assets/js/noheroes-ui.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "url": "https://www.noheroes.com.br/sobre",
+    "mainEntity": {
+      "@type": "Person",
+      "name": "Raul Takagi Sato Souza",
+      "alternateName": "Raul Takagi",
+      "jobTitle": ["Tatuador", "Escritor"],
+      "image": "https://www.noheroes.com.br/assets/img/foto-raul-960.jpg",
+      "email": "mailto:eco.noheroes@gmail.com",
+      "knowsLanguage": ["pt", "en", "de"],
+      "brand": { "@type": "Brand", "name": "NoHeroes" },
+      "url": "https://www.noheroes.com.br/sobre"
+    }
+  }
+  </script>
 </head>
-<body>
-<!-- Header + drawer + fundo (componentes compartilhados) -->
-<nh-header></nh-header>
+<body class="nh-pagina">
 <nh-background></nh-background>
+<nh-header></nh-header>
 
-<main style="padding-top:120px;">
+<main id="conteudo">
 
-<!-- ═══ 1. HERO ═══ -->
-<section id="oque-e-noheroes" style="padding:60px 20px 48px;max-width:1100px;margin:0 auto;">
-  <div class="hero-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;">
-
-    <!-- Bloco principal -->
-    <div style="background:#0c0a10;border:1px solid rgba(143,79,255,0.2);border-radius:18px;padding:32px;" class="reveal">
-      <div class="section-label">O Universo</div>
-      <h2 class="cinzel text-grad" style="font-size:clamp(22px,3.5vw,36px);margin:0 0 16px;line-height:1.2;">O que é NoHeroes?</h2>
-      <div style="width:40px;height:2px;background:linear-gradient(90deg,#8f4fff,#d9b55a);border-radius:99px;margin-bottom:20px;"></div>
-      <p style="color:rgba(255,255,255,0.6);font-size:15px;margin:0 0 16px;">Muito mais que uma marca: um <span class="text-grad" style="font-weight:700;">portal vivo</span>.</p>
-      <p style="color:rgba(255,255,255,0.5);font-size:14px;line-height:1.75;margin:0 0 20px;">Uma plataforma multimídia de impacto — onde histórias, conhecimento e transformação se entrelaçam. Aqui, você não é apenas um espectador. Você evolui.</p>
-      <blockquote style="border-left:3px solid rgba(143,79,255,0.5);padding-left:16px;font-style:italic;color:rgba(255,255,255,0.4);font-size:13px;margin:0 0 24px;">"Você lê, assiste e interage. Aprende. Cresce. E com o tempo… Você também Cria."</blockquote>
-      <div style="display:flex;flex-wrap:wrap;gap:10px;">
-        <a href="apoiar.html" style="padding:10px 22px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);font-size:13px;font-weight:600;text-decoration:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline;vertical-align:middle;margin-right:6px;"><defs><linearGradient id="cta2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" stroke="url(#cta2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Apoiar o projeto</a>
-      </div>
-    </div>
-
-    <!-- Sistema vivo -->
-    <div style="background:#0c0a10;border:1px solid rgba(143,79,255,0.15);border-radius:18px;padding:32px;" class="reveal">
-      <div class="section-label">Sistema Vivo</div>
-      <h3 class="text-grad cinzel" style="font-size:18px;margin:0 0 16px;">Ecossistema Interconectado</h3>
-      <div style="display:flex;flex-direction:column;gap:12px;">
-        <div style="display:flex;align-items:start;gap:12px;padding:12px;background:rgba(217,181,90,0.04);border-radius:10px;border:1px solid rgba(217,181,90,0.1);">
-          <span style="font-size:20px;flex-shrink:0;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <defs><linearGradient id="nhg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs>
-  <path d="M4 19.5A2.5 2.5 0 016.5 17H20M4 19.5A2.5 2.5 0 014 17V5a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2H6.5" stroke="url(#nhg)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-</svg></span>
-          <div><div style="font-size:13px;font-weight:700;color:#f0d99a;margin-bottom:2px;">Livros & E-books</div><div style="font-size:12px;color:rgba(255,255,255,0.4);">ACDA & Chrysalis — dupla principal.</div></div>
-        </div>
-        <div style="display:flex;align-items:start;gap:12px;padding:12px;background:rgba(255,255,255,0.02);border-radius:10px;border:1px solid rgba(255,255,255,0.06);">
-          <span style="font-size:20px;flex-shrink:0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="hi3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm0-7a3 3 0 100-6 3 3 0 000 6zm0 0v4m0-14v4" stroke="url(#hi3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <div><div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.7);margin-bottom:2px;">Evolução Real</div><div style="font-size:12px;color:rgba(255,255,255,0.4);">Criatividade, aprendizado e propósito unidos.</div></div>
+  <!-- HERO -->
+  <section class="nh-hero sb-hero" aria-labelledby="sb-titulo">
+    <div class="nh-wrap nh-hero-grid">
+      <div>
+        <p class="sb-eyebrow" data-i18n="sob.eyebrow">Sobre</p>
+        <h1 id="sb-titulo" class="nh-h1 sb-h1">Raul Takagi</h1>
+        <p class="nh-hero-sub" data-i18n="sob.hero.sub">Tatuador e escritor. NoHeroes é o meu selo e estúdio: é por aqui que saem as tatuagens, as histórias e tudo o que eu crio.</p>
+        <div class="nh-hero-ctas">
+          <a data-nh-wa="tatuagem" class="nh-btn nh-btn-pri nh-btn-grande" data-i18n="sob.cta_tattoo">Agendar tatuagem</a>
+          <a data-nh-webnovel class="nh-btn nh-btn-ouro nh-btn-grande" data-i18n="sob.cta_ler">Ler Anjo Devorador</a>
         </div>
       </div>
+      <figure class="sb-foto">
+        <picture>
+          <source type="image/webp" srcset="assets/img/foto-raul-480.webp 480w, assets/img/foto-raul-960.webp 960w" sizes="(min-width: 1024px) 420px, 80vw">
+          <img src="assets/img/foto-raul-480.jpg" alt="Raul Takagi" data-i18n-attr="alt:sob.foto_alt" width="480" height="480" fetchpriority="high">
+        </picture>
+      </figure>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ═══ STATS ═══ -->
-<section style="max-width:900px;margin:0 auto 48px;padding:0 20px;">
-  <div class="stats-grid" style="display:grid;grid-template-columns:repeat(3,1fr);background:#0c0a10;border:1px solid rgba(143,79,255,0.15);border-radius:16px;overflow:hidden;">
-    <div class="stat-item" style="border-right:1px solid rgba(255,255,255,0.06);">
-      <div class="stat-num">1</div>
-      <div style="font-size:11px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.1em;">Livro publicado</div>
-    </div>
-    <div class="stat-item" style="border-right:1px solid rgba(255,255,255,0.06);">
-      <div class="stat-num">∞</div>
-      <div style="font-size:11px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.1em;">Comunidade ativa</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">2025</div>
-      <div style="font-size:11px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.1em;">Ano de fundação</div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ MARQUEE VERSÍCULOS ═══ -->
-<div class="marquee-wrap" style="margin-bottom:60px;">
-  <div class="marquee-inner">
-    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"Ainda que eu ande pelo vale da sombra da morte, não temerei mal algum." (Salmos 23:4)</span>
-    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"O Deus de toda graça os restaurará, confirmará e fortalecerá." (1 Pedro 5:10)</span>
-    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"Não temas, porque eu sou contigo; não te assombres, porque eu sou teu Deus." (Isaías 41:10)</span>
-    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"Pois Deus não nos deu espírito de covardia, mas de poder, de amor e de equilíbrio." (2 Timóteo 1:7)</span>
-    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"Sobre ti resplandece o Senhor, e a sua glória sobre ti se manifesta." (Isaías 60:2)</span>
-    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"Quando passares pelas águas, eu estarei contigo." (Isaías 43:2)</span>
-    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"Seja forte e corajoso! O Senhor, o seu Deus, estará com você por onde você andar." (Josué 1:9)</span>
-    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"Bendito seja o Senhor, que adestra as minhas mãos para a batalha." (Salmos 144:1)</span>
-    <!-- duplicata para loop contínuo -->
-    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"Ainda que eu ande pelo vale da sombra da morte, não temerei mal algum." (Salmos 23:4)</span>
-    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"O Deus de toda graça os restaurará, confirmará e fortalecerá." (1 Pedro 5:10)</span>
-    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"Não temas, porque eu sou contigo; não te assombres, porque eu sou teu Deus." (Isaías 41:10)</span>
-    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"Pois Deus não nos deu espírito de covardia, mas de poder, de amor e de equilíbrio." (2 Timóteo 1:7)</span>
-    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"Sobre ti resplandece o Senhor, e a sua glória sobre ti se manifesta." (Isaías 60:2)</span>
-    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"Quando passares pelas águas, eu estarei contigo." (Isaías 43:2)</span>
-    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"Seja forte e corajoso! O Senhor, o seu Deus, estará com você por onde você andar." (Josué 1:9)</span>
-    <span style="margin:0 40px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">"Bendito seja o Senhor, que adestra as minhas mãos para a batalha." (Salmos 144:1)</span>
-  </div>
-</div>
-
-<!-- ═══ 2. MUITO ALÉM + PROJETOS ═══ -->
-<section id="muito-alem" style="padding:0 20px 64px;max-width:1100px;margin:0 auto;">
-  <div style="text-align:center;margin-bottom:40px;" class="reveal">
-    <div class="section-label" style="text-align:center;">Ecossistema</div>
-    <h2 class="cinzel text-grad" style="font-size:clamp(20px,3vw,32px);margin:0 0 12px;">Muito além de uma história</h2>
-    <p style="color:rgba(255,255,255,0.4);font-size:14px;max-width:500px;margin:0 auto;">Um universo multimídia onde criamos, contamos histórias e ajudamos você a evoluir de verdade.</p>
-  </div>
-
-  <div class="projects-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
-
-    <!-- Livros -->
-    <div class="glass-card reveal">
-      <div style="width:72px;height:72px;border-radius:14px;background:rgba(217,181,90,0.08);border:1px solid rgba(217,181,90,0.2);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 16px;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <defs><linearGradient id="nhg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs>
-  <path d="M4 19.5A2.5 2.5 0 016.5 17H20M4 19.5A2.5 2.5 0 014 17V5a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2H6.5" stroke="url(#nhg)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-</svg></div>
-      <h3 style="font-family:'Cinzel Decorative',serif;font-size:13px;text-align:center;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:0 0 8px;">Editora Alternativa</h3>
-      <p style="font-size:12px;color:rgba(255,255,255,0.45);text-align:center;line-height:1.6;margin:0 0 14px;">ACDA & CHRYSALIS — Dupla de dark fantasy onde lazer e filosofia se fundem.</p>
-      <div style="text-align:center;"><a href="store.html" style="font-size:12px;color:#f0d99a;text-decoration:none;border:1px solid rgba(217,181,90,0.3);padding:6px 14px;border-radius:8px;">Ver Loja →</a></div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ═══ 4. LINHA DO TEMPO ═══ -->
-<section id="timeline-section" style="padding:0 0 64px;">
-  <div style="text-align:center;margin-bottom:32px;padding:0 20px;" class="reveal">
-    <div class="section-label" style="text-align:center;">História</div>
-    <h2 class="cinzel text-grad" style="font-size:clamp(18px,2.5vw,28px);margin:0 0 8px;">Linha do Tempo</h2>
-    <p style="color:rgba(255,255,255,0.35);font-size:13px;">A jornada que nos trouxe até aqui — e o que está por vir.</p>
-  </div>
-  <div class="timeline-scroll">
-    <div class="tl-box"><div class="tl-year">2015</div><div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6;">Criação do projeto Dragon Spirit H, com dois protagonistas. Primeiro roteiro de anime.</div></div>
-    <div class="tl-box"><div class="tl-year">2016–2020</div><div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6;">Ideias amadurecem. Personagens e mundos evoluem no papel. Nasce o simbolismo da saga.</div></div>
-    <div class="tl-box"><div class="tl-year">2021</div><div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6;">Traumas na Alemanha moldam a essência emocional do universo NoHeroes. A ideia ganha identidade.</div></div>
-    <div class="tl-box"><div class="tl-year">2022–2023</div><div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6;">Retorno ao Brasil. Cura pessoal e nascimento dos primeiros rascunhos com o mundo de Caelum.</div></div>
-    <div class="tl-box"><div class="tl-year">2024</div><div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6;">Separação dos projetos. Quase abandono total. Gravidez da esposa reacende o sonho.</div></div>
-    <div class="tl-box"><div class="tl-year">Início 2025</div><div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6;">ROAR é escrito. Nasce a trilogia NoHeroes (ROAR, FREQ, Echoes). Surge o conceito de sistema vivo.</div></div>
-    <div class="tl-box"><div class="tl-year">Meados 2025</div><div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6;">Falha em projeto de animação reacende a garra. Aprende a programar. Cria o site e os primeiros produtos.</div></div>
-    <div class="tl-box"><div class="tl-year">Final 2025</div><div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6;">Site funcional. Livros, e-books, loja e comunidade em formação. Manifesto lançado. Busca por aliados.</div></div>
-    <div class="tl-box tl-now"><div class="tl-year">2026 — Agora</div><div style="font-size:13px;color:rgba(255,255,255,0.7);line-height:1.6;"><strong style="color:#c4a3ff;">Primeiro livro publicado.</strong> Comunidade crescendo.</div></div>
-    <div class="tl-box" style="border-color:rgba(251,191,36,0.2);">
-      <div class="tl-year" style="color:#fbbf24;">Futuro próximo</div>
-      <div style="font-size:13px;color:rgba(255,255,255,0.45);line-height:1.6;">Segundo livro.</div>
-      <div style="margin-top:8px;"><span style="font-size:10px;color:#fbbf24;border:1px solid rgba(251,191,36,0.3);padding:2px 8px;border-radius:99px;">Em construção</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ 5. POR TRÁS DAS SOMBRAS ═══ -->
-<section id="criador" style="padding:0 20px 64px;max-width:800px;margin:0 auto;">
-  <div style="text-align:center;margin-bottom:32px;" class="reveal">
-    <div class="section-label" style="text-align:center;">O Criador</div>
-    <h2 class="cinzel text-grad" style="font-size:clamp(18px,2.5vw,28px);margin:0;">Por trás das Sombras...</h2>
-  </div>
-  <div style="background:#0c0a10;border:1px solid rgba(143,79,255,0.2);border-radius:18px;padding:32px;display:flex;flex-wrap:wrap;gap:28px;align-items:center;" class="reveal">
-    <div style="text-align:center;flex-shrink:0;">
-      <img src="assets/images/foto-raul.jpg" alt="Raul Takagi" style="width:100px;height:100px;border-radius:50%;object-fit:cover;border:3px solid rgba(143,79,255,0.4);">
-      <div style="margin-top:10px;display:flex;justify-content:center;gap:12px;">
-        <a href="https://instagram.com/noheroe" aria-label="Instagram"><img src="assets/icons/instagram icon.png" alt="Instagram" style="width:20px;height:20px;opacity:0.6;transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.6"></a>
+  <!-- BIO -->
+  <section id="quem" class="nh-secao sb-bio" aria-labelledby="sb-quem">
+    <div class="nh-wrap sb-bio-grid">
+      <div>
+        <h2 id="sb-quem" class="nh-h2" data-i18n="sob.quem.titulo">Quem é Raul</h2>
+      </div>
+      <div class="sb-texto">
+        <p data-i18n-html="sob.quem.p1">Sou <strong>tatuador</strong>: a pele é mais um suporte para a minha arte, com desenho autoral e composição pensada para a anatomia de cada pessoa.</p>
+        <p data-i18n-html="sob.quem.p2">Sou <strong>escritor</strong> de dark fantasy. Publico a webnovel <em>Anjo Devorador</em> em capítulos, em português e em inglês, e o livro <em>As Cinzas do Amanhã</em> já está à venda.</p>
+        <p data-i18n="sob.quem.p3">Antes disso fui bombeiro, trabalhei com turismo, sobrevivencialismo e como gerente de hotelaria, dei palestras em escolas e aprendi o ritmo de churrascaria e açougue. Também construí este site inteiro, do código à arte.</p>
+        <ul class="sb-idiomas" aria-label="Idiomas" data-i18n-attr="aria-label:sob.idiomas">
+          <li data-i18n="sob.idioma.pt">Português nativo</li>
+          <li data-i18n="sob.idioma.en">Inglês fluente</li>
+          <li data-i18n="sob.idioma.de">Alemão fluente</li>
+          <li data-i18n="sob.idioma.jp">Japonês em aprendizado</li>
+        </ul>
       </div>
     </div>
-    <div style="flex:1;min-width:240px;">
-      <h3 style="font-family:'Cinzel Decorative',serif;font-size:16px;margin:0 0 4px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Raul Takagi S. Souza</h3>
-      <p style="font-size:12px;color:rgba(255,255,255,0.35);margin:0 0 14px;text-transform:uppercase;letter-spacing:0.1em;">Criador · Escritor · Artista Digital · Dev</p>
-      <p style="font-size:14px;color:rgba(255,255,255,0.55);line-height:1.7;margin:0 0 16px;">"...há um criador. Raul. Um escritor, artista digital e pai — que transforma angústias em arte e fantasia em realidade."</p>
-      <button onclick="abrirManifesto()" style="padding:8px 20px;border-radius:10px;border:1px solid rgba(143,79,255,0.4);background:rgba(143,79,255,0.08);color:#c4a3ff;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline;vertical-align:middle;margin-right:6px;"><defs><linearGradient id="mb1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke="url(#mb1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Ler Manifesto</button>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- Modal Manifesto -->
-<div id="manifestoModal" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px;">
-  <div style="background:linear-gradient(135deg,#0c0a10,#1a0d2e);border:1px solid rgba(143,79,255,0.3);border-radius:18px;padding:32px;max-width:600px;width:100%;max-height:85vh;overflow-y:auto;position:relative;">
-    <button onclick="fecharManifesto()" style="position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);font-size:14px;cursor:pointer;">✕</button>
-    <h2 class="cinzel text-grad" style="font-size:20px;margin:0 0 20px;">Manifesto</h2>
-    <div style="font-size:14px;color:rgba(255,255,255,0.65);line-height:1.8;display:flex;flex-direction:column;gap:14px;">
-      <p>Eu nasci sem ter escolhido estar aqui. Cresci inserido num sistema que nunca pedi pra fazer parte — e que, mesmo prometendo segurança e justiça, só me cobra, explora e me prende.</p>
-      <p>Quando algo dá errado, ninguém aparece pra me proteger. Se eu erro, sou punido. Se sou roubado, azar o meu. A lógica é simples: o sistema exige tudo, mas entrega quase nada.</p>
-      <p>Por isso eu criei a <strong style="color:#c4a3ff;">NoHeroes</strong>. Não só como uma história. Mas como um grito. Um universo onde as leis são claras, o valor é real e quem constrói é quem decide.</p>
-      <p>Eu não quero depender de plataformas que me cobram taxas abusivas por algo que fiz sozinho. Não quero ser apenas mais um número alimentando engrenagens que nunca me deram nada.</p>
-      <p>Eu ajudo quem anda comigo. Divido com os que precisam. Mas não aceito ser sugado por abutres. A liberdade, pra mim, não é um luxo. É necessidade.</p>
-      <p>Este projeto é minha forma de resistir. De viver do que eu acredito, com quem acredita junto. E se você também sente que o mundo tá do avesso — talvez <strong style="color:#c4a3ff;">NoHeroes</strong> seja o seu lugar.</p>
-    </div>
-    <div style="text-align:center;margin-top:24px;"><button onclick="fecharManifesto()" style="padding:10px 28px;border-radius:10px;background:linear-gradient(135deg,#8f4fff,#d9b55a);border:none;color:#000;font-weight:700;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;">Fechar</button></div>
-  </div>
-</div>
-
-<!-- ═══ 6. EQUIPE ═══ -->
-<section style="padding:0 20px 64px;max-width:800px;margin:0 auto;">
-  <div style="text-align:center;margin-bottom:32px;" class="reveal">
-    <div class="section-label" style="text-align:center;">Equipe</div>
-    <h2 class="cinzel text-grad" style="font-size:clamp(18px,2.5vw,28px);margin:0 0 8px;">Equipe & Colaboradores</h2>
-    <p style="color:rgba(255,255,255,0.35);font-size:13px;">O universo NoHeroes é construído com ajuda coletiva.</p>
-  </div>
-  <div class="team-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;">
-
-    <!-- Raul -->
-    <div style="background:#0c0a10;border:1px solid rgba(143,79,255,0.2);border-radius:14px;padding:24px;text-align:center;" class="reveal">
-      <img src="assets/images/foto-raul.jpg" alt="Raul" style="width:72px;height:72px;border-radius:50%;object-fit:cover;border:2px solid rgba(143,79,255,0.4);margin-bottom:12px;">
-      <h3 style="font-family:'Cinzel Decorative',serif;font-size:14px;font-weight:700;margin:0 0 4px;background:linear-gradient(135deg,#c4a3ff,#f0d99a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Raul Takagi S. Souza</h3>
-      <p style="font-size:12px;color:rgba(255,255,255,0.35);">Criador, roteirista, artista digital & desenvolvedor</p>
-    </div>
-
-    <!-- Claude -->
-    <div style="background:#0c0a10;border:1px solid rgba(217,181,90,0.2);border-radius:14px;padding:24px;text-align:center;" class="reveal">
-      <img src="assets/images/claude-color.png" alt="Claude" style="width:72px;height:72px;border-radius:50%;object-fit:cover;border:2px solid rgba(217,181,90,0.4);margin:0 auto 12px;background:#fff;display:block;">
-      <h3 style="font-family:'Cinzel Decorative',serif;font-size:14px;font-weight:700;margin:0 0 4px;background:linear-gradient(135deg,#f0d99a,#c4a3ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Claude</h3>
-      <p style="font-size:12px;color:rgba(255,255,255,0.35);">Assistente de criação, co-desenvolvimento & pesquisa</p>
-    </div>
-
-  </div>
-  <div style="text-align:center;" class="reveal">
-    <a href="portifólio.html#contato" style="display:inline-block;padding:12px 28px;border-radius:12px;background:linear-gradient(135deg,#8f4fff,#d9b55a);color:#000;font-weight:700;font-size:13px;text-decoration:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline;vertical-align:middle;margin-right:6px;"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" stroke="rgba(0,0,0,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Indicar ou Tornar-se Colaborador</a>
-  </div>
-</section>
-
-<!-- ═══ 7. PRESS KIT ═══ -->
-<section id="press-kit" style="padding:0 20px 80px;max-width:800px;margin:0 auto;">
-  <div style="text-align:center;margin-bottom:32px;" class="reveal">
-    <div class="section-label" style="text-align:center;">Imprensa</div>
-    <h2 class="cinzel text-grad" style="font-size:clamp(18px,2.5vw,28px);margin:0 0 8px;">Para a Imprensa e Parceiros</h2>
-    <p style="color:rgba(255,255,255,0.35);font-size:13px;max-width:480px;margin:0 auto;">Materiais oficiais do projeto NoHeroes para imprensa, colaboradores e parceiros.</p>
-  </div>
-
-  <div style="background:#0c0a10;border:1px solid rgba(143,79,255,0.2);border-radius:18px;padding:28px;" class="reveal">
-    <h3 class="text-grad cinzel" style="font-size:16px;margin:0 0 16px;">Press & Media Kit — NoHeroes</h3>
-    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">
-      <div style="display:flex;gap:12px;align-items:start;padding:12px;background:rgba(255,255,255,0.02);border-radius:10px;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><defs><linearGradient id="psa" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke="url(#psa)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <div><div style="margin-bottom:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline;vertical-align:middle;margin-right:6px;"><defs><linearGradient id="li1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke="url(#li1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><strong style="color:#c4a3ff;font-size:13px;">Press Kit (PDF)</strong></div><p style="font-size:12px;color:rgba(255,255,255,0.4);margin:2px 0 0;">Material institucional para a imprensa — apresentação oficial, contexto criativo e universo.</p></div>
-      </div>
-      <div style="display:flex;gap:12px;align-items:start;padding:12px;background:rgba(255,255,255,0.02);border-radius:10px;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><defs><linearGradient id="psb" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke="url(#psb)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <div><div style="margin-bottom:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline;vertical-align:middle;margin-right:6px;"><defs><linearGradient id="li2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke="url(#li2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><strong style="color:#f0d99a;font-size:13px;">Media Kit (PDF)</strong></div><p style="font-size:12px;color:rgba(255,255,255,0.4);margin:2px 0 0;">Para colaboradores e parceiros — diretrizes de uso visual da marca NoHeroes.</p></div>
-      </div>
-      <div style="display:flex;gap:12px;align-items:start;padding:12px;background:rgba(255,255,255,0.02);border-radius:10px;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><defs><linearGradient id="psc" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs><path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2zM16 3H8" stroke="url(#psc)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <div><div style="margin-bottom:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline;vertical-align:middle;margin-right:6px;"><defs><linearGradient id="li3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs><path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2zM16 3H8M12 12v4m0 0l-2-2m2 2l2-2" stroke="url(#li3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><strong style="color:rgba(255,255,255,0.7);font-size:13px;">Pacote Completo (ZIP)</strong></div><p style="font-size:12px;color:rgba(255,255,255,0.4);margin:2px 0 0;">Todos os arquivos organizados, assets para uso profissional e pitch oficial.</p></div>
+  <!-- O QUE FAÇO -->
+  <section id="frentes" class="nh-secao" aria-labelledby="sb-frentes">
+    <div class="nh-wrap">
+      <h2 id="sb-frentes" class="nh-h2" data-i18n="sob.frentes.titulo">O que sai do estúdio</h2>
+      <div class="sb-frentes">
+        <article class="sb-frente sb-frente-pele">
+          <h3 class="nh-h3" data-i18n="sob.f.tattoo_t">Tatuagem</h3>
+          <p data-i18n="sob.f.tattoo">Projetos autorais, desenhados para você. Tamanho e valor sob consulta.</p>
+          <div class="nh-servico-links">
+            <a data-nh-wa="tatuagem" class="nh-link" data-i18n="sob.f.tattoo_cta">Agendar pelo WhatsApp</a>
+            <a href="index.html#tatuagem" class="nh-link" data-i18n="sob.f.tattoo_ver">Ver trabalhos</a>
+          </div>
+        </article>
+        <article class="sb-frente sb-frente-papel">
+          <h3 class="nh-h3" data-i18n="sob.f.obra_t">Escrita</h3>
+          <p data-i18n="sob.f.obra">A webnovel Anjo Devorador, o livro As Cinzas do Amanhã e a trilogia Sistema Vivo.</p>
+          <div class="nh-servico-links">
+            <a data-nh-webnovel class="nh-link" data-i18n="sob.f.obra_cta">Ler Anjo Devorador</a>
+            <a href="index.html#obra" class="nh-link" data-i18n="sob.f.obra_ver">Conhecer as obras</a>
+          </div>
+        </article>
+        <article class="sb-frente">
+          <h3 class="nh-h3" data-i18n="sob.f.loja_t">Loja</h3>
+          <p data-i18n="sob.f.loja">E-books com entrega imediata e peças físicas para colecionador.</p>
+          <div class="nh-servico-links">
+            <a href="store.html" class="nh-link" data-i18n="sob.f.loja_cta">Ir para a loja</a>
+          </div>
+        </article>
+        <article class="sb-frente">
+          <h3 class="nh-h3" data-i18n="sob.f.serv_t">Sites e arte digital</h3>
+          <p data-i18n="sob.f.serv">Sites e lojas completos, identidade visual, logos e ilustração.</p>
+          <div class="nh-servico-links">
+            <a data-nh-wa="sites" class="nh-link" data-i18n="sob.f.serv_cta">Pedir orçamento</a>
+            <a href="portif%C3%B3lio.html#vitrines" class="nh-link" data-i18n="sob.f.serv_ver">Ver trabalhos</a>
+          </div>
+        </article>
       </div>
     </div>
-    <div class="press-btns" style="display:flex;flex-wrap:wrap;gap:10px;">
-      <a href="assets/press/press-media-kit-noheroes.zip" style="padding:10px 18px;border-radius:10px;background:linear-gradient(135deg,#8f4fff,#d9b55a);color:#000;font-weight:700;font-size:13px;text-decoration:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline;vertical-align:middle;margin-right:6px;"><defs><linearGradient id="pg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs><path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2zM16 3H8M12 12v4m0 0l-2-2m2 2l2-2" stroke="url(#pg1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Baixar Kit Completo (ZIP)</a>
-      <a href="assets/press/press-kit-noheroes.pdf" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(143,79,255,0.3);color:#c4a3ff;font-size:13px;font-weight:600;text-decoration:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline;vertical-align:middle;margin-right:6px;"><defs><linearGradient id="pg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke="url(#pg2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Press Kit (PDF)</a>
-      <a href="assets/press/media-kit-noheroes.pdf" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(217,181,90,0.3);color:#f0d99a;font-size:13px;font-weight:600;text-decoration:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline;vertical-align:middle;margin-right:6px;"><defs><linearGradient id="pg3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke="url(#pg3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Media Kit (PDF)</a>
-      <a href="https://github.com/NoHeroe/press-midea-kit" target="_blank" rel="noopener" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);font-size:13px;font-weight:600;text-decoration:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline;vertical-align:middle;margin-right:6px;"><defs><linearGradient id="pg4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" stroke="url(#pg4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>GitHub</a>
-      <a href="suporte.html" style="padding:10px 18px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.4);font-size:13px;font-weight:600;text-decoration:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline;vertical-align:middle;margin-right:6px;"><defs><linearGradient id="pg5" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#c4a3ff"/><stop offset="100%" style="stop-color:#f0d99a"/></linearGradient></defs><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="url(#pg5)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Contato</a>
-    </div>
-  </div>
-</section>
+  </section>
 
+  <!-- TRAJETÓRIA -->
+  <section id="trajetoria" class="nh-secao" aria-labelledby="sb-traj">
+    <div class="nh-wrap">
+      <h2 id="sb-traj" class="nh-h2" data-i18n="sob.traj.titulo">Trajetória</h2>
+      <p class="nh-lead" data-i18n="sob.traj.lead">Do primeiro roteiro ao selo NoHeroes.</p>
+      <ol class="sb-linha">
+        <li><span class="sb-ano">2015</span><p data-i18n="sob.traj.2015">Cria o projeto Dragon Spirit H, com dois protagonistas. Primeiro roteiro de anime.</p></li>
+        <li><span class="sb-ano">2016–2020</span><p data-i18n="sob.traj.2016">As ideias amadurecem. Personagens e mundos evoluem no papel e nasce o simbolismo da saga.</p></li>
+        <li><span class="sb-ano">2021</span><p data-i18n="sob.traj.2021">Traumas vividos na Alemanha moldam a essência emocional do universo NoHeroes.</p></li>
+        <li><span class="sb-ano">2022–2023</span><p data-i18n="sob.traj.2022">Volta ao Brasil. Tempo de cura e dos primeiros rascunhos com o mundo de Caelum.</p></li>
+        <li><span class="sb-ano">2024</span><p data-i18n="sob.traj.2024">Separa os projetos e quase desiste de tudo. A gravidez da esposa reacende o sonho.</p></li>
+        <li><span class="sb-ano" data-i18n="sob.traj.a2025">Início de 2025</span><p data-i18n="sob.traj.2025a">Escreve ROAR, o começo da trilogia, e surge o conceito de sistema vivo.</p></li>
+        <li><span class="sb-ano" data-i18n="sob.traj.b2025">Meados de 2025</span><p data-i18n="sob.traj.2025b">Um projeto de animação falha e reacende a garra. Aprende a programar e cria o site e os primeiros produtos.</p></li>
+        <li><span class="sb-ano" data-i18n="sob.traj.c2025">Fim de 2025</span><p data-i18n="sob.traj.2025c">Site no ar, com livros, e-books e loja. Lança o manifesto.</p></li>
+        <li class="sb-agora"><span class="sb-ano" data-i18n="sob.traj.a2026">2026 — agora</span><p data-i18n="sob.traj.2026">Primeiro livro publicado e Anjo Devorador em capítulos, em português e inglês.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- MANIFESTO -->
+  <section id="manifesto" class="nh-secao" aria-labelledby="sb-manif">
+    <div class="nh-wrap">
+      <details class="sb-manifesto">
+        <summary>
+          <h2 id="sb-manif" class="nh-h2" data-i18n="sob.manif.titulo">Manifesto</h2>
+          <span class="sb-manif-abrir" data-i18n="sob.manif.abrir">Ler o manifesto</span>
+        </summary>
+        <div class="sb-texto" data-i18n-html="sob.manif.texto">
+          <p>Eu nasci sem ter escolhido estar aqui. Cresci inserido num sistema que nunca pedi pra fazer parte — e que, mesmo prometendo segurança e justiça, só me cobra, explora e me prende.</p>
+          <p>Quando algo dá errado, ninguém aparece pra me proteger. Se eu erro, sou punido. Se sou roubado, azar o meu. A lógica é simples: o sistema exige tudo, mas entrega quase nada.</p>
+          <p>Por isso eu criei a <strong>NoHeroes</strong>. Não só como uma história. Mas como um grito. Um universo onde as leis são claras, o valor é real e quem constrói é quem decide.</p>
+          <p>Eu não quero depender de plataformas que me cobram taxas abusivas por algo que fiz sozinho. Não quero ser apenas mais um número alimentando engrenagens que nunca me deram nada.</p>
+          <p>Eu ajudo quem anda comigo. Divido com os que precisam. Mas não aceito ser sugado por abutres. A liberdade, pra mim, não é um luxo. É necessidade.</p>
+          <p>Este projeto é minha forma de resistir. De viver do que eu acredito, com quem acredita junto. E se você também sente que o mundo tá do avesso — talvez <strong>NoHeroes</strong> seja o seu lugar.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- PRESS KIT -->
+  <section id="press-kit" class="nh-secao" aria-labelledby="sb-press">
+    <div class="nh-wrap">
+      <h2 id="sb-press" class="nh-h2" data-i18n="sob.press.titulo">Imprensa e parceiros</h2>
+      <p class="nh-lead" data-i18n="sob.press.lead">Materiais oficiais do NoHeroes para imprensa, colaboradores e parceiros.</p>
+      <ul class="sb-press">
+        <li>
+          <a href="assets/press/press-kit-noheroes.pdf" download>
+            <strong data-i18n="sob.press.pk">Press kit</strong>
+            <span data-i18n="sob.press.pk_d">Apresentação oficial, contexto criativo e universo.</span>
+            <em>PDF · 1,6 MB</em>
+          </a>
+        </li>
+        <li>
+          <a href="assets/press/media-kit-noheroes.pdf" download>
+            <strong data-i18n="sob.press.mk">Media kit</strong>
+            <span data-i18n="sob.press.mk_d">Diretrizes de uso visual da marca.</span>
+            <em>PDF · 4,3 MB</em>
+          </a>
+        </li>
+        <li>
+          <a href="assets/press/press-media-kit-noheroes.zip" download>
+            <strong data-i18n="sob.press.zip">Pacote completo</strong>
+            <span data-i18n="sob.press.zip_d">Todos os arquivos e imagens para uso profissional.</span>
+            <em>ZIP · 11,8 MB</em>
+          </a>
+        </li>
+      </ul>
+      <p class="sb-press-contato"><span data-i18n="sob.press.contato">Contato para imprensa:</span> <a class="nh-link" href="mailto:eco.noheroes@gmail.com">eco.noheroes@gmail.com</a></p>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="nh-secao sb-final" aria-labelledby="sb-fim">
+    <div class="nh-wrap">
+      <h2 id="sb-fim" class="nh-h2" data-i18n="sob.fim.titulo">Tem uma ideia para a pele?</h2>
+      <p class="nh-lead" data-i18n="sob.fim.lead">Mande referências, o local do corpo e o tamanho aproximado. Eu respondo com um orçamento.</p>
+      <div class="nh-hero-ctas">
+        <a data-nh-wa="tatuagem" class="nh-btn nh-btn-pri nh-btn-grande" data-i18n="sob.cta_tattoo">Agendar tatuagem</a>
+        <a href="suporte.html" class="nh-btn nh-btn-sec nh-btn-grande" data-i18n="sob.fim.duvidas">Dúvidas frequentes</a>
+      </div>
+    </div>
+  </section>
 </main>
 
-<!-- Footer (componente compartilhado) -->
 <nh-footer></nh-footer>
-
-<script src="assets/js/suporte-widget.js"></script>
-<script>
-// Ano do rodapé, drawer e brasas agora vêm do componente compartilhado
-// (assets/js/noheroes-ui.js). Aqui fica só o que é específico do Sobre.
-
-// ─── MANIFESTO MODAL ───
-function abrirManifesto() {
-  const m = document.getElementById('manifestoModal');
-  m.style.display = 'flex';
-}
-function fecharManifesto() {
-  document.getElementById('manifestoModal').style.display = 'none';
-}
-document.getElementById('manifestoModal').addEventListener('click', function(e) {
-  if (e.target === this) fecharManifesto();
-});
-
-// ─── SCROLL REVEAL ───
-const revealEls = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-}, { threshold: 0.12 });
-revealEls.forEach(el => observer.observe(el));
-</script>
-<script defer src="assets/js/noheroes-ui.js"></script>
 </body>
 </html>

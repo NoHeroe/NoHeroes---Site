@@ -1,0 +1,55 @@
+/* sobre.html */
+.sb-hero { padding-top: 104px; }
+@media (min-width: 1024px) { .sb-hero { padding-top: 140px; } }
+.sb-eyebrow { font-size: .75rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: #b48cff; margin-bottom: 10px; }
+.sb-h1 { font-size: clamp(2.4rem, 10vw, 4.6rem); }
+.sb-foto { margin: 0; justify-self: center; width: min(78vw, 420px); aspect-ratio: 1; border-radius: 28px; overflow: hidden; position: relative;
+  border: 1px solid rgba(143, 79, 255, .35); box-shadow: 0 30px 80px rgba(143, 79, 255, .18), 0 0 0 6px rgba(143, 79, 255, .05); }
+.sb-foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.sb-foto::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(7, 6, 10, .55)); }
+
+.sb-bio-grid { display: grid; gap: 18px; }
+@media (min-width: 900px) { .sb-bio-grid { grid-template-columns: 1fr 2fr; gap: 48px; } }
+.sb-texto { display: grid; gap: 14px; color: var(--nh-texto-2); font-size: 1.04rem; line-height: 1.75; max-width: 42rem; }
+.sb-texto strong { color: #f1eaff; }
+.sb-texto em { color: #f0d99a; font-style: normal; }
+.sb-idiomas { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.sb-idiomas li { padding: 6px 12px; border-radius: 999px; border: 1px solid var(--nh-linha); background: rgba(255, 255, 255, .03); font-size: .85rem; color: var(--nh-texto-2); }
+
+.sb-frentes { margin-top: 22px; display: grid; gap: 12px; }
+@media (min-width: 768px) { .sb-frentes { grid-template-columns: 1fr 1fr; gap: 16px; } }
+.sb-frente { padding: 22px; border-radius: 18px; border: 1px solid var(--nh-linha); background: rgba(255, 255, 255, .02); display: grid; gap: 8px; align-content: start; color: var(--nh-texto-2); }
+.sb-frente-pele { border-color: rgba(143, 79, 255, .4); background: linear-gradient(160deg, rgba(143, 79, 255, .12), rgba(255, 255, 255, .02) 60%); }
+.sb-frente-papel { border-color: rgba(217, 181, 90, .4); background: linear-gradient(160deg, rgba(217, 181, 90, .1), rgba(255, 255, 255, .02) 60%); }
+
+.sb-linha { margin-top: 26px; position: relative; display: grid; gap: 18px; padding-left: 22px; }
+.sb-linha::before { content: ''; position: absolute; left: 5px; top: 6px; bottom: 6px; width: 2px; border-radius: 2px;
+  background: linear-gradient(180deg, rgba(143, 79, 255, .7), rgba(217, 181, 90, .7)); }
+.sb-linha li { position: relative; display: grid; gap: 2px; }
+.sb-linha li::before { content: ''; position: absolute; left: -22px; top: 7px; width: 12px; height: 12px; border-radius: 50%;
+  background: var(--nh-bg); border: 2px solid #8f4fff; }
+.sb-linha p { color: var(--nh-texto-2); max-width: 40rem; }
+.sb-ano { font-family: 'Cinzel Decorative', serif; font-size: .9rem; color: #e2cfff; }
+.sb-agora::before { background: #d9b55a !important; border-color: #d9b55a !important; box-shadow: 0 0 14px rgba(217, 181, 90, .6); }
+.sb-agora .sb-ano { color: #f0d99a; }
+
+.sb-manifesto { border-radius: 20px; border: 1px solid rgba(143, 79, 255, .3); background: rgba(20, 14, 32, .55); padding: 22px; }
+.sb-manifesto summary { list-style: none; cursor: pointer; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 10px; }
+.sb-manifesto summary::-webkit-details-marker { display: none; }
+.sb-manif-abrir { font-size: .9rem; font-weight: 600; color: #c4a3ff; }
+.sb-manif-abrir::after { content: ' ↓'; }
+.sb-manifesto[open] .sb-manif-abrir { display: none; }
+.sb-manifesto .sb-texto { margin-top: 16px; font-style: italic; }
+
+.sb-press { margin-top: 22px; display: grid; gap: 12px; }
+@media (min-width: 768px) { .sb-press { grid-template-columns: repeat(3, 1fr); } }
+.sb-press a { display: grid; gap: 6px; height: 100%; padding: 18px; border-radius: 16px; border: 1px solid var(--nh-linha); background: rgba(255, 255, 255, .02);
+  color: var(--nh-texto-2); text-decoration: none; transition: border-color .2s, transform .2s; }
+.sb-press a:hover { border-color: rgba(143, 79, 255, .45); transform: translateY(-2px); }
+.sb-press strong { color: #f1eaff; }
+.sb-press span { font-size: .92rem; }
+.sb-press em { font-style: normal; font-size: .8rem; color: #f0d99a; letter-spacing: .04em; }
+.sb-press-contato { margin-top: 16px; color: var(--nh-texto-2); }
+
+.sb-final { text-align: left; }
+.sb-final .nh-lead { margin-top: 10px; }
