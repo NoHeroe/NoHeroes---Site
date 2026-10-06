@@ -70,6 +70,7 @@
     #infoModal.active{display:flex;animation:fadeIn 0.2s ease-in-out}
     #infoModal .modal-content{position:relative;width:100%;max-width:420px;max-height:90vh;overflow-y:auto;background:rgba(24,24,27,0.95);border:1px solid rgba(168,85,247,0.4);border-radius:1rem;box-shadow:0 0 15px rgba(168,85,247,0.25);backdrop-filter:blur(10px);padding:1rem}
     #infoModal img{width:100%;max-height:50vh;object-fit:contain;border-radius:.75rem;margin-bottom:.75rem}
+    @media(max-width:640px){#infoModal img{max-height:30vh}}
     #btnCloseInfo{position:absolute;top:.5rem;right:.5rem;border:1px solid rgba(168,85,247,0.4);background:rgba(0,0,0,0.5);border-radius:.5rem;color:#f4f4f4;font-size:1rem;width:2rem;height:2rem}
     @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
@@ -84,6 +85,40 @@
     .nh-skel{background:linear-gradient(90deg,rgba(255,255,255,.04),rgba(255,255,255,.10),rgba(255,255,255,.04));background-size:200% 100%;animation:nhSkel 1.1s ease-in-out infinite;border:1px solid rgba(168,85,247,.18)}
     @keyframes nhSkel{0%{background-position:0% 0%}100%{background-position:200% 0%}}
     @media(prefers-reduced-motion:reduce){.nh-eq span,.nh-skel,.nh-dots::after{animation:none!important}}
+    /* ── LOJA FÍSICA: selos, variantes, quantidade, carrinho ── */
+    .nh-card-tags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:4px}
+    .nh-selo{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 6px;border-radius:99px;border:1px solid}
+    .nh-selo-fisico{color:#facc15;border-color:rgba(250,204,21,.45);background:rgba(250,204,21,.08)}
+    .nh-selo-digital{color:#c084fc;border-color:rgba(168,85,247,.45);background:rgba(168,85,247,.08)}
+    .nh-selo-baixo{color:#fca5a5;border-color:rgba(248,113,113,.45);background:rgba(248,113,113,.08)}
+    .nh-card-ml{display:block;margin-top:6px;text-align:center;font-size:10px;font-weight:700;color:#facc15;border:1px solid rgba(250,204,21,.4);border-radius:8px;padding:5px 0;text-decoration:none}
+    .nh-card-ml:hover{background:rgba(250,204,21,.08)}
+    .nh-label{font-size:11px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.08em;margin:12px 0 6px}
+    .nh-variantes{display:flex;flex-wrap:wrap;gap:6px}
+    .nh-var{min-height:40px;padding:0 12px;border-radius:10px;border:1px solid rgba(168,85,247,.35);background:rgba(255,255,255,.03);color:#f4f4f4;font-size:13px;cursor:pointer}
+    .nh-var.ativa{border-color:#a855f7;background:rgba(168,85,247,.18);color:#e9d5ff}
+    .nh-var:disabled{opacity:.4;cursor:not-allowed;text-decoration:line-through}
+    .nh-var small{text-decoration:none;font-size:10px}
+    .nh-linha-preco{display:flex;align-items:center;gap:8px;margin:14px 0 10px}
+    .nh-preco{font-size:20px;font-weight:700;color:#facc15}
+    .nh-qtd-linha{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+    .nh-qtd{display:inline-flex;align-items:center;border:1px solid rgba(168,85,247,.35);border-radius:10px;overflow:hidden}
+    .nh-qtd button{width:40px;height:40px;background:transparent;color:#f4f4f4;font-size:18px;border:0;cursor:pointer}
+    .nh-qtd button:disabled{opacity:.3;cursor:not-allowed}
+    .nh-qtd span{min-width:32px;text-align:center;font-weight:700}
+    .nh-qtd-sm button{width:32px;height:32px;font-size:15px}
+    .nh-nota{font-size:11px;color:rgba(255,255,255,.45);margin:0 0 8px}
+    .nh-btn-pri{width:100%;min-height:44px;border-radius:12px;border:0;background:#a855f7;color:#000;font-weight:700;cursor:pointer}
+    .nh-btn-pri:disabled{background:#333;color:#777;cursor:not-allowed}
+    .nh-btn-sec,.nh-btn-ml{display:flex;align-items:center;justify-content:center;min-height:42px;border-radius:12px;font-weight:700;font-size:13px;text-decoration:none;margin-top:8px}
+    .nh-btn-sec{border:1px solid rgba(168,85,247,.45);color:#c084fc}
+    .nh-btn-ml{border:1px solid rgba(250,204,21,.45);color:#facc15}
+    .nh-cart-linha{display:flex;gap:10px;align-items:flex-start;padding:8px;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04)}
+    .nh-cart-linha img{width:56px;height:72px;object-fit:cover;border-radius:8px;flex-shrink:0}
+    .nh-cart-info{flex:1;min-width:0}
+    .nh-cart-nome{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .nh-cart-var{font-size:11px;color:rgba(255,255,255,.55);margin-bottom:4px}
+    .nh-cart-rem{width:32px;height:32px;border-radius:8px;border:1px solid rgba(239,68,68,.4);color:#f87171;background:transparent;flex-shrink:0}
   </style>
 </head>
 <body class="min-h-screen">
@@ -99,7 +134,7 @@
   </a>
   <div style="display:flex;align-items:center;gap:10px;">
     <!-- Carrinho -->
-    <button id="btnCart" style="position:relative;width:36px;height:36px;border-radius:10px;border:1px solid rgba(168,85,247,0.4);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+    <button id="btnCart" style="position:relative;width:36px;height:36px;border-radius:10px;border:1px solid rgba(168,85,247,0.4);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;" aria-label="Abrir carrinho">
       <svg xmlns="http://www.w3.org/2000/svg" style="width:18px;height:18px;" viewBox="0 0 24 24">
         <defs><linearGradient id="gradCart" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#8f4fff"><animate attributeName="stop-color" values="#8f4fff;#a855f7;#facc15;#8f4fff" dur="6s" repeatCount="indefinite"/></stop><stop offset="100%" stop-color="#facc15"><animate attributeName="stop-color" values="#facc15;#a855f7;#8f4fff;#facc15" dur="6s" repeatCount="indefinite"/></stop></linearGradient></defs>
         <path fill="url(#gradCart)" d="M7 4h-2l-1 2h2l3.6 7.59-1.35 2.45A1.99 1.99 0 0 0 10 19h9v-2h-8.42c-.14 0-.25-.11-.25-.25l.03-.12L11.1 14h5.45c.75 0 1.41-.41 1.75-1.03L21 7H6.21l-.94-2zM7 20c-1.1 0-1.99.9-1.99 2S5.9 24 7 24s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2S15.9 24 17 24s2-.9 2-2-.9-2-2-2z"/>
@@ -157,38 +192,34 @@
 </main>
 
 <!-- DRAWER DO CARRINHO -->
-<aside id="cartDrawer" class="fixed top-0 right-0 h-full w-[92vw] sm:w-[400px] translate-x-full transition-transform duration-300 ease-in-out bg-zinc-900/95 backdrop-blur border-l border-roxo/40 z-50 flex flex-col" style="z-index:180;">
+<div id="cartOverlay" class="hidden fixed inset-0 bg-black/60" style="z-index:150"></div>
+<aside id="cartDrawer" aria-label="Carrinho" class="fixed top-0 right-0 h-full w-full max-w-[400px] translate-x-full transition-transform duration-300 ease-in-out bg-zinc-900/95 backdrop-blur-xl border-l border-roxo/30 flex flex-col" style="z-index:160">
   <div class="p-4 border-b border-roxo/30 flex items-center justify-between">
     <h3 class="cinzel text-base text-roxo">Seu carrinho</h3>
-    <button id="btnCloseCart" class="h-9 w-9 rounded-xl border border-roxo/40 hover:bg-white/5 text-sm">✕</button>
+    <button id="btnCloseCart" class="h-10 w-10 rounded-xl border border-roxo/40 hover:bg-white/5 text-sm" aria-label="Fechar carrinho">✕</button>
   </div>
   <div id="cartItems" class="p-4 flex-1 overflow-y-auto space-y-3"></div>
   <div class="p-4 border-t border-roxo/30 space-y-3">
     <div class="flex items-center justify-between text-sm">
-      <span class="text-white/70">Subtotal R$</span>
+      <span class="text-white/70">Subtotal</span>
       <span id="cartSubtotal" class="font-semibold">R$ 0,00</span>
     </div>
-    <label class="block text-sm text-white/80">Método de pagamento</label>
-    <select id="paymentMethod" class="w-full bg-black/40 border border-roxo/40 rounded-xl px-3 py-2 text-sm">
-      <option value="mercadopago" selected>Mercado Pago</option>
-    </select>
-    <div class="flex items-center justify-between text-sm">
-      <span class="text-white/70">Total</span>
-      <span id="cartTotalWithFee" class="font-semibold text-roxo">R$ 0,00</span>
-    </div>
-    <button id="btnCheckout" class="w-full mt-1 bg-roxo text-black font-bold rounded-xl px-4 py-3 hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed">Pagar agora</button>
+    <p id="cartFreteNota" class="hidden text-xs text-white/50">Há itens físicos: o frete é calculado no próximo passo.</p>
+    <button id="btnCheckout" class="nh-btn-pri" disabled>Finalizar compra</button>
   </div>
 </aside>
 
-<!-- MODAL INFO -->
-<div id="infoModal" class="fixed inset-0 z-50" style="z-index:170;">
+<!-- MODAL DO PRODUTO -->
+<div id="infoModal" class="fixed inset-0" style="z-index:170;" role="dialog" aria-modal="true" aria-labelledby="infoName">
   <div class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
   <div class="modal-content relative mx-auto">
-    <button id="btnCloseInfo">✕</button>
+    <button id="btnCloseInfo" aria-label="Fechar">✕</button>
     <img id="infoImg" src="" alt="">
+    <div id="infoTags" class="nh-card-tags"></div>
     <h3 id="infoName" class="font-display text-xl text-roxo mb-1"></h3>
     <p id="infoDesc" class="text-white/80 text-sm leading-relaxed"></p>
-    <div id="infoActions" class="mt-3"></div>
+    <div id="infoCompra"></div>
+    <div id="infoActions" class="mt-1"></div>
   </div>
 </div>
 
@@ -196,604 +227,290 @@
 <nh-footer></nh-footer>
 
 <script src="assets/js/cookies.js"></script>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/carrinho.js"></script>
 <script>
-// Drawer: agora no componente compartilhado <nh-drawer> (gatilho via [data-nh-drawer-toggle])
-</script>
-<script>
-
 // ==========================
-// NoHeroes Store PRO - Script Revisado
+// NoHeroes Loja — produtos físicos e digitais, variantes e carrinho misto
+// (o preço exibido é prévia; o servidor recalcula no checkout)
 // ==========================
+const state = { allProducts: [], filtered: [], categories: [], activeCategory: 'todas', produtoAberto: null };
+const API = window.API_BASE;
+const qs = (s, el = document) => el.querySelector(s);
+const qsa = (s, el = document) => Array.from(el.querySelectorAll(s));
+const fmtBRL = (n) => (Number(n) || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+const esc = (s = '') => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-const state = {
-  allProducts: [],
-  filtered: [],
-  categories: [],
-  activeCategory: 'todas',
-  cart: []
-};
-
-const taxes = {
-  mercadopago: 0
-};
-
-// ===== Helpers curtos =====
-const qs = (s, el=document) => el.querySelector(s);
-const qsa = (s, el=document) => Array.from(el.querySelectorAll(s));
-const fmtBRL = (n) => (Number(n)||0).toLocaleString('pt-BR', { style:'currency', currency:'BRL' });
-
-// ==========================
-// LINK FÍSICO (Mercado Livre) — sem backend
-// Regras:
-// - type: "physical" ou "hybrid"
-// - arquivo: URL do Mercado Livre (https://...)
-// ==========================
-function getPhysicalUrl(p){
-  const t = String(p?.type || '').toLowerCase().trim();
-  let url = String(p?.arquivo || '').trim();
-
-  const isPhysical = (t === 'physical' || t === 'hybrid' || t === 'fisico' || t === 'físico');
-
-  // Se não é físico/híbrido, nem tenta
-  if (!isPhysical) return null;
-
-  // Se não tem URL, nada a fazer
-  if (!url) return null;
-
-  // Bloqueia protocolos perigosos
-  if (/^javascript:/i.test(url) || /^data:/i.test(url)) return null;
-
-  // Normaliza URLs sem protocolo
-  if (url.startsWith('www.')) url = `https://${url}`;
-  if (url.includes('mercadolivre.com.br') && !/^https?:\/\//i.test(url)) url = `https://${url}`;
-
-  // Só aceita http/https
-  const looksLikeUrl = /^https?:\/\//i.test(url);
-  if (!looksLikeUrl) return null;
-
-  return url;
-}
-
-// ==========================
-// IMAGEM / URL (igual inventário)
-// ==========================
-const PLACEHOLDER = 'assets/images/placeholder.png';
-
-function resolveImageUrl(u){
+// Imagem padrão (sem depender de arquivo): moldura escura com o "N" da marca.
+const PLACEHOLDER = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300"><rect width="200" height="300" fill="#141018"/>' +
+  '<text x="100" y="170" font-family="Georgia,serif" font-size="72" fill="#a855f7" text-anchor="middle" opacity=".5">N</text></svg>');
+function resolveImageUrl(u) {
   if (!u) return PLACEHOLDER;
-
   u = String(u).trim();
-
-  // URL completa
-  if (u.startsWith('http://') || u.startsWith('https://')) return u;
-
-  // padrão do seu banco: noheroes.com.br/assets/...
+  if (/^https?:\/\//i.test(u)) return u;
   if (u.startsWith('noheroes.com.br')) return `https://${u}`;
-
-  // uploads servidos pela API
-  if (u.startsWith('/uploads')) return `https://api.noheroes.com.br${u}`;
-
-  // caminho absoluto no front (ex: /assets/images/...)
-  if (u.startsWith('/')) return u;
-
-  // caminho relativo no front (ex: assets/images/...)
-  if (u.startsWith('assets/')) return u;
-
-  // fallback: trata como domínio sem protocolo
+  if (u.startsWith('/') || u.startsWith('assets/')) return u;
   return `https://${u}`;
 }
-
-function bindImgFallback(imgEl){
-  if (!imgEl) return;
-  imgEl.addEventListener('error', () => { imgEl.src = PLACEHOLDER; }, { once:true });
+const urlSegura = (u) => (u && /^https?:\/\//i.test(String(u).trim()) ? String(u).trim() : null);
+function precoBase(p) { return Number(p.discountReal != null ? p.discountReal : p.priceReal) || 0; }
+function faixaPreco(p) {
+  if (!p.has_variants || !(p.variants || []).length) return fmtBRL(precoBase(p));
+  const precos = p.variants.map((v) => Number(v.price));
+  const min = Math.min(...precos), max = Math.max(...precos);
+  return min === max ? fmtBRL(min) : `${fmtBRL(min)} – ${fmtBRL(max)}`;
 }
-
-// ===== Token & Auth =====
-function getJwt() {
-  const raw = (localStorage.getItem('NoHeroes_token') || localStorage.getItem('token') || '').trim();
-  return raw.replace(/^Bearer\s+/i, '');
-}
-// Logout automático se token inválido
-function handleAuthError(res) {
-  if (res.status === 401) {
-    localStorage.removeItem('NoHeroes_token');
-    alert('Sessão expirada. Faça login novamente.');
-    location.href = 'login.html';
-    throw new Error('Sessão expirada');
-  }
-}
+const getJwt = () => (localStorage.getItem('NoHeroes_token') || localStorage.getItem('token') || '').trim().replace(/^Bearer\s+/i, '');
 
 // ==========================
-// Carrinho & Totais
+// Filtros por categoria
 // ==========================
-function saveCart(){
-  localStorage.setItem('noheroes_cart', JSON.stringify(state.cart));
-  updateCartBadge();
+const CATEGORY_MAP = { ebooks: 'Ebooks', ebook: 'Ebooks', mentorias: 'Mentorias', mentoria: 'Mentorias', extras: 'Extras' };
+function normalizeCat(cat) {
+  const key = String(cat || '').toLowerCase().trim();
+  return CATEGORY_MAP[key] || (String(cat || '').charAt(0).toUpperCase() + String(cat || '').slice(1));
 }
-
-function loadCart() {
-  const jwt = getJwt();
-
-  // Se o usuário NÃO está logado:
-  if (!jwt) {
-    // Remove carrinho antigo para evitar compra sem login
-    localStorage.removeItem('noheroes_cart');
-    state.cart = [];
-    updateCartBadge();
-    return;
-  }
-
-  // Se o usuário ESTÁ logado:
-  try {
-    const saved = JSON.parse(localStorage.getItem('noheroes_cart') || '[]');
-    state.cart = Array.isArray(saved) ? saved : [];
-  } catch {
-    state.cart = [];
-  }
-
-  updateCartBadge();
-}
-
-function updateCartBadge(){
-  qs('#cartBadge').textContent = state.cart.reduce((s,i)=>s+i.quantity, 0);
-}
-
-function cartMoneySubtotal(){
-  const raw = state.cart.reduce((s, i) => {
-    const price = Number(i.priceReal || 0);
-    return s + price * i.quantity;
-  }, 0);
-
-  return raw;
-}
-
-// compatibilidade com código antigo
-function cartSubtotal(){
-  return cartMoneySubtotal();
-}
-
-function calcTotalWithFee(subtotal, method){
-   return subtotal;
-}
-
-function updateTotalWithFee(){
-  const money = cartMoneySubtotal();
-  qs('#cartSubtotal').textContent = fmtBRL(money);
-  qs('#cartTotalWithFee').textContent = fmtBRL(calcTotalWithFee(money));
-}
-
-// ==========================
-// Layout: Filtros
-// ==========================
-function buildFilters(){
+function buildFilters() {
   const pills = qs('#filterPills');
-  if (!pills) return;
   pills.innerHTML = '';
-  const all = ['todas', ...state.categories];
-  all.forEach(cat => {
-    const btn = document.createElement('button');
-    btn.className = 'filter-pill' + (state.activeCategory === cat ? ' active' : '');
-    btn.textContent = cat === 'todas' ? 'Todas' : cat;
-    btn.addEventListener('click', () => { state.activeCategory = cat; applyFilter(); highlightFilters(); });
-    pills.appendChild(btn);
+  ['todas', ...state.categories].forEach((cat) => {
+    const b = document.createElement('button');
+    b.className = 'filter-pill' + (state.activeCategory === cat ? ' active' : '');
+    b.textContent = cat === 'todas' ? 'Todas' : cat;
+    b.addEventListener('click', () => { state.activeCategory = cat; buildFilters(); applyFilter(); });
+    pills.appendChild(b);
   });
 }
-
-function highlightFilters(){
-  qsa('#filterPills .filter-pill').forEach(btn => {
-    const cat = btn.textContent.toLowerCase();
-    const active = state.activeCategory === 'todas' ? cat === 'todas' : cat === state.activeCategory.toLowerCase();
-    btn.classList.toggle('active', active);
-  });
-}
-
-function applyFilter(){
-  const cat = state.activeCategory;
-  state.filtered = cat==='todas' ? state.allProducts.slice() : state.allProducts.filter(p=>normalizeCat(p.category)===cat);
+function applyFilter() {
+  const c = state.activeCategory;
+  state.filtered = c === 'todas' ? state.allProducts.slice() : state.allProducts.filter((p) => p.category === c);
   renderProducts();
 }
 
-const CATEGORY_MAP = { ebooks:'Ebooks', ebook:'Ebooks', mentorias:'Mentorias', mentoria:'Mentorias', extras:'Extras' };
-function normalizeCat(cat){
-  const key = String(cat||'').toLowerCase().trim();
-  return CATEGORY_MAP[key] || (String(cat||'').charAt(0).toUpperCase() + String(cat||'').slice(1));
+// ==========================
+// Vitrine
+// ==========================
+function seloEntrega(p) {
+  return p.fulfillment === 'physical'
+    ? '<span class="nh-selo nh-selo-fisico" title="Produto físico — enviado pelos Correios/transportadora">Físico</span>'
+    : '<span class="nh-selo nh-selo-digital" title="Produto digital — liberado no seu inventário">Digital</span>';
 }
-
-// ==========================
-// Render: Produtos
-// ==========================
-function productCard(p, compact=false){
-  const rawImg = (p.imageUrl || p.image_url || p.image || '').trim();
-  const imgSrc = resolveImageUrl(rawImg);
-  const physicalUrl = getPhysicalUrl(p);
-  const hasPhysical = !!physicalUrl;
-  const emBreve = String(p.status||'').toLowerCase() === 'em_breve';
-  const precoReal = p.priceReal ? `<span class="font-semibold text-dourado">${fmtBRL(p.priceReal)}</span>` : '';
-  const preco = precoReal ? `<div class="mt-1 flex items-center gap-2">${precoReal}</div>` : `<div class="mt-1 text-dourado">Gratuito</div>`;
-  const btnDisabled = emBreve ? 'opacity-60 cursor-not-allowed' : '';
-
-  const btnPhysical = hasPhysical ? `
-    <a href="${escapeAttr(physicalUrl)}"
-       target="_blank" rel="noopener"
-       class="mt-2 w-full inline-flex items-center justify-center rounded-xl px-3 py-2 border border-dourado/40 text-dourado hover:bg-white/5 font-bold">
-      Comprar físico (Mercado Livre)
-    </a>
-  ` : '';
-
-  const addBtn = (() => {
-    const jwt = getJwt();
-    if (!jwt) return `<button disabled class="nh-card-btn" style="background:#333;color:#666;" title="Faça login">Login necessário</button>`;
-    if (emBreve) return `<button disabled class="nh-card-btn" style="background:#333;color:#666;">Em breve</button>`;
-    return `<button class="nh-card-btn add-btn" data-id="${escapeAttr(p.id)}">+ Carrinho</button>`;
-  })();
-
+function productCard(p) {
+  const emBreve = String(p.status || '').toLowerCase() === 'em_breve';
+  const esgotado = !emBreve && !p.available;
+  let botao;
+  if (emBreve) botao = '<button disabled class="nh-card-btn">Em breve</button>';
+  else if (esgotado) botao = '<button disabled class="nh-card-btn">Esgotado</button>';
+  else if (p.has_variants) botao = `<button class="nh-card-btn" data-abrir="${p.id}">Escolher opção</button>`;
+  else botao = `<button class="nh-card-btn" data-add="${p.id}">+ Carrinho</button>`;
+  const ml = urlSegura(p.marketplace_url)
+    ? `<a class="nh-card-ml" href="${esc(urlSegura(p.marketplace_url))}" target="_blank" rel="noopener noreferrer">Comprar no Mercado Livre</a>` : '';
   return `
   <article class="nh-card">
-    ${emBreve?'<span class="badge-embreve">EM BREVE</span>':''}
-    <button class="nh-card-info info-btn" data-id="${escapeAttr(p.id)}" data-name="${escapeAttr(p.name)}" data-img="${escapeAttr(imgSrc)}" data-desc="${escapeAttr(p.description||'Sem descrição.')}" title="Detalhes">i</button>
-    <img src="${imgSrc}" alt="${escapeAttr(p.name)}"/>
+    ${emBreve ? '<span class="badge-embreve">EM BREVE</span>' : ''}
+    <button class="nh-card-info" data-abrir="${p.id}" title="Detalhes" aria-label="Detalhes de ${esc(p.name)}">i</button>
+    <img src="${esc(resolveImageUrl(p.imageUrl))}" alt="${esc(p.name)}" loading="lazy"/>
     <div class="nh-card-body">
-      <div class="nh-card-name">${p.name}</div>
-      ${p.rarity?`<div class="nh-card-rarity">${p.rarity}</div>`:''}
-      <div class="nh-card-price">${precoReal?precoReal:'<span style="color:rgba(255,255,255,0.4);font-size:10px;">Gratuito</span>'}</div>
-      ${addBtn}
-      ${btnPhysical}
+      <div class="nh-card-tags">${seloEntrega(p)}${!p.has_variants && p.low_stock ? '<span class="nh-selo nh-selo-baixo">Últimas unidades</span>' : ''}</div>
+      <div class="nh-card-name">${esc(p.name)}</div>
+      <div class="nh-card-price">${faixaPreco(p)}</div>
+      ${botao}
+      ${ml}
     </div>
   </article>`;
 }
-
-function renderProducts(){
+function renderProducts() {
   const grid = qs('#productsGrid');
   const empty = qs('#emptyState');
-
-  if (!state.filtered.length) {
-    grid.innerHTML = '';
-    empty.classList.remove('hidden');
-    return;
-  }
+  if (!state.filtered.length) { grid.innerHTML = ''; empty.classList.remove('hidden'); return; }
   empty.classList.add('hidden');
-
-  // Agrupa por categoria
-  const byCategory = {};
-  state.filtered.forEach(p => {
-    const cat = normalizeCat(p.category) || 'Outros';
-    if (!byCategory[cat]) byCategory[cat] = [];
-    byCategory[cat].push(p);
-  });
-
-  // Renderiza seções por categoria
-  const cats = Object.keys(byCategory).sort((a,b)=>a.localeCompare(b));
-
-  grid.innerHTML = cats.map((cat, ci) => {
-    const prods = byCategory[cat];
-    const cards = prods.map(p => productCard(p, true)).join('');
-    const sep = ci < cats.length - 1
-      ? '<div class="nh-cat-sep"></div>'
-      : '';
-    return `
-      <div class="nh-cat-section">
-        <h2 class="nh-cat-title">${cat} <span class="nh-cat-count">${prods.length}</span></h2>
-        <div class="nh-scroll-row">${cards}</div>
-      </div>
-      ${sep}`;
-  }).join('');
-
-  // Eventos info-btn e add-btn
-  qsa('.info-btn', grid).forEach(btn => btn.addEventListener('click', () => {
-    const id   = btn.getAttribute('data-id');
-    const name = btn.getAttribute('data-name');
-    const img  = btn.getAttribute('data-img');
-    const desc = btn.getAttribute('data-desc');
-    const product = state.filtered.find(p => String(p.id) === String(id));
-    openInfo({name, img, desc, product});
-  }));
-
-  qsa('.add-btn', grid).forEach(btn => btn.addEventListener('click', () => {
-    if (btn.textContent.trim().toLowerCase() === 'em breve') return;
-    const id = btn.getAttribute('data-id');
-    const prod = state.filtered.find(p => String(p.id)===String(id));
-    if (prod) addToCart(prod);
-  }));
-
-  qsa('#productsGrid img').forEach(img => bindImgFallback(img));
+  const porCat = {};
+  state.filtered.forEach((p) => { (porCat[p.category || 'Outros'] = porCat[p.category || 'Outros'] || []).push(p); });
+  const cats = Object.keys(porCat).sort((a, b) => a.localeCompare(b));
+  grid.innerHTML = cats.map((cat, i) => `
+    <div class="nh-cat-section">
+      <h2 class="nh-cat-title">${esc(cat)} <span class="nh-cat-count">${porCat[cat].length}</span></h2>
+      <div class="nh-scroll-row">${porCat[cat].map(productCard).join('')}</div>
+    </div>${i < cats.length - 1 ? '<div class="nh-cat-sep"></div>' : ''}`).join('');
+  qsa('img', grid).forEach((img) => img.addEventListener('error', () => { img.src = PLACEHOLDER; }, { once: true }));
 }
 
 // ==========================
-// Modal Info
+// Modal do produto (detalhes + variante + quantidade)
 // ==========================
-function openInfo({name, img, desc, product}){
-  qs('#infoName').textContent = name;
+const modal = { varianteId: null, qtd: 1 };
+function abrirProduto(id) {
+  const p = state.allProducts.find((x) => String(x.id) === String(id));
+  if (!p) return;
+  state.produtoAberto = p;
+  modal.qtd = 1;
+  const primeira = (p.variants || []).find((v) => v.available);
+  modal.varianteId = p.has_variants ? (primeira ? primeira.id : null) : null;
+  const img = qs('#infoImg');
+  img.src = resolveImageUrl(p.imageUrl);
+  img.alt = p.name;
+  img.onerror = () => { img.src = PLACEHOLDER; };
+  qs('#infoName').textContent = p.name;
+  qs('#infoTags').innerHTML = seloEntrega(p);
+  qs('#infoDesc').textContent = p.description || '';
+  renderModalCompra();
+  const links = [];
+  const det = urlSegura(p.detailsUrl) || (p.detailsUrl && /^\/[\w\-./]*$/.test(p.detailsUrl) ? p.detailsUrl : null);
+  if (det) links.push(`<a class="nh-btn-sec" href="${esc(det)}" ${det.startsWith('/') ? '' : 'target="_blank" rel="noopener noreferrer"'}>+ Informações</a>`);
+  if (urlSegura(p.marketplace_url)) links.push(`<a class="nh-btn-ml" href="${esc(urlSegura(p.marketplace_url))}" target="_blank" rel="noopener noreferrer">Comprar no Mercado Livre</a>`);
+  qs('#infoActions').innerHTML = links.join('');
+  qs('#infoModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function varianteAtual() {
+  const p = state.produtoAberto;
+  return p && p.has_variants ? (p.variants || []).find((v) => v.id === modal.varianteId) || null : null;
+}
+function renderModalCompra() {
+  const p = state.produtoAberto;
+  const area = qs('#infoCompra');
+  const emBreve = String(p.status || '').toLowerCase() === 'em_breve';
+  const v = varianteAtual();
+  const fonte = p.has_variants ? v : p;
+  const preco = p.has_variants ? (v ? Number(v.price) : null) : precoBase(p);
+  const max = fonte ? fonte.max_qty : 0;
+  if (modal.qtd > max) modal.qtd = Math.max(1, max);
 
-  const el = qs('#infoImg');
-  el.src = resolveImageUrl(img);
-  bindImgFallback(el);
-
-  qs('#infoDesc').textContent = desc;
-
-  // AÇÕES DO MODAL (Mercado Livre + Landing)
-const actions = qs('#infoActions');
-if (actions) {
-  const physicalUrl = product ? getPhysicalUrl(product) : null;
-
-  // detailsUrl pode vir com nomes diferentes do backend
-  const detailsUrlRaw =
-    (product?.detailsUrl ?? product?.details_url ?? product?.details ?? '').toString().trim();
-
-  // bloqueia protocolos perigosos
-  const detailsSafe =
-    detailsUrlRaw &&
-    !/^javascript:/i.test(detailsUrlRaw) &&
-    !/^data:/i.test(detailsUrlRaw);
-
-  // normaliza URL (opcional, mas ajuda)
-  let detailsUrl = detailsUrlRaw;
-  if (detailsSafe) {
-    if (detailsUrl.startsWith('www.')) detailsUrl = `https://${detailsUrl}`;
-    if (/^noheroes\.com\.br/i.test(detailsUrl)) detailsUrl = `https://${detailsUrl}`;
+  let html = '';
+  if (p.has_variants) {
+    html += '<div class="nh-label">Opção</div><div class="nh-variantes" role="radiogroup" aria-label="Opções">' +
+      p.variants.map((x) => `<button type="button" role="radio" aria-checked="${x.id === modal.varianteId}" class="nh-var${x.id === modal.varianteId ? ' ativa' : ''}" data-var="${x.id}" ${x.available ? '' : 'disabled'}>` +
+        `${esc(x.label)}${x.available ? '' : ' <small>(esgotado)</small>'}</button>`).join('') + '</div>';
   }
-
-  const btnDetails = detailsSafe ? `
-    <a href="${escapeAttr(detailsUrl)}"
-       target="_blank" rel="noopener noreferrer"
-       class="w-full inline-flex items-center justify-center rounded-xl px-3 py-2 border border-roxo/40 text-roxo hover:bg-white/5 font-bold">
-      + Informações
-    </a>
-  ` : '';
-
-  const btnPhysical = physicalUrl ? `
-    <a href="${escapeAttr(physicalUrl)}"
-       target="_blank" rel="noopener"
-       class="w-full inline-flex items-center justify-center rounded-xl px-3 py-2 border border-dourado/40 text-dourado hover:bg-white/5 font-bold">
-      Comprar físico (Mercado Livre)
-    </a>
-  ` : '';
-
-  // se tiver os dois, empilha com gap; se tiver só um, aparece só ele; se não tiver nenhum, vazio.
-  actions.innerHTML = `<div class="grid gap-2">${btnDetails}${btnPhysical}</div>`;
+  html += `<div class="nh-linha-preco"><span class="nh-preco">${preco != null ? fmtBRL(preco) : '—'}</span>` +
+    (fonte && fonte.low_stock ? '<span class="nh-selo nh-selo-baixo">Últimas unidades</span>' : '') + '</div>';
+  if (emBreve) html += '<button class="nh-btn-pri" disabled>Em breve</button>';
+  else if (!fonte || !fonte.available) html += '<button class="nh-btn-pri" disabled>Esgotado</button>';
+  else {
+    html += `<div class="nh-qtd-linha"><span class="nh-label" style="margin:0">Quantidade</span>
+      <div class="nh-qtd"><button type="button" data-q="-1" aria-label="Diminuir" ${modal.qtd <= 1 ? 'disabled' : ''}>−</button>
+      <span aria-live="polite">${modal.qtd}</span>
+      <button type="button" data-q="1" aria-label="Aumentar" ${modal.qtd >= max ? 'disabled' : ''}>+</button></div></div>
+      ${max <= 3 ? `<p class="nh-nota">Máximo ${max} por pedido.</p>` : ''}
+      <button class="nh-btn-pri" id="btnAddModal">Adicionar ao carrinho</button>`;
+  }
+  area.innerHTML = html;
+  qsa('[data-var]', area).forEach((b) => b.addEventListener('click', () => { modal.varianteId = Number(b.dataset.var); modal.qtd = 1; renderModalCompra(); }));
+  qsa('[data-q]', area).forEach((b) => b.addEventListener('click', () => { modal.qtd = Math.max(1, Math.min(max, modal.qtd + Number(b.dataset.q))); renderModalCompra(); }));
+  const add = qs('#btnAddModal', area);
+  if (add) add.addEventListener('click', () => { if (adicionar(p, varianteAtual(), modal.qtd)) fecharProduto(); });
 }
-
-  const modal = qs('#infoModal');
-  modal.classList.add('active');
-}
-
-function closeInfo(){
-  const modal = qs('#infoModal');
-  modal.classList.remove('active');
-}
-qs('#infoModal').addEventListener('click', (e) => {
-  // fecha se clicou fora do conteúdo (overlay/fundo)
-  if (!e.target.closest('.modal-content')) closeInfo();
-});
-qs('#btnCloseInfo').addEventListener('click', closeInfo);
+function fecharProduto() { qs('#infoModal').classList.remove('active'); document.body.style.overflow = ''; }
 
 // ==========================
 // Carrinho
 // ==========================
-function toggleCart(open){
-  const el = qs('#cartDrawer');
-  const shouldOpen = (open===undefined) ? el.classList.contains('translate-x-full') : open;
-  el.classList.toggle('translate-x-full', !shouldOpen);
-}
-
-function addToCart(p){
-  const jwt = getJwt();
-  if (!jwt) {
-    alert('Você precisa estar logado para adicionar itens ao carrinho.');
-    location.href = 'login.html';
-    return;
-  }
-  const idx = state.cart.findIndex(i => String(i.id)===String(p.id));
-  if (idx>-1) state.cart[idx].quantity += 1;
-  else state.cart.push({
-  id: p.id,
-  name: p.name,
-  type: p.type || '',
-  imageUrl: resolveImageUrl(p.imageUrl || p.image_url || p.image || ''),
-  priceReal: Number(p.discountReal ?? p.priceReal ?? 0),
-  quantity: 1
-});
-  saveCart();
-  renderCart();
+function adicionar(p, v, qtd) {
+  if (!getJwt()) { alert('Entre na sua conta para comprar.'); location.href = 'login.html'; return false; }
+  const fonte = v || p;
+  const antes = (NHCart.itens().find((i) => i.key === `${p.id}:${v ? v.id : ''}`) || {}).quantity || 0;
+  const depois = NHCart.adicionar({
+    id: p.id, variant_id: v ? v.id : null, name: p.name, variant_label: v ? v.label : null,
+    unit_price: v ? v.price : precoBase(p), max_qty: fonte.max_qty, fulfillment: p.fulfillment, imageUrl: resolveImageUrl(p.imageUrl),
+  }, qtd);
+  if (depois === antes) { alert('Você já tem a quantidade máxima disponível deste item no carrinho.'); return false; }
   toggleCart(true);
+  return true;
 }
-
-function removeFromCart(id){
-  state.cart = state.cart.filter(i => String(i.id)!==String(id));
-  saveCart();
-  renderCart();
-}
-
-function changeQty(id, delta){
-  const item = state.cart.find(i => String(i.id)===String(id));
-  if (!item) return;
-  item.quantity = Math.max(1, item.quantity + delta);
-  saveCart();
-  renderCart();
-}
-
-function renderCart(){
+function renderCart() {
+  const itens = NHCart.itens();
   const box = qs('#cartItems');
-
-  if (!state.cart.length){
+  qs('#cartBadge').textContent = NHCart.quantidade();
+  if (!itens.length) {
     box.innerHTML = '<p class="text-white/60 text-sm">Seu carrinho está vazio.</p>';
   } else {
-    box.innerHTML = state.cart.map(i => {
-      const priceLabel = fmtBRL(i.priceReal);
-
-      return `
-        <div class="flex items-center gap-3 p-2 rounded-xl border border-white/10 bg-white/5">
-          <img src="${i.imageUrl}" class="h-16 w-16 rounded-lg object-cover"/>
-          <div class="flex-1">
-            <p class="font-medium">${escapeHtml(i.name)}</p>
-            <p class="text-sm text-white/70">${priceLabel} • <span class="text-xs">Qtd.</span>
-              <button class="px-2" onclick="changeQty('${i.id}', -1)">−</button>
-              <span class="px-2 font-semibold">${i.quantity}</span>
-              <button class="px-2" onclick="changeQty('${i.id}', 1)">+</button>
-            </p>
+    box.innerHTML = itens.map((i) => `
+      <div class="nh-cart-linha">
+        <img src="${esc(i.imageUrl || PLACEHOLDER)}" alt="" />
+        <div class="nh-cart-info">
+          <p class="nh-cart-nome">${esc(i.name)}</p>
+          ${i.variant_label ? `<p class="nh-cart-var">${esc(i.variant_label)}</p>` : ''}
+          <p class="nh-cart-var">${i.fulfillment === 'physical' ? 'Físico' : 'Digital'} · ${fmtBRL(i.unit_price)}</p>
+          <div class="nh-qtd nh-qtd-sm">
+            <button type="button" data-cq="${esc(i.key)}" data-d="-1" aria-label="Diminuir" ${i.quantity <= 1 ? 'disabled' : ''}>−</button>
+            <span>${i.quantity}</span>
+            <button type="button" data-cq="${esc(i.key)}" data-d="1" aria-label="Aumentar" ${i.quantity >= i.max_qty ? 'disabled' : ''}>+</button>
           </div>
-          <button class="h-9 w-9 rounded-lg border border-red-500/40 text-red-400" onclick="removeFromCart('${i.id}')">✕</button>
-        </div>`;
-    }).join('');
+        </div>
+        <button class="nh-cart-rem" data-rem="${esc(i.key)}" aria-label="Remover ${esc(i.name)}">✕</button>
+      </div>`).join('');
+    qsa('img', box).forEach((img) => img.addEventListener('error', () => { img.src = PLACEHOLDER; }, { once: true }));
   }
-
-  // fallback das imagens do carrinho (sempre)
-  qsa('#cartItems img').forEach(img => bindImgFallback(img));
-
-  // Totais
-  qs('#cartSubtotal').textContent = fmtBRL(cartSubtotal());
-  updateTotalWithFee();
+  qs('#cartSubtotal').textContent = fmtBRL(NHCart.total());
+  qs('#cartFreteNota').classList.toggle('hidden', !NHCart.temFisico());
+  qs('#btnCheckout').disabled = !itens.length;
+}
+function toggleCart(open) {
+  const el = qs('#cartDrawer');
+  const abrir = open === undefined ? el.classList.contains('translate-x-full') : open;
+  el.classList.toggle('translate-x-full', !abrir);
+  qs('#cartOverlay').classList.toggle('hidden', !abrir);
 }
 
 // ==========================
-// Checkout
+// Carga
 // ==========================
-let paying = false;
-async function checkout(){
-  if (paying) return;
-  if (!state.cart.length) return alert('Carrinho vazio.');
-  const jwt = getJwt();
-if (!jwt) {
-    alert('Você precisa estar logado para finalizar a compra.');
-    location.href = 'login.html';
-    return;
-}
-  const btn = qs('#btnCheckout');
-  paying = true; btn.disabled = true; btn.textContent = 'Processando...';
-
-  try{
-    const method = qs('#paymentMethod').value;
-    if (!method) throw new Error('Selecione um método de pagamento.');
-
-    if (method === 'mercadopago'){
-      const itensComTaxa = state.cart.map(i => ({
-  id: i.id,
-  title: i.name,
-  description: i.description || i.name || 'Produto NoHeroes',
-  quantity: i.quantity,
-  unit_price: Number(i.priceReal), // sem taxa embutida
-  category_id: 'store'
-}));
-
-      let userEmail = '', userName = 'Cliente NoHeroes';
-      try{
-        if (jwt) {
-          const payload = JSON.parse(atob((jwt.split('.')[1]||''))||'{}');
-          userEmail = payload?.email || '';
-          userName  = payload?.nome_completo || payload?.username || userName;
-        }
-      }catch{}
-
-      const body = {
-  items: itensComTaxa,
-  email: userEmail,
-  nome_completo: userName
-};
-      const resp = await fetch('https://api.noheroes.com.br/checkout/create-preference', {
-        method:'POST',
-        headers:{ 'Content-Type':'application/json', ...(jwt?{ 'Authorization':`Bearer ${jwt}` }: {}) },
-        body: JSON.stringify(body)
-      });
-
-      handleAuthError(resp);
-      const data = await resp.json();
-      if (!resp.ok || !data.init_point) throw new Error(data.error || data.message || 'Falha ao iniciar pagamento.');
-      toggleCart(false);
-      location.assign(data.init_point);
-      return;
-    }
-
-  }
-  catch(err){
-    alert('❌ ' + (err?.message || 'Erro inesperado.'));
-  }
-  finally{
-    paying = false; btn.disabled = false; btn.textContent = 'Pagar agora';
-  }
-}
-
-function showProductsLoading(){
-  const el = qs('#productsLoading');
-  if (!el) return;
-  el.classList.remove('hidden');
-}
-
-function hideProductsLoading(){
-  const el = qs('#productsLoading');
-  if (!el) return;
-  el.classList.add('hidden');
-}
-
-
-// ==========================
-// Fetch de produtos
-// ==========================
-async function loadProducts(){
-  const t0 = performance.now();
-  showProductsLoading();
-
-  try{
-    const res = await fetch('https://api.noheroes.com.br/shop');
-    handleAuthError(res);
-    if (!res.ok) throw new Error('Falha ao carregar produtos.');
-
+async function loadProducts() {
+  qs('#productsLoading').classList.remove('hidden');
+  try {
+    const res = await fetch(`${API}/shop`);
     const json = await res.json();
-    if (!json?.success) throw new Error('Resposta inválida.');
-
-    state.allProducts = (json.data||[]).map(p => ({...p, category: normalizeCat(p.category)}));
-  } catch (e){
-    console.warn('Falha ao carregar produtos da API, usando fallback local.', e);
-    state.allProducts = [
-      { id:'demo2', name:'Ebook Manual das Sombras', imageUrl:'https://picsum.photos/seed/nh2/600/800', category:'Ebooks', priceReal:25.0, rarity:'Raro' },
-      { id:'demo3', name:'Mentoria Nocturna', imageUrl:'https://picsum.photos/seed/nh3/600/800', category:'Mentorias', priceReal:199.9, rarity:'Épico' }
-    ];
+    if (!res.ok || !json.success) throw new Error('Resposta inválida.');
+    state.allProducts = (json.data || []).map((p) => ({ ...p, category: normalizeCat(p.category) }));
+    const avisos = NHCart.reconciliar(state.allProducts);
+    if (avisos.length) console.info('[loja] carrinho ajustado:', avisos);
+  } catch (e) {
+    state.allProducts = [];
+    qs('#emptyState').textContent = 'Não foi possível carregar a loja agora. Tente de novo em instantes.';
   } finally {
-    const elapsed = performance.now() - t0;
-    const min = 350;
-    if (elapsed < min) await new Promise(r => setTimeout(r, min - elapsed));
-    hideProductsLoading();
+    qs('#productsLoading').classList.add('hidden');
   }
-
-  const setCats = new Set(state.allProducts.map(p => normalizeCat(p.category)));
-  state.categories = Array.from(setCats).sort((a,b)=>a.localeCompare(b));
+  state.categories = [...new Set(state.allProducts.map((p) => p.category))].sort((a, b) => a.localeCompare(b));
   buildFilters();
   applyFilter();
 }
 
-// ==========================
-// Helpers
-// ==========================
-function escapeHtml(s=''){ 
-  return String(s).replace(/[&<>"]/g, c => ({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    "\"":"&quot;"
-  }[c]));
-}
-function escapeAttr(s=''){ 
-  return String(s).replace(/[`"'\\]/g, ch=>({"`":"\\`","\"":"&quot;","'":"&#39;","\\":"\\\\"}[ch]||ch)); 
-}
-
-// Brasas: agora no componente compartilhado <nh-background> (noheroes-ui.js)
-
-// Fechar drawer ao clicar em um filtro (mobile)
-function closeDrawerOnFilter() {}
-
-// ==========================
-// Eventos de UI
-// ==========================
 document.addEventListener('DOMContentLoaded', () => {
-  qs('#btnCart').addEventListener('click', ()=> toggleCart());
-  qs('#btnCloseCart').addEventListener('click', ()=> toggleCart(false));
-  qs('#btnCloseInfo').addEventListener('click', closeInfo);
-  qs('#infoModal').addEventListener('click', (e)=>{ if (e.target.id==='infoModal') closeInfo(); });
-  qs('#paymentMethod').addEventListener('change', updateTotalWithFee);
-  qs('#btnCheckout').addEventListener('click', checkout);
-  loadCart(); renderCart(); loadProducts();
+  qs('#btnCart').addEventListener('click', () => toggleCart());
+  qs('#btnCloseCart').addEventListener('click', () => toggleCart(false));
+  qs('#cartOverlay').addEventListener('click', () => toggleCart(false));
+  qs('#btnCloseInfo').addEventListener('click', fecharProduto);
+  // Fecha só no clique no fundo. (e.target.isConnected: escolher variante/quantidade re-renderiza a
+  // área de compra; o botão clicado já saiu do DOM e o closest() daria "fora do modal".)
+  qs('#infoModal').addEventListener('click', (e) => { if (e.target.isConnected && !e.target.closest('.modal-content')) fecharProduto(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { fecharProduto(); toggleCart(false); } });
+  qs('#productsGrid').addEventListener('click', (e) => {
+    const abrir = e.target.closest('[data-abrir]');
+    if (abrir) return abrirProduto(abrir.dataset.abrir);
+    const add = e.target.closest('[data-add]');
+    if (add) {
+      const p = state.allProducts.find((x) => String(x.id) === add.dataset.add);
+      if (p) adicionar(p, null, 1);
+    }
+  });
+  qs('#cartItems').addEventListener('click', (e) => {
+    const rem = e.target.closest('[data-rem]');
+    if (rem) return NHCart.remover(rem.dataset.rem);
+    const q = e.target.closest('[data-cq]');
+    if (q) {
+      const linha = NHCart.itens().find((i) => i.key === q.dataset.cq);
+      if (linha) NHCart.definirQtd(linha.key, linha.quantity + Number(q.dataset.d));
+    }
+  });
+  qs('#btnCheckout').addEventListener('click', () => {
+    if (!getJwt()) { alert('Entre na sua conta para finalizar a compra.'); location.href = 'login.html'; return; }
+    location.href = 'checkout.html';
+  });
+  document.addEventListener('nh:cart', renderCart);
+  renderCart();
+  loadProducts();
 });
-// Fechar drawer tocando fora (mobile)
-
-
 </script>
 </body>
 </html>
