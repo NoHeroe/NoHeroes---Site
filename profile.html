@@ -332,6 +332,7 @@ dialog[open] .dialog-ctr {
 /* Drawer: agora em assets/css/noheroes-ui.css (componente <nh-drawer>) */
   </style>
 
+  <script src="assets/js/config.js"></script>
   <!-- Gate: token normalizado -->
     <script>
     (function(){
@@ -344,7 +345,6 @@ dialog[open] .dialog-ctr {
       }
       localStorage.setItem('NoHeroes_token', normalized);
       window.tokenJWT = normalized;
-      window.API_BASE = 'https://api.noheroes.com.br';
     })();
   </script>
 
@@ -519,11 +519,11 @@ dialog[open] .dialog-ctr {
         <button id="closeConfig" class="text-red-400 hover:text-red-300 text-2xl leading-none" type="button">&times;</button>
       </div>
 
-      <div class="flex px-6 gap-2 bg-transparent sticky top-0 z-10 pt-2">
-        <button data-tab="security" class="tab-btn flex-1 py-2 text-center font-semibold" aria-selected="true" type="button">Senha & Segurança</button>
-        <button data-tab="profile"  class="tab-btn flex-1 py-2 text-center font-semibold" type="button">Dados Pessoais</button>
-        <button data-tab="address"  class="tab-btn flex-1 py-2 text-center font-semibold" type="button">Endereço</button>
-        <button data-tab="permissions" class="tab-btn flex-1 py-2 text-center font-semibold" type="button">Permissões</button>
+      <div class="flex flex-wrap px-4 sm:px-6 gap-x-2 bg-transparent sticky top-0 z-10 pt-2">
+        <button data-tab="security" class="tab-btn flex-1 basis-[45%] sm:basis-0 py-2 text-center font-semibold" aria-selected="true" type="button">Senha & Segurança</button>
+        <button data-tab="profile"  class="tab-btn flex-1 basis-[45%] sm:basis-0 py-2 text-center font-semibold" type="button">Dados Pessoais</button>
+        <button data-tab="address"  class="tab-btn flex-1 basis-[45%] sm:basis-0 py-2 text-center font-semibold" type="button">Endereço</button>
+        <button data-tab="permissions" class="tab-btn flex-1 basis-[45%] sm:basis-0 py-2 text-center font-semibold" type="button">Permissões</button>
       </div>
 
       <div class="px-6 py-5 space-y-6 overflow-y-auto" style="max-height:calc(85vh - 132px)">
@@ -557,44 +557,47 @@ dialog[open] .dialog-ctr {
               <span class="text-sm text-gray-300/80 mb-1 block">Telefone</span>
               <input type="text" id="input-telefone" class="input" placeholder="(xx) xxxxx-xxxx"/>
             </label>
-          </div>
-        </section>
-
-        <!-- Endereço -->
-        <section id="tab-address" class="hidden space-y-4">
-          <div class="grid sm:grid-cols-3 gap-4">
-            <label class="block sm:col-span-2">
-              <span class="text-sm text-gray-300/80 mb-1 block">Endereço</span>
-              <input type="text" id="input-endereco" class="input" placeholder="Rua / Av."/>
-            </label>
             <label class="block">
-              <span class="text-sm text-gray-300/80 mb-1 block">Número</span>
-              <input type="text" id="input-numero" class="input" placeholder="Nº"/>
-            </label>
-            <label class="block">
-              <span class="text-sm text-gray-300/80 mb-1 block">Bairro</span>
-              <input type="text" id="input-bairro" class="input" placeholder="Bairro"/>
-            </label>
-            <label class="block">
-              <span class="text-sm text-gray-300/80 mb-1 block">Cidade</span>
-              <input type="text" id="input-cidade" class="input" placeholder="Cidade"/>
-            </label>
-            <label class="block">
-              <span class="text-sm text-gray-300/80 mb-1 block">Estado</span>
-              <input type="text" id="input-estado" class="input" placeholder="UF"/>
-            </label>
-            <label class="block">
-              <span class="text-sm text-gray-300/80 mb-1 block">CEP</span>
-              <input type="text" id="input-cep" class="input" placeholder="00000-000"/>
-            </label>
-            <label class="block sm:col-span-3">
-              <span class="text-sm text-gray-300/80 mb-1 block">Complemento</span>
-              <input type="text" id="input-complemento" class="input" placeholder="Apto, bloco, referência..."/>
-            </label>
-            <label class="block sm:col-span-3">
               <span class="text-sm text-gray-300/80 mb-1 block">Documento</span>
               <input type="text" id="input-documento" class="input" placeholder="CPF/CNPJ"/>
             </label>
+          </div>
+        </section>
+
+        <!-- Endereços de entrega (/account/addresses — os mesmos do checkout) -->
+        <section id="tab-address" class="hidden space-y-4">
+          <p class="text-xs text-gray-400">Usados na entrega de produtos físicos. O padrão já vem marcado no checkout.</p>
+          <div id="listaEnderecos" class="space-y-2"><p class="text-sm text-gray-400">Carregando…</p></div>
+          <button id="btnNovoEndereco" class="btn btn-ghost border border-purple-500/40 hover:bg-purple-500/10 text-purple-300" type="button">+ Novo endereço</button>
+          <div id="formEndereco" class="hidden space-y-3">
+            <input type="hidden" id="eId"/>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              <label class="block"><span class="text-sm text-gray-300/80 mb-1 block">CEP</span>
+                <input type="text" id="eCep" class="input" inputmode="numeric" maxlength="9" placeholder="00000-000" autocomplete="postal-code"/></label>
+              <label class="block"><span class="text-sm text-gray-300/80 mb-1 block">UF</span>
+                <input type="text" id="eUf" class="input" maxlength="2" autocomplete="address-level1"/></label>
+              <label class="block col-span-2 sm:col-span-1"><span class="text-sm text-gray-300/80 mb-1 block">Cidade</span>
+                <input type="text" id="eCidade" class="input" autocomplete="address-level2"/></label>
+              <label class="block col-span-2"><span class="text-sm text-gray-300/80 mb-1 block">Rua</span>
+                <input type="text" id="eRua" class="input" autocomplete="address-line1"/></label>
+              <label class="block"><span class="text-sm text-gray-300/80 mb-1 block">Número</span>
+                <input type="text" id="eNumero" class="input"/></label>
+              <label class="block"><span class="text-sm text-gray-300/80 mb-1 block">Complemento</span>
+                <input type="text" id="eCompl" class="input" autocomplete="address-line2"/></label>
+              <label class="block col-span-2 sm:col-span-1"><span class="text-sm text-gray-300/80 mb-1 block">Bairro</span>
+                <input type="text" id="eBairro" class="input"/></label>
+              <label class="block col-span-2"><span class="text-sm text-gray-300/80 mb-1 block">Destinatário</span>
+                <input type="text" id="eNome" class="input" autocomplete="name"/></label>
+              <label class="block"><span class="text-sm text-gray-300/80 mb-1 block">Telefone</span>
+                <input type="text" id="eFone" class="input" inputmode="tel"/></label>
+              <label class="block col-span-2 sm:col-span-1"><span class="text-sm text-gray-300/80 mb-1 block">Apelido</span>
+                <input type="text" id="eRotulo" class="input" placeholder="Casa, Trabalho…"/></label>
+            </div>
+            <p id="cepStatus" class="text-xs text-gray-400" aria-live="polite"></p>
+            <div class="flex gap-2">
+              <button id="btnSalvarEndereco" class="btn btn-primary flex-1" type="button">Salvar endereço</button>
+              <button id="btnCancelarEndereco" class="btn btn-ghost" type="button">Cancelar</button>
+            </div>
           </div>
         </section>
 
@@ -663,12 +666,12 @@ dialog[open] .dialog-ctr {
   <!-- MODAL HISTÓRICO DE COMPRAS -->
 <dialog id="comprasModal">
   <div class="dialog-ctr w-[min(94vw,900px)] max-h-[85vh] overflow-hidden ring-gradient flex flex-col">
-    <div class="flex items-center justify-between px-6 py-4 border-b border-purple-800/60">
-      <h2 class="text-xl font-bold text-purple-300">Histórico de Compras</h2>
+    <div class="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-purple-800/60">
+      <h2 class="text-xl font-bold text-purple-300">Minhas Compras</h2>
       <button id="btnFecharCompras" class="text-red-400 hover:text-red-300 text-2xl leading-none" type="button">&times;</button>
     </div>
 
-    <div id="comprasContainer" class="flex-1 overflow-y-auto px-6 py-4 space-y-4 text-sm">
+    <div id="comprasContainer" class="flex-1 overflow-y-auto px-4 sm:px-6 py-4 space-y-3 text-sm">
       <p class="text-center text-gray-400/80">Carregando compras...</p>
     </div>
 
@@ -686,7 +689,7 @@ dialog[open] .dialog-ctr {
       <button id="btnFecharDetalhes" class="text-red-400 hover:text-red-300 text-2xl leading-none" type="button">&times;</button>
     </div>
 
-    <div id="detalhesItens" class="flex-1 overflow-y-auto px-6 py-4 space-y-3 text-sm text-gray-300/90">
+    <div id="detalhesItens" class="flex-1 overflow-y-auto px-4 sm:px-6 py-4 space-y-4 text-sm text-gray-300/90">
       <p class="text-center text-gray-400">Carregando detalhes...</p>
     </div>
 
@@ -696,6 +699,8 @@ dialog[open] .dialog-ctr {
   </div>
 </dialog>
 <script src="assets/js/cookies.js"></script>
+<script src="assets/js/pedidos.js"></script>
+<script src="assets/js/enderecos.js"></script>
   <script>
     // ========= helper: close-on-backdrop para <dialog> =========
     function enableBackdropClose(dlg){
@@ -864,13 +869,6 @@ btnConfirmLogout.addEventListener('click', () => {
         document.getElementById('input-nomecompleto').value = user.nome_completo || '';
         document.getElementById('input-email').value = user.email || '';
         document.getElementById('input-telefone').value = user.telefone || '';
-        document.getElementById('input-endereco').value = user.endereco || '';
-        document.getElementById('input-numero').value = user.numero || '';
-        document.getElementById('input-bairro').value = user.bairro || '';
-        document.getElementById('input-cidade').value = user.cidade || '';
-        document.getElementById('input-estado').value = user.estado || '';
-        document.getElementById('input-cep').value = user.cep || '';
-        document.getElementById('input-complemento').value = user.complemento || '';
         document.getElementById('input-documento').value = user.documento || '';
       }catch(e){
         console.error('Erro ao carregar dashboard:', e);
@@ -917,14 +915,7 @@ btnConfirmLogout.addEventListener('click', () => {
       const payload = {
         nome_completo: document.getElementById('input-nomecompleto').value.trim(),
         telefone: document.getElementById('input-telefone').value.trim(),
-        documento: document.getElementById('input-documento').value.trim(),
-        endereco: document.getElementById('input-endereco').value.trim(),
-        numero: document.getElementById('input-numero').value.trim(),
-        bairro: document.getElementById('input-bairro').value.trim(),
-        cidade: document.getElementById('input-cidade').value.trim(),
-        estado: document.getElementById('input-estado').value.trim(),
-        cep: document.getElementById('input-cep').value.trim(),
-        complemento: document.getElementById('input-complemento').value.trim()
+        documento: document.getElementById('input-documento').value.trim()
       };
       try{
         const res = await api('/dashboard/update', { method:'PATCH', body: JSON.stringify(payload) });
@@ -967,10 +958,11 @@ document.getElementById('btnCompras').addEventListener('click', async () => {
   document.getElementById(id).addEventListener('click', () => detalhesDlg.close())
 );
 
-// carregar histórico
+// carregar histórico (Minhas Compras): pagamento + entrega de cada pedido
 async function carregarCompras(){
   const cont = document.getElementById('comprasContainer');
   cont.innerHTML = '<p class="text-center text-gray-400/80">Carregando compras...</p>';
+  const P = window.NHPedido;
 
   try {
     const res = await api('/orders', { method:'GET' });
@@ -984,22 +976,21 @@ async function carregarCompras(){
       return;
     }
 
-    cont.innerHTML = pedidos.map(p => `
-      <div class="card ring-gradient p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-sm">
-        <div>
-          <p class="font-semibold text-purple-300">${fmtData(p.createdAt)}</p>
-          <p class="text-gray-400">Status: <span class="text-${statusColor(p.status)}">${p.status}</span></p>
-          <p class="text-gray-400">Método: <span class="text-gray-300">${p.method || '—'}</span></p>
+    cont.innerHTML = pedidos.map(p => {
+      const resumo = (p.items || []).map(i => `${i.quantity}× ${P.esc(i.title || 'Item #' + i.id)}`).join(', ');
+      return `
+      <button type="button" class="verDetalhesBtn w-full text-left card ring-gradient p-3 sm:p-4 rounded-xl hover:bg-purple-500/5" data-id="${P.esc(p.id)}">
+        <div class="flex items-start justify-between gap-3">
+          <div class="min-w-0">
+            <p class="font-semibold text-purple-300">${P.esc(fmtData(p.createdAt))}</p>
+            <p class="text-xs text-gray-400 truncate">${resumo || '—'}</p>
+          </div>
+          <p class="text-base font-bold text-amber-300 whitespace-nowrap">${P.brl(p.total)}</p>
         </div>
-        <div class="text-right">
-          <p class="text-lg font-bold text-amber-300">${fmtBRL(p.total || 0)}</p>
-          <button class="btn btn-ghost border border-purple-500/40 hover:bg-purple-500/10 mt-1 verDetalhesBtn" data-id="${p.order_id || p.id || p._id || ''}"
->Ver detalhes</button>
-        </div>
-      </div>
-    `).join('');
+        <div class="flex flex-wrap gap-1 mt-2">${P.seloPagamento(p.status)}${p.fulfillment_status && p.fulfillment_status !== 'na' ? P.seloEntrega(p.fulfillment_status) : ''}</div>
+      </button>`;
+    }).join('');
 
-    // bind dos botões
     cont.querySelectorAll('.verDetalhesBtn').forEach(btn => {
       btn.addEventListener('click', ()=>abrirDetalhes(btn.dataset.id));
     });
@@ -1015,62 +1006,152 @@ function fmtData(iso){
   const d = new Date(iso);
   return d.toLocaleDateString('pt-BR', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
 }
-function fmtBRL(valor) {
-  const n = Number(valor || 0);
-  return n.toLocaleString('pt-BR', {
-    style: 'currency',
-    currency: 'BRL'
-  });
-}
-function statusColor(s){
-  if(!s) return 'gray-400';
-  const st = s.toLowerCase();
-  if(st.includes('approved')) return 'green-400';
-  if(st.includes('pending')) return 'yellow-400';
-  if(st.includes('rejected')||st.includes('cancel')) return 'red-400';
-  return 'gray-300';
-}
 
-// abrir detalhes de um pedido
+// detalhe: itens, endereço, frete, rastreio e linha do tempo
 async function abrirDetalhes(orderId){
-  if (!orderId || orderId === 'undefined') {
-  console.error("ID de pedido inválido:", orderId);
-  document.getElementById('detalhesItens').innerHTML =
-    '<p class="text-center text-red-400">Este pedido está incompleto ou corrompido.</p>';
-  return;
-}
-  detalhesDlg.showModal();
   const box = document.getElementById('detalhesItens');
-  box.innerHTML = '<p class="text-center text-gray-400/80">Carregando itens...</p>';
+  const P = window.NHPedido;
+  if (!orderId) {
+    box.innerHTML = '<p class="text-center text-red-400">Este pedido está incompleto.</p>';
+    return;
+  }
+  detalhesDlg.showModal();
+  document.getElementById('detalhesTitulo').textContent = 'Pedido ' + orderId;
+  box.innerHTML = '<p class="text-center text-gray-400/80">Carregando…</p>';
 
   try{
-    const res = await api(`/orders/${orderId}`, { method:'GET' });
+    const res = await api(`/orders/${encodeURIComponent(orderId)}`, { method:'GET' });
     if(!res) return;
     const json = await res.json();
     if(!json.success) throw new Error(json.message);
+    const o = json.data;
+    const bloco = (titulo, html) => `<div><h3 class="text-xs uppercase tracking-wider text-gray-400 mb-1">${titulo}</h3>${html}</div>`;
 
-    const itens = json.data?.items || json.data?.items_json || [];
-    if(!itens.length){
-      box.innerHTML = '<p class="text-center text-gray-500 py-6">Nenhum item listado nesta compra.</p>';
-      return;
+    const itens = (o.items || []).map(i => `
+      <div class="flex justify-between gap-3 border-b border-gray-700/40 py-1.5">
+        <span class="min-w-0"><span class="text-purple-200">${i.quantity}× ${P.esc(i.title || 'Item #' + i.id)}</span>${i.variant_label ? ` <span class="text-gray-400">(${P.esc(i.variant_label)})</span>` : ''}
+          <span class="text-[10px] text-gray-500 uppercase ml-1">${i.fulfillment === 'physical' ? 'físico' : 'digital'}</span></span>
+        <span class="whitespace-nowrap">${i.unit_price != null ? P.brl(i.unit_price * i.quantity) : ''}</span>
+      </div>`).join('');
+    const totais = `
+      <div class="flex justify-between pt-2 text-gray-400"><span>Subtotal</span><span>${P.brl(o.subtotal != null ? o.subtotal : o.total)}</span></div>
+      ${o.shipping_method ? `<div class="flex justify-between text-gray-400"><span>Frete</span><span>${o.shipping_cost ? P.brl(o.shipping_cost) : 'Grátis'}</span></div>` : ''}
+      ${o.discount ? `<div class="flex justify-between text-gray-400"><span>Desconto</span><span>− ${P.brl(o.discount)}</span></div>` : ''}
+      <div class="flex justify-between font-bold text-amber-300"><span>Total</span><span>${P.brl(o.total)}</span></div>`;
+
+    let html = `<div class="flex flex-wrap gap-1">${P.seloPagamento(o.status)}${o.fulfillment_status !== 'na' ? P.seloEntrega(o.fulfillment_status) : ''}
+      <span class="text-xs text-gray-400 ml-1 self-center">${P.esc(P.metodo(o.payment_provider))}</span></div>`;
+    if (o.status === 'awaiting_manual_confirmation')
+      html += `<a href="agradecimento.html?order=${encodeURIComponent(o.id)}" class="btn btn-ghost border border-amber-400/50 text-amber-300 w-full">Ver QR Code / código Pix</a>`;
+    html += bloco('Itens', itens + totais);
+    if (o.shipping_address) {
+      const m = o.shipping_method;
+      html += bloco('Entrega', `<p>${P.endereco(o.shipping_address)}</p>` +
+        (m ? `<p class="mt-1 text-gray-400">${P.esc(m.service)}${m.carrier ? ' · ' + P.esc(m.carrier) : ''}${m.days ? ` · ${m.days.min === m.days.max ? m.days.max : m.days.min + '–' + m.days.max} dia(s) úteis` : ''}</p>` : ''));
     }
-
-    box.innerHTML = itens.map(i => `
-      <div class="flex items-center gap-3 border-b border-gray-700/40 pb-2">
-        <img src="${i.imageUrl || i.image || '/assets/images/linktree.png'}" class="w-12 h-12 rounded-lg object-cover" alt="">
-        <div class="flex-1">
-          <p class="font-semibold text-purple-200">${i.name}</p>
-          <p class="text-gray-400 text-xs">${i.quantity || 1}x — ${fmtBRL(i.priceReal || i.price || 0)}</p>
-        </div>
-      </div>
-    `).join('');
+    if (o.tracking) {
+      const t = o.tracking;
+      const link = t.url && /^https?:\/\//i.test(t.url) ? `<a href="${P.esc(t.url)}" target="_blank" rel="noopener" class="text-purple-300 underline">Acompanhar entrega</a>` : '';
+      html += bloco('Rastreio', `<p>${t.carrier ? P.esc(t.carrier) + ' · ' : ''}<span class="font-mono select-all">${P.esc(t.code || '')}</span></p>${link}`);
+    }
+    html += bloco('Histórico', P.timeline(o.events));
+    box.innerHTML = html;
   }catch(err){
     console.error(err);
     box.innerHTML = `<p class="text-center text-red-400">Erro ao carregar detalhes.</p>`;
   }
 }
 
-  
+// vindo do agradecimento.html (#compras): abre Minhas Compras direto
+if (location.hash === '#compras') { comprasDlg.showModal(); carregarCompras(); }
+
+// ========= ENDEREÇOS DE ENTREGA (/account/addresses) =========
+let __enderecos = [];
+const $e = (id) => document.getElementById(id);
+async function carregarEnderecos(){
+  const box = $e('listaEnderecos');
+  try{
+    const res = await api('/account/addresses', { method:'GET' });
+    if(!res) return;
+    const json = await res.json();
+    __enderecos = json.data || [];
+    if(!__enderecos.length){ box.innerHTML = '<p class="text-sm text-gray-400">Nenhum endereço salvo.</p>'; return; }
+    box.innerHTML = __enderecos.map(a => `
+      <div class="rounded-xl border ${a.is_default ? 'border-purple-500/60 bg-purple-500/5' : 'border-gray-700/60'} p-3 text-sm">
+        <p class="font-semibold text-purple-200">${NHPedido.esc(a.label || a.recipient_name)}${a.is_default ? ' <span class="text-xs text-gray-400">(padrão)</span>' : ''}</p>
+        <p class="text-gray-400 text-xs mt-0.5">${NHPedido.esc(a.recipient_name)} · ${NHEndereco.resumo(a)}</p>
+        <div class="flex flex-wrap gap-3 mt-2 text-xs">
+          <button type="button" class="text-purple-300 underline" data-end-editar="${a.id}">Editar</button>
+          ${a.is_default ? '' : `<button type="button" class="text-purple-300 underline" data-end-padrao="${a.id}">Tornar padrão</button>`}
+          <button type="button" class="text-red-400 underline" data-end-remover="${a.id}">Remover</button>
+        </div>
+      </div>`).join('');
+  }catch(e){
+    box.innerHTML = '<p class="text-sm text-red-400">Erro ao carregar endereços.</p>';
+  }
+}
+function abrirFormEndereco(a){
+  $e('formEndereco').classList.remove('hidden');
+  $e('btnNovoEndereco').classList.add('hidden');
+  $e('eId').value = a ? a.id : '';
+  $e('eCep').value = a ? NHEndereco.formatarCep(a.cep) : '';
+  $e('eUf').value = a ? a.state : '';
+  $e('eCidade').value = a ? a.city : '';
+  $e('eRua').value = a ? a.street : '';
+  $e('eNumero').value = a ? a.number : '';
+  $e('eCompl').value = a ? (a.complement || '') : '';
+  $e('eBairro').value = a ? a.district : '';
+  $e('eNome').value = a ? a.recipient_name : ($e('input-nomecompleto').value || '');
+  $e('eFone').value = a ? (a.phone || '') : ($e('input-telefone').value || '');
+  $e('eRotulo').value = a ? (a.label || '') : '';
+  $e('cepStatus').textContent = '';
+  $e('eCep').focus();
+}
+function fecharFormEndereco(){
+  $e('formEndereco').classList.add('hidden');
+  $e('btnNovoEndereco').classList.remove('hidden');
+}
+$e('btnNovoEndereco').addEventListener('click', () => abrirFormEndereco(null));
+$e('btnCancelarEndereco').addEventListener('click', fecharFormEndereco);
+$e('eCep').addEventListener('input', async (e) => {
+  e.target.value = NHEndereco.formatarCep(e.target.value);
+  if (e.target.value.replace(/\D/g, '').length !== 8) return;
+  $e('cepStatus').textContent = 'Buscando CEP…';
+  const r = await NHEndereco.viaCep(e.target.value);
+  if (!r) { $e('cepStatus').textContent = 'CEP não encontrado (ou serviço fora do ar). Preencha à mão.'; return; }
+  $e('eRua').value = r.street || $e('eRua').value;
+  $e('eBairro').value = r.district || $e('eBairro').value;
+  $e('eCidade').value = r.city;
+  $e('eUf').value = r.state;
+  $e('cepStatus').textContent = 'Endereço encontrado. Confira e informe o número.';
+  $e('eNumero').focus();
+});
+$e('btnSalvarEndereco').addEventListener('click', async () => {
+  const id = $e('eId').value;
+  const body = {
+    cep: $e('eCep').value, state: $e('eUf').value, city: $e('eCidade').value, street: $e('eRua').value,
+    number: $e('eNumero').value, complement: $e('eCompl').value, district: $e('eBairro').value,
+    recipient_name: $e('eNome').value, phone: $e('eFone').value, label: $e('eRotulo').value,
+  };
+  const res = await api(id ? `/account/addresses/${id}` : '/account/addresses', { method: id ? 'PATCH' : 'POST', body: JSON.stringify(body) });
+  if(!res) return;
+  const json = await res.json().catch(() => ({}));
+  if(!res.ok){ $e('cepStatus').textContent = json.message || 'Não foi possível salvar.'; return; }
+  fecharFormEndereco();
+  carregarEnderecos();
+});
+$e('listaEnderecos').addEventListener('click', async (e) => {
+  const b = e.target.closest('button'); if(!b) return;
+  if (b.dataset.endEditar) return abrirFormEndereco(__enderecos.find(a => String(a.id) === b.dataset.endEditar));
+  if (b.dataset.endPadrao) { await api(`/account/addresses/${b.dataset.endPadrao}/default`, { method:'PATCH' }); return carregarEnderecos(); }
+  if (b.dataset.endRemover) {
+    if (b.dataset.armado !== '1') { b.dataset.armado = '1'; b.textContent = 'Confirmar remoção'; return; }
+    await api(`/account/addresses/${b.dataset.endRemover}`, { method:'DELETE' });
+    carregarEnderecos();
+  }
+});
+document.querySelector('[data-tab="address"]').addEventListener('click', carregarEnderecos);
+
 // Drawer: agora no componente compartilhado <nh-drawer> (gatilho via [data-nh-drawer-toggle])
 
 // ═══════════════════════════════════════════════
