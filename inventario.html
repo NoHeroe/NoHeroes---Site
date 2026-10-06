@@ -1,920 +1,164 @@
-<!DOCTYPE html><html lang="pt-BR">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NoHeroes | Inventário (Meus Produtos)</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title data-i18n="bib.meta.titulo">Minha biblioteca | NoHeroes</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#07060a">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tw.css">
+  <link rel="stylesheet" href="assets/css/noheroes-ui.css">
+  <link rel="stylesheet" href="assets/css/paginas.css">
+  <link rel="stylesheet" href="assets/css/perfil.css">
+  <script>
+    // Sem sessão → login (volta para cá depois).
+    (function () {
+      var raw = (localStorage.getItem('NoHeroes_token') || '').replace(/^Bearer\s+/i, '').trim();
+      if (raw.split('.').length !== 3) { location.replace('login.html?volta=inventario.html'); }
+    })();
+  </script>
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/i18n/comum.js"></script>
+  <script src="assets/i18n/biblioteca.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script defer src="assets/js/noheroes-ui.js"></script>
   <style>
-/* =========================================
-   NoHeroes — Inventário (Meus Produtos)
-   CSS unificado, sem redundâncias
-   Ajustes:
-   - Botões: roxo/dourado (remove vermelho/preto)
-   - Imagens nos slots: sempre inteiras (contain)
-   ========================================= */
-
-/* ---------- Variáveis de design ---------- */
-:root{
-  --bg:#0a0a0a;                 /* fundo geral */
-  --panel:rgba(17,17,17,.88);   /* painel translúcido */
-  --border:#3a3a3a;             /* borda */
-  --text:#e6e6e6;               /* texto */
-  --muted:#9aa0a6;              /* texto secundário */
-  --slot:rgba(26,26,26,.75);    /* slot */
-  --slot-b:#5b5b5b;             /* borda slot */
-
-  --hp:#dc143c;                 /* barras HUD */
-  --mp:#4169e1;
-  --xp:#9b59b6;                 /* roxo base */
-
-  --nh-rgb:155,89,182;          /* roxo NoHeroes (glow) */
-  --gold:#c29546;               /* dourado */
-
-  /* Gradientes NoHeroes */
-  --grad-title:linear-gradient(90deg,#7c3aed,#c29546); /* roxo -> dourado */
-  --grad-btn:linear-gradient(90deg,#7c3aed,#c29546);   /* roxo -> dourado */
-
-  --shadow:rgba(0,0,0,.6);
-}
-
-/* ---------- Reset básico ---------- */
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{height:100%}
-body{
-  width:100%;
-  background:
-    radial-gradient(1200px 600px at 70% -10%, rgba(var(--nh-rgb),.08), transparent 60%),
-    radial-gradient(900px 500px at -10% 40%, rgba(210,180,140,.06), transparent 60%),
-    var(--bg);
-  color:var(--text);
-  font-family:"Share Tech Mono", monospace;
-  overflow-x:hidden;
-  overflow-y:auto;
-}
-
-/* Canvas brasas */
-#brasasCanvas{
-  position:fixed;
-  inset:0;
-  width:100vw;
-  height:100vh;
-  z-index:0;
-  pointer-events:none;
-}
-
-/* =========================================
-   HUD
-   ========================================= */
-.hud{
-  position:fixed; top:0; left:0; right:0;
-  display:flex; flex-wrap:wrap; gap:12px;
-  align-items:center; justify-content:space-between;
-  padding:10px 16px;
-  background:rgba(10,10,10,.9);
-  border-bottom:2px solid var(--border);
-  box-shadow:0 8px 24px var(--shadow);
-  z-index:50;
-}
-.hud .group{display:flex;gap:12px;align-items:center}
-.badge{
-  font-family:"Cinzel Decorative",serif;
-  padding:4px 10px;
-  border:1px solid var(--border);
-  border-radius:6px;
-  background:var(--slot);
-  box-shadow:0 0 8px var(--shadow);
-}
-.bar{
-  width:140px;height:12px;
-  background:#1c1c1c;
-  border:1px solid var(--border);
-  border-radius:3px;
-  overflow:hidden;
-  position:relative;
-  box-shadow:inset 0 0 6px rgba(0,0,0,.6);
-}
-.fill{height:100%;width:70%;box-shadow:0 0 6px rgba(255,255,255,.2)}
-.fill[data-val]::after{
-  content:attr(data-val);
-  position:absolute;right:6px;top:50%;
-  transform:translateY(-50%);
-  font-size:.7em;
-  color:#fff;
-}
-.hp{background:var(--hp)} .mp{background:var(--mp)} .xp{background:var(--xp)}
-@media(min-width:1024px){.bar{width:180px}}
-
-/* =========================================
-   Títulos e legendas (gradiente roxo -> dourado)
-   ========================================= */
-@keyframes nh-flow-title{
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
-}
-
-.title,
-.panel-title,
-.legend{
-  text-align:center;
-  font-family:"Cinzel Decorative",serif;
-  text-transform:uppercase;
-  background: var(--grad-title);
-  background-size:200% 200%;
-  animation: nh-flow-title 6s linear infinite;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  color:transparent;
-  text-shadow:0 0 10px rgba(124,58,237,.45);
-}
-
-/* =========================================
-   Botões (ROXO -> DOURADO) unificados
-   ========================================= */
-@keyframes nh-flow-btn{
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
-}
-
-.btn-x,
-.sp-btn,
-.hud .actions button,
-.item-modal .actions a,
-.item-modal .actions button{
-  background: var(--grad-btn);
-  background-size:200% 200%;
-  animation: nh-flow-btn 8s linear infinite;
-
-  color:#0b0b0b;
-  border:1px solid rgba(194,149,70,.55);
-  border-radius:12px;
-
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-
-  padding:10px 18px;
-  font-family:"Cinzel Decorative",serif;
-  text-transform:uppercase;
-  letter-spacing:.5px;
-  text-decoration:none;
-
-  box-shadow:
-    0 6px 18px rgba(0,0,0,.5),
-    0 0 14px rgba(124,58,237,.20);
-
-  cursor:pointer;
-  transition: filter .2s ease, box-shadow .2s ease, transform .15s ease;
-}
-.btn-x:hover,
-.sp-btn:hover,
-.hud .actions button:hover,
-.item-modal .actions a:hover,
-.item-modal .actions button:hover{
-  filter:brightness(1.06);
-  box-shadow:
-    0 10px 26px rgba(0,0,0,.55),
-    0 0 18px rgba(124,58,237,.35),
-    0 0 14px rgba(194,149,70,.22);
-}
-.btn-x:active,
-.sp-btn:active,
-.hud .actions button:active,
-.item-modal .actions a:active,
-.item-modal .actions button:active{
-  transform: translateY(0);
-  filter:brightness(1.02);
-}
-
-/* HUD: ajustes finos sem duplicar tema */
-.hud .actions button{
-  font-size:.85em;
-  padding:8px 14px;
-}
-
-/* Tabs */
-.sp-tabs{
-  display:grid;
-  grid-template-columns:repeat(2, minmax(0,1fr));
-  gap:12px;
-}
-.sp-tabs .btn-x{ width:100%; justify-content:center; }
-@media (min-width:640px){
-  .sp-tabs{ grid-template-columns:repeat(3, minmax(0,1fr)); }
-}
-
-/* =========================================
-   Layout principal
-   ========================================= */
-.main{
-  max-width:1200px;
-  margin:0 auto;
-  padding:90px 16px 24px;
-  display:flex;
-  flex-direction:column;
-  gap:18px;
-  position:relative;
-  z-index:1; /* acima do canvas */
-}
-.shell{
-  background:var(--panel);
-  border:2px solid var(--border);
-  border-radius:12px;
-  box-shadow:0 0 26px var(--shadow), inset 0 0 10px rgba(255,255,255,.04);
-  padding:20px;
-  display:flex;
-  flex-direction:column;
-  gap:18px;
-}
-
-/* Cabeçalho */
-.header-row{
-  display:flex;
-  flex-wrap:wrap;
-  gap:12px;
-  align-items:center;
-  justify-content:center;
-}
-.title{ width:100%; font-size:1.4rem; letter-spacing:.8px; }
-
-/* Separador */
-.section-sep{
-  height:1px;
-  margin:14px 0 10px;
-  background:linear-gradient(
-    90deg,
-    transparent,
-    rgba(124,58,237,.6),
-    rgba(194,149,70,.6),
-    transparent
-  );
-  filter:drop-shadow(0 0 8px rgba(124,58,237,.35));
-  border-radius:999px;
-}
-
-/* =========================================
-   Inventário (grid 9xN)
-   ========================================= */
-.note{font-size:.9rem;color:var(--muted)}
-
-.inv-grid{display:grid;gap:8px}
-@media(min-width:1024px){.inv-grid{grid-template-columns:repeat(9, 1fr)}}
-@media(max-width:1023px){.inv-grid{grid-template-columns:repeat(auto-fill, minmax(48px,1fr))}}
-
-.inv-slot{
-  width:100%;
-  aspect-ratio:1;
-  border-radius:8px;
-  background:var(--slot);
-  border:2px solid var(--slot-b);
-  display:grid;
-  place-items:center;
-  color:#bfbfbf;
-  position:relative;
-  cursor:pointer;
-  box-shadow:inset 0 0 8px rgba(0,0,0,.55);
-  transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
-  overflow:hidden;
-}
-.inv-slot:hover{
-  border-color:var(--xp);
-  box-shadow:0 0 14px rgba(var(--nh-rgb),.45), inset 0 0 10px rgba(255,255,255,.1);
-  transform: scale(1.02);
-}
-.count{
-  position:absolute;
-  bottom:3px;right:4px;
-  background:rgba(0,0,0,.72);
-  font-size:.7em;
-  padding:2px 4px;
-  border-radius:4px;
-}
-
-/* Slots bloqueados (101–200) */
-.inv-slot.locked{
-  background:#121212;
-  border-color:#3c3c3c;
-  color:#777;
-  cursor:not-allowed;
-  box-shadow: inset 0 0 10px rgba(0,0,0,.6);
-  transform:none;
-}
-.inv-slot.locked::before{
-  content:"🔒";
-  font-size:1.1rem;
-  opacity:.65;
-}
-.inv-slot.locked:hover{
-  border-color:#4a4a4a;
-  box-shadow: 0 0 8px rgba(0,0,0,.4), inset 0 0 12px rgba(255,255,255,.06);
-}
-
-/* Raridades visuais */
-.inv-slot[data-rarity="Comum"]     { border-color:#fff; }
-.inv-slot[data-rarity="Raro"]      { border-color:#00ff88; box-shadow:0 0 10px rgba(0,255,136,.4), inset 0 0 8px rgba(0,0,0,.6); }
-.inv-slot[data-rarity="Épico"]     { border-color:#1e90ff; box-shadow:0 0 10px rgba(30,144,255,.45), inset 0 0 8px rgba(0,0,0,.6); }
-.inv-slot[data-rarity="Lendário"]  { border-color:#facc15; box-shadow:0 0 10px rgba(250,204,21,.5), inset 0 0 8px rgba(0,0,0,.6); }
-.inv-slot[data-rarity="Sombrio"]   { border-color:#8a2be2; box-shadow:0 0 12px rgba(138,43,226,.55), inset 0 0 8px rgba(0,0,0,.6); }
-
-/* Raridade Secreta com animação RGB */
-@keyframes rgbGlow{
-  0%   { border-color:#ff0000; box-shadow:0 0 10px #ff0000, inset 0 0 8px rgba(0,0,0,.6); }
-  25%  { border-color:#00ff00; box-shadow:0 0 10px #00ff00, inset 0 0 8px rgba(0,0,0,.6); }
-  50%  { border-color:#00ffff; box-shadow:0 0 10px #00ffff, inset 0 0 8px rgba(0,0,0,.6); }
-  75%  { border-color:#ff00ff; box-shadow:0 0 10px #ff00ff, inset 0 0 8px rgba(0,0,0,.6); }
-  100% { border-color:#ff0000; box-shadow:0 0 10px #ff0000, inset 0 0 8px rgba(0,0,0,.6); }
-}
-.inv-slot.raridade-secreto{
-  animation: rgbGlow 3s linear infinite;
-  border-width:2px;
-}
-
-/* =========================================
-   Modal de ajuda (Como funciona?)
-   ========================================= */
-.modal-backdrop{
-  position:fixed;
-  inset:0;
-  z-index:60;
-  background:rgba(0,0,0,.55);
-  display:grid;
-  place-items:center;
-  backdrop-filter: blur(2px);
-}
-.modal-backdrop[hidden]{ display:none !important; }
-.modal{
-  width:min(92vw,640px);
-  background:rgba(17,17,17,.95);
-  border:1px solid #3a3a3a;
-  border-radius:14px;
-  box-shadow:0 24px 60px rgba(0,0,0,.6);
-  padding:14px;
-}
-.modal-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  border-bottom:1px solid #3a3a3a;
-  padding-bottom:10px;
-  margin-bottom:10px;
-}
-.modal-body{ font-size:.95rem; color:var(--text); }
-body.modal-open{ overflow:hidden; }
-
-/* Botão "Como funciona?" */
-.help-btn{
-  margin:10px auto 0;
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  padding:10px 18px;
-  border-radius:12px;
-  border:1px solid #3b1a3f;
-  background: linear-gradient(90deg,#2b0f32,#1a1a1a);
-  color:#e9ddff;
-  font-family:"Cinzel Decorative",serif;
-  text-transform:uppercase;
-  letter-spacing:.6px;
-  cursor:pointer;
-  box-shadow: 0 6px 18px rgba(0,0,0,.45), 0 0 12px rgba(124,58,237,.25) inset;
-  transition: transform .15s ease, box-shadow .2s ease, filter .2s ease;
-}
-.help-btn:hover{
-  transform:translateY(-1px);
-  box-shadow: 0 8px 22px rgba(0,0,0,.55), 0 0 18px rgba(194,149,70,.28) inset;
-  filter:brightness(1.05);
-}
-.help-btn:active{
-  transform:translateY(0);
-  filter:brightness(.98);
-}
-.help-btn .ico{
-  width:18px;
-  height:18px;
-  color: var(--gold);
-  filter: drop-shadow(0 0 6px rgba(194,149,70,.35));
-}
-
-/* =========================================
-   Compatibilidade com CSS injetado do JS
-   (não remove funcionalidade, apenas garante padrão)
-   ========================================= */
-
-/* Imagens dos slots: SEMPRE INTEIRAS (contain) */
-.inv-slot img{
-  width:100%;
-  height:100%;
-  padding:6px;
-  display:block;
-  object-fit:contain;         /* crucial: não corta */
-  object-position:center;
-  border-radius:8px;
-}
-
-/* Botões no modal do item: mantém sua tipografia mínima */
-.item-modal .actions button{
-  min-width:120px;
-  font-family:"Cinzel Decorative",serif;
-  letter-spacing:.8px;
-}
-</style>
-<link rel="stylesheet" href="assets/css/noheroes-ui.css">
-<script defer src="assets/js/noheroes-ui.js"></script>
+    .bib-lista { display: grid; gap: 12px; margin-top: 18px; }
+    @media (min-width: 768px) { .bib-lista { grid-template-columns: 1fr 1fr; } }
+    .bib-item { display: grid; grid-template-columns: 76px 1fr; gap: 14px; align-items: center; padding: 14px; border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.09); background: rgba(255,255,255,.025); }
+    .bib-capa { width: 76px; aspect-ratio: 2 / 3; border-radius: 8px; overflow: hidden; background: #141018; border: 1px solid rgba(143,79,255,.25); }
+    .bib-capa img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .bib-nome { font-weight: 700; color: #fff; line-height: 1.3; }
+    .bib-meta { font-size: 13px; color: var(--nh-texto-2); margin-top: 2px; }
+    .bib-acoes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .bib-acoes .nh-btn { min-height: 40px; padding: 0 16px; font-size: 14px; }
+    .bib-msg { font-size: 13px; margin-top: 6px; color: #fca5a5; }
+    .bib-skel { height: 140px; border-radius: 16px; background: linear-gradient(90deg, rgba(255,255,255,.03), rgba(255,255,255,.07), rgba(255,255,255,.03));
+      background-size: 200% 100%; animation: bibSkel 1.2s infinite linear; }
+    @keyframes bibSkel { to { background-position: -200% 0; } }
+    @media (prefers-reduced-motion: reduce) { .bib-skel { animation: none; } }
+  </style>
 </head>
-<body>
-   <!-- Fundo + menu lateral (componentes compartilhados) -->
-   <nh-background></nh-background>
-   <nh-drawer></nh-drawer>
-    <header class="hud" role="banner">
-    <div class="actions">
-      <button data-nh-drawer-toggle aria-label="Abrir menu">☰ Menu</button>
-      <button onclick="location.href='store.html'">⛩ Loja</button>
+<body class="nh-pagina">
+<nh-background></nh-background>
+<nh-header></nh-header>
+
+<main id="conteudo" class="nh-wrap pf-main">
+  <div class="pf-painel">
+    <h1 class="nh-h2" data-i18n="bib.titulo">Minha biblioteca</h1>
+    <p class="pf-sub" style="margin-top:8px" data-i18n="bib.sub">Tudo o que você comprou. Os e-books ficam aqui para baixar sempre que precisar.</p>
+    <div class="nh-ctas-linha" style="margin-top:0">
+      <a href="profile.html#compras" class="nh-link" data-i18n="bib.ver_compras">Ver minhas compras</a>
+      <a href="store.html" class="nh-link" data-i18n="bib.ir_loja">Ir para a loja</a>
     </div>
-  </header> 
- <!-- ===== MAIN ===== -->  <main class="main" aria-label="Inventário do usuário">
-    <section class="shell" id="inventario">
-      <div class="header-row">
-        <h1 class="title">Inventário — Meus Produtos</h1>
-      </div>
 
-<div class="section-sep" aria-hidden="true"></div>
-
-<!-- Botão opcional para reabrir a dica -->
-<!-- Botão estilizado -->
-<button id="open-help" class="help-btn" type="button">
-  <svg viewBox="0 0 24 24" aria-hidden="true" class="ico">
-    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.3" fill="none" opacity=".4"/>
-    <path d="M12 8a2 2 0 0 1 2 2c0 1.5-2 2-2 4m0 2h.01"
-          stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-  Como funciona?
-</button>
-
-<!-- Modal de ajuda -->
-<div id="inv-help-backdrop" class="modal-backdrop" hidden>
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="help-title">
-    <header class="modal-head">
-  <h3 id="help-title" class="panel-title" style="margin:0;border:0;padding:0">Como funciona o Inventário</h3>
-  <button id="close-help" class="btn-x" type="button" style="padding:6px 10px;border-radius:8px">Fechar</button>
-    </header>
-    <div class="modal-body">
-      <p class="note" style="margin:0">
-        Aqui aparecem todos os itens/vantagens que você <strong>já comprou</strong> no universo NoHeroes.
-        Se ainda não comprou nada, os blocos ficam vazios — sem cards “soltos”.
-      </p>
+    <div id="bibLista" class="bib-lista" aria-live="polite">
+      <div class="bib-skel"></div><div class="bib-skel"></div>
     </div>
   </div>
-</div>
+</main>
 
-<section aria-label="Inventário">
-  <h2 class="panel-title" style="font-size:1.05em">Inventário</h2>
-  <div class="inv-grid" id="inv-grid"></div>
-  <p class="note" style="margin-top:8px;text-align:center">
-    Slots <strong>101–200</strong> ficam bloqueados por enquanto.
-  </p>
-</section>
+<nh-footer></nh-footer>
 
-  </main>
-  <!-- Footer (componente compartilhado) -->
-  <nh-footer></nh-footer>
-  <script>
-/* ==========================
-   AUTH + API
-========================== */
-(function(){
-  const raw = localStorage.getItem('NoHeroes_token') || '';
-  const token = raw.replace(/^Bearer\s+/i, '');
-  if (!token || token.split('.').length !== 3) {
-    localStorage.removeItem('NoHeroes_token');
-    location.href = 'login.html';
-    return;
-  }
-  window.tokenJWT = token;
-  window.API_BASE = 'https://api.noheroes.com.br';
-})();
-async function api(path, opts={}) {
-  const res = await fetch(`${window.API_BASE}${path}`, {
-    ...opts,
-    headers: {
-      'Content-Type':'application/json',
-      'Authorization':`Bearer ${window.tokenJWT}`,
-      ...(opts.headers||{})
-    }
-  });
-  if (res.status===401) {
-    localStorage.removeItem('NoHeroes_token');
-    location.href='login.html';
-  }
-  return res;
-}
+<script>
+(function () {
+  const t = (k, v) => NHI18n.t(k, v);
+  const token = (localStorage.getItem('NoHeroes_token') || '').replace(/^Bearer\s+/i, '').trim();
+  const lista = document.getElementById('bibLista');
+  let itens = null, erroCarga = false;
 
-/* ==========================
-   DOWNLOAD — item digital (PDF)
-========================== */
-function getFilenameFromDisposition(disposition) {
-  if (!disposition) return null;
-
-  // tenta filename*=UTF-8''...
-  const mStar = disposition.match(/filename\*\s*=\s*UTF-8''([^;]+)/i);
-  if (mStar && mStar[1]) return decodeURIComponent(mStar[1].replace(/"/g, ''));
-
-  // tenta filename="..."
-  const m = disposition.match(/filename\s*=\s*"([^"]+)"/i);
-  if (m && m[1]) return m[1];
-
-  return null;
-}
-
-async function downloadDigitalItem(userItemId, fallbackName = 'download.pdf') {
-  if (!userItemId) {
-    alert('Item inválido para download.');
-    return;
-  }
-
-  try {
-    const res = await fetch(`${window.API_BASE}/inventory/${userItemId}/download`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${window.tokenJWT}`,
-      }
-    });
-
-    if (!res.ok) {
-      const err = await res.json().catch(() => null);
-      throw new Error(err?.message || 'Falha ao baixar arquivo.');
-    }
-
-    const cd = res.headers.get('content-disposition');
-    const filename = getFilenameFromDisposition(cd) || fallbackName;
-
-    const blob = await res.blob();
-    const url = window.URL.createObjectURL(blob);
-
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-
-    window.URL.revokeObjectURL(url);
-  } catch (e) {
-    console.error('download:', e);
-    alert(e.message || 'Erro ao baixar o arquivo.');
-  }
-}
-
-/* ==========================
-   CSS INJETADO (cartão, modal, skeleton)
-========================== */
-(function(){
-  if (document.getElementById('inv-css')) return;
-  const css = document.createElement('style');
-  css.id = 'inv-css';
-  css.textContent = `
-    .inv-slot{ position:relative; overflow:hidden; transition:transform .15s ease; }
-    .inv-slot img{ display:block; width:90%; height:90%; object-fit:cover; border-radius:8px; }
-    .inv-slot .count{ position:absolute; bottom:3px; right:4px; background:rgba(0,0,0,.72); font-size:.7em; padding:2px 4px; border-radius:4px }
-
-    .inv-card{
-      position:absolute; left:0; right:0; bottom:0;
-      transform:translateY(100%); opacity:0;
-      background:rgba(10,10,12,.96); border-top:1px solid #3a3a3a;
-      padding:10px 12px; font-size:.86rem; line-height:1.25; text-align:left;
-      box-shadow:0 -10px 22px rgba(0,0,0,.55);
-      transition:transform .14s ease, opacity .14s ease;
-    }
-    .inv-card .name{ display:block; font-weight:700; margin:0 0 2px 0 }
-    .inv-card .rarity{ opacity:.85; font-size:.78rem; margin:0 0 6px 0; display:inline-block }
-    .inv-card .mini-actions{ display:flex; gap:8px; margin-top:8px }
-    .inv-card .mini-actions a, .inv-card .mini-actions button{
-      border:1px solid #3a3a3a; background:#161616; color:#e6e6e6;
-      font-size:.78rem; padding:6px 8px; border-radius:8px; cursor:pointer;
-    }
-    @media (hover:hover){
-      .inv-slot:hover{ transform:scale(1.05); z-index:5 }
-      .inv-slot:hover .inv-card{ transform:translateY(0); opacity:1 }
-    }
-
-    /* MODAL */
-    .item-modal-backdrop{
-      position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
-      background:rgba(0,0,0,.8); z-index:999; backdrop-filter:blur(4px);
-    }
-    .item-modal{
-      position:relative; background:#111; border:1px solid #3a3a3a; border-radius:14px;
-      max-width:560px; width:min(96vw,560px); padding:18px;
-      box-shadow:0 24px 60px rgba(0,0,0,.6); text-align:center;
-    }
-    .item-modal .close-btn{
-      position:absolute; top:10px; right:12px; border:0; background:transparent; color:#fff;
-      font-size:1.1rem; cursor:pointer;
-    }
-    .item-modal .img-wrap{ display:flex; align-items:center; justify-content:center; margin-bottom:12px }
-    .item-modal img{ width:220px; height:220px; object-fit:contain; }
-    .item-modal h2{ margin:6px 0 2px 0; font-size:1.2rem }
-    .item-modal .rarity{ opacity:.85; font-style:italic; margin-bottom:8px }
-    .item-modal .desc{ color:#cfcfcf; margin:6px 0 10px 0; text-align:left }
-    .item-modal .owner{ background:#171717; padding:10px; border:1px solid #2c2c2c; border-radius:8px; color:#bbb; font-size:.92rem; text-align:left }
-    .item-modal .actions{ margin-top:12px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap }
-    .item-modal .actions a, .item-modal .actions button{
-      border:1px solid #3a3a3a; background:linear-gradient(90deg,#8b0000,#000); color:#e6e6e6;
-      padding:10px 14px; border-radius:12px; text-transform:uppercase; letter-spacing:.4px; cursor:pointer;
-    }
-
-    /* Skeleton */
-    .inv-skel{ width:100%; aspect-ratio:1; border-radius:8px; background:linear-gradient(90deg,#1a1a1a,#222,#1a1a1a);
-      animation: invSkel 1.2s infinite; border:2px solid #2e2e2e; }
-    @keyframes invSkel{ 0%{background-position:0%} 100%{background-position:200%} }
-  `;
-  document.head.appendChild(css);
-})();
-
-/* ==========================
-   RARIDADE / NORMALIZAÇÃO
-========================== */
-const RARITY_ORDER  = ['Comum','Raro','Épico','Lendário','Sombrio','Secreto'];
-const RARITY_COLORS = {
-  'Comum':    '#ffffff',
-  'Raro':     '#00ff88',
-  'Épico':    '#1e90ff',
-  'Lendário': '#facc15',
-  'Sombrio':  '#8a2be2'
-};
-function normalizeRarity(v){
-  if (!v) return 'Comum';
-  const s = String(v).normalize('NFD').replace(/\p{Diacritic}/gu,'').toLowerCase();
-  if (['comum','common'].includes(s)) return 'Comum';
-  if (['raro','rare'].includes(s)) return 'Raro';
-  if (['epico','épico','epic'].includes(s)) return 'Épico';
-  if (['lendario','lendário','legendary'].includes(s)) return 'Lendário';
-  if (['sombrio','shadow','dark'].includes(s)) return 'Sombrio';
-  if (['secreto','secret','rgb'].includes(s)) return 'Secreto';
-  return 'Comum';
-}
-
-/* ==========================
-   IMAGEM / URL
-========================== */
-const PLACEHOLDER = '/assets/images/placeholder.png';
-function resolveImageUrl(u){
-  if (!u) return PLACEHOLDER;
-  if (u.startsWith('http://') || u.startsWith('https://')) return u;
-  if (u.startsWith('noheroes.com.br')) return `https://${u}`;
-  if (u.startsWith('/uploads')) return `${window.API_BASE}${u}`;
-  if (u.startsWith('/')) return u;
-  return `https://${u}`;
-}
-function bindImgFallback(imgEl){
-  imgEl.addEventListener('error', () => { imgEl.src = PLACEHOLDER; }, { once:true });
-}
-
-/* ==========================
-   SLOT + CARTÃO
-========================== */
-function slotEl(raw){
-  const el = document.createElement('div');
-  el.className = 'inv-slot';
-  if (!raw) { el.classList.add('inv-skel'); return el; }
-
-  // normalização
-  const name  = raw.name ?? raw.titulo ?? raw.title ?? raw.cached_name ?? 'Item';
-  const desc  = raw.description ?? raw.descricao ?? '';
-  const img   = raw.imageUrl ?? raw.image_url ?? raw.image ?? '';
-  const qty   = raw.quantity ?? raw.qty ?? 1;
-  const rare  = normalizeRarity(raw.rarity ?? raw.raridade ?? 'Comum');
-  const isAct = (raw.isActive ?? raw.ativo ?? true);
-  const owner = raw.ownerDescription ?? raw.owner_desc ?? '';
-
-  if (isAct === false) { el.classList.add('inv-skel'); return el; }
-
-  // visual (cor pela raridade)
-  const color = RARITY_COLORS[rare] || '#777';
-  el.dataset.rarity = rare;
-
-  const src = resolveImageUrl(img);
-  el.innerHTML = `
-    <img alt="${name}">
-    <span class="count">${qty}</span>
-  `;
-  const imgEl = el.querySelector('img');
-  imgEl.src = src;
-  bindImgFallback(imgEl);
-
-  if (rare === 'Secreto') {
-    el.classList.add('raridade-secreto');
-  } else {
-    el.style.borderColor = color;
-    el.style.boxShadow = `0 0 10px ${color}80, inset 0 0 8px rgba(0,0,0,.6)`;
-  }
-
-  // Clique abre o modal imediatamente (desktop e mobile)
-  el.addEventListener('click', () => {
-    abrirModal({ raw, name, desc, rare, img: src, color, owner });
-  });
-
-  return el;
-}
-
-/* ==========================
-   Ações contextuais
-========================== */
-function makeQuickAction(item){
-  const id = item.id ?? item.item_id ?? '';
-  const arquivo = item.arquivo ? resolveImageUrl(item.arquivo) : null;
-  const cat = (item.category||'').toLowerCase();
-
-  // eBook: abre a página do e-book com query
-  if (cat === 'ebook' || cat === 'ebooks') {
-    return `<a href="ebooks.html?open=${encodeURIComponent(id)}" rel="noopener">Ler</a>`;
-  }
-  // Se tiver arquivo direto, disponibiliza "Abrir"
-  if (arquivo) {
-    return `<a href="${arquivo}" target="_blank" rel="noopener">Abrir</a>`;
-  }
-  // Fallback
-  return `<button type="button" data-open-modal>Abrir</button>`;
-}
-
-/* ==========================
-   MODAL — versão final
-========================== */
-(() => {
-  // Cria fade-in suave
-  const fadeIn = (el) => {
-    el.style.opacity = 0;
-    el.style.transition = 'opacity .18s ease';
-    requestAnimationFrame(() => {
-      el.style.opacity = 1;
-    });
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const nome = (i) => (NHI18n.lang === 'en' && i.name_en) || i.name || t('bib.item');
+  const imagem = (u) => {
+    if (!u) return '';
+    if (/^https?:\/\//.test(u)) return u;
+    if (u.startsWith('/uploads')) return API_BASE + u;
+    if (u.startsWith('/')) return u;
+    return 'https://' + u; // legado: "noheroes.com.br/assets/..."
   };
 
-  function escHandler(e) {
-    if (e.key === 'Escape') fecharModal();
+  async function api(path) {
+    const r = await fetch(API_BASE + path, { headers: { Authorization: 'Bearer ' + token } });
+    if (r.status === 401) { localStorage.removeItem('NoHeroes_token'); location.href = 'login.html?volta=inventario.html'; throw new Error(t('err.sessao')); }
+    return r;
   }
 
-  window.fecharModal = function fecharModal() {
-    document.querySelectorAll('.item-modal-backdrop').forEach(n => {
-      n.style.opacity = 0;
-      setTimeout(() => n.remove(), 150);
-    });
-    document.removeEventListener('keydown', escHandler);
-  };
-
-  window.abrirModal = function abrirModal({raw, name, desc, rare, img, color, owner}) {
-    // Garante que não existe modal aberto
-    fecharModal();
-
-    const m = document.createElement('div');
-    m.className = 'item-modal-backdrop';
-    m.innerHTML = `
-      <div class="item-modal" role="dialog" aria-modal="true">
-        <button class="close-btn" aria-label="Fechar">✖</button>
-        <div class="img-wrap"><img src="${img}" alt="${name}"></div>
-        <h2 style="color:${color}">${name}</h2>
-        <div class="rarity">${rare}</div>
-        <p class="desc">${desc || 'Sem descrição.'}</p>
-        ${owner ? `<div class="owner"><strong>Descrição do dono:</strong><br>${owner}</div>` : ''}
-                <div class="actions">
-          ${
-            (raw?.permiteDownload === true && raw?.userItemId)
-              ? `<button type="button" class="btn-download" data-download>Baixar</button>`
-              : ``
-          }
-          <button type="button" class="btn-fechar">Fechar</button>
+  function desenhar() {
+    if (erroCarga) {
+      lista.innerHTML = `<div class="nh-vazio" style="grid-column:1/-1"><p style="margin-bottom:12px">${esc(t('bib.erro'))}</p>
+        <button type="button" class="nh-btn nh-btn-sec" id="bibTentar">${esc(t('bib.tentar'))}</button></div>`;
+      document.getElementById('bibTentar').onclick = carregar;
+      return;
+    }
+    if (!itens) return;
+    if (!itens.length) {
+      lista.innerHTML = `<div class="nh-vazio" style="grid-column:1/-1"><p style="margin-bottom:12px">${esc(t('bib.vazio'))}</p>
+        <a href="store.html" class="nh-btn nh-btn-pri">${esc(t('bib.ir_loja'))}</a></div>`;
+      return;
+    }
+    lista.innerHTML = itens.map((i, n) => {
+      const img = imagem(i.imageUrl);
+      const quando = i.acquiredAt ? t('bib.comprado_em', { data: NHI18n.data(i.acquiredAt, { dateStyle: 'medium' }) }) : '';
+      const acao = i.permiteDownload
+        ? `<button type="button" class="nh-btn nh-btn-pri" data-baixar="${n}">${esc(t('bib.baixar'))}</button>`
+        : `<a href="profile.html#compras" class="nh-btn nh-btn-sec">${esc(t('bib.acompanhar'))}</a>`;
+      return `<article class="bib-item">
+        <div class="bib-capa">${img ? `<img src="${esc(img)}" alt="" loading="lazy" onerror="this.remove()">` : ''}</div>
+        <div>
+          <p class="bib-nome">${esc(nome(i))}</p>
+          <p class="bib-meta">${esc(i.permiteDownload ? t('bib.digital') : t('bib.fisico'))}${quando ? ' · ' + esc(quando) : ''}</p>
+          <div class="bib-acoes">${acao}</div>
+          <p class="bib-msg" data-msg="${n}" hidden></p>
         </div>
-      </div>
-    `;
-    document.body.appendChild(m);
+      </article>`;
+    }).join('');
+  }
 
-    fadeIn(m);
-
-    // Fechar clicando no backdrop, no X, ou no botão "Fechar"
-    m.addEventListener('click', (e) => {
-      if (e.target === m || e.target.closest('.close-btn') || e.target.closest('.btn-fechar')) {
-        fecharModal();
-      }
-    });
-
-    // Baixar (se existir)
-    const btnDl = m.querySelector('[data-download]');
-    if (btnDl) {
-      btnDl.addEventListener('click', async () => {
-        btnDl.disabled = true;
-        btnDl.textContent = 'Baixando...';
-
-        // nome sugerido (pode ser alterado)
-        const safeName = `${(name || 'ebook').replace(/[\\/:*?"<>|]/g, '')}.pdf`;
-
-        await downloadDigitalItem(raw.userItemId, safeName);
-
-        btnDl.disabled = false;
-        btnDl.textContent = 'Baixar';
-      });
+  lista.addEventListener('click', async (e) => {
+    const b = e.target.closest('[data-baixar]');
+    if (!b) return;
+    const i = itens[+b.dataset.baixar];
+    const msg = lista.querySelector(`[data-msg="${b.dataset.baixar}"]`);
+    msg.hidden = true;
+    b.disabled = true; b.textContent = t('bib.baixando');
+    try {
+      const r = await api('/inventory/' + i.userItemId + '/download');
+      if (!r.ok) throw new Error(NHI18n.erro(await r.json().catch(() => null), 'bib.erro_baixar'));
+      const cd = r.headers.get('content-disposition') || '';
+      const m = cd.match(/filename\*\s*=\s*UTF-8''([^;]+)/i) || cd.match(/filename\s*=\s*"([^"]+)"/i);
+      const arquivo = m ? decodeURIComponent(m[1].replace(/"/g, '')) : (i.name || 'ebook').replace(/[\\/:*?"<>|]/g, '') + '.pdf';
+      const url = URL.createObjectURL(await r.blob());
+      const a = Object.assign(document.createElement('a'), { href: url, download: arquivo });
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    } catch (err) {
+      msg.textContent = err.message || t('bib.erro_baixar');
+      msg.hidden = false;
+    } finally {
+      b.disabled = false; b.textContent = t('bib.baixar');
     }
+  });
 
-    // Fechar com ESC
-    document.addEventListener('keydown', escHandler);
-  };
+  async function carregar() {
+    erroCarga = false; itens = null;
+    lista.innerHTML = '<div class="bib-skel"></div><div class="bib-skel"></div>';
+    try {
+      const r = await api('/inventory');
+      const j = await r.json().catch(() => null);
+      if (!r.ok || !j) throw new Error();
+      itens = (Array.isArray(j.items) ? j.items : []).filter((i) => i.isActive !== false);
+    } catch (_) { erroCarga = true; }
+    desenhar();
+  }
+
+  document.addEventListener('nh:lang', desenhar);
+  carregar();
 })();
-
-/* ==========================
-   RENDER + SKELETON
-========================== */
-function skeletonGrid(){
-  const grid = document.getElementById('inv-grid');
-  grid.innerHTML = '';
-  for(let i=0;i<36;i++){ // primeira dobra com skeleton
-    const d = document.createElement('div');
-    d.className='inv-skel';
-    grid.appendChild(d);
-  }
-}
-function renderInventory(itemsRaw){
-  const grid = document.getElementById('inv-grid');
-  grid.innerHTML = '';
-
-  const MAX_SLOTS = 200;
-  const FREE_SLOTS = 100;
-
-  const fill = Math.min(Array.isArray(itemsRaw) ? itemsRaw.length : 0, FREE_SLOTS);
-  for (let i=0;i<fill;i++) grid.appendChild(slotEl(itemsRaw[i]));
-  for (let i=fill;i<FREE_SLOTS;i++) grid.appendChild(slotEl(null));
-
-  for (let i=FREE_SLOTS;i<MAX_SLOTS;i++){
-    const l = document.createElement('div');
-    l.className = 'inv-slot locked';
-    l.title = 'Slot bloqueado';
-    grid.appendChild(l);
-  }
-}
-
-/* ==========================
-   LOAD INVENTÁRIO
-========================== */
-async function carregarInventario(){
-  try{
-    skeletonGrid();
-    const res = await api('/inventory');
-    const json = await res.json();
-
-    const items = Array.isArray(json?.items) ? json.items
-                : Array.isArray(json)        ? json
-                : [];
-
-    // filtra ativos, normaliza e ordena por raridade
-    const ativos = items.filter(i => (i.isActive ?? i.ativo ?? true) !== false);
-    ativos.sort((a,b)=>{
-      const ra = normalizeRarity(a.rarity ?? a.raridade);
-      const rb = normalizeRarity(b.rarity ?? b.raridade);
-      const ia = RARITY_ORDER.indexOf(ra); const ib = RARITY_ORDER.indexOf(rb);
-      return (ia>=0?ia:999) - (ib>=0?ib:999);
-    });
-
-    renderInventory(ativos);
-  }catch(e){
-    console.error('inventário:', e);
-    renderInventory([]);
-  }
-}
-
-/* ==========================
-   AJUDA
-========================== */
-const $bd   = document.getElementById('inv-help-backdrop');
-const $open = document.getElementById('open-help');
-const $close= document.getElementById('close-help');
-function openHelp(){ $bd.hidden=false; document.body.classList.add('modal-open'); }
-function closeHelp(){ $bd.hidden=true; document.body.classList.remove('modal-open'); }
-$open?.addEventListener('click', openHelp);
-$close?.addEventListener('click', closeHelp);
-$bd?.addEventListener('click', e=>{ if(e.target === $bd) closeHelp(); });
-document.addEventListener('keydown', e=>{ if(e.key==='Escape' && !$bd.hidden) closeHelp(); });
-if(!localStorage.getItem('nh_inv_help_seen')){ openHelp(); localStorage.setItem('nh_inv_help_seen','1'); }
-
-/* ==========================
-   BOOT
-========================== */
-document.addEventListener('DOMContentLoaded', ()=>{
-  carregarInventario();
-});
-
-/* Ajusta o espaço entre o HUD e o conteúdo pra altura real do header
-   (evita vão grande demais ou pequeno demais quando o HUD quebra linha) */
-function syncHudGap(){
-  const hud = document.querySelector('.hud');
-  const main = document.querySelector('.main');
-  if (!hud || !main) return;
-  main.style.paddingTop = (hud.offsetHeight + 16) + 'px';
-}
-window.addEventListener('load', syncHudGap);
-window.addEventListener('resize', syncHudGap);
-
-/* Brasas: agora no componente compartilhado <nh-background> (noheroes-ui.js) */
 </script>
 </body>
 </html>
