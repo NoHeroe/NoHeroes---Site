@@ -88,19 +88,27 @@ body{background:var(--bg);color:var(--text);font-family:var(--fb);overflow-x:hid
 .main{padding:72px 20px 40px;max-width:1100px;margin:0 auto}
 @media(max-width:640px){.main{padding:66px 14px 80px}}
 
-/* ── MOBILE NAV ── */
-.mob-nav{
-  display:none;position:fixed;bottom:0;left:0;right:0;height:60px;
-  background:var(--s1);border-top:1px solid var(--border);z-index:50;
-  padding-bottom:env(safe-area-inset-bottom);
+/* ── ABAS NO MOBILE ──
+   A gaveta (☰) tem todos os destinos, mas fica escondida. No mobile, todas as abas aparecem
+   também como chips no topo do conteúdo, quebrando linha (nada depende de rolar para o lado).
+   Os chips são gerados da própria gaveta no boot: uma fonte só. */
+.tabstrip{display:none}
+@media(max-width:640px){
+  .tabstrip{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 16px}
+  .tabstrip button{min-height:36px;padding:0 11px;border-radius:99px;border:1px solid var(--border2);background:var(--s2);
+    color:var(--muted);font-size:11px;font-weight:700;font-family:var(--fb);white-space:nowrap;cursor:pointer}
+  .tabstrip button.active{color:#fff;border-color:rgba(143,79,255,.6);background:rgba(143,79,255,.18)}
 }
-@media(max-width:640px){.mob-nav{display:flex}}
-.mob-nav-items{display:flex;justify-content:space-around;align-items:center;height:100%;padding:0 8px}
-.mob-btn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 10px;border-radius:8px;background:none;border:none;cursor:pointer;color:var(--muted);transition:all .2s;flex:1}
-.mob-btn.active{color:var(--accent)}
-.mob-btn .mi{font-size:18px}
-.mob-btn .ml{font-size:8px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;font-family:var(--fb)}
 
+/* ── EDITOR DE VARIANTES ── */
+.var-row{display:grid;grid-template-columns:1fr 1.4fr 1fr 1fr 1fr 1fr auto auto;gap:6px;align-items:center;margin-bottom:6px}
+.var-row.var-off{opacity:.45}
+.var-ativa{display:flex;align-items:center;gap:4px;font-size:11px;white-space:nowrap}
+@media(max-width:640px){
+  .var-row{grid-template-columns:1fr 1fr;padding:8px;border:1px solid var(--border2);border-radius:10px}
+  .var-row [data-k="label"]{grid-column:1/-1}
+}
+.filtros{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:14px}
 /* ── TABS ── */
 .tab{display:none}
 .tab.active{display:block;animation:fadeUp .3s ease-out}
@@ -210,6 +218,7 @@ textarea.input{resize:vertical;min-height:80px}
 .toast.info{background:rgba(143,79,255,.15);border:1px solid rgba(143,79,255,.4)}
 
 /* CONFIRM */
+#confirm-modal{z-index:210} /* abre por cima do modal que a chamou (pedido, produto...) */
 #confirm-modal .modal-box{max-width:380px}
 
 /* MOBILE RESPONSIVE */
@@ -222,7 +231,6 @@ textarea.input{resize:vertical;min-height:80px}
      sai a duplicata. Isso ainda devolve ~140px de altura util (60px da barra + 80px de
      padding que existiam so para reserva-la), que era metade do "enquadramento ruim".
      A outra metade eram os alvos de toque do topo: medidos em 35 / 35 / 24 / 22px. */
-  .mob-nav{display:none}
   .main{padding-bottom:24px}
   .topbar{padding:0 12px}
   .topbar-right{gap:6px}
@@ -282,6 +290,9 @@ textarea.input{resize:vertical;min-height:80px}
   </div>
 </header>
 
+<!-- Abas no mobile (preenchida no boot a partir da gaveta) -->
+<nav class="tabstrip" id="tabstrip" aria-label="Seções do painel"></nav>
+
 <!-- ── SIDEBAR OVERLAY ── -->
 <div id="sidebar-overlay" onclick="closeSidebar()"></div>
 
@@ -300,7 +311,9 @@ textarea.input{resize:vertical;min-height:80px}
 
   <span class="nav-section">Plataforma</span>
   <button class="nav-item" onclick="goTab('users')" id="nav-users"><span class="ni">👥</span>Usuários</button>
-  <button class="nav-item" onclick="goTab('shop')" id="nav-shop"><span class="ni">🛒</span>Loja</button>
+  <button class="nav-item" onclick="goTab('shop')" id="nav-shop"><span class="ni">🛒</span>Produtos</button>
+  <button class="nav-item" onclick="goTab('orders')" id="nav-orders"><span class="ni">📦</span>Pedidos</button>
+  <button class="nav-item" onclick="goTab('shipping')" id="nav-shipping"><span class="ni">🚚</span>Frete</button>
   <button class="nav-item" onclick="goTab('finance')" id="nav-finance"><span class="ni">💰</span>Financeiro</button>
   <button class="nav-item" onclick="goTab('goals')" id="nav-goals"><span class="ni">🎯</span>Metas</button>
   <button class="nav-item" onclick="goTab('newsletter')" id="nav-newsletter"><span class="ni">📧</span>Newsletter</button>
@@ -372,35 +385,83 @@ textarea.input{resize:vertical;min-height:80px}
     </div>
   </div>
 
-  <!-- LOJA -->
+  <!-- PRODUTOS -->
   <div id="tab-shop" class="tab">
     <div class="section-header">
-      <div><div class="section-title">Loja</div><div class="section-sub">Produtos e pedidos da plataforma</div></div>
+      <div><div class="section-title">Produtos</div><div class="section-sub">Digitais e físicos, com variantes</div></div>
       <button class="btn btn-primary btn-sm" onclick="openProductModal()">+ Novo Produto</button>
     </div>
-    <div style="display:flex;gap:8px;margin-bottom:16px;">
-      <button class="btn btn-ghost btn-sm" id="shop-tab-products" onclick="showShopTab('products')" style="border-color:rgba(143,79,255,.4);color:var(--accent)">Produtos</button>
-      <button class="btn btn-ghost btn-sm" id="shop-tab-orders" onclick="showShopTab('orders')">Pedidos</button>
-    </div>
-    <div id="shop-products">
-      <div class="search-row"><input class="input" id="product-search" placeholder="Buscar produto..." oninput="filterProducts()"></div>
-      <div class="overflow-x">
-        <table class="tbl">
-          <thead><tr><th>ID</th><th>Nome</th><th>Tipo</th><th>Preço R$</th><th>Estoque</th><th>Status</th><th>Ações</th></tr></thead>
-          <tbody id="tb-products"><tr><td colspan="7" style="text-align:center;color:var(--muted);padding:20px">Carregando...</td></tr></tbody>
-        </table>
-      </div>
-    </div>
-    <div id="shop-orders" style="display:none">
-      <div class="overflow-x">
-        <table class="tbl">
-          <thead><tr><th>ID</th><th>Usuário</th><th>Total</th><th>Status</th><th>Data</th></tr></thead>
-          <tbody id="tb-orders"><tr><td colspan="5" style="text-align:center;color:var(--muted);padding:20px">Carregando...</td></tr></tbody>
-        </table>
-      </div>
+    <div class="search-row"><input class="input" id="product-search" placeholder="Buscar produto..." oninput="filterProducts()" aria-label="Buscar produto"></div>
+    <div class="overflow-x">
+      <table class="tbl">
+        <thead><tr><th>ID</th><th>Nome</th><th>Tipo</th><th>Preço</th><th>Estoque</th><th>Status</th><th>Ações</th></tr></thead>
+        <tbody id="tb-products"><tr><td colspan="7" style="text-align:center;color:var(--muted);padding:20px">Carregando...</td></tr></tbody>
+      </table>
     </div>
   </div>
 
+  <!-- PEDIDOS -->
+  <div id="tab-orders" class="tab">
+    <div class="section-header">
+      <div><div class="section-title">Pedidos</div><div class="section-sub">Pagamento, entrega e histórico · toque num pedido para abrir</div></div>
+      <button class="btn btn-ghost btn-sm" onclick="loadOrders()">↻ Atualizar</button>
+    </div>
+    <div class="filtros">
+      <select class="input" id="of-status" onchange="buscarPedidos()" aria-label="Pagamento">
+        <option value="">Pagamento: todos</option>
+        <option value="pending">Aguardando pagamento</option>
+        <option value="awaiting_manual_confirmation">Pix em verificação</option>
+        <option value="approved">Pago</option>
+        <option value="needs_attention">Pago — em análise</option>
+        <option value="rejected">Recusado</option>
+        <option value="cancelled">Cancelado</option>
+        <option value="refunded">Estornado</option>
+        <option value="charged_back">Contestado</option>
+      </select>
+      <select class="input" id="of-fulfillment" onchange="buscarPedidos()" aria-label="Entrega">
+        <option value="">Entrega: todas</option>
+        <option value="pending">A preparar</option>
+        <option value="preparing">Em preparação</option>
+        <option value="shipped">Enviado</option>
+        <option value="delivered">Entregue</option>
+        <option value="returned">Devolvido</option>
+        <option value="na">Só digital</option>
+      </select>
+      <select class="input" id="of-provider" onchange="buscarPedidos()" aria-label="Meio de pagamento">
+        <option value="">Meio: todos</option>
+        <option value="mercadopago">Mercado Pago</option>
+        <option value="pix_direto">Pix direto</option>
+      </select>
+      <input class="input" id="of-from" type="date" onchange="buscarPedidos()" aria-label="Criado a partir de">
+      <input class="input" id="of-to" type="date" onchange="buscarPedidos()" aria-label="Criado até">
+      <input class="input" id="of-q" placeholder="Pedido, rastreio, e-mail… (Enter)" onkeydown="if(event.key==='Enter')buscarPedidos()" aria-label="Buscar pedido">
+    </div>
+    <div class="overflow-x">
+      <table class="tbl">
+        <thead><tr><th>Pedido</th><th>Cliente</th><th>Total</th><th>Pagamento</th><th>Entrega</th><th>Data</th></tr></thead>
+        <tbody id="tb-orders"><tr><td colspan="6" style="text-align:center;color:var(--muted);padding:20px">Carregando...</td></tr></tbody>
+      </table>
+    </div>
+    <div class="log-pagination">
+      <button class="btn btn-ghost btn-sm" id="orders-prev" onclick="paginaPedidos(-1)">← Anterior</button>
+      <span id="orders-page-info" style="color:var(--muted)">—</span>
+      <button class="btn btn-ghost btn-sm" id="orders-next" onclick="paginaPedidos(1)">Próxima →</button>
+    </div>
+  </div>
+
+  <!-- FRETE -->
+  <div id="tab-shipping" class="tab">
+    <div class="section-header">
+      <div><div class="section-title">Frete</div><div class="section-sub">Tarifas manuais por UF ou faixa de CEP + faixa de peso. Todas as que casam com o destino aparecem no checkout.</div></div>
+      <button class="btn btn-primary btn-sm" onclick="openRateModal()">+ Nova tarifa</button>
+    </div>
+    <div class="overflow-x">
+      <table class="tbl">
+        <thead><tr><th>Serviço</th><th>Destino</th><th>Peso</th><th>Preço</th><th>Prazo</th><th>Status</th><th>Ações</th></tr></thead>
+        <tbody id="tb-rates"><tr><td colspan="7" style="text-align:center;color:var(--muted);padding:20px">Carregando...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
   <!-- METAS -->
   <div id="tab-goals" class="tab">
     <div class="section-header">
@@ -524,55 +585,39 @@ textarea.input{resize:vertical;min-height:80px}
     </div>
   </div>
 
-</main>
-
-<!-- MOBILE NAV -->
-<nav class="mob-nav">
-  <div class="mob-nav-items">
-    <button class="mob-btn active" onclick="goTab('dashboard')" id="mob-dashboard"><span class="mi">📊</span><span class="ml">Painel</span></button>
-    <button class="mob-btn" onclick="goTab('users')" id="mob-users"><span class="mi">👥</span><span class="ml">Users</span></button>
-    <button class="mob-btn" onclick="goTab('shop')" id="mob-shop"><span class="mi">🛒</span><span class="ml">Loja</span></button>
-    <button class="mob-btn" onclick="goTab('finance')" id="mob-finance"><span class="mi">💰</span><span class="ml">Financeiro</span></button>
-    <button class="mob-btn" onclick="goTab('logs')" id="mob-logs"><span class="mi">🧾</span><span class="ml">Logs</span></button>
-  </div>
-</nav>
-
-<!-- MODALS -->
-  <!-- ── FINANCEIRO ── -->
+  <!-- FINANCEIRO -->
   <div id="tab-finance" class="tab">
     <div class="section-header">
       <div>
         <div class="section-title">Financeiro</div>
-        <div class="section-sub">Receita consolidada</div>
+        <div class="section-sub">Pedidos pagos (Mercado Pago e Pix) e doações no período</div>
       </div>
       <div style="display:flex;gap:8px;align-items:center;">
-        <select class="input" id="fin-period" style="width:auto;" onchange="loadAdminFinance()">
-          <!-- preenchido via JS -->
-        </select>
+        <select class="input" id="fin-period" style="width:auto;" onchange="loadAdminFinance()" aria-label="Período"></select>
         <button class="btn btn-ghost btn-sm" onclick="loadAdminFinance()">↻</button>
-        
       </div>
     </div>
-
-    <!-- KPIs -->
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:24px;">
-      <div class="card"><div class="kpi-label">Receita Total</div><div class="kpi-value" id="fin-total" style="color:var(--gold);">—</div><div class="kpi-sub">No período</div></div>
-      <div class="card"><div class="kpi-label">Pedidos</div><div class="kpi-value" id="fin-orders" style="font-size:28px;">—</div><div class="kpi-sub">Aprovados</div></div>
+    <div class="kpi-grid">
+      <div class="kpi"><div class="kpi-label">Receita</div><div class="kpi-value" id="fin-total" style="color:var(--gold);">—</div><div class="kpi-sub" id="fin-orders-sub">—</div></div>
+      <div class="kpi"><div class="kpi-label">Produtos</div><div class="kpi-value" id="fin-products">—</div><div class="kpi-sub">Sem o frete</div></div>
+      <div class="kpi"><div class="kpi-label">Frete</div><div class="kpi-value" id="fin-shipping">—</div><div class="kpi-sub">Cobrado nos pedidos</div></div>
+      <div class="kpi"><div class="kpi-label">Doações</div><div class="kpi-value" id="fin-donations">—</div><div class="kpi-sub" id="fin-donations-sub">—</div></div>
+      <div class="kpi"><div class="kpi-label">Aguardando</div><div class="kpi-value" id="fin-awaiting">—</div><div class="kpi-sub">Pedidos sem pagamento</div></div>
+      <div class="kpi"><div class="kpi-label">Estornos</div><div class="kpi-value" id="fin-refunded">—</div><div class="kpi-sub">Estornados ou contestados</div></div>
     </div>
-
-    <!-- Por método -->
-    <div class="card" style="margin-bottom:20px;">
-      <div style="font-size:13px;font-weight:700;margin-bottom:14px;">Por Método de Pagamento</div>
+    <div class="card">
+      <div style="font-size:13px;font-weight:700;margin-bottom:14px;">Por meio de pagamento</div>
       <div class="overflow-x">
         <table class="tbl">
-          <thead><tr><th>Método</th><th>Pedidos</th><th>Receita</th></tr></thead>
+          <thead><tr><th>Meio</th><th>Pedidos</th><th>Receita</th></tr></thead>
           <tbody id="fin-by-method"><tr><td colspan="3" style="text-align:center;color:var(--muted);padding:20px">Carregando...</td></tr></tbody>
         </table>
       </div>
     </div>
   </div>
+</main>
 
-
+<!-- MODALS -->
 <div class="modal-backdrop" id="confirm-modal">
   <div class="modal-box" style="max-width:360px;">
     <div class="modal-title" style="-webkit-text-fill-color:var(--red);background:none;color:var(--red);">⚠️ Confirmar</div>
@@ -606,33 +651,57 @@ textarea.input{resize:vertical;min-height:80px}
 </div>
 
 <div class="modal-backdrop" id="product-modal">
-  <div class="modal-box" style="max-width:620px;">
+  <div class="modal-box" style="max-width:780px;width:min(780px,96vw)">
     <div class="modal-title" id="product-modal-title">Novo Produto</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;" class="grid-2">
-
-      <div class="field" style="grid-column:1/-1"><label class="label">Nome</label><input class="input" id="pm-name" placeholder="Nome do produto"></div>
-
-      <!-- Tipo — controla campos dinâmicos -->
-      <div class="field" style="grid-column:1/-1">
-        <label class="label">Tipo de Produto</label>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 12px;" class="grid-2">
+      <div class="field" style="grid-column:1/-1"><label class="label" for="pm-name">Nome</label><input class="input" id="pm-name" placeholder="Nome do produto"></div>
+      <div class="field">
+        <label class="label" for="pm-type">Tipo</label>
         <select class="input" id="pm-type">
-          <option value="item">Item (inventário)</option>
+          <option value="item">Item</option>
           <option value="ebook">E-book</option>
-          <option value="book">Livro (PDF)</option>
+          <option value="book">Livro</option>
         </select>
       </div>
+      <div class="field">
+        <label class="label" for="pm-fulfillment">Entrega</label>
+        <select class="input" id="pm-fulfillment" onchange="atualizarCamposFisico()">
+          <option value="digital">Digital</option>
+          <option value="physical">Físico (envio)</option>
+        </select>
+      </div>
+      <div class="field"><label class="label" for="pm-price-real">Preço R$</label><input class="input" id="pm-price-real" type="number" step=".01" min="0"></div>
+      <div class="field"><label class="label" for="pm-discount">Preço promocional R$ (opcional)</label><input class="input" id="pm-discount" type="number" step=".01" min="0"></div>
+      <div class="field"><label class="label" for="pm-stock">Estoque (vazio = ilimitado; com variantes vale o delas)</label><input class="input" id="pm-stock" type="number" min="0"></div>
+      <div class="field"><label class="label" for="pm-category">Categoria</label><input class="input" id="pm-category" placeholder="Ebooks, Camisas..."></div>
+      <div class="field"><label class="label" for="pm-rarity">Raridade</label><input class="input" id="pm-rarity" placeholder="Comum, Épico..."></div>
+      <div class="field"><label class="label" for="pm-image">URL da imagem</label><input class="input" id="pm-image" placeholder="https://..."></div>
+      <div class="field"><label class="label" for="pm-details">Página "+ Informações" (detailsUrl)</label><input class="input" id="pm-details" placeholder="/ebooks.html"></div>
+      <div class="field"><label class="label" for="pm-marketplace">Link do Mercado Livre</label><input class="input" id="pm-marketplace" placeholder="https://produto.mercadolivre.com.br/..."></div>
+      <div class="field" style="grid-column:1/-1"><label class="label" for="pm-description">Descrição</label><textarea class="input" id="pm-description" rows="3"></textarea></div>
 
-      <div class="field"><label class="label">Preço R$</label><input class="input" id="pm-price-real" type="number" step=".01" min="0"></div>
+      <!-- Digital -->
+      <div id="pm-digital-box" style="grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:0 12px" class="grid-2">
+        <div class="field"><label class="label" for="pm-file-key">Arquivo digital (digital_file_key)</label><input class="input" id="pm-file-key" placeholder="ebook-tudo-esta-conectado"></div>
+        <div class="field" style="display:flex;align-items:flex-end"><label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;padding-bottom:10px"><input type="checkbox" id="pm-download"> Permite download</label></div>
+      </div>
 
+      <!-- Físico -->
+      <div id="pm-fisico-box" style="grid-column:1/-1;display:none;grid-template-columns:repeat(4,1fr);gap:0 12px" class="grid-2">
+        <div class="field"><label class="label" for="pm-weight">Peso (g) *</label><input class="input" id="pm-weight" type="number" min="1"></div>
+        <div class="field"><label class="label" for="pm-length">Compr. (cm)</label><input class="input" id="pm-length" type="number" step=".1" min="0"></div>
+        <div class="field"><label class="label" for="pm-width">Largura (cm)</label><input class="input" id="pm-width" type="number" step=".1" min="0"></div>
+        <div class="field"><label class="label" for="pm-height">Altura (cm)</label><input class="input" id="pm-height" type="number" step=".1" min="0"></div>
+      </div>
 
-      <div class="field"><label class="label">Estoque (vazio = ilimitado)</label><input class="input" id="pm-stock" type="number" min="0"></div>
-      <div class="field"><label class="label">Categoria</label><input class="input" id="pm-category" placeholder="ebook, passe, avatar..."></div>
-      <div class="field"><label class="label">Raridade</label><input class="input" id="pm-rarity" placeholder="Comum, Épico, Lendário..."></div>
-      <div class="field"><label class="label">URL da Imagem</label><input class="input" id="pm-image" placeholder="https://..."></div>
-      <div class="field" style="grid-column:1/-1"><label class="label">Descrição</label><textarea class="input" id="pm-description" rows="3"></textarea></div>
-      <div class="field" style="grid-column:1/-1;display:flex;gap:16px;flex-wrap:wrap;">
-        <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;"><input type="checkbox" id="pm-active" checked> Ativo</label>
-        <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;"><input type="checkbox" id="pm-consumable"> Consumível</label>
+      <div class="field" style="grid-column:1/-1">
+        <span class="label">Variantes (tamanho, cor… cada uma com SKU, preço e estoque próprios)</span>
+        <div id="pm-variants"></div>
+        <button type="button" class="btn btn-ghost btn-sm" onclick="addVariante()">+ Variante</button>
+        <p style="font-size:10px;color:var(--muted);margin-top:6px">Variante já salva não é apagada: desmarque "Ativa" (pedidos antigos apontam para ela). Preço próprio vazio = preço do produto.</p>
+      </div>
+      <div class="field" style="grid-column:1/-1">
+        <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;"><input type="checkbox" id="pm-active" checked> Ativo (aparece na loja)</label>
       </div>
     </div>
     <div class="modal-footer">
@@ -642,13 +711,50 @@ textarea.input{resize:vertical;min-height:80px}
   </div>
 </div>
 
-<script>
+<div class="modal-backdrop" id="order-modal">
+  <div class="modal-box" style="max-width:640px">
+    <div class="modal-title" id="order-modal-title">Pedido</div>
+    <div id="order-modal-body"></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('order-modal')">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="rate-modal">
+  <div class="modal-box">
+    <div class="modal-title" id="rate-modal-title">Nova tarifa</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 12px;" class="grid-2">
+      <div class="field"><label class="label" for="rm-service">Serviço *</label><input class="input" id="rm-service" placeholder="PAC, Sedex, Retirada..."></div>
+      <div class="field"><label class="label" for="rm-carrier">Transportadora</label><input class="input" id="rm-carrier" placeholder="Correios"></div>
+      <div class="field"><label class="label" for="rm-kind">Tipo</label>
+        <select class="input" id="rm-kind"><option value="rate">Envio</option><option value="pickup">Retirada (vale para todo CEP)</option></select></div>
+      <div class="field"><label class="label" for="rm-uf">UF (vazio = qualquer)</label><input class="input" id="rm-uf" maxlength="2" placeholder="SP"></div>
+      <div class="field"><label class="label" for="rm-cep-start">CEP inicial</label><input class="input" id="rm-cep-start" inputmode="numeric" placeholder="01000000"></div>
+      <div class="field"><label class="label" for="rm-cep-end">CEP final</label><input class="input" id="rm-cep-end" inputmode="numeric" placeholder="19999999"></div>
+      <div class="field"><label class="label" for="rm-wmin">Peso mín. (g)</label><input class="input" id="rm-wmin" type="number" min="0"></div>
+      <div class="field"><label class="label" for="rm-wmax">Peso máx. (g, vazio = ∞)</label><input class="input" id="rm-wmax" type="number" min="0"></div>
+      <div class="field"><label class="label" for="rm-price">Preço R$</label><input class="input" id="rm-price" type="number" step=".01" min="0"></div>
+      <div class="field"><label class="label" for="rm-sort">Ordem</label><input class="input" id="rm-sort" type="number" min="0"></div>
+      <div class="field"><label class="label" for="rm-dmin">Prazo mín. (dias úteis)</label><input class="input" id="rm-dmin" type="number" min="0"></div>
+      <div class="field"><label class="label" for="rm-dmax">Prazo máx. (dias úteis)</label><input class="input" id="rm-dmax" type="number" min="0"></div>
+      <div class="field" style="grid-column:1/-1"><label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;"><input type="checkbox" id="rm-active" checked> Ativa</label></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('rate-modal')">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveRate()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/pedidos.js"></script><script>
 /* ═══════════════════════════════════════════════════════════
    NOHEROES ADMIN — v2.0
-   API: https://api.noheroes.com.br
+   API: window.API_BASE (assets/js/config.js)
 ═══════════════════════════════════════════════════════════ */
 
-const API_BASE = 'https://api.noheroes.com.br';
+const API_BASE = window.API_BASE; // assets/js/config.js
 const TIPOS_PRODUTO = ['item', 'ebook', 'book'];
 
 /* ─── AUTH ── */
@@ -665,7 +771,9 @@ const S = {
   products: [],
   editUserId: null,
   editProductId: null,
-  editProductType: null
+  editProductType: null,
+  rates: [],
+  editRateId: null
 };
 
 /* Escape de HTML — todo conteúdo de USUÁRIO renderizado por innerHTML passa aqui
@@ -697,7 +805,7 @@ function toast(msg, type='info') {
   const t = document.createElement('div');
   t.className = `toast ${type}`;
   const icons = {success:'✓',error:'✕',info:'ℹ'};
-  t.innerHTML = `<span>${icons[type]||'•'}</span><span>${msg}</span>`;
+  t.innerHTML = `<span>${icons[type]||'•'}</span><span>${escHtml(msg)}</span>`;
   w.appendChild(t);
   setTimeout(()=>t.classList.add('show'),10);
   setTimeout(()=>{ t.classList.remove('show'); setTimeout(()=>t.remove(),350); },3500);
@@ -712,31 +820,48 @@ const initials = s => (s||'?').split(' ').map(w=>w[0]).join('').slice(0,2).toUpp
 function statusBadge(s) {
   const map = {
     approved:'badge-green', published:'badge-green', active:'badge-green', confirmed:'badge-green',
-    pending:'badge-yellow', draft:'badge-muted', rascunho:'badge-muted',
+    pending:'badge-yellow', draft:'badge-muted', rascunho:'badge-muted', inactive:'badge-muted',
     rejected:'badge-red', suspended:'badge-red', banido:'badge-red',
     premium:'badge-purple'
   };
-  return `<span class="badge ${map[s]||'badge-muted'}">${s||'—'}</span>`;
+  const rotulo = { active:'Ativo', inactive:'Inativo' }[s] || s;
+  return `<span class="badge ${map[s]||'badge-muted'}">${escHtml(rotulo||'—')}</span>`;
 }
 
 /* ─── NAV ── */
 function goTab(id) {
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.nav-item,.mob-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.nav-item,#tabstrip button').forEach(b=>b.classList.remove('active'));
   document.getElementById(`tab-${id}`)?.classList.add('active');
   document.getElementById(`nav-${id}`)?.classList.add('active');
-  document.getElementById(`mob-${id}`)?.classList.add('active');
+  const chip=document.querySelector(`#tabstrip [data-tab="${id}"]`);
+  if(chip) chip.classList.add('active');
   closeSidebar();
   window.scrollTo(0,0);
 
   // lazy load
   const loaders = {
-    dashboard:loadDashboard, users:loadAdminUsers, shop:loadShop,
-    goals:loadGoals, newsletter:loadNewsletter, logs:loadLogs
+    dashboard:loadDashboard, users:loadAdminUsers, shop:loadShop, orders:loadOrders, shipping:loadRates,
+    finance:loadAdminFinance, goals:loadGoals, newsletter:loadNewsletter, logs:loadLogs
   };
   if(loaders[id]) loaders[id]();
 }
 
+/* ─── ABAS NO MOBILE: copia os destinos da gaveta ── */
+(function montarTabstrip(){
+  const strip=document.getElementById('tabstrip');
+  document.querySelectorAll('.sidebar .nav-item').forEach(b=>{
+    const id=b.id.replace(/^nav-/,'');
+    const chip=document.createElement('button');
+    chip.type='button';
+    chip.dataset.tab=id;
+    chip.textContent=b.textContent.trim();
+    if(b.classList.contains('active')) chip.classList.add('active');
+    chip.addEventListener('click',()=>goTab(id));
+    strip.appendChild(chip);
+  });
+  document.querySelector('.main').prepend(strip);
+})();
 /* ─── SIDEBAR ── */
 function toggleSidebar() {
   const s = document.getElementById('sidebar');
@@ -790,7 +915,7 @@ async function loadDashboard() {
 
   const [{ok:ok1,data:sd},{ok:ok2,data:od}] = await Promise.all([
     api('/admin/stats?_='+Date.now()),
-    api('/admin/orders')
+    api('/admin/orders?limit=5')
   ]);
 
   if(ok1) {
@@ -804,10 +929,10 @@ async function loadDashboard() {
   if(ok2 && od.data?.length) {
     tb.innerHTML=od.data.slice(0,5).map(o=>`
       <tr>
-        <td style="font-family:var(--fm);font-size:11px;">${o.order_id||o.id}</td>
-        <td>${o.User?.username||o.user||'—'}</td>
+        <td style="font-family:var(--fm);font-size:11px;">${escHtml(o.order_id||o.id)}</td>
+        <td>${escHtml(o.User?.username||'—')}</td>
         <td style="color:var(--gold);font-family:var(--fm)">${fmtBRL(o.total)}</td>
-        <td>${statusBadge(o.status)}</td>
+        <td>${NHPedido.seloPagamento(o.status)}</td>
         <td style="color:var(--muted);font-size:11px">${fmtDate(o.createdAt)}</td>
       </tr>`).join('');
   } else {
@@ -897,131 +1022,353 @@ async function saveUser() {
   else toast('Erro ao atualizar usuário.','error');
 }
 
-/* ═══ LOJA ═══ */
-function showShopTab(tab) {
-  document.getElementById('shop-products').style.display=tab==='products'?'block':'none';
-  document.getElementById('shop-orders').style.display=tab==='orders'?'block':'none';
-  document.getElementById('shop-tab-products').style.borderColor=tab==='products'?'rgba(143,79,255,.4)':'';
-  document.getElementById('shop-tab-products').style.color=tab==='products'?'var(--accent)':'';
-  document.getElementById('shop-tab-orders').style.borderColor=tab==='orders'?'rgba(143,79,255,.4)':'';
-  document.getElementById('shop-tab-orders').style.color=tab==='orders'?'var(--accent)':'';
-  if(tab==='products') loadProducts();
-  if(tab==='finance') { buildFinPeriodSelect(); loadAdminFinance(); }
-  else loadOrders();
-}
+/* ═══ LOJA: PRODUTOS ═══ */
+const $ = (id) => document.getElementById(id);
+const val = (id) => $(id).value.trim();
+const numOuNulo = (id) => { const v = val(id); return v === '' ? null : Number(v); };
 
 async function loadShop() { loadProducts(); }
 
 async function loadProducts() {
   const {ok,data}=await api('/admin/products');
-  const tb=document.getElementById('tb-products');
-  if(!ok||!tb) return;
-  S.products=data.data||data.items||[];
+  const tb=$('tb-products');
+  if(!tb) return;
+  if(!ok){ tb.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:20px">Erro ao carregar produtos.</td></tr>'; return; }
+  S.products=data.data||[];
   renderProducts(S.products);
 }
 
+function estoqueDoProduto(p) {
+  const ativas=(p.variants||[]).filter(v=>v.is_active);
+  if(ativas.length){
+    if(ativas.some(v=>v.stock==null)) return '∞';
+    return ativas.reduce((s,v)=>s+v.stock,0)+` <span style="color:var(--muted);font-size:10px">(${ativas.length} var.)</span>`;
+  }
+  return p.stock!=null?p.stock:'∞';
+}
+
 function renderProducts(prods) {
-  const tb=document.getElementById('tb-products');
+  const tb=$('tb-products');
   if(!prods.length){ tb.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:20px">Nenhum produto.</td></tr>'; return; }
   const typeLabel={'ebook':'📕 E-book','book':'📗 Livro','item':'🎒 Item'};
   tb.innerHTML=prods.map(p=>`
     <tr>
       <td style="font-family:var(--fm);font-size:11px;color:var(--muted)">${p.id}</td>
-      <td style="font-weight:700">${p.name}</td>
-      <td style="font-size:11px;font-family:var(--fm)">${typeLabel[p.type]||p.type||'—'}</td>
-      <td style="color:var(--gold);font-family:var(--fm)">${fmtBRL(p.priceReal||p.price_real||0)}</td>
-      <td style="font-family:var(--fm)">${p.stock!=null?p.stock:'∞'}</td>
-      <td>${statusBadge(p.isActive||p.is_active?'active':'inactive')}</td>
+      <td style="font-weight:700">${escHtml(p.name)}${p.marketplace_url?' <span class="badge badge-yellow">ML</span>':''}</td>
+      <td style="font-size:11px;font-family:var(--fm)">${typeLabel[p.type]||escHtml(p.type)||'—'}<br>
+        <span class="badge ${p.fulfillment==='physical'?'badge-yellow':'badge-purple'}">${p.fulfillment==='physical'?'Físico':'Digital'}</span></td>
+      <td style="color:var(--gold);font-family:var(--fm)">${fmtBRL(p.discountReal!=null?p.discountReal:p.priceReal)}</td>
+      <td style="font-family:var(--fm)">${estoqueDoProduto(p)}</td>
+      <td>${statusBadge(p.isActive?'active':'inactive')}</td>
       <td style="display:flex;gap:4px;flex-wrap:wrap;">
-        <button class="btn btn-ghost btn-sm" onclick="openProductModal(${p.id})">✏️</button>
-        <button class="btn btn-danger btn-sm" onclick="deleteProduct(${p.id})">🗑️</button>
+        <button class="btn btn-ghost btn-sm" onclick="openProductModal(${p.id})" aria-label="Editar">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteProduct(${p.id})" aria-label="Excluir">🗑️</button>
       </td>
     </tr>`).join('');
 }
 
 function filterProducts() {
-  const q=document.getElementById('product-search').value.toLowerCase();
+  const q=$('product-search').value.toLowerCase();
   renderProducts(S.products.filter(p=>(p.name||'').toLowerCase().includes(q)));
+}
+
+function atualizarCamposFisico() {
+  const fisico=$('pm-fulfillment').value==='physical';
+  $('pm-fisico-box').style.display=fisico?'grid':'none';
+  $('pm-digital-box').style.display=fisico?'none':'grid';
+}
+
+/* Editor de variantes: cada linha = uma variante (as existentes guardam o id). */
+function linhaVariante(v={}) {
+  const at=v.attributes||{};
+  const div=document.createElement('div');
+  div.className='var-row'+(v.is_active===false?' var-off':'');
+  div.dataset.id=v.id||'';
+  div.innerHTML=`
+    <input class="input" data-k="sku" placeholder="SKU *" value="${escHtml(v.sku||'')}">
+    <input class="input" data-k="label" placeholder="Rótulo * (M / Preta)" value="${escHtml(v.label||'')}">
+    <input class="input" data-k="tamanho" placeholder="Tamanho" value="${escHtml(at.tamanho||'')}">
+    <input class="input" data-k="cor" placeholder="Cor" value="${escHtml(at.cor||'')}">
+    <input class="input" data-k="price_override" type="number" step=".01" min="0" placeholder="Preço próprio" value="${v.price_override!=null?v.price_override:''}">
+    <input class="input" data-k="stock" type="number" min="0" step="1" placeholder="Estoque (∞)" value="${v.stock!=null?v.stock:''}">
+    <label class="var-ativa"><input type="checkbox" data-k="is_active" ${v.is_active===false?'':'checked'}> Ativa</label>
+    ${v.id?'':'<button type="button" class="btn btn-ghost btn-sm" data-remover>✕</button>'}`;
+  div.querySelector('[data-k="is_active"]').addEventListener('change',e=>div.classList.toggle('var-off',!e.target.checked));
+  div.querySelector('[data-remover]')?.addEventListener('click',()=>div.remove());
+  return div;
+}
+function addVariante(v) { $('pm-variants').appendChild(linhaVariante(v)); }
+function lerVariantes() {
+  return [...document.querySelectorAll('#pm-variants .var-row')].map((row,i)=>{
+    const g=k=>row.querySelector(`[data-k="${k}"]`);
+    const attributes={};
+    if(g('tamanho').value.trim()) attributes.tamanho=g('tamanho').value.trim();
+    if(g('cor').value.trim()) attributes.cor=g('cor').value.trim();
+    const v={ sku:g('sku').value.trim(), label:g('label').value.trim(), attributes,
+      price_override:g('price_override').value===''?null:Number(g('price_override').value),
+      stock:g('stock').value===''?null:Number(g('stock').value),
+      is_active:g('is_active').checked, sort:i };
+    if(row.dataset.id) v.id=Number(row.dataset.id);
+    return v;
+  });
 }
 
 function openProductModal(id=null) {
   S.editProductId=id;
   S.editProductType=null;
-  document.getElementById('product-modal-title').textContent=id?'Editar Produto':'Novo Produto';
-  if(id) {
-    const p=S.products.find(x=>x.id===id);
-    if(p){
-      document.getElementById('pm-name').value=p.name||'';
-      S.editProductType=p.type||'item';
-      document.getElementById('pm-type').value=TIPOS_PRODUTO.includes(p.type)?p.type:'item';
-      document.getElementById('pm-price-real').value=p.priceReal||p.price_real||0;
-      document.getElementById('pm-stock').value=p.stock||'';
-      document.getElementById('pm-category').value=p.category||'';
-      document.getElementById('pm-rarity').value=p.rarity||'';
-      document.getElementById('pm-image').value=p.imageUrl||'';
-      document.getElementById('pm-description').value=p.description||'';
-      document.getElementById('pm-active').checked=!!(p.isActive||p.is_active);
-      document.getElementById('pm-consumable').checked=!!(p.isConsumable||p.is_consumable);
-    }
-  } else {
-    ['pm-name','pm-price-real','pm-stock','pm-category','pm-rarity','pm-image','pm-description'].forEach(id=>document.getElementById(id).value='');
-    document.getElementById('pm-type').value='item';
-    document.getElementById('pm-active').checked=true;
-    document.getElementById('pm-consumable').checked=false;
-  }
+  $('product-modal-title').textContent=id?'Editar Produto':'Novo Produto';
+  const p=id?S.products.find(x=>x.id===id):null;
+  const set=(k,v)=>{ $(k).value=v==null?'':v; };
+  set('pm-name',p?.name); set('pm-price-real',p?.priceReal); set('pm-discount',p?.discountReal);
+  set('pm-stock',p?.stock); set('pm-category',p?.category); set('pm-rarity',p?.rarity);
+  set('pm-image',p?.imageUrl); set('pm-description',p?.description); set('pm-details',p?.detailsUrl);
+  set('pm-marketplace',p?.marketplace_url); set('pm-file-key',p?.digitalFileKey);
+  set('pm-weight',p?.weight_g); set('pm-length',p?.length_cm); set('pm-width',p?.width_cm); set('pm-height',p?.height_cm);
+  S.editProductType=p?.type||null;
+  $('pm-type').value=p&&TIPOS_PRODUTO.includes(p.type)?p.type:'item';
+  $('pm-fulfillment').value=p?.fulfillment||'digital';
+  $('pm-download').checked=!!p?.permiteDownload;
+  $('pm-active').checked=p?!!p.isActive:true;
+  $('pm-variants').innerHTML='';
+  (p?.variants||[]).forEach(addVariante);
+  atualizarCamposFisico();
   openModal('product-modal');
 }
 
 async function saveProduct() {
-  const type=document.getElementById('pm-type').value;
-  // Tipos legados que o formulário não oferece mais são
-  // preservados na edição — o select não os tem, e salvar não pode trocá-los por 'item'.
-  const tipoParaSalvar = (S.editProductType && !TIPOS_PRODUTO.includes(S.editProductType)) ? S.editProductType : type;
-  const stockRaw=document.getElementById('pm-stock').value;
-
-
+  const type=$('pm-type').value;
+  // Tipos legados que o formulário não oferece são preservados na edição.
+  const tipoParaSalvar=(S.editProductType && !TIPOS_PRODUTO.includes(S.editProductType)) ? S.editProductType : type;
+  const fisico=$('pm-fulfillment').value==='physical';
   const payload={
-    name:document.getElementById('pm-name').value.trim(),
-    type: tipoParaSalvar,
-    priceReal:parseFloat(document.getElementById('pm-price-real').value)||0,
-    price:parseFloat(document.getElementById('pm-price-real').value)||0,
-    stock:stockRaw!==''?parseInt(stockRaw):null,
-    category:document.getElementById('pm-category').value.trim()||type,
-    rarity:document.getElementById('pm-rarity').value.trim(),
-    imageUrl:document.getElementById('pm-image').value.trim(),
-    description:document.getElementById('pm-description').value.trim(),
-    isActive:document.getElementById('pm-active').checked,
-    isConsumable:document.getElementById('pm-consumable').checked
+    name:val('pm-name'),
+    type:tipoParaSalvar,
+    fulfillment:$('pm-fulfillment').value,
+    priceReal:numOuNulo('pm-price-real')||0,
+    discountReal:numOuNulo('pm-discount'),
+    stock:numOuNulo('pm-stock'),
+    category:val('pm-category')||type,
+    rarity:val('pm-rarity'),
+    imageUrl:val('pm-image'),
+    description:val('pm-description'),
+    detailsUrl:val('pm-details')||null,
+    marketplace_url:val('pm-marketplace')||null,
+    isActive:$('pm-active').checked,
+    variants:lerVariantes()
   };
+  if(fisico){
+    Object.assign(payload,{ weight_g:numOuNulo('pm-weight'), length_cm:numOuNulo('pm-length'), width_cm:numOuNulo('pm-width'), height_cm:numOuNulo('pm-height') });
+  } else {
+    Object.assign(payload,{ permiteDownload:$('pm-download').checked, digitalFileKey:val('pm-file-key')||null });
+  }
+  if(!payload.name){ toast('Informe o nome.','error'); return; }
+  if(payload.variants.some(v=>!v.sku||!v.label)){ toast('Toda variante precisa de SKU e rótulo.','error'); return; }
   const method=S.editProductId?'PATCH':'POST';
   const path=S.editProductId?`/admin/products/${S.editProductId}`:'/admin/products';
-  const {ok}=await api(path,{method,body:JSON.stringify(payload)});
+  const {ok,data}=await api(path,{method,body:JSON.stringify(payload)});
   if(ok){ toast(S.editProductId?'Produto atualizado!':'Produto criado!','success'); closeModal('product-modal'); loadProducts(); }
-  else toast('Erro ao salvar produto.','error');
+  else toast(data.message||'Erro ao salvar produto.','error');
 }
 
 async function deleteProduct(id) {
-  confirm_('Excluir este produto permanentemente?',async()=>{
-    const {ok}=await api(`/admin/products/${id}`,{method:'DELETE'});
-    if(ok){ toast('Produto excluído.','error'); loadProducts(); }
-    else toast('Erro ao excluir produto.','error');
+  confirm_('Excluir este produto? Se ele já foi vendido, será só DESATIVADO (quem comprou mantém o acesso).',async()=>{
+    const {ok,data}=await api(`/admin/products/${id}`,{method:'DELETE'});
+    if(ok){ toast(data.message||'Feito.', data.deactivated?'info':'success'); loadProducts(); }
+    else toast(data.message||'Erro ao excluir produto.','error');
   });
 }
 
+/* ═══ PEDIDOS ═══ */
+const PED = { limit:50, offset:0, total:0, atual:null };
+
+function filtrosPedidos() {
+  const p=new URLSearchParams();
+  [['status','of-status'],['fulfillment','of-fulfillment'],['provider','of-provider'],['from','of-from'],['to','of-to'],['q','of-q']]
+    .forEach(([k,id])=>{ const v=val(id); if(v) p.set(k,v); });
+  p.set('limit',PED.limit); p.set('offset',PED.offset);
+  return p.toString();
+}
+function buscarPedidos() { PED.offset=0; loadOrders(); }
+function paginaPedidos(d) { PED.offset=Math.max(0,PED.offset+d*PED.limit); loadOrders(); }
+
 async function loadOrders() {
-  const {ok,data}=await api('/admin/orders');
-  const tb=document.getElementById('tb-orders');
-  if(!ok||!tb) return;
+  const tb=$('tb-orders');
+  tb.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:20px">Carregando...</td></tr>';
+  const {ok,data}=await api('/admin/orders?'+filtrosPedidos());
+  if(!ok){ tb.innerHTML=`<tr><td colspan="6" style="text-align:center;color:var(--red);padding:20px">${escHtml(data.message||'Erro ao carregar pedidos.')}</td></tr>`; return; }
   const orders=data.data||[];
-  if(!orders.length){ tb.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:20px">Nenhum pedido.</td></tr>'; return; }
+  PED.total=data.total||0;
+  $('orders-page-info').textContent=PED.total?`${PED.offset+1}–${PED.offset+orders.length} de ${PED.total}`:'0 pedidos';
+  $('orders-prev').disabled=PED.offset===0;
+  $('orders-next').disabled=PED.offset+orders.length>=PED.total;
+  if(!orders.length){ tb.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:20px">Nenhum pedido com esses filtros.</td></tr>'; return; }
   tb.innerHTML=orders.map(o=>`
-    <tr>
-      <td style="font-family:var(--fm);font-size:11px">${o.order_id||o.id}</td>
-      <td>${o.User?.username||o.user||'—'}</td>
-      <td style="color:var(--gold);font-family:var(--fm)">${fmtBRL(o.total)}</td>
-      <td>${statusBadge(o.status)}</td>
+    <tr style="cursor:pointer" onclick="openOrder('${escHtml(o.order_id)}')">
+      <td style="font-family:var(--fm);font-size:11px">${escHtml(o.order_id)}</td>
+      <td>${escHtml(o.User?.username||'—')}<br><span style="color:var(--muted);font-size:10px">${escHtml(o.User?.email||'')}</span></td>
+      <td style="color:var(--gold);font-family:var(--fm)">${fmtBRL(o.total)}<br><span style="color:var(--muted);font-size:10px">${escHtml(NHPedido.metodo(o.payment_provider||o.method))}</span></td>
+      <td>${NHPedido.seloPagamento(o.status)}</td>
+      <td>${o.fulfillment_status&&o.fulfillment_status!=='na'?NHPedido.seloEntrega(o.fulfillment_status):'<span style="color:var(--muted);font-size:11px">digital</span>'}</td>
       <td style="color:var(--muted);font-size:11px">${fmtDate(o.createdAt)}</td>
     </tr>`).join('');
+}
+
+async function openOrder(id) {
+  $('order-modal-body').innerHTML='<p style="color:var(--muted)">Carregando…</p>';
+  openModal('order-modal');
+  const {ok,data}=await api(`/admin/orders/${encodeURIComponent(id)}`);
+  if(!ok){ $('order-modal-body').innerHTML=`<p style="color:var(--red)">${escHtml(data.message||'Erro.')}</p>`; return; }
+  renderOrder(data.data);
+}
+
+function renderOrder(o) {
+  PED.atual=o;
+  $('order-modal-title').textContent='Pedido '+o.order_id;
+  const itens=(o.items_json||[]).map(i=>`
+    <div style="display:flex;justify-content:space-between;gap:8px;padding:4px 0;border-bottom:1px solid var(--border2);font-size:12px">
+      <span>${i.quantity}× ${escHtml(i.title||('#'+i.id))}${i.variant_label?` <span style="color:var(--muted)">(${escHtml(i.variant_label)})</span>`:''}
+        <span class="badge ${i.fulfillment==='physical'?'badge-yellow':'badge-purple'}">${i.fulfillment==='physical'?'físico':'digital'}</span></span>
+      <span style="font-family:var(--fm)">${i.unit_price!=null?fmtBRL(i.unit_price*i.quantity):''}</span>
+    </div>`).join('');
+  const m=o.shipping_method;
+  const fisico=o.fulfillment_status&&o.fulfillment_status!=='na';
+  const podeConfirmarPix=o.payment_provider==='pix_direto'&&o.status==='awaiting_manual_confirmation';
+  const podeCancelar=!['cancelled','refunded','charged_back','rejected'].includes(o.status);
+  const pagoNoMP=(o.payment_provider||o.method)==='mercadopago'&&['approved','needs_attention'].includes(o.status);
+  const opcoesEntrega=Object.keys(NHPedido.ENTREGA).filter(k=>k!=='na').map(k=>`<option value="${k}" ${o.fulfillment_status===k?'selected':''}>${NHPedido.rotuloEntrega(k)}</option>`).join('');
+
+  $('order-modal-body').innerHTML=`
+    <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:12px">
+      ${NHPedido.seloPagamento(o.status)} ${fisico?NHPedido.seloEntrega(o.fulfillment_status):''}
+      <span style="font-size:11px;color:var(--muted)">${escHtml(NHPedido.metodo(o.payment_provider||o.method))} · ${fmtDate(o.createdAt)}</span>
+    </div>
+    <div class="label">Cliente</div>
+    <p style="font-size:12px;margin-bottom:12px">${escHtml(o.User?.nome_completo||o.User?.username||'—')} · ${escHtml(o.User?.email||'')}</p>
+    <div class="label">Itens</div>
+    ${itens}
+    <div style="font-size:12px;margin:8px 0 12px">
+      <div style="display:flex;justify-content:space-between;color:var(--muted)"><span>Subtotal</span><span>${fmtBRL(o.subtotal!=null?o.subtotal:o.total)}</span></div>
+      ${Number(o.shipping_cost)?`<div style="display:flex;justify-content:space-between;color:var(--muted)"><span>Frete</span><span>${fmtBRL(o.shipping_cost)}</span></div>`:''}
+      <div style="display:flex;justify-content:space-between;font-weight:700;color:var(--gold)"><span>Total</span><span>${fmtBRL(o.total)}</span></div>
+    </div>
+    ${o.shipping_address?`<div class="label">Entrega</div><p style="font-size:12px;margin-bottom:4px">${NHPedido.endereco(o.shipping_address)}</p>
+      ${m?`<p style="font-size:11px;color:var(--muted);margin-bottom:12px">${escHtml(m.service)}${m.carrier?' · '+escHtml(m.carrier):''}${m.days?` · ${m.days.min}–${m.days.max} dias úteis`:''}</p>`:''}`:''}
+    ${podeConfirmarPix?`<button class="btn btn-green" style="width:100%;justify-content:center;margin-bottom:12px" onclick="confirmarPix()">✓ Confirmar Pix recebido</button>`:''}
+    ${fisico?`
+    <div class="sep"></div>
+    <div class="label">Atualizar entrega</div>
+    <div class="grid-2" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="field"><label class="label" for="of-st">Status</label><select class="input" id="of-st">${opcoesEntrega}</select></div>
+      <div class="field"><label class="label" for="of-carrier">Transportadora</label><input class="input" id="of-carrier" value="${escHtml(o.carrier||'')}"></div>
+      <div class="field"><label class="label" for="of-code">Código de rastreio</label><input class="input" id="of-code" value="${escHtml(o.tracking_code||'')}"></div>
+      <div class="field"><label class="label" for="of-url">Link de rastreio</label><input class="input" id="of-url" placeholder="https://..." value="${escHtml(o.tracking_url||'')}"></div>
+    </div>`:''}
+    <div class="field"><label class="label" for="of-notes">Notas internas (o cliente não vê)</label><textarea class="input" id="of-notes" rows="2">${escHtml(o.admin_notes||'')}</textarea></div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="salvarEntrega()">Salvar ${fisico?'entrega e notas':'notas'}</button>
+    <div class="sep"></div>
+    <div class="label">Histórico</div>
+    ${NHPedido.timeline((o.events||[]).map(e=>({...e, message:(e.message||'')+(e.actor&&e.actor!=='system'?` — ${e.actor}`:'')})))}
+    ${podeCancelar?`
+    <div class="sep"></div>
+    <div class="label">Cancelar pedido</div>
+    <input class="input" id="oc-reason" placeholder="Motivo (vai no histórico)" style="margin-bottom:8px">
+    ${pagoNoMP?`<label style="display:flex;gap:6px;align-items:center;font-size:12px;margin-bottom:8px"><input type="checkbox" id="oc-refund" checked> Estornar no Mercado Pago</label>`:''}
+    ${['approved','needs_attention'].includes(o.status)&&!pagoNoMP?'<p style="font-size:11px;color:var(--yellow);margin-bottom:8px">Pago fora do Mercado Pago: o estorno precisa ser feito à mão.</p>':''}
+    <button class="btn btn-danger" style="width:100%;justify-content:center" onclick="cancelarPedido()">Cancelar pedido</button>`:''}`;
+}
+
+async function salvarEntrega() {
+  const o=PED.atual; if(!o) return;
+  const body={ admin_notes:val('of-notes') };
+  if($('of-st')) Object.assign(body,{ fulfillment_status:$('of-st').value, carrier:val('of-carrier')||null, tracking_code:val('of-code')||null, tracking_url:val('of-url')||null });
+  const {ok,data}=await api(`/admin/orders/${encodeURIComponent(o.order_id)}/fulfillment`,{method:'PATCH',body:JSON.stringify(body)});
+  if(!ok){ toast(data.message||'Erro ao salvar.','error'); return; }
+  toast('Pedido atualizado.','success');
+  renderOrder({ ...data.data, User:o.User });
+  loadOrders();
+}
+
+function confirmarPix() {
+  const o=PED.atual;
+  confirm_(`Confirmar que o Pix de ${fmtBRL(o.total)} do pedido ${o.order_id} caiu na conta?`, async()=>{
+    const {ok,data}=await api(`/admin/orders/${encodeURIComponent(o.order_id)}/confirm-pix`,{method:'POST'});
+    if(!ok){ toast(data.message||'Erro ao confirmar.','error'); return; }
+    toast(data.status==='needs_attention'?'Pago, mas falta estoque: veja o histórico.':'Pix confirmado. Pedido aprovado.', data.status==='needs_attention'?'error':'success');
+    renderOrder({ ...data.data, User:o.User });
+    loadOrders();
+  });
+}
+
+function cancelarPedido() {
+  const o=PED.atual;
+  const refund=!!$('oc-refund')?.checked;
+  const reason=val('oc-reason')||null;
+  confirm_(`Cancelar o pedido ${o.order_id}${refund?' e ESTORNAR no Mercado Pago':''}?`, async()=>{
+    const {ok,data}=await api(`/admin/orders/${encodeURIComponent(o.order_id)}/cancel`,{method:'POST',body:JSON.stringify({ refund, reason })});
+    if(!ok){ toast(data.message||'Erro ao cancelar.','error'); return; }
+    toast(`Pedido ${NHPedido.rotuloPagamento(data.status).toLowerCase()}.`,'info');
+    renderOrder({ ...data.data, User:o.User });
+    loadOrders();
+  });
+}
+
+/* ═══ FRETE (tarifas manuais) ═══ */
+async function loadRates() {
+  const tb=$('tb-rates');
+  const {ok,data}=await api('/admin/shipping-rates');
+  if(!ok){ tb.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--red);padding:20px">Erro ao carregar tarifas.</td></tr>'; return; }
+  S.rates=data.data||[];
+  if(!S.rates.length){ tb.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:20px">Nenhuma tarifa. Sem tarifas, o frete manual não oferece opções.</td></tr>'; return; }
+  const cep=c=>c?String(c).replace(/^(\d{5})(\d{3})$/,'$1-$2'):'';
+  tb.innerHTML=S.rates.map(r=>`
+    <tr>
+      <td style="font-weight:700">${escHtml(r.service)}<br><span style="color:var(--muted);font-size:10px">${escHtml(r.carrier||'')}${r.kind==='pickup'?' · retirada':''}</span></td>
+      <td style="font-size:11px">${r.kind==='pickup'?'—':r.uf?escHtml(r.uf):r.cep_start?`${cep(r.cep_start)} a ${cep(r.cep_end)}`:'Brasil todo'}</td>
+      <td style="font-size:11px;font-family:var(--fm)">${r.weight_min_g||0}–${r.weight_max_g!=null?r.weight_max_g+' g':'∞'}</td>
+      <td style="color:var(--gold);font-family:var(--fm)">${Number(r.price)===0?'Grátis':fmtBRL(r.price)}</td>
+      <td style="font-size:11px">${r.days_max!=null?`${r.days_min??r.days_max}–${r.days_max} d`:'—'}</td>
+      <td>${statusBadge(r.is_active?'active':'inactive')}</td>
+      <td style="display:flex;gap:4px">
+        <button class="btn btn-ghost btn-sm" onclick="openRateModal(${r.id})" aria-label="Editar">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteRate(${r.id})" aria-label="Remover">🗑️</button>
+      </td>
+    </tr>`).join('');
+}
+
+function openRateModal(id=null) {
+  S.editRateId=id;
+  const r=id?S.rates.find(x=>x.id===id):null;
+  $('rate-modal-title').textContent=id?'Editar tarifa':'Nova tarifa';
+  const set=(k,v)=>{ $(k).value=v==null?'':v; };
+  set('rm-service',r?.service); set('rm-carrier',r?.carrier); set('rm-uf',r?.uf);
+  set('rm-cep-start',r?.cep_start); set('rm-cep-end',r?.cep_end);
+  set('rm-wmin',r?.weight_min_g); set('rm-wmax',r?.weight_max_g); set('rm-price',r?.price);
+  set('rm-dmin',r?.days_min); set('rm-dmax',r?.days_max); set('rm-sort',r?.sort);
+  $('rm-kind').value=r?.kind||'rate';
+  $('rm-active').checked=r?!!r.is_active:true;
+  openModal('rate-modal');
+}
+
+async function saveRate() {
+  const body={
+    service:val('rm-service'), carrier:val('rm-carrier')||null, kind:$('rm-kind').value,
+    uf:val('rm-uf')||null, cep_start:val('rm-cep-start')||null, cep_end:val('rm-cep-end')||null,
+    weight_min_g:numOuNulo('rm-wmin'), weight_max_g:numOuNulo('rm-wmax'), price:numOuNulo('rm-price')??0,
+    days_min:numOuNulo('rm-dmin'), days_max:numOuNulo('rm-dmax'), sort:numOuNulo('rm-sort')??0,
+    is_active:$('rm-active').checked
+  };
+  if(!body.service){ toast('Informe o nome do serviço.','error'); return; }
+  if(!!body.cep_start!==!!body.cep_end){ toast('Faixa de CEP precisa de início e fim.','error'); return; }
+  const {ok,data}=await api(S.editRateId?`/admin/shipping-rates/${S.editRateId}`:'/admin/shipping-rates',{method:S.editRateId?'PATCH':'POST',body:JSON.stringify(body)});
+  if(!ok){ toast(data.message||'Erro ao salvar tarifa.','error'); return; }
+  toast('Tarifa salva.','success'); closeModal('rate-modal'); loadRates();
+}
+
+function deleteRate(id) {
+  confirm_('Remover esta tarifa? (Para pausar, prefira desmarcar "Ativa".)', async()=>{
+    const {ok,data}=await api(`/admin/shipping-rates/${id}`,{method:'DELETE'});
+    if(ok){ toast('Tarifa removida.','info'); loadRates(); } else toast(data.message||'Erro ao remover.','error');
+  });
 }
 
 /* ═══ METAS ═══ */
@@ -1064,40 +1411,39 @@ async function loadGoals() {
 // ============================================================
 function buildFinPeriodSelect() {
   const sel = document.getElementById('fin-period');
-  if (!sel || sel.options.length > 1) return;
+  if (!sel || sel.options.length) return;
   const now = new Date();
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 12; i++) {
     const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-    const val = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
     const label = d.toLocaleString('pt-BR', { month: 'long', year: 'numeric' });
-    const opt = document.createElement('option');
-    opt.value = val; opt.textContent = label.charAt(0).toUpperCase() + label.slice(1);
-    if (i === 0) opt.selected = true;
-    sel.appendChild(opt);
+    sel.add(new Option(label.charAt(0).toUpperCase() + label.slice(1), `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`));
   }
+  sel.add(new Option('Todo o período', 'all'));
 }
 
 async function loadAdminFinance() {
   buildFinPeriodSelect();
-  const period = document.getElementById('fin-period')?.value || '';
-  const url = `/admin/finance${period ? `?period=${period}` : ''}`;
-  const { ok, data } = await api(url);
-  if (!ok) { toast('Erro ao carregar dados financeiros.', 'error'); return; }
-
-  const s = data.summary || {};
-  const setEl = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
-  setEl('fin-total',  fmtBRL(s.totalRevenue || 0));
-  setEl('fin-orders', s.orders || 0);
-
-  // Por método
+  const period = document.getElementById('fin-period').value;
+  const { ok, data } = await api(`/admin/finance?period=${encodeURIComponent(period)}`);
   const tb = document.getElementById('fin-by-method');
-  if (tb) {
-    const rows = (data.byMethod || []);
-    tb.innerHTML = rows.length
-      ? rows.map(r => `<tr><td>${r.method}</td><td>${r.orders}</td><td style="color:var(--gold)">${fmtBRL(r.revenue)}</td></tr>`).join('')
-      : '<tr><td colspan="3" style="text-align:center;color:var(--muted);padding:16px">Nenhum dado.</td></tr>';
+  if (!ok) {
+    tb.innerHTML = `<tr><td colspan="3" style="text-align:center;color:var(--red);padding:16px">${escHtml(data.message || 'Erro ao carregar o financeiro.')}</td></tr>`;
+    return;
   }
-
+  const s = data.summary || {};
+  const setEl = (id, v) => { document.getElementById(id).textContent = v; };
+  setEl('fin-total', fmtBRL(s.totalRevenue));
+  setEl('fin-orders-sub', `${s.orders || 0} pedido(s) pago(s)`);
+  setEl('fin-products', fmtBRL(s.productsRevenue));
+  setEl('fin-shipping', fmtBRL(s.shippingRevenue));
+  setEl('fin-donations', fmtBRL(s.donationsTotal));
+  setEl('fin-donations-sub', `${s.donations || 0} doação(ões)`);
+  setEl('fin-awaiting', fmtNum(s.awaitingPayment));
+  setEl('fin-refunded', fmtNum(s.refunded));
+  const rows = data.byMethod || [];
+  tb.innerHTML = rows.length
+    ? rows.map(r => `<tr><td>${escHtml(NHPedido.metodo(r.method))}</td><td>${r.orders}</td><td style="color:var(--gold)">${fmtBRL(r.revenue)}</td></tr>`).join('')
+    : '<tr><td colspan="3" style="text-align:center;color:var(--muted);padding:16px">Nenhuma venda no período.</td></tr>';
 }
 
 async function loadNewsletter() {
