@@ -59,7 +59,27 @@ Regras fixas: identidade visual atual (roxo #8f4fff/#a855f7, dourado #d9b55a/#fa
 - [x] Lighthouse mobile local: a11y 96–100, boas práticas 100, SEO 100 (login 69 = noindex proposital); performance medida em produção após o deploy
 
 ## Fase 7 — publicação
-- [ ] Backup R2 → merge → migrações → deploy.sh → Cloudflare → teste em produção PT/EN
+- [x] Backup R2 `noheroes_20261006_091220.dump` (1,7 MB, 185 objetos, verificado)
+- [x] Backend: main `16e125a` (fast-forward) → migração `2026-10-redesign.sql` (4 tabelas, 5 colunas, 3 valores de enum; conferida) → `deploy.sh` ✅
+  - ⚠️ o `docker compose stop api` não parou a API: a migração rodou com o código antigo no ar (inofensivo — só adiciona; registrado)
+- [x] API em produção: CORS com X-NH-Lang, erros com código e EN, /shop com campos EN, rotas novas exigindo login
+- [x] Site: main `d00f923` → Cloudflare Pages (~30 s); depois `c7e2135` (lobos do linktree)
+- [x] Produção sem login, PT e EN, 375/1280: 72 checagens limpas; todos os links 200; .md internos → 404; página inexistente → 404
+
+### Lighthouse mobile — antes × depois (produção, mesmas condições)
+| página | perf | a11y | boas práticas | SEO |
+|---|---|---|---|---|
+| index | 69 → 80 | 95 → 100 | 81 → 82 | 83 → 100 |
+| sobre | 70 → 88 | 95 → 100 | 81 → 82 | 92 → 100 |
+| portfólio | 43 → 85 | 89 → 96 | 81 → 82 | 83 → 100 |
+| store | 45 → 82 | 95 → 100 | 81 → 82 | 83 → 100 |
+| linktree | 64 → 70 | 85 → 100 | 81 → 82 | 83 → 100 |
+| acda | 63 → 83 | 93 → 96 | 81 → 82 | 92 → 100 |
+| suporte | 81 → 95 | 82 → 100 | 77 → 82 | 92 → 100 |
+| apoiar | 68 → 87 | 95 → 100 | 81 → 82 | 83 → 100 |
+| login | 61 → 76 | 96 → 100 | 81 → 79 | 83 → 69 (noindex proposital) |
+
+Boas práticas fica em 82 por um único item: o script de detecção de bots que o próprio Cloudflare injeta (`/cdn-cgi/challenge-platform`) usa uma API obsoleta — não é do site.
 
 ## Pendências do Raul (`[[RAUL]]`)
 (lista completa no relatório final; é mantida aqui conforme surgem)
@@ -78,3 +98,4 @@ Regras fixas: identidade visual atual (roxo #8f4fff/#a855f7, dourado #d9b55a/#fa
 - Imagens dos 10 personagens (acda — os arquivos nunca foram enviados ao site; hoje há placeholder com a inicial).
 - Token do Cloudflare Web Analytics (assets/js/config.js, `CF_BEACON_TOKEN`) — ou ligar o Web Analytics no painel do Pages.
 - Nomes/descrições em inglês dos produtos (admin › Produtos; sem eles a loja EN mostra o PT).
+- (Opcional) Cloudflare › Security › Bots: desligar "JavaScript detections" leva boas práticas de 82 para 100.
