@@ -5,6 +5,8 @@ Tudo o que é texto novo ou alterado, seção por seção, com a fonte. Fontes, 
 - **Site** = o que já estava publicado (acda.html, home, linktree, loja).
 - **Cap. N** = capítulos publicados da webnovel (57 em 10/10/2026: Cap. 00 “Universo” + 1–56, PT e EN). Os capítulos foram
   lidos na própria Webnovel; o Cap. 00 é o “conhecimento comum” do mundo que o autor publicou sem spoiler.
+- **Site antigo** = a página `/acda` publicada antes desta branch (recuperada do git). **Regra atual (Raul, 10/10):** as
+  informações dela estão liberadas e voltaram; onde contradizem o Capítulo 00, vale o Capítulo 00 (seção 4b).
 - **Raul** = definições desta tarefa (edições, modelo, idiomas).
 - **Vault** não foi necessário: nenhum fato da página depende só dele.
 
@@ -63,143 +65,166 @@ Mercado Livre: **não há link real** (o produto 7 não tem `marketplace_url`), 
 | **Vai ter livro físico do Anjo Devorador?** Por enquanto, não. O foco é a webnovel; se o projeto crescer, Anjo Devorador pode ganhar uma edição física. Quem quer a história no papel hoje encontra o volume 1 de As Cinzas do Amanhã. | **Will Anjo Devorador get a print book?** Not for now. … (in Portuguese). | Raul |
 | **Em quais idiomas?** Anjo Devorador sai em português, a língua original, e em inglês, com o título Devouring Angel. A versão em inglês é traduzida com auxílio de IA, como o autor explica na própria Webnovel. As Cinzas do Amanhã está em português. | **Which languages?** … translated with the help of AI, as the author explains on Webnovel itself. … | Raul; IA: nota do autor no Cap. 1 (EN), “A Note About the English Version”. **Raul: confirme se quer essa frase na página.** |
 
-## 4. O universo (abas)
+## 4. O universo (página restaurada)
 
-Abertura: “Tudo aqui já apareceu nos capítulos publicados. O resto, você descobre lendo.” / “Everything here has already
-appeared in the published chapters. The rest, you discover by reading.”
+**Regra nova (Raul, 10/10):** as informações da página antiga da ACDA estão liberadas. Elas voltaram, com o visual novo,
+**palavra por palavra** (PT copiado do `acda.html` antigo; EN do dicionário antigo `assets/i18n/acda.js`, restaurado do git e
+carregado de novo pela página, com as mesmas chaves `acd.*`). Onde a página antiga contradiz o **Capítulo 00**, vale o
+Capítulo 00 — ver a lista de conflitos na seção 4b.
 
-**O mundo** — tudo do **Cap. 00**: Caelum e Sublicus; terras além dos oceanos (mortal atravessar); a Torre no horizonte,
-“a Semente do Mundo” / “the Seed of the World”; cúpulas (“Enquanto a cúpula resistir, a cidade vive.”); magitecnologia
-(cristais de mana); dragões (“não negociam”); criaturas por Classe: Fera, Monstro, Demônio, Voidrin (Voidrins nascem da
-Energia Negativa).
+**Aviso (novo, antes do bloco):**
+- PT: “Daqui para baixo há informações sobre o mundo, os personagens e as facções que podem soar como spoilers leves, mas não atrapalham a leitura da obra.”
+- EN: “From here on there is information about the world, the characters and the factions that may read like light spoilers, but won’t get in the way of reading the story.”
 
-**Lugares**
-- Kaleidos — Nação da Diversidade e Liberdade, democracia multicultural, capital Lunaris Fortuna (a mais próspera). **Cap. 00**
-- Aeon — Nação da Ordem e Perfeição, teocracia da Pureza, Suma Sacerdotisa, inertes = povo puro, vitalistas perseguidos; guerras passadas com Kaleidos. **Cap. 00**
-- Tsukigakure — “O lar do Clã da Lua, onde Azuos é acolhido e começa a treinar.” **Nota do autor no Cap. 44** (“Tsukigakure (Clã da Lua)”) + **Cap. 5**
-- As florestas — “Azuos desperta perto da Floresta Negra e sobrevive à Floresta Lupina antes de chegar ao Clã da Lua.” **Caps. 5, 17 e 18**
+**Destaque “Enciclopédia do universo” (novo):** “Capítulo 00 completo · PT e EN” / “O que todo mundo em Sublicus sabe: o mundo,
+as nações, as energias, os Elos, as criaturas e a Guilda.” → `/anjo-devorador/enciclopedia`.
 
-**Clãs e Guilda**
-- Os quatro clãs mantêm a paz entre Kaleidos e Aeon; Lua e Sol perto de Kaleidos, Runas na fronteira, Feras em território de Aeon. **Cap. 00**
-- Clã da Lua “forma os caçadores e assassinos mais letais de Sublicus”. **Cap. 6**
-- Guilda dos Aventureiros: neutra, Rank de **E a S**, Rank ≠ Elos. **Cap. 00** (o site antigo dizia “S+”: corrigido)
+**Abertura do bloco (nova):** “Caelum, suas nações, clãs, lendas e personagens.” / “Caelum, its nations, clans, legends and characters.”
 
-**Poder** — tudo do **Cap. 00**: as três energias; Inertes, Magos e Vitalistas; o Aspecto (um Vitalista pode tomar a
-habilidade de outro; muitos se passam por Magos); os Elos (até cinco, o sexto é especulação); magia negra; as classes.
+**Layout:** sem imagens nas abas. Cada assunto é uma sanfona com **título forte**, **uma linha de resumo** e o texto.
+Oito abas, nesta ordem: O mundo · Lugares · Clãs e facções · Poder e magia · Mitos e lendas · Magitecnologia · A saga · Personagens.
 
-Imagens: as mesmas artes do site antigo (Kaleidos, Aeon, clãs, Floresta Negra, Guilda), agora só como ilustração, sem texto
-que não esteja nos capítulos.
+| Aba | O que tem | Fonte |
+|---|---|---|
+| **O mundo** | citação “Caelum não é um mundo…”; “Em ACDA, o mundo não é cenário…”; “Este é o solo onde Azuos desperta…”; Caelum/Sublicus e a Semente do Mundo; sanfonas: **O continente** (texto do antigo modal do mapa), **Um mundo em colapso**, **As cúpulas** (+ “A muralha”), **Dragões**, **Criaturas** (+ “Ameaças reais”) | Site antigo (`acd.130`, `136`, `137`, `41`, `48`, modais `MAPA_CAELUM` e `mundo`) + Cap. 00 |
+| **Lugares** | **Kaleidos — Democracia rebelde** (citação + Cap. 00 + texto da antiga imagem “Kaleidos”), **Aeon — Teocracia totalitária** (idem), **Lunaris Fortuna** (antigo “cidade construída com a natureza” + Cap. 00: capital de Kaleidos), **Tsukigakure**, **As florestas** | Site antigo (`acd.145–148`, `45`, modais) + Cap. 00 + Caps. 5, 17, 18, 44 |
+| **Clãs e facções** | os quatro clãs e onde ficam; “Clãs: Lua (assassinos), Sol (luxo/sabedoria)…”; “Clãs em guerra fria…”; sanfonas: **Clã da Lua**, **do Sol**, **das Runas**, **das Feras** (resumo do Cap. 00 + texto antigo de cada clã), **Guilda dos Aventureiros** (Cap. 00 + texto antigo, com o rank corrigido), **Culto do Vazio** | Site antigo (`acd.149`, `150`, `47`, modais dos clãs, Guilda e Culto) + Cap. 00 + Cap. 6 |
+| **Poder e magia** | “Poder não é privilégio…”; “Em Caelum, magia não é truque…”; sanfonas: **As três energias** (Cap. 00 + Lumen/Umbra antigos), **Inertes, Magos e Vitalistas** (Cap. 00 + textos antigos), **O Aspecto** (+ “Vitalismo: dom inato…”, “O poder: vitalistas nascem com dom único…”), **Os Elos**, **Magia negra**, **Regras de Caelum** (as 5), **As classes**; “Dica de leitura”; “A pergunta não é o que você faz com poder…” | Site antigo (`acd.168–185`, `42`, `46`) + Cap. 00 |
+| **Mitos e lendas** | “Alguns mitos estão vivos…”; **Oni Vagante**, **O Bom Dragão**, **Barões Anciãos**, **Valdaryon**, **Floresta Negra** — cada um com a linha curta antiga de resumo e o texto longo antigo | Site antigo (`acd.187–202`, modais) |
+| **Magitecnologia** | “Ciência não morreu…”; “A magitecnologia une conhecimento arcano…”; Cap. 00 (cristais de mana); **Artefatos rúnicos**, **Zepelins mágicos**, **Montarias vivas**, **Portais arcanos**, **Relógios rúnicos**; “Caelum não quer heróis…” | Site antigo (`acd.203–216`, modais) + Cap. 00 |
+| **A saga** | “Cinco Atos. Um Destino.” com os **Atos I a V** (título, selo e texto); **A Obra**: O coração do conflito, O que torna ACDA único, Estética & inspiração; “Por que ACDA é a obra-pilar” e “O que você vai encontrar” (4 + 4 linhas) | Site antigo (`acd.111–127`, `217`, modais `conflito`/`diferenciais`/`estetica`, `acd.39–48`) |
+| **Personagens** | 11 selos (abaixo) | Site antigo + Caps. 6 e 10 (Kira) |
 
-**Personagens** (selos mantidos; só o que os capítulos já mostraram)
+**Também voltaram:** no card da edição compacta, as sanfonas **Sumário** (os 8 itens do volume 1) e **Para quem é** (4 itens);
+nas perguntas rápidas, **“O que torna esse mundo diferente?”** e **“O tom é leve ou mais sombrio?”** (textos antigos).
 
-| Personagem | Papel PT / EN | Texto PT | Fonte |
-|---|---|---|---|
-| Azuos | O Vitalista sem memória / The Vitalist with no memory | Desperta numa floresta sem memórias e sem destino, sabendo apenas o próprio nome. Sobrevive à Floresta Lupina e é acolhido pelo Clã da Lua, onde começa a treinar. | Sinopse; Caps. 1, 5, 8 |
-| Kira | O filhote / The pup | Um filhote de lobo de [Presas Douradas] que Azuos leva consigo e batiza de Kira. Desde então, não desgruda dele. | Caps. 6, 10 |
-| Kagemitsu | O ancião da Lua / The Moon Clan’s elder | O ancião do Clã da Lua. Recebe Azuos, sabe que ele sobreviveu à Floresta Lupina e anuncia que o treinamento começa no dia seguinte. | Cap. 5 |
-| Yumi | A conselheira / The councilor | Conselheira do Clã da Lua. Conduz a primeira turma de aprendizes, a turma de Azuos. | Caps. 6, 14 |
-| Cerverus | O último dragão / The last dragon | Mestre no Clã da Lua. Passa dos dois metros e, sob o capuz, só aparece o brilho âmbar dos olhos. Yumi o apresenta como “o último dragão”. | Cap. 14 |
-| Sado | O garoto das runas / The boy with the runes | Aprendiz com desenhos rúnicos em tom ciano nos antebraços. É o primeiro a tomar o partido de Azuos. | Cap. 10 |
-| Slyther | O provocador / The provoker | Aprendiz da mesma turma. Desde o primeiro dia, duvida de Azuos em voz alta. | Cap. 10 |
-| Sakura | A prodígio / The prodigy | A primeira aprendiz de Cerverus e a mais jovem a se formar no Clã da Lua. Um prodígio que ninguém conseguiu igualar. | Cap. 48 |
+### Personagens (visual novo, texto antigo)
 
-Os textos completos em inglês estão em `assets/i18n/obra.js`.
+Ordem e textos da página antiga, palavra por palavra (papel do card + papel e texto do diálogo; EN `acd.char.*`).
+A **Kira** não existia na página antiga e ficou (texto dos Caps. 6 e 10), logo depois de Azuos.
 
-## 4b. O que vem por aí — decida item por item
+| Selo | Card (PT) | Diálogo — papel e texto (PT) |
+|---|---|---|
+| A | Azuos — O portador da Marca Negra | O portador da Marca Negra · Jovem vitalista atormentado por um segredo terrível. Carrega cicatrizes físicas e emocionais. Busca respostas sobre seu passado e sobre a entidade que habita sua alma. |
+| K | Kira — O filhote | O filhote · Um filhote de lobo de [Presas Douradas] que Azuos leva consigo e batiza de Kira. Desde então, não desgruda dele. *(capítulos)* |
+| ? | ??? — Entidade desconhecida | Entidade desconhecida · Nada se sabe sobre sua origem. Sua presença causa inquietação entre magos e vitalistas. Tudo o que se tem são rumores... e cicatrizes deixadas para trás. |
+| C | Cerverus — O último dragão | O último dragão · Membro da realeza draconiana e um dos maiores guerreiros vivos. Mestre de Azuos, tornou-se uma figura paterna em sua jornada. |
+| S | Sado — O irmão de armas | O irmão de armas · Vitalista do furto e parceiro fiel. Feroz em combate, leal no silêncio. Um espírito que encontrou em Azuos um propósito maior que a guerra. |
+| S | Sakura — A flor letal | A flor letal · Mestra prodígio do Clã da Lua, perita em técnicas de assassinato e furtividade. Move-se com precisão cirúrgica — beleza e morte num só gesto. |
+| S | Slyther — A sombra que desafia | A sombra que desafia · Rival impulsivo de Azuos. Ágil, venenoso e arrogante. Seu orgulho o coloca sempre em rota de colisão com aqueles que brilham mais que ele. |
+| R | Runan — Guardião das Runas | Guardião do Clã das Runas · Vitalista prodígio com poderes misteriosos. Seus feitos desafiam a lógica e sua presença intimida até os mais experientes. |
+| Y | Yumi — A lâmina do silêncio | A lâmina do silêncio · Instrutora no Clã da Lua e guarda-costas de elite. Discreta, precisa e letal. Protege o que acredita com disciplina inabalável. |
+| K | Kagemitsu — O general da Lua | O general da Lua · Líder respeitado do Clã da Lua. Mentor de jovens guerreiros e símbolo de estratégia, equilíbrio e força entre os vitalistas. |
+| K | Koda — O sol que sangra | O sol que sangra · Vitalista misterioso com poderes do sangue e da luz. Ator dos bastidores, guardião silencioso dos escolhidos e executor do destino. |
 
-Seção nova (`#por-vir`), entre O universo e o fechamento. Título **O que vem por aí** / **What’s coming**; abertura
-“Nomes deste mundo que ainda não chegaram aos capítulos.” / “Names from this world that haven’t reached the chapters yet.”
-(texto novo, só de moldura). Cada item tem **só o nome e uma frase copiada palavra por palavra da página antiga**
-(PT do `acda.html`, EN da antiga `assets/i18n/acda.js`), sem lore nova. Os limiares 190%/191% ficaram de fora.
-**Na prévia aparecem todos; na publicação, só os marcados MANTER** (cada um é um `<li data-por-vir="…">`).
+## 4b. Conflitos com o Capítulo 00 — para você confirmar
 
-| # | Item (PT / EN) | Frase PT | Frase EN | Imagem | Onde estava na página antiga | Decisão |
-|---|---|---|---|---|---|---|
-| 1 | Marca Negra / Black Mark | A verdade por trás da Marca Negra começa a emergir. | The truth behind the Black Mark begins to surface. | selo “M” | Ato II | [MANTER / REMOVER] |
-| 2 | ??? | Nada se sabe sobre sua origem. | Nothing is known about its origin. | selo “?” | card “???” | [MANTER / REMOVER] |
-| 3 | Runan | Seus feitos desafiam a lógica e sua presença intimida até os mais experientes. | His feats defy logic and his presence intimidates even the most experienced. | selo “R” | card Runan | [MANTER / REMOVER] |
-| 4 | Koda | O sol que sangra. | The bleeding sun. | selo “K” | card Koda (papel) | [MANTER / REMOVER] |
-| 5 | Oni Vagante / Wandering Oni | Ninguém jamais retornou para confirmar. | No one has ever come back to confirm it. | oni-vagante | Mitos & Lendas | [MANTER / REMOVER] |
-| 6 | O Bom Dragão / The Good Dragon | Ele aparece apenas quando o destino encontra uma alma incomum. | He appears only when fate meets an uncommon soul. | bom-dragao | Mitos & Lendas | [MANTER / REMOVER] |
-| 7 | Barões Anciãos / Elder Barons | Encontrar um Ancião é compreender, em segundos, o que é insignificância. | To meet an Elder is to understand, in seconds, what insignificance means. | baroes-anciaos | Mitos & Lendas | [MANTER / REMOVER] |
-| 8 | Valdaryon | Seja mito ou verdade, ninguém jamais viu o lugar. | Myth or truth, no one has ever seen the place. | valdaryon | Mitos & Lendas | [MANTER / REMOVER] |
-| 9 | Culto do Vazio / Cult of the Void | Ninguém sabe quantos são. Nem onde estão. | No one knows how many they are. Or where. | culto-vazio | Nações & Clãs (o nome aparece no Cap. 33, sem descrição) | [MANTER / REMOVER] |
-| 10 | Legião Negra / The Black Legion | A Legião Negra não é apenas um exército — é uma ideia. | The Black Legion is not just an army — it is an idea. | selo “L” | Ato III | [MANTER / REMOVER] |
-| 11 | Lumen | Pode queimar, expor e julgar. | It can burn, expose and judge. | selo “L” | Magia & Regras | [MANTER / REMOVER] |
-| 12 | Umbra | Poder rápido — cobra sanidade, humanidade e destino. | Fast power — it costs sanity, humanity and fate. | selo “U” | Magia & Regras | [MANTER / REMOVER] |
-| 13 | Zepelins mágicos / Magic Zeppelins | Foram projetados para operar em altitudes que nem mesmo dragões ousam alcançar. | They were designed to fly at altitudes not even dragons dare to reach. | zepelim | Magitecnologia | [MANTER / REMOVER] |
-| 14 | Portais arcanos / Arcane Portals | Viajar por um portal é rápido. Mas nunca totalmente seguro. | Traveling through a portal is fast. But never entirely safe. | portal | Magitecnologia | [MANTER / REMOVER] |
-| 15 | Relógios rúnicos / Rune Clocks | Relógios rúnicos não medem o tempo. Eles o registram. | Rune clocks do not measure time. They record it. | relogio-runico | Magitecnologia | [MANTER / REMOVER] |
-| 16 | Montarias vivas / Living Mounts | Montar uma criatura viva não é dominação. É sobrevivência compartilhada. | Riding a living creature is not domination. It is shared survival. | montaria-viva | Magitecnologia | [MANTER / REMOVER] |
+Regra aplicada: onde a página antiga contradiz o Capítulo 00, a página usa o **Capítulo 00**. Cada ajuste está numa chave
+própria (`ob.conf.*`) para ser fácil de desfazer.
 
-Observação: as duas frases mais próximas de revelar algo são a 1 (Marca Negra, vinha da sinopse do Ato II) e a 2 (???).
+| # | Página antiga dizia | Capítulo 00 diz | O que a página mostra agora | Confirmar |
+|---|---|---|---|---|
+| 1 | Guilda: “colares de prestígio, que variam do **Rank E ao Rank S+**” | Rank de Guilda **de E (o mais baixo) a S (o mais alto)** | “…do Rank E ao **Rank S**” (resto do texto antigo igual) | [ ] |
+| 2 | Modal do mapa: “**Caelum — O Continente das Cinzas**” (Caelum como continente) | **Caelum é o mundo; Sublicus é o continente** conhecido | Sanfona “O continente”, resumo “Caelum é o mundo; Sublicus, o continente conhecido.” + o texto antigo do mapa (que começa com “Este mapa não representa apenas terras…”, embora o mapa em si não esteja mais na página) | [ ] |
+| 3 | “**Inertes:** **pouco excedente**. Sentem pressão de mana mas não canalizam conscientemente.” | Inertes **não possuem** Energia Vital excedente e seguem caminhos físicos | “Inertes: não possuem Energia Vital excedente e seguem caminhos físicos. Sentem pressão de mana mas não canalizam conscientemente.” | [ ] |
+| 4 | “**Vital (Vita):** energia pessoal. **Até 190%: técnicas básicas. A partir de 191%: habilidade única desperta.**” | Energia Vital (**mana**); Vitalistas **nascem** com uma única habilidade (o Aspecto) | “Vital (mana): energia pessoal, o combustível das habilidades e dos feitiços. Todos a possuem; quem não tem magia a chama de vigor.” — **os limiares 190%/191% saíram** | [ ] |
+| 5 | Nomes “**Lumen**” (Positiva) e “**Umbra**” (Negativa); “dom único”; “habilidade única desperta” | “Energia Positiva”/“Energia Negativa”; **Aspecto**; poder medido em **Elos** | Os textos de Lumen e Umbra continuam (não contradizem, só dão outro nome); “Aspecto” e “Elos” vêm do Cap. 00 nas sanfonas próprias | [ ] manter Lumen/Umbra |
+| 6 | “**As Guildas** de Aventureiros são organizações independentes…” (várias) | “**A Guilda** dos Aventureiros é a maior organização de Sublicus” (uma) | Plural mantido no texto antigo; o resumo da sanfona usa o Cap. 00 | [ ] |
+| 7 | Clã da Lua “os olhos ocultos **de Kaleidos**”; Clã do Sol “a maior biblioteca **de Kaleidos**” | Os clãs têm **território próprio** e mantêm a paz **entre** Kaleidos e Aeon (Lua e Sol ficam **perto** de Kaleidos) | Texto antigo mantido (não chega a contradizer); o resumo de cada clã mostra a posição do Cap. 00 | [ ] |
+| 8 | Clã das Feras: “Fundaram a Guilda de Aventureiros” (nada sobre onde ficam) | Clã das Feras fica **dentro do território de Aeon** | Os dois: resumo do Cap. 00 + texto antigo. Sem conflito direto | — |
+| 9 | Aeon: “diz servir aos deuses… ordens são decretos divinos” (sem líder citado) | Teocracia da Pureza **liderada por uma Suma Sacerdotisa** | Os dois juntos. Sem conflito direto | — |
 
-## 5. Trailer
+Fora do Capítulo 00 (diferenças com os **capítulos** da webnovel, só para você saber — ficou o texto antigo, como pedido):
+Yumi “instrutora e guarda-costas” (nos capítulos ela é **conselheira**); Kagemitsu “general/líder” (nos capítulos, **ancião**);
+Ato I “Lunaris Fortuna parece segura” (na webnovel Azuos chega primeiro ao Clã da Lua).
+
+**Não restaurado (e por quê):**
+- a pergunta antiga “**Preciso ter lido algo antes?** Não. ACDA é o ponto de entrada da saga…” — contradiz a sua resposta nova
+  “Por qual eu começo? Pela webnovel”;
+- a grade “Saga ACDA — 5 Volumes” (Vol. I disponível, II em produção, III–V em breve) e a aba “Formatos & Entrega” — repetem o
+  card da edição compacta e a aba “A saga”; voltam se você quiser;
+- as **imagens** das abas (pedido) e o mapa.
+
+## 5. Enciclopédia — `/anjo-devorador/enciclopedia`
+
+**Por que uma página própria (e não uma seção):** o Capítulo 00 tem ~100 parágrafos; dentro da página da obra ele dobraria a
+rolagem e esconderia o resto. Como subpágina, o endereço mostra a que obra pertence, tem título e descrição próprios no Google
+e pode ser compartilhada direto. A página da obra aponta para ela no destaque do universo e no menu interno.
+
+- **Texto:** o Capítulo 00 **oficial, completo, sem edição** — a edição em português quando o site está em PT e a edição em
+  inglês (Devouring Angel) quando está em EN. Copiado da Webnovel e conferido: hash SHA-256 idêntico ao da plataforma e
+  **0 linhas faltando** nos dois idiomas. Inclui a nota de abertura e a “Nota do Autor”.
+- **Única mudança de forma (não de palavra):** em “Dragões”, o PT tem duas linhas (“Eles não negociam.” / “Eles destroem tudo
+  em seu caminho.”) onde o EN tem uma; no PT elas ficam no mesmo parágrafo, com quebra de linha.
+- **Leitura:** sumário com âncoras (20 seções + abertura; no celular abre e fecha, no computador fica fixo ao lado e marca a
+  seção da vez), coluna de ~68 caracteres, títulos em Cinzel, escala de criaturas destacada, botão “voltar ao topo”, link
+  “← Anjo Devorador” e “Voltar para a página da obra”, botões **Ler em português / Read in English** (com UTM
+  `utm_content=enciclopedia`).
+- **Textos da página (EN):** “Encyclopedia of the universe”, “Chapter 00 · Universe”, “Official text of the webnovel’s Chapter 00,
+  English edition (Devouring Angel).”, “Contents”, “Back to top”, “Back to the story page”.
+- Sitemap: `/anjo-devorador/enciclopedia` e `?lang=en`. schema.org `Article` ligado ao `Book` da obra.
+- Gerada por `gera_enciclopedia.py` a partir do texto salvo; se o autor mudar o Capítulo 00 na Webnovel, é só gerar de novo.
+
+## 6. Bestiário (pronto e oculto)
+
+Nada aparece para o público hoje: a aba e o painel estão em `<template>` e só entram na página se a constante for `true`.
+
+**Para ativar** — em `anjo-devorador.html`, no script do fim da página:
+```js
+const MOSTRAR_BESTIARIO = true;
+```
+**Para cadastrar criaturas** — no mesmo lugar, a lista `BESTIARIO`:
+```js
+const BESTIARIO = [
+  { nome: { pt: 'Presas Douradas', en: 'Golden Fangs' }, classe: 'fera', elos: 1,
+    texto: { pt: 'Texto em português…', en: 'Text in English…' } },
+];
+```
+- `classe`: `'fera' | 'monstro' | 'demonio' | 'voidrin'` (a escala do Capítulo 00; o selo sai traduzido sozinho).
+- `elos`: número de 0 a 5, ou `null` para não mostrar.
+- O card (`.ob-besta`: nome, selo da classe, Elos e texto) e o estilo já estão em `assets/css/obra.css`; a aba entra depois de
+  “Personagens”. O teste `tools/teste-obra.py` hoje confere que o Bestiário **não** aparece — ao ativar, ajuste essa linha.
+
+## 7. Trailer
 
 Continua oculto no `<template id="trailer-pendente">`.
 
-## 6. Fechamento
+## 8. Fechamento
 
 | PT | EN | Fonte |
 |---|---|---|
 | Comece agora | Start now | — |
 | Onde ler — Na Webnovel, grátis, com capítulo novo todo dia. | Where to read — On Webnovel, free, with a new chapter every day. | Raul / Webnovel |
 | Onde comprar — As Cinzas do Amanhã — Vol. 1, a edição compacta em romance. | Where to buy — … the compact edition as a novel (in Portuguese). | Raul / Site |
-| Receba novidades da obra (nome, e-mail, Assinar) | Get news about the story | Raul; usa a mesma newsletter do site (`source: anjo-devorador`) |
+| Receba novidades da obra (nome, e-mail, Assinar) | Get news about the story | Raul; mesma newsletter do site (`source: anjo-devorador`) |
 | @universo_noheroes no Instagram | @universo_noheroes on Instagram | Site (rodapé, “Redes da obra”) |
 
-## 7. SEO
+**Menu interno (novo, fixo abaixo do header):** Edições · Perguntas · Universo · Enciclopédia · Onde ler /
+Editions · Questions · Universe · Encyclopedia · Where to read.
+
+## 9. SEO
 
 - Título PT: **Anjo Devorador — webnovel de dark fantasy | NoHeroes** · EN: **Anjo Devorador (Devouring Angel) — dark fantasy webnovel | NoHeroes**
 - Descrição PT: Anjo Devorador, a webnovel de dark fantasy de Raul Takagi: capítulo novo todo dia, leitura grátis, em português e inglês. Conheça as duas edições, o mundo de Caelum e os personagens.
-- Descrição EN: Anjo Devorador (Devouring Angel), the dark fantasy webnovel by Raul Takagi: a new chapter every day, free to read, in Portuguese and English. Meet the two editions, the world of Caelum and its characters.
-- Compartilhamento (og/twitter) PT: “Capítulo novo todo dia, grátis, em português e inglês. Uma história, duas edições: a webnovel e o romance As Cinzas do Amanhã.” / EN equivalente.
-- schema.org `Book` “Anjo Devorador” (alternateName: Devouring Angel, As Cinzas do Amanhã), autor **Raul Takagi Sato Souza**,
-  `workExample`: a webnovel (expandida, grátis, PT/EN, com a tradução EN ligada) e o romance (compacta, Vol. 1, PT, 402 páginas).
-- canonical, hreflang (pt-BR, en, x-default), og:url e sitemap → `/anjo-devorador`.
+- schema.org `Book` com as duas edições (`workExample`: webnovel e romance), autor **Raul Takagi Sato Souza**.
+- Enciclopédia: título “Enciclopédia do universo — Anjo Devorador | NoHeroes” / “Encyclopedia of the universe — Devouring Angel | NoHeroes”.
+- canonical, hreflang, og:url e sitemap → `/anjo-devorador` e `/anjo-devorador/enciclopedia`.
 
-## 8. Fora da página
+## 10. Fora da página
 
-- **Botão [i]** “Sobre a obra” / “About the story” → `/anjo-devorador`, ao lado de: home (topo e seção Obra, PT e EN), 404,
-  sobre (botão e link), linktree (botão principal e bloco Web Novel), portfólio (Escrita → card da webnovel) e loja (produto ACDA).
-- **Menu e rodapé**: “Anjo Devorador” agora abre `/anjo-devorador` (antes `/#obra`). Em “Sobre”, “Conhecer as obras” continua em `/#obra`, porque fala de todas as obras (inclui a trilogia Sistema Vivo).
-- **Links antigos**: `/acda` e `/acda.html` → 301 para `/anjo-devorador` (a âncora segue: `#comprar`, `#personagens`, `#universo`,
-  `#atos`, `#mundo`). Home “Comprar o livro” e portfólio já apontam direto para a página nova.
-- **Loja**: no produto ACDA, o “Mais informações” virou “Sobre a obra” (mesmo rótulo do [i]).
-- **Banco (produto 7)** — migração `backend/migrations/2026-10-obra-acda-nome.sql` (branch `obra-anjo-devorador` do backend),
-  **ainda não aplicada em produção** (aplicar junto com o merge):
-  - name: `No Heroes As Cinzas Do Amanhã (PDF)` → **As Cinzas do Amanhã — Vol. 1 (edição compacta, romance)**
-  - name_en: (vazio) → **As Cinzas do Amanhã — Vol. 1 (compact edition, novel)**
-  - detailsUrl: `/acda.html` → `/anjo-devorador`
-  - **Raul: o nome novo tira o “(PDF)”.** Na loja o produto continua com o selo de digital; se preferir, dá para manter “(PDF)” no fim.
+- **Botão [i]** “Sobre a obra” / “About the story” → `/anjo-devorador` ao lado de toda leitura da obra: home (topo e seção Obra),
+  404, sobre (botão e link), linktree (botão e bloco Web Novel), portfólio (Escrita) e loja (produto ACDA). Na enciclopédia não
+  há [i]: ela já é parte da obra e tem dois links de volta para a página.
+- **Menu e rodapé:** “Anjo Devorador” → `/anjo-devorador`.
+- **Links antigos:** `/acda` e `/acda.html` → 301 para `/anjo-devorador` (a âncora segue).
+- **Loja:** no produto ACDA, “Sobre a obra” no lugar de “Mais informações”.
+- **Banco (produto 7)** — `backend/migrations/2026-10-obra-acda-nome.sql` (branch `obra-anjo-devorador` do backend), aplicar junto
+  com o merge: nome **As Cinzas do Amanhã — Vol. 1 (edição compacta, romance)** / **As Cinzas do Amanhã — Vol. 1 (compact edition, novel)**, `detailsUrl` → `/anjo-devorador`.
+- **Ajuste técnico:** o header, o rodapé e as imagens otimizadas agora usam caminhos absolutos (`/assets/…`), para funcionar em
+  páginas de subpasta como a enciclopédia.
 
-## 9. O que ficou de fora (e por quê)
+## 11. Para decidir
 
-**Estava no site antigo, mas ainda não apareceu em nenhum dos 57 capítulos (seria spoiler ou fato sem fonte).**
-Os nomes abaixo marcados com ★ voltaram só como nome + frase na seção “O que vem por aí” (4b), à sua decisão;
-o resto (descrições, papéis, regras, números) continua fora:
-- ★ o nome “Marca Negra” (a marca no peito de Azuos aparece no Cap. 1, mas sem nome) e o card “???” (entidade desconhecida)
-- ★ os personagens Runan e Koda
-- ★ Oni Vagante, O Bom Dragão, Barões Anciãos, Valdaryon, Relógio de Draugh
-- ★ a Legião Negra e as sinopses dos Atos II a V; o sumário do Vol. 1 (fala de torneio, marionetes e observadores, que a webnovel ainda não mostrou)
-- ★ Lumen/Umbra; fora: os limiares de 190%/191% e as “Regras de Caelum” (demônios renascem, criar vida é impossível etc.)
-- ★ zepelins, portais arcanos e montarias vivas (e ★ relógios rúnicos)
-- a Guilda com Rank “S+” (o Cap. 00 diz E a S) e “o Clã das Feras fundou a Guilda”
-- detalhes dos personagens que os capítulos não confirmam: Cerverus “da realeza draconiana” e “figura paterna”; Sado
-  “vitalista do furto”; Sakura “mestra de assassinato”; Yumi “instrutora e guarda-costas”; Slyther “venenoso”
-- a biblioteca do Clã do Sol e as descrições longas dos clãs (só a localização está no Cap. 00)
-- o mapa de Caelum (o arquivo é um placeholder e o texto dele não está nos capítulos)
-
-**Pouca informação publicada:** ★ Culto do Vazio (só o nome, no Cap. 33).
-
-**Saiu por foco, sem problema de spoiler — pode voltar se você quiser:** “Por que ACDA é a obra-pilar”, “Para quem é”,
-“Estética & inspiração” (Berserk, Fairy Tail, Bleach, soulslike) e os modais “Um mundo em colapso”/“O coração do conflito”.
-
-## 10. Para decidir
-
-1. O selo “Capítulo novo todo dia” — hoje o ritmo é quase diário (houve intervalos de 2 dias).
-2. A frase sobre tradução com IA na pergunta “Em quais idiomas?”.
-3. O nome do produto sem “(PDF)”.
-4. Prévia: a API só aceita o domínio oficial, então **na prévia** a loja, o preço vindo da loja e a newsletter não falam
-   com a API (aparece o aviso de manutenção na loja). Na página da obra o preço fica no valor fixo (R$ 14,97).
-   No domínio oficial, depois do merge, tudo funciona.
+1. Os 9 itens da seção 4b (conflitos com o Capítulo 00).
+2. A frase sobre tradução com IA em “Em quais idiomas?” (continua, como pedido).
+3. Se a grade de volumes e a pergunta “Preciso ter lido algo antes?” devem voltar.

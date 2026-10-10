@@ -21,7 +21,7 @@ def versao(caminho):
 
 
 mudou = 0
-for f in glob.glob('*.html'):
+for f in glob.glob('*.html') + glob.glob('anjo-devorador/*.html'):  # páginas em subpasta usam /assets/… (absoluto)
     s = io.open(f, encoding='utf-8', newline='').read()
     def rep(m):
         v = versao(m.group(3))

@@ -30,15 +30,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
   <link rel="preload" as="image" fetchpriority="high" href="assets/img/anjodevorador-480.webp" imagesrcset="assets/img/anjodevorador-320.webp 320w, assets/img/anjodevorador-480.webp 480w, assets/img/anjodevorador-960.webp 960w" imagesizes="(min-width: 768px) 300px, 190px">
-  <link rel="stylesheet" href="assets/css/tw.css?v=f9b5a138da">
+  <link rel="stylesheet" href="assets/css/tw.css?v=5ac32d3050">
   <link rel="stylesheet" href="assets/css/noheroes-ui.css?v=662aa10064">
   <link rel="stylesheet" href="assets/css/paginas.css?v=a013b35520">
-  <link rel="stylesheet" href="assets/css/obra.css?v=27044b1a13">
+  <link rel="stylesheet" href="assets/css/obra.css?v=a0e987ba88">
   <script src="assets/js/i18n.js?v=a0a8450a3b"></script>
   <script src="assets/i18n/comum.js?v=9043f3b63e"></script>
-  <script src="assets/i18n/obra.js?v=66f21175ed"></script>
-  <script src="assets/js/config.js?v=2e78d624f2"></script>
-  <script defer src="assets/js/noheroes-ui.js?v=2c2a7db9fc"></script>
+  <script src="assets/i18n/acda.js?v=04e927b04d"></script>
+  <script src="assets/i18n/obra.js?v=9bd4981df6"></script>
+  <script src="assets/js/config.js?v=b288e9296c"></script>
+  <script defer src="assets/js/noheroes-ui.js?v=4187397f12"></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -116,6 +117,17 @@
     </div>
   </section>
 
+  <!-- menu interno da página (fixo abaixo do header) -->
+  <nav class="ob-subnav" aria-label="Nesta página" data-i18n-attr="aria-label:ob.nav.rotulo">
+    <ul>
+      <li><a href="#edicoes" data-i18n="ob.nav.edicoes">Edições</a></li>
+      <li><a href="#perguntas" data-i18n="ob.nav.perguntas">Perguntas</a></li>
+      <li><a href="#universo" data-i18n="ob.nav.universo">Universo</a></li>
+      <li><a href="/anjo-devorador/enciclopedia" data-i18n="ob.nav.enciclopedia">Enciclopédia</a></li>
+      <li><a href="#onde-ler" data-i18n="ob.nav.ler">Onde ler</a></li>
+    </ul>
+  </nav>
+
   <!-- ═══ DUAS EDIÇÕES ═══ -->
   <span id="atos" class="ob-ancora" aria-hidden="true"></span>
   <section id="edicoes" class="nh-secao" aria-labelledby="ed-titulo">
@@ -163,6 +175,14 @@
             <a class="nh-btn nh-btn-pri" href="/store"><span class="ob-preco" data-i18n="ob.ed.acda_ebook">Comprar o e-book — R$ 14,97</span></a>
             <a class="nh-btn nh-btn-sec" href="https://loja.uiclap.com/titulo/ua145735" target="_blank" rel="noopener" data-i18n="ob.ed.acda_fisico">Livro físico (Uiclap)</a>
           </div>
+          <details>
+            <summary data-i18n="acd.49">Sumário</summary>
+            <ol class="ob-lista ob-num ob-mini"><li data-i18n="acd.52">Entrada no mundo — Azuos e o "ponto sem volta"</li><li data-i18n="acd.53">Lunaris Fortuna — neutralidade, brilho e tensão</li><li data-i18n="acd.54">Cúpulas/Barreiras — a solução que virou narrativa oficial</li><li data-i18n="acd.55">Clãs e hierarquias — símbolos, títulos e seleção</li><li data-i18n="acd.56">Magia vs Vitalismo — dom inato, regras ignoradas e medo</li><li data-i18n="acd.57">Confrontos — vitrine, política e armadilhas</li><li data-i18n="acd.58">Ameaças emergentes — marionetes, dragões e observadores</li><li data-i18n="acd.59">Fechamento do Ato I — o estopim do que vem depois</li></ol>
+          </details>
+          <details>
+            <summary data-i18n="acd.50">Para quem é</summary>
+            <ul class="ob-lista ob-mini"><li data-i18n="acd.60">Leitores de dark fantasy que gostam de sistema de poder e consequências.</li><li data-i18n="acd.61">Quem quer a obra-origem do universo NoHeroes (a base da lore).</li><li data-i18n="acd.62">Fãs de clãs/facções, intriga e competição tensa — sem "herói perfeito".</li><li data-i18n="acd.63">Quem curte mundos vivos, magia com regras e ameaça constante.</li></ul>
+          </details>
           <p class="ob-letra" data-i18n="ob.ed.acda_nota">E-book: fica no seu inventário depois da compra. Livro físico: vendido pela Uiclap, com o prazo da plataforma.</p>
         </article>
       </div>
@@ -196,154 +216,260 @@
           <summary data-i18n="ob.faq.q5">Em quais idiomas?</summary>
           <p data-i18n="ob.faq.a5">Anjo Devorador sai em português, a língua original, e em inglês, com o título Devouring Angel. A versão em inglês é traduzida com auxílio de IA, como o autor explica na própria Webnovel. As Cinzas do Amanhã está em português.</p>
         </details>
+        <details>
+          <summary data-i18n="acd.73">O que torna esse mundo diferente?</summary>
+          <p data-i18n="acd.74">O sistema de poder (magos vs vitalistas), as cúpulas/barreiras, e a sensação constante de que o espetáculo é só uma camada — por baixo tem política e ameaça antiga.</p>
+        </details>
+        <details>
+          <summary data-i18n="acd.75">O tom é leve ou mais sombrio?</summary>
+          <p data-i18n="acd.76">Fantasia sombria: consequências, dilemas e um mundo que não recompensa ingenuidade.</p>
+        </details>
       </div>
     </div>
   </section>
 
-  <!-- ═══ O UNIVERSO ═══ -->
+  <!-- ═══ O UNIVERSO ═══
+       Textos da página antiga (/acda) restaurados com as mesmas chaves acd.* (EN em assets/i18n/acda.js) + Capítulo 00
+       (chaves ob.*). Onde a página antiga contradiz o Capítulo 00, vale o Capítulo 00 (chaves ob.conf.*; lista no REVISAO_OBRA.md).
+       Gerado por scratchpad/gera_universo.py; o Bestiário fica pronto e oculto (MOSTRAR_BESTIARIO no script da página). -->
   <span id="mundo" class="ob-ancora" aria-hidden="true"></span>
   <section id="universo" class="nh-secao" aria-labelledby="uni-titulo" style="padding-top:0">
     <div class="nh-wrap">
       <div class="nh-secao-topo">
         <h2 id="uni-titulo" class="nh-h2" data-i18n="ob.uni.titulo">O universo</h2>
-        <p class="nh-lead" data-i18n="ob.uni.lead">Tudo aqui já apareceu nos capítulos publicados. O resto, você descobre lendo.</p>
+        <p class="nh-lead" data-i18n="ob.uni.lead">Caelum, suas nações, clãs, lendas e personagens.</p>
       </div>
+      <p class="ob-aviso" role="note"><span class="ob-aviso-ic" aria-hidden="true">✦</span><span data-i18n="ob.aviso">Daqui para baixo há informações sobre o mundo, os personagens e as facções que podem soar como spoilers leves, mas não atrapalham a leitura da obra.</span></p>
+      <a class="ob-enc" href="/anjo-devorador/enciclopedia">
+        <span class="ob-enc-k" data-i18n="ob.enc.kicker">Capítulo 00 completo · PT e EN</span>
+        <span class="ob-enc-t" data-i18n="ob.enc.titulo">Enciclopédia do universo</span>
+        <span class="ob-enc-d" data-i18n="ob.enc.texto">O que todo mundo em Sublicus sabe: o mundo, as nações, as energias, os Elos, as criaturas e a Guilda.</span>
+        <span class="ob-enc-seta" aria-hidden="true">→</span>
+      </a>
 
       <div class="ob-abas" role="tablist" aria-label="O universo" data-i18n-attr="aria-label:ob.uni.titulo">
         <button class="ob-aba" role="tab" id="aba-mundo" aria-controls="painel-mundo" aria-selected="true" data-i18n="ob.aba.mundo">O mundo</button>
         <button class="ob-aba" role="tab" id="aba-lugares" aria-controls="painel-lugares" aria-selected="false" tabindex="-1" data-i18n="ob.aba.lugares">Lugares</button>
-        <button class="ob-aba" role="tab" id="aba-faccoes" aria-controls="painel-faccoes" aria-selected="false" tabindex="-1" data-i18n="ob.aba.faccoes">Clãs e Guilda</button>
-        <button class="ob-aba" role="tab" id="aba-poder" aria-controls="painel-poder" aria-selected="false" tabindex="-1" data-i18n="ob.aba.poder">Poder</button>
+        <button class="ob-aba" role="tab" id="aba-faccoes" aria-controls="painel-faccoes" aria-selected="false" tabindex="-1" data-i18n="ob.aba.faccoes">Clãs e facções</button>
+        <button class="ob-aba" role="tab" id="aba-poder" aria-controls="painel-poder" aria-selected="false" tabindex="-1" data-i18n="ob.aba.poder">Poder e magia</button>
+        <button class="ob-aba" role="tab" id="aba-mitos" aria-controls="painel-mitos" aria-selected="false" tabindex="-1" data-i18n="ob.aba.mitos">Mitos e lendas</button>
+        <button class="ob-aba" role="tab" id="aba-magitec" aria-controls="painel-magitec" aria-selected="false" tabindex="-1" data-i18n="ob.aba.magitec">Magitecnologia</button>
+        <button class="ob-aba" role="tab" id="aba-saga" aria-controls="painel-saga" aria-selected="false" tabindex="-1" data-i18n="ob.aba.saga">A saga</button>
         <button class="ob-aba" role="tab" id="aba-personagens" aria-controls="personagens" aria-selected="false" tabindex="-1" data-i18n="ob.aba.personagens">Personagens</button>
       </div>
 
-      <!-- O MUNDO -->
       <div class="ob-painel" role="tabpanel" id="painel-mundo" aria-labelledby="aba-mundo" tabindex="0">
+        <p class="ob-citacao" data-i18n="acd.130">"Caelum não é um mundo. É um campo de guerra entre monstros, memórias e ambições."</p>
+        <p data-i18n-html="acd.136"><strong>Em ACDA, o mundo não é cenário — é um personagem.</strong> Caelum foi forjado por guerras, criaturas colossais e segredos enterrados. Aqui, magia não é fantasia: é maldição ou redenção.</p>
+        <p data-i18n-html="acd.137">Este é o solo onde Azuos desperta, marcado, caçado e escolhido para algo que ainda não entende.<em>Bem-vindo a Caelum. Onde cada nome carrega uma maldição.</em></p>
         <p data-i18n-html="ob.mundo.p1">O mundo se chama <strong>Caelum</strong>. A história se passa em <strong>Sublicus</strong>, o continente conhecido, onde ficam os reinos, os clãs e as cidades. Há outras terras além dos oceanos, mas atravessá-los é mortal, e poucos retornam.</p>
         <p data-i18n-html="ob.mundo.p2">No horizonte, visível de qualquer ponto do continente, ergue-se uma Torre imensa que desaparece no céu. Todos podem vê-la, mas ninguém sabe o que ela é. Ela é chamada de <strong>“a Semente do Mundo”</strong>.</p>
-        <div class="ob-cards">
-          <div class="ob-card"><div class="ob-card-corpo">
-            <h3 data-i18n="ob.mundo.cupulas_t">As cúpulas</h3>
-            <p data-i18n="ob.mundo.cupulas">Nenhuma cidade sobreviveria a céu aberto. As grandes cidades se protegem sob cúpulas e barreiras mágicas que impedem a entrada de monstros e dragões. Enquanto a cúpula resistir, a cidade vive.</p>
-          </div></div>
-          <div class="ob-card"><div class="ob-card-corpo">
-            <h3 data-i18n="ob.mundo.magitec_t">Magitecnologia</h3>
-            <p data-i18n="ob.mundo.magitec">A civilização depende da união entre magia e tecnologia. Cristais de mana alimentam máquinas, muralhas e as próprias cúpulas, e equipamentos encantados fazem parte do cotidiano.</p>
-          </div></div>
-          <div class="ob-card"><div class="ob-card-corpo">
-            <h3 data-i18n="ob.mundo.dragoes_t">Dragões</h3>
-            <p data-i18n="ob.mundo.dragoes">O maior terror de Caelum: colossais, poderosos e inteligentes. Um soldado comum não consegue derrotar um. Eles não negociam; destroem tudo em seu caminho.</p>
-          </div></div>
-          <div class="ob-card"><div class="ob-card-corpo">
-            <h3 data-i18n="ob.mundo.criaturas_t">Criaturas</h3>
-            <p data-i18n="ob.mundo.criaturas">Os monstros são classificados pela Classe: Fera, Monstro, Demônio e Voidrin. Os Voidrins nascem da Energia Negativa, têm inteligência igual ou superior à humana e são as criaturas mais perigosas que se conhecem.</p>
-          </div></div>
+        <div class="ob-its">
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="ob.it.mapa.t">O continente</span><span class="ob-it-r" data-i18n="ob.conf.mapa.r">Caelum é o mundo; Sublicus, o continente conhecido.</span></summary>
+            <div class="ob-it-c"><p class="ob-pre" data-i18n="acd.img.MAPA_CAELUM.x">Este mapa não representa apenas terras e fronteiras. Ele registra os limites do que ainda sobrevive.
+
+Caelum foi moldado por eras de conflito entre dragões, nações humanas e forças que precedem a própria história. Cada região marcada aqui carrega resquícios de guerras esquecidas, cidades soterradas e pactos jamais quebrados.
+
+Nada em Caelum é estável. Fronteiras mudam. Nações caem. E o mapa… nunca permanece o mesmo por muito tempo.</p></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="acd.info.mundo.t">Um mundo em colapso</span></summary>
+            <div class="ob-it-c"><div class="ob-html" data-i18n-html="acd.info.mundo.b">Civilizações ruíram sob dragões e fome de energia. <strong>Aeon</strong> ergue disciplina como fé; <strong>Kaleidos</strong> vende esperança que não paga a conta. Entre elas, os clãs que outrora aguentavam o impacto estão dilacerados em disputas internas, traições e jogos de poder. Dragões descem dos céus como presságio inevitável, enquanto a <strong>energia negativa</strong> dá origem a demônios e criaturas que se alimentam das próprias emoções humanas. A cada noite, a energia negativa cresce e reescreve o mapa.</div></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="ob.mundo.cupulas_t">As cúpulas</span><span class="ob-it-r" data-i18n-html="acd.41"><strong>A muralha:</strong> cúpulas surgem como resposta às ameaças — dragões e voidrins.</span></summary>
+            <div class="ob-it-c"><p data-i18n="ob.mundo.cupulas">Nenhuma cidade sobreviveria a céu aberto. As grandes cidades se protegem sob cúpulas e barreiras mágicas que impedem a entrada de monstros e dragões. Enquanto a cúpula resistir, a cidade vive.</p></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="ob.mundo.dragoes_t">Dragões</span></summary>
+            <div class="ob-it-c"><p data-i18n="ob.mundo.dragoes">O maior terror de Caelum: colossais, poderosos e inteligentes. Um soldado comum não consegue derrotar um. Eles não negociam; destroem tudo em seu caminho.</p></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="ob.mundo.criaturas_t">Criaturas</span><span class="ob-it-r" data-i18n-html="acd.48"><strong>Ameaças reais:</strong> dragões, marionetes e presenças nas sombras — o perigo não é teoria.</span></summary>
+            <div class="ob-it-c"><p data-i18n="ob.mundo.criaturas">Os monstros são classificados pela Classe: Fera, Monstro, Demônio e Voidrin. Os Voidrins nascem da Energia Negativa, têm inteligência igual ou superior à humana e são as criaturas mais perigosas que se conhecem.</p></div></details>
         </div>
       </div>
 
-      <!-- LUGARES -->
       <div class="ob-painel" role="tabpanel" id="painel-lugares" aria-labelledby="aba-lugares" tabindex="0" hidden>
-        <div class="ob-cards">
-          <div class="ob-card">
-            <img src="assets/img/kaleidos-city-480.webp" alt="" loading="lazy" width="480" height="300">
-            <div class="ob-card-corpo">
-              <h3 data-i18n="ob.lug.kaleidos_t">Kaleidos</h3>
-              <p data-i18n="ob.lug.kaleidos">A Nação da Diversidade e Liberdade: uma democracia multicultural onde humanos, elfos, magos, vitalistas e inertes convivem. A capital, Lunaris Fortuna, é a cidade mais próspera do continente.</p>
-            </div>
-          </div>
-          <div class="ob-card">
-            <img src="assets/img/aeon-cathedral-480.webp" alt="" loading="lazy" width="480" height="300">
-            <div class="ob-card-corpo">
-              <h3 data-i18n="ob.lug.aeon_t">Aeon</h3>
-              <p data-i18n="ob.lug.aeon">A Nação da Ordem e Perfeição: uma teocracia da Pureza, liderada por uma Suma Sacerdotisa. Lá, os inertes são o povo puro, e os vitalistas são perseguidos como impuros. Aeon e Kaleidos já se enfrentaram em guerras e seguem rivais.</p>
-            </div>
-          </div>
-          <div class="ob-card">
-            <img src="assets/img/clan-lua-480.webp" alt="" loading="lazy" width="480" height="300">
-            <div class="ob-card-corpo">
-              <h3 data-i18n="ob.lug.tsuki_t">Tsukigakure</h3>
-              <p data-i18n="ob.lug.tsuki">O lar do Clã da Lua, onde Azuos é acolhido e começa a treinar.</p>
-            </div>
-          </div>
-          <div class="ob-card">
-            <img src="assets/img/floresta-negra-480.webp" alt="" loading="lazy" width="480" height="300">
-            <div class="ob-card-corpo">
-              <h3 data-i18n="ob.lug.florestas_t">As florestas</h3>
-              <p data-i18n="ob.lug.florestas">Azuos desperta perto da Floresta Negra e sobrevive à Floresta Lupina antes de chegar ao Clã da Lua.</p>
-            </div>
-          </div>
+        <div class="ob-its">
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="acd.147">Kaleidos — Democracia rebelde</span><span class="ob-it-r" data-i18n="acd.148">"Fragmentada, multicultural, perigosa. Unidos pela liberdade e pelo ódio à tirania de Aeon."</span></summary>
+            <div class="ob-it-c"><p data-i18n="ob.lug.kaleidos">A Nação da Diversidade e Liberdade: uma democracia multicultural onde humanos, elfos, magos, vitalistas e inertes convivem. A capital, Lunaris Fortuna, é a cidade mais próspera do continente.</p><p class="ob-pre" data-i18n="acd.img.KALEIDOS_CIDADE.x">Kaleidos não é unificada. É um mosaico de culturas, crenças e contradições.
+
+Aqui, bairros funcionam como pequenas nações, cada um com suas próprias regras, líderes e conflitos internos. A convivência não nasce da harmonia, mas da necessidade.
+
+Unidos apenas pelo ódio comum à tirania de Aeon, os habitantes de Kaleidos vivem em constante tensão, equilibrando liberdade e caos.</p></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="acd.145">Aeon — Teocracia totalitária</span><span class="ob-it-r" data-i18n="acd.146">"Uma nação que diz servir aos deuses, mas age como se fosse um. Ordens são decretos divinos."</span></summary>
+            <div class="ob-it-c"><p data-i18n="ob.lug.aeon">A Nação da Ordem e Perfeição: uma teocracia da Pureza, liderada por uma Suma Sacerdotisa. Lá, os inertes são o povo puro, e os vitalistas são perseguidos como impuros. Aeon e Kaleidos já se enfrentaram em guerras e seguem rivais.</p><p class="ob-pre" data-i18n="acd.img.AEON_CATEDRAL.x">Aeon se ergue sob o dogma absoluto. Suas catedrais não foram construídas para inspirar fé, mas para impor obediência.
+
+Cada estrutura monumental serve como lembrete constante de que questionar é heresia e que a ordem precede a liberdade.
+
+A luz que emana de Aeon não aquece. Ela observa.
+
+Em Aeon, não há espaço para dúvida. A fé é lei. E a lei… é eterna.</p></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="ob.lug.lunaris_t">Lunaris Fortuna</span><span class="ob-it-r" data-i18n-html="acd.45"><strong>Lunaris Fortuna:</strong> cidade construída com a natureza — arquitetura e mana integradas.</span></summary>
+            <div class="ob-it-c"><p data-i18n="ob.lug.lunaris">Capital de Kaleidos e a cidade mais próspera do continente.</p></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="ob.lug.tsuki_t">Tsukigakure</span></summary>
+            <div class="ob-it-c"><p data-i18n="ob.lug.tsuki">O lar do Clã da Lua, onde Azuos é acolhido e começa a treinar.</p></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="ob.lug.florestas_t">As florestas</span></summary>
+            <div class="ob-it-c"><p data-i18n="ob.lug.florestas">Azuos desperta perto da Floresta Negra e sobrevive à Floresta Lupina antes de chegar ao Clã da Lua.</p></div></details>
         </div>
       </div>
 
-      <!-- CLÃS E GUILDA -->
       <div class="ob-painel" role="tabpanel" id="painel-faccoes" aria-labelledby="aba-faccoes" tabindex="0" hidden>
         <p data-i18n="ob.fac.p1">Além das nações, Sublicus tem quatro grandes clãs, cada um com seu território. Juntos, eles mantêm a paz entre Kaleidos e Aeon, e boa parte da política e das guerras do continente gira em torno deles.</p>
-        <div class="ob-cards ob-cards-3">
-          <div class="ob-card">
-            <img src="assets/img/clan-lua-480.webp" alt="" loading="lazy" width="480" height="300">
-            <div class="ob-card-corpo"><h3 data-i18n="ob.fac.lua_t">Clã da Lua</h3><p data-i18n="ob.fac.lua">Perto de Kaleidos. Forma os caçadores e assassinos mais letais de Sublicus.</p></div>
-          </div>
-          <div class="ob-card">
-            <img src="assets/img/clan-sol-480.webp" alt="" loading="lazy" width="480" height="300">
-            <div class="ob-card-corpo"><h3 data-i18n="ob.fac.sol_t">Clã do Sol</h3><p data-i18n="ob.fac.sol">Também fica perto de Kaleidos.</p></div>
-          </div>
-          <div class="ob-card">
-            <img src="assets/img/clan-runas-480.webp" alt="" loading="lazy" width="480" height="300">
-            <div class="ob-card-corpo"><h3 data-i18n="ob.fac.runas_t">Clã das Runas</h3><p data-i18n="ob.fac.runas">Ocupa a fronteira entre as duas nações.</p></div>
-          </div>
-          <div class="ob-card">
-            <img src="assets/img/clan-feras-480.webp" alt="" loading="lazy" width="480" height="300">
-            <div class="ob-card-corpo"><h3 data-i18n="ob.fac.feras_t">Clã das Feras</h3><p data-i18n="ob.fac.feras">Fica dentro do território de Aeon.</p></div>
-          </div>
-          <div class="ob-card">
-            <img src="assets/img/guilda-avent-480.webp" alt="" loading="lazy" width="480" height="300">
-            <div class="ob-card-corpo"><h3 data-i18n="ob.fac.guilda_t">Guilda dos Aventureiros</h3><p data-i18n="ob.fac.guilda">A maior organização de Sublicus: neutra e presente em todo lugar. Avalia cada aventureiro em provas práticas e lhe dá um Rank, de E (o mais baixo) a S (o mais alto). O Rank mede a capacidade comprovada; os Elos, o poder bruto.</p></div>
-          </div>
+        <p data-i18n-html="acd.149"><strong>Clãs:</strong> Lua (assassinos), Sol (luxo/sabedoria), Feras (instinto), Runas (magia antiga).</p>
+        <p data-i18n-html="acd.47"><strong>Clãs em guerra fria:</strong> símbolos, títulos, arena e hierarquia que definem a saga.</p>
+        <div class="ob-its">
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="ob.fac.lua_t">Clã da Lua</span><span class="ob-it-r" data-i18n="ob.fac.lua">Perto de Kaleidos. Forma os caçadores e assassinos mais letais de Sublicus.</span></summary>
+            <div class="ob-it-c"><p class="ob-pre" data-i18n="acd.img.CLA_LUA.x">Entre os quatro grandes clãs de Caelum, o Clã da Lua é lembrado pela precisão e pelo silêncio.
+
+Especialistas em espionagem, rastreamento e assassinato, forjaram sua reputação como os olhos ocultos de Kaleidos.
+
+Silenciosos, pacientes e implacáveis, os filhos da Lua aprenderam a transformar o próprio silêncio em arma.</p></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="ob.fac.sol_t">Clã do Sol</span><span class="ob-it-r" data-i18n="ob.fac.sol">Também fica perto de Kaleidos.</span></summary>
+            <div class="ob-it-c"><p class="ob-pre" data-i18n="acd.img.CLA_SOL.x">O Clã do Sol é o mais antigo entre os grandes clãs de Caelum.
+
+São mestres do conhecimento arcano, formando magos eruditos e guerreiros disciplinados. Administram a maior biblioteca de Kaleidos.
+
+Na guerra, são lanças de fogo. Na paz, são guardiões da palavra.</p></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="ob.fac.runas_t">Clã das Runas</span><span class="ob-it-r" data-i18n="ob.fac.runas">Ocupa a fronteira entre as duas nações.</span></summary>
+            <div class="ob-it-c"><p class="ob-pre" data-i18n="acd.img.CLA_RUNAS.x">Nenhum clã carrega tradição tão profunda quanto o Clã das Runas.
+
+Mestres da magia rúnica e arcana, são responsáveis pela maior parte da magitecnologia conhecida. Armas encantadas, barreiras defensivas e rotas de transporte nascem de suas forjas.
+
+Onde há progresso, há o toque das Runas.</p></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="ob.fac.feras_t">Clã das Feras</span><span class="ob-it-r" data-i18n="ob.fac.feras">Fica dentro do território de Aeon.</span></summary>
+            <div class="ob-it-c"><p class="ob-pre" data-i18n="acd.img.CLA_FERAS.x">O Clã das Feras é lembrado tanto por sua força quanto pela alegria de seu povo.
+
+São druidas e guerreiros de vigor extremo, muitos com traços animalescos herdados de rituais antigos. Fundaram a Guilda de Aventureiros.
+
+Mesmo em tempos de guerra, são eles que lembram aos povos que viver também é motivo para brindar.</p></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="ob.fac.guilda_t">Guilda dos Aventureiros</span><span class="ob-it-r" data-i18n="ob.fac.guilda">A maior organização de Sublicus: neutra e presente em todo lugar. Avalia cada aventureiro em provas práticas e lhe dá um Rank, de E (o mais baixo) a S (o mais alto). O Rank mede a capacidade comprovada; os Elos, o poder bruto.</span></summary>
+            <div class="ob-it-c"><p class="ob-pre" data-i18n="ob.conf.guilda">As Guildas de Aventureiros são organizações independentes, reconhecidas em todo o continente. Não servem a nações nem a clãs.
+
+A hierarquia é definida por colares de prestígio, que variam do Rank E ao Rank S.
+
+Ser aventureiro não é apenas um ofício. É pertencer a uma irmandade que sobreviveu à ruína de reinos.</p></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="acd.164">Culto do Vazio</span><span class="ob-it-r" data-i18n-html="acd.150"><strong>Facções:</strong> Culto do Vazio (corrupção) e Guilda de Aventureiros (caos útil).</span></summary>
+            <div class="ob-it-c"><p class="ob-pre" data-i18n="acd.img.CULTO_VAZIO.x">Há quem diga que o culto nasceu como uma seita, rezando às criaturas do vazio em troca de poder. Com o tempo, deixaram de se ajoelhar… e aprenderam a comandar.
+
+Hoje sussurra-se que movem nações como marionetes. Ninguém sabe quantos são. Nem onde estão.</p></div></details>
         </div>
       </div>
 
-      <!-- PODER -->
       <div class="ob-painel" role="tabpanel" id="painel-poder" aria-labelledby="aba-poder" tabindex="0" hidden>
-        <div class="ob-cards" style="margin-top:0">
-          <div class="ob-card"><div class="ob-card-corpo">
-            <h3 data-i18n="ob.poder.energias_t">As três energias</h3>
-            <p data-i18n="ob.poder.energias">Toda magia vem de três energias. A Energia Vital (mana) é o combustível das habilidades e dos feitiços; todos a possuem. A Energia Positiva e a Energia Negativa nascem das emoções: a positiva eleva, a negativa corrompe, e acumulá-la é perigoso e condenado.</p>
-          </div></div>
-          <div class="ob-card"><div class="ob-card-corpo">
-            <h3 data-i18n="ob.poder.naturezas_t">Inertes, Magos e Vitalistas</h3>
-            <p data-i18n="ob.poder.naturezas">As pessoas se dividem pela Energia Vital excedente. Os Inertes não têm excedente e seguem caminhos físicos. Os Magos têm o bastante para aprender magia. Os Vitalistas não aprendem magia: nascem com uma única habilidade, só deles.</p>
-          </div></div>
-          <div class="ob-card"><div class="ob-card-corpo">
-            <h3 data-i18n="ob.poder.aspecto_t">O Aspecto</h3>
-            <p data-i18n="ob.poder.aspecto">A habilidade de um Vitalista se chama Aspecto, e nenhum se repete entre duas pessoas. Um Vitalista pode tomar a habilidade de outro; por isso, e por guerras antigas, eles são temidos, odiados e caçados. Muitos se passam por Magos.</p>
-          </div></div>
-          <div class="ob-card"><div class="ob-card-corpo">
-            <h3 data-i18n="ob.poder.elos_t">Os Elos</h3>
-            <p data-i18n="ob.poder.elos">Quem cultiva forja Elos dentro de si, também chamados de Núcleos ou Chacras: centros de energia que acumulam poder. O mundo conhece até cinco; um sexto é só especulação. Pessoas e criaturas são medidas por essa contagem.</p>
-          </div></div>
-          <div class="ob-card"><div class="ob-card-corpo">
-            <h3 data-i18n="ob.poder.negra_t">Magia negra</h3>
-            <p data-i18n="ob.poder.negra">É proibida e condenada em todo o continente. Não usa mana, e sim rituais e sacrifícios, por isso qualquer pessoa pode praticá-la.</p>
-          </div></div>
-          <div class="ob-card"><div class="ob-card-corpo">
-            <h3 data-i18n="ob.poder.classes_t">As classes</h3>
-            <p data-i18n="ob.poder.classes">A profissão se escolhe pela aptidão, porque a escolha errada pode ser fatal. De combate: Guerreiro, Colosso, Monge, Ladino e Caçador. Mágicas: Mago, Druida e Sacerdote.</p>
-          </div></div>
+        <p class="ob-citacao" data-i18n="acd.168">"Poder não é privilégio. É herança, fardo... ou ruína."</p>
+        <p data-i18n-html="acd.169">Em <strong>Caelum</strong>, magia não é "truque" nem "dom gratuito". Toda manifestação mágica vem de <strong>mana excedente</strong> — energia que transborda do corpo e da alma. O problema é que esse poder sempre cobra: <strong>cansaço, risco, corrupção ou consequências irreversíveis</strong>.</p>
+        <div class="ob-its">
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="ob.poder.energias_t">As três energias</span></summary>
+            <div class="ob-it-c"><p data-i18n="ob.poder.energias">Toda magia vem de três energias. A Energia Vital (mana) é o combustível das habilidades e dos feitiços; todos a possuem. A Energia Positiva e a Energia Negativa nascem das emoções: a positiva eleva, a negativa corrompe, e acumulá-la é perigoso e condenado.</p><ul class="ob-lista"><li data-i18n-html="ob.conf.vital"><strong>Vital (mana):</strong> energia pessoal, o combustível das habilidades e dos feitiços. Todos a possuem; quem não tem magia a chama de vigor.</li><li data-i18n-html="acd.172"><strong>Positiva (Lumen):</strong> restauração, purificação. Pode queimar, expor e julgar.</li><li data-i18n-html="acd.173"><strong>Negativa (Umbra):</strong> ruína e distorção. Poder rápido — cobra sanidade, humanidade e destino.</li></ul></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="ob.poder.naturezas_t">Inertes, Magos e Vitalistas</span></summary>
+            <div class="ob-it-c"><p data-i18n="ob.poder.naturezas">As pessoas se dividem pela Energia Vital excedente. Os Inertes não têm excedente e seguem caminhos físicos. Os Magos têm o bastante para aprender magia. Os Vitalistas não aprendem magia: nascem com uma única habilidade, só deles.</p><ul class="ob-lista"><li data-i18n-html="ob.conf.inertes"><strong>Inertes:</strong> não possuem Energia Vital excedente e seguem caminhos físicos. Sentem pressão de mana mas não canalizam conscientemente.</li><li data-i18n-html="acd.176"><strong>Magos:</strong> moldam mana por técnica e estudo. Versáteis, mas limitados contra vitalistas de alto nível.</li><li data-i18n-html="acd.177"><strong>Vitalistas:</strong> anomalia — o corpo vira motor mágico. Ultrapassam limites humanos. Vivem no fio da navalha.</li></ul></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="ob.poder.aspecto_t">O Aspecto</span><span class="ob-it-r" data-i18n-html="acd.46"><strong>Vitalismo:</strong> dom inato que ignora regras — pode ser "absorvido" em confrontos.</span></summary>
+            <div class="ob-it-c"><p data-i18n="ob.poder.aspecto">A habilidade de um Vitalista se chama Aspecto, e nenhum se repete entre duas pessoas. Um Vitalista pode tomar a habilidade de outro; por isso, e por guerras antigas, eles são temidos, odiados e caçados. Muitos se passam por Magos.</p><p data-i18n-html="acd.42"><strong>O poder:</strong> vitalistas nascem com dom único e perigoso — reorganizando hierarquias.</p></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="ob.poder.elos_t">Os Elos</span></summary>
+            <div class="ob-it-c"><p data-i18n="ob.poder.elos">Quem cultiva forja Elos dentro de si, também chamados de Núcleos ou Chacras: centros de energia que acumulam poder. O mundo conhece até cinco; um sexto é só especulação. Pessoas e criaturas são medidas por essa contagem.</p></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="ob.poder.negra_t">Magia negra</span><span class="ob-it-r" data-i18n="acd.179">Magia negra é proibida — atravessa limites éticos.</span></summary>
+            <div class="ob-it-c"><p data-i18n="ob.poder.negra">É proibida e condenada em todo o continente. Não usa mana, e sim rituais e sacrifícios, por isso qualquer pessoa pode praticá-la.</p></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="acd.178">Regras de Caelum</span></summary>
+            <div class="ob-it-c"><ol class="ob-lista ob-num"><li data-i18n="acd.179">Magia negra é proibida — atravessa limites éticos.</li><li data-i18n="acd.180">Vitalistas superam magos em combate puro.</li><li data-i18n="acd.181">Criar vida do zero é impossível.</li><li data-i18n="acd.182">Demônios podem renascer.</li><li data-i18n="acd.183">Energia negativa atrai predadores.</li></ol></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="ob.poder.classes_t">As classes</span></summary>
+            <div class="ob-it-c"><p data-i18n="ob.poder.classes">A profissão se escolhe pela aptidão, porque a escolha errada pode ser fatal. De combate: Guerreiro, Colosso, Monge, Ladino e Caçador. Mágicas: Mago, Druida e Sacerdote.</p></div></details>
+        </div>
+        <p class="ob-dica" data-i18n-html="acd.184"><strong>Dica de leitura:</strong> quando um personagem usa magia, observe o "custo". Se algo parece forte demais sem consequência, desconfie: em Caelum, quase sempre existe um preço escondido.</p>
+        <p class="ob-citacao ob-fim" data-i18n="acd.185">"A pergunta não é o que você faz com poder... é o que ele faz com você."</p>
+      </div>
+
+      <div class="ob-painel" role="tabpanel" id="painel-mitos" aria-labelledby="aba-mitos" tabindex="0" hidden>
+        <p class="ob-citacao" data-i18n="acd.187">"Alguns mitos estão vivos. E eles lembram quem você é."</p>
+        <div class="ob-its">
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="acd.194">Oni Vagante</span><span class="ob-it-r" data-i18n-html="acd.188"><strong>Oni Vagante</strong> — espadachim mascarado, imortal. Vaga em busca de um oponente digno.</span></summary>
+            <div class="ob-it-c"><p class="ob-pre" data-i18n="acd.img.ONI_VAGANTE.x">Conta-se sobre um demônio que lutou tanto que nem a morte ousou vencê-lo. Onde passa, deixa apenas silêncio, sangue e corpos sem nomes.
+
+Dizem que vaga pelo continente em busca de oponentes dignos. Ninguém jamais retornou para confirmar.</p></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="acd.196">O Bom Dragão</span><span class="ob-it-r" data-i18n-html="acd.189"><strong>O Bom Dragão</strong> — oráculo alado que aparece a almas raras. Presságio de mudança.</span></summary>
+            <div class="ob-it-c"><p class="ob-pre" data-i18n="acd.img.BOM_DRAGAO.x">Entre as lendas de Caelum, poucas são tão raras quanto a do Bom Dragão. Ele aparece apenas quando o destino encontra uma alma incomum.
+
+Se ele existe, não é para ser seguido. É para ser temido com reverência: um presságio de que o mundo está prestes a mudar.</p></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="acd.198">Barões Anciãos</span><span class="ob-it-r" data-i18n-html="acd.190"><strong>Barões Anciãos</strong> — topo da evolução draconiana. Devoram dor humana e tornam-se híbridos.</span></summary>
+            <div class="ob-it-c"><p class="ob-pre" data-i18n="acd.img.BAROES_ANCIÃOS.x">No topo da evolução draconiana existem os chamados Dragões Barões Anciãos — seres que ultrapassaram os limites da própria espécie.
+
+Devoram demônios. Devoram Voidrins. Devoram homens. Encontrar um Ancião é compreender, em segundos, o que é insignificância.</p></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="acd.200">Valdaryon</span><span class="ob-it-r" data-i18n-html="acd.191"><strong>Valdaryon</strong> — cidade subterrânea de draconianos sobreviventes. Mito ou realidade?</span></summary>
+            <div class="ob-it-c"><p class="ob-pre" data-i18n="acd.img.VALDARYON.x">Nos dias de fogo e cinzas, acreditava-se que os draconianos haviam sido extintos. Mas os velhos cantos falam de Valdaryon — uma cidade erguida sob a terra.
+
+Seja mito ou verdade, ninguém jamais viu o lugar.</p></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="acd.202">Floresta Negra</span><span class="ob-it-r" data-i18n-html="acd.192"><strong>Floresta Negra</strong> — selva consciente que devora o que entra. Nem dragões a sobrevoam.</span></summary>
+            <div class="ob-it-c"><p class="ob-pre" data-i18n="acd.img.FLORESTA_NEGRA.x">Conta-se que a Floresta Negra nasceu do pranto de um anjo. Árvores respiram. Raízes observam. O solo consome.
+
+Nem mesmo dragões se atrevem a sobrevoar suas copas.</p></div></details>
         </div>
       </div>
 
-      <!-- PERSONAGENS -->
+      <div class="ob-painel" role="tabpanel" id="painel-magitec" aria-labelledby="aba-magitec" tabindex="0" hidden>
+        <p class="ob-citacao" data-i18n="acd.204">"Ciência não morreu. Ela foi devorada pela magia."</p>
+        <p data-i18n="acd.205">A magitecnologia une conhecimento arcano e necessidade prática. Em Caelum, progresso e desigualdade caminham lado a lado.</p>
+        <p data-i18n="ob.mundo.magitec">A civilização depende da união entre magia e tecnologia. Cristais de mana alimentam máquinas, muralhas e as próprias cúpulas, e equipamentos encantados fazem parte do cotidiano.</p>
+        <div class="ob-its">
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="acd.207">Artefatos rúnicos</span></summary>
+            <div class="ob-it-c"><p class="ob-pre" data-i18n="acd.img.ARTEFATOS_RUNICOS.x">Chamamos de artefatos rúnicos todo objeto capaz de canalizar, armazenar ou alterar o fluxo de mana por meio de inscrições arcanas.
+
+Alguns artefatos carregam efeitos passivos permanentes. Outros exigem ativação consciente, sacrifícios energéticos ou condições específicas.</p></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="acd.209">Zepelins mágicos</span></summary>
+            <div class="ob-it-c"><p class="ob-pre" data-i18n="acd.img.ZEPELINS_MAGICOS.x">Zepelins mágicos não são meros veículos aéreos. Foram projetados para operar em altitudes que nem mesmo dragões ousam alcançar.
+
+Sustentados por núcleos de mana e selos gravitacionais, são capazes de transportar cargas sobrenaturais e tropas inteiras.</p></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="acd.211">Montarias vivas</span></summary>
+            <div class="ob-it-c"><p class="ob-pre" data-i18n="acd.img.MONTARIAS_VIVAS.x">Montarias vivas são criaturas domesticadas ou vinculadas por pactos druidicos, rúnicos ou vitais. Entre elas estão grifos, hipogrifos e wyverns.
+
+Montar uma criatura viva não é dominação. É sobrevivência compartilhada.</p></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="acd.213">Portais arcanos</span></summary>
+            <div class="ob-it-c"><p class="ob-pre" data-i18n="acd.img.PORTAIS_ARCANOS.x">Com as estradas tomadas por dragões, os portais tornaram-se o principal meio de deslocamento seguro entre grandes centros.
+
+Falhas nesses sistemas podem resultar em desaparecimentos, fusões corporais ou deslocamentos temporais. Viajar por um portal é rápido. Mas nunca totalmente seguro.</p></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="acd.215">Relógios rúnicos</span></summary>
+            <div class="ob-it-c"><p class="ob-pre" data-i18n="acd.img.RELOGIOS_RUNICOS.x">Relógios rúnicos não medem o tempo. Eles o registram.
+
+O mais temido deles é o Relógio de Draugh, o Morto-Vivo. Ali, a Era do Caos nunca terminou. Relógios rúnicos são memória. E memória, em Caelum, pode matar.</p></div></details>
+        </div>
+        <p class="ob-citacao ob-fim" data-i18n="acd.216">"Caelum não quer heróis. Só almas fortes o bastante para sobreviver a ele."</p>
+      </div>
+
+      <div class="ob-painel" role="tabpanel" id="painel-saga" aria-labelledby="aba-saga" tabindex="0" hidden>
+        <h3 class="ob-sub" data-i18n="acd.112">Cinco Atos. Um Destino.</h3>
+        <div class="ob-its">
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="acd.113">Ato I — Equilíbrio Rompido</span><span class="ob-selo-ato" data-i18n="acd.114">Publicado</span></summary>
+            <div class="ob-it-c"><p data-i18n="acd.115">Azuos emerge da floresta marcado e sem memória. Lunaris Fortuna parece segura — mas o sistema de poder dos clãs não aceita anomalias. O espetáculo começa, as alianças se formam e o equilíbrio frágil do mundo começa a rachar.</p></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="acd.116">Ato II — As Luzes se Apagam</span><span class="ob-selo-ato" data-i18n="acd.117">Escalada</span></summary>
+            <div class="ob-it-c"><p data-i18n="acd.118">A verdade por trás da Marca Negra começa a emergir. Forças que deveriam ser aliadas mostram suas fissuras. A energia negativa avança — e as luzes de Lunaris Fortuna deixam de ser símbolo de esperança.</p></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="acd.119">Ato III — A Legião Negra</span><span class="ob-selo-ato" data-i18n="acd.120">Ruptura</span></summary>
+            <div class="ob-it-c"><p data-i18n="acd.121">A Legião Negra não é apenas um exército — é uma ideia. E ideias não morrem com espadas. O confronto que todos temiam chega, e Caelum descobre que seus maiores inimigos talvez não venham de fora.</p></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="acd.122">Ato IV — (em breve)</span><span class="ob-selo-ato futuro" data-i18n="acd.123">Em produção</span></summary>
+            <div class="ob-it-c"><p data-i18n="acd.124">Detalhes do Ato IV serão revelados em breve. Acompanhe as atualizações da saga.</p></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="acd.125">Ato V — (em breve)</span><span class="ob-selo-ato futuro" data-i18n="acd.126">Roadmap</span></summary>
+            <div class="ob-it-c"><p data-i18n="acd.127">O ato final da saga. O destino de Caelum e de todos que nele habitam será selado aqui.</p></div></details>
+        </div>
+        <h3 class="ob-sub" data-i18n="acd.217">A Obra</h3>
+        <div class="ob-its">
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="acd.info.conflito.t">O coração do conflito</span></summary>
+            <div class="ob-it-c"><div class="ob-html" data-i18n-html="acd.info.conflito.b">Entre a utopia quebrada de Kaleidos e o autoritarismo religioso de Aeon pulsa a verdadeira ameaça: o colapso das verdades universais. O desequilíbrio não nasce apenas dos monstros lá fora, mas dos que cada um carrega por dentro.<br><br>ACDA não narra heróis invencíveis, mas sobreviventes que rugem mesmo quando a esperança já abandonou o campo. O conflito real não é apenas político ou militar — é espiritual, moral e existencial. É a luta por significado quando o mundo já não oferece nenhum.</div></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="acd.info.diferenciais.t">O que torna ACDA único</span></summary>
+            <div class="ob-it-c"><div class="ob-html" data-i18n-html="acd.info.diferenciais.b"><ul style="list-style:disc;padding-left:18px;display:flex;flex-direction:column;gap:10px;"><li><strong>Vitalismo</strong> como ciência espiritual: emoção tem massa, intenção tem custo, cura tem preço.</li><li><strong>Energia negativa</strong> que corrompe até o que é puro.</li><li>Os <strong>clãs</strong> refletem culturas profundas e cheias de falhas.</li><li>Não há bem absoluto nem mal absoluto — apenas sobreviventes tentando segurar o que resta.</li><li>Brutal, íntima, sem escapatória fácil.</li></ul></div></div></details>
+        <details class="ob-it"><summary><span class="ob-it-t" data-i18n="acd.info.estetica.t">Estética &amp; inspiração</span></summary>
+            <div class="ob-it-c"><div class="ob-html" data-i18n-html="acd.info.estetica.b">Metais escuros, brasas douradas, símbolos de rito — elegância suja. O visual serve a narrativa: <strong>peso antes de brilho</strong>. A estética de ACDA nasce da dor e da beleza no caos. Inspirada em <strong>Berserk</strong>, <strong>Fairy Tail</strong>, <strong>Bleach</strong> e jogos soulslike, a obra mescla brutalidade com lirismo.<br><br>Não há filtros: batalhas são violentas, a espiritualidade é velada, e a narrativa mergulha em dilemas existenciais. O resultado é uma experiência intensa, onde cada palavra carrega o peso de um mundo que não se curva. É fantasia sombria — mas com a alma humana exposta no centro.</div></div></details>
+        </div>
+        <div class="ob-resumos">
+        <div><h4 data-i18n="acd.39">Por que ACDA é a obra-pilar</h4><ul class="ob-lista ob-mini"><li data-i18n-html="acd.40"><strong>O palco:</strong> cidades que respiram mana e tecnologia mágica, tensão real por baixo.</li><li data-i18n-html="acd.41"><strong>A muralha:</strong> cúpulas surgem como resposta às ameaças — dragões e voidrins.</li><li data-i18n-html="acd.42"><strong>O poder:</strong> vitalistas nascem com dom único e perigoso — reorganizando hierarquias.</li><li data-i18n-html="acd.43"><strong>O conflito:</strong> o torneio não é só luta — é política, vitrine e armadilha.</li></ul></div>
+        <div><h4 data-i18n="acd.44">O que você vai encontrar</h4><ul class="ob-lista ob-mini"><li data-i18n-html="acd.45"><strong>Lunaris Fortuna:</strong> cidade construída com a natureza — arquitetura e mana integradas.</li><li data-i18n-html="acd.46"><strong>Vitalismo:</strong> dom inato que ignora regras — pode ser "absorvido" em confrontos.</li><li data-i18n-html="acd.47"><strong>Clãs em guerra fria:</strong> símbolos, títulos, arena e hierarquia que definem a saga.</li><li data-i18n-html="acd.48"><strong>Ameaças reais:</strong> dragões, marionetes e presenças nas sombras — o perigo não é teoria.</li></ul></div>
+        </div>
+      </div>
+
       <div class="ob-painel" role="tabpanel" id="personagens" aria-labelledby="aba-personagens" tabindex="0" hidden>
         <p data-i18n="ob.pers.lead">Toque num selo para conhecer o personagem.</p>
-        <div class="ob-pers" style="margin-top:16px">
-          <button type="button" class="ob-p" data-ob-p="azuos"><span class="ob-selo" aria-hidden="true"><span>A</span></span><span class="ob-p-info"><span class="ob-p-nome">Azuos</span><span class="ob-p-papel" data-i18n="ob.p.azuos.r">O Vitalista sem memória</span></span></button>
+        <div class="ob-pers">
+          <button type="button" class="ob-p" data-ob-p="Azuos" data-ob-p-old="1"><span class="ob-selo" aria-hidden="true"><span>A</span></span><span class="ob-p-info"><span class="ob-p-nome">Azuos</span><span class="ob-p-papel" data-i18n="acd.84">O portador da Marca Negra</span></span></button>
           <button type="button" class="ob-p" data-ob-p="kira"><span class="ob-selo" aria-hidden="true"><span>K</span></span><span class="ob-p-info"><span class="ob-p-nome">Kira</span><span class="ob-p-papel" data-i18n="ob.p.kira.r">O filhote</span></span></button>
-          <button type="button" class="ob-p" data-ob-p="kagemitsu"><span class="ob-selo" aria-hidden="true"><span>K</span></span><span class="ob-p-info"><span class="ob-p-nome">Kagemitsu</span><span class="ob-p-papel" data-i18n="ob.p.kagemitsu.r">O ancião da Lua</span></span></button>
-          <button type="button" class="ob-p" data-ob-p="yumi"><span class="ob-selo" aria-hidden="true"><span>Y</span></span><span class="ob-p-info"><span class="ob-p-nome">Yumi</span><span class="ob-p-papel" data-i18n="ob.p.yumi.r">A conselheira</span></span></button>
-          <button type="button" class="ob-p" data-ob-p="cerverus"><span class="ob-selo" aria-hidden="true"><span>C</span></span><span class="ob-p-info"><span class="ob-p-nome">Cerverus</span><span class="ob-p-papel" data-i18n="ob.p.cerverus.r">O último dragão</span></span></button>
-          <button type="button" class="ob-p" data-ob-p="sado"><span class="ob-selo" aria-hidden="true"><span>S</span></span><span class="ob-p-info"><span class="ob-p-nome">Sado</span><span class="ob-p-papel" data-i18n="ob.p.sado.r">O garoto das runas</span></span></button>
-          <button type="button" class="ob-p" data-ob-p="slyther"><span class="ob-selo" aria-hidden="true"><span>S</span></span><span class="ob-p-info"><span class="ob-p-nome">Slyther</span><span class="ob-p-papel" data-i18n="ob.p.slyther.r">O provocador</span></span></button>
-          <button type="button" class="ob-p" data-ob-p="sakura"><span class="ob-selo" aria-hidden="true"><span>S</span></span><span class="ob-p-info"><span class="ob-p-nome">Sakura</span><span class="ob-p-papel" data-i18n="ob.p.sakura.r">A prodígio</span></span></button>
+          <button type="button" class="ob-p" data-ob-p="x" data-ob-p-old="1"><span class="ob-selo" aria-hidden="true"><span>?</span></span><span class="ob-p-info"><span class="ob-p-nome" data-i18n="acd.char.x.n">???</span><span class="ob-p-papel" data-i18n="acd.86">Entidade desconhecida</span></span></button>
+          <button type="button" class="ob-p" data-ob-p="Cerverus" data-ob-p-old="1"><span class="ob-selo" aria-hidden="true"><span>C</span></span><span class="ob-p-info"><span class="ob-p-nome">Cerverus</span><span class="ob-p-papel" data-i18n="acd.89">O último dragão</span></span></button>
+          <button type="button" class="ob-p" data-ob-p="Sado" data-ob-p-old="1"><span class="ob-selo" aria-hidden="true"><span>S</span></span><span class="ob-p-info"><span class="ob-p-nome">Sado</span><span class="ob-p-papel" data-i18n="acd.92">O irmão de armas</span></span></button>
+          <button type="button" class="ob-p" data-ob-p="Sakura" data-ob-p-old="1"><span class="ob-selo" aria-hidden="true"><span>S</span></span><span class="ob-p-info"><span class="ob-p-nome">Sakura</span><span class="ob-p-papel" data-i18n="acd.95">A flor letal</span></span></button>
+          <button type="button" class="ob-p" data-ob-p="Slyther" data-ob-p-old="1"><span class="ob-selo" aria-hidden="true"><span>S</span></span><span class="ob-p-info"><span class="ob-p-nome">Slyther</span><span class="ob-p-papel" data-i18n="acd.98">A sombra que desafia</span></span></button>
+          <button type="button" class="ob-p" data-ob-p="Runan" data-ob-p-old="1"><span class="ob-selo" aria-hidden="true"><span>R</span></span><span class="ob-p-info"><span class="ob-p-nome">Runan</span><span class="ob-p-papel" data-i18n="acd.101">Guardião das Runas</span></span></button>
+          <button type="button" class="ob-p" data-ob-p="Yumi" data-ob-p-old="1"><span class="ob-selo" aria-hidden="true"><span>Y</span></span><span class="ob-p-info"><span class="ob-p-nome">Yumi</span><span class="ob-p-papel" data-i18n="acd.104">A lâmina do silêncio</span></span></button>
+          <button type="button" class="ob-p" data-ob-p="Kagemitsu" data-ob-p-old="1"><span class="ob-selo" aria-hidden="true"><span>K</span></span><span class="ob-p-info"><span class="ob-p-nome">Kagemitsu</span><span class="ob-p-papel" data-i18n="acd.107">O general da Lua</span></span></button>
+          <button type="button" class="ob-p" data-ob-p="Koda" data-ob-p-old="1"><span class="ob-selo" aria-hidden="true"><span>K</span></span><span class="ob-p-info"><span class="ob-p-nome">Koda</span><span class="ob-p-papel" data-i18n="acd.110">O sol que sangra</span></span></button>
         </div>
       </div>
     </div>
@@ -358,131 +484,24 @@
     </div>
   </dialog>
 
-  <!-- ═══ O QUE VEM POR AÍ ═══
-       Nomes que estavam na página antiga e ainda não apareceram nos capítulos: só o nome e a frase que já estava publicada.
-       Cada <li data-por-vir> sai ou fica conforme o MANTER/REMOVER do Raul (REVISAO_OBRA.md, seção 4b). -->
-  <section id="por-vir" class="nh-secao" aria-labelledby="vir-titulo" style="padding-top:0">
-    <div class="nh-wrap">
-      <div class="nh-secao-topo">
-        <h2 id="vir-titulo" class="nh-h2" data-i18n="ob.vir.titulo">O que vem por aí</h2>
-        <p class="nh-lead" data-i18n="ob.vir.lead">Nomes deste mundo que ainda não chegaram aos capítulos.</p>
-      </div>
-      <ul class="ob-vir-grade">
-        <li class="ob-vir" data-por-vir="marca">
-          <div class="ob-vir-arte"><span class="ob-selo" aria-hidden="true"><span>M</span></span></div>
-          <div class="ob-vir-texto">
-            <h3 data-i18n="ob.vir.marca.n">Marca Negra</h3>
-            <p data-i18n="ob.vir.marca.f">A verdade por trás da Marca Negra começa a emergir.</p>
-          </div>
-        </li>
-        <li class="ob-vir" data-por-vir="entidade">
-          <div class="ob-vir-arte"><span class="ob-selo" aria-hidden="true"><span>?</span></span></div>
-          <div class="ob-vir-texto">
-            <h3 data-i18n="ob.vir.entidade.n">???</h3>
-            <p data-i18n="ob.vir.entidade.f">Nada se sabe sobre sua origem.</p>
-          </div>
-        </li>
-        <li class="ob-vir" data-por-vir="runan">
-          <div class="ob-vir-arte"><span class="ob-selo" aria-hidden="true"><span>R</span></span></div>
-          <div class="ob-vir-texto">
-            <h3 data-i18n="ob.vir.runan.n">Runan</h3>
-            <p data-i18n="ob.vir.runan.f">Seus feitos desafiam a lógica e sua presença intimida até os mais experientes.</p>
-          </div>
-        </li>
-        <li class="ob-vir" data-por-vir="koda">
-          <div class="ob-vir-arte"><span class="ob-selo" aria-hidden="true"><span>K</span></span></div>
-          <div class="ob-vir-texto">
-            <h3 data-i18n="ob.vir.koda.n">Koda</h3>
-            <p data-i18n="ob.vir.koda.f">O sol que sangra.</p>
-          </div>
-        </li>
-        <li class="ob-vir" data-por-vir="oni">
-          <div class="ob-vir-arte"><img src="assets/img/oni-vagante-480.webp" srcset="assets/img/oni-vagante-320.webp 320w, assets/img/oni-vagante-480.webp 480w" sizes="(min-width: 900px) 260px, 46vw" alt="" loading="lazy" width="480" height="600"></div>
-          <div class="ob-vir-texto">
-            <h3 data-i18n="ob.vir.oni.n">Oni Vagante</h3>
-            <p data-i18n="ob.vir.oni.f">Ninguém jamais retornou para confirmar.</p>
-          </div>
-        </li>
-        <li class="ob-vir" data-por-vir="bom-dragao">
-          <div class="ob-vir-arte"><img src="assets/img/bom-dragao-480.webp" srcset="assets/img/bom-dragao-320.webp 320w, assets/img/bom-dragao-480.webp 480w" sizes="(min-width: 900px) 260px, 46vw" alt="" loading="lazy" width="480" height="600"></div>
-          <div class="ob-vir-texto">
-            <h3 data-i18n="ob.vir.bom-dragao.n">O Bom Dragão</h3>
-            <p data-i18n="ob.vir.bom-dragao.f">Ele aparece apenas quando o destino encontra uma alma incomum.</p>
-          </div>
-        </li>
-        <li class="ob-vir" data-por-vir="baroes">
-          <div class="ob-vir-arte"><img src="assets/img/baroes-anciaos-480.webp" srcset="assets/img/baroes-anciaos-320.webp 320w, assets/img/baroes-anciaos-480.webp 480w" sizes="(min-width: 900px) 260px, 46vw" alt="" loading="lazy" width="480" height="600"></div>
-          <div class="ob-vir-texto">
-            <h3 data-i18n="ob.vir.baroes.n">Barões Anciãos</h3>
-            <p data-i18n="ob.vir.baroes.f">Encontrar um Ancião é compreender, em segundos, o que é insignificância.</p>
-          </div>
-        </li>
-        <li class="ob-vir" data-por-vir="valdaryon">
-          <div class="ob-vir-arte"><img src="assets/img/valdaryon-480.webp" srcset="assets/img/valdaryon-320.webp 320w, assets/img/valdaryon-480.webp 480w" sizes="(min-width: 900px) 260px, 46vw" alt="" loading="lazy" width="480" height="600"></div>
-          <div class="ob-vir-texto">
-            <h3 data-i18n="ob.vir.valdaryon.n">Valdaryon</h3>
-            <p data-i18n="ob.vir.valdaryon.f">Seja mito ou verdade, ninguém jamais viu o lugar.</p>
-          </div>
-        </li>
-        <li class="ob-vir" data-por-vir="culto">
-          <div class="ob-vir-arte"><img src="assets/img/culto-vazio-480.webp" srcset="assets/img/culto-vazio-320.webp 320w, assets/img/culto-vazio-480.webp 480w" sizes="(min-width: 900px) 260px, 46vw" alt="" loading="lazy" width="480" height="600"></div>
-          <div class="ob-vir-texto">
-            <h3 data-i18n="ob.vir.culto.n">Culto do Vazio</h3>
-            <p data-i18n="ob.vir.culto.f">Ninguém sabe quantos são. Nem onde estão.</p>
-          </div>
-        </li>
-        <li class="ob-vir" data-por-vir="legiao">
-          <div class="ob-vir-arte"><span class="ob-selo" aria-hidden="true"><span>L</span></span></div>
-          <div class="ob-vir-texto">
-            <h3 data-i18n="ob.vir.legiao.n">Legião Negra</h3>
-            <p data-i18n="ob.vir.legiao.f">A Legião Negra não é apenas um exército — é uma ideia.</p>
-          </div>
-        </li>
-        <li class="ob-vir" data-por-vir="lumen">
-          <div class="ob-vir-arte"><span class="ob-selo" aria-hidden="true"><span>L</span></span></div>
-          <div class="ob-vir-texto">
-            <h3 data-i18n="ob.vir.lumen.n">Lumen</h3>
-            <p data-i18n="ob.vir.lumen.f">Pode queimar, expor e julgar.</p>
-          </div>
-        </li>
-        <li class="ob-vir" data-por-vir="umbra">
-          <div class="ob-vir-arte"><span class="ob-selo" aria-hidden="true"><span>U</span></span></div>
-          <div class="ob-vir-texto">
-            <h3 data-i18n="ob.vir.umbra.n">Umbra</h3>
-            <p data-i18n="ob.vir.umbra.f">Poder rápido — cobra sanidade, humanidade e destino.</p>
-          </div>
-        </li>
-        <li class="ob-vir" data-por-vir="zepelins">
-          <div class="ob-vir-arte"><img src="assets/img/zepelim-480.webp" srcset="assets/img/zepelim-320.webp 320w, assets/img/zepelim-480.webp 480w" sizes="(min-width: 900px) 260px, 46vw" alt="" loading="lazy" width="480" height="600"></div>
-          <div class="ob-vir-texto">
-            <h3 data-i18n="ob.vir.zepelins.n">Zepelins mágicos</h3>
-            <p data-i18n="ob.vir.zepelins.f">Foram projetados para operar em altitudes que nem mesmo dragões ousam alcançar.</p>
-          </div>
-        </li>
-        <li class="ob-vir" data-por-vir="portais">
-          <div class="ob-vir-arte"><img src="assets/img/portal-480.webp" srcset="assets/img/portal-320.webp 320w, assets/img/portal-480.webp 480w" sizes="(min-width: 900px) 260px, 46vw" alt="" loading="lazy" width="480" height="600"></div>
-          <div class="ob-vir-texto">
-            <h3 data-i18n="ob.vir.portais.n">Portais arcanos</h3>
-            <p data-i18n="ob.vir.portais.f">Viajar por um portal é rápido. Mas nunca totalmente seguro.</p>
-          </div>
-        </li>
-        <li class="ob-vir" data-por-vir="relogios">
-          <div class="ob-vir-arte"><img src="assets/img/relogio-runico-480.webp" srcset="assets/img/relogio-runico-320.webp 320w, assets/img/relogio-runico-480.webp 480w" sizes="(min-width: 900px) 260px, 46vw" alt="" loading="lazy" width="480" height="600"></div>
-          <div class="ob-vir-texto">
-            <h3 data-i18n="ob.vir.relogios.n">Relógios rúnicos</h3>
-            <p data-i18n="ob.vir.relogios.f">Relógios rúnicos não medem o tempo. Eles o registram.</p>
-          </div>
-        </li>
-        <li class="ob-vir" data-por-vir="montarias">
-          <div class="ob-vir-arte"><img src="assets/img/montaria-viva-480.webp" srcset="assets/img/montaria-viva-320.webp 320w, assets/img/montaria-viva-480.webp 480w" sizes="(min-width: 900px) 260px, 46vw" alt="" loading="lazy" width="480" height="600"></div>
-          <div class="ob-vir-texto">
-            <h3 data-i18n="ob.vir.montarias.n">Montarias vivas</h3>
-            <p data-i18n="ob.vir.montarias.f">Montar uma criatura viva não é dominação. É sobrevivência compartilhada.</p>
-          </div>
-        </li>
-      </ul>
+  <!-- Bestiário (futuro): fica fora da página até MOSTRAR_BESTIARIO = true no script abaixo. Como ativar e como
+       cadastrar criaturas: REVISAO_OBRA.md, seção "Bestiário". -->
+  <template id="tpl-bestiario-aba">
+    <button class="ob-aba" role="tab" id="aba-bestiario" aria-controls="painel-bestiario" aria-selected="false" tabindex="-1" data-i18n="ob.aba.bestiario">Bestiário</button>
+  </template>
+  <template id="tpl-bestiario-painel">
+    <div class="ob-painel" role="tabpanel" id="painel-bestiario" aria-labelledby="aba-bestiario" tabindex="0" hidden>
+      <p data-i18n="ob.best.lead">Criaturas de Caelum, pela Classe (Fera, Monstro, Demônio, Voidrin) e pelos Elos.</p>
+      <div class="ob-bestas"></div>
     </div>
-  </section>
+  </template>
+  <template id="tpl-besta">
+    <article class="ob-besta">
+      <header><h4 class="ob-besta-nome"></h4><span class="ob-besta-classe"></span></header>
+      <p class="ob-besta-elos"></p>
+      <p class="ob-besta-texto"></p>
+    </article>
+  </template>
 
   <!-- Trailer oculto até o vídeo chegar: para mostrar, tire o <template>. -->
   <template id="trailer-pendente">
@@ -539,6 +558,43 @@
   'use strict';
   const t = (k, v) => NHI18n.t(k, v);
 
+  // ── Bestiário (futuro): pronto e fora da página até MOSTRAR_BESTIARIO = true. Como cadastrar: REVISAO_OBRA.md ──
+  const MOSTRAR_BESTIARIO = false;
+  const BESTIARIO = [
+    // { nome: { pt: '…', en: '…' }, classe: 'fera' | 'monstro' | 'demonio' | 'voidrin', elos: 0-5 ou null, texto: { pt: '…', en: '…' } },
+  ];
+  if (MOSTRAR_BESTIARIO) {
+    const lista = document.querySelector('.ob-abas');
+    lista.appendChild(document.getElementById('tpl-bestiario-aba').content.cloneNode(true));
+    document.getElementById('personagens').after(document.getElementById('tpl-bestiario-painel').content.cloneNode(true));
+    const CLASSE = { fera: ['Fera', 'Beast'], monstro: ['Monstro', 'Monster'], demonio: ['Demônio', 'Demon'], voidrin: ['Voidrin', 'Voidrin'] };
+    const pintar = () => {
+      const en = NHI18n.lang === 'en' ? 1 : 0, caixa = document.querySelector('#painel-bestiario .ob-bestas');
+      caixa.textContent = '';
+      BESTIARIO.forEach((b) => {
+        const c = document.getElementById('tpl-besta').content.cloneNode(true);
+        c.querySelector('.ob-besta-nome').textContent = en ? b.nome.en : b.nome.pt;
+        c.querySelector('.ob-besta-classe').textContent = (CLASSE[b.classe] || ['', ''])[en];
+        c.querySelector('.ob-besta-elos').textContent = b.elos == null ? '' : (en ? 'Links: ' : 'Elos: ') + b.elos;
+        c.querySelector('.ob-besta-texto').textContent = en ? b.texto.en : b.texto.pt;
+        caixa.appendChild(c);
+      });
+    };
+    pintar(); document.addEventListener('nh:lang', pintar);
+    NHI18n.aplicar && NHI18n.aplicar(document.getElementById('painel-bestiario'));
+  }
+
+  // ── menu interno: marca a seção da vez ──
+  const navLinks = [...document.querySelectorAll('.ob-subnav a[href^="#"]')];
+  const alvos = navLinks.map((a) => document.querySelector(a.getAttribute('href')));
+  const marcarNav = () => {
+    const y = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nh-ancora')) || 124;
+    let atual = -1;
+    alvos.forEach((el, i) => { if (el && el.getBoundingClientRect().top <= y + 8) atual = i; });
+    navLinks.forEach((a, i) => (i === atual ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current')));
+  };
+  addEventListener('scroll', marcarNav, { passive: true }); marcarNav();
+
   // ── abas do universo (teclado: setas, Home, End) ──
   const abas = [...document.querySelectorAll('.ob-aba')];
   function abrirAba(aba, foco) {
@@ -575,10 +631,11 @@
   let origem = null;
   document.querySelectorAll('[data-ob-p]').forEach((b) => b.addEventListener('click', () => {
     const k = b.getAttribute('data-ob-p');
+    const base = b.hasAttribute('data-ob-p-old') ? 'acd.char.' + k : 'ob.p.' + k; // antigos: texto da página /acda
     origem = b;
     document.getElementById('ob-d-nome').textContent = b.querySelector('.ob-p-nome').textContent;
-    document.getElementById('ob-d-papel').textContent = t('ob.p.' + k + '.r');
-    document.getElementById('ob-d-texto').textContent = t('ob.p.' + k + '.d');
+    document.getElementById('ob-d-papel').textContent = t(base + '.r');
+    document.getElementById('ob-d-texto').textContent = t(base + '.d');
     dlg.showModal();
   }));
   dlg.querySelector('[data-ob-fechar]').addEventListener('click', () => dlg.close());

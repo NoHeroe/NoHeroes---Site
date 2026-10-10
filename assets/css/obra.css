@@ -121,19 +121,69 @@
 /* âncoras antigas do /acda (#comprar, #atos, #mundo…) caem no lugar certo, abaixo do header */
 .ob-ancora { display: block; height: 0; scroll-margin-top: var(--nh-ancora); }
 
-/* ---------- o que vem por aí: só nome + frase, tom de mistério ---------- */
-.ob-vir-grade { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-@media (min-width: 640px) { .ob-vir-grade { grid-template-columns: repeat(3, 1fr); } }
-@media (min-width: 1024px) { .ob-vir-grade { grid-template-columns: repeat(4, 1fr); } }
-.ob-vir { position: relative; border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); background: #0a080d; display: flex; flex-direction: column; }
-.ob-vir-arte { position: relative; aspect-ratio: 4/5; overflow: hidden; }
-.ob-vir-arte img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(.55) brightness(.62) contrast(1.05); transition: filter .4s; }
-.ob-vir:hover .ob-vir-arte img { filter: grayscale(.2) brightness(.8); }
-.ob-vir-arte::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, #0a080d 2%, transparent 55%); pointer-events: none; }
-.ob-vir .ob-selo { filter: saturate(.6) brightness(.85); }
-.ob-vir-texto { padding: 0 12px 14px; margin-top: -28px; position: relative; z-index: 1; display: grid; gap: 4px; }
-.ob-vir h3 { font-family: 'Cinzel Decorative', serif; font-size: 14px; line-height: 1.25; background: linear-gradient(135deg, #c4a3ff, #f0d99a); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.ob-vir p { font-size: 13px; line-height: 1.55; font-style: italic; color: rgba(236,232,243,.72); }
-
 /* seções abaixo da dobra: o navegador só calcula estilo/layout quando chegam perto da tela (celular mais leve) */
-#perguntas, #universo, #por-vir, #onde-ler { content-visibility: auto; contain-intrinsic-size: auto 900px; }
+#perguntas, #universo, #onde-ler { content-visibility: auto; contain-intrinsic-size: auto 900px; }
+
+/* ---------- menu interno da página ---------- */
+html:root { --nh-ancora: 124px; } /* header fixo + este menu */
+.ob-subnav { position: sticky; top: 64px; z-index: 40; background: rgba(7,6,10,.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--nh-linha); }
+.ob-subnav ul { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; max-width: 72rem; margin: 0 auto; padding: 0 12px; }
+.ob-subnav ul::-webkit-scrollbar { display: none; }
+.ob-subnav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; white-space: nowrap; font-size: 13.5px; font-weight: 600;
+  color: var(--nh-texto-2); border-bottom: 2px solid transparent; text-decoration: none; }
+.ob-subnav a:hover { color: #fff; }
+.ob-subnav a[aria-current="true"] { color: #f0d99a; border-bottom-color: #d9b55a; }
+
+/* ---------- universo: aviso, enciclopédia e itens em sanfona (sem imagens, fácil de escanear) ---------- */
+.ob-aviso { display: flex; gap: 10px; align-items: flex-start; margin: 0 0 14px; padding: 12px 14px; border-radius: 12px;
+  border: 1px dashed rgba(217,181,90,.45); background: rgba(217,181,90,.06); color: rgba(236,232,243,.82); font-size: .9rem; line-height: 1.55; max-width: 46rem; }
+.ob-aviso-ic { color: #d9b55a; line-height: 1.5; }
+.ob-enc { position: relative; display: grid; gap: 4px; margin: 0 0 22px; padding: 16px 52px 16px 18px; border-radius: 16px; text-decoration: none;
+  border: 1px solid rgba(143,79,255,.45); background: linear-gradient(135deg, rgba(143,79,255,.18), rgba(217,181,90,.08)); max-width: 46rem; transition: border-color .2s, transform .2s; }
+.ob-enc:hover, .ob-enc:focus-visible { border-color: #c4a3ff; transform: translateY(-1px); }
+.ob-enc-k { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #c4a3ff; }
+.ob-enc-t { font-family: 'Cinzel Decorative', serif; font-size: 1.15rem; color: #f1eaff; }
+.ob-enc-d { color: var(--nh-texto-2); font-size: .92rem; }
+.ob-enc-seta { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); font-size: 22px; color: #f0d99a; }
+.ob-its { display: grid; gap: 8px; margin-top: 14px; }
+.ob-it { border: 1px solid var(--nh-linha); border-radius: 12px; background: rgba(255,255,255,.025); }
+.ob-it[open] { border-color: rgba(143,79,255,.4); background: rgba(143,79,255,.05); }
+.ob-it summary { list-style: none; cursor: pointer; min-height: 52px; padding: 12px 44px 12px 14px; position: relative; display: grid; gap: 2px; align-content: center; }
+.ob-it summary::-webkit-details-marker { display: none; }
+.ob-it summary::after { content: '+'; position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: #c4a3ff; font-size: 20px; transition: transform .2s; }
+.ob-it[open] summary::after { transform: translateY(-50%) rotate(45deg); }
+.ob-it summary:focus-visible { outline: 2px solid #f0d99a; outline-offset: 2px; border-radius: 12px; }
+.ob-it-t { font-weight: 700; color: #fff; font-size: 1rem; }
+.ob-it-r { color: rgba(236,232,243,.7); font-size: .9rem; line-height: 1.5; }
+.ob-it-r strong { color: rgba(236,232,243,.85); }
+.ob-it-c { padding: 0 14px 14px; display: grid; gap: 10px; color: #e4def0; line-height: 1.7; font-size: .95rem; }
+.ob-pre { white-space: pre-line; }
+.ob-html ul { list-style: disc; padding-left: 18px; display: grid; gap: 6px; }
+.ob-painel .ob-citacao { font-style: italic; color: #c4a3ff; margin: 0 0 10px; }
+.ob-painel .ob-fim { margin: 14px 0 0; text-align: center; }
+.ob-painel p em { display: block; margin-top: 8px; color: #c4a3ff; }
+.ob-dica { margin-top: 14px; padding: 10px 12px; border-left: 2px solid #d9b55a; background: rgba(217,181,90,.06); border-radius: 0 10px 10px 0; font-size: .92rem; }
+.ob-num { list-style: decimal; padding-left: 20px; }
+.ob-num li::before { content: none; }
+.ob-sub { font-family: 'Cinzel Decorative', serif; color: #f1eaff; font-size: 1.05rem; margin: 18px 0 0; }
+.ob-sub:first-child { margin-top: 0; }
+.ob-selo-ato { justify-self: start; font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 999px; color: #86efac; border: 1px solid rgba(134,239,172,.35); background: rgba(134,239,172,.07); }
+.ob-selo-ato.futuro { color: #fbbf24; border-color: rgba(251,191,36,.35); background: rgba(251,191,36,.07); }
+.ob-resumos { display: grid; gap: 14px; margin-top: 18px; }
+@media (min-width: 768px) { .ob-resumos { grid-template-columns: 1fr 1fr; } }
+.ob-resumos h4 { font-weight: 700; color: #fff; margin-bottom: 8px; }
+.ob-mini { font-size: .9rem; }
+.ob-mini strong { color: #fff; }
+.ob-ed details { border-top: 1px solid var(--nh-linha); padding-top: 8px; }
+.ob-ed summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; font-weight: 600; color: #f0d99a; }
+.ob-ed details ul, .ob-ed details ol { margin-top: 4px; }
+
+/* ---------- Bestiário (pronto e oculto; ver REVISAO_OBRA.md) ---------- */
+.ob-bestas { display: grid; gap: 12px; margin-top: 14px; }
+@media (min-width: 640px) { .ob-bestas { grid-template-columns: 1fr 1fr; } }
+.ob-besta { border: 1px solid var(--nh-linha); border-radius: 14px; padding: 14px; background: rgba(255,255,255,.03); display: grid; gap: 6px; }
+.ob-besta header { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+.ob-besta-nome { font-family: 'Cinzel Decorative', serif; color: #f1eaff; font-size: 1rem; }
+.ob-besta-classe { font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 999px; border: 1px solid rgba(196,163,255,.45); color: #c4a3ff; white-space: nowrap; }
+.ob-besta-elos { font-size: 12px; color: #f0d99a; }
+.ob-besta-texto { color: #e4def0; font-size: .93rem; line-height: 1.65; }

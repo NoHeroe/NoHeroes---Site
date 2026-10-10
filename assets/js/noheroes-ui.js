@@ -322,7 +322,7 @@
 <header class="nh-topo fixed top-0 inset-x-0 z-50">
   <div class="mx-auto max-w-6xl h-16 px-4 flex items-center gap-4">
     <a href="/" class="flex items-center gap-2 shrink-0" aria-label="NoHeroes — início">
-      <img src="assets/img/noheroes-logo-320.webp" alt="" width="40" height="40" class="h-10 w-10 drop-shadow-glow">
+      <img src="/assets/img/noheroes-logo-320.webp" alt="" width="40" height="40" class="h-10 w-10 drop-shadow-glow">
       <span class="cinzel text-lg text-grad-nh hidden sm:inline">NoHeroes</span>
     </a>
     <nav class="${enxuto ? 'hidden' : 'hidden lg:flex'} items-center gap-1 ml-4" aria-label="Navegação principal" data-i18n-attr="aria-label:nav.principal">
@@ -421,7 +421,7 @@ ${DRAWER_HTML()}`;
   }
 
   /* ---------- <nh-footer> ---------- */
-  const redeIcone = (r) => `<a href="${r.url}" target="_blank" rel="noopener" aria-label="${r.nome}" class="nh-rede"><img src="assets/icons/${r.icone}%20icon.png" alt="" width="22" height="22" loading="lazy"></a>`;
+  const redeIcone = (r) => `<a href="${r.url}" target="_blank" rel="noopener" aria-label="${r.nome}" class="nh-rede"><img src="/assets/icons/${r.icone}%20icon.png" alt="" width="22" height="22" loading="lazy"></a>`;
   class NhFooter extends HTMLElement {
     connectedCallback() {
       const C = NH_CONTATO;

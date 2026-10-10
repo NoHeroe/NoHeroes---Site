@@ -1,0 +1,55 @@
+/* /anjo-devorador/enciclopedia — leitura confortável do Capítulo 00. Base: paginas.css. Mobile primeiro. */
+html:root { --nh-ancora: 84px; } /* o html já desconta o header (scroll-padding-top em noheroes-ui.css); não somar scroll-margin */
+.enc { padding-bottom: 48px; }
+.enc-topo { padding-top: 22px; padding-bottom: 8px; display: grid; gap: 8px; justify-items: start; }
+.enc-voltar { display: inline-flex; align-items: center; min-height: 44px; color: #c4a3ff; font-weight: 600; text-decoration: none; }
+.enc-voltar:hover { color: #fff; }
+.enc-kicker { font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: #f0d99a; }
+.enc-h1 { font-size: clamp(1.9rem, 7vw, 3rem); background: linear-gradient(135deg, #f4ecff 10%, #c4a3ff 50%, #f0d99a 95%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.enc-fonte { color: var(--nh-texto-2); font-size: .92rem; }
+.enc-ler { margin-top: 8px; width: 100%; max-width: 42rem; }
+
+.enc-grade { display: grid; gap: 18px; margin-top: 18px; }
+@media (min-width: 1024px) { .enc-grade { grid-template-columns: 250px minmax(0, 1fr); gap: 48px; align-items: start; } }
+
+/* sumário */
+.enc-toc details { border: 1px solid var(--nh-linha); border-radius: 14px; background: rgba(12,10,16,.85); }
+.enc-toc summary { list-style: none; cursor: pointer; min-height: 48px; padding: 0 44px 0 16px; display: flex; align-items: center; position: relative;
+  font-weight: 700; color: #fff; }
+.enc-toc summary::-webkit-details-marker { display: none; }
+.enc-toc summary::after { content: '+'; position: absolute; right: 16px; color: #c4a3ff; font-size: 20px; transition: transform .2s; }
+.enc-toc details[open] summary::after { transform: rotate(45deg); }
+.enc-toc ol { list-style: none; padding: 0 8px 10px; margin: 0; display: grid; }
+.enc-toc a { display: flex; align-items: center; min-height: 40px; padding: 4px 10px; border-radius: 8px; color: var(--nh-texto-2); font-size: .92rem; text-decoration: none; line-height: 1.3; }
+.enc-toc a:hover { color: #fff; background: rgba(255,255,255,.04); }
+.enc-toc a[aria-current="true"] { color: #f0d99a; background: rgba(217,181,90,.08); }
+@media (min-width: 1024px) {
+  .enc-toc { position: sticky; top: 84px; max-height: calc(100vh - 100px); overflow: auto; scrollbar-width: thin; }
+  .enc-toc summary { cursor: default; pointer-events: none; }
+  .enc-toc summary::after { content: none; }
+}
+
+/* texto */
+.enc-texto { max-width: 42rem; font-size: 1.08rem; line-height: 1.85; color: #e9e3f3; }
+.enc-texto p + p { margin-top: .85em; }
+.enc-nota { padding: 14px 16px; border-radius: 12px; border: 1px dashed rgba(217,181,90,.45); background: rgba(217,181,90,.06); color: rgba(236,232,243,.82); font-size: .95rem; line-height: 1.6; }
+.enc-h2 { font-family: 'Cinzel Decorative', serif; font-size: clamp(1.35rem, 5vw, 1.8rem); color: #f1eaff; margin: 28px 0 10px; }
+.enc-lead { color: #d8d1e6; font-style: italic; }
+.enc-sec, .enc-autor { margin-top: 30px; }
+.enc-h3 { font-family: 'Cinzel Decorative', serif; font-size: 1.2rem; line-height: 1.3; color: #f0d99a; margin-bottom: 10px; padding-top: 18px;
+  border-top: 1px solid var(--nh-linha); }
+.enc-h3::before { content: '✦ '; color: #8f4fff; }
+.enc-escala { list-style: none; padding: 0; margin: .6em 0; display: grid; gap: 6px; }
+.enc-escala li { padding: 8px 12px; border-left: 2px solid rgba(143,79,255,.6); background: rgba(143,79,255,.06); border-radius: 0 8px 8px 0; }
+.enc-fecho { margin-top: 1.2em; font-style: italic; color: #c4a3ff; }
+.enc-autor { padding: 16px 18px; border-radius: 14px; border: 1px solid var(--nh-linha); background: rgba(255,255,255,.03); font-size: 1rem; }
+.enc-autor .enc-h3 { border-top: 0; padding-top: 0; color: #c4a3ff; }
+.enc-autor .enc-h3::before { content: none; }
+.enc-fim { margin-top: 36px; padding-top: 22px; border-top: 1px solid var(--nh-linha); display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.enc-fim .nh-btn { flex: 1 1 200px; }
+
+/* voltar ao topo */
+.enc-subir { position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); z-index: 60; width: 48px; height: 48px; border-radius: 50%;
+  border: 1px solid rgba(196,163,255,.5); background: rgba(12,10,16,.92); color: #f0d99a; font-size: 20px; cursor: pointer; box-shadow: 0 8px 24px rgba(0,0,0,.5); }
+.enc-subir:hover { border-color: #f0d99a; }
+.enc-subir:focus-visible { outline: 2px solid #f0d99a; outline-offset: 2px; }

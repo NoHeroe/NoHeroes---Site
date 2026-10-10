@@ -37,6 +37,17 @@ def checa(cond, msg):
     else: falhas.append(msg)
 
 
+def assentar(pg, max_ms=5000):
+    """Espera a rolagem suave terminar (scrollY parar de mudar) em vez de um tempo fixo."""
+    pg.wait_for_timeout(350)  # dá tempo de a rolagem suave começar (senão "parado" pode ser "ainda não saiu")
+    ult, t = None, 0
+    while t < max_ms:
+        pg.wait_for_timeout(120); t += 120
+        y = pg.evaluate('scrollY')
+        if y == ult: return
+        ult = y
+
+
 def vigiar(pg, erros):
     pg.on('console', lambda m: erros.append(m.text[:150]) if m.type == 'error' and not any(i in m.text for i in IGNORAR) else None)
     pg.on('pageerror', lambda e: erros.append('pageerror: ' + str(e)[:150]))
@@ -130,7 +141,10 @@ with sync_playwright() as p:
             ler = J("""() => document.querySelector('[data-nh-webnovel-utm=""]').href""")
             checa(('36812423600316905' if lang == 'en' else '36811359900298905') in ler, f'{tag} "Ler agora" não segue o idioma: {ler}')
             # abas: clique e setas
-            for aba in ('lugares', 'faccoes', 'poder', 'personagens', 'mundo'):
+            ABAS = ('mundo', 'lugares', 'faccoes', 'poder', 'mitos', 'magitec', 'saga', 'personagens')
+            checa(J("[...document.querySelectorAll('.ob-aba')].map(a => a.id.slice(4)).join()") == ','.join(ABAS), f'{tag} abas fora da ordem/sobrando (Bestiário deveria estar oculto)')
+            checa(not J("!!document.getElementById('painel-bestiario')"), f'{tag} Bestiário apareceu (MOSTRAR_BESTIARIO deveria ser false)')
+            for aba in ABAS[1:] + ABAS[:1]:
                 pg.locator(f'#aba-{aba}').click(); pg.wait_for_timeout(120)
                 painel = 'personagens' if aba == 'personagens' else 'painel-' + aba
                 checa(J(f"!document.getElementById('{painel}').hidden && [...document.querySelectorAll('[role=tabpanel]')].filter(p => !p.hidden).length === 1"), f'{tag} aba {aba} não abriu sozinha')
@@ -140,7 +154,7 @@ with sync_playwright() as p:
             checa(J("document.activeElement.id === 'aba-personagens'"), f'{tag} End nas abas não funciona')
             # personagens
             n = pg.locator('[data-ob-p]').count()
-            checa(n == 8, f'{tag} {n} personagens')
+            checa(n == 11, f'{tag} {n} personagens (10 da página antiga + Kira)')
             for k in range(n):
                 pg.locator('[data-ob-p]').nth(k).click(); pg.wait_for_timeout(150)
                 d = J("""() => ({ aberto: document.getElementById('ob-dialogo').open, nome: document.getElementById('ob-d-nome').textContent,
@@ -148,11 +162,24 @@ with sync_playwright() as p:
                 checa(d['aberto'] and d['nome'] and len(d['texto']) > 40 and not d['papel'].startswith('ob.'), f'{tag} diálogo do personagem {k + 1}: {d}')
                 pg.keyboard.press('Escape'); pg.wait_for_timeout(120)
                 checa(not J("document.getElementById('ob-dialogo').open"), f'{tag} Esc não fechou o diálogo {k + 1}')
-            # o que vem por aí: 16 itens, cada um com nome e frase
-            vir = J("""() => [...document.querySelectorAll('[data-por-vir]')].map(li => ({ n: li.querySelector('h3').textContent.trim(), f: li.querySelector('p').textContent.trim() }))""")
-            checa(len(vir) == 16 and all(v['n'] and len(v['f']) > 10 and not v['f'].startswith('ob.') for v in vir), f'{tag} O que vem por aí: {len(vir)} itens {vir[:2]}')
+            checa(not J("!!document.querySelector('#por-vir, [data-por-vir]')"), f'{tag} a seção O que vem por aí voltou')
+            # itens do universo: abrem e têm texto
+            for aba in ('mundo', 'lugares', 'faccoes', 'poder', 'mitos', 'magitec', 'saga'):
+                pg.locator(f'#aba-{aba}').click(); pg.wait_for_timeout(80)
+                vazios = J("""(a) => { const ds = [...document.querySelectorAll('#painel-' + a + ' details.ob-it')]; ds.forEach(d => d.open = true);
+                    return [ds.length, ds.filter(d => d.querySelector('.ob-it-c').innerText.trim().length < 15).length]; }""", aba)
+                checa(vazios[0] >= 3 and vazios[1] == 0, f'{tag} aba {aba}: {vazios[0]} itens, {vazios[1]} sem texto')
+            checa(J("!!document.querySelector('.ob-aviso') && document.querySelector('.ob-aviso').getBoundingClientRect().top < document.querySelector('.ob-abas').getBoundingClientRect().top"), f'{tag} aviso de spoiler leve ausente ou depois das abas')
+            checa(J("document.querySelector('.ob-enc').getAttribute('href')") == '/anjo-devorador/enciclopedia', f'{tag} destaque da enciclopédia sem link')
+            # menu interno
+            menu = J("[...document.querySelectorAll('.ob-subnav a')].map(a => a.getAttribute('href'))")
+            checa(menu == ['#edicoes', '#perguntas', '#universo', '/anjo-devorador/enciclopedia', '#onde-ler'], f'{tag} menu interno: {menu}')
+            for alvo in ('#perguntas', '#universo', '#onde-ler'):
+                pg.locator(f'.ob-subnav a[href="{alvo}"]').click(); assentar(pg)
+                pos = J("(a) => Math.round(document.querySelector(a).getBoundingClientRect().top)", alvo)
+                checa(60 <= pos <= 200, f'{tag} menu interno {alvo}: alvo em {pos}px (coberto ou longe)')
             # perguntas
-            checa(pg.locator('.ob-faq details').count() == 5, f'{tag} perguntas != 5')
+            checa(pg.locator('.ob-faq details').count() == 7, f'{tag} perguntas != 7 (5 novas + 2 da página antiga)')
             pg.locator('.ob-faq summary').nth(2).click(); pg.wait_for_timeout(120)
             checa(J("document.querySelectorAll('.ob-faq details')[2].open"), f'{tag} sanfona da pergunta 3 não abriu')
             # alvos de toque das ações principais
@@ -163,6 +190,40 @@ with sync_playwright() as p:
             checa(rol <= 0, f'{tag} /anjo-devorador: rolagem horizontal {rol}px')
             checa(not J('window.__csp'), f'{tag} /anjo-devorador: CSP {J("window.__csp")}')
             for e in set(erros): falhas.append(f'{tag} /anjo-devorador: console: {e}')
+            pg.close()
+
+            # ── enciclopédia ──
+            pg = ctx.new_page(); erros = []; vigiar(pg, erros)
+            pg.goto(BASE + '/anjo-devorador/enciclopedia', wait_until='networkidle'); pg.wait_for_timeout(600)
+            J = pg.evaluate
+            toc = J("[...document.querySelectorAll('.enc-toc a')].map(a => a.getAttribute('href'))")
+            checa(len(toc) == 21 and all(J("(h) => !!document.querySelector(h)", h) for h in toc), f'{tag} enciclopédia: sumário com {len(toc)} itens ou âncora sem alvo')
+            texto = J("document.querySelector('.enc-texto').innerText")
+            amostra, outro = ('The world is called Caelum.', 'O mundo se chama Caelum.') if lang == 'en' else ('O mundo se chama Caelum.', 'The world is called Caelum.')
+            checa(amostra in texto, f'{tag} enciclopédia: texto oficial do idioma não aparece')
+            checa(outro not in texto, f'{tag} enciclopédia: texto dos dois idiomas misturado')
+            sem = J("""() => { const D = window.NH_DICT, L = NHI18n.lang; return L === 'en' ? [...document.querySelectorAll('[data-i18n],[data-i18n-html]')]
+                     .map(e => e.getAttribute('data-i18n') || e.getAttribute('data-i18n-html')).filter(k => !(k in D.en)) : []; }""")
+            checa(not sem, f'{tag} enciclopédia sem EN: {sem[:5]}')
+            largo = w >= 1024
+            if largo:
+                checa(J("document.getElementById('enc-toc-caixa').open"), f'{tag} sumário fechado no computador')
+            for h in ('#dragoes', '#a-guilda-e-seus-ranks', '#nota-do-autor'):
+                if not largo:
+                    pg.locator('#enc-toc-t').click(); pg.wait_for_timeout(150)
+                pg.locator(f'.enc-toc a[href="{h}"]').click(); assentar(pg)
+                pos = J("(h) => Math.round(document.querySelector(h).getBoundingClientRect().top)", h)
+                checa(40 <= pos <= 160 and pg.url.endswith(h), f'{tag} enciclopédia {h}: alvo em {pos}px')
+            checa(J("!document.getElementById('enc-subir').hidden"), f'{tag} enciclopédia: botão voltar ao topo não apareceu')
+            pg.locator('#enc-subir').click(); assentar(pg)
+            checa(J('scrollY') < 50, f'{tag} enciclopédia: voltar ao topo não subiu')
+            lk = J("[...document.querySelectorAll('a')].map(a => a.href).filter(h => h.includes('webnovel.com'))")
+            checa(len(lk) == 4 and all('utm_content=enciclopedia' in h and 'utm_guid=4507859912' in h for h in lk), f'{tag} enciclopédia: botões Ler sem UTM ({len(lk)})')
+            checa(J("[...document.querySelectorAll('a')].filter(a => a.getAttribute('href') === '/anjo-devorador').length") >= 2, f'{tag} enciclopédia: sem link de volta para a obra')
+            rol = J('document.documentElement.scrollWidth - document.documentElement.clientWidth')
+            checa(rol <= 0, f'{tag} enciclopédia: rolagem horizontal {rol}px')
+            checa(not J('window.__csp'), f'{tag} enciclopédia: CSP {J("window.__csp")}')
+            for e in set(erros): falhas.append(f'{tag} enciclopédia: console: {e}')
             pg.close()
             ctx.close()
     b.close()

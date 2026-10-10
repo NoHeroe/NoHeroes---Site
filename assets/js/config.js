@@ -36,7 +36,7 @@
     if (!ws) return u;
     var alvo = largura || 480, w = ws[ws.length - 1];
     for (var i = 0; i < ws.length; i++) if (ws[i] >= alvo) { w = ws[i]; break; }
-    return 'assets/img/' + slug + '-' + w + '.webp';
+    return '/assets/img/' + slug + '-' + w + '.webp'; // absoluto: funciona também em páginas de subpasta (/anjo-devorador/enciclopedia)
   };
 
   // Estatísticas de visita sem cookies (Cloudflare Web Analytics): não guarda nada no navegador,

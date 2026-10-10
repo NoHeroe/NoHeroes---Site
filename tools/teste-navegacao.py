@@ -19,7 +19,7 @@ BASE = (args[0] if args else 'http://localhost:4173').rstrip('/')
 MD = sys.argv[sys.argv.index('--md') + 1] if '--md' in sys.argv else None
 TOKEN = open(sys.argv[sys.argv.index('--token') + 1]).read().strip() if '--token' in sys.argv else None
 LOCAL = 'localhost' in BASE
-PUBLICAS = ['/', '/sobre', '/store', '/anjo-devorador', '/ebooks', '/portfolio', '/linktree', '/apoiar', '/suporte', '/termos',
+PUBLICAS = ['/', '/sobre', '/store', '/anjo-devorador', '/anjo-devorador/enciclopedia', '/ebooks', '/portfolio', '/linktree', '/apoiar', '/suporte', '/termos',
             '/privacidade', '/login', '/register', '/forgot', '/reenvio', '/verify-email', '/agradecimento', '/404']
 LOGADAS = ['/profile', '/inventario', '/checkout'] if TOKEN else []
 LARGURAS, LANGS = [375, 1280], ['pt', 'en']

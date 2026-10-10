@@ -65,6 +65,22 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.noheroes.com.br/anjo-devorador"/>
   </url>
   <url>
+    <loc>https://www.noheroes.com.br/anjo-devorador/enciclopedia</loc>
+    <lastmod>2026-10-10</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.noheroes.com.br/anjo-devorador/enciclopedia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.noheroes.com.br/anjo-devorador/enciclopedia?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.noheroes.com.br/anjo-devorador/enciclopedia"/>
+  </url>
+  <url>
+    <loc>https://www.noheroes.com.br/anjo-devorador/enciclopedia?lang=en</loc>
+    <lastmod>2026-10-10</lastmod>
+    <priority>0.63</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.noheroes.com.br/anjo-devorador/enciclopedia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.noheroes.com.br/anjo-devorador/enciclopedia?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.noheroes.com.br/anjo-devorador/enciclopedia"/>
+  </url>
+  <url>
     <loc>https://www.noheroes.com.br/ebooks</loc>
     <lastmod>2026-10-06</lastmod>
     <priority>0.7</priority>
