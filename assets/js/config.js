@@ -57,6 +57,44 @@
     if (window.NHI18n) return window.NHI18n.lang;
     try { return localStorage.getItem('nh_lang') || 'pt'; } catch (_) { return 'pt'; }
   }
+  // ── Manutenção: API fora do ar ─────────────────────────────────────────────────────────────────
+  // Servidor ou túnel caído → o Cloudflare responde 502/530 sem CORS e o fetch falha (TypeError), ou a
+  // API responde 503 (banco fora). Nas páginas de loja e conta aparece um aviso no topo (PT/EN), que some
+  // sozinho quando uma chamada volta a dar certo. Internet do visitante caída não conta (navigator.onLine).
+  var PAGINAS_API = /^\/(store|checkout|profile|inventario|login|register|forgot|reenvio|verify-email|agradecimento|suporte)(\.html)?\/?$/;
+  var paginaApi = PAGINAS_API.test(location.pathname);
+  var TEXTOS = {
+    pt: ['Loja e conta em manutenção', 'Nosso servidor está fora do ar por alguns instantes. Seus pedidos e dados estão seguros. Tente de novo em alguns minutos.'],
+    en: ['Store and account under maintenance', 'Our server is down for a moment. Your orders and data are safe. Please try again in a few minutes.'],
+  };
+  var foraDoAr = false;
+  function desenharAviso() {
+    var el = document.getElementById('nh-manutencao');
+    if (!foraDoAr) { if (el) el.hidden = true; return; }
+    if (!document.body) return;
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'nh-manutencao';
+      el.className = 'nh-manutencao';
+      el.setAttribute('role', 'alert');
+      var alvo = document.getElementById('conteudo') || document.querySelector('main') || document.body;
+      alvo.insertBefore(el, alvo.firstChild);
+    }
+    var t = TEXTOS[idioma() === 'en' ? 'en' : 'pt'];
+    el.innerHTML = '<strong></strong><span></span>';
+    el.firstChild.textContent = t[0];
+    el.lastChild.textContent = t[1];
+    el.hidden = false;
+  }
+  function marcar(fora) {
+    if (!paginaApi || fora === foraDoAr) return;
+    foraDoAr = fora;
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', desenharAviso, { once: true });
+    else desenharAviso();
+  }
+  document.addEventListener('nh:lang', desenharAviso);
+  window.NH_API_FORA = function () { return foraDoAr; };
+
   var nhFetch = function (input, init) {
     var url = typeof input === 'string' ? input : (input && input.url) || '';
     if (url.indexOf(api) !== 0) return fetchOriginal.call(this, input, init);
@@ -64,8 +102,22 @@
     var h = new Headers(init.headers || (typeof input !== 'string' && input.headers) || {});
     if (!h.has('X-NH-Lang')) h.set('X-NH-Lang', idioma());
     init.headers = h;
-    return fetchOriginal.call(this, input, init);
+    return fetchOriginal.call(this, input, init).then(function (res) {
+      marcar(res.status === 502 || res.status === 503 || res.status === 504 || (res.status >= 520 && res.status <= 530));
+      return res;
+    }, function (err) {
+      if (navigator.onLine !== false && !(err && err.name === 'AbortError')) marcar(true);
+      throw err;
+    });
   };
   nhFetch.__nh = true;
   window.fetch = nhFetch;
+
+  // Páginas que só chamam a API ao enviar um formulário (login, cadastro…) já avisam ao abrir.
+  if (paginaApi) {
+    var ctl = window.AbortController ? new AbortController() : null;
+    var limite = setTimeout(function () { if (ctl) { ctl.abort(); marcar(true); } }, 8000);
+    nhFetch(api + '/healthz', { cache: 'no-store', signal: ctl && ctl.signal })
+      .then(function () { clearTimeout(limite); }, function () { clearTimeout(limite); });
+  }
 })();

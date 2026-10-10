@@ -4,9 +4,12 @@ Uso: python tools/dev-server.py [porta]   (padrão 4173, raiz = pasta do reposit
   • /x            → x.html (se existir)            • /             → index.html
   • /x.html       → 308 para /x (mantém a query)    • /index.html   → 308 para /
   • _redirects    → regras "origem destino [status]" (200 = reescrita; 301/302/308 = redirecionamento)
+  • _headers      → cabeçalhos por caminho (CSP etc.), como no Pages; só aqui o connect-src ganha http://localhost:*
+                    e sai o upgrade-insecure-requests
+                    para o site local falar com a API local (porta 3999)
   • não achou     → 404.html com status 404
 """
-import http.server, os, sys, urllib.parse
+import http.server, os, re, sys, urllib.parse
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PORTA = int(sys.argv[1]) if len(sys.argv) > 1 else 4173
@@ -25,6 +28,28 @@ def regras():
     return out
 
 
+def cabecalhos():
+    """_headers do Pages: linha sem recuo = padrão de caminho (* = qualquer coisa); linhas recuadas 'Nome: valor'."""
+    out, atual = [], None
+    try:
+        for linha in open(os.path.join(RAIZ, '_headers'), encoding='utf-8'):
+            if not linha.strip() or linha.lstrip().startswith('#'):
+                continue
+            if not linha[0].isspace():
+                atual = (re.compile('^' + re.escape(linha.strip()).replace(r'\*', '.*') + '$'), [])
+                out.append(atual)
+            elif atual and ':' in linha:
+                nome, valor = linha.strip().split(':', 1)
+                valor = valor.strip()
+                if nome.lower() == 'content-security-policy':
+                    valor = valor.replace('connect-src ', 'connect-src http://localhost:* ', 1)
+                    valor = valor.replace('; upgrade-insecure-requests', '')  # em http://localhost viraria https e quebraria a API local
+                atual[1].append((nome.strip(), valor))
+    except FileNotFoundError:
+        pass
+    return out
+
+
 class H(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *a, **k):
         super().__init__(*a, directory=RAIZ, **k)
@@ -34,6 +59,11 @@ class H(http.server.SimpleHTTPRequestHandler):
 
     def end_headers(self):
         self.send_header('Cache-Control', 'no-store')
+        caminho = urllib.parse.unquote(urllib.parse.urlsplit(getattr(self, '_original', self.path)).path)
+        for padrao, lista in cabecalhos():
+            if padrao.match(caminho):
+                for nome, valor in lista:
+                    self.send_header(nome, valor)
         super().end_headers()
 
     def _redir(self, destino, status, query):
@@ -64,6 +94,7 @@ class H(http.server.SimpleHTTPRequestHandler):
         return '/404.html', 404, u.query
 
     def do_GET(self):
+        self._original = self.path
         r = self._resolver()
         if not r:
             return

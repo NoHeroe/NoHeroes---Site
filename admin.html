@@ -293,6 +293,7 @@ textarea.input{resize:vertical;min-height:80px}
   </div>
   <div class="topbar-right">
     <button class="btn btn-ghost btn-sm" onclick="location.href='/'" title="Ver site">🌐 Site</button>
+    <button class="btn btn-ghost btn-sm" onclick="mfaRegerar()" title="Códigos de recuperação da verificação em duas etapas">🔐 Segurança</button>
     <button class="btn btn-ghost btn-sm" onclick="logout()">Sair</button>
   </div>
 </header>
@@ -699,6 +700,40 @@ textarea.input{resize:vertical;min-height:80px}
 </main>
 
 <!-- MODALS -->
+<!-- 2FA do admin: cadastro obrigatório (sem fechar) e novos códigos de recuperação -->
+<div class="modal-backdrop" id="mfa-modal" data-fixo="1">
+  <div class="modal-box" style="max-width:440px;">
+    <div class="modal-title">🔐 Verificação em duas etapas</div>
+    <div id="mfa-passo-qr">
+      <p style="font-size:13px;color:var(--muted);line-height:1.6">O painel exige um segundo fator. Escaneie o QR code com um app autenticador (Google Authenticator, Authy, 1Password…) e digite o código de 6 dígitos que ele mostra.</p>
+      <div id="mfa-qr" style="background:#fff;border-radius:12px;padding:10px;width:200px;height:200px;margin:14px auto"></div>
+      <p style="font-size:11px;color:var(--muted);text-align:center;word-break:break-all">Sem câmera? Digite a chave: <code id="mfa-segredo" style="user-select:all"></code></p>
+      <div class="field" style="margin-top:12px"><input class="input" id="mfa-codigo" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="Código de 6 dígitos" aria-label="Código de 6 dígitos"></div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="Auth.clear();location.href='/login'">Sair</button>
+        <button class="btn btn-primary" id="mfa-ativar">Ativar</button>
+      </div>
+    </div>
+    <div id="mfa-passo-regerar" style="display:none">
+      <p style="font-size:13px;color:var(--muted);line-height:1.6">Gera 10 códigos de recuperação novos. Os antigos deixam de valer. Digite o código atual do app para confirmar.</p>
+      <p id="mfa-restantes" style="font-size:12px;color:var(--muted)"></p>
+      <div class="field" style="margin-top:12px"><input class="input" id="mfa-codigo2" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="Código de 6 dígitos" aria-label="Código de 6 dígitos"></div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="closeModal('mfa-modal')">Cancelar</button>
+        <button class="btn btn-primary" id="mfa-regerar">Gerar códigos novos</button>
+      </div>
+    </div>
+    <div id="mfa-passo-codigos" style="display:none">
+      <p style="font-size:13px;color:var(--muted);line-height:1.6"><strong style="color:var(--text)">Guarde estes códigos agora</strong> (gerenciador de senhas ou papel). Cada um entra uma vez no lugar do código do app, se você perder o celular. Eles não aparecem de novo.</p>
+      <pre id="mfa-lista" style="background:var(--s2);border:1px solid var(--border2);border-radius:10px;padding:12px;font-size:14px;line-height:1.8;text-align:center;user-select:all;margin:12px 0"></pre>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" id="mfa-copiar">Copiar</button>
+        <button class="btn btn-primary" id="mfa-guardei">Guardei, continuar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal-backdrop" id="confirm-modal">
   <div class="modal-box" style="max-width:360px;">
     <div class="modal-title" style="-webkit-text-fill-color:var(--red);background:none;color:var(--red);">⚠️ Confirmar</div>
@@ -874,7 +909,7 @@ textarea.input{resize:vertical;min-height:80px}
   </div>
 </div>
 
-<script src="assets/js/config.js?v=88c4250dc2"></script>
+<script src="assets/js/config.js?v=2e78d624f2"></script>
 <script src="assets/js/pedidos.js?v=3776bc9eb5"></script><script>
 /* ═══════════════════════════════════════════════════════════
    NOHEROES ADMIN — v2.0
@@ -1010,7 +1045,7 @@ function closeSidebar() {
 function openModal(id) { document.getElementById(id).classList.add('show'); document.body.style.overflow='hidden'; }
 function closeModal(id) { document.getElementById(id).classList.remove('show'); document.body.style.overflow=''; }
 document.querySelectorAll('.modal-backdrop').forEach(m=>{
-  m.addEventListener('click',e=>{ if(e.target===m) closeModal(m.id); });
+  m.addEventListener('click',e=>{ if(e.target===m && !m.dataset.fixo) closeModal(m.id); });
 });
 function confirm_(msg, fn) {
   document.getElementById('confirm-msg').textContent=msg;
@@ -1030,6 +1065,7 @@ async function boot() {
     setTimeout(()=>location.href='/login',1500);
     return;
   }
+  if(!(await mfaGarantir())) return;
   S.user = data.user || data;
   const ini = initials(S.user.username||S.user.nome_completo);
   document.getElementById('sb-avatar').textContent=ini;
@@ -1931,6 +1967,58 @@ async function clearLogs() {
     if(ok){ toast('Logs limpos.','info'); loadLogs(); }
     else toast('Erro ao limpar logs.','error');
   });
+}
+
+/* ═══ 2FA DO ADMIN ═══
+   O backend só abre /admin/* com sessão que passou pela 2FA (middlewares/isAdmin.js).
+   Sem 2FA ainda → cadastro aqui (não dá para fechar); 2FA ativa mas sessão antiga → login de novo. */
+async function mfaGarantir() {
+  const {ok,data} = await api('/api/auth/mfa/status');
+  if(ok && data.sessao_verificada) return true;
+  if(ok && data.ativo) {
+    toast('Entre de novo com o código do app autenticador.','info');
+    Auth.clear(); setTimeout(()=>location.href='/login?volta=/admin',1500); return false;
+  }
+  const r = await api('/api/auth/mfa/setup',{method:'POST'});
+  if(!r.ok){ toast(r.data.message||'Não foi possível iniciar a verificação em duas etapas.','error'); return false; }
+  $('mfa-qr').innerHTML = r.data.qr_svg;            // SVG gerado pela nossa API (qrcode)
+  $('mfa-segredo').textContent = r.data.segredo.replace(/(.{4})/g,'$1 ').trim();
+  mfaPasso('qr'); openModal('mfa-modal'); setTimeout(()=>$('mfa-codigo').focus(),100);
+  return new Promise((resolve)=>{
+    const ativar = async ()=>{
+      const code = $('mfa-codigo').value.replace(/\D/g,'');
+      if(code.length!==6){ toast('Digite os 6 dígitos do app.','error'); return; }
+      $('mfa-ativar').disabled=true;
+      const a = await api('/api/auth/mfa/enable',{method:'POST',body:JSON.stringify({code})});
+      $('mfa-ativar').disabled=false;
+      if(!a.ok){ toast(a.data.message||'Código inválido.','error'); $('mfa-codigo').value=''; return; }
+      localStorage.setItem('NoHeroes_token','Bearer '+a.data.token);
+      mfaMostrarCodigos(a.data.codigos, ()=>{ closeModal('mfa-modal'); toast('Verificação em duas etapas ativada.','success'); resolve(true); });
+    };
+    $('mfa-ativar').onclick = ativar;
+    $('mfa-codigo').onkeydown = (ev)=>{ if(ev.key==='Enter') ativar(); };
+  });
+}
+function mfaPasso(p) {
+  ['qr','regerar','codigos'].forEach(x=>{ $('mfa-passo-'+x).style.display = x===p ? '' : 'none'; });
+}
+function mfaMostrarCodigos(codigos, depois) {
+  $('mfa-lista').textContent = codigos.join('\n');
+  mfaPasso('codigos');
+  $('mfa-copiar').onclick = ()=>{ navigator.clipboard.writeText(codigos.join('\n')).then(()=>toast('Códigos copiados.','success')); };
+  $('mfa-guardei').onclick = depois;
+}
+async function mfaRegerar() {
+  const st = await api('/api/auth/mfa/status');
+  $('mfa-restantes').textContent = st.ok ? `Códigos de recuperação ainda válidos: ${st.data.codigos_restantes} de 10.` : '';
+  $('mfa-codigo2').value=''; mfaPasso('regerar');
+  const m=$('mfa-modal'); delete m.dataset.fixo; openModal('mfa-modal'); setTimeout(()=>$('mfa-codigo2').focus(),100);
+  $('mfa-regerar').onclick = async ()=>{
+    const code = $('mfa-codigo2').value.replace(/\D/g,'');
+    const r = await api('/api/auth/mfa/recovery-codes',{method:'POST',body:JSON.stringify({code})});
+    if(!r.ok){ toast(r.data.message||'Código inválido.','error'); return; }
+    mfaMostrarCodigos(r.data.codigos, ()=>closeModal('mfa-modal'));
+  };
 }
 
 /* ═══ LOGOUT ═══ */

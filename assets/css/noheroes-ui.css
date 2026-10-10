@@ -193,3 +193,9 @@ html { --nh-ancora: 84px; scroll-padding-top: var(--nh-ancora); }
 /* <nh-header> só se monta quando o noheroes-ui.js (defer) roda: a altura do espaçador fica reservada
    desde a primeira pintura — sem isso o conteúdo da página "pulava" 64px (CLS). */
 nh-header { display: block; min-height: 64px; }
+
+/* Aviso de manutenção (API fora do ar) — assets/js/config.js põe no topo do <main> das páginas de loja e conta */
+.nh-manutencao { display: flex; flex-direction: column; gap: 4px; margin: 12px auto 18px; max-width: 760px; padding: 14px 16px;
+  border: 1px solid rgba(217, 181, 90, 0.55); border-radius: 14px; background: rgba(217, 181, 90, 0.1); color: var(--nh-texto);
+  font-size: 0.95rem; line-height: 1.5; text-align: left; }
+.nh-manutencao strong { color: var(--nh-dourado); font-weight: 700; }

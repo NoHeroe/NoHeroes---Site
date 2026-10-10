@@ -13,12 +13,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/tw.css?v=71d91782c0">
-  <link rel="stylesheet" href="assets/css/noheroes-ui.css?v=41c6c3ed63">
+  <link rel="stylesheet" href="assets/css/noheroes-ui.css?v=6f3533b854">
   <link rel="stylesheet" href="assets/css/paginas.css?v=a013b35520">
   <script src="assets/js/i18n.js?v=a0a8450a3b"></script>
   <script src="assets/i18n/comum.js?v=3ccccd7cb7"></script>
-  <script src="assets/i18n/conta.js?v=3fc07a2cf3"></script>
-  <script src="assets/js/config.js?v=88c4250dc2"></script>
+  <script src="assets/i18n/conta.js?v=98b89f59f0"></script>
+  <script src="assets/js/config.js?v=2e78d624f2"></script>
   <script defer src="assets/js/noheroes-ui.js?v=39832468e6"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
@@ -50,6 +50,19 @@
     <p id="error" class="nh-form-msg erro" role="alert"></p>
     <div class="nh-ou"><span data-i18n="conta.ou">ou</span></div>
     <div id="googleLoginContainer" class="nh-google"></div>
+  </form>
+
+  <!-- 2º passo do login de admin (verificação em duas etapas) -->
+  <form id="mfaForm" class="nh-auth-card" novalidate hidden>
+    <h2 class="nh-h3" data-i18n="login.mfa_titulo">Verificação em duas etapas</h2>
+    <p class="nh-lead" style="font-size:.95rem" data-i18n="login.mfa_texto">Digite o código de 6 dígitos do seu app autenticador. Sem o celular? Use um código de recuperação.</p>
+    <div class="nh-campo">
+      <label for="mfaCode" data-i18n="login.mfa_codigo">Código</label>
+      <input type="text" id="mfaCode" class="nh-input" inputmode="numeric" autocomplete="one-time-code" maxlength="12" required>
+    </div>
+    <button id="mfaBtn" type="submit" class="nh-btn nh-btn-pri nh-btn-grande w-full" data-i18n="login.mfa_confirmar">Confirmar</button>
+    <button id="mfaVoltar" type="button" class="nh-btn nh-btn-sec w-full" data-i18n="login.mfa_voltar">Voltar</button>
+    <p id="mfaErro" class="nh-form-msg erro" role="alert"></p>
   </form>
 
   <p class="nh-auth-rodape"><span data-i18n="login.sem_conta">Não tem conta?</span> <a href="/register" class="nh-link" data-i18n="login.criar">Criar conta</a></p>
@@ -89,6 +102,45 @@
     location.href = ok ? volta : (payload.is_admin ? '/admin' : '/profile');
   }
 
+  // Admin com 2FA: a API devolve mfa_token em vez do token; troca pelo token com o código do app.
+  const mfaForm = document.getElementById('mfaForm');
+  const mfaCode = document.getElementById('mfaCode');
+  const mfaErro = document.getElementById('mfaErro');
+  let mfaToken = null;
+  function pedirCodigo(token) {
+    mfaToken = token;
+    form.hidden = true; mfaForm.hidden = false; mfaErro.textContent = ''; mfaCode.value = '';
+    mfaCode.focus();
+  }
+  document.getElementById('mfaVoltar').addEventListener('click', () => {
+    mfaToken = null; mfaForm.hidden = true; form.hidden = false; pass.value = ''; pass.focus();
+  });
+  mfaForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const code = mfaCode.value.trim();
+    if (!code) return;
+    const btn = document.getElementById('mfaBtn');
+    btn.disabled = true; mfaErro.textContent = '';
+    try {
+      const res = await fetch(`${API_BASE}/api/auth/mfa/verify`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ mfa_token: mfaToken, code }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.token) {
+        if (data.recuperacao_usada) alert(t('login.mfa_poucos', { n: data.codigos_restantes }));
+        await concluir(data.token, data);
+        return;
+      }
+      if (data.code === 'MFA_EXPIRADO') { document.getElementById('mfaVoltar').click(); erro(esc(NHI18n.erro(data, 'login.invalido'))); return; }
+      mfaErro.textContent = NHI18n.erro(data, 'login.invalido');
+      mfaCode.value = ''; mfaCode.focus();
+    } catch (_) {
+      mfaErro.textContent = t('err.conexao');
+    } finally {
+      btn.disabled = false;
+    }
+  });
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     erro('');
@@ -102,6 +154,7 @@
         method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }),
       });
       const data = await res.json().catch(() => ({}));
+      if (res.ok && data.mfa_required) { pedirCodigo(data.mfa_token); return; }
       if (res.ok && data.token) {
         if (document.getElementById('remember').checked) localStorage.setItem('NoHeroes_email', email);
         else localStorage.removeItem('NoHeroes_email');
@@ -133,6 +186,7 @@
     })
       .then(async (res) => {
         const data = await res.json().catch(() => ({}));
+        if (res.ok && data.mfa_required) { pedirCodigo(data.mfa_token); return; }
         if (!res.ok || !data.token) throw data;
         await concluir(data.token, data);
       })
