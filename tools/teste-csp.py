@@ -54,7 +54,7 @@ with sync_playwright() as p:
                 pg = ctx.new_page()
                 erros = []
                 pg.on('pageerror', lambda e: erros.append(str(e)[:160]))
-                pg.on('console', lambda m: erros.append(m.text[:160]) if m.type == 'error' and 'Content Security Policy' in m.text else None)
+                pg.on('console', lambda m: erros.append(m.text[:160]) if m.type == 'error' and 'Content Security Policy' in m.text and 'report-only' not in m.text else None)  # report-only = política do próprio Google no iframe dele, não bloqueia
                 pg.goto(BASE + pag, wait_until='networkidle'); pg.wait_for_timeout(400)
                 v = pg.evaluate('window.__csp')
                 tag = f'[{w}{lang}] {pag}'
