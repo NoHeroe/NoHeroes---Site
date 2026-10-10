@@ -27,7 +27,7 @@ IGNORAR = ('accounts.google.com', 'gsi', 'GSI_LOGGER', 'cloudflareinsights', 'st
 
 COLETA = r"""() => {
   const ctx = (e) => e.closest('#drawer') ? 'menu' : e.closest('nh-header') ? 'header' : e.closest('nh-footer') ? 'rodapé' : 'página';
-  const vis = (e) => { const r = e.getBoundingClientRect(); const cs = getComputedStyle(e); return !!(r.width || r.height) && cs.visibility !== 'hidden' && !e.closest('[hidden]'); };
+  const vis = (e) => { const r = e.getBoundingClientRect(); const cs = getComputedStyle(e); const fechado = e.closest('details:not([open])'); return !!(r.width || r.height) && cs.visibility !== 'hidden' && !e.closest('[hidden]') && !(fechado && !e.closest('summary')); };  // conteúdo de <details> fechado conta como oculto (o Chrome mantém o tamanho)
   const txt = (e) => (e.innerText || e.getAttribute('aria-label') || e.title || '').trim().replace(/\s+/g, ' ').slice(0, 60);
   const links = [...document.querySelectorAll('a[href]')].filter((a) => !a.closest('template')).map((a) => ({
     ctx: ctx(a), classe: a.className || '', texto: txt(a) || '(ícone)', href: a.getAttribute('href'), abs: a.href, visivel: vis(a) || ctx(a) === 'menu', oculto: !!a.closest('[hidden]') || a.hidden }));
