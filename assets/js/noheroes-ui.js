@@ -26,6 +26,13 @@
     whatsappExibicao: '(65) 99324-0270',
     email: 'eco.noheroes@gmail.com',
     webnovel: { pt: 'https://wbnv.in/a/48k55PS', en: 'https://wbnv.in/a/6fk6zss' },
+    // Endereço direto do livro: o link curto (wbnv.in) descarta UTM. Os parâmetros utm_identity/entry/guid são os
+    // mesmos que o link curto põe (atribuição do autor na Webnovel); o NH.webnovelUtm acrescenta os nossos.
+    webnovelLivro: {
+      pt: 'https://www.webnovel.com/book/36811359900298905',
+      en: 'https://www.webnovel.com/book/36812423600316905',
+      autor: 'utm_identity=author&utm_entry=sdk&utm_guid=4507859912',
+    },
     redesObra: [
       { nome: 'YouTube', url: 'https://www.youtube.com/@Universo_NoHeroes', icone: 'youtube' },
       { nome: 'Instagram', url: 'https://www.instagram.com/universo_noheroes', icone: 'instagram' },
@@ -52,6 +59,12 @@
     return 'https://wa.me/' + NH_CONTATO.whatsapp + '?text=' + encodeURIComponent(m[lang()] || m.pt);
   };
   window.NH.webnovel = () => NH_CONTATO.webnovel[lang()] || NH_CONTATO.webnovel.pt;
+  // Link oficial com UTM do site: NH.webnovelUtm('pt'|'en'|'' (idioma atual), 'topo') → utm_content=topo
+  window.NH.webnovelUtm = function (qual, conteudo) {
+    const L = NH_CONTATO.webnovelLivro;
+    const q = L.autor + '&utm_source=noheroes&utm_medium=site&utm_campaign=anjo-devorador' + (conteudo ? '&utm_content=' + encodeURIComponent(conteudo) : '');
+    return (L[qual] || L[lang()] || L.pt) + '?' + q;
+  };
   window.NH.logado = function () {
     try { return (localStorage.getItem('NoHeroes_token') || '').split('.').length === 3; } catch (_) { return false; }
   };
@@ -66,6 +79,19 @@
       const qual = a.getAttribute('data-nh-webnovel');
       a.href = NH_CONTATO.webnovel[qual] || window.NH.webnovel();
       a.target = '_blank'; a.rel = 'noopener';
+    });
+    (raiz || document).querySelectorAll('[data-nh-webnovel-utm]').forEach((a) => {
+      a.href = window.NH.webnovelUtm(a.getAttribute('data-nh-webnovel-utm'), a.getAttribute('data-utm-content'));
+      a.target = '_blank'; a.rel = 'noopener';
+    });
+    // Botão [i] "Sobre a obra": <a data-nh-sobre-obra></a> ao lado de cada link de leitura do Anjo Devorador.
+    (raiz || document).querySelectorAll('[data-nh-sobre-obra]').forEach((a) => {
+      const rotulo = T('obra.info');
+      a.href = '/anjo-devorador';
+      a.classList.add('nh-info');
+      a.setAttribute('aria-label', rotulo);
+      a.title = rotulo;
+      if (!a.firstElementChild) a.innerHTML = '<span class="nh-info-i" aria-hidden="true">i</span>';
     });
     (raiz || document).querySelectorAll('[data-nh-conta]').forEach((a) => {
       a.href = window.NH.logado() ? '/profile' : '/login';
@@ -212,7 +238,7 @@
   // Navegação principal — fonte única: o header mostra NAV; o menu lateral mostra MENU (NAV + Início e Portfólio).
   const NAV = [
     { k: 'tatuagem', href: '/#tatuagem' },
-    { k: 'obra', href: '/#obra' },
+    { k: 'obra', href: '/anjo-devorador' },
     { k: 'loja', href: '/store' },
     { k: 'servicos', href: '/#servicos' },
     { k: 'sobre', href: '/sobre' },

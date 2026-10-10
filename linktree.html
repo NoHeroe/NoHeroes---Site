@@ -24,8 +24,8 @@
 <meta name="theme-color" content="#07060a">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="/assets/img/og/apple-touch-icon.png">
-  <link rel="stylesheet" href="assets/css/noheroes-ui.css?v=6f3533b854">
-  <script defer src="assets/js/noheroes-ui.js?v=39832468e6"></script>
+  <link rel="stylesheet" href="assets/css/noheroes-ui.css?v=662aa10064">
+  <script defer src="assets/js/noheroes-ui.js?v=2c2a7db9fc"></script>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root{ --nh-bg:#0a0a0a; --nh-ink:#e5e5e5; --nh-ink-dim:#bfbfe0; --nh-accent1:#8f4fff; --nh-accent2:#facc15; --nh-border:rgba(255,255,255,.10); }
@@ -64,12 +64,12 @@
     #outros-modal.open{display:flex}
 
   </style>
-<script src="assets/i18n/comum.js?v=3ccccd7cb7"></script>
+<script src="assets/i18n/comum.js?v=9043f3b63e"></script>
 <script src="assets/js/config.js?v=2e78d624f2"></script>
 <script src="assets/js/i18n.js?v=a0a8450a3b"></script>
 <script src="assets/i18n/linktree.js?v=8dea29b364"></script>
 <!-- utilitários por último: mesma ordem de cascata do antigo Tailwind CDN -->
-<link rel="stylesheet" href="assets/css/tw.css?v=71d91782c0">
+<link rel="stylesheet" href="assets/css/tw.css?v=f9b5a138da">
 </head>
 <body>
 
@@ -123,7 +123,7 @@
   <div class="space-y-4 max-w-sm mx-auto">
     <!-- 1-2: principais -->
     <a id="lt-agendar" href="https://wa.me/5565993240270" target="_blank" rel="noopener" data-i18n="lt.btn_agendar" class="btn-x">Agendar tatuagem</a>
-    <a id="lt-ler" href="https://wbnv.in/a/48k55PS" target="_blank" rel="noopener" data-i18n="lt.btn_ler" class="btn-vinho">Ler Anjo Devorador</a>
+    <div class="nh-com-info nh-bloco"><a id="lt-ler" href="https://wbnv.in/a/48k55PS" target="_blank" rel="noopener" data-i18n="lt.btn_ler" class="btn-vinho">Ler Anjo Devorador</a><a data-nh-sobre-obra href="/anjo-devorador" aria-label="Sobre a obra" title="Sobre a obra" data-i18n-attr="aria-label:obra.info;title:obra.info"></a></div>
 
     <!-- 3: portfólio de tatuagem -->
     <a href="/portfolio#tatuagem" data-i18n="lt.btn_portfolio_tattoo" class="btn-ghost">Portfólio de tatuagem</a>
@@ -143,7 +143,7 @@
         </span>
         <svg id="webnovel-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform 0.3s ease;" class="mr-2 text-purple-400" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
       </button>
-      <div id="webnovel-langs" style="display:none;" class="mt-2 grid grid-cols-2 gap-2 animate-fadeIn">
+      <div id="webnovel-langs" style="display:none;grid-template-columns:1fr 1fr 44px;align-items:center;" class="mt-2 gap-2 animate-fadeIn">
         <a href="https://wbnv.in/a/48k55PS" data-utm target="_blank" rel="noopener" class="btn-ghost flex items-center justify-center gap-2 py-3 hover:border-purple-500 transition-all">
           <span class="text-xs font-bold text-purple-300" data-i18n="ltm.9">✦ PT</span>
           <span class="text-xs text-gray-300" data-i18n="ltm.10">Português</span>
@@ -152,6 +152,7 @@
           <span class="text-xs font-bold text-amber-300" data-i18n="ltm.11">✦ EN</span>
           <span class="text-xs text-gray-300" data-i18n="ltm.12">English</span>
         </a>
+        <a data-nh-sobre-obra href="/anjo-devorador" aria-label="Sobre a obra" title="Sobre a obra" data-i18n-attr="aria-label:obra.info;title:obra.info"></a>
       </div>
     </div>
 

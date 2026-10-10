@@ -17,7 +17,7 @@ BASE = (sys.argv[1] if len(sys.argv) > 1 else 'http://localhost:4173').rstrip('/
 LOCAL = 'localhost' in BASE or '127.0.0.1' in BASE
 API = 'http://localhost:3999' if LOCAL else 'https://api.noheroes.com.br'
 PAGINAS = ['/', '/store', '/checkout', '/login', '/register', '/forgot', '/reenvio', '/verify-email', '/profile',
-           '/inventario', '/agradecimento', '/suporte', '/apoiar', '/ebooks', '/acda', '/sobre', '/portfolio',
+           '/inventario', '/agradecimento', '/suporte', '/apoiar', '/ebooks', '/anjo-devorador', '/sobre', '/portfolio',
            '/linktree', '/termos', '/privacidade', '/admin', '/pagina-que-nao-existe']
 COM_AVISO = ['/store', '/checkout', '/login', '/register', '/profile', '/inventario', '/suporte']
 falhas, ok = [], 0

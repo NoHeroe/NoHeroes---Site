@@ -24,16 +24,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/tw.css?v=71d91782c0">
-  <link rel="stylesheet" href="assets/css/noheroes-ui.css?v=6f3533b854">
+  <link rel="stylesheet" href="assets/css/tw.css?v=f9b5a138da">
+  <link rel="stylesheet" href="assets/css/noheroes-ui.css?v=662aa10064">
   <link rel="stylesheet" href="assets/css/paginas.css?v=a013b35520">
   <link rel="stylesheet" href="assets/css/loja.css?v=741a3ef789">
   <script src="assets/js/i18n.js?v=a0a8450a3b"></script>
-  <script src="assets/i18n/comum.js?v=3ccccd7cb7"></script>
+  <script src="assets/i18n/comum.js?v=9043f3b63e"></script>
   <script src="assets/i18n/loja.js?v=68c65eba3e"></script>
   <script src="assets/js/config.js?v=2e78d624f2"></script>
   <script src="assets/js/carrinho.js?v=e14161b093"></script>
-  <script defer src="assets/js/noheroes-ui.js?v=39832468e6"></script>
+  <script defer src="assets/js/noheroes-ui.js?v=2c2a7db9fc"></script>
 </head>
 <body class="nh-pagina">
 <nh-background></nh-background>
@@ -164,6 +164,9 @@
   /* ---------- vitrine ---------- */
   // Físico só vende com frete de entrega configurado no servidor (desconhecido = sem frete).
   const semFrete = (p) => p.fulfillment === 'physical' && !st.entrega;
+  // Produto da obra Anjo Devorador / As Cinzas do Amanhã: ganha o [i] "Sobre a obra" (→ /anjo-devorador).
+  const daObra = (p) => p.id === 7 || /^\/?(acda|anjo-devorador)(\.html)?(#.*)?$/.test(p.detailsUrl || '');
+  const botaoObra = () => `<a class="nh-info" href="/anjo-devorador" aria-label="${esc(t('obra.info'))}" title="${esc(t('obra.info'))}"><span class="nh-info-i" aria-hidden="true">i</span></a>`;
   function card(p, i) {
     const breve = emBreve(p), esgotado = !breve && !p.available;
     let botao;
@@ -184,7 +187,7 @@
         <h3 class="lj-card-nome">${esc(nome(p))}</h3>
         <p class="lj-card-preco">${faixa(p)}</p>
       </div>
-      <div class="lj-card-acoes">${botao}${ml}</div>
+      <div class="lj-card-acoes">${daObra(p) ? `<div class="nh-com-info nh-bloco">${botao}${botaoObra()}</div>` : botao}${ml}</div>
     </li>`;
   }
   function vitrine() {
@@ -235,7 +238,8 @@
     renderCompra();
     const links = [];
     const det = urlSegura(p.detailsUrl) || (p.detailsUrl && /^\/[\w\-./]*$/.test(p.detailsUrl) ? p.detailsUrl.replace(/^\//, '') : null);
-    if (det) links.push(`<a class="lj-btn lj-btn-sec" href="${esc(det)}" ${/^https?:/.test(det) ? 'target="_blank" rel="noopener noreferrer"' : ''}>${esc(t('loja.mais_info'))}</a>`);
+    if (daObra(p)) links.push(`<a class="lj-btn lj-btn-sec" href="/anjo-devorador">${esc(t('obra.info'))}</a>`);
+    else if (det) links.push(`<a class="lj-btn lj-btn-sec" href="${esc(det)}" ${/^https?:/.test(det) ? 'target="_blank" rel="noopener noreferrer"' : ''}>${esc(t('loja.mais_info'))}</a>`);
     if (urlSegura(p.marketplace_url)) links.push(`<a class="lj-btn lj-btn-ml" href="${esc(urlSegura(p.marketplace_url))}" target="_blank" rel="noopener noreferrer">${esc(t('loja.ml'))}</a>`);
     qs('#infoActions').innerHTML = links.join('');
   }

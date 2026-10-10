@@ -27,8 +27,8 @@
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="/assets/img/og/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/noheroes-ui.css?v=6f3533b854">
-<script defer src="assets/js/noheroes-ui.js?v=39832468e6"></script>
+<link rel="stylesheet" href="assets/css/noheroes-ui.css?v=662aa10064">
+<script defer src="assets/js/noheroes-ui.js?v=2c2a7db9fc"></script>
 <style>
 html:root{--nh-ancora:132px}
 *{box-sizing:border-box}
@@ -234,9 +234,9 @@ select.field-input option{background:#0c0a10;color:#e5e5e5}
 @media(prefers-reduced-motion:reduce){.chev,.barra-movel{transition:none}}
 </style>
 <!-- utilitários por último: mesma ordem de cascata do antigo Tailwind CDN -->
-<link rel="stylesheet" href="assets/css/tw.css?v=71d91782c0">
+<link rel="stylesheet" href="assets/css/tw.css?v=f9b5a138da">
 <script src="assets/js/i18n.js?v=a0a8450a3b"></script>
-<script src="assets/i18n/comum.js?v=3ccccd7cb7"></script>
+<script src="assets/i18n/comum.js?v=9043f3b63e"></script>
 <script src="assets/i18n/portfolio.js?v=102f8eee26"></script>
 <script src="assets/js/config.js?v=2e78d624f2"></script>
 </head>
@@ -370,7 +370,7 @@ select.field-input option{background:#0c0a10;color:#e5e5e5}
         <div style="padding:14px;flex:1;display:flex;flex-direction:column;">
           <h3 style="font-size:14px;font-weight:700;margin:0 0 4px;">ACDA — As Cinzas do Amanhã</h3>
           <p data-i18n-html="port.wr_acda" style="font-size:12px;color:rgba(255,255,255,0.45);margin:0 0 12px;flex:1;">Romance de dark fantasy. Primeiro volume da saga — o marco do universo NoHeroes.</p>
-          <a href="/acda" class="btn-ghost" style="font-size:12px;"><span data-i18n-html="port.wr_read">Conhecer a obra</span></a>
+          <a href="/anjo-devorador" class="btn-ghost" style="font-size:12px;"><span data-i18n-html="port.wr_read">Conhecer a obra</span></a>
         </div>
       </article>
     <div class="vm-extra" id="escrita-extra" hidden>
@@ -379,9 +379,10 @@ select.field-input option{background:#0c0a10;color:#e5e5e5}
         <div style="padding:14px;flex:1;display:flex;flex-direction:column;">
           <h3 style="font-size:14px;font-weight:700;margin:0 0 4px;">Webnovel <span style="color:rgba(255,255,255,0.4);font-weight:400;font-size:12px;">(em publicação)</span></h3>
           <p data-i18n-html="port.wr_webnovel" style="font-size:12px;color:rgba(255,255,255,0.45);margin:0 0 12px;flex:1;">A obra nova, publicada em capítulos na Webnovel — disponível em duas versões:</p>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr 44px;gap:8px;align-items:center;">
             <a href="https://wbnv.in/a/48k55PS" target="_blank" rel="noopener" class="btn-ghost" style="font-size:12px;padding:9px 0;">✦ PT</a>
             <a href="https://wbnv.in/a/6fk6zss" target="_blank" rel="noopener" class="btn-ghost" style="font-size:12px;padding:9px 0;">✦ EN</a>
+            <a data-nh-sobre-obra href="/anjo-devorador" aria-label="Sobre a obra" title="Sobre a obra" data-i18n-attr="aria-label:obra.info;title:obra.info"></a>
           </div>
         </div>
       </article>
@@ -591,7 +592,7 @@ select.field-input option{background:#0c0a10;color:#e5e5e5}
         <div style="display:flex;flex-wrap:wrap;gap:10px;">
           <a href="https://noheroes.com.br" target="_blank" rel="noopener" class="btn-ghost" style="font-size:12px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg><span data-i18n-html="port.proj_btn_site">Site</span></a>
           <a href="/store" class="btn-ghost" style="font-size:12px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 11V7a4 4 0 00-8 0v4M5 11h14l1 9H4l1-9z"/></svg><span data-i18n-html="port.proj_btn_store">Loja</span></a>
-          <a href="/acda" class="btn-ghost" style="font-size:12px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg><span data-i18n-html="port.proj_btn_book">Livro ACDA</span></a>
+          <a href="/anjo-devorador" class="btn-ghost" style="font-size:12px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg><span data-i18n-html="port.proj_btn_book">Livro ACDA</span></a>
         </div>
       </div>
     </div>

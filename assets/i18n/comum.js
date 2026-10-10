@@ -3,6 +3,7 @@
   Object.assign(D.pt, {
     'nav.tatuagem': 'Tatuagem',
     'nav.obra': 'Anjo Devorador',
+    'obra.info': 'Sobre a obra',
     'nav.loja': 'Loja',
     'nav.servicos': 'Serviços',
     'nav.sobre': 'Sobre',
@@ -77,6 +78,7 @@
   Object.assign(D.en, {
     'nav.tatuagem': 'Tattoo',
     'nav.obra': 'Anjo Devorador',
+    'obra.info': 'About the story',
     'nav.loja': 'Store',
     'nav.servicos': 'Services',
     'nav.sobre': 'About',

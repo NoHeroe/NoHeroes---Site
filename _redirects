@@ -8,3 +8,9 @@
 /portif%C3%B3lio /portfolio 301
 /portif%C3%B3lio.html /portfolio 301
 /NAVEGACAO.md  /404.html  200
+/REVISAO_OBRA.md  /404.html  200
+/IMAGENS_PENDENTES.md  /404.html  200
+
+# Página da obra: /acda virou /anjo-devorador (o navegador mantém a âncora, ex.: /acda#comprar → /anjo-devorador#comprar)
+/acda /anjo-devorador 301
+/acda.html /anjo-devorador 301

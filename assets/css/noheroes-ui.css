@@ -199,3 +199,19 @@ nh-header { display: block; min-height: 64px; }
   border: 1px solid rgba(217, 181, 90, 0.55); border-radius: 14px; background: rgba(217, 181, 90, 0.1); color: var(--nh-texto);
   font-size: 0.95rem; line-height: 1.5; text-align: left; }
 .nh-manutencao strong { color: var(--nh-dourado); font-weight: 700; }
+
+/* Botão [i] "Sobre a obra" (assets/js/noheroes-ui.js preenche <a data-nh-sobre-obra>): círculo pequeno no estilo do site,
+   área de toque de 44px; não estica dentro de linhas flex de botões. */
+.nh-info { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; flex: 0 0 44px;
+  border-radius: 50%; color: #f0d99a; text-decoration: none; vertical-align: middle; }
+.nh-info-i { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%;
+  border: 1.5px solid rgba(217, 181, 90, 0.75); background: rgba(217, 181, 90, 0.1); font: italic 700 14px/1 Georgia, 'Times New Roman', serif;
+  transition: background .2s, border-color .2s, transform .2s; }
+.nh-info:hover .nh-info-i, .nh-info:focus-visible .nh-info-i { background: rgba(217, 181, 90, 0.25); border-color: #f0d99a; transform: scale(1.08); }
+.nh-info:focus-visible { outline: 2px solid #f0d99a; outline-offset: 2px; }
+.nh-com-info { display: inline-flex; align-items: center; gap: 4px; max-width: 100%; }
+.nh-com-info > :not(.nh-info) { min-width: 0; }
+.nh-com-info.nh-bloco { display: flex; width: 100%; }
+.nh-com-info.nh-bloco > :first-child { flex: 1 1 auto; }
+.nh-ctas-linha .nh-com-info { flex: 1 1 260px; }
+@media (min-width: 640px) { .nh-ctas-linha .nh-com-info { flex: 0 0 auto; } }
