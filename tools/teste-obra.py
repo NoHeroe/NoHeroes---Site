@@ -18,9 +18,15 @@ falhas, ok = [], 0
 ESPIA = """window.__csp = [];
 document.addEventListener('securitypolicyviolation', e => window.__csp.push(e.violatedDirective + ' ← ' + (e.blockedURI || 'inline')));"""
 IGNORAR = ('accounts.google.com', 'gsi', 'GSI_LOGGER', 'cloudflareinsights', 'status of 403 ()', 'fonts.g', 'report-only')
+# Prévia do Cloudflare Pages (*.pages.dev): a API só aceita o domínio oficial (CORS), então a loja fica de fora e os
+# avisos de CORS no console são esperados lá.
+PREVIA = '.pages.dev' in BASE
+if PREVIA:
+    IGNORAR += ('CORS', 'Access-Control', 'Failed to fetch', 'net::ERR_FAILED', 'api.noheroes.com.br')
 # página → quantos [i] devem existir (o portfólio só mostra a webnovel depois do "ver mais" da Escrita)
 # loja: >= 1 (todo produto da obra ganha o [i]; em produção é só o 7, no banco local também o livro impresso de teste)
 PAGINAS_I = {'/': 3, '/sobre': 2, '/linktree': 2, '/portfolio': 1, '/store': -1, '/pagina-inexistente': 1}
+if PREVIA: PAGINAS_I.pop('/store')
 PAGINAS_MENU = ['/', '/sobre', '/store', '/portfolio', '/anjo-devorador', '/ebooks', '/suporte', '/login']
 ROTULO = {'pt': 'Sobre a obra', 'en': 'About the story'}
 
